@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ZL_EXTRACT CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EXTRACTOR" TYPE="PROG">
+ <DIRECTORY SRCSYSTEM="NSP" AUTHOR="TARYCK" DEVCLASS="ZAPLINK-FRAMEWORK-DEVTOOLS" MASTERLANG="E"/>
+ <RAW SOURCE="*&amp;---------------------------------------------------------------------*
+*&amp; Report  ZAPLINK_EXTRACTOR
+*&amp;
+*&amp;---------------------------------------------------------------------*
+*&amp;
+*&amp;
+*&amp;---------------------------------------------------------------------*
+
+REPORT  ZAPLINK_EXTRACTOR.
+
+PARAMETERS:
+  p_pack TYPE ZAPLINK_EXTRACTOR=&gt;TD_PACKAGE DEFAULT &apos;ZAPLINK&apos;,
+  p_path type ZAPLINK_EXTRACTOR=&gt;TD_DIRECTORYNAME default &apos;Z:\SAP\Google Code\zaplink&apos;.
+
+data o_extract type ref to ZAPLINK_EXTRACTOR.
+
+CREATE OBJECT o_extract.
+CALL METHOD o_extract-&gt;do_extraction
+  EXPORTING
+    target_dir = p_path
+    package    = p_pack.">
+  <A0_MAIN NAME="ZAPLINK_EXTRACTOR" VARCL="X" SUBC="1" CNAM="TARYCK" CDAT="20100111" UNAM="TARYCK" UDAT="20100111" VERN="000002" RSTAT="K" RMAND="001" RLOAD="E" FIXPT="X" SDATE="20100111" STIME="235457" IDATE="20100111" ITIME="235457" UCCHECK="X"/>
+  <TEXTSPOOL>
+   <ITEM ID="R">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="ZAPLink : Extract all package to files" LENGTH="38 "/>
+    </TEXTS>
+   </ITEM>
+  </TEXTSPOOL>
+ </RAW>
+</ZL_EXTRACT>

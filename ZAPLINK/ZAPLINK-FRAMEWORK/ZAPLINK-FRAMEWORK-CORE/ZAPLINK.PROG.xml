@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ZL_EXTRACT CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK" TYPE="PROG">
+ <DIRECTORY SRCSYSTEM="NSP" AUTHOR="TARYCK" DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
+ <RAW SOURCE="*/---------------------------------------------------------------------\
+*|   This file is part of ZAP link framework                           |
+*|                                                                     |
+*|   ZAP Link is free software; you can redistribute it and/or modify  |
+*|   it under the terms of the GNU General Public License as published |
+*|   by the Free Software Foundation; either version 2 of the License, |
+*|   or (at your option) any later version.                            |
+*|                                                                     |
+*|   ZAP Link is provided without any warranty.                        |
+*\---------------------------------------------------------------------/
+
+*/---------------------------------------------------------------------\
+*| /  __ \           | |      (_) |         | |                        |
+*| | /  \/ ___  _ __ | |_ _ __ _| |__  _   _| |_ ___  _ __ ___         |
+*| | |    / _ \| &apos;_ \| __| &apos;__| | &apos;_ \| | | | __/ _ \| &apos;__/ __|        |
+*| | \__/\ (_) | | | | |_| |  | | |_) | |_| | || (_) | |  \__ \        |
+*|  \____/\___/|_| |_|\__|_|  |_|_.__/ \__,_|\__\___/|_|  |___/        |
+*|---------------------------------------------------------------------|
+*| Lead Developer : Taryck BENSIALI                                    |
+*|                        taryck.bensiali@gmail.com                    |
+*\---------------------------------------------------------------------/
+REPORT  zaplink.
+
+INCLUDE zaplink_top.
+INCLUDE zaplink_scr.
+
+*/----------------------main------------------------------------------\
+START-OF-SELECTION.
+************* N U G G E T *************
+*   create empty nugget
+  IF nugc = &apos;X&apos;.
+    PERFORM nugget_create.
+*   add object to nugget
+  ELSEIF nuga = &apos;X&apos;.
+    PERFORM nugget_add.
+*   import nugget
+  ELSEIF nugi = &apos;X&apos;.
+    PERFORM nugget_import.
+*   display objects in a nugget
+  ELSEIF nugd = &apos;X&apos;.
+    PERFORM nugget_display.
+*   Un install a nugget
+  ELSEIF nugu = &apos;X&apos;.
+    PERFORM nugget_uninstall.
+  ELSEIF nugp = &apos;X&apos;.
+    PERFORM nugget_package.
+  ELSEIF nugr = &apos;X&apos;.
+    PERFORM nugget_tr.
+  ENDIF.
+
+END-OF-SELECTION.
+*\--------------------------------------------------------------------/
+  INCLUDE zaplink_frm.">
+  <A0_MAIN NAME="ZAPLINK" VARCL="X" SUBC="1" APPL="S" CNAM="TBENSIAL" CDAT="20090504" UNAM="TARYCK" UDAT="20100108" VERN="000040" RSTAT="S" RMAND="321" RLOAD="E" FIXPT="X" SDATE="20100111" STIME="230841" IDATE="20100108" ITIME="110431" UCCHECK="X"/>
+  <DOCUMENTATION>
+   <ITEM APPLICATION="DOKU" ID="RE" OBJECT="ZAPLINK" LANGU="E" MASTERLANG="X" TYP="E" DOKFORM="S_DOCU_SHOW" DOKSTYLE="S_DOCUS1">
+    <TEXTS>
+     <ITEM TDSPRAS="E" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20091005" TDFTIME="102537" TDLUSER="TBENSIAL" TDLRELES="700" TDLDATE="20091005" TDLTIME="102539" TDLINESIZE="072">U1&amp;PURPOSE&amp;
+ASZAP Link interface program.
+ASAllow you to install component from XML paquet.
+U1&amp;INTEGRATION&amp;
+AS
+U1&amp;PREREQUISITES&amp;
+AS
+U1&amp;FEATURES&amp;
+AS
+U2&amp;SELECTION&amp;
+AS
+U2&amp;STANDARD_VARIANTS&amp;
+AS
+U2&amp;OUTPUT&amp;
+AS
+U1&amp;ACTIVITIES&amp;
+AS
+U1&amp;EXAMPLE&amp;
+AS</ITEM>
+    </TEXTS>
+   </ITEM>
+   <ITEM APPLICATION="DOKU" ID="RE" OBJECT="ZAPLINK_IMP" LANGU="E" MASTERLANG="X" TYP="E" DOKFORM="S_DOCU_SHOW" DOKSTYLE="S_DOCUS1">
+    <TEXTS>
+     <ITEM TDSPRAS="E" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20091005" TDFTIME="102537" TDLUSER="TBENSIAL" TDLRELES="700" TDLDATE="20091005" TDLTIME="102539" TDLINESIZE="072">U1&amp;PURPOSE&amp;
+ASZAP Link interface program.
+ASAllow you to install component from XML paquet.
+U1&amp;INTEGRATION&amp;
+AS
+U1&amp;PREREQUISITES&amp;
+AS
+U1&amp;FEATURES&amp;
+AS
+U2&amp;SELECTION&amp;
+AS
+U2&amp;STANDARD_VARIANTS&amp;
+AS
+U2&amp;OUTPUT&amp;
+AS
+U1&amp;ACTIVITIES&amp;
+AS
+U1&amp;EXAMPLE&amp;
+AS</ITEM>
+    </TEXTS>
+   </ITEM>
+  </DOCUMENTATION>
+  <TEXTSPOOL>
+   <ITEM ID="I" KEY="NGA">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="Objekt zum Nugget hinzufügen" LENGTH="28 "/>
+     <ITEM LANGU="E" ENTRY="Add Object to Nugget" LENGTH="20 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="NGC">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="Neues Nugget anlegen" LENGTH="20 "/>
+     <ITEM LANGU="E" ENTRY="Create Empty Nugget" LENGTH="19 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="NGI">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="Nugget importieren" LENGTH="18 "/>
+     <ITEM LANGU="E" ENTRY="Import Nugget" LENGTH="13 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="OPT">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="Optionen" LENGTH="8 "/>
+     <ITEM LANGU="E" ENTRY="Options" LENGTH="7 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="SLK">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="SAPlink" LENGTH="7 "/>
+     <ITEM LANGU="E" ENTRY="SAPlink" LENGTH="7 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="TB1">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="Objekt" LENGTH="6 "/>
+     <ITEM LANGU="E" ENTRY="Slinkee" LENGTH="7 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="TB2">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="Nugget" LENGTH="6 "/>
+     <ITEM LANGU="E" ENTRY="Nugget" LENGTH="6 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="R">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="SAPlink" LENGTH="7 "/>
+     <ITEM LANGU="E" ENTRY="SAPlink 0.2.0" LENGTH="13 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="DEVCLASS">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="D       ." LENGTH="15 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="EXPORT">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Objekt exportieren" LENGTH="26 "/>
+     <ITEM LANGU="E" ENTRY="        Export Object to Slinkee" LENGTH="32 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="FILENAME">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        SAPlink Dateiname" LENGTH="33 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="IMPORT">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Objekt importieren" LENGTH="26 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="KORRNUM">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="D       ." LENGTH="34 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NOBJNAM">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Objektname" LENGTH="19 "/>
+     <ITEM LANGU="E" ENTRY="        Object Name" LENGTH="19 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NOVRWR">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Originale überschreiben" LENGTH="31 "/>
+     <ITEM LANGU="E" ENTRY="        Overwrite Originals" LENGTH="27 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NPLUGIN">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Objekttyp" LENGTH="19 "/>
+     <ITEM LANGU="E" ENTRY="        Object Type" LENGTH="19 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NUGA">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Zum Nugget hinzufügen" LENGTH="29 "/>
+     <ITEM LANGU="E" ENTRY="        Add Object to Nugget" LENGTH="28 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NUGC">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Neues Nugget anlegen" LENGTH="28 "/>
+     <ITEM LANGU="E" ENTRY="        Create New Nugget" LENGTH="27 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NUGD">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Objekte des Nuggets anzeigen" LENGTH="36 "/>
+     <ITEM LANGU="E" ENTRY="        Display Nugget" LENGTH="33 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NUGFILE">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Nugget Dateiname" LENGTH="32 "/>
+     <ITEM LANGU="E" ENTRY="        Nugget File Name" LENGTH="32 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NUGGNAM">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Nuggetname" LENGTH="19 "/>
+     <ITEM LANGU="E" ENTRY="        Nugget Name" LENGTH="19 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NUGI">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Nugget importieren" LENGTH="26 "/>
+     <ITEM LANGU="E" ENTRY="        Import Nugget" LENGTH="21 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NUGP">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Fügen Sie Paket Nugget hinzu" LENGTH="36 "/>
+     <ITEM LANGU="E" ENTRY="        Add Objects from a Package" LENGTH="34 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NUGR">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        Add Objects from a Transport" LENGTH="36 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="NUGU">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        Uninstall Nuget&apos;s objects" LENGTH="33 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="OACTIV">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        Active objects at end" LENGTH="29 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="OBJNAME">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Objektname" LENGTH="19 "/>
+     <ITEM LANGU="E" ENTRY="        Object Name" LENGTH="19 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="OVERWR">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Originale Überschreiben" LENGTH="31 "/>
+     <ITEM LANGU="E" ENTRY="        Overwrite Originals" LENGTH="27 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="PACKAGE">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Packet Name" LENGTH="20 "/>
+     <ITEM LANGU="E" ENTRY="        Package Name" LENGTH="20 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="PLUGIN">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="        Objekttyp" LENGTH="19 "/>
+     <ITEM LANGU="E" ENTRY="        Object Type" LENGTH="19 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="REQNUGG">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        Transport Number" LENGTH="24 "/>
+    </TEXTS>
+   </ITEM>
+  </TEXTSPOOL>
+ </RAW>
+</ZL_EXTRACT>
