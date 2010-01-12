@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-16"?>
 <ZL_EXTRACT CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG">
- <DIRECTORY SRCSYSTEM="NSP" AUTHOR="TARYCK" DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
- <RAW SOURCE="*&amp;---------------------------------------------------------------------*
+ <DIRECTORY SRCSYSTEM="OD4" AUTHOR="TBENSIAL" DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
+ <RAW>
+  <A0_MAIN NAME="ZAPLINK_SCR" EDTX="X" VARCL="X" SUBC="I" CNAM="TBENSIAL" CDAT="20090507" UNAM="TBENSIAL" UDAT="20091118" VERN="000021" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" SDATE="20091118" STIME="155352" IDATE="20091118" ITIME="155352" UCCHECK="X"/>
+  <SOURCE>*&amp;---------------------------------------------------------------------*
 *&amp;  Include           ZAPLINLK_SCR
 *&amp;---------------------------------------------------------------------*
 
@@ -177,8 +179,7 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR reqnugg-low.
 
   reqnugg-low = es_selected_request-trkorr.
 
-*\--------------------------------------------------------------------/">
-  <A0_MAIN NAME="ZAPLINK_SCR" EDTX="X" VARCL="X" SUBC="I" CNAM="TBENSIAL" CDAT="20090507" UNAM="TARYCK" UDAT="20100108" VERN="000022" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" SDATE="20100108" STIME="110431" IDATE="20100108" ITIME="110431" UCCHECK="X"/>
+*\--------------------------------------------------------------------/</SOURCE>
   <TEXTSPOOL>
    <ITEM ID="R">
     <TEXTS>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-16"?>
 <ZL_EXTRACT CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG">
- <DIRECTORY SRCSYSTEM="NSP" AUTHOR="TARYCK" DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
- <RAW SOURCE="*&amp;---------------------------------------------------------------------*
+ <DIRECTORY SRCSYSTEM="OD4" AUTHOR="TBENSIAL" DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
+ <RAW>
+  <A0_MAIN NAME="ZAPLINK_FRM" VARCL="X" SUBC="I" APPL="S" CNAM="TBENSIAL" CDAT="20090507" UNAM="TBENSIAL" UDAT="20091124" VERN="000060" RMAND="220" RLOAD="E" SDATE="20091124" STIME="174116" IDATE="20091124" ITIME="174116" UCCHECK="X"/>
+  <SOURCE>*&amp;---------------------------------------------------------------------*
 *&amp;  Include           ZAPLINK_FRM
 *&amp;---------------------------------------------------------------------*
 */---------------------get_current_screen_value-----------------------\
@@ -377,8 +379,7 @@ FORM nugget_tr .
 
   PERFORM dsp_result_display USING space objlist space.
 
-ENDFORM.                    &quot; NUGGET_TR">
-  <A0_MAIN NAME="ZAPLINK_FRM" VARCL="X" SUBC="I" APPL="S" CNAM="TBENSIAL" CDAT="20090507" UNAM="TARYCK" UDAT="20100108" VERN="000061" RMAND="220" RLOAD="E" SDATE="20100108" STIME="110431" IDATE="20100108" ITIME="110431" UCCHECK="X"/>
+ENDFORM.                    &quot; NUGGET_TR</SOURCE>
   <TEXTSPOOL>
    <ITEM ID="R">
     <TEXTS>

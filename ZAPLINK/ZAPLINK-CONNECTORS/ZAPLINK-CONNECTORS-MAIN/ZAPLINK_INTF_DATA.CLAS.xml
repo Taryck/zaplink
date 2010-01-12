@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-16"?>
 <ZL_EXTRACT CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS">
- <DIRECTORY SRCSYSTEM="NSP" AUTHOR="TARYCK" DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
+ <DIRECTORY SRCSYSTEM="OD4" AUTHOR="TBENSIAL" DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="DEFBB7F738B38EF1BEA4000C293C7343" EXPOSURE="2" STATE="1" AUTHOR="TBENSIAL" CREATEDON="20091120" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="701">
-   <INHERITANCE REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" STATE="1" AUTHOR="TARYCK" CREATEDON="20100107"/>
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="B348064B8305545DE1000000AC120173" EXPOSURE="2" STATE="1" AUTHOR="TBENSIAL" CREATEDON="20091120" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="700">
+   <INHERITANCE REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" STATE="1" AUTHOR="TBENSIAL" CREATEDON="20091120"/>
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="Data for ABAP Object Interface"/>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
-   <ITEM CMPNAME="A0_MAINDATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TARYCK" CREATEDON="20100107" TYPTYPE="1" TYPE="TS_MAIN_DATA" R3RELEASE="701">
+   <ITEM CMPNAME="A0_MAINDATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091120" TYPTYPE="1" TYPE="TS_MAIN_DATA" R3RELEASE="700">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Maindata of Class"/>
     </TEXTS>
@@ -43,9 +43,145 @@ ASHaving XML node with / (which means end of node) make nugget display
    <MACROS>*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
+  <METHODS>
+   <ITEM CMPNAME="FROM_DATA">
+    <SOURCE>DATA _t   LIKE LINE OF a0_maindata-texts.
+  DATA _in  LIKE LINE OF interfaces.
+  FIELD-SYMBOLS:
+    &lt;co&gt;  LIKE LINE OF fm_data-comprisings,
+    &lt;ec&gt;  LIKE LINE OF fm_data-explore_comprisings.
+
+  a0_maindata-hdr = fm_data-interface.
+  obj_name = a0_maindata-clsname.
+  obj_version = a0_maindata-version.
+  obj_langu = a0_maindata-langu.
+
+*CLASS_DESC  TYPE tt_SEOCLASSTX,
+  a0_maindata-texts = fm_data-class_desc.
+  MODIFY a0_maindata-texts FROM _t TRANSPORTING clsname WHERE clsname &lt;&gt; _t-clsname.
+  CLEAR a0_maindata-descript.
+
+* Get all common attributes between Class and Interface
+  CALL METHOD super-&gt;from_data
+    EXPORTING
+      fm_data = fm_data.
+
+*COMPRISINGS TYPE  SEOR_COMPRISINGS_R
+  LOOP AT fm_data-comprisings ASSIGNING &lt;co&gt;
+    WHERE clsname = a0_maindata-clsname.
+    CLEAR _in.
+    MOVE-CORRESPONDING &lt;co&gt; to _in.
+
+    CLEAR _in-clsname.
+    INSERT _in INTO TABLE interfaces.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="TO_DATA">
+    <SOURCE>DATA _t   LIKE LINE OF a0_maindata-texts.
+  DATA _co  LIKE LINE OF fm_data-comprisings.
+  DATA _ec  LIKE LINE OF fm_data-explore_comprisings.
+  FIELD-SYMBOLS:
+    &lt;in&gt;  LIKE LINE OF interfaces.
+
+  obj_name = a0_maindata-clsname.
+  obj_version = a0_maindata-version.
+  obj_langu = a0_maindata-langu.
+
+* Warning recieving (will reset FM_DATA)
+  CALL METHOD super-&gt;to_data
+    RECEIVING
+      fm_data = fm_data.
+
+  fm_data-interface = a0_maindata-hdr.
+  READ TABLE a0_maindata-texts INTO _t
+       WITH TABLE KEY langu = a0_maindata-langu.
+  IF sy-subrc = 0.
+    fm_data-interface-descript = _t-descript.
+  ENDIF.
+
+*CLASS_DESC  TYPE tt_SEOCLASSTX,
+  fm_data-class_desc = a0_maindata-texts.
+  _t-clsname = a0_maindata-clsname.
+  MODIFY fm_data-class_desc FROM _t TRANSPORTING clsname WHERE clsname &lt;&gt; _t-clsname.
+
+*COMPRISINGS TYPE  SEOR_COMPRISINGS_R
+  LOOP AT interfaces ASSIGNING &lt;in&gt;.
+    CLEAR: _co.
+    MOVE-CORRESPONDING &lt;in&gt; to _co.
+    _co-clsname = a0_maindata-clsname.
+    INSERT _co INTO TABLE fm_data-comprisings.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+  </METHODS>
   <REDEFINITIONS>
-   <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="FROM_DATA"/>
-   <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="TO_DATA"/>
+   <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="FROM_DATA">
+    <SOURCE>DATA _t   LIKE LINE OF a0_maindata-texts.
+  DATA _in  LIKE LINE OF interfaces.
+  FIELD-SYMBOLS:
+    &lt;co&gt;  LIKE LINE OF fm_data-comprisings,
+    &lt;ec&gt;  LIKE LINE OF fm_data-explore_comprisings.
+
+  a0_maindata-hdr = fm_data-interface.
+  obj_name = a0_maindata-clsname.
+  obj_version = a0_maindata-version.
+  obj_langu = a0_maindata-langu.
+
+*CLASS_DESC  TYPE tt_SEOCLASSTX,
+  a0_maindata-texts = fm_data-class_desc.
+  MODIFY a0_maindata-texts FROM _t TRANSPORTING clsname WHERE clsname &lt;&gt; _t-clsname.
+  CLEAR a0_maindata-descript.
+
+* Get all common attributes between Class and Interface
+  CALL METHOD super-&gt;from_data
+    EXPORTING
+      fm_data = fm_data.
+
+*COMPRISINGS TYPE  SEOR_COMPRISINGS_R
+  LOOP AT fm_data-comprisings ASSIGNING &lt;co&gt;
+    WHERE clsname = a0_maindata-clsname.
+    CLEAR _in.
+    MOVE-CORRESPONDING &lt;co&gt; to _in.
+
+    CLEAR _in-clsname.
+    INSERT _in INTO TABLE interfaces.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="TO_DATA">
+    <SOURCE>DATA _t   LIKE LINE OF a0_maindata-texts.
+  DATA _co  LIKE LINE OF fm_data-comprisings.
+  DATA _ec  LIKE LINE OF fm_data-explore_comprisings.
+  FIELD-SYMBOLS:
+    &lt;in&gt;  LIKE LINE OF interfaces.
+
+  obj_name = a0_maindata-clsname.
+  obj_version = a0_maindata-version.
+  obj_langu = a0_maindata-langu.
+
+* Warning recieving (will reset FM_DATA)
+  CALL METHOD super-&gt;to_data
+    RECEIVING
+      fm_data = fm_data.
+
+  fm_data-interface = a0_maindata-hdr.
+  READ TABLE a0_maindata-texts INTO _t
+       WITH TABLE KEY langu = a0_maindata-langu.
+  IF sy-subrc = 0.
+    fm_data-interface-descript = _t-descript.
+  ENDIF.
+
+*CLASS_DESC  TYPE tt_SEOCLASSTX,
+  fm_data-class_desc = a0_maindata-texts.
+  _t-clsname = a0_maindata-clsname.
+  MODIFY fm_data-class_desc FROM _t TRANSPORTING clsname WHERE clsname &lt;&gt; _t-clsname.
+
+*COMPRISINGS TYPE  SEOR_COMPRISINGS_R
+  LOOP AT interfaces ASSIGNING &lt;in&gt;.
+    CLEAR: _co.
+    MOVE-CORRESPONDING &lt;in&gt; to _co.
+    _co-clsname = a0_maindata-clsname.
+    INSERT _co INTO TABLE fm_data-comprisings.
+  ENDLOOP.</SOURCE>
+   </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>
    <ITEM TYPEGROUP="ABAP" VERSION="1" IMPLICIT="X"/>
@@ -57,7 +193,7 @@ ASHaving XML node with / (which means end of node) make nugget display
    <ITEM TYPEGROUP="SEOT" VERSION="1" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TS_MAIN_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="4" SRCROW1="18 " SRCCOLUMN1="4 " SRCROW2="23 " SRCCOLUMN2="24 " R3RELEASE="701" TYPESRC_LENG="198 ">
+   <ITEM CMPNAME="TS_MAIN_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091120" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="4" SRCROW1="18 " SRCCOLUMN1="4 " SRCROW2="23 " SRCCOLUMN2="24 " R3RELEASE="700" TYPESRC_LENG="198 ">
     BEGIN OF ts_main_data.
     INCLUDE TYPE vseointerf AS hdr.
     TYPES:

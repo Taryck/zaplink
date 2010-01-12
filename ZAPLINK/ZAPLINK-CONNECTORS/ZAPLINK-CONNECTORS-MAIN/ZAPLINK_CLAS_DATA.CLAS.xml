@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-16"?>
 <ZL_EXTRACT CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS">
- <DIRECTORY SRCSYSTEM="NSP" AUTHOR="TARYCK" DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
+ <DIRECTORY SRCSYSTEM="OD4" AUTHOR="TBENSIAL" DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="66FF044B26B30C5BE1000000AC120173" EXPOSURE="2" STATE="1" AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TARYCK" CHANGEDON="20100107" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="701">
-   <INHERITANCE REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" STATE="1" AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107"/>
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="66FF044B26B30C5BE1000000AC120173" EXPOSURE="2" STATE="1" AUTHOR="TBENSIAL" CREATEDON="20091119" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="700">
+   <INHERITANCE REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" STATE="1" AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119"/>
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="Data for Class"/>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
-   <ITEM CMPNAME="A0_MAINDATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="1" TYPE="TS_CLASS_DATA" R3RELEASE="701">
+   <ITEM CMPNAME="A0_MAINDATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="1" TYPE="TS_CLASS_DATA">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Maindata of Class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="1" TYPE="TT_EXCEPTIONS_TEXTS" R3RELEASE="701">
+   <ITEM CMPNAME="EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="1" TYPE="TT_EXCEPTIONS_TEXTS">
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="1" TYPE="TT_FRIENDS" R3RELEASE="701">
+   <ITEM CMPNAME="FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="1" TYPE="TT_FRIENDS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class Friends list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="LOCAL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="1" TYPE="TS_LOCALS" R3RELEASE="701">
+   <ITEM CMPNAME="LOCAL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="1" TYPE="TS_LOCALS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Local data : Type, Implementaiton &amp; Macros"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="1" TYPE="TT_REDEFINITIONS" R3RELEASE="701">
+   <ITEM CMPNAME="REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="1" TYPE="TT_REDEFINITIONS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Methods redefinitions"/>
     </TEXTS>
@@ -65,7 +65,7 @@ ASHaving XML node with / (which means end of node) make nugget display
   </LOCAL>
   <METHODS>
    <ITEM CMPNAME="COMPLETE_DATA">
-    <SOURCE>DATA _val TYPE seovalue.
+    <SOURCE>  DATA _val TYPE seovalue.
   DATA _sotr LIKE LINE OF fm_data-exceptions_texts.
   DATA _text TYPE STANDARD TABLE OF sotr_text.
   DATA _attr_text LIKE LINE OF fm_data-component_desc.
@@ -122,11 +122,12 @@ ASHaving XML node with / (which means end of node) make nugget display
       ENDLOOP.
 
     ENDLOOP.
-  ENDIF.</SOURCE>
+  ENDIF.
+</SOURCE>
    </ITEM>
    <ITEM CMPNAME="FROM_DATA">
     <SOURCE>  DATA _in  LIKE LINE OF interfaces.
-  DATA _ia  LIKE LINE OF _in-components.
+  DATA _ia  LIKE LINE OF _in-attributes_redefinition.
   DATA _t   LIKE LINE OF a0_maindata-texts.
   DATA _fr  LIKE LINE OF friends.
   DATA _re  LIKE LINE OF me-&gt;redefinitions.
@@ -136,8 +137,6 @@ ASHaving XML node with / (which means end of node) make nugget display
   FIELD-SYMBOLS:
     &lt;m_&gt;  LIKE LINE OF fm_data-includes-methods,
     &lt;im&gt;  LIKE LINE OF fm_data-implementings,
-    &lt;ei&gt;  LIKE LINE OF fm_data-explore_implementings,
-    &lt;ic&gt;  LIKE LINE OF &lt;ei&gt;-comprisings,
     &lt;rd&gt;  LIKE LINE OF fm_data-impl_details,
     &lt;me&gt;  LIKE LINE OF methods,
     &lt;fr&gt;  LIKE LINE OF fm_data-friendships,
@@ -150,7 +149,7 @@ ASHaving XML node with / (which means end of node) make nugget display
   DATA _cx_text  LIKE LINE OF exceptions_texts.
   DATA _sotr_key TYPE sotr_conc.
   DATA _text     LIKE LINE OF _cx_text-longtexts.
-  DATA _fm_data  TYPE t_fm_data.
+  data _fm_data  TYPE T_FM_DATA.
 
   a0_maindata-hdr = fm_data-class.
   obj_name = a0_maindata-clsname.
@@ -186,7 +185,7 @@ ASHaving XML node with / (which means end of node) make nugget display
       CLEAR: _cx_text-attvalue, _cx_text-clsname, _cx_text-langu, _cx_text-descript.    &quot; Attribut
 * keep old OTR in case SOTR creation failed
 *      CLEAR: _cx_text-concept.                                                           &quot; SOTR
-      MODIFY _cx_text-longtexts FROM _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
+      MODIFY _cx_text-longtexts from _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
       INSERT _cx_text INTO TABLE exceptions_texts.
       DELETE _fm_data-attributes.                 &quot; exception text no logner an attribute
     ENDLOOP.
@@ -211,48 +210,17 @@ ASHaving XML node with / (which means end of node) make nugget display
          WHERE clsname = &lt;im&gt;-clsname
            AND refclsname = &lt;im&gt;-refclsname.
 *           and version = &lt;im&gt;-version   &quot; needed ?
-      CLEAR _ia.
-      _ia-hdr = &lt;rd&gt;.
+      _ia = &lt;rd&gt;.
       CLEAR: _ia-clsname, _ia-refclsname.
-
-      IF &lt;rd&gt;-attvalue IS INITIAL             &quot; Component is a method
-* because attribute without new default value are not displayed in impl_details because not implemented (no change made)
-* Attribute in interface can&apos;t have any default value
-* If in the future they could have it will be necessary to test a interface with default value implemented by a class where default value is return to none.
-         AND &lt;rd&gt;-mtdabstrct IS INITIAL.      &quot; not abstract : with source code
-        CLEAR _mk.
-        _mk-clsname = &lt;rd&gt;-clsname.
-        _mk-cpdname = &lt;rd&gt;-mtdname.
-        READ TABLE _fm_data-includes-methods ASSIGNING &lt;m_&gt;
-             WITH KEY cpdkey = _mk.
-        IF sy-subrc = 0.
-          _ia-source-_ = get_source( &lt;m_&gt;-incname ).
-          IF NOT _ia-source-_ IS INITIAL.
-            CLEAR &lt;m_&gt;. &quot; do it once : DELETE _fm_data-includes-methods. dump
-          ENDIF.
-        ENDIF.
-        IF _ia-source-_ IS INITIAL.
-          _ia-source-_ = &apos;Source code Expected&apos;(sce). &quot; to generate a compilation error on target method in order to user to investigate the reson
-        ENDIF.
-      ENDIF.
-
-      APPEND _ia  TO _in-components.
+      APPEND _ia  TO _in-attributes_redefinition.
     ENDLOOP.
 
     CLEAR _in-clsname.
     INSERT _in INTO TABLE interfaces.
   ENDLOOP.
-* Interface declared in an other interface should be removed , because when adding interface the included interface will be added also
-* This prevent import failure
-  LOOP AT fm_data-explore_implementings ASSIGNING &lt;ei&gt;
-       WHERE NOT comprisings IS INITIAL.
-    LOOP AT &lt;ei&gt;-comprisings ASSIGNING &lt;ic&gt;.
-      DELETE interfaces WHERE refclsname = &lt;ic&gt;-refclsname.
-    ENDLOOP.
-  ENDLOOP.
 
 *Methodes Source
-  LOOP AT _fm_data-includes-methods ASSIGNING &lt;m_&gt;.
+  LOOP AT fm_data-includes-methods ASSIGNING &lt;m_&gt;.
     _source = get_source( &lt;m_&gt;-incname ).
     CHECK NOT _source IS INITIAL.
     _mk = &lt;m_&gt;-cpdkey.
@@ -294,19 +262,20 @@ ASHaving XML node with / (which means end of node) make nugget display
 
     CLEAR _re-clsname.
     INSERT _re INTO TABLE redefinitions.
-  ENDLOOP.</SOURCE>
+  ENDLOOP.
+</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_SOURCE" VERSION="1" STATE="1" EDITORDER="1 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" MTDDECLTYP="1" R3RELEASE="701">
+   <ITEM CMPNAME="GET_SOURCE" VERSION="1" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" MTDDECLTYP="1" R3RELEASE="700">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Clean ABAP Source code"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="PROGRAM" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" PARPASSTYP="1" TYPTYPE="1" TYPE="PROGRAMM">
+     <ITEM SCONAME="PROGRAM" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" PARPASSTYP="1" TYPTYPE="1" TYPE="PROGRAMM">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ABAP Program Name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="SOURCE" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_SOURCE">
+     <ITEM SCONAME="SOURCE" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_SOURCE">
       <TEXTS>
        <ITEM LANGU="E"/>
       </TEXTS>
@@ -337,23 +306,23 @@ ASHaving XML node with / (which means end of node) make nugget display
 
   source = zaplink_object=&gt;conv_abap_raw2source( code ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SOTR2VALUE" VERSION="1" STATE="1" EDITORDER="3 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" MTDDECLTYP="1" R3RELEASE="701">
+   <ITEM CMPNAME="SOTR2VALUE" VERSION="1" STATE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091119" MTDDECLTYP="1" R3RELEASE="700">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert SOTR_CONC to Attrvalue"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Initial value"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" PARDECLTYP="3" TYPTYPE="1" TYPE="SEOVALUE">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" PARDECLTYP="3" TYPTYPE="1" TYPE="SEOVALUE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>concatenate &apos;&apos;&apos;&apos; data &apos;&apos;&apos;&apos; into result.</SOURCE>
+    <SOURCE>  concatenate &apos;&apos;&apos;&apos; data &apos;&apos;&apos;&apos; into result.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TO_DATA">
     <SOURCE>  DATA _t   LIKE LINE OF a0_maindata-texts.
@@ -367,7 +336,7 @@ ASHaving XML node with / (which means end of node) make nugget display
     &lt;cx&gt;  LIKE LINE OF exceptions_texts,
     &lt;re&gt;  LIKE LINE OF redefinitions,
     &lt;in&gt;  LIKE LINE OF interfaces,
-    &lt;ia&gt;  LIKE LINE OF &lt;in&gt;-components,
+    &lt;ia&gt;  LIKE LINE OF &lt;in&gt;-attributes_redefinition,
     &lt;ct&gt;  LIKE LINE OF &lt;cx&gt;-texts,
     &lt;fr&gt;  LIKE LINE OF friends.
   DATA _text LIKE LINE OF _cx-texts.
@@ -408,25 +377,17 @@ ASHaving XML node with / (which means end of node) make nugget display
     _in-clsname = a0_maindata-clsname.
     INSERT _in INTO TABLE fm_data-implementings.
 
-    LOOP AT &lt;in&gt;-components ASSIGNING &lt;ia&gt;.
-      _id = &lt;ia&gt;-hdr.
+    LOOP AT &lt;in&gt;-attributes_redefinition ASSIGNING &lt;ia&gt;.
+      _id = &lt;ia&gt;.
       _id-clsname = _in-clsname.
       _id-refclsname = _in-refclsname .
       APPEND _id TO fm_data-impl_details.
-      IF &lt;ia&gt;-attvalue IS INITIAL             &quot; Component is a method
-         AND &lt;ia&gt;-mtdabstrct IS INITIAL.      &quot; not abstract : with source code
-        CLEAR: _ms.
-
-        _ms-cpdname = &lt;ia&gt;-mtdname.
-        _ms-redefine = abap_true.
-        _ms-source = zaplink_object=&gt;conv_abap_source2raw( &lt;ia&gt;-source-_ ).
-        APPEND _ms TO fm_data-method_sources.
-      ENDIF.
     ENDLOOP.
 
   ENDLOOP.
 
 *FRIENDS
+*REDEFINITIONS
 *FRIENDSHIPS  TYPE  SEOF_FRIENDSHIPS_R
   LOOP AT friends ASSIGNING &lt;fr&gt;.
     CLEAR _fr.
@@ -477,25 +438,26 @@ ASHaving XML node with / (which means end of node) make nugget display
     _text-concept = &lt;cx&gt;-concept.
     MODIFY _cx-texts FROM _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
     INSERT _cx INTO TABLE fm_data-exceptions_texts.
-  ENDLOOP.</SOURCE>
+  ENDLOOP.
+</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UPDATE_CONCEPT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" MTDDECLTYP="1" R3RELEASE="701">
+   <ITEM CMPNAME="UPDATE_CONCEPT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Update Concepts"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FM_DATA">
+     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FM_DATA">
       <TEXTS>
        <ITEM LANGU="E"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="MSG_COL" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_MSG_COL">
+     <ITEM SCONAME="MSG_COL" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_MSG_COL">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Message Collector"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA lt_types TYPE sotr_objects.
+    <SOURCE>  DATA lt_types TYPE sotr_objects.
   DATA _type    LIKE LINE OF lt_types.
   DATA _cx      TYPE REF TO zaplink_cx.
   DATA _paket   TYPE sotr_pack.
@@ -690,35 +652,37 @@ ASHaving XML node with / (which means end of node) make nugget display
   ENDLOOP.
 
   INSERT LINES OF fm_data-exceptions_texts INTO TABLE lt_cx.
-  fm_data-exceptions_texts = lt_cx.</SOURCE>
+  fm_data-exceptions_texts = lt_cx.
+</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="VALUE2SOTR" VERSION="1" STATE="1" EDITORDER="2 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" MTDDECLTYP="1" R3RELEASE="701">
+   <ITEM CMPNAME="VALUE2SOTR" VERSION="1" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" MTDDECLTYP="1" R3RELEASE="700">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert Attrvalue to SOTR_CONC"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" PARPASSTYP="1" TYPTYPE="1" TYPE="SEOVALUE">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" PARPASSTYP="1" TYPTYPE="1" TYPE="SEOVALUE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Initial value"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" PARDECLTYP="3" TYPTYPE="1" TYPE="SOTR_CONC">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" PARDECLTYP="3" TYPTYPE="1" TYPE="SOTR_CONC">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA _val TYPE seovalue.
+    <SOURCE>  DATA _val TYPE seovalue.
 
   _val = data.
   REPLACE ALL OCCURRENCES OF &apos;&apos;&apos;&apos; IN _val WITH space.
   CONDENSE _val.
-  result = _val.</SOURCE>
+  result = _val.
+</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="COMPLETE_DATA">
-    <SOURCE>DATA _val TYPE seovalue.
+    <SOURCE>  DATA _val TYPE seovalue.
   DATA _sotr LIKE LINE OF fm_data-exceptions_texts.
   DATA _text TYPE STANDARD TABLE OF sotr_text.
   DATA _attr_text LIKE LINE OF fm_data-component_desc.
@@ -775,11 +739,12 @@ ASHaving XML node with / (which means end of node) make nugget display
       ENDLOOP.
 
     ENDLOOP.
-  ENDIF.</SOURCE>
+  ENDIF.
+</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="FROM_DATA">
     <SOURCE>  DATA _in  LIKE LINE OF interfaces.
-  DATA _ia  LIKE LINE OF _in-components.
+  DATA _ia  LIKE LINE OF _in-attributes_redefinition.
   DATA _t   LIKE LINE OF a0_maindata-texts.
   DATA _fr  LIKE LINE OF friends.
   DATA _re  LIKE LINE OF me-&gt;redefinitions.
@@ -789,8 +754,6 @@ ASHaving XML node with / (which means end of node) make nugget display
   FIELD-SYMBOLS:
     &lt;m_&gt;  LIKE LINE OF fm_data-includes-methods,
     &lt;im&gt;  LIKE LINE OF fm_data-implementings,
-    &lt;ei&gt;  LIKE LINE OF fm_data-explore_implementings,
-    &lt;ic&gt;  LIKE LINE OF &lt;ei&gt;-comprisings,
     &lt;rd&gt;  LIKE LINE OF fm_data-impl_details,
     &lt;me&gt;  LIKE LINE OF methods,
     &lt;fr&gt;  LIKE LINE OF fm_data-friendships,
@@ -803,7 +766,7 @@ ASHaving XML node with / (which means end of node) make nugget display
   DATA _cx_text  LIKE LINE OF exceptions_texts.
   DATA _sotr_key TYPE sotr_conc.
   DATA _text     LIKE LINE OF _cx_text-longtexts.
-  DATA _fm_data  TYPE t_fm_data.
+  data _fm_data  TYPE T_FM_DATA.
 
   a0_maindata-hdr = fm_data-class.
   obj_name = a0_maindata-clsname.
@@ -839,7 +802,7 @@ ASHaving XML node with / (which means end of node) make nugget display
       CLEAR: _cx_text-attvalue, _cx_text-clsname, _cx_text-langu, _cx_text-descript.    &quot; Attribut
 * keep old OTR in case SOTR creation failed
 *      CLEAR: _cx_text-concept.                                                           &quot; SOTR
-      MODIFY _cx_text-longtexts FROM _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
+      MODIFY _cx_text-longtexts from _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
       INSERT _cx_text INTO TABLE exceptions_texts.
       DELETE _fm_data-attributes.                 &quot; exception text no logner an attribute
     ENDLOOP.
@@ -864,48 +827,17 @@ ASHaving XML node with / (which means end of node) make nugget display
          WHERE clsname = &lt;im&gt;-clsname
            AND refclsname = &lt;im&gt;-refclsname.
 *           and version = &lt;im&gt;-version   &quot; needed ?
-      CLEAR _ia.
-      _ia-hdr = &lt;rd&gt;.
+      _ia = &lt;rd&gt;.
       CLEAR: _ia-clsname, _ia-refclsname.
-
-      IF &lt;rd&gt;-attvalue IS INITIAL             &quot; Component is a method
-* because attribute without new default value are not displayed in impl_details because not implemented (no change made)
-* Attribute in interface can&apos;t have any default value
-* If in the future they could have it will be necessary to test a interface with default value implemented by a class where default value is return to none.
-         AND &lt;rd&gt;-mtdabstrct IS INITIAL.      &quot; not abstract : with source code
-        CLEAR _mk.
-        _mk-clsname = &lt;rd&gt;-clsname.
-        _mk-cpdname = &lt;rd&gt;-mtdname.
-        READ TABLE _fm_data-includes-methods ASSIGNING &lt;m_&gt;
-             WITH KEY cpdkey = _mk.
-        IF sy-subrc = 0.
-          _ia-source-_ = get_source( &lt;m_&gt;-incname ).
-          IF NOT _ia-source-_ IS INITIAL.
-            CLEAR &lt;m_&gt;. &quot; do it once : DELETE _fm_data-includes-methods. dump
-          ENDIF.
-        ENDIF.
-        IF _ia-source-_ IS INITIAL.
-          _ia-source-_ = &apos;Source code Expected&apos;(sce). &quot; to generate a compilation error on target method in order to user to investigate the reson
-        ENDIF.
-      ENDIF.
-
-      APPEND _ia  TO _in-components.
+      APPEND _ia  TO _in-attributes_redefinition.
     ENDLOOP.
 
     CLEAR _in-clsname.
     INSERT _in INTO TABLE interfaces.
   ENDLOOP.
-* Interface declared in an other interface should be removed , because when adding interface the included interface will be added also
-* This prevent import failure
-  LOOP AT fm_data-explore_implementings ASSIGNING &lt;ei&gt;
-       WHERE NOT comprisings IS INITIAL.
-    LOOP AT &lt;ei&gt;-comprisings ASSIGNING &lt;ic&gt;.
-      DELETE interfaces WHERE refclsname = &lt;ic&gt;-refclsname.
-    ENDLOOP.
-  ENDLOOP.
 
 *Methodes Source
-  LOOP AT _fm_data-includes-methods ASSIGNING &lt;m_&gt;.
+  LOOP AT fm_data-includes-methods ASSIGNING &lt;m_&gt;.
     _source = get_source( &lt;m_&gt;-incname ).
     CHECK NOT _source IS INITIAL.
     _mk = &lt;m_&gt;-cpdkey.
@@ -947,7 +879,8 @@ ASHaving XML node with / (which means end of node) make nugget display
 
     CLEAR _re-clsname.
     INSERT _re INTO TABLE redefinitions.
-  ENDLOOP.</SOURCE>
+  ENDLOOP.
+</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="TO_DATA">
     <SOURCE>  DATA _t   LIKE LINE OF a0_maindata-texts.
@@ -961,7 +894,7 @@ ASHaving XML node with / (which means end of node) make nugget display
     &lt;cx&gt;  LIKE LINE OF exceptions_texts,
     &lt;re&gt;  LIKE LINE OF redefinitions,
     &lt;in&gt;  LIKE LINE OF interfaces,
-    &lt;ia&gt;  LIKE LINE OF &lt;in&gt;-components,
+    &lt;ia&gt;  LIKE LINE OF &lt;in&gt;-attributes_redefinition,
     &lt;ct&gt;  LIKE LINE OF &lt;cx&gt;-texts,
     &lt;fr&gt;  LIKE LINE OF friends.
   DATA _text LIKE LINE OF _cx-texts.
@@ -1002,25 +935,17 @@ ASHaving XML node with / (which means end of node) make nugget display
     _in-clsname = a0_maindata-clsname.
     INSERT _in INTO TABLE fm_data-implementings.
 
-    LOOP AT &lt;in&gt;-components ASSIGNING &lt;ia&gt;.
-      _id = &lt;ia&gt;-hdr.
+    LOOP AT &lt;in&gt;-attributes_redefinition ASSIGNING &lt;ia&gt;.
+      _id = &lt;ia&gt;.
       _id-clsname = _in-clsname.
       _id-refclsname = _in-refclsname .
       APPEND _id TO fm_data-impl_details.
-      IF &lt;ia&gt;-attvalue IS INITIAL             &quot; Component is a method
-         AND &lt;ia&gt;-mtdabstrct IS INITIAL.      &quot; not abstract : with source code
-        CLEAR: _ms.
-
-        _ms-cpdname = &lt;ia&gt;-mtdname.
-        _ms-redefine = abap_true.
-        _ms-source = zaplink_object=&gt;conv_abap_source2raw( &lt;ia&gt;-source-_ ).
-        APPEND _ms TO fm_data-method_sources.
-      ENDIF.
     ENDLOOP.
 
   ENDLOOP.
 
 *FRIENDS
+*REDEFINITIONS
 *FRIENDSHIPS  TYPE  SEOF_FRIENDSHIPS_R
   LOOP AT friends ASSIGNING &lt;fr&gt;.
     CLEAR _fr.
@@ -1071,7 +996,8 @@ ASHaving XML node with / (which means end of node) make nugget display
     _text-concept = &lt;cx&gt;-concept.
     MODIFY _cx-texts FROM _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
     INSERT _cx INTO TABLE fm_data-exceptions_texts.
-  ENDLOOP.</SOURCE>
+  ENDLOOP.
+</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>
@@ -1084,12 +1010,12 @@ ASHaving XML node with / (which means end of node) make nugget display
    <ITEM TYPEGROUP="SEOT" VERSION="1" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TO_MSG_COL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR" R3RELEASE="701">
+   <ITEM CMPNAME="TO_MSG_COL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Message Collector"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CLASS_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="4" SRCROW1="49 " SRCCOLUMN1="4 " SRCROW2="69 " SRCCOLUMN2="25 " R3RELEASE="701" TYPESRC_LENG="886 ">
+   <ITEM CMPNAME="TS_CLASS_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="4" SRCROW1="49 " SRCCOLUMN1="4 " SRCROW2="69 " SRCCOLUMN2="25 " TYPESRC_LENG="888 ">
     BEGIN OF ts_class_data.
     INCLUDE TYPE vseoclass AS hdr.
 *      Include type VSEOEXTEND as Inh.  &quot; Duplicate name for some fields
@@ -1111,11 +1037,12 @@ ASHaving XML node with / (which means end of node) make nugget display
         textpool    TYPE zaplink_program=&gt;tt_textpools,
         sources     TYPE ts_sources,
       END OF ts_class_data
+
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Maindata of Class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_EXCEPTION_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="4" SRCROW1="19 " SRCCOLUMN1="4 " SRCROW2="25 " SRCCOLUMN2="29 " R3RELEASE="701" TYPESRC_LENG="230 ">
+   <ITEM CMPNAME="TS_EXCEPTION_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="4" SRCROW1="19 " SRCCOLUMN1="4 " SRCROW2="25 " SRCCOLUMN2="29 " TYPESRC_LENG="232 ">
     BEGIN OF ts_exception_text.
     INCLUDE TYPE seoo_attribute_r AS attr.
     INCLUDE TYPE sotr_head AS cx.
@@ -1123,52 +1050,59 @@ ASHaving XML node with / (which means end of node) make nugget display
         texts     TYPE tt_seocompotx_l,
         longtexts TYPE tt_sotr_texts,
       END OF ts_exception_text
+
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_LOCALS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="4" SRCROW1="33 " SRCCOLUMN1="4 " SRCROW2="37 " SRCCOLUMN2="23 " R3RELEASE="701" TYPESRC_LENG="177 ">
+   <ITEM CMPNAME="TS_LOCALS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="4" SRCROW1="33 " SRCCOLUMN1="4 " SRCROW2="37 " SRCCOLUMN2="23 " TYPESRC_LENG="179 ">
     BEGIN OF ts_locals,
           types           TYPE ts_source_,
           implementations TYPE ts_source_,
           macros          TYPE ts_source_,
         END OF ts_locals
+
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Local data : Type, Implementaiton &amp; Macros"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_REDEFINITION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="4" SRCROW1="39 " SRCCOLUMN1="4 " SRCROW2="43 " SRCCOLUMN2="27 " R3RELEASE="701" TYPESRC_LENG="189 ">
+   <ITEM CMPNAME="TS_REDEFINITION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="4" SRCROW1="39 " SRCCOLUMN1="4 " SRCROW2="43 " SRCCOLUMN2="27 " TYPESRC_LENG="191 ">
     BEGIN OF ts_redefinition.
     INCLUDE TYPE seoredef AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
     TYPES:
         source  TYPE ts_sourceasstruc,
       END OF ts_redefinition
+
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Method&apos;s redefinition data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCE_" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="31 " SRCCOLUMN2="20 " R3RELEASE="701" TYPESRC_LENG="68 ">
+   <ITEM CMPNAME="TS_SOURCE_" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091120" TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="31 " SRCCOLUMN2="20 " R3RELEASE="700" TYPESRC_LENG="70 ">
     begin of ts_source_,
       _ type ts_source,
     end of ts_source_
+
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="4" SRCROW1="27 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="85 " R3RELEASE="701" TYPESRC_LENG="82 ">
+   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="4" SRCROW1="27 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="85 " TYPESRC_LENG="84 ">
     tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname
+
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="4" SRCROW1="47 " SRCCOLUMN1="4 " SRCROW2="47 " SRCCOLUMN2="86 " R3RELEASE="701" TYPESRC_LENG="83 ">
+   <ITEM CMPNAME="TT_FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="4" SRCROW1="47 " SRCCOLUMN1="4 " SRCROW2="47 " SRCCOLUMN2="86 " TYPESRC_LENG="85 ">
     tt_friends    TYPE SORTED TABLE OF seofriends WITH UNIQUE KEY refclsname friendtype
+
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class Friends list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " AUTHOR="TARYCK" CREATEDON="20100107" CHANGEDBY="TARYCK" CHANGEDON="20100107" TYPTYPE="4" SRCROW1="45 " SRCCOLUMN1="4 " SRCROW2="45 " SRCCOLUMN2="80 " R3RELEASE="701" TYPESRC_LENG="77 ">
+   <ITEM CMPNAME="TT_REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" TYPTYPE="4" SRCROW1="45 " SRCCOLUMN1="4 " SRCROW2="45 " SRCCOLUMN2="80 " TYPESRC_LENG="79 ">
     tt_redefinitions TYPE SORTED TABLE OF ts_redefinition WITH UNIQUE KEY mtdname
+
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Methods redefinitions"/>
     </TEXTS>
