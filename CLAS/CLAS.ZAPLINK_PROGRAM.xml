@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="758C12285335B5F3EB43729EE236AE1D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="18080259D7FC71A30175B82A8B5B5CA2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY SRCSYSTEM="OD4" AUTHOR="TBENSIAL" DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="B32B044B702B371EE1000000AC120173" EXPOSURE="2" STATE="1" AUTHOR="TBENSIAL" CREATEDON="20090703" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="700">
@@ -156,12 +156,20 @@
   endif.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ZAPLINK_CONNECTOR~READ_FROM_SA">
-    <SOURCE>DATA _data TYPE REF TO zaplink_prog_data.
+    <SOURCE>*Issue:7
+  TYPES:
+    BEGIN OF ts_doc,
+      prog TYPE programm,
+      wildcard(1) TYPE c,
+    END OF ts_doc.
+  DATA s_obj TYPE ts_doc.
+*Issue:7
+  DATA _data TYPE REF TO zaplink_prog_data.
   DATA _prog TYPE td_progname.
   DATA _name TYPE td_compname.
   DATA _obj  TYPE doku_obj.
 
-  create OBJECT object.
+  CREATE OBJECT object.
   object-&gt;set_component( component ).
   CASE component-&gt;get_type( ).
     WHEN st_program.
@@ -180,7 +188,7 @@
           WHERE name = _name
             AND state = &apos;I&apos;.      &quot; Inactive
       ENDIF.
-      clear _data-&gt;a0_main-state.
+      CLEAR _data-&gt;a0_main-state.
 * Source code
       _data-&gt;source-_ = get_prog_source( _prog ).
 *      IF NOT _data-&gt;source IS INITIAL. CLEAR _data-&gt;a0_main-data. ENDIF.
@@ -188,7 +196,11 @@
 * Texts Pool
       _data-&gt;textspool = get_prog_textpool( _prog ).
 * Documentation
-      CONCATENATE _name &apos;*&apos; INTO _obj.
+*      CONCATENATE _name &apos;*&apos; INTO _obj. &quot; Issue:7
+      s_obj-prog = _name.
+      s_obj-wildcard = &apos;*&apos;.
+      _obj = s_obj.
+*Issue:7
       _data-&gt;documentation = zaplink_documentation=&gt;get( ids = r_doc_id
                                                       object = _obj ).
       object-&gt;raw ?= _data.
@@ -210,49 +222,64 @@
     WHEN st_program.
       _data ?= object-&gt;raw.
       _prog = _data-&gt;a0_main-name = object-&gt;name.
-* Program
-* Add program to tadir with $TMP
-* This prevent include to be inconsistent
-      CALL FUNCTION &apos;RS_CORR_INSERT&apos;
+** Program
+** Add program to tadir with $TMP
+** This prevent include to be inconsistent
+*      CALL FUNCTION &apos;RS_CORR_INSERT&apos;
+*        EXPORTING
+*          object                         = _prog
+*          object_class                   = &apos;ABAP&apos;
+*          mode                           = &apos;I&apos;    &quot; Insert
+**         GLOBAL_LOCK                    = &apos; &apos;
+*          devclass                       = &apos;$TMP&apos;
+**         KORRNUM                        = &apos; &apos;
+**         USE_KORRNUM_IMMEDIATEDLY       = &apos; &apos;
+**         AUTHOR                         = &apos; &apos;
+**         MASTER_LANGUAGE                = &apos; &apos;
+**         GENFLAG                        = &apos; &apos;
+**         PROGRAM                        = &apos; &apos;
+**         OBJECT_CLASS_SUPPORTS_MA       = &apos; &apos;
+**         EXTEND                         = &apos; &apos;
+**         SUPPRESS_DIALOG                = &apos; &apos;
+**         MOD_LANGU                      = &apos; &apos;
+**         ACTIVATION_CALL                = &apos; &apos;
+**       IMPORTING
+**         DEVCLASS                       =
+**         KORRNUM                        =
+**         ORDERNUM                       =
+**         NEW_CORR_ENTRY                 =
+**         AUTHOR                         =
+**         TRANSPORT_KEY                  =
+**         NEW_EXTEND                     =
+*        EXCEPTIONS
+*          cancelled                      = 1
+*          permission_failure             = 2
+*          unknown_objectclass            = 3
+*          OTHERS                         = 4.
+*      IF sy-subrc &lt;&gt; 0.
+*        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*                WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+*      ENDIF.
+
+      _oname = _prog.
+      CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
         EXPORTING
-          object                         = _prog
-          object_class                   = &apos;ABAP&apos;
-          mode                           = &apos;I&apos;    &quot; Insert
-*         GLOBAL_LOCK                    = &apos; &apos;
-          devclass                       = &apos;$TMP&apos;
-*         KORRNUM                        = &apos; &apos;
-*         USE_KORRNUM_IMMEDIATEDLY       = &apos; &apos;
-*         AUTHOR                         = &apos; &apos;
-*         MASTER_LANGUAGE                = &apos; &apos;
-*         GENFLAG                        = &apos; &apos;
-*         PROGRAM                        = &apos; &apos;
-*         OBJECT_CLASS_SUPPORTS_MA       = &apos; &apos;
-*         EXTEND                         = &apos; &apos;
-*         SUPPRESS_DIALOG                = &apos; &apos;
-*         MOD_LANGU                      = &apos; &apos;
-*         ACTIVATION_CALL                = &apos; &apos;
+          object                  = &apos;REPS&apos;
+          obj_name                = _oname
+*         DELETED_FLAG            = &apos; &apos;
 *       IMPORTING
-*         DEVCLASS                       =
-*         KORRNUM                        =
-*         ORDERNUM                       =
-*         NEW_CORR_ENTRY                 =
-*         AUTHOR                         =
-*         TRANSPORT_KEY                  =
-*         NEW_EXTEND                     =
+*         OBJECT_INSERTED         =
         EXCEPTIONS
-          cancelled                      = 1
-          permission_failure             = 2
-          unknown_objectclass            = 3
-          OTHERS                         = 4.
+          wrong_object_name       = 1
+          OTHERS                  = 2.
       IF sy-subrc &lt;&gt; 0.
         MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
                 WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
       ENDIF.
 
-      _oname = _prog.
       CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
         EXPORTING
-          object                  = &apos;PROG&apos;
+          object                  = &apos;REPT&apos;
           obj_name                = _oname
 *         DELETED_FLAG            = &apos; &apos;
 *       IMPORTING
@@ -380,12 +407,20 @@
   endif.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP">
-    <SOURCE>DATA _data TYPE REF TO zaplink_prog_data.
+    <SOURCE>*Issue:7
+  TYPES:
+    BEGIN OF ts_doc,
+      prog TYPE programm,
+      wildcard(1) TYPE c,
+    END OF ts_doc.
+  DATA s_obj TYPE ts_doc.
+*Issue:7
+  DATA _data TYPE REF TO zaplink_prog_data.
   DATA _prog TYPE td_progname.
   DATA _name TYPE td_compname.
   DATA _obj  TYPE doku_obj.
 
-  create OBJECT object.
+  CREATE OBJECT object.
   object-&gt;set_component( component ).
   CASE component-&gt;get_type( ).
     WHEN st_program.
@@ -404,7 +439,7 @@
           WHERE name = _name
             AND state = &apos;I&apos;.      &quot; Inactive
       ENDIF.
-      clear _data-&gt;a0_main-state.
+      CLEAR _data-&gt;a0_main-state.
 * Source code
       _data-&gt;source-_ = get_prog_source( _prog ).
 *      IF NOT _data-&gt;source IS INITIAL. CLEAR _data-&gt;a0_main-data. ENDIF.
@@ -412,7 +447,11 @@
 * Texts Pool
       _data-&gt;textspool = get_prog_textpool( _prog ).
 * Documentation
-      CONCATENATE _name &apos;*&apos; INTO _obj.
+*      CONCATENATE _name &apos;*&apos; INTO _obj. &quot; Issue:7
+      s_obj-prog = _name.
+      s_obj-wildcard = &apos;*&apos;.
+      _obj = s_obj.
+*Issue:7
       _data-&gt;documentation = zaplink_documentation=&gt;get( ids = r_doc_id
                                                       object = _obj ).
       object-&gt;raw ?= _data.
@@ -434,49 +473,64 @@
     WHEN st_program.
       _data ?= object-&gt;raw.
       _prog = _data-&gt;a0_main-name = object-&gt;name.
-* Program
-* Add program to tadir with $TMP
-* This prevent include to be inconsistent
-      CALL FUNCTION &apos;RS_CORR_INSERT&apos;
+** Program
+** Add program to tadir with $TMP
+** This prevent include to be inconsistent
+*      CALL FUNCTION &apos;RS_CORR_INSERT&apos;
+*        EXPORTING
+*          object                         = _prog
+*          object_class                   = &apos;ABAP&apos;
+*          mode                           = &apos;I&apos;    &quot; Insert
+**         GLOBAL_LOCK                    = &apos; &apos;
+*          devclass                       = &apos;$TMP&apos;
+**         KORRNUM                        = &apos; &apos;
+**         USE_KORRNUM_IMMEDIATEDLY       = &apos; &apos;
+**         AUTHOR                         = &apos; &apos;
+**         MASTER_LANGUAGE                = &apos; &apos;
+**         GENFLAG                        = &apos; &apos;
+**         PROGRAM                        = &apos; &apos;
+**         OBJECT_CLASS_SUPPORTS_MA       = &apos; &apos;
+**         EXTEND                         = &apos; &apos;
+**         SUPPRESS_DIALOG                = &apos; &apos;
+**         MOD_LANGU                      = &apos; &apos;
+**         ACTIVATION_CALL                = &apos; &apos;
+**       IMPORTING
+**         DEVCLASS                       =
+**         KORRNUM                        =
+**         ORDERNUM                       =
+**         NEW_CORR_ENTRY                 =
+**         AUTHOR                         =
+**         TRANSPORT_KEY                  =
+**         NEW_EXTEND                     =
+*        EXCEPTIONS
+*          cancelled                      = 1
+*          permission_failure             = 2
+*          unknown_objectclass            = 3
+*          OTHERS                         = 4.
+*      IF sy-subrc &lt;&gt; 0.
+*        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*                WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+*      ENDIF.
+
+      _oname = _prog.
+      CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
         EXPORTING
-          object                         = _prog
-          object_class                   = &apos;ABAP&apos;
-          mode                           = &apos;I&apos;    &quot; Insert
-*         GLOBAL_LOCK                    = &apos; &apos;
-          devclass                       = &apos;$TMP&apos;
-*         KORRNUM                        = &apos; &apos;
-*         USE_KORRNUM_IMMEDIATEDLY       = &apos; &apos;
-*         AUTHOR                         = &apos; &apos;
-*         MASTER_LANGUAGE                = &apos; &apos;
-*         GENFLAG                        = &apos; &apos;
-*         PROGRAM                        = &apos; &apos;
-*         OBJECT_CLASS_SUPPORTS_MA       = &apos; &apos;
-*         EXTEND                         = &apos; &apos;
-*         SUPPRESS_DIALOG                = &apos; &apos;
-*         MOD_LANGU                      = &apos; &apos;
-*         ACTIVATION_CALL                = &apos; &apos;
+          object                  = &apos;REPS&apos;
+          obj_name                = _oname
+*         DELETED_FLAG            = &apos; &apos;
 *       IMPORTING
-*         DEVCLASS                       =
-*         KORRNUM                        =
-*         ORDERNUM                       =
-*         NEW_CORR_ENTRY                 =
-*         AUTHOR                         =
-*         TRANSPORT_KEY                  =
-*         NEW_EXTEND                     =
+*         OBJECT_INSERTED         =
         EXCEPTIONS
-          cancelled                      = 1
-          permission_failure             = 2
-          unknown_objectclass            = 3
-          OTHERS                         = 4.
+          wrong_object_name       = 1
+          OTHERS                  = 2.
       IF sy-subrc &lt;&gt; 0.
         MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
                 WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
       ENDIF.
 
-      _oname = _prog.
       CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
         EXPORTING
-          object                  = &apos;PROG&apos;
+          object                  = &apos;REPT&apos;
           obj_name                = _oname
 *         DELETED_FLAG            = &apos; &apos;
 *       IMPORTING
