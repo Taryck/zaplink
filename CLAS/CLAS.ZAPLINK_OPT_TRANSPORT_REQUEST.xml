@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="35C3552DDA2C7BE9AC62AD526E129DDC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_TRANSPORT_REQUEST" TYPE="CLAS" VERSION="1.0">
- <DIRECTORY SRCSYSTEM="OD4" AUTHOR="TBENSIAL" DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
+<ZL_OBJECT CHECKSUM="3C04086B656B9D6A979E53452CE0F8B5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_TRANSPORT_REQUEST" TYPE="CLAS" VERSION="1.0">
+ <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="EB890D4B0CF39537E1000000AC120173" EXPOSURE="2" STATE="1" AUTHOR="TBENSIAL" CREATEDON="20091126" CHANGEDBY="TBENSIAL" CHANGEDON="20091126" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="700">
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="EB890D4B0CF39537E1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="Zap Link Transport Request options"/>
    </TEXTS>
@@ -25,7 +25,7 @@
    </ITEM>
   </ALIASES>
   <ATTRIBUTS>
-   <ITEM CMPNAME="SUBSTITUTIONKINDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091126" CHANGEDBY="TBENSIAL" CHANGEDON="20091126" ATTDECLTYP="2" TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="29 " TYPESRC_LENG="602 " TYPESRC="BEGIN OF substitutionkinds,
+   <ITEM CMPNAME="SUBSTITUTIONKINDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="29 " TYPESRC_LENG="602 " TYPESRC="BEGIN OF substitutionkinds,
         fixed             TYPE td_substitutionkind VALUE &apos;F&apos;,    &quot; Assign allways the same specified devclass
         same_as_container TYPE td_substitutionkind VALUE &apos;K&apos;,    &quot; Keep the same scheme as in container
         user              TYPE td_substitutionkind VALUE &apos;U&apos;,    &quot; let user select a transport request for all component
@@ -37,24 +37,29 @@
      <ITEM LANGU="E" DESCRIPT="All possible transport request substitution Kinds"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_SUBSTITUTION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091126" TYPTYPE="1" TYPE="TD_SUBSTITUTIONKIND" R3RELEASE="700">
+   <ITEM CMPNAME="_SUBSTITUTION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TD_SUBSTITUTIONKIND">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Transport Request substitution Kind"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_TRANSPORT_REQUEST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091126" TYPTYPE="1" TYPE="TD_TRANSPORT_REQUEST" R3RELEASE="700">
+   <ITEM CMPNAME="_TRANSPORT_REQUEST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TD_TRANSPORT_REQUEST">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Transport Request provided by user"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_TR_MAPPING" VERSION="1" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091126" TYPTYPE="1" TYPE="TT_TR_SUBSTITS" R3RELEASE="700">
+   <ITEM CMPNAME="_TR_MAPPING" VERSION="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TT_TR_SUBSTITS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Substitution table"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="_USER_INPUT" VERSION="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TD_TRANSPORT_REQUEST">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="TR&apos;s user input"/>
+    </TEXTS>
+   </ITEM>
   </ATTRIBUTS>
   <INTERFACES>
-   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" AUTHOR="TBENSIAL" CREATEDON="20091126" RELTYPE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
   <LOCAL>
    <TYPES>*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
@@ -67,13 +72,13 @@
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091126" CHANGEDBY="TBENSIAL" CHANGEDON="20091126" MTDTYPE="2">
+   <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>  _substitution = substitutionkinds-input.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_SUBSTITUTIONKIND" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091126" CHANGEDBY="TBENSIAL" CHANGEDON="20091126" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_SUBSTITUTIONKIND" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Substitution Kind : Getter"/>
     </TEXTS>
@@ -93,7 +98,7 @@
     </EXCEPTIONS>
     <SOURCE>result = _substitution.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TRANSPORT_REQUEST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091126" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TRANSPORT_REQUEST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Transport Request value : Getter"/>
     </TEXTS>
@@ -113,7 +118,7 @@
     </EXCEPTIONS>
     <SOURCE>  result = _transport_request.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_SUBSTITUTIONKIND" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091126" CHANGEDBY="TBENSIAL" CHANGEDON="20091126" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_SUBSTITUTIONKIND" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Substitution Kind : Setter"/>
     </TEXTS>
@@ -131,8 +136,9 @@
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>CHECK data &lt;&gt; _substitution.
+    <SOURCE>  CHECK data &lt;&gt; _substitution.
 
+  CLEAR _user_input.
   CASE data.
     WHEN substitutionkinds-same_as_container OR
          substitutionkinds-user OR
@@ -151,7 +157,7 @@
   ENDCASE.
   _substitution = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_TRANSPORT_REQUEST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="TBENSIAL" CREATEDON="20091126" CHANGEDBY="TBENSIAL" CHANGEDON="20091126" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_TRANSPORT_REQUEST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Transport Request value : Setter"/>
     </TEXTS>
@@ -178,7 +184,7 @@
   ENDIF.
   _transport_request = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SUBSTITUTE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " AUTHOR="TBENSIAL" CREATEDON="20091126" CHANGEDBY="TBENSIAL" CHANGEDON="20091126" MTDNEWEXC="X">
+   <ITEM CMPNAME="SUBSTITUTE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get substitute Transport Request"/>
     </TEXTS>
@@ -201,18 +207,63 @@
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>  FIELD-SYMBOLS:
+    <SOURCE>  DATA t_e071   TYPE STANDARD TABLE OF e071.
+  DATA t_e071k  TYPE STANDARD TABLE OF e071k.
+  FIELD-SYMBOLS:
     &lt;s&gt; LIKE LINE OF _tr_mapping.
 
-  check component is bound.
+  CHECK component IS BOUND.
   CASE _substitution.
     WHEN substitutionkinds-input.
-      clear result.
+      CLEAR result.
       EXIT. &quot; all ways empty to let use choose the right transport request
     WHEN substitutionkinds-fixed.
       result = _transport_request.
     WHEN substitutionkinds-user.
 * to develop using MF TRINT_ORDER_CHOICE
+      IF _user_input IS INITIAL.
+        CALL FUNCTION &apos;TRINT_ORDER_CHOICE&apos;
+          EXPORTING
+*         WI_SIMULATION                = &apos; &apos;
+            wi_order_type                = &apos;K&apos;
+            wi_task_type                 = &apos;S&apos;
+*         WI_CATEGORY                  = &apos;SYST&apos;
+*         WI_CLIENT                    = SY-MANDT
+*         IV_TARSYSTEM                 = &apos; &apos;
+*         WI_ORDER                     = &apos; &apos;
+*         WI_E070                      =
+*         WI_SUPPRESS_DIALOG           = &apos; &apos;
+*         WI_CLI_DEP                   = &apos; &apos;
+*         WI_REMOVE_LOCKS              = &apos;X&apos;
+*         WI_DISPLAY_BUTTON            = &apos; &apos;
+*         WI_APPEND_TO_ORDER           = &apos; &apos;
+*         WI_APPEND_TO_FO              = &apos; &apos;
+*         IV_CURRENT_PROJECT           = &apos; &apos;
+*         IV_WARN_NOSTAND_TAR          = &apos; &apos;
+          IMPORTING
+*         WE_ORDER                     =
+            we_task                      = _user_input
+          TABLES
+            wt_e071                      = t_e071
+            wt_e071k                     = t_e071k
+          EXCEPTIONS
+            no_correction_selected       = 1
+            display_mode                 = 2
+            object_append_error          = 3
+            recursive_call               = 4
+            wrong_order_type             = 5
+            OTHERS                       = 6.
+        IF sy-subrc &lt;&gt; 0.
+          CLEAR _user_input.
+        ELSE.
+          result = _user_input.
+        ENDIF.
+      ENDIF.
+      IF NOT _user_input IS INITIAL.
+        result = _user_input.
+      ELSE.
+        CLEAR result.
+      ENDIF.
     WHEN substitutionkinds-custom.
 * to develop using event ?
     WHEN substitutionkinds-same_as_container.
@@ -230,13 +281,16 @@
   ENDCASE.</SOURCE>
    </ITEM>
   </METHODS>
+  <TYPEGROUPS>
+   <ITEM TYPEGROUP="ABAP" IMPLICIT="X"/>
+  </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TO_COMPONENT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091126" CHANGEDBY="TBENSIAL" CHANGEDON="20091126" TYPTYPE="3" TYPE="ZAPLINK_RAW">
+   <ITEM CMPNAME="TO_COMPONENT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_RAW">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_TR_SUBSTIT" VERSION="1" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091126" CHANGEDBY="TBENSIAL" CHANGEDON="20091126" TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="9 " SRCCOLUMN2="22 " TYPESRC_LENG="130 ">
+   <ITEM CMPNAME="TS_TR_SUBSTIT" VERSION="1" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="9 " SRCCOLUMN2="22 " TYPESRC_LENG="130 ">
     BEGIN OF ts_tr_substit,
      xml_tr TYPE td_transport_request,
      sap_tr TYPE td_transport_request,
@@ -246,7 +300,7 @@
      <ITEM LANGU="E" DESCRIPT="Transport Resquest substitution"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TR_SUBSTITS" VERSION="1" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091126" CHANGEDBY="TBENSIAL" CHANGEDON="20091126" TYPTYPE="4" SRCROW1="11 " SRCCOLUMN1="4 " SRCROW2="11 " SRCCOLUMN2="75 " R3RELEASE="700" TYPESRC_LENG="74 ">
+   <ITEM CMPNAME="TT_TR_SUBSTITS" VERSION="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="11 " SRCCOLUMN1="4 " SRCROW2="11 " SRCCOLUMN2="75 " TYPESRC_LENG="74 ">
     tt_tr_substits TYPE SORTED TABLE OF ts_tr_substit WITH UNIQUE KEY xml_tr
 
     <TEXTS>

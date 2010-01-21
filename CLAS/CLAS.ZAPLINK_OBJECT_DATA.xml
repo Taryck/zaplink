@@ -1,74 +1,86 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="58F771D8AB088717F5221415E10776B2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.0">
- <DIRECTORY SRCSYSTEM="OD4" AUTHOR="TBENSIAL" DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
+<ZL_OBJECT CHECKSUM="D7AEEBC74C974683EF5255CF399BCA07" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.0">
+ <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="46F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" AUTHOR="TBENSIAL" CREATEDON="20090909" CLSCCINCL="X" FIXPT="X" UNICODE="X" R3RELEASE="700">
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="46F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="Commun Data for Class &amp; Interface"/>
    </TEXTS>
   </A0_MAINDATA>
-  <ATTRIBUTS>
-   <ITEM CMPNAME="ALIASES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="1" TYPE="TT_ALIAS">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class&apos;s Aliases"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="ATTRIBUTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="1" TYPE="TT_ATTRIBUTS">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class&apos;s attributes"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="COMPONENTS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" TYPTYPE="1" TYPE="TT_COMPONENTS" R3RELEASE="700">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component&apos;s list"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="DOCUMENTATION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="1" TYPE="ZAPLINK_DOCUMENTATION=&gt;TT_DOCS">
+  <ALIASES>
+   <ITEM CMPNAME="TT_TXTP_TEXTPOOLS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TXTP_TEXTPOOLS">
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="EVENTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="1" TYPE="TT_EVENTS">
+  </ALIASES>
+  <ATTRIBUTS>
+   <ITEM CMPNAME="ALIASES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TT_ALIAS">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Class&apos;s Aliases"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="ATTRIBUTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_ATTRIBUTS">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Class&apos;s attributes"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="COMPONENTS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TT_COMPONENTS">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Component&apos;s list"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="DEFERRED" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="TS_DEFERRED">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Deffered loads"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="DOCUMENTATION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="ZAPLINK_DOCUMENTATION=&gt;TT_DOCS">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="EVENTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_EVENTS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Events"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INTERFACES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="1" TYPE="TT_INTERFACES">
+   <ITEM CMPNAME="INTERFACES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_INTERFACES">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class interface use"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="LINE_SEPARATOR" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " AUTHOR="TBENSIAL" CREATEDON="20091118" ATTDECLTYP="2" ATTVALUE="CL_ABAP_CHAR_UTILITIES=&gt;NEWLINE" TYPTYPE="1" TYPE="ABAP_CHAR1" R3RELEASE="700">
+   <ITEM CMPNAME="LINE_SEPARATOR" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="2" ATTVALUE="CL_ABAP_CHAR_UTILITIES=&gt;NEWLINE" TYPTYPE="1" TYPE="ABAP_CHAR1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Line separator Code =&gt; String"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="METHODS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="1" TYPE="TT_METHODS">
+   <ITEM CMPNAME="METHODS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TT_METHODS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s methods"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="OBJ_LANGU" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091118" TYPTYPE="1" TYPE="SYLANGU" R3RELEASE="700">
+   <ITEM CMPNAME="OBJ_LANGU" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SYLANGU">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Language Key of Current Text Environment"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="OBJ_NAME" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" TYPTYPE="1" TYPE="SEOCLSNAME" R3RELEASE="700">
+   <ITEM CMPNAME="OBJ_NAME" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="SEOCLSNAME">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Object Type Name"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="OBJ_VERSION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" TYPTYPE="1" TYPE="SEOVERSION" R3RELEASE="700">
+   <ITEM CMPNAME="OBJ_VERSION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="SEOVERSION">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Version indicator (active/inactive)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TYPEGROUPS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="1" TYPE="TT_TYPEGROUPS">
+   <ITEM CMPNAME="TYPEGROUPS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_TYPEGROUPS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s type pool used"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TYPES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="1" TYPE="TT_TYPES">
+   <ITEM CMPNAME="TYPES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TT_TYPES">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s types"/>
     </TEXTS>
@@ -92,6 +104,9 @@ ASHaving XML node with / (which means end of node) make nugget display
     </TEXTS>
    </ITEM>
   </DOCUMENTATION>
+  <INTERFACES>
+   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+  </INTERFACES>
   <LOCAL>
    <TYPES>*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
@@ -103,12 +118,80 @@ ASHaving XML node with / (which means end of node) make nugget display
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="COMPLETE_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119">
+   <ITEM CMPNAME="ANONYMIZE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
+    </TEXTS>
+    <SOURCE>*  DATA s_al  LIKE LINE OF aliases.
+  DATA s_at LIKE LINE OF attributs.
+*  DATA s_ev LIKE LINE OF events.
+  FIELD-SYMBOLS:
+    &lt;ev&gt;    LIKE LINE OF events.
+  DATA s_in LIKE LINE OF interfaces.
+  DATA s_ty  LIKE LINE OF types.
+*  DATA s_tg  LIKE LINE OF typegroups.
+*  DATA s_me  LIKE LINE OF methods.
+  FIELD-SYMBOLS:
+    &lt;me&gt;    LIKE LINE OF methods.
+  DATA s_pa  LIKE LINE OF &lt;me&gt;-parameters.
+  DATA s_ex  LIKE LINE OF &lt;me&gt;-exceptions.
+
+* ALIASES : OK
+* ATTRIBUTS
+  MODIFY attributs FROM s_at TRANSPORTING author createdon changedby changedon r3release
+         WHERE NOT cmpname IS INITIAL.
+
+*DOCUMENTATION
+
+*EVENTS
+*  MODIFY events FROM s_ev TRANSPORTING author createdon changedby changedon r3release
+*         WHERE NOT cmpname IS INITIAL.
+  LOOP AT events ASSIGNING &lt;ev&gt;.
+    CLEAR:
+      &lt;ev&gt;-author,
+      &lt;ev&gt;-createdon,
+      &lt;ev&gt;-changedby,
+      &lt;ev&gt;-changedon,
+      &lt;ev&gt;-r3release.
+    MODIFY &lt;me&gt;-parameters FROM s_pa TRANSPORTING author createdon changedby changedon
+           WHERE NOT cmpname IS INITIAL.
+    MODIFY &lt;me&gt;-exceptions FROM s_ex TRANSPORTING author createdon changedby changedon
+           WHERE NOT cmpname IS INITIAL.
+  ENDLOOP.
+
+*INTERFACES
+  MODIFY interfaces FROM s_in TRANSPORTING author createdon changedby changedon
+         WHERE NOT refclsname IS INITIAL.
+
+*METHODS
+*  MODIFY methods FROM s_me TRANSPORTING author createdon changedby changedon r3release
+*         WHERE NOT cmpname IS INITIAL.
+  LOOP AT methods ASSIGNING &lt;me&gt;.
+    CLEAR:
+      &lt;me&gt;-author,
+      &lt;me&gt;-createdon,
+      &lt;me&gt;-changedby,
+      &lt;me&gt;-changedon,
+      &lt;me&gt;-r3release.
+    MODIFY &lt;me&gt;-parameters FROM s_pa TRANSPORTING author createdon changedby changedon
+           WHERE NOT cmpname IS INITIAL.
+    MODIFY &lt;me&gt;-exceptions FROM s_ex TRANSPORTING author createdon changedby changedon
+           WHERE NOT cmpname IS INITIAL.
+  ENDLOOP.
+
+*TYPEGROUPS : OK
+*TYPES
+  MODIFY types FROM s_ty TRANSPORTING author createdon changedby changedon r3release
+         WHERE NOT cmpname IS INITIAL.
+
+*DEFERRED : OK</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="COMPLETE_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Complete FM Data from SAP data"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FM_DATA">
+     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20100121" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FM_DATA">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Function Modules Class Data"/>
       </TEXTS>
@@ -270,7 +353,7 @@ ASHaving XML node with / (which means end of node) make nugget display
 *ENHANCEMENT_exVENTS TYPE  ENHCLASSTABEVENT
 *ENHANCEMENT_IMPLEMENTINGS  TYPE  ENHCLASSTABIMPLEMENTING</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FD_COMP_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091118" R3RELEASE="700">
+   <ITEM CMPNAME="FD_COMP_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes : Comp description"/>
     </TEXTS>
@@ -303,7 +386,7 @@ ASHaving XML node with / (which means end of node) make nugget display
     INSERT _t INTO TABLE texts.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FD_EXCEPTIONS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" R3RELEASE="700">
+   <ITEM CMPNAME="FD_EXCEPTIONS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes : Exceptions"/>
     </TEXTS>
@@ -340,7 +423,7 @@ ASHaving XML node with / (which means end of node) make nugget display
     INSERT _ex INTO TABLE exceptions.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FD_PARAMETERS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" R3RELEASE="700">
+   <ITEM CMPNAME="FD_PARAMETERS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes : Parameters"/>
     </TEXTS>
@@ -377,7 +460,7 @@ ASHaving XML node with / (which means end of node) make nugget display
     INSERT _pa INTO TABLE parameters.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FD_SUBC_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" R3RELEASE="700">
+   <ITEM CMPNAME="FD_SUBC_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes : Sub Comp description"/>
     </TEXTS>
@@ -416,18 +499,18 @@ ASHaving XML node with / (which means end of node) make nugget display
     INSERT _t INTO TABLE texts.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FROM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119">
+   <ITEM CMPNAME="FROM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FM_DATA">
+     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100121" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FM_DATA">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Function Modules Class Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA _at  LIKE LINE OF attributs.
+    <SOURCE>  DATA _at  LIKE LINE OF attributs.
   DATA _ty  LIKE LINE OF types.
   DATA _tg  LIKE LINE OF typegroups.
   DATA _me  LIKE LINE OF methods.
@@ -472,6 +555,9 @@ ASHaving XML node with / (which means end of node) make nugget display
     CLEAR: _tg-clsname, _tg-defered-clsname, _tg-itf_def-clsname. &quot; VERSION
     INSERT _tg INTO TABLE typegroups.
   ENDLOOP.
+  loop at fm_data-clsdeferrds ASSIGNING &lt;cd&gt;.
+
+  endloop.
 
 *ATTRIBUTES TYPE  SEOO_atTTRIBUTES_R
 *COMPONENT_DESC  TYPE  tt_SEOCOMPOTX,
@@ -566,17 +652,17 @@ ASHaving XML node with / (which means end of node) make nugget display
 *ENHANCEMENT_exVENTS TYPE  ENHCLASSTABEVENT
 *ENHANCEMENT_IMPLEMENTINGS  TYPE  ENHCLASSTABIMPLEMENTING</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_INCLUDES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_INCLUDES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get report includes names from class name"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="CLSNAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSNAME">
+     <ITEM SCONAME="CLSNAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20100121" PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSNAME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Object Type Name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="INCLUDES" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_INCLUDES">
+     <ITEM SCONAME="INCLUDES" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20100121" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_INCLUDES">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="List of Class&apos;s include with ABAP Code"/>
       </TEXTS>
@@ -600,7 +686,7 @@ ASHaving XML node with / (which means end of node) make nugget display
       others             = 0.   &quot; Ignore exception : Class may not exits
           .</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TD_COMP_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " AUTHOR="TBENSIAL" CREATEDON="20091118" R3RELEASE="700">
+   <ITEM CMPNAME="TD_COMP_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes : Comp description"/>
     </TEXTS>
@@ -629,7 +715,7 @@ ASHaving XML node with / (which means end of node) make nugget display
     INSERT _t INTO TABLE descriptions.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TD_EXCEPTIONS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " AUTHOR="TBENSIAL" CREATEDON="20091118" R3RELEASE="700">
+   <ITEM CMPNAME="TD_EXCEPTIONS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes : Exceptions"/>
     </TEXTS>
@@ -679,7 +765,7 @@ ASHaving XML node with / (which means end of node) make nugget display
     INSERT _ex INTO TABLE fm_data-exceps.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TD_PARAMETERS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " AUTHOR="TBENSIAL" CREATEDON="20091118" R3RELEASE="700">
+   <ITEM CMPNAME="TD_PARAMETERS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes : Parameters"/>
     </TEXTS>
@@ -728,7 +814,7 @@ ASHaving XML node with / (which means end of node) make nugget display
     INSERT _pa INTO TABLE fm_data-parameters.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TD_SUBC_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " AUTHOR="TBENSIAL" CREATEDON="20091118" R3RELEASE="700">
+   <ITEM CMPNAME="TD_SUBC_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes : Sub Comp description"/>
     </TEXTS>
@@ -764,18 +850,18 @@ ASHaving XML node with / (which means end of node) make nugget display
     INSERT _t INTO TABLE DESCRIPTIONS.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TO_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119">
+   <ITEM CMPNAME="TO_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert object attributes to FM Data"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" PARDECLTYP="3" TYPTYPE="1" TYPE="T_FM_DATA">
+     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100121" PARDECLTYP="3" TYPTYPE="1" TYPE="T_FM_DATA">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Function Modules Class Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA _id  LIKE LINE OF fm_data-impl_details.
+    <SOURCE>  DATA _id  LIKE LINE OF fm_data-impl_details.
   DATA _at  LIKE LINE OF fm_data-attributes.
   DATA _ty  LIKE LINE OF fm_data-types.
   DATA _tg  LIKE LINE OF fm_data-typeusages.
@@ -977,6 +1063,75 @@ ASHaving XML node with / (which means end of node) make nugget display
 *ENHANCEMENT_exVENTS TYPE  ENHCLASSTABEVENT
 *ENHANCEMENT_IMPLEMENTINGS  TYPE  ENHCLASSTABIMPLEMENTING</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="UNANONYMIZE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
+    </TEXTS>
+    <SOURCE>* Every thing should be done by SAP injection (data will be completed)
+**  DATA s_al  LIKE LINE OF aliases.
+*  DATA s_at LIKE LINE OF attributs.
+**  DATA s_ev LIKE LINE OF events.
+*  FIELD-SYMBOLS:
+*    &lt;ev&gt;    LIKE LINE OF events.
+*  DATA s_in LIKE LINE OF interfaces.
+*  DATA s_ty  LIKE LINE OF types.
+**  DATA s_tg  LIKE LINE OF typegroups.
+**  DATA s_me  LIKE LINE OF methods.
+*  FIELD-SYMBOLS:
+*    &lt;me&gt;    LIKE LINE OF methods.
+*  DATA s_pa  LIKE LINE OF &lt;me&gt;-parameters.
+*  DATA s_ex  LIKE LINE OF &lt;me&gt;-exceptions.
+*
+** ALIASES : OK
+** ATTRIBUTS
+*  MODIFY attributs FROM s_at TRANSPORTING author createdon changedby changedon r3release
+*         WHERE NOT cmpname IS INITIAL.
+*
+**DOCUMENTATION
+*
+**EVENTS
+**  MODIFY events FROM s_ev TRANSPORTING author createdon changedby changedon r3release
+**         WHERE NOT cmpname IS INITIAL.
+*  LOOP AT events ASSIGNING &lt;ev&gt;.
+*    CLEAR:
+*      &lt;ev&gt;-author,
+*      &lt;ev&gt;-createdon,
+*      &lt;ev&gt;-changedby,
+*      &lt;ev&gt;-changedon,
+*      &lt;ev&gt;-r3release.
+*    MODIFY &lt;me&gt;-parameters FROM s_pa TRANSPORTING author createdon changedby changedon
+*           WHERE NOT cmpname IS INITIAL.
+*    MODIFY &lt;me&gt;-exceptions FROM s_ex TRANSPORTING author createdon changedby changedon
+*           WHERE NOT cmpname IS INITIAL.
+*  ENDLOOP.
+*
+**INTERFACES
+*  MODIFY interfaces FROM s_in TRANSPORTING author createdon changedby changedon
+*         WHERE NOT refclsname IS INITIAL.
+*
+**METHODS
+**  MODIFY methods FROM s_me TRANSPORTING author createdon changedby changedon r3release
+**         WHERE NOT cmpname IS INITIAL.
+*  LOOP AT methods ASSIGNING &lt;me&gt;.
+*    CLEAR:
+*      &lt;me&gt;-author,
+*      &lt;me&gt;-createdon,
+*      &lt;me&gt;-changedby,
+*      &lt;me&gt;-changedon,
+*      &lt;me&gt;-r3release.
+*    MODIFY &lt;me&gt;-parameters FROM s_pa TRANSPORTING author createdon changedby changedon
+*           WHERE NOT cmpname IS INITIAL.
+*    MODIFY &lt;me&gt;-exceptions FROM s_ex TRANSPORTING author createdon changedby changedon
+*           WHERE NOT cmpname IS INITIAL.
+*  ENDLOOP.
+*
+**TYPEGROUPS : OK
+**TYPES
+*  MODIFY types FROM s_ty TRANSPORTING author createdon changedby changedon r3release
+*         WHERE NOT cmpname IS INITIAL.
+*
+**DEFERRED : OK</SOURCE>
+   </ITEM>
   </METHODS>
   <TYPEGROUPS>
    <ITEM TYPEGROUP="ABAP" VERSION="1" IMPLICIT="X"/>
@@ -988,29 +1143,29 @@ ASHaving XML node with / (which means end of node) make nugget display
    <ITEM TYPEGROUP="SEOT" VERSION="1" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TS_ALIAS_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="24 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="144 " SRCCOLUMN1="4 " SRCROW2="148 " SRCCOLUMN2="23 " TYPESRC_LENG="135 ">
+   <ITEM CMPNAME="TS_ALIAS_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="25 " TYPTYPE="4" SRCROW1="160 " SRCCOLUMN1="6 " SRCROW2="164 " SRCCOLUMN2="25 " TYPESRC_LENG="143 ">
     BEGIN OF ts_alias_data.
-  INCLUDE TYPE seoo_alias_r AS hdr.
-  TYPES:
-      texts   TYPE tt_seocompotx_l,
-    END OF ts_alias_data
+    INCLUDE TYPE seoo_alias_r AS hdr.
+    TYPES:
+        texts   TYPE tt_seocompotx_l,
+      END OF ts_alias_data
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Alias definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ATTR_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="26 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="152 " SRCCOLUMN1="4 " SRCROW2="156 " SRCCOLUMN2="22 " TYPESRC_LENG="137 ">
+   <ITEM CMPNAME="TS_ATTR_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="27 " TYPTYPE="4" SRCROW1="168 " SRCCOLUMN1="6 " SRCROW2="172 " SRCCOLUMN2="24 " TYPESRC_LENG="145 ">
     BEGIN OF ts_attr_data.
-  INCLUDE TYPE seoo_attribute_r AS hdr.
-  TYPES:
-      texts   TYPE tt_seocompotx_l,
-    END OF ts_attr_data
+    INCLUDE TYPE seoo_attribute_r AS hdr.
+    TYPES:
+        texts   TYPE tt_seocompotx_l,
+      END OF ts_attr_data
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Attribute definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_COMPONENT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091118" TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="8 " SRCCOLUMN2="22 " R3RELEASE="700" TYPESRC_LENG="90 ">
+   <ITEM CMPNAME="TS_COMPONENT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="8 " SRCCOLUMN2="22 " TYPESRC_LENG="90 ">
     BEGIN OF ts_component,
       cmpname TYPE seoo_method_r-cmpname,
     END OF ts_component
@@ -1018,341 +1173,364 @@ ASHaving XML node with / (which means end of node) make nugget display
      <ITEM LANGU="E" DESCRIPT="Component (Types, alias, method, attribute) definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CX_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="13 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="53 " SRCCOLUMN1="4 " SRCROW2="58 " SRCCOLUMN2="20 " TYPESRC_LENG="174 ">
-    begin of ts_cx_text.
-      include type SOTR_HEAD as hdr.
-  types:
-      texts   type tt_sotr_texts,
-      CMPNAME type SEOO_ATTRIBUTE_R-CMPNAME,
-    end of ts_cx_text
+   <ITEM CMPNAME="TS_CX_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="14 " TYPTYPE="4" SRCROW1="68 " SRCCOLUMN1="6 " SRCROW2="73 " SRCCOLUMN2="22 " TYPESRC_LENG="180 ">
+    BEGIN OF ts_cx_text.
+    INCLUDE TYPE sotr_head AS hdr.
+    TYPES:
+        texts   TYPE tt_sotr_texts,
+        cmpname TYPE seoo_attribute_r-cmpname,
+      END OF ts_cx_text
 
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_EVENT_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="20 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="120 " SRCCOLUMN1="4 " SRCROW2="128 " SRCCOLUMN2="23 " TYPESRC_LENG="303 ">
+   <ITEM CMPNAME="TS_DEFERRED" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="26 " SRCCOLUMN1="6 " SRCROW2="29 " SRCCOLUMN2="23 " TYPESRC_LENG="223 ">
+    BEGIN OF ts_deferred,                   &quot; used to handle
+        classes TYPE seot_clsdeferrds_w,      &quot; class * definition load
+        interfaces TYPE seot_intdeferrds_r,   &quot; interface * load
+      END OF ts_deferred
+
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_EVENT_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="21 " TYPTYPE="4" SRCROW1="136 " SRCCOLUMN1="6 " SRCROW2="144 " SRCCOLUMN2="25 " TYPESRC_LENG="313 ">
     BEGIN OF ts_event_data.
-  INCLUDE TYPE seoo_event_r AS hdr.
-  TYPES:
-      texts         TYPE tt_seocompotx_l,
+    INCLUDE TYPE seoo_event_r AS hdr.
+    TYPES:
+        texts         TYPE tt_seocompotx_l,
 *      redefinition  TYPE seoredef,
-      parameters    TYPE tt_parameters,
+        parameters    TYPE tt_parameters,
 *        exceptions    TYPE tt_exceptions,
 *      _               TYPE ts_source,
-    END OF ts_event_data
+      END OF ts_event_data
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Event definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_EXCEP_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="18 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="112 " SRCCOLUMN1="4 " SRCROW2="116 " SRCCOLUMN2="23 " TYPESRC_LENG="139 ">
+   <ITEM CMPNAME="TS_EXCEP_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4" SRCROW1="128 " SRCCOLUMN1="6 " SRCROW2="132 " SRCCOLUMN2="25 " TYPESRC_LENG="147 ">
     BEGIN OF ts_excep_data.
-  INCLUDE TYPE seos_exception_r AS hdr.
-  TYPES:
-      texts   TYPE tt_seosubcotx_l,
-    END OF ts_excep_data
+    INCLUDE TYPE seos_exception_r AS hdr.
+    TYPES:
+        texts   TYPE tt_seosubcotx_l,
+      END OF ts_excep_data
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Exception definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_INCLUDES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="37 " SRCCOLUMN1="4 " SRCROW2="49 " SRCCOLUMN2="25 " TYPESRC_LENG="495 ">
+   <ITEM CMPNAME="TS_INCLUDES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="12 " TYPTYPE="4" SRCROW1="52 " SRCCOLUMN1="6 " SRCROW2="64 " SRCCOLUMN2="29 " TYPESRC_LENG="543 ">
     BEGIN OF ts_includes,
-          classpool     TYPE program,
-          pubsec        TYPE program,
-          prisec        TYPE program,
-          prosec        TYPE program,
-          cl            TYPE program,
-          ccimp         TYPE program,
-          ccdef         TYPE program,
-          ccmac         TYPE program,
-          interfacepool TYPE program,
-          intfsec       TYPE program,
-          methods       TYPE seop_methods_w_include,
-        END OF ts_includes
+              classpool     TYPE program,
+              pubsec        TYPE program,
+              prisec        TYPE program,
+              prosec        TYPE program,
+              cl            TYPE program,
+              ccimp         TYPE program,
+              ccdef         TYPE program,
+              ccmac         TYPE program,
+              interfacepool TYPE program,
+              intfsec       TYPE program,
+              methods       TYPE seop_methods_w_include,
+            END OF ts_includes
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="List of Class&apos;s include with ABAP Code"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_INTERFACE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="33 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="180 " SRCCOLUMN1="4 " SRCROW2="184 " SRCCOLUMN2="22 " TYPESRC_LENG="254 ">
+   <ITEM CMPNAME="TS_INTERFACE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="35 " TYPTYPE="4" SRCROW1="202 " SRCCOLUMN1="6 " SRCROW2="207 " SRCCOLUMN2="24 " TYPESRC_LENG="369 ">
     BEGIN OF ts_interface.
-  INCLUDE TYPE seor_implementing_r AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
-  TYPES:
-      attributes_redefinition TYPE tt_itf_default_values,   &quot; Interface public attribute default value
-    END OF ts_interface
+    INCLUDE TYPE seor_implementing_r AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
+    TYPES:
+        components TYPE tt_comp_impl,   &quot; Interface public attribute default value &amp; Method implementation
+*      attributes_redefinition TYPE tt_itf_default_values,   &quot; Interface public attribute default value
+      END OF ts_interface
 
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_METH_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="22 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="132 " SRCCOLUMN1="4 " SRCROW2="140 " SRCCOLUMN2="22 " TYPESRC_LENG="310 ">
+   <ITEM CMPNAME="TS_METH_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="23 " TYPTYPE="4" SRCROW1="148 " SRCCOLUMN1="6 " SRCROW2="156 " SRCCOLUMN2="24 " TYPESRC_LENG="324 ">
     BEGIN OF ts_meth_data.
-  INCLUDE TYPE seoo_method_r AS hdr.
-  TYPES:
-      texts         TYPE tt_seocompotx_l,
+    INCLUDE TYPE seoo_method_r AS hdr.
+    TYPES:
+        texts         TYPE tt_seocompotx_l,
 *      redefinition  TYPE ts_redefinition,
-      parameters    TYPE tt_parameters,
-      exceptions    TYPE tt_exceptions,
-      source        TYPE ts_sourceasstruc,
-    END OF ts_meth_data
+        parameters    TYPE tt_parameters,
+        exceptions    TYPE tt_exceptions,
+        source        TYPE ts_sourceasstruc,
+      END OF ts_meth_data
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Method definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_PARAM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="16 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="104 " SRCCOLUMN1="4 " SRCROW2="108 " SRCCOLUMN2="23 " TYPESRC_LENG="139 ">
+   <ITEM CMPNAME="TS_PARAM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4" SRCROW1="120 " SRCCOLUMN1="6 " SRCROW2="124 " SRCCOLUMN2="25 " TYPESRC_LENG="147 ">
     BEGIN OF ts_param_data.
-  INCLUDE TYPE seos_parameter_r AS hdr.
-  TYPES:
-      texts   TYPE tt_seosubcotx_l,
-    END OF ts_param_data
+    INCLUDE TYPE seos_parameter_r AS hdr.
+    TYPES:
+        texts   TYPE tt_seosubcotx_l,
+      END OF ts_param_data
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Parameter definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="1" TYPE="ZAPLINK_PROGRAM=&gt;TS_SOURCE">
+   <ITEM CMPNAME="TS_REDEF_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="33 " TYPTYPE="4" SRCROW1="194 " SRCCOLUMN1="6 " SRCROW2="198 " SRCCOLUMN2="25 " TYPESRC_LENG="146 ">
+    BEGIN OF ts_redef_data.
+    INCLUDE TYPE seoredef AS hdr.
+    TYPES:
+        source        TYPE ts_sourceasstruc,
+      END OF ts_redef_data
+
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_SOURCE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="ZAPLINK_PROGRAM=&gt;TS_SOURCE">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ABAP Source code"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCEASSTRUC" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="17 " SRCCOLUMN1="4 " SRCROW2="19 " SRCCOLUMN2="28 " TYPESRC_LENG="86 ">
+   <ITEM CMPNAME="TS_SOURCEASSTRUC" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="32 " SRCCOLUMN1="6 " SRCROW2="34 " SRCCOLUMN2="32 " TYPESRC_LENG="94 ">
     BEGIN OF ts_sourceasstruc,
-        _ TYPE ts_source,
-      END OF ts_sourceasstruc
+            _ TYPE ts_source,
+          END OF ts_sourceasstruc
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ABAP Source code as structure"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="35 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="188 " SRCCOLUMN1="4 " SRCROW2="196 " SRCCOLUMN2="22 " TYPESRC_LENG="362 ">
+   <ITEM CMPNAME="TS_SOURCES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="37 " TYPTYPE="4" SRCROW1="211 " SRCCOLUMN1="6 " SRCROW2="219 " SRCCOLUMN2="26 " TYPESRC_LENG="394 ">
     BEGIN OF ts_sources,
-        classpool   TYPE  ts_sourceasstruc,
-        local_types TYPE  ts_sourceasstruc,
-        local_imp   TYPE  ts_sourceasstruc,
-        macros      TYPE  ts_sourceasstruc,
-        public      TYPE  ts_sourceasstruc,
-        private     TYPE  ts_sourceasstruc,
-        protected   TYPE  ts_sourceasstruc,
-      END OF ts_sources
+            classpool   TYPE  ts_sourceasstruc,
+            local_types TYPE  ts_sourceasstruc,
+            local_imp   TYPE  ts_sourceasstruc,
+            macros      TYPE  ts_sourceasstruc,
+            public      TYPE  ts_sourceasstruc,
+            private     TYPE  ts_sourceasstruc,
+            protected   TYPE  ts_sourceasstruc,
+          END OF ts_sources
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class ABAP Source codes as structure"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_TGRP_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="30 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="169 " SRCCOLUMN1="4 " SRCROW2="174 " SRCCOLUMN2="22 " TYPESRC_LENG="179 ">
+   <ITEM CMPNAME="TS_TGRP_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="31 " TYPTYPE="4" SRCROW1="185 " SRCCOLUMN1="6 " SRCROW2="190 " SRCCOLUMN2="24 " TYPESRC_LENG="189 ">
     BEGIN OF ts_tgrp_data.
-  INCLUDE TYPE seot_typepusage_r AS hdr.
-  TYPES:
-      defered TYPE seot_clsdeferrd_r,
-      itf_def TYPE seot_intdeferrd_r,
-    END OF ts_tgrp_data
+    INCLUDE TYPE seot_typepusage_r AS hdr.
+    TYPES:
+        defered TYPE seot_clsdeferrd_r,
+        itf_def TYPE seot_intdeferrd_r,
+      END OF ts_tgrp_data
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Type pool used data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_TYPE_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="28 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="160 " SRCCOLUMN1="4 " SRCROW2="165 " SRCCOLUMN2="22 " TYPESRC_LENG="163 ">
+   <ITEM CMPNAME="TS_TYPE_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="29 " TYPTYPE="4" SRCROW1="176 " SRCCOLUMN1="6 " SRCROW2="181 " SRCCOLUMN2="24 " TYPESRC_LENG="173 ">
     BEGIN OF ts_type_data.
-  INCLUDE TYPE seoo_type_r AS hdr.
-  TYPES:
-      texts   TYPE tt_seocompotx_l,
-      _       TYPE ts_source,
-    END OF ts_type_data
+    INCLUDE TYPE seoo_type_r AS hdr.
+    TYPES:
+        texts   TYPE tt_seocompotx_l,
+        _       TYPE ts_source,
+      END OF ts_type_data
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Type definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_ALIAS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="25 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="150 " SRCCOLUMN1="4 " SRCROW2="150 " SRCCOLUMN2="70 " TYPESRC_LENG="69 ">
+   <ITEM CMPNAME="TT_ALIAS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="26 " TYPTYPE="4" SRCROW1="166 " SRCCOLUMN1="6 " SRCROW2="166 " SRCCOLUMN2="72 " TYPESRC_LENG="69 ">
     tt_alias TYPE SORTED TABLE OF ts_alias_data WITH UNIQUE KEY cmpname
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Aliases"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_ATTRIBUTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="27 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="158 " SRCCOLUMN1="4 " SRCROW2="158 " SRCCOLUMN2="73 " TYPESRC_LENG="72 ">
+   <ITEM CMPNAME="TT_ATTRIBUTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="28 " TYPTYPE="4" SRCROW1="174 " SRCCOLUMN1="6 " SRCROW2="174 " SRCCOLUMN2="75 " TYPESRC_LENG="72 ">
     tt_attributs TYPE SORTED TABLE OF ts_attr_data WITH UNIQUE KEY cmpname
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s attributes"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_COMPONENTS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091118" TYPTYPE="4" SRCROW1="10 " SRCCOLUMN1="4 " SRCROW2="10 " SRCCOLUMN2="74 " R3RELEASE="700" TYPESRC_LENG="71 ">
+   <ITEM CMPNAME="TT_COMPONENTS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="10 " SRCCOLUMN1="4 " SRCROW2="10 " SRCCOLUMN2="74 " TYPESRC_LENG="71 ">
     tt_components TYPE SORTED TABLE OF ts_component WITH UNIQUE KEY cmpname
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Component&apos;s list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_CX_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="14 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="60 " SRCCOLUMN1="4 " SRCROW2="60 " SRCCOLUMN2="70 " TYPESRC_LENG="69 ">
-    tt_cx_texts type SORTED TABLE OF ts_cx_text with UNIQUE key CONCEPT
+   <ITEM CMPNAME="TT_COMP_IMPL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="34 " TYPTYPE="4" SRCROW1="200 " SRCCOLUMN1="6 " SRCROW2="200 " SRCCOLUMN2="76 " TYPESRC_LENG="73 ">
+    tt_comp_impl TYPE SORTED TABLE OF ts_redef_data WITH UNIQUE KEY mtdname
 
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_EVENTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="21 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="130 " SRCCOLUMN1="4 " SRCROW2="130 " SRCCOLUMN2="71 " TYPESRC_LENG="70 ">
+   <ITEM CMPNAME="TT_CX_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="15 " TYPTYPE="4" SRCROW1="75 " SRCCOLUMN1="6 " SRCROW2="75 " SRCCOLUMN2="72 " TYPESRC_LENG="69 ">
+    tt_cx_texts TYPE SORTED TABLE OF ts_cx_text WITH UNIQUE KEY concept
+
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_EVENTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="22 " TYPTYPE="4" SRCROW1="146 " SRCCOLUMN1="6 " SRCROW2="146 " SRCCOLUMN2="73 " TYPESRC_LENG="70 ">
     tt_events TYPE SORTED TABLE OF ts_event_data WITH UNIQUE KEY cmpname
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Events"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_EXCEPTIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="19 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="118 " SRCCOLUMN1="4 " SRCROW2="118 " SRCCOLUMN2="75 " TYPESRC_LENG="74 ">
+   <ITEM CMPNAME="TT_EXCEPTIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="20 " TYPTYPE="4" SRCROW1="134 " SRCCOLUMN1="6 " SRCROW2="134 " SRCCOLUMN2="77 " TYPESRC_LENG="74 ">
     tt_exceptions TYPE SORTED TABLE OF ts_excep_data WITH UNIQUE KEY sconame
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Method&apos;s &amp; Event Exceptions"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_INTERFACES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="34 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="186 " SRCCOLUMN1="4 " SRCROW2="186 " SRCCOLUMN2="77 " TYPESRC_LENG="76 ">
+   <ITEM CMPNAME="TT_INTERFACES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="36 " TYPTYPE="4" SRCROW1="209 " SRCCOLUMN1="6 " SRCROW2="209 " SRCCOLUMN2="79 " TYPESRC_LENG="76 ">
     tt_interfaces TYPE SORTED TABLE OF ts_interface WITH UNIQUE KEY refclsname
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class interface use"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_ITF_DEFAULT_VALUES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="32 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="178 " SRCCOLUMN1="4 " SRCROW2="178 " SRCCOLUMN2="78 " TYPESRC_LENG="77 ">
-    tt_itf_default_values TYPE SORTED TABLE OF seoredef WITH UNIQUE KEY mtdname
-
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TT_METHODS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="23 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="142 " SRCCOLUMN1="4 " SRCROW2="142 " SRCCOLUMN2="71 " TYPESRC_LENG="70 ">
+   <ITEM CMPNAME="TT_METHODS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="24 " TYPTYPE="4" SRCROW1="158 " SRCCOLUMN1="6 " SRCROW2="158 " SRCCOLUMN2="73 " TYPESRC_LENG="70 ">
     tt_methods TYPE SORTED TABLE OF ts_meth_data WITH UNIQUE KEY cmpname
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s methods"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_PARAMETERS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="17 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="110 " SRCCOLUMN1="4 " SRCROW2="110 " SRCCOLUMN2="75 " TYPESRC_LENG="74 ">
+   <ITEM CMPNAME="TT_PARAMETERS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="4" SRCROW1="126 " SRCCOLUMN1="6 " SRCROW2="126 " SRCCOLUMN2="77 " TYPESRC_LENG="74 ">
     tt_parameters TYPE SORTED TABLE OF ts_param_data WITH UNIQUE KEY sconame
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Method&apos;s &amp; Event parameters"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOCLASSTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="21 " SRCCOLUMN2="67 " TYPESRC_LENG="66 ">
+   <ITEM CMPNAME="TT_SEOCLASSTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="36 " SRCCOLUMN1="6 " SRCROW2="36 " SRCCOLUMN2="69 " TYPESRC_LENG="66 ">
     tt_seoclasstx TYPE STANDARD TABLE OF seoclasstx WITH DEFAULT KEY
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOCLASSTX_S" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="23 " SRCCOLUMN1="4 " SRCROW2="23 " SRCCOLUMN2="72 " TYPESRC_LENG="71 ">
+   <ITEM CMPNAME="TT_SEOCLASSTX_S" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="38 " SRCCOLUMN1="6 " SRCROW2="38 " SRCCOLUMN2="74 " TYPESRC_LENG="71 ">
     tt_seoclasstx_s TYPE SORTED TABLE OF seoclasstx WITH UNIQUE KEY langu
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description class With unique Key"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOCOMPOTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="25 " SRCCOLUMN1="4 " SRCROW2="25 " SRCCOLUMN2="67 " TYPESRC_LENG="66 ">
+   <ITEM CMPNAME="TT_SEOCOMPOTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="40 " SRCCOLUMN1="6 " SRCROW2="40 " SRCCOLUMN2="69 " TYPESRC_LENG="66 ">
     tt_seocompotx TYPE STANDARD TABLE OF seocompotx WITH DEFAULT KEY
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description component (full key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOCOMPOTX_L" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="29 " SRCCOLUMN2="72 " TYPESRC_LENG="71 ">
+   <ITEM CMPNAME="TT_SEOCOMPOTX_L" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="44 " SRCCOLUMN1="6 " SRCROW2="44 " SRCCOLUMN2="74 " TYPESRC_LENG="71 ">
     tt_seocompotx_l TYPE SORTED TABLE OF seocompotx WITH UNIQUE KEY langu
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description component (Langu key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOCOMPOTX_S" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="27 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="80 " TYPESRC_LENG="79 ">
+   <ITEM CMPNAME="TT_SEOCOMPOTX_S" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="42 " SRCCOLUMN1="6 " SRCROW2="42 " SRCCOLUMN2="82 " TYPESRC_LENG="79 ">
     tt_seocompotx_s TYPE SORTED TABLE OF seocompotx WITH UNIQUE KEY cmpname langu
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description component (With unique Key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOSUBCOTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="31 " SRCCOLUMN1="4 " SRCROW2="31 " SRCCOLUMN2="67 " TYPESRC_LENG="66 ">
+   <ITEM CMPNAME="TT_SEOSUBCOTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4" SRCROW1="46 " SRCCOLUMN1="6 " SRCROW2="46 " SRCCOLUMN2="69 " TYPESRC_LENG="66 ">
     tt_seosubcotx TYPE STANDARD TABLE OF seosubcotx WITH DEFAULT KEY
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description Sub component (full key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOSUBCOTX_L" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="35 " SRCCOLUMN1="4 " SRCROW2="35 " SRCCOLUMN2="72 " TYPESRC_LENG="71 ">
+   <ITEM CMPNAME="TT_SEOSUBCOTX_L" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " TYPTYPE="4" SRCROW1="50 " SRCCOLUMN1="6 " SRCROW2="50 " SRCCOLUMN2="74 " TYPESRC_LENG="71 ">
     tt_seosubcotx_l TYPE SORTED TABLE OF seosubcotx WITH UNIQUE KEY langu
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description Sub component (Langu key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOSUBCOTX_S" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="33 " SRCCOLUMN1="4 " SRCROW2="33 " SRCCOLUMN2="88 " TYPESRC_LENG="87 ">
+   <ITEM CMPNAME="TT_SEOSUBCOTX_S" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="4" SRCROW1="48 " SRCCOLUMN1="6 " SRCROW2="48 " SRCCOLUMN2="90 " TYPESRC_LENG="87 ">
     tt_seosubcotx_s TYPE SORTED TABLE OF seosubcotx WITH UNIQUE KEY cmpname sconame langu
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description Sub component (With unique Key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SOTR_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="12 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="51 " SRCCOLUMN1="4 " SRCROW2="51 " SRCCOLUMN2="76 " TYPESRC_LENG="75 ">
-    tt_sotr_texts type SORTED TABLE OF SOTR_TEXT with UNIQUE key LANGU OBJECT
+   <ITEM CMPNAME="TT_SOTR_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="13 " TYPTYPE="4" SRCROW1="66 " SRCCOLUMN1="6 " SRCROW2="66 " SRCCOLUMN2="78 " TYPESRC_LENG="75 ">
+    tt_sotr_texts TYPE SORTED TABLE OF sotr_text WITH UNIQUE KEY langu object
 
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TYPEGROUPS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="31 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="176 " SRCCOLUMN1="4 " SRCROW2="176 " SRCCOLUMN2="76 " TYPESRC_LENG="75 ">
+   <ITEM CMPNAME="TT_TYPEGROUPS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="32 " TYPTYPE="4" SRCROW1="192 " SRCCOLUMN1="6 " SRCROW2="192 " SRCCOLUMN2="78 " TYPESRC_LENG="75 ">
     tt_typegroups TYPE SORTED TABLE OF ts_tgrp_data WITH UNIQUE KEY typegroup
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s type pool used"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TYPES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="29 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="167 " SRCCOLUMN1="4 " SRCROW2="167 " SRCCOLUMN2="69 " TYPESRC_LENG="68 ">
+   <ITEM CMPNAME="TT_TYPES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="30 " TYPTYPE="4" SRCROW1="183 " SRCCOLUMN1="6 " SRCROW2="183 " SRCCOLUMN2="71 " TYPESRC_LENG="68 ">
     tt_types TYPE SORTED TABLE OF ts_type_data WITH UNIQUE KEY cmpname
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s types"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="T_FM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="15 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" TYPTYPE="4" SRCROW1="62 " SRCCOLUMN1="4 " SRCROW2="102 " SRCCOLUMN2="25 " TYPESRC_LENG="1951 ">
+   <ITEM CMPNAME="T_FM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="4" SRCROW1="77 " SRCCOLUMN1="6 " SRCROW2="118 " SRCCOLUMN2="29 " TYPESRC_LENG="2148 ">
     BEGIN OF t_fm_data,
 *            name TYPE seoclsname,
 *            version TYPE seoversion,
-            class TYPE  vseoclass,
-            interface TYPE  vseointerf,
-            attributes  TYPE  seoo_attributes_r,
-            methods TYPE  seoo_methods_r,
-            events  TYPE  seoo_events_r,
-            types TYPE  seoo_types_r,
-            parameters  TYPE  seos_parameters_r,
-            exceps  TYPE  seos_exceptions_r,
-            implementings TYPE  seor_implementings_r,
-            inheritance TYPE  vseoextend,
-            redefinitions TYPE  seor_redefinitions_r,
-            impl_details  TYPE  seor_redefinitions_r,
-            friendships TYPE  seof_friendships_r,
-            typeusages TYPE  seot_typepusages_r,
-            clsdeferrds TYPE  seot_clsdeferrds_r,
-            intdeferrds TYPE  seot_intdeferrds_r,
-            comprisings TYPE  seor_comprisings_r,
-            explore_inheritance TYPE  seok_cls_typeinfos,
-            explore_implementings TYPE  seok_int_typeinfos,
-            explore_comprisings TYPE  seok_int_typeinfos,
-            aliases TYPE  seoo_aliases_r,
-            enhancement_methods TYPE  enhmeth_tabheader,
-            enhancement_attributes  TYPE  enhclasstabattrib,
-            enhancement_events  TYPE  enhclasstabevent,
-            enhancement_implementings TYPE  enhclasstabimplementing,
-            enhancement_comprisings TYPE  enhclasstabintfcompri,
-            class_desc  TYPE tt_seoclasstx,
-            component_desc  TYPE  tt_seocompotx,
-            subcomponent_desc TYPE  tt_seosubcotx,
-            includes TYPE ts_includes,
+                class TYPE  vseoclass,
+                interface TYPE  vseointerf,
+                attributes  TYPE  seoo_attributes_r,
+                methods TYPE  seoo_methods_r,
+                events  TYPE  seoo_events_r,
+                types TYPE  seoo_types_r,
+                parameters  TYPE  seos_parameters_r,
+                exceps  TYPE  seos_exceptions_r,
+                implementings TYPE  seor_implementings_r,
+                inheritance TYPE  vseoextend,
+                redefinitions TYPE  seor_redefinitions_r,
+                impl_details  TYPE  seor_redefinitions_r,
+                friendships TYPE  seof_friendships_r,
+                typeusages TYPE  seot_typepusages_r,
+                clsdeferrds TYPE  seot_clsdeferrds_r,
+                intdeferrds TYPE  seot_intdeferrds_r,
+                comprisings TYPE  seor_comprisings_r,
+                explore_inheritance TYPE  seok_cls_typeinfos,
+                explore_implementings TYPE  seok_int_typeinfos,
+                explore_comprisings TYPE  seok_int_typeinfos,
+                aliases TYPE  seoo_aliases_r,
+                enhancement_methods TYPE  enhmeth_tabheader,
+                enhancement_attributes  TYPE  enhclasstabattrib,
+                enhancement_events  TYPE  enhclasstabevent,
+                enhancement_implementings TYPE  enhclasstabimplementing,
+                enhancement_comprisings TYPE  enhclasstabintfcompri,
+                class_desc  TYPE tt_seoclasstx,
+                component_desc  TYPE  tt_seocompotx,
+                subcomponent_desc TYPE  tt_seosubcotx,
+                includes TYPE ts_includes,
 * FOR SEO_CLASS_CREATE_COMPLETE only
-            method_sources TYPE seo_method_source_table,
-            locals_def  TYPE  rswsourcet,
-            locals_imp  TYPE  rswsourcet,
-            locals_mac  TYPE  rswsourcet,
+                method_sources TYPE seo_method_source_table,
+                textspool   TYPE tt_txtp_textpools,
+                locals_def  TYPE  rswsourcet,
+                locals_imp  TYPE  rswsourcet,
+                locals_mac  TYPE  rswsourcet,
 * FOR Exception class
-            exceptions_texts type tt_cx_texts,
-          END OF t_fm_data
+                exceptions_texts TYPE tt_cx_texts,
+              END OF t_fm_data
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
