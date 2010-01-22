@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="07178888948053BAAF38AE5B3AD706E0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="5727AE3FA4863F6857941A55CBCD862A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="66FF044B26B30C5BE1000000AC120173" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -219,10 +219,14 @@ ASHaving XML node with / (which means end of node) make nugget display
       _cx_text-longtexts = &lt;cx&gt;-texts.
       _cx_text-texts = fd_comp_desc( descriptions = fm_data-component_desc
                                         component = &lt;at&gt;-cmpname ).
-      CLEAR: _cx_text-attvalue, _cx_text-clsname, _cx_text-langu, _cx_text-descript.    &quot; Attribut
-* keep old OTR in case SOTR creation failed
-*      CLEAR: _cx_text-concept.                                                           &quot; SOTR
+*      _cx_text-texts = &lt;cx&gt;-texts.
+*      MODIFY _cx_text-texts FROM _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
       MODIFY _cx_text-longtexts FROM _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
+      CLEAR: _cx_text-attvalue, _cx_text-clsname, _cx_text-langu, _cx_text-descript.    &quot; Attribut
+* SOTR can&apos;t be change or created using external key.
+* When you change texts of an exception it&apos;s SOTR GUID change :-(
+      CLEAR: _cx_text-concept.                                                          &quot; SOTR
+* So don&apos;t save KEY to component useless
       INSERT _cx_text INTO TABLE exceptions_texts.
       DELETE _fm_data-attributes.                 &quot; exception text no logner an attribute
     ENDLOOP.
@@ -263,7 +267,7 @@ ASHaving XML node with / (which means end of node) make nugget display
          AND &lt;rd&gt;-mtdabstrct IS INITIAL.      &quot; not abstract : with source code
         CLEAR _mk.
         _mk-clsname = &lt;rd&gt;-clsname.
-        _mk-cpdname = &lt;rd&gt;-mtdname.
+        CONCATENATE &lt;rd&gt;-refclsname method_separator &lt;rd&gt;-mtdname INTO _mk-cpdname.
         READ TABLE _fm_data-includes-methods ASSIGNING &lt;m_&gt;
              WITH KEY cpdkey = _mk.
         IF sy-subrc = 0.
@@ -277,7 +281,7 @@ ASHaving XML node with / (which means end of node) make nugget display
         ENDIF.
       ENDIF.
 
-      APPEND _ia  TO _in-components.
+      INSERT _ia  INTO TABLE _in-components.
     ENDLOOP.
 
     CLEAR _in-clsname.
@@ -617,18 +621,18 @@ ASHaving XML node with / (which means end of node) make nugget display
           parameter_error             = 14
           OTHERS                      = 15.
       IF sy-subrc &lt;&gt; 0.
-      _cx = zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                        funcname = &apos;SOTR_DELETE_CONCEPT&apos; ).
-      IF NOT msg_col IS BOUND.
-        RAISE EXCEPTION _cx.
-      ELSE.
-        CALL METHOD msg_col-&gt;add_exception
-          EXPORTING
-            exception    = _cx
+        _cx = zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
+                                          funcname = &apos;SOTR_DELETE_CONCEPT&apos; ).
+        IF NOT msg_col IS BOUND.
+          RAISE EXCEPTION _cx.
+        ELSE.
+          CALL METHOD msg_col-&gt;add_exception
+            EXPORTING
+              exception    = _cx
 *            id_detlevel  =
 *            id_probclass =
-            .
-      ENDIF.
+              .
+        ENDIF.
       ENDIF.
     ENDIF.
 
@@ -643,7 +647,7 @@ ASHaving XML node with / (which means end of node) make nugget display
             entries                             = _entries
 *       FLAG_CORRECTION_ENTRY               =
 *       IN_UPDATE_TASK                      =
-            CONCEPT_DEFAULT                     = &lt;cx&gt;-concept
+            concept_default                     = &lt;cx&gt;-concept
 *       FLAG_COPY_TEXT                      =
           IMPORTING
             concept                             = ls_cx-concept
@@ -724,7 +728,7 @@ ASHaving XML node with / (which means end of node) make nugget display
       CONTINUE.
     ENDIF.
 
-    check ls_cx-concept &lt;&gt; &lt;cx&gt;-concept.
+    CHECK ls_cx-concept &lt;&gt; &lt;cx&gt;-concept.
 
     INSERT ls_cx INTO TABLE lt_cx.
     DELETE fm_data-exceptions_texts.
@@ -919,10 +923,14 @@ ASHaving XML node with / (which means end of node) make nugget display
       _cx_text-longtexts = &lt;cx&gt;-texts.
       _cx_text-texts = fd_comp_desc( descriptions = fm_data-component_desc
                                         component = &lt;at&gt;-cmpname ).
-      CLEAR: _cx_text-attvalue, _cx_text-clsname, _cx_text-langu, _cx_text-descript.    &quot; Attribut
-* keep old OTR in case SOTR creation failed
-*      CLEAR: _cx_text-concept.                                                           &quot; SOTR
+*      _cx_text-texts = &lt;cx&gt;-texts.
+*      MODIFY _cx_text-texts FROM _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
       MODIFY _cx_text-longtexts FROM _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
+      CLEAR: _cx_text-attvalue, _cx_text-clsname, _cx_text-langu, _cx_text-descript.    &quot; Attribut
+* SOTR can&apos;t be change or created using external key.
+* When you change texts of an exception it&apos;s SOTR GUID change :-(
+      CLEAR: _cx_text-concept.                                                          &quot; SOTR
+* So don&apos;t save KEY to component useless
       INSERT _cx_text INTO TABLE exceptions_texts.
       DELETE _fm_data-attributes.                 &quot; exception text no logner an attribute
     ENDLOOP.
@@ -963,7 +971,7 @@ ASHaving XML node with / (which means end of node) make nugget display
          AND &lt;rd&gt;-mtdabstrct IS INITIAL.      &quot; not abstract : with source code
         CLEAR _mk.
         _mk-clsname = &lt;rd&gt;-clsname.
-        _mk-cpdname = &lt;rd&gt;-mtdname.
+        CONCATENATE &lt;rd&gt;-refclsname method_separator &lt;rd&gt;-mtdname INTO _mk-cpdname.
         READ TABLE _fm_data-includes-methods ASSIGNING &lt;m_&gt;
              WITH KEY cpdkey = _mk.
         IF sy-subrc = 0.
@@ -977,7 +985,7 @@ ASHaving XML node with / (which means end of node) make nugget display
         ENDIF.
       ENDIF.
 
-      APPEND _ia  TO _in-components.
+      INSERT _ia  INTO TABLE _in-components.
     ENDLOOP.
 
     CLEAR _in-clsname.

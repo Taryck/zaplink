@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0C7EAE45388C75103C4DB9286F078BD3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="0E67A95CDF0CFF976112D8D720F470FF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="A32B044B702B371EE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -292,8 +292,6 @@
   DATA _name            TYPE td_compname.
 
   _d = o_data-&gt;to_data( ).
-  zaplink_clas_data=&gt;update_concept( EXPORTING msg_col = application_log
-                                     CHANGING  fm_data = _d ).
 
   CALL FUNCTION &apos;SEO_BUFFER_INIT&apos;.
   CALL FUNCTION &apos;SEO_CLASS_CREATE_COMPLETE&apos;
@@ -351,6 +349,12 @@
       RAISE EXCEPTION TYPE zaplink_cx_connector
         EXPORTING textid = zaplink_cx_connector=&gt;system_error.
   ENDCASE.
+
+* Exceptions texts
+  if not _d-exceptions_texts is INITIAL.
+*  zaplink_clas_data=&gt;update_concept( EXPORTING msg_col = application_log
+*                                     CHANGING  fm_data = _d ).
+  endif.
 
 * Issue 1
   _d-includes = zaplink_object_data=&gt;get_includes( _d-class-clsname ).

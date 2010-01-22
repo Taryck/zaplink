@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9138837A0EC704763B6F977C58E5A19E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="72C44C81EF6AE890ADF1EE509EF35782" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="47F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -362,12 +362,126 @@
    </ITEM>
   </ATTRIBUTS>
   <INTERFACES>
-   <ITEM REFCLSNAME="ZAPLINK_CNX_EXT_CLEANER" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_CNX_EXT_CLEANER" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1">
+    <COMPONENTS>
+     <ITEM VERSION="1" MTDNAME="ANONYMIZE">
+      <SOURCE>  CHECK object IS BOUND.
+  object-&gt;anonymize( ).</SOURCE>
+     </ITEM>
+     <ITEM VERSION="1" MTDNAME="UNANONYMIZE">
+      <SOURCE>  CHECK object IS BOUND.
+  object-&gt;unanonymize( ).</SOURCE>
+     </ITEM>
+    </COMPONENTS>
+   </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1">
     <COMPONENTS>
      <ITEM VERSION="1" MTDNAME="CREATE_NEW_RAW" MTDABSTRCT="X"/>
      <ITEM VERSION="1" MTDNAME="DELETE_FROM_SAP" MTDABSTRCT="X"/>
      <ITEM VERSION="1" MTDNAME="DO_EXISTS" MTDABSTRCT="X"/>
+     <ITEM VERSION="1" MTDNAME="EXPORT_FROM_SAP">
+      <SOURCE>  DATA ez_xml          TYPE to_ez_xml.
+  DATA o_data          TYPE to_raw.
+
+  o_data = read_from_sap( component ).
+  IF o_data IS BOUND.
+    o_data-&gt;connector = me-&gt;uuid.
+    o_data-&gt;version = me-&gt;version.
+    CREATE OBJECT ez_xml.
+
+    TRY.
+      object = ez_xml-&gt;any2xml( any       = o_data
+                                type      = comp_nodename ).
+* control content
+    ENDTRY.
+  ENDIF.</SOURCE>
+     </ITEM>
+     <ITEM VERSION="1" MTDNAME="GET_VALUES">
+      <SOURCE>  DATA _obj_type TYPE  euobj-id.
+  DATA _name TYPE td_compname.
+
+  _obj_type = type.
+
+  CALL FUNCTION &apos;REPOSITORY_INFO_SYSTEM_F4&apos;
+    EXPORTING
+      object_type           = _obj_type
+      object_name           = name
+      suppress_selection    = abap_true
+      use_alv_grid          = abap_false
+      without_personal_list = abap_false
+    IMPORTING
+      object_name_selected  = _name
+    EXCEPTIONS
+      cancel                = 1.
+  IF sy-subrc = 0.
+    name = _name.
+  ENDIF.</SOURCE>
+     </ITEM>
+     <ITEM VERSION="1" MTDNAME="IMPORT_TO_SAP">
+      <SOURCE>  DATA root_node TYPE REF TO if_ixml_node.
+  DATA o_raw     TYPE to_raw.
+  DATA _name     TYPE string.
+  DATA ez_xml    TYPE REF TO zaplink_easyxml.
+  DATA o_cx      TYPE REF TO cx_root.
+  DATA o_zlcx    TYPE REF TO zaplink_cx.
+
+  CHECK object IS BOUND.
+
+  TRY.
+      root_node = object-&gt;get_root_element( ).
+      IF NOT root_node IS BOUND.
+        _name = &apos;$NONE$&apos;(001).
+        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
+              textid = zaplink_cx_connector=&gt;invalid_xml
+           node_name = _name.
+      ENDIF.
+
+      _name = root_node-&gt;get_name( ).
+      IF _name &lt;&gt; comp_nodename.
+        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
+              textid = zaplink_cx_connector=&gt;invalid_xml
+           node_name = _name.
+      ENDIF.
+
+      TRY.
+          o_raw = zaplink_connectors=&gt;node_2_raw( root_node ).
+        CATCH zaplink_cx_connector INTO o_mycx.
+          RAISE EXCEPTION o_mycx.
+      ENDTRY.
+
+* Version handling to develop
+      IF is_supported_version( o_raw-&gt;version ) = abap_false.
+* Version &apos;&amp;CONN_VER&amp;&apos; is not (or no longer) suported by this connector.
+        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
+              textid = zaplink_cx_connector=&gt;unsuported_version
+            conn_ver = o_raw-&gt;version.
+      ENDIF.
+
+      o_raw = create_new_raw( o_raw-&gt;type ).
+      CREATE OBJECT ez_xml.
+      CALL METHOD ez_xml-&gt;xml2any
+        EXPORTING
+          xmldoc = object
+        CHANGING
+          any    = o_raw.
+
+      components = write_to_sap( o_raw ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+    CATCH zaplink_cx INTO o_zlcx.
+      create OBJECT o_mycx EXPORTING
+             textid = zaplink_cx=&gt;system_error
+           prev_cx = o_zlcx.
+      o_mycx-&gt;update( ).
+      raise EXCEPTION o_mycx.
+    CATCH cx_root INTO o_cx.
+      create OBJECT o_mycx EXPORTING
+             textid = zaplink_cx=&gt;system_error
+           previous = o_cx.
+      o_mycx-&gt;update( ).
+      raise EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
+     </ITEM>
      <ITEM VERSION="1" MTDNAME="IS_SUPPORTED_VERSION" MTDABSTRCT="X"/>
      <ITEM VERSION="1" MTDNAME="READ_FROM_SAP" MTDABSTRCT="X"/>
      <ITEM VERSION="1" MTDNAME="WRITE_TO_SAP" MTDABSTRCT="X"/>
@@ -776,117 +890,6 @@
     ENDAT.
 
   ENDLOOP.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYM">
-    <SOURCE>  CHECK object IS BOUND.
-  object-&gt;anonymize( ).</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CNX_EXT_CLEANER~UNANON">
-    <SOURCE>  CHECK object IS BOUND.
-  object-&gt;unanonymize( ).</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CONNECTOR~EXPORT_FROM_">
-    <SOURCE>  DATA ez_xml          TYPE to_ez_xml.
-  DATA o_data          TYPE to_raw.
-
-  o_data = read_from_sap( component ).
-  IF o_data IS BOUND.
-    o_data-&gt;connector = me-&gt;uuid.
-    o_data-&gt;version = me-&gt;version.
-    CREATE OBJECT ez_xml.
-
-    TRY.
-      object = ez_xml-&gt;any2xml( any       = o_data
-                                type      = comp_nodename ).
-* control content
-    ENDTRY.
-  ENDIF.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CONNECTOR~GET_VALUES">
-    <SOURCE>  DATA _obj_type TYPE  euobj-id.
-  DATA _name TYPE td_compname.
-
-  _obj_type = type.
-
-  CALL FUNCTION &apos;REPOSITORY_INFO_SYSTEM_F4&apos;
-    EXPORTING
-      object_type           = _obj_type
-      object_name           = name
-      suppress_selection    = abap_true
-      use_alv_grid          = abap_false
-      without_personal_list = abap_false
-    IMPORTING
-      object_name_selected  = _name
-    EXCEPTIONS
-      cancel                = 1.
-  IF sy-subrc = 0.
-    name = _name.
-  ENDIF.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CONNECTOR~IMPORT_TO_SA">
-    <SOURCE>  DATA root_node TYPE REF TO if_ixml_node.
-  DATA o_raw     TYPE to_raw.
-  DATA _name     TYPE string.
-  DATA ez_xml    TYPE REF TO zaplink_easyxml.
-  DATA o_cx      TYPE REF TO cx_root.
-  DATA o_zlcx    TYPE REF TO zaplink_cx.
-
-  CHECK object IS BOUND.
-
-  TRY.
-      root_node = object-&gt;get_root_element( ).
-      IF NOT root_node IS BOUND.
-        _name = &apos;$NONE$&apos;(001).
-        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-              textid = zaplink_cx_connector=&gt;invalid_xml
-           node_name = _name.
-      ENDIF.
-
-      _name = root_node-&gt;get_name( ).
-      IF _name &lt;&gt; comp_nodename.
-        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-              textid = zaplink_cx_connector=&gt;invalid_xml
-           node_name = _name.
-      ENDIF.
-
-      TRY.
-          o_raw = zaplink_connectors=&gt;node_2_raw( root_node ).
-        CATCH zaplink_cx_connector INTO o_mycx.
-          RAISE EXCEPTION o_mycx.
-      ENDTRY.
-
-* Version handling to develop
-      IF is_supported_version( o_raw-&gt;version ) = abap_false.
-* Version &apos;&amp;CONN_VER&amp;&apos; is not (or no longer) suported by this connector.
-        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-              textid = zaplink_cx_connector=&gt;unsuported_version
-            conn_ver = o_raw-&gt;version.
-      ENDIF.
-
-      o_raw = create_new_raw( o_raw-&gt;type ).
-      CREATE OBJECT ez_xml.
-      CALL METHOD ez_xml-&gt;xml2any
-        EXPORTING
-          xmldoc = object
-        CHANGING
-          any    = o_raw.
-
-      components = write_to_sap( o_raw ).
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_zlcx.
-      create OBJECT o_mycx EXPORTING
-             textid = zaplink_cx=&gt;system_error
-           prev_cx = o_zlcx.
-      o_mycx-&gt;update( ).
-      raise EXCEPTION o_mycx.
-    CATCH cx_root INTO o_cx.
-      create OBJECT o_mycx EXPORTING
-             textid = zaplink_cx=&gt;system_error
-           previous = o_cx.
-      o_mycx-&gt;update( ).
-      raise EXCEPTION o_mycx.
-  ENDTRY.</SOURCE>
    </ITEM>
   </METHODS>
   <TEXTSPOOL>

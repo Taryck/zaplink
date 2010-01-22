@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="07C7AEA34EE8A68B42E8EDFCFFCE419E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="DEFF8572D0EB79B0D7E56CCB5A2FDB37" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="DCFD034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -445,62 +445,70 @@
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Reset all connectors to default (remove local)"/>
     </TEXTS>
-    <SOURCE>  DATA _connectors TYPE REF TO cl_oo_if_relations.
+    <SOURCE>  DATA o_conn      TYPE REF TO zaplink_connector.
+  DATA _connectors TYPE REF TO cl_oo_if_relations.
+  DATA o_desc      TYPE REF TO cl_abap_typedescr.
   FIELD-SYMBOLS:
     &lt;im_cl&gt; LIKE LINE OF _connectors-&gt;implementing_classes,
     &lt;s_cl&gt; LIKE LINE OF _connectors-&gt;subclasses.
 
-  clear CONNECTOR_LIST.
-* Interface use
-  CREATE OBJECT _connectors
-    EXPORTING
-      clsname      = &apos;ZAPLINK_CONNECTOR&apos;
+  CLEAR connector_list.
+*Issue 3
+* Check interface type (local or global).
+  o_desc = cl_abap_structdescr=&gt;describe_by_name( &apos;ZAPLINK_CONNECTOR&apos; ).
+* when Local : \PROGRAM=ZAPLINK_INSTALLER\INTERFACE=ZAPLINK_CONNECTOR
+* when Global : \INTERFACE=ZAPLINK_CONNECTOR
+  IF o_desc-&gt;absolute_name CP &apos;\INTERFACE=*&apos;.
+* Global Interface : check use
+    CREATE OBJECT _connectors
+      EXPORTING
+        clsname      = &apos;ZAPLINK_CONNECTOR&apos;
 *      w_references = seox_true
 *      w_implementings = seox_true
 *      w_comprisings = seox_true
 *      w_subclasses = seox_true
-    EXCEPTIONS
-      not_existing = 0    &quot; For installer ignore not existing class
-      is_class     = 2
-      OTHERS       = 3
-      .
-  IF sy-subrc &lt;&gt; 0.
-    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-  ENDIF.
-  IF _connectors IS BOUND.
-    LOOP AT _connectors-&gt;implementing_classes ASSIGNING &lt;im_cl&gt;
-            WHERE exposure &lt;&gt; &apos;0&apos;   &quot; Private
-              AND version = &apos;1&apos;     &quot; Active
-              AND state &lt;&gt; &apos;0&apos;      &quot; Only modeled
-              .
+      EXCEPTIONS
+        not_existing = 0    &quot; For installer ignore not existing class
+        is_class     = 2
+        OTHERS       = 3.
+    IF sy-subrc &lt;&gt; 0.
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+                 WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    ENDIF.
+    IF _connectors IS BOUND.
+      LOOP AT _connectors-&gt;implementing_classes ASSIGNING &lt;im_cl&gt;
+              WHERE exposure &lt;&gt; &apos;0&apos;   &quot; Private
+                AND version = &apos;1&apos;     &quot; Active
+                AND state &lt;&gt; &apos;0&apos;      &quot; Only modeled
+                .
 
-      TRY.
+        TRY.
 
-          _add_connector( class = &lt;im_cl&gt;-clsname ).
+            _add_connector( class = &lt;im_cl&gt;-clsname ).
 
-        CATCH cx_root.
-          CONTINUE.
-      ENDTRY.
+          CATCH cx_root.
+            CONTINUE.
+        ENDTRY.
 
-    ENDLOOP.
+      ENDLOOP.
 
-    LOOP AT _connectors-&gt;subclasses ASSIGNING &lt;s_cl&gt;
-            WHERE state &lt;&gt; &apos;0&apos;      &quot; Only modeled
-              AND version = &apos;1&apos;     &quot; Active
-              .
+      LOOP AT _connectors-&gt;subclasses ASSIGNING &lt;s_cl&gt;
+              WHERE state &lt;&gt; &apos;0&apos;      &quot; Only modeled
+                AND version = &apos;1&apos;     &quot; Active
+                .
 
-      TRY.
+        TRY.
 
-          _add_connector( class = &lt;s_cl&gt;-clsname ).
+            _add_connector( class = &lt;s_cl&gt;-clsname ).
 
-        CATCH cx_root.
-          CONTINUE.
-      ENDTRY.
+          CATCH cx_root.
+            CONTINUE.
+        ENDTRY.
 
-    ENDLOOP.
+      ENDLOOP.
 
-    _update_def_class( ).
+      _update_def_class( ).
+    ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TYPE2TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
