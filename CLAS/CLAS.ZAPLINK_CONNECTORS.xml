@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="07C7AEA34EE8A68B42E8EDFCFFCE419E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="17C971073033711A6D9671449C32E1E2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="DCFD034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -58,6 +58,11 @@
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TD_TYPEORDER" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TYPEORDER">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TD_TYPE_AS_TEXT" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TYPE_AS_TEXT">
     <TEXTS>
      <ITEM LANGU="E"/>
@@ -90,7 +95,7 @@
      <ITEM LANGU="E" DESCRIPT="Connectors for all components types"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="45 " SRCCOLUMN1="4 " SRCROW2="48 " SRCCOLUMN2="20 " TYPESRC_LENG="205 " TYPESRC="BEGIN OF exists,
+   <ITEM CMPNAME="EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="47 " SRCCOLUMN1="4 " SRCROW2="50 " SRCCOLUMN2="20 " TYPESRC_LENG="205 " TYPESRC="BEGIN OF exists,
           exists     TYPE td_connexists VALUE ZAPLINK_DATATYPES~EXISTS-exists,
           not_exists TYPE td_connexists VALUE ZAPLINK_DATATYPES~EXISTS-not_exists,
         END OF exists
@@ -102,6 +107,11 @@
    <ITEM CMPNAME="LOCAL_DEVCLASS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="2" ATTVALUE="&apos;$LOCAL$&apos;" TYPTYPE="1" TYPE="TD_DEVCLASS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Devclass for Local class"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="MAX_ORDER" VERSION="1" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;999999&apos;" TYPTYPE="1" TYPE="TD_TYPEORDER">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Max (and default) Rank for type"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
@@ -181,7 +191,11 @@
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>  DATA _types TYPE STANDARD TABLE OF ko100 WITH DEFAULT KEY.
+    <SOURCE>  DATA t_types    TYPE STANDARD TABLE OF ko100 WITH DEFAULT KEY.
+  DATA s_saptypes LIKE LINE OF saptypes.
+  DATA t_saptypes TYPE STANDARD TABLE OF ts_saptypes.
+  FIELD-SYMBOLS:
+    &lt;t&gt; LIKE LINE OF t_types.
 
 * Create XML Engine
   xmlengine = cl_ixml=&gt;create( ).
@@ -190,15 +204,27 @@
 *   IMPORTING
 *     WE_TABLE_LINES       =
     TABLES
-      wt_object_text       = _types.
-  SORT _types BY object.
-  DELETE ADJACENT DUPLICATES FROM _types COMPARING object.
-  saptypes = _types.
+      wt_object_text       = t_types.
+
+  SORT t_types BY object.
+  DELETE ADJACENT DUPLICATES FROM t_types COMPARING object.
+
+  LOOP AT t_types ASSIGNING &lt;t&gt;.
+    CLEAR s_saptypes. s_saptypes-hdr = &lt;t&gt;.
+    s_saptypes-order = max_order.
+    APPEND s_saptypes TO t_saptypes.
+  ENDLOOP.
+
+  saptypes = t_saptypes.
+
+  s_saptypes-order = 50.  MODIFY saptypes FROM s_saptypes TRANSPORTING order WHERE object = &apos;DEVC&apos;.
+  s_saptypes-order = 100. MODIFY saptypes FROM s_saptypes TRANSPORTING order WHERE object = &apos;INTF&apos;.
+  s_saptypes-order = 150. MODIFY saptypes FROM s_saptypes TRANSPORTING order WHERE object = &apos;CLAS&apos;.
 
   reset_connectors( ).
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CLEAR_CONNECTORS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CLEAR_CONNECTORS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Remove all connectors"/>
     </TEXTS>
@@ -219,7 +245,7 @@
        <ITEM LANGU="E" DESCRIPT="ZAP Link Connector interface"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TYPE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE">
+     <ITEM SCONAME="TYPE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E"/>
       </TEXTS>
@@ -236,14 +262,23 @@
   DATA _conn      LIKE LINE OF connector_list.
   DATA _classname TYPE td_connclass.
   FIELD-SYMBOLS:
+    &lt;cl&gt; LIKE LINE OF _classes,
     &lt;c&gt; LIKE LINE OF _conn-classes.
 
-  TRY.
-      _conn = _search_connector( type ).
-
-      IF NOT connuuid IS INITIAL.
-        READ TABLE _conn-classes ASSIGNING &lt;c&gt;
-             WITH TABLE KEY uuid = connuuid.
+* Check same class already loaded
+  IF NOT connuuid IS INITIAL.
+    READ TABLE _classes ASSIGNING &lt;cl&gt;
+               WITH TABLE KEY uuid = connuuid.
+    IF sy-subrc &lt;&gt; 0.
+* Class &apos;&amp;CONNUUID&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNCLASS&amp;&apos;
+      RAISE EXCEPTION TYPE zaplink_cx_connector
+                 EXPORTING textid = zaplink_cx_connector=&gt;invalid_uuid
+                             type = type
+                         connuuid = connuuid.
+    ELSE.
+      IF NOT type IS INITIAL.
+        READ TABLE &lt;cl&gt;-types TRANSPORTING NO FIELDS
+             WITH TABLE KEY type = type.
         IF sy-subrc &lt;&gt; 0.
 * Class &apos;&amp;CONNUUID&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNCLASS&amp;&apos;
           RAISE EXCEPTION TYPE zaplink_cx_connector
@@ -251,30 +286,39 @@
                                  type = type
                              connuuid = connuuid.
         ENDIF.
-        _classname = &lt;c&gt;-classname.
-      ELSE.
-        IF NOT _conn-classes IS INITIAL AND _conn-default_class IS INITIAL.
-          READ TABLE _conn-classes ASSIGNING &lt;c&gt; INDEX 1.
-          IF sy-subrc = 0.
-            _conn-default_class = &lt;c&gt;-classname.
-          ENDIF.
-        ENDIF.
-        _classname = _conn-default_class.
       ENDIF.
-
-      IF NOT _classname IS INITIAL.
-        TRY.
-            CREATE OBJECT result TYPE (_classname).
-          CATCH cx_root INTO _cx.
-            RAISE EXCEPTION TYPE zaplink_cx_connector
-                       EXPORTING textid = zaplink_cx=&gt;system_error
-                               previous = _cx.
-        ENDTRY.
+    ENDIF.
+    _classname = &lt;cl&gt;-classname.
+  ELSEIF NOT type IS INITIAL.
+    TRY.
+        _conn = _search_connector( type ).
+      CATCH zaplink_cx_connector INTO o_mycx.
+        RAISE EXCEPTION o_mycx.
+    ENDTRY.
+    IF NOT _conn-classes IS INITIAL AND _conn-default_class IS INITIAL.
+      READ TABLE _conn-classes ASSIGNING &lt;c&gt; INDEX 1.
+      IF sy-subrc = 0.
+        _conn-default_class = &lt;c&gt;-classname.
       ENDIF.
+    ENDIF.
+    _classname = _conn-default_class.
+  ELSE.
+* Class &apos;&amp;CONNUUID&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNCLASS&amp;&apos;
+    RAISE EXCEPTION TYPE zaplink_cx_connector
+               EXPORTING textid = zaplink_cx_connector=&gt;invalid_uuid
+                           type = type
+                       connuuid = connuuid.
+  ENDIF.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
+  IF NOT _classname IS INITIAL.
+    TRY.
+        CREATE OBJECT result TYPE (_classname).
+      CATCH cx_root INTO _cx.
+        RAISE EXCEPTION TYPE zaplink_cx_connector
+                   EXPORTING textid = zaplink_cx=&gt;system_error
+                           previous = _cx.
+    ENDTRY.
+  ENDIF.
 </SOURCE>
    </ITEM>
    <ITEM CMPNAME="DO_EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -315,7 +359,7 @@
       RAISE EXCEPTION _cx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CLASSNAME" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_CLASSNAME" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get conenctor&apos;s classname"/>
     </TEXTS>
@@ -343,6 +387,34 @@
   CHECK o_conn IS BOUND.
   o_typedesc ?= cl_abap_objectdescr=&gt;describe_by_object_ref( o_conn ).
   result = o_typedesc-&gt;get_relative_name( ).
+</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_TYPEORDER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Get order of object Type"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE">
+      <TEXTS>
+       <ITEM LANGU="E"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20100125" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_TYPEORDER">
+      <TEXTS>
+       <ITEM LANGU="E"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>  FIELD-SYMBOLS:
+    &lt;t&gt; LIKE LINE OF saptypes.
+
+  READ TABLE saptypes ASSIGNING &lt;t&gt;
+       WITH TABLE KEY object = data.
+  IF sy-subrc = 0.
+    result = &lt;t&gt;-order.
+  ELSE.
+    result = max_order.
+  ENDIF.
 </SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_VALUES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
@@ -441,69 +513,77 @@
   ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="RESET_CONNECTORS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
+   <ITEM CMPNAME="RESET_CONNECTORS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Reset all connectors to default (remove local)"/>
     </TEXTS>
-    <SOURCE>  DATA _connectors TYPE REF TO cl_oo_if_relations.
+    <SOURCE>  DATA o_conn      TYPE REF TO zaplink_connector.
+  DATA _connectors TYPE REF TO cl_oo_if_relations.
+  DATA o_desc      TYPE REF TO cl_abap_typedescr.
   FIELD-SYMBOLS:
     &lt;im_cl&gt; LIKE LINE OF _connectors-&gt;implementing_classes,
     &lt;s_cl&gt; LIKE LINE OF _connectors-&gt;subclasses.
 
-  clear CONNECTOR_LIST.
-* Interface use
-  CREATE OBJECT _connectors
-    EXPORTING
-      clsname      = &apos;ZAPLINK_CONNECTOR&apos;
+  CLEAR connector_list.
+*Issue 3
+* Check interface type (local or global).
+  o_desc = cl_abap_structdescr=&gt;describe_by_name( &apos;ZAPLINK_CONNECTOR&apos; ).
+* when Local : \PROGRAM=ZAPLINK_INSTALLER\INTERFACE=ZAPLINK_CONNECTOR
+* when Global : \INTERFACE=ZAPLINK_CONNECTOR
+  IF o_desc-&gt;absolute_name CP &apos;\INTERFACE=*&apos;.
+* Global Interface : check use
+    CREATE OBJECT _connectors
+      EXPORTING
+        clsname      = &apos;ZAPLINK_CONNECTOR&apos;
 *      w_references = seox_true
 *      w_implementings = seox_true
 *      w_comprisings = seox_true
 *      w_subclasses = seox_true
-    EXCEPTIONS
-      not_existing = 0    &quot; For installer ignore not existing class
-      is_class     = 2
-      OTHERS       = 3
-      .
-  IF sy-subrc &lt;&gt; 0.
-    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-  ENDIF.
-  IF _connectors IS BOUND.
-    LOOP AT _connectors-&gt;implementing_classes ASSIGNING &lt;im_cl&gt;
-            WHERE exposure &lt;&gt; &apos;0&apos;   &quot; Private
-              AND version = &apos;1&apos;     &quot; Active
-              AND state &lt;&gt; &apos;0&apos;      &quot; Only modeled
-              .
+      EXCEPTIONS
+        not_existing = 0    &quot; For installer ignore not existing class
+        is_class     = 2
+        OTHERS       = 3.
+    IF sy-subrc &lt;&gt; 0.
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+                 WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    ENDIF.
+    IF _connectors IS BOUND.
+      LOOP AT _connectors-&gt;implementing_classes ASSIGNING &lt;im_cl&gt;
+              WHERE exposure &lt;&gt; &apos;0&apos;   &quot; Private
+                AND version = &apos;1&apos;     &quot; Active
+                AND state &lt;&gt; &apos;0&apos;      &quot; Only modeled
+                .
 
-      TRY.
+        TRY.
 
-          _add_connector( class = &lt;im_cl&gt;-clsname ).
+            _add_connector( class = &lt;im_cl&gt;-clsname ).
 
-        CATCH cx_root.
-          CONTINUE.
-      ENDTRY.
+          CATCH cx_root.
+            CONTINUE.
+        ENDTRY.
 
-    ENDLOOP.
+      ENDLOOP.
 
-    LOOP AT _connectors-&gt;subclasses ASSIGNING &lt;s_cl&gt;
-            WHERE state &lt;&gt; &apos;0&apos;      &quot; Only modeled
-              AND version = &apos;1&apos;     &quot; Active
-              .
+      LOOP AT _connectors-&gt;subclasses ASSIGNING &lt;s_cl&gt;
+              WHERE state &lt;&gt; &apos;0&apos;      &quot; Only modeled
+                AND version = &apos;1&apos;     &quot; Active
+                .
 
-      TRY.
+        TRY.
 
-          _add_connector( class = &lt;s_cl&gt;-clsname ).
+            _add_connector( class = &lt;s_cl&gt;-clsname ).
 
-        CATCH cx_root.
-          CONTINUE.
-      ENDTRY.
+          CATCH cx_root.
+            CONTINUE.
+        ENDTRY.
 
-    ENDLOOP.
+      ENDLOOP.
 
-    _update_def_class( ).
+      _update_def_class( ).
+    ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TYPE2TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
+   <ITEM CMPNAME="TYPE2TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get object Type as text"/>
     </TEXTS>
@@ -522,11 +602,11 @@
     <SOURCE>  FIELD-SYMBOLS:
     &lt;t&gt; LIKE LINE OF saptypes.
 
-    READ TABLE saptypes ASSIGNING &lt;t&gt;
-         WITH TABLE KEY object = data.
-    IF sy-subrc = 0.
-      result = &lt;t&gt;-text.
-    ENDIF.
+  READ TABLE saptypes ASSIGNING &lt;t&gt;
+       WITH TABLE KEY object = data.
+  IF sy-subrc = 0.
+    result = &lt;t&gt;-text.
+  ENDIF.
 </SOURCE>
    </ITEM>
    <ITEM CMPNAME="_ADD_CONNECTOR" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -534,12 +614,12 @@
      <ITEM LANGU="E" DESCRIPT="Add a connector to the list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="CLASS" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091123" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONNCLASS">
+     <ITEM SCONAME="CLASS" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONNCLASS">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Object Type : ClassName"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="DEVCLASS" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091123" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_DEVCLASS" PAROPTIONL="X">
+     <ITEM SCONAME="DEVCLASS" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_DEVCLASS" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Devlopment class"/>
       </TEXTS>
@@ -596,64 +676,67 @@
       RAISE EXCEPTION cx_comp.
   ENDTRY.
 
-  check connector is bound.
+  CHECK connector IS BOUND.
 
-  the_class-uuid = connector-&gt;uuid.
+  IF not connector-&gt;uuid is INITIAL               AND
+     NOT connector-&gt;supported_types IS INITIAL.
+    the_class-uuid = connector-&gt;uuid.
 * Check same class already loaded
-  READ TABLE _classes ASSIGNING &lt;cl&gt;
-             WITH TABLE KEY uuid = the_class-uuid.
-  IF sy-subrc = 0.
-    IF NOT ( &lt;cl&gt;-devclass &lt;&gt; local_devclass AND devclass = local_devclass ).
-      RAISE EXCEPTION TYPE zaplink_cx_component EXPORTING
-                      textid = zaplink_cx_component=&gt;twice_class
-                   connclass = class.
-    ELSE.
+    READ TABLE _classes ASSIGNING &lt;cl&gt;
+               WITH TABLE KEY uuid = the_class-uuid.
+    IF sy-subrc = 0.
+      IF NOT ( &lt;cl&gt;-devclass &lt;&gt; local_devclass AND devclass = local_devclass ).
+        RAISE EXCEPTION TYPE zaplink_cx_component EXPORTING
+                        textid = zaplink_cx_component=&gt;twice_class
+                     connclass = class.
+      ELSE.
 * OK : Overide general class with local class
-      LOOP AT &lt;cl&gt;-types ASSIGNING &lt;t&gt;.
-        READ TABLE connector_list ASSIGNING &lt;c&gt;
-             WITH TABLE KEY object = &lt;t&gt;-type.
-        IF sy-subrc &lt;&gt; 0.
-          RAISE EXCEPTION TYPE zaplink_cx_component EXPORTING
-                          textid = zaplink_cx_component=&gt;system_error
-                         cx_name = &apos;TYPE NOT FOUND&apos;.
-        ELSE.
-          DELETE &lt;c&gt;-classes WHERE classname = class.
-        ENDIF.
-      ENDLOOP.
-    ENDIF.
-  ENDIF.
-
-  the_class-classname = class.
-  IF NOT devclass IS INITIAL.
-    the_class-devclass = devclass.
-  ELSE.
-    SELECT SINGLE devclass INTO the_class-devclass
-      FROM tadir
-      WHERE pgmid = &apos;R3TR&apos;
-        AND object = &apos;CLAS&apos;
-        AND obj_name = the_class-classname.
-  ENDIF.
-  the_class-types = connector-&gt;supported_types.
-  INSERT the_class INTO TABLE _classes.
-
-  LOOP AT connector-&gt;supported_types ASSIGNING &lt;t&gt;.
-    READ TABLE connector_list ASSIGNING &lt;c&gt;
-         WITH TABLE KEY object = &lt;t&gt;-type.
-    IF sy-subrc &lt;&gt; 0.
-      _conn-object = &lt;t&gt;-type.
-      READ TABLE saptypes ASSIGNING &lt;st&gt;
-                 WITH TABLE KEY object = _conn-object.
-      IF sy-subrc = 0.
-        _conn-text = &lt;st&gt;-text.
+        LOOP AT &lt;cl&gt;-types ASSIGNING &lt;t&gt;.
+          READ TABLE connector_list ASSIGNING &lt;c&gt;
+               WITH TABLE KEY object = &lt;t&gt;-type.
+          IF sy-subrc &lt;&gt; 0.
+            RAISE EXCEPTION TYPE zaplink_cx_component EXPORTING
+                            textid = zaplink_cx_component=&gt;system_error
+                           cx_name = &apos;TYPE NOT FOUND&apos;.
+          ELSE.
+            DELETE &lt;c&gt;-classes WHERE classname = class.
+          ENDIF.
+        ENDLOOP.
       ENDIF.
-      INSERT _conn INTO TABLE connector_list.
+    ENDIF.
+
+    the_class-classname = class.
+    IF NOT devclass IS INITIAL.
+      the_class-devclass = devclass.
+    ELSE.
+      SELECT SINGLE devclass INTO the_class-devclass
+        FROM tadir
+        WHERE pgmid = &apos;R3TR&apos;
+          AND object = &apos;CLAS&apos;
+          AND obj_name = the_class-classname.
+    ENDIF.
+    the_class-types = connector-&gt;supported_types.
+    INSERT the_class INTO TABLE _classes.
+
+    LOOP AT connector-&gt;supported_types ASSIGNING &lt;t&gt;.
       READ TABLE connector_list ASSIGNING &lt;c&gt;
            WITH TABLE KEY object = &lt;t&gt;-type.
-    ENDIF.
-    CLEAR _class.
-    MOVE-CORRESPONDING the_class TO _class.
-    INSERT _class INTO TABLE &lt;c&gt;-classes.
-  ENDLOOP.
+      IF sy-subrc &lt;&gt; 0.
+        _conn-object = &lt;t&gt;-type.
+        READ TABLE saptypes ASSIGNING &lt;st&gt;
+                   WITH TABLE KEY object = _conn-object.
+        IF sy-subrc = 0.
+          _conn-text = &lt;st&gt;-text.
+        ENDIF.
+        INSERT _conn INTO TABLE connector_list.
+        READ TABLE connector_list ASSIGNING &lt;c&gt;
+             WITH TABLE KEY object = &lt;t&gt;-type.
+      ENDIF.
+      CLEAR _class.
+      MOVE-CORRESPONDING the_class TO _class.
+      INSERT _class INTO TABLE &lt;c&gt;-classes.
+    ENDLOOP.
+  ENDIF.
 
   CLEAR value_table.
   LOOP AT connector_list ASSIGNING &lt;c&gt;.
@@ -668,12 +751,12 @@
      <ITEM LANGU="E" DESCRIPT="Search for a connector in list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091123" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_CONN_DEF">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_CONN_DEF">
       <TEXTS>
        <ITEM LANGU="E"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TYPE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20091123" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE">
+     <ITEM SCONAME="TYPE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE">
       <TEXTS>
        <ITEM LANGU="E"/>
       </TEXTS>
@@ -774,18 +857,18 @@
      <ITEM LANGU="E" DESCRIPT="RAW component with data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CLASS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="25 " SRCCOLUMN2="16 " TYPESRC_LENG="122 ">
+   <ITEM CMPNAME="TS_CLASS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="25 " SRCCOLUMN2="18 " TYPESRC_LENG="130 ">
     BEGIN OF ts_class.
-INCLUDE TYPE ts_conn_class.
-TYPES:
-    types TYPE tt_types,   &quot; supported_types
-  END OF ts_class
+  INCLUDE TYPE ts_conn_class.
+  TYPES:
+      types TYPE tt_types,   &quot; supported_types
+    END OF ts_class
 
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_COMPONENT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="39 " SRCCOLUMN1="4 " SRCROW2="42 " SRCCOLUMN2="26 " TYPESRC_LENG="121 ">
+   <ITEM CMPNAME="TS_COMPONENT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="41 " SRCCOLUMN1="4 " SRCROW2="44 " SRCCOLUMN2="26 " TYPESRC_LENG="121 ">
     BEGIN OF ts_component,
           type TYPE td_comptype,
           name TYPE td_compname,
@@ -806,6 +889,17 @@ TYPES:
      <ITEM LANGU="E" DESCRIPT="Connector Info"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TS_SAPTYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="33 " SRCCOLUMN2="21 " TYPESRC_LENG="148 ">
+    BEGIN OF ts_saptypes.
+  INCLUDE TYPE ko100 AS hdr.
+  TYPES:
+      order TYPE td_typeorder,     &quot; order of prefered load
+    END OF ts_saptypes
+
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TS_VALUE" VERSION="1" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="9 " SRCCOLUMN2="23 " TYPESRC_LENG="120 ">
     BEGIN OF ts_value,
            object TYPE td_comptype,
@@ -823,8 +917,8 @@ TYPES:
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SAPTYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="29 " SRCCOLUMN2="64 " TYPESRC_LENG="63 ">
-    tt_saptypes TYPE HASHED TABLE OF ko100 WITH UNIQUE KEY object
+   <ITEM CMPNAME="TT_SAPTYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="35 " SRCCOLUMN1="4 " SRCROW2="35 " SRCCOLUMN2="70 " TYPESRC_LENG="69 ">
+    tt_saptypes TYPE HASHED TABLE OF ts_saptypes WITH UNIQUE KEY object
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="List of SAP CTS Types"/>

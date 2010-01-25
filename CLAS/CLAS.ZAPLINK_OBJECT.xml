@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0C7EAE45388C75103C4DB9286F078BD3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="56B693B5DFDAC04F425F4A80993AA2C7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="A32B044B702B371EE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -45,6 +45,11 @@
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
+  <DEFERRED>
+   <CLASSES>
+    <ITEM TYPEGROUP="ZAPLINK_OBJECT_DATA" VERSION="1" TPUTYPE="1" IMPLICIT="X"/>
+   </CLASSES>
+  </DEFERRED>
   <FRIENDS>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" STATE="1"/>
   </FRIENDS>
@@ -292,8 +297,6 @@
   DATA _name            TYPE td_compname.
 
   _d = o_data-&gt;to_data( ).
-  zaplink_clas_data=&gt;update_concept( EXPORTING msg_col = application_log
-                                     CHANGING  fm_data = _d ).
 
   CALL FUNCTION &apos;SEO_BUFFER_INIT&apos;.
   CALL FUNCTION &apos;SEO_CLASS_CREATE_COMPLETE&apos;
@@ -351,6 +354,12 @@
       RAISE EXCEPTION TYPE zaplink_cx_connector
         EXPORTING textid = zaplink_cx_connector=&gt;system_error.
   ENDCASE.
+
+* Exceptions texts
+  if not _d-exceptions_texts is INITIAL.
+*  zaplink_clas_data=&gt;update_concept( EXPORTING msg_col = application_log
+*                                     CHANGING  fm_data = _d ).
+  endif.
 
 * Issue 1
   _d-includes = zaplink_object_data=&gt;get_includes( _d-class-clsname ).
@@ -476,276 +485,6 @@
   _component-&gt;set_name( _name ).
   CREATE OBJECT components.
   components-&gt;add( _component ).</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYM">
-    <SOURCE>  DATA _o_class       TYPE to_class.
-  DATA _o_interface   TYPE to_interface.
-
-  TRY.
-      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
-
-  CASE object-&gt;type.
-    WHEN st_class.
-      _o_class ?= object-&gt;raw.
-      _o_class-&gt;anonymize( ).
-    WHEN st_interface.
-      _o_interface ?= object-&gt;raw.
-      _o_interface-&gt;anonymize( ).
-    WHEN OTHERS.
-  ENDCASE.
-</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CNX_EXT_CLEANER~UNANON">
-    <SOURCE>  DATA _o_class       TYPE to_class.
-  DATA _o_interface   TYPE to_interface.
-
-  TRY.
-      super-&gt;zaplink_cnx_ext_cleaner~unanonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
-
-  CASE object-&gt;type.
-    WHEN st_class.
-      _o_class ?= object-&gt;raw.
-      _o_class-&gt;unanonymize( ).
-    WHEN st_interface.
-      _o_interface ?= object-&gt;raw.
-      _o_interface-&gt;unanonymize( ).
-    WHEN OTHERS.
-  ENDCASE.
-</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CONNECTOR~CREATE_NEW_R">
-    <SOURCE>  DATA o_clas TYPE to_class.
-  DATA o_intf TYPE to_interface.
-
-  CREATE OBJECT object.
-  CASE type.
-    WHEN st_class.
-      CREATE OBJECT o_clas.
-      object-&gt;raw ?= o_clas.
-*      create object object type TO_CLASS.
-    WHEN st_interface.
-      CREATE OBJECT o_intf.
-      object-&gt;raw ?= o_intf.
-*      create object object type TO_CLASS.
-    WHEN OTHERS.
-      CLEAR object.
-      RAISE EXCEPTION TYPE zaplink_cx.
-  ENDCASE.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CONNECTOR~DELETE_FROM_">
-    <SOURCE>DATA clskey TYPE seoclskey.
-
-  CASE component-&gt;get_type( ).
-    WHEN st_class.
-      clskey-clsname = component-&gt;get_name( ).
-      CALL FUNCTION &apos;SEO_CLASS_DELETE_W_DEPS&apos;
-        EXPORTING
-          clskey       = clskey
-        EXCEPTIONS
-          not_existing = 1
-          is_interface = 2
-          not_deleted  = 3
-          db_error     = 4
-          OTHERS       = 5.
-      IF sy-subrc &lt;&gt; 0.
-        CASE sy-subrc.
-          WHEN 1.
-            RAISE EXCEPTION TYPE zaplink_cx_connector
-              EXPORTING textid = zaplink_cx_connector=&gt;not_found.
-*          WHEN 2.
-*            RAISE EXCEPTION TYPE zcx_saplink
-*              EXPORTING
-*                textid = zcx_saplink=&gt;error_message
-*                msg = &apos;interfaces not supported&apos;.
-*          WHEN 3.
-*            RAISE EXCEPTION TYPE zcx_saplink
-*              EXPORTING
-*                textid = zcx_saplink=&gt;error_message
-*                msg = &apos;class not deleted&apos;.
-          WHEN OTHERS.
-            RAISE EXCEPTION TYPE zaplink_cx_connector
-              EXPORTING textid = zaplink_cx_connector=&gt;system_error.
-        ENDCASE.
-      ENDIF.
-    WHEN st_interface.
-      clskey-clsname = component-&gt;get_name( ).
-* Not working
-*      CALL FUNCTION &apos;SEO_INTERFACE_DELETE_W_DEPS&apos;
-*        EXPORTING
-*          intkey       = clskey
-*          save         = seox_true
-*        EXCEPTIONS
-*          not_existing = 1
-*          is_class     = 2
-*          not_deleted  = 3
-*          db_error     = 4
-*          OTHERS       = 5.
-      CALL FUNCTION &apos;SEO_INTERFACE_DELETE_COMPLETE&apos;
-        EXPORTING
-          intkey                     = clskey
-*         GENFLAG                    = &apos; &apos;
-          AUTHORITY_CHECK            = SEOX_TRUE
-          SUPPRESS_DOCU_DELETE       = SEOX_TRUE
-*         SUPPRESS_COMMIT            = SEOX_FALSE
-*       CHANGING
-*         CORRNR                     =
-        EXCEPTIONS
-          NOT_EXISTING               = 1
-          IS_CLASS                   = 2
-          DB_ERROR                   = 3
-          NO_ACCESS                  = 4
-          OTHER                      = 5
-          OTHERS                     = 6
-                .
-      IF sy-subrc &lt;&gt; 0.
-        CASE sy-subrc.
-          WHEN 1.
-            RAISE EXCEPTION TYPE zaplink_cx_connector
-              EXPORTING textid = zaplink_cx_connector=&gt;not_found.
-*          WHEN 2.
-*            RAISE EXCEPTION TYPE zcx_saplink
-*              EXPORTING
-*                textid = zcx_saplink=&gt;error_message
-*                msg = &apos;interfaces not supported&apos;.
-*          WHEN 3.
-*            RAISE EXCEPTION TYPE zcx_saplink
-*              EXPORTING
-*                textid = zcx_saplink=&gt;error_message
-*                msg = &apos;class not deleted&apos;.
-          WHEN OTHERS.
-            RAISE EXCEPTION TYPE zaplink_cx_connector
-              EXPORTING textid = zaplink_cx_connector=&gt;system_error.
-        ENDCASE.
-      ENDIF.
-    WHEN OTHERS.
-  ENDCASE.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
-    <SOURCE>DATA clskey TYPE seoclskey.
-*  DATA not_active TYPE  seox_boolean.
-
-  CASE component-&gt;get_type( ).
-    WHEN st_class.
-      clskey-clsname = component-&gt;get_name( ).
-
-      CALL FUNCTION &apos;SEO_CLASS_EXISTENCE_CHECK&apos;
-        EXPORTING
-          clskey        = clskey
-*        IMPORTING
-*          not_active    = not_active
-        EXCEPTIONS
-          not_specified = 1
-          not_existing  = 2
-          is_interface  = 3
-          no_text       = 4
-          inconsistent  = 5
-          OTHERS        = 6.
-
-      IF sy-subrc = 0.
-        exists = &apos;X&apos;.
-      ENDIF.
-    WHEN st_interface.
-      clskey-clsname = component-&gt;get_name( ).
-
-      CALL FUNCTION &apos;SEO_INTERFACE_EXISTENCE_CHECK&apos;
-        EXPORTING
-          intkey              = clskey
-*       IMPORTING
-*         NOT_ACTIVE          =
-       EXCEPTIONS
-         not_specified       = 1
-         not_existing        = 2
-         is_class            = 3
-         no_text             = 4
-         inconsistent        = 5
-         OTHERS              = 6.
-
-      IF sy-subrc = 0.
-        exists = &apos;X&apos;.
-      ENDIF.
-    WHEN OTHERS.
-  ENDCASE.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED">
-    <SOURCE>  result = abap_false.
-  if version = _ver.
-    result = abap_true.
-  endif.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CONNECTOR~READ_FROM_SA">
-    <SOURCE>  DATA o_clas TYPE to_class.
-  DATA o_intf TYPE to_interface.
-
-  CREATE OBJECT object.
-  object-&gt;set_component( component ).
-
-  CASE component-&gt;get_type( ).
-    WHEN st_class.
-      TRY.
-          o_clas = export_from_sap_class( component ).
-        CATCH zaplink_cx_connector INTO o_mycx.
-          IF NOT o_mycx-&gt;messages IS BOUND.
-            o_mycx-&gt;messages = application_log.
-            o_mycx-&gt;update( ).
-          ENDIF.
-          RAISE EXCEPTION o_mycx.
-      ENDTRY.
-      CLEAR o_clas-&gt;a0_maindata-clsname.
-      object-&gt;raw ?= o_clas.
-    WHEN st_interface.
-      TRY.
-          o_intf = export_from_sap_interface( component ).
-        CATCH zaplink_cx_connector INTO o_mycx.
-          IF NOT o_mycx-&gt;messages IS BOUND.
-            o_mycx-&gt;messages = application_log.
-            o_mycx-&gt;update( ).
-          ENDIF.
-          RAISE EXCEPTION o_mycx.
-      ENDTRY.
-      CLEAR o_intf-&gt;a0_maindata-clsname.
-      object-&gt;raw ?= o_intf.
-    WHEN OTHERS.
-      CLEAR object.
-      RAISE EXCEPTION TYPE zaplink_cx.
-  ENDCASE.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
-    <SOURCE>  DATA _o_class       TYPE to_class.
-  DATA _o_interface   TYPE to_interface.
-
-  CASE object-&gt;type.
-    WHEN st_class.
-      _o_class ?= object-&gt;raw.
-      _o_class-&gt;a0_maindata-clsname = object-&gt;name.
-      TRY.
-          components = import_to_sap_class( _o_class ).
-        CATCH zaplink_cx_connector INTO o_mycx.
-          IF NOT o_mycx-&gt;messages IS BOUND.
-            o_mycx-&gt;messages = application_log.
-            o_mycx-&gt;update( ).
-          ENDIF.
-          RAISE EXCEPTION o_mycx.
-      ENDTRY.
-    WHEN st_interface.
-      _o_interface ?= object-&gt;raw.
-      _o_interface-&gt;a0_maindata-clsname = object-&gt;name.
-      TRY.
-          components = import_to_sap_interface( _o_interface ).
-        CATCH zaplink_cx_connector INTO o_mycx.
-          IF NOT o_mycx-&gt;messages IS BOUND.
-            o_mycx-&gt;messages = application_log.
-            o_mycx-&gt;update( ).
-          ENDIF.
-          RAISE EXCEPTION o_mycx.
-      ENDTRY.
-    WHEN OTHERS.
-  ENDCASE.</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>

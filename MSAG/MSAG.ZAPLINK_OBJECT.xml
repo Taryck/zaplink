@@ -1,112 +1,129 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="1269C3FADA2F2266FAEF33F82C0F1029" CONNECTOR="1FAC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="MSAG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="3FB4355AD6C4372A9813B666E2E95905" CONNECTOR="1FAC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="MSAG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA MASTERLANG="E" RESPUSER="TBENSIAL"/>
   <MESSAGES>
-   <ITEM MSGNR="000" SELFDEF="3">
+   <ITEM MSGNR="000" APPLICATION="DOKU" TYP="E" DOKFORM="S_DOCU_SHOW" DOKSTYLE="S_DOCUS1">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Root node &apos;&amp;1&apos; not found"/>
+     <ITEM LANGU="E" SHORT_TXT="Fatal Error : Method &amp;1 (&amp;2) is implemented but without any definition">
+      <LONG_TXT TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100122" TDFTIME="110724" TDLUSER="TBENSIAL" TDLRELES="700" TDLDATE="20100122" TDLTIME="111501" TDLINESIZE="072">U1&amp;CAUSE&amp;
+ASWhen analyzing method&apos;s list, it appears that method &amp;V1&amp; of class &amp;V2&amp;
+  has an include (means is implemented) but no definition has been found
+  in method&apos;s list. This is not (as far as we known) a normal situation.
+ASCheck table &apos;METHODS&apos; of module function &apos;SEO_CLASS_TYPEINFO_GET&apos; and
+  compare it to method&apos;s include list. method&apos;s include list is the result
+  of method &apos;GET_ALL_METHOD_INCLUDES&apos; of class &apos;CL_OO_CLASSNAME_SERVICE&apos;.
+U1&amp;SYSTEM_RESPONSE&amp;
+AS
+U1&amp;WHAT_TO_DO&amp;
+ASCheck that class &amp;V2&amp; is OK (compile). If so try to copy it and use this
+  new class for export.
+ASIf none of this solutions works please send this case for support the
+  connector&apos;s developer, here goto ZAPLink home site.
+U1&amp;SYS_ADMIN&amp;
+AS</LONG_TXT>
+     </ITEM>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="001" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="The actual plugin ver. (&amp;1) and the file ver. (&amp;2) are not compatible"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="002" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="The actual plugin ver. (&amp;1) and the file ver. (&amp;2) are compatible"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="003" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Processing Package &amp;1"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="004" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Succesfully deleted Package &amp;1"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="005" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Can&apos;t delete Package &amp;1 =&gt; switching to update"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="006" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Parsing Package &amp;1"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="007" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Parsing Interface &amp;1"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="008" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Controling existence of Package &amp;1"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="009" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Controling existence of Interface &amp;1"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="010" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Succesfully deleted Interface &amp;1"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="011" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Can&apos;t delete Interface &amp;1 =&gt; switching to update"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="012" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Fatal Errors occurs, check ba log (SLG1) : &apos;&amp;1&apos; &apos;&amp;2&apos; &apos;&amp;3&apos;"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="013" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Processing Interface &amp;1"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="014" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Processing Interface &amp;1 attributs (ACLs, Elements, ...)"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="015" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Processing Package &amp;1 attributs"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="016" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="System Error : Object &apos;&amp;3&apos; is not bound in method &amp;1-&gt;&amp;2"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="017" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="System Error : Return code &amp;4 when calling method &amp;3 in method &amp;1-&gt;&amp;2"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="018" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Delete TADIR entry of &amp;1 &amp;2 &amp;3 (not existing)"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="019" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="TADIR entry : Source System (&amp;1) Author (&amp;2) GenFlag (&amp;3)"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="020" SELFDEF="3">
     <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Object TADIR entry : &amp;1 &amp;2 &amp;3"/>
+     <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
    <ITEM MSGNR="021" SELFDEF="3">

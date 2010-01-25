@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B1BB3F060CD91376D4684647F28BD679" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="9BB3491FF2150F235461B78700D37D0B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="4FF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -59,6 +59,7 @@
   TRY.
 * Initialize Interator
       TRY.
+          object_list-&gt;order_kind = zaplink_list=&gt;order_kinds-no_order.
           object_list-&gt;init_sel_iter( ).
           object_list-&gt;display_progress = abap_true.
           o_comp = object_list-&gt;get_next( ).
@@ -210,6 +211,7 @@
     <SOURCE>  DATA o_comp    TYPE zaplink_list=&gt;to_component.
 
   CHECK object_list IS BOUND.
+  object_list-&gt;order_kind = zaplink_list=&gt;order_kinds-no_order.
   object_list-&gt;init_sel_iter( ).
   object_list-&gt;display_progress = abap_true.
 

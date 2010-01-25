@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5F920E6D6CA4165CABE7B59D5F8B0895" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="9001F41FE30AC04290A236E1A6064408" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="1B7B0D4B0CF39537E1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -281,8 +281,9 @@
         object_exists_local        = 2
         OTHERS                     = 3.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;TRINT_TADIR_INSERT&apos;
-                                                  subrc = sy-subrc ).
+      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
+                                                funcname = &apos;TRINT_TADIR_INSERT&apos;
+                                                   subrc = sy-subrc ).
       log-&gt;add_symsg( ).
       log-&gt;add_exception( o_mycx ).
       CLEAR o_mycx.
@@ -317,8 +318,9 @@
         object_has_no_tadir        = 3
         OTHERS                     = 4.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;TRINT_TADIR_MODIFY&apos;
-                                                  subrc = sy-subrc ).
+      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
+                                                funcname = &apos;TRINT_TADIR_MODIFY&apos;
+                                                   subrc = sy-subrc ).
       log-&gt;add_symsg( ).
       log-&gt;add_exception( o_mycx ).
       CLEAR o_mycx.
@@ -357,8 +359,9 @@
       unknown_objectclass            = 3
       OTHERS                         = 4.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;TRINT_TADIR_MODIFY&apos;
-                                                subrc = sy-subrc ).
+    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
+                                              funcname = &apos;RS_CORR_INSERT&apos;
+                                                 subrc = sy-subrc ).
     log-&gt;add_symsg( ).
     log-&gt;add_exception( o_mycx ).
     CLEAR o_mycx.
