@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D7AEEBC74C974683EF5255CF399BCA07" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="0A856691F4C405577D10A5EC889DF25C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="46F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -58,6 +58,11 @@
    <ITEM CMPNAME="METHODS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TT_METHODS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s methods"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="METHOD_SEPARATOR" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " ATTDECLTYP="2" ATTVALUE="&apos;~&apos;" TYPTYPE="1" TYPE="ABAP_CHAR1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Method separator"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="OBJ_LANGU" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SYLANGU">
@@ -197,7 +202,11 @@ ASHaving XML node with / (which means end of node) make nugget display
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  CHECK NOT fm_data-class-clsname IS INITIAL.
+    <SOURCE>  DATA s_impl_detail LIKE LINE OF fm_data-impl_details.
+  FIELD-SYMBOLS:
+    &lt;m&gt; LIKE LINE OF fm_data-includes-methods.
+
+  CHECK NOT fm_data-class-clsname IS INITIAL.
 
   SELECT * INTO TABLE fm_data-class_desc
     FROM seoclasstx
@@ -213,145 +222,53 @@ ASHaving XML node with / (which means end of node) make nugget display
 
   fm_data-includes = get_includes( fm_data-class-clsname ).
 
+* Issue 4
+*impl_details doesn&apos;t contains methods implemented when class is abstract
+* we check that all methods (comparing include) has it&apos;s entry.
+  LOOP AT fm_data-includes-methods ASSIGNING &lt;m&gt;
+          WHERE cpdkey-clsname = fm_data-class-clsname.
 
-  DATA _at  LIKE LINE OF attributs.
-  DATA _ty  LIKE LINE OF types.
-  DATA _tg  LIKE LINE OF typegroups.
-  DATA _me  LIKE LINE OF methods.
-  DATA _al  LIKE LINE OF aliases.
-  DATA _ev  LIKE LINE OF events.
-  DATA _mk  TYPE seocpdkey.
-  FIELD-SYMBOLS:
-    &lt;m_&gt;  LIKE LINE OF fm_data-includes-methods,
-    &lt;at&gt;  LIKE LINE OF fm_data-attributes,
-    &lt;al&gt;  LIKE LINE OF fm_data-aliases,
-    &lt;me&gt;  LIKE LINE OF fm_data-methods,
-    &lt;ev&gt;  LIKE LINE OF fm_data-events,
-    &lt;cd&gt;  LIKE LINE OF fm_data-clsdeferrds,
-    &lt;id&gt;  LIKE LINE OF fm_data-intdeferrds,
-    &lt;ty&gt;  LIKE LINE OF fm_data-types,
-    &lt;tu&gt;  LIKE LINE OF fm_data-typeusages.
-
-*TYPEPUSAGES  TYPE  SEOT_TYPEPUSAGES_R
-*CLSDEFERRDS  TYPE  SEOT_CLSDEFERRDS_R
-*INTDEFERRDS  TYPE  SEOT_INTDEFERRDS_R
-  LOOP AT fm_data-typeusages ASSIGNING &lt;tu&gt;
-          WHERE clsname = obj_name.
-    CLEAR _tg.
-    _tg-hdr = &lt;tu&gt;.
-
-    READ TABLE fm_data-clsdeferrds ASSIGNING &lt;cd&gt;
-         WITH TABLE KEY clsname = &lt;tu&gt;-clsname
-                      typegroup = &lt;tu&gt;-typegroup
-                        version = &lt;tu&gt;-version.
+* Check if method is a classic method
+    READ TABLE fm_data-methods TRANSPORTING NO FIELDS
+         WITH KEY clsname = &lt;m&gt;-cpdkey-clsname
+                  cmpname = &lt;m&gt;-cpdkey-cpdname.
     IF sy-subrc = 0.
-      _tg-defered = &lt;cd&gt;.
+* OK Method exists as a method.
+      CONTINUE.
     ENDIF.
 
-    READ TABLE fm_data-intdeferrds ASSIGNING &lt;id&gt;
-         WITH TABLE KEY clsname = &lt;tu&gt;-clsname
-                      typegroup = &lt;tu&gt;-typegroup
-                        version = &lt;tu&gt;-version.
+* Check if method is a redefinition
+    READ TABLE fm_data-redefinitions TRANSPORTING NO FIELDS
+         WITH KEY clsname = &lt;m&gt;-cpdkey-clsname
+               refclsname = fm_data-inheritance-refclsname
+                  mtdname = &lt;m&gt;-cpdkey-cpdname.
     IF sy-subrc = 0.
-      _tg-itf_def = &lt;id&gt;.
+* OK Method exists as a method&apos;s redefinition.
+      CONTINUE.
     ENDIF.
 
-    CLEAR: _tg-clsname, _tg-defered-clsname, _tg-itf_def-clsname. &quot; VERSION
-    INSERT _tg INTO TABLE typegroups.
+* Check if method is a interface implementation
+    CLEAR s_impl_detail.
+    s_impl_detail-clsname = &lt;m&gt;-cpdkey-clsname.
+    SPLIT &lt;m&gt;-cpdkey-cpdname AT method_separator INTO s_impl_detail-refclsname s_impl_detail-mtdname.
+    IF s_impl_detail-mtdname IS INITIAL. &quot; no ~ in name
+* Need to add new method which is not possible.
+*Fatal Error : Method &amp;1 (&amp;2) is implemented but without any definition
+      MESSAGE a000(zaplink_object) WITH &lt;m&gt;-cpdkey-cpdname &lt;m&gt;-cpdkey-clsname.
+    ENDIF.
+
+    READ TABLE fm_data-impl_details TRANSPORTING NO FIELDS
+         WITH KEY clsname = s_impl_detail-clsname
+               refclsname = s_impl_detail-refclsname
+                  mtdname = s_impl_detail-mtdname.
+    IF sy-subrc = 0.
+* OK Method exists as a implemented method.
+      CONTINUE.
+    ENDIF.
+* Method&apos;s doesn&apos;t exist as interface implementation =&gt; insert data
+    s_impl_detail-version = &apos;1&apos;. APPEND s_impl_detail TO fm_data-impl_details.
   ENDLOOP.
-
-*ATTRIBUTES TYPE  SEOO_atTTRIBUTES_R
-*COMPONENT_DESC  TYPE  tt_SEOCOMPOTX,
-  LOOP AT fm_data-attributes ASSIGNING &lt;at&gt;
-    WHERE clsname = obj_name.
-    CLEAR _at.
-    _at-hdr = &lt;at&gt;.
-
-    _at-texts = fd_comp_desc( descriptions = fm_data-component_desc
-                                 component = &lt;at&gt;-cmpname ).
-    CLEAR: _at-clsname, _at-langu, _at-descript. &quot; VERSION ?
-    INSERT _at INTO TABLE attributs.
-  ENDLOOP.
-
-*METHODS  TYPE  SEOO_meETHODS_R
-*PARAMETERS TYPE  SEOS_paARAMETERS_R
-*EXCEPS TYPE  SEOS_exXCEPTIONS_R
-*SUBCOMPONENT_DESC type  tt_SEOSUBCOTX,
-  LOOP AT fm_data-methods ASSIGNING &lt;me&gt;
-          WHERE clsname = obj_name.
-    CLEAR _me.
-    _me-hdr = &lt;me&gt;.
-
-    _me-texts = fd_comp_desc( descriptions = fm_data-component_desc
-                                 component = &lt;me&gt;-cmpname ).
-
-    _me-exceptions = fd_exceptions( fm_data = fm_data
-                                  component = &lt;me&gt;-cmpname ).
-
-    _me-parameters = fd_parameters( fm_data = fm_data
-                                  component = &lt;me&gt;-cmpname ).
-
-    CLEAR: _me-clsname, _me-langu, _me-descript. &quot; VERSION
-    INSERT _me INTO TABLE methods.
-  ENDLOOP.
-
-*EVENTS TYPE  SEOO_exVENTS_R
-*PARAMETERS TYPE  SEOS_paARAMETERS_R
-*EXCEPS TYPE  SEOS_exXCEPTIONS_R
-*SUBCOMPONENT_DESC type  tt_SEOSUBCOTX,
-  LOOP AT fm_data-events ASSIGNING &lt;ev&gt;
-          WHERE clsname = obj_name.
-    CLEAR _ev.
-    _ev-hdr = &lt;ev&gt;.
-
-    _ev-texts = fd_comp_desc( descriptions = fm_data-component_desc
-                                 component = &lt;ev&gt;-cmpname ).
-
-    _ev-parameters = fd_parameters( fm_data = fm_data
-                                  component = &lt;ev&gt;-cmpname ).
-* No exception in event
-*    _ev-exceptions = fd_exceptions( fm_data = fm_data
-*                                  component = &lt;ev&gt;-cmpname ).
-
-    CLEAR: _ev-clsname, _ev-langu, _ev-descript. &quot; VERSION
-    INSERT _ev INTO TABLE events.
-  ENDLOOP.
-
-*TYPES  TYPE  SEOO_TYPES_R
-  LOOP AT fm_data-types ASSIGNING &lt;ty&gt;
-          WHERE clsname = obj_name.
-    CLEAR _ty.
-    _ty-hdr = &lt;ty&gt;.
-    _ty-_ = _ty-typesrc. CLEAR _ty-typesrc.
-    REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;cr_lf IN _ty-_ WITH cl_abap_char_utilities=&gt;newline.
-
-    _ty-texts = fd_comp_desc( descriptions = fm_data-component_desc
-                                 component = &lt;ty&gt;-cmpname ).
-
-    CLEAR: _ty-clsname, _ty-langu, _ty-descript. &quot; VERSION
-    INSERT _ty INTO TABLE types.
-  ENDLOOP.
-
-*ALIASES  TYPE  SEOO_atLIASES_R
-  LOOP AT fm_data-aliases ASSIGNING &lt;al&gt;
-          WHERE clsname = obj_name.
-    CLEAR _al.
-    _al-hdr = &lt;al&gt;.
-
-    _al-texts = fd_comp_desc( descriptions = fm_data-component_desc
-                                 component = &lt;al&gt;-cmpname ).
-
-    CLEAR: _al-clsname. &quot; VERSION
-    INSERT _al INTO TABLE aliases.
-  ENDLOOP.
-
-* No use detected
-*EXPLORE_INHERITANCE  TYPE  SEOK_CLS_TYPEINFOS
-*EXPLORE_IMPLEMENTINGS  TYPE  SEOK_INT_TYPEINFOS
-*ENHANCEMENT_meETHODS  TYPE  ENHMETH_TABHEADER
-*ENHANCEMENT_atTTRIBUTES TYPE  ENHCLASSTABATTRIB
-*ENHANCEMENT_exVENTS TYPE  ENHCLASSTABEVENT
-*ENHANCEMENT_IMPLEMENTINGS  TYPE  ENHCLASSTABIMPLEMENTING</SOURCE>
+</SOURCE>
    </ITEM>
    <ITEM CMPNAME="FD_COMP_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>
@@ -517,6 +434,8 @@ ASHaving XML node with / (which means end of node) make nugget display
   DATA _al  LIKE LINE OF aliases.
   DATA _ev  LIKE LINE OF events.
   DATA _mk  TYPE seocpdkey.
+  DATA _dc  LIKE LINE OF deferred-classes.
+  DATA _di  LIKE LINE OF deferred-interfaces.
   FIELD-SYMBOLS:
     &lt;m_&gt;  LIKE LINE OF fm_data-includes-methods,
     &lt;at&gt;  LIKE LINE OF fm_data-attributes,
@@ -529,8 +448,6 @@ ASHaving XML node with / (which means end of node) make nugget display
     &lt;tu&gt;  LIKE LINE OF fm_data-typeusages.
 
 *TYPEPUSAGES  TYPE  SEOT_TYPEPUSAGES_R
-*CLSDEFERRDS  TYPE  SEOT_CLSDEFERRDS_R
-*INTDEFERRDS  TYPE  SEOT_INTDEFERRDS_R
   LOOP AT fm_data-typeusages ASSIGNING &lt;tu&gt;
           WHERE clsname = obj_name.
     CLEAR _tg.
@@ -555,9 +472,22 @@ ASHaving XML node with / (which means end of node) make nugget display
     CLEAR: _tg-clsname, _tg-defered-clsname, _tg-itf_def-clsname. &quot; VERSION
     INSERT _tg INTO TABLE typegroups.
   ENDLOOP.
-  loop at fm_data-clsdeferrds ASSIGNING &lt;cd&gt;.
 
-  endloop.
+* ISSUE 2 : Begin
+*CLSDEFERRDS  TYPE  SEOT_CLSDEFERRDS_R
+  LOOP AT fm_data-clsdeferrds ASSIGNING &lt;cd&gt;.
+    _dc = &lt;cd&gt;.
+    CLEAR: _dc-clsname.
+    INSERT _dc INTO TABLE deferred-classes.
+  ENDLOOP.
+
+*INTDEFERRDS  TYPE  SEOT_INTDEFERRDS_R
+  LOOP AT fm_data-intdeferrds ASSIGNING &lt;id&gt;.
+    _di = &lt;id&gt;.
+    CLEAR: _di-clsname.
+    INSERT _di INTO TABLE deferred-interfaces.
+  ENDLOOP.
+* ISSUE 2 : End
 
 *ATTRIBUTES TYPE  SEOO_atTTRIBUTES_R
 *COMPONENT_DESC  TYPE  tt_SEOCOMPOTX,
@@ -668,7 +598,7 @@ ASHaving XML node with / (which means end of node) make nugget display
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>includes-classpool = cl_oo_classname_service=&gt;get_classpool_name( clsname ).
+    <SOURCE>  includes-classpool = cl_oo_classname_service=&gt;get_classpool_name( clsname ).
   includes-pubsec    = cl_oo_classname_service=&gt;get_pubsec_name( clsname ).
   includes-prosec    = cl_oo_classname_service=&gt;get_prosec_name( clsname ).
   includes-prisec    = cl_oo_classname_service=&gt;get_prisec_name( clsname ).
@@ -869,6 +799,8 @@ ASHaving XML node with / (which means end of node) make nugget display
   DATA _al  LIKE LINE OF fm_data-aliases.
   DATA _ev  LIKE LINE OF fm_data-events.
   DATA _ms  LIKE LINE OF fm_data-method_sources.
+  DATA _dc  LIKE LINE OF fm_data-clsdeferrds.
+  DATA _di  LIKE LINE OF deferred-interfaces.
   DATA tmp_me LIKE LINE OF methods.
   FIELD-SYMBOLS:
     &lt;at&gt;  LIKE LINE OF attributs,
@@ -876,6 +808,8 @@ ASHaving XML node with / (which means end of node) make nugget display
     &lt;me&gt;  LIKE LINE OF methods,
     &lt;ev&gt;  LIKE LINE OF events,
     &lt;ct&gt;  LIKE LINE OF &lt;at&gt;-texts,
+    &lt;dc&gt;  LIKE LINE OF deferred-classes,
+    &lt;di&gt;  LIKE LINE OF deferred-interfaces,
     &lt;ty&gt;  LIKE LINE OF types,
     &lt;tu&gt;  LIKE LINE OF typegroups.
 
@@ -887,8 +821,6 @@ ASHaving XML node with / (which means end of node) make nugget display
 *  maindata-sources-private-_ = zaplink_program=&gt;get_source( fm_data-includes-prisec ).
 
 *TYPEPUSAGES  TYPE  SEOT_TYPEPUSAGES_R
-*CLSDEFERRDS  TYPE  SEOT_CLSDEFERRDS_R
-*INTDEFERRDS  TYPE  SEOT_INTDEFERRDS_R
   LOOP AT typegroups ASSIGNING &lt;tu&gt;.
     CLEAR _tg.
     _tg = &lt;tu&gt;-hdr.
@@ -910,6 +842,22 @@ ASHaving XML node with / (which means end of node) make nugget display
     _tg-clsname = obj_name.
     INSERT _tg INTO TABLE fm_data-typeusages.
   ENDLOOP.
+
+* ISSUE 2 : Begin
+*CLSDEFERRDS  TYPE  SEOT_CLSDEFERRDS_R
+  LOOP AT deferred-classes ASSIGNING &lt;dc&gt;.
+    CLEAR _dc. _dc = &lt;dc&gt;.
+    _dc-clsname = obj_name..
+    INSERT _dc INTO TABLE fm_data-clsdeferrds.
+  ENDLOOP.
+
+*INTDEFERRDS  TYPE  SEOT_INTDEFERRDS_R
+  LOOP AT deferred-interfaces ASSIGNING &lt;di&gt;.
+    CLEAR _di. _di = &lt;di&gt;.
+    _di-clsname = obj_name.
+    INSERT _di INTO TABLE fm_data-intdeferrds.
+  ENDLOOP.
+* ISSUE 2 : End
 
 *ATTRIBUTES TYPE  SEOO_atTTRIBUTES_R
 *COMPONENT_DESC  TYPE  tt_SEOCOMPOTX,
