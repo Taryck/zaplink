@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9C01B4BB32CF7437BEFD11109FFAFDB9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="9B3F0D9B6A4A0C2E7C1051F0F08AF55A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="F5F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="F5F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_FILE">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPLINK Nugget : File Manager"/>
+    <ITEM LANGU="E" DESCRIPT="ZAPLink : File Manager"/>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
@@ -66,7 +66,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Files" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
@@ -86,7 +86,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Files" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
@@ -106,7 +106,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Files" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
@@ -119,7 +119,7 @@
      <ITEM LANGU="E" DESCRIPT="Load file content"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Files" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
@@ -259,13 +259,13 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Files" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>DATA ft TYPE filetable.
+    <SOURCE>  DATA ft TYPE filetable.
   DATA filecount TYPE i.
   DATA cx_name TYPE string.
 
@@ -297,9 +297,9 @@
         WHEN OTHERS.
           cx_name = &apos;OTHERS&apos;.
       ENDCASE.
-* Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
+* Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
       RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;dialog_canceled
+            EXPORTING textid = zaplink_cx_file=&gt;load_error
                     filename = filename
                     filetype = _filetype
                      cx_name = cx_name.
@@ -325,16 +325,16 @@
      <ITEM LANGU="E" DESCRIPT="Save file content"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Files" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>DATA tmptable TYPE table_of_strings.
-  DATA cx_name TYPE string.
-  DATA cx TYPE REF TO cx_root.
-  DATA _cx TYPE REF TO zaplink_cx_file.
+    <SOURCE>  DATA tmptable  TYPE table_of_strings.
+*  DATA cx_name   TYPE string.
+  DATA o_cx      TYPE REF TO cx_root.
+  DATA o_cx_file TYPE REF TO zaplink_cx_file.
   FIELD-SYMBOLS:
     &lt;s&gt; LIKE LINE OF tmptable.
 
@@ -345,87 +345,98 @@
     IF _filename IS INITIAL.
       save_dialog( ).
     ELSE.
-      CALL METHOD cl_gui_frontend_services=&gt;gui_download
+*     CALL METHOD cl_gui_frontend_services=&gt;gui_download
+*     Not used because of missing param : SHOW_TRANSFER_STATUS
+      CALL FUNCTION &apos;GUI_DOWNLOAD&apos;
         EXPORTING
-*          bin_filesize              =
-          filename                  = _filename
-          filetype                  = &apos;DAT&apos;
-*      append                    = SPACE
-*      write_field_separator     = SPACE
-*      header                    = &apos;00&apos;
-*      trunc_trailing_blanks     = SPACE
-*      write_lf                  = &apos;X&apos;
-*      col_select                = SPACE
-*      col_select_mask           = SPACE
-*      dat_mode                  = SPACE
-*      confirm_overwrite         = SPACE
-*      no_auth_check             = SPACE
-*      codepage                  = SPACE
-*      ignore_cerr               = ABAP_TRUE
-*      replacement               = &apos;#&apos;
-*      write_bom                 = SPACE
-*      trunc_trailing_blanks_eol = &apos;X&apos;
-*      wk1_n_format              = SPACE
-*      wk1_n_size                = SPACE
-*      wk1_t_format              = SPACE
-*      wk1_t_size                = SPACE
-*    IMPORTING
-*      filelength                =
-        CHANGING
-          data_tab                  = tmptable
+*         BIN_FILESIZE                    =
+          filename                        = _filename
+          filetype                        = &apos;DAT&apos;
+*         APPEND                          = &apos; &apos;
+*         WRITE_FIELD_SEPARATOR           = &apos; &apos;
+*         HEADER                          = &apos;00&apos;
+*         TRUNC_TRAILING_BLANKS           = &apos; &apos;
+*         WRITE_LF                        = &apos;X&apos;
+*         COL_SELECT                      = &apos; &apos;
+*         COL_SELECT_MASK                 = &apos; &apos;
+*         DAT_MODE                        = &apos; &apos;
+*         CONFIRM_OVERWRITE               = &apos; &apos;
+*         NO_AUTH_CHECK                   = &apos; &apos;
+*         CODEPAGE                        = &apos; &apos;
+*         IGNORE_CERR                     = ABAP_TRUE
+*         REPLACEMENT                     = &apos;#&apos;
+*         WRITE_BOM                       = &apos; &apos;
+*         TRUNC_TRAILING_BLANKS_EOL       = &apos;X&apos;
+*         WK1_N_FORMAT                    = &apos; &apos;
+*         WK1_N_SIZE                      = &apos; &apos;
+*         WK1_T_FORMAT                    = &apos; &apos;
+*         WK1_T_SIZE                      = &apos; &apos;
+*         WRITE_LF_AFTER_LAST_LINE        = ABAP_TRUE
+          show_transfer_status            = abap_false
+*       IMPORTING
+*         FILELENGTH                      =
+        TABLES
+          data_tab                        = tmptable
+*         FIELDNAMES                      =
         EXCEPTIONS
-          file_write_error          = 1
-          no_batch                  = 2
-          gui_refuse_filetransfer   = 3
-          invalid_type              = 4
-          no_authority              = 5
-          unknown_error             = 6
-          header_not_allowed        = 7
-          separator_not_allowed     = 8
-          filesize_not_allowed      = 9
-          header_too_long           = 10
-          dp_error_create           = 11
-          dp_error_send             = 12
-          dp_error_write            = 13
-          unknown_dp_error          = 14
-          access_denied             = 15
-          dp_out_of_memory          = 16
-          disk_full                 = 17
-          dp_timeout                = 18
-          file_not_found            = 19
-          dataprovider_exception    = 20
-          control_flush_error       = 21
-          not_supported_by_gui      = 22
-          error_no_gui              = 23
-          OTHERS                    = 24.
+          file_write_error                = 1
+          no_batch                        = 2
+          gui_refuse_filetransfer         = 3
+          invalid_type                    = 4
+          no_authority                    = 5
+          unknown_error                   = 6
+          header_not_allowed              = 7
+          separator_not_allowed           = 8
+          filesize_not_allowed            = 9
+          header_too_long                 = 10
+          dp_error_create                 = 11
+          dp_error_send                   = 12
+          dp_error_write                  = 13
+          unknown_dp_error                = 14
+          access_denied                   = 15
+          dp_out_of_memory                = 16
+          disk_full                       = 17
+          dp_timeout                      = 18
+          file_not_found                  = 19
+          dataprovider_exception          = 20
+          control_flush_error             = 21
+          OTHERS                          = 22.
       IF sy-subrc &lt;&gt; 0.
-        CASE sy-subrc.
-          WHEN &apos;1&apos;.
-            cx_name = &apos;&apos;.
-          WHEN OTHERS.
-            cx_name = &apos;OTHERS&apos;.
-        ENDCASE.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-        RAISE EXCEPTION TYPE zaplink_cx_file
-              EXPORTING textid = zaplink_cx_file=&gt;save_error
-                      filename = _filename
-                      filetype = _filetype
-                       cx_name = cx_name.
+        TRY.
+            o_cx_file ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;GUI_DOWNLOAD&apos;
+                                                           subrc = sy-subrc
+                                                       classname = &apos;ZAPLINK_CX_FILE&apos;
+                                                          textid = zaplink_cx_file=&gt;save_error ).
+            o_cx_file-&gt;filename = _filename.
+            o_cx_file-&gt;filetype = _filetype.
+          CATCH cx_root INTO o_cx.
+* Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
+            CREATE OBJECT o_cx_file
+              EXPORTING
+                textid   = zaplink_cx_file=&gt;save_error
+                filename = _filename
+                filetype = _filetype
+                previous = o_cx.
+            o_cx_file-&gt;update( ).
+            RAISE EXCEPTION o_cx_file.
+        ENDTRY.
+        RAISE EXCEPTION o_cx_file.
       ENDIF.
     ENDIF.
   ELSEIF _filetype = c_ft_server.
     TRY.
         OPEN DATASET _filename FOR OUTPUT IN TEXT MODE ENCODING DEFAULT.
-      CATCH cx_root INTO cx.
+      CATCH cx_root INTO o_cx.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-        CREATE OBJECT _cx
+        CREATE OBJECT o_cx_file
           EXPORTING
             textid   = zaplink_cx_file=&gt;save_error
             filename = _filename
             filetype = _filetype
-            previous = cx.
-        _cx-&gt;update( ).
-        RAISE EXCEPTION _cx.
+            previous = o_cx.
+        o_cx_file-&gt;update( ).
+        RAISE EXCEPTION o_cx_file.
     ENDTRY.
     IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
@@ -439,31 +450,31 @@
     LOOP AT tmptable ASSIGNING &lt;s&gt;.
       TRY.
           TRANSFER &lt;s&gt; TO _filename.
-        CATCH cx_root INTO cx.
+        CATCH cx_root INTO o_cx.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-          CREATE OBJECT _cx
+          CREATE OBJECT o_cx_file
             EXPORTING
               textid   = zaplink_cx_file=&gt;save_error
               filename = _filename
               filetype = _filetype
-              previous = cx.
-          _cx-&gt;update( ).
-          RAISE EXCEPTION _cx.
+              previous = o_cx.
+          o_cx_file-&gt;update( ).
+          RAISE EXCEPTION o_cx_file.
       ENDTRY.
     ENDLOOP.
 
     TRY.
         CLOSE DATASET _filename.
-      CATCH cx_root INTO cx.
+      CATCH cx_root INTO o_cx.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-        CREATE OBJECT _cx
+        CREATE OBJECT o_cx_file
           EXPORTING
             textid   = zaplink_cx_file=&gt;save_error
             filename = _filename
             filetype = _filetype
-            previous = cx.
-        _cx-&gt;update( ).
-        RAISE EXCEPTION _cx.
+            previous = o_cx.
+        o_cx_file-&gt;update( ).
+        RAISE EXCEPTION o_cx_file.
     ENDTRY.
     IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
@@ -491,7 +502,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Files" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
@@ -545,7 +556,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Files" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
@@ -565,7 +576,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Files" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
@@ -595,7 +606,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Files" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>

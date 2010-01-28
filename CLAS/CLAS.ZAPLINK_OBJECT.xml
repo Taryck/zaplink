@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="56B693B5DFDAC04F425F4A80993AA2C7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="34B0CC062C4FDD131C0D14E0C709CB17" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="A32B044B702B371EE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="A32B044B702B371EE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_OBJECT">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="SapLink Class &amp; Interface Installer"/>
+    <ITEM LANGU="E" DESCRIPT="ZAPLink Class &amp; Interface connector"/>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
@@ -569,16 +569,6 @@
           WHEN 1.
             RAISE EXCEPTION TYPE zaplink_cx_connector
               EXPORTING textid = zaplink_cx_connector=&gt;not_found.
-*          WHEN 2.
-*            RAISE EXCEPTION TYPE zcx_saplink
-*              EXPORTING
-*                textid = zcx_saplink=&gt;error_message
-*                msg = &apos;interfaces not supported&apos;.
-*          WHEN 3.
-*            RAISE EXCEPTION TYPE zcx_saplink
-*              EXPORTING
-*                textid = zcx_saplink=&gt;error_message
-*                msg = &apos;class not deleted&apos;.
           WHEN OTHERS.
             RAISE EXCEPTION TYPE zaplink_cx_connector
               EXPORTING textid = zaplink_cx_connector=&gt;system_error.
@@ -619,16 +609,6 @@
           WHEN 1.
             RAISE EXCEPTION TYPE zaplink_cx_connector
               EXPORTING textid = zaplink_cx_connector=&gt;not_found.
-*          WHEN 2.
-*            RAISE EXCEPTION TYPE zcx_saplink
-*              EXPORTING
-*                textid = zcx_saplink=&gt;error_message
-*                msg = &apos;interfaces not supported&apos;.
-*          WHEN 3.
-*            RAISE EXCEPTION TYPE zcx_saplink
-*              EXPORTING
-*                textid = zcx_saplink=&gt;error_message
-*                msg = &apos;class not deleted&apos;.
           WHEN OTHERS.
             RAISE EXCEPTION TYPE zaplink_cx_connector
               EXPORTING textid = zaplink_cx_connector=&gt;system_error.

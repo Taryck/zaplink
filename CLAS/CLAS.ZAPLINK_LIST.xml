@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="08CDB67285D3252942F0D6B830B70685" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="7A1A04AE486364810D72DC00B14729BA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="16F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="16F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
    <INHERITANCE REFCLSNAME="ZAPLINK_LIST_" VERSION="1" STATE="1"/>
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
@@ -310,15 +310,15 @@
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>DATA alv TYPE td_alv.
+    <SOURCE>  DATA alv TYPE td_alv.
 
   alv = conv_to_alv( ).
 
   CALL FUNCTION &apos;REUSE_ALV_GRID_DISPLAY&apos;
     EXPORTING
-*      i_callback_program       = &apos;ZSAPLINK&apos;
-*      i_callback_pf_status_set = &apos;PF_STATUS_SET&apos;
-*      i_callback_user_command  = &apos;USER_COMMAND_USER&apos;
+*      i_callback_program       =
+*      i_callback_pf_status_set =
+*      i_callback_user_command  =
       i_grid_title             = &apos;Select objects&apos;(lst)
       it_fieldcat              = alv_conf-simple-fields
       is_layout                = alv_conf-simple-layout
@@ -1093,7 +1093,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Component" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
       </TEXTS>

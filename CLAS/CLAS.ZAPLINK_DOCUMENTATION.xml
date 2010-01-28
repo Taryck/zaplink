@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8CE15027E1D453F5BA4385124388F39E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="D45001D9085FA6B23E39836E5C9DE3AA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="DCF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="SAPLink - Message Class plugin"/>
+    <ITEM LANGU="E" DESCRIPT="ZAPLink - Documentation tools"/>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -273,7 +273,7 @@ CLASS ZAPLINK_DOC_DATA DEFINITION LOAD.</IMPLEMENTATIONS>
 *    ENDTRY.
     CALL METHOD bal_log-&gt;add_from_instance
       EXPORTING
-        io_msglist        = ezxml-&gt;bal_log
+        io_msglist        = ezxml-&gt;application_log
         if_add_as_subnode = abap_true
 *      if_cumulate       =
         .
@@ -311,7 +311,7 @@ CLASS ZAPLINK_DOC_DATA DEFINITION LOAD.</IMPLEMENTATIONS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Reset Bal Log"/>
     </TEXTS>
-    <SOURCE>DATA object	TYPE balobj_d.
+    <SOURCE>  DATA object	TYPE balobj_d.
   DATA subobject  TYPE balsubobj.
   DATA ext_id	TYPE balnrext.
 
@@ -319,7 +319,7 @@ CLASS ZAPLINK_DOC_DATA DEFINITION LOAD.</IMPLEMENTATIONS>
     EXIT.
   ENDIF.
 
-  object = &apos;ZSAPLINK&apos;.
+  object = zaplink_connector=&gt;ballog_object.
   subobject	= &apos;DOCT&apos;.
 *  CONCATENATE sy-uname sy-datum sy-uzeit INTO ext_id SEPARATED BY space.
 *01    Create
@@ -336,7 +336,7 @@ CLASS ZAPLINK_DOC_DATA DEFINITION LOAD.</IMPLEMENTATIONS>
       id_subobject   = subobject
       id_extnumber   = ext_id
       auto_upd_custo = abap_true
-      id_activity    = &apos;01&apos;
+      id_activity    = zaplink_message_collector=&gt;actions-create
     EXCEPTIONS
       error          = 1
       OTHERS         = 2.
@@ -441,7 +441,7 @@ CLASS ZAPLINK_DOC_DATA DEFINITION LOAD.</IMPLEMENTATIONS>
       any = t_docs.
 *  ENDTRY.
 
-  IF t_docs IS INITIAL AND ezxml-&gt;bal_log-&gt;has_messages_of_msgt( id_msgty = &apos;W&apos; ) IS INITIAL.
+  IF t_docs IS INITIAL AND ezxml-&gt;application_log-&gt;has_messages_of_msgt( id_msgty = &apos;W&apos; ) IS INITIAL.
     EXIT. &quot;nothing to do
   ENDIF.
 
@@ -449,7 +449,7 @@ CLASS ZAPLINK_DOC_DATA DEFINITION LOAD.</IMPLEMENTATIONS>
 
   CALL METHOD bal_log-&gt;add_from_instance
     EXPORTING
-      io_msglist        = ezxml-&gt;bal_log
+      io_msglist        = ezxml-&gt;application_log
       if_add_as_subnode = abap_true
 *      if_cumulate       =
       .

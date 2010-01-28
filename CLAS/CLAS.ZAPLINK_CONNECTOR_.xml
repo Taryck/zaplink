@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="72C44C81EF6AE890ADF1EE509EF35782" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="1D9C4AFA5A182CE3207ABA73CCCC3B0C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="47F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="47F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="Zap Link Connector base implementation"/>
    </TEXTS>
@@ -355,7 +355,12 @@
    </ITEM>
   </ALIASES>
   <ATTRIBUTS>
-   <ITEM CMPNAME="O_MYCX" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TO_EXCEPTION">
+   <ITEM CMPNAME="O_CX" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="O_MYCX" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Exception for connector"/>
     </TEXTS>
@@ -703,7 +708,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091125">
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091125">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
@@ -740,7 +745,7 @@
   ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_BASE_ATTRIBUTS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 ">
+   <ITEM CMPNAME="SET_BASE_ATTRIBUTS" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Build default Connector Base Attributs"/>
     </TEXTS>
@@ -756,19 +761,30 @@
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA o_desc    TYPE REF TO cl_abap_typedescr.
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100127">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>  DATA o_desc    TYPE REF TO cl_abap_typedescr.
   DATA string    TYPE string.
-  data _name     type TADIR-OBJ_NAME.
-  data _type     type TADIR-OBJECT.
+  DATA _name     TYPE tadir-obj_name.
+  DATA _type     TYPE tadir-object.
 
   o_desc = cl_abap_typedescr=&gt;describe_by_object_ref( p_object_ref = me ).
   string = o_desc-&gt;get_relative_name( ).
 
-  _name = attributs-name = component-&gt;get_name( ).
+  TRY.
+      _name = attributs-name = component-&gt;get_name( ).
+      _type = component-&gt;get_type( ).
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.
   attributs-class = string.
   attributs-version = me-&gt;version.
 
-  _type = component-&gt;get_type( ).
   CALL FUNCTION &apos;TRINT_TADIR_QUERY&apos;
     EXPORTING
       iv_pgmid           = &apos;R3TR&apos;
@@ -777,7 +793,7 @@
     IMPORTING
 *     EV_OBJECT          =
 *     EV_SRCSYSTEM       =
-      EV_DEVCLASS        = attributs-devclass
+      ev_devclass        = attributs-devclass
 *     EV_AUTHOR          =
 *     EV_GENFLAG         =
 *     EV_EXIST           =
@@ -903,6 +919,11 @@
    <ITEM CMPNAME="TO_EXCEPTION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
   </TYPES>

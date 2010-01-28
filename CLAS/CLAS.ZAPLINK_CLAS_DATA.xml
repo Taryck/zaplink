@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="410361B766FCE238F0E8593C3E5D802A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="220F1052072C8BE1B64B4DF088D78950" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="66FF044B26B30C5BE1000000AC120173" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -29,6 +29,16 @@
      <ITEM LANGU="E" DESCRIPT="Local data : Type, Implementaiton &amp; Macros"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="O_CX" VERSION="1" STATE="1" EDITORDER="8 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="O_MYCX" VERSION="1" STATE="1" EDITORDER="7 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_REDEFINITIONS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Methods redefinitions"/>
@@ -43,18 +53,29 @@
   <DOCUMENTATION>
    <ITEM APPLICATION="DOKU" ID="CA" OBJECT="ZAPLINK_CLAS_DATA             A0_MAINDATA" LANGU="E" MASTERLANG="X" TYP="E" DOKFORM="S_DOCU_SHOW" DOKSTYLE="S_DOCUS1">
     <TEXTS>
-     <ITEM TDSPRAS="E" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20091119" TDFTIME="114549" TDLRELES="700" TDLINESIZE="072">U1&amp;MEANING&amp;
-ASUsing &quot;/&quot; ensure that this attributes will be the first in alphabetic
-  order.
-ASUsing &quot;/&quot;, for SAP, means namespace. In order to work you should also
-  add another &quot;/&quot; which is the end of the namespace prefix.
-ASBecause this attributes doesn&apos;t have anything after the second &quot;/&quot;, this
-  namespace prefix is not controlled against the authorized namespaces
-  list.
+     <ITEM TDSPRAS="E" TDVERSION="00002" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100126" TDFTIME="120515" TDLUSER="TBENSIAL" TDLRELES="700" TDLDATE="20100126" TDLTIME="120551" TDLINESIZE="072">U1&amp;MEANING&amp;
+ASStore Class main data. &quot;A0_&quot; prefix has been use to keep this segment on
+  the top of the list.
+U1History
+AS1) Using &quot;/&quot; as prefix
+ASUsing &quot;/&quot; as prefix to ensure that this attributes will be the first in
+  alphabetic order. Using &quot;/&quot;, for SAP, means namespace. In order to work
+  you should also add another &quot;/&quot; which is the end of the namespace
+  prefix. Because this attributes doesn&apos;t have anything after the second
+  &quot;/&quot;, this namespace prefix is not controlled against the authorized
+  namespaces list.
+ASSo it&apos;s OK to use field starting with /.
+AS
+AS2) XML Node starting with &quot;/&quot;
+ASThis kind of node is expected as a closing node, which is a problem for
+  XML parser
+AS
+AS3) Using &quot;_&quot; as prefix
+ASUsing &quot;_&quot; as prefix let this attributes at the end in the alphabetic
+  order. So not working
 U1&amp;HINTS&amp;
-ASUse with care or prefer simple attribute names without &quot;/&quot;.
-ASHaving XML node with / (which means end of node) make nugget display
-  difficult in many XML viewer. So no longer use &quot;/&quot;.</ITEM>
+ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
+  &quot;/&quot;.</ITEM>
     </TEXTS>
    </ITEM>
   </DOCUMENTATION>
@@ -128,7 +149,7 @@ ASHaving XML node with / (which means end of node) make nugget display
     </PARAMETERS>
     <SOURCE>  concatenate &apos;&apos;&apos;&apos; data &apos;&apos;&apos;&apos; into result.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UPDATE_CONCEPT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
+   <ITEM CMPNAME="UPDATE_CONCEPT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Update Concepts"/>
     </TEXTS>
@@ -144,9 +165,15 @@ ASHaving XML node with / (which means end of node) make nugget display
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100127">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>  DATA lt_types TYPE sotr_objects.
   DATA _type    LIKE LINE OF lt_types.
-  DATA _cx      TYPE REF TO zaplink_cx.
   DATA _paket   TYPE sotr_pack.
   DATA _entries TYPE sotr_text_tt.
   DATA _entry   LIKE LINE OF _entries.
@@ -216,14 +243,15 @@ ASHaving XML node with / (which means end of node) make nugget display
           parameter_error             = 14
           OTHERS                      = 15.
       IF sy-subrc &lt;&gt; 0.
-        _cx = zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                          funcname = &apos;SOTR_DELETE_CONCEPT&apos; ).
+        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
+                                             classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
+                                              funcname = &apos;SOTR_DELETE_CONCEPT&apos; ).
         IF NOT msg_col IS BOUND.
-          RAISE EXCEPTION _cx.
+          RAISE EXCEPTION o_mycx.
         ELSE.
           CALL METHOD msg_col-&gt;add_exception
             EXPORTING
-              exception    = _cx
+              exception    = o_mycx
 *            id_detlevel  =
 *            id_probclass =
               .
@@ -308,18 +336,19 @@ ASHaving XML node with / (which means end of node) make nugget display
             OTHERS                              = 19.
     ENDTRY.
     IF sy-subrc &lt;&gt; 0.
-      _cx = zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                        funcname = &apos;SOTR_CREATE_CONCEPT&apos; ).
-      IF NOT msg_col IS BOUND.
-        RAISE EXCEPTION _cx.
-      ELSE.
-        CALL METHOD msg_col-&gt;add_exception
-          EXPORTING
-            exception    = _cx
+        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
+                                             classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
+                                              funcname = &apos;SOTR_CREATE_CONCEPT&apos; ).
+        IF NOT msg_col IS BOUND.
+          RAISE EXCEPTION o_mycx.
+        ELSE.
+          CALL METHOD msg_col-&gt;add_exception
+            EXPORTING
+              exception    = o_mycx
 *            id_detlevel  =
 *            id_probclass =
-            .
-      ENDIF.
+              .
+        ENDIF.
       CONTINUE.
     ENDIF.
 
@@ -796,12 +825,22 @@ ASHaving XML node with / (which means end of node) make nugget display
    <ITEM TYPEGROUP="SEOT" VERSION="1" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
+   <ITEM CMPNAME="TO_EXCEPTION" VERSION="1" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TO_MSG_COL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Message Collector"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CLASS_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4" SRCROW1="49 " SRCCOLUMN1="4 " SRCROW2="69 " SRCCOLUMN2="25 " TYPESRC_LENG="888 ">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" VERSION="1" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_CLASS_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4" SRCROW1="51 " SRCCOLUMN1="4 " SRCROW2="71 " SRCCOLUMN2="25 " TYPESRC_LENG="888 ">
     BEGIN OF ts_class_data.
     INCLUDE TYPE vseoclass AS hdr.
 *      Include type VSEOEXTEND as Inh.  &quot; Duplicate name for some fields
@@ -828,7 +867,7 @@ ASHaving XML node with / (which means end of node) make nugget display
      <ITEM LANGU="E" DESCRIPT="Maindata of Class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_EXCEPTION_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="19 " SRCCOLUMN1="4 " SRCROW2="25 " SRCCOLUMN2="29 " TYPESRC_LENG="232 ">
+   <ITEM CMPNAME="TS_EXCEPTION_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="29 " TYPESRC_LENG="232 ">
     BEGIN OF ts_exception_text.
     INCLUDE TYPE seoo_attribute_r AS attr.
     INCLUDE TYPE sotr_head AS cx.
@@ -841,7 +880,7 @@ ASHaving XML node with / (which means end of node) make nugget display
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_LOCALS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="33 " SRCCOLUMN1="4 " SRCROW2="37 " SRCCOLUMN2="23 " TYPESRC_LENG="179 ">
+   <ITEM CMPNAME="TS_LOCALS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="35 " SRCCOLUMN1="4 " SRCROW2="39 " SRCCOLUMN2="23 " TYPESRC_LENG="179 ">
     BEGIN OF ts_locals,
           types           TYPE ts_source_,
           implementations TYPE ts_source_,
@@ -852,7 +891,7 @@ ASHaving XML node with / (which means end of node) make nugget display
      <ITEM LANGU="E" DESCRIPT="Local data : Type, Implementaiton &amp; Macros"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_REDEFINITION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="39 " SRCCOLUMN1="4 " SRCROW2="43 " SRCCOLUMN2="27 " TYPESRC_LENG="191 ">
+   <ITEM CMPNAME="TS_REDEFINITION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="41 " SRCCOLUMN1="4 " SRCROW2="45 " SRCCOLUMN2="27 " TYPESRC_LENG="191 ">
     BEGIN OF ts_redefinition.
     INCLUDE TYPE seoredef AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
     TYPES:
@@ -863,7 +902,7 @@ ASHaving XML node with / (which means end of node) make nugget display
      <ITEM LANGU="E" DESCRIPT="Method&apos;s redefinition data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCE_" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="31 " SRCCOLUMN2="20 " TYPESRC_LENG="70 ">
+   <ITEM CMPNAME="TS_SOURCE_" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="31 " SRCCOLUMN1="4 " SRCROW2="33 " SRCCOLUMN2="20 " TYPESRC_LENG="70 ">
     begin of ts_source_,
       _ type ts_source,
     end of ts_source_
@@ -872,21 +911,21 @@ ASHaving XML node with / (which means end of node) make nugget display
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="27 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="85 " TYPESRC_LENG="84 ">
+   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="29 " SRCCOLUMN2="85 " TYPESRC_LENG="84 ">
     tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname
 
     <TEXTS>
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="47 " SRCCOLUMN1="4 " SRCROW2="47 " SRCCOLUMN2="86 " TYPESRC_LENG="85 ">
+   <ITEM CMPNAME="TT_FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="49 " SRCCOLUMN1="4 " SRCROW2="49 " SRCCOLUMN2="86 " TYPESRC_LENG="85 ">
     tt_friends    TYPE SORTED TABLE OF seofriends WITH UNIQUE KEY refclsname friendtype
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class Friends list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="45 " SRCCOLUMN1="4 " SRCROW2="45 " SRCCOLUMN2="80 " TYPESRC_LENG="79 ">
+   <ITEM CMPNAME="TT_REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="47 " SRCCOLUMN1="4 " SRCROW2="47 " SRCCOLUMN2="80 " TYPESRC_LENG="79 ">
     tt_redefinitions TYPE SORTED TABLE OF ts_redefinition WITH UNIQUE KEY mtdname
 
     <TEXTS>

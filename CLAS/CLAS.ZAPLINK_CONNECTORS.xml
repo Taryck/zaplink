@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="17C971073033711A6D9671449C32E1E2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="5D44240A33CAAE0872F44D8144D82E22" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="DCFD034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="DCFD034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
    </TEXTS>
@@ -95,7 +95,7 @@
      <ITEM LANGU="E" DESCRIPT="Connectors for all components types"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="47 " SRCCOLUMN1="4 " SRCROW2="50 " SRCCOLUMN2="20 " TYPESRC_LENG="205 " TYPESRC="BEGIN OF exists,
+   <ITEM CMPNAME="EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="48 " SRCCOLUMN1="4 " SRCROW2="51 " SRCCOLUMN2="20 " TYPESRC_LENG="205 " TYPESRC="BEGIN OF exists,
           exists     TYPE td_connexists VALUE ZAPLINK_DATATYPES~EXISTS-exists,
           not_exists TYPE td_connexists VALUE ZAPLINK_DATATYPES~EXISTS-not_exists,
         END OF exists
@@ -112,6 +112,11 @@
    <ITEM CMPNAME="MAX_ORDER" VERSION="1" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;999999&apos;" TYPTYPE="1" TYPE="TD_TYPEORDER">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Max (and default) Rank for type"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="O_CX" VERSION="1" STATE="1" EDITORDER="5 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
@@ -156,7 +161,9 @@
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
    <MACROS>*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
-*&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
+*&quot;* in the implementation part of the class
+
+INCLUDE ZAPLINK_MACROS.</MACROS>
   </LOCAL>
   <METHODS>
    <ITEM CMPNAME="ADD_LOCAL_CONNECTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -171,7 +178,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Component" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -224,10 +231,17 @@
   reset_connectors( ).
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CLEAR_CONNECTORS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CLEAR_CONNECTORS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Remove all connectors"/>
     </TEXTS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100127">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>  clear CONNECTOR_LIST.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CREATE_CONNECTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -252,7 +266,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Component" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -338,7 +352,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Component" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -348,10 +362,10 @@
   DATA _conn LIKE LINE OF connector_list.
 
   TRY.
-     result = exists-not_exists.
+      result = exists-not_exists.
       _conn = _search_connector( type ).
 
-      IF not _conn-classes is INITIAL.
+      IF NOT _conn-classes IS INITIAL.
         result = exists-exists.
       ENDIF.
 
@@ -376,7 +390,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091127">
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091127">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
@@ -482,7 +496,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091125">
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091125">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
@@ -513,10 +527,17 @@
   ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="RESET_CONNECTORS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
+   <ITEM CMPNAME="RESET_CONNECTORS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Reset all connectors to default (remove local)"/>
     </TEXTS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100127">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>  DATA o_conn      TYPE REF TO zaplink_connector.
   DATA _connectors TYPE REF TO cl_oo_if_relations.
   DATA o_desc      TYPE REF TO cl_abap_typedescr.
@@ -544,8 +565,7 @@
         is_class     = 2
         OTHERS       = 3.
     IF sy-subrc &lt;&gt; 0.
-      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
-                 WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+      mac_raise_symsg &apos;ZAPLINK_CX_CONNECTOR&apos; zaplink_cx_connector=&gt;system_error.
     ENDIF.
     IF _connectors IS BOUND.
       LOOP AT _connectors-&gt;implementing_classes ASSIGNING &lt;im_cl&gt;
@@ -626,14 +646,14 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Component" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>  DATA connector TYPE REF TO zaplink_connector.
-  DATA cx        TYPE REF TO cx_root.
+  DATA o_cx_root TYPE REF TO cx_root.
   DATA o_cx_create TYPE REF TO cx_sy_create_object_error.
   DATA cx_comp   TYPE REF TO zaplink_cx_component.
   DATA tabletypeline TYPE ko105.
@@ -660,25 +680,15 @@
           OR cx_sy_create_object_error=&gt;protected_constructor.
 * Ignore exception
         WHEN OTHERS.
-          CREATE OBJECT cx_comp
-            EXPORTING
-              textid   = zaplink_cx_component=&gt;system_error
-              previous = o_cx_create.
-          cx_comp-&gt;update( ).
-          RAISE EXCEPTION cx_comp.
+          mac_cascade_raise_root o_mycx o_cx_create.
       ENDCASE.
-    CATCH cx_root INTO cx.
-      CREATE OBJECT cx_comp
-        EXPORTING
-          textid   = zaplink_cx_component=&gt;system_error
-          previous = cx.
-      cx_comp-&gt;update( ).
-      RAISE EXCEPTION cx_comp.
+    CATCH cx_root INTO o_cx_root.
+      mac_cascade_raise_root o_mycx o_cx_root.
   ENDTRY.
 
   CHECK connector IS BOUND.
 
-  IF not connector-&gt;uuid is INITIAL               AND
+  IF NOT connector-&gt;uuid IS INITIAL               AND
      NOT connector-&gt;supported_types IS INITIAL.
     the_class-uuid = connector-&gt;uuid.
 * Check same class already loaded
@@ -686,8 +696,8 @@
                WITH TABLE KEY uuid = the_class-uuid.
     IF sy-subrc = 0.
       IF NOT ( &lt;cl&gt;-devclass &lt;&gt; local_devclass AND devclass = local_devclass ).
-        RAISE EXCEPTION TYPE zaplink_cx_component EXPORTING
-                        textid = zaplink_cx_component=&gt;twice_class
+        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
+                        textid = zaplink_cx_connector=&gt;twice_class
                      connclass = class.
       ELSE.
 * OK : Overide general class with local class
@@ -695,8 +705,8 @@
           READ TABLE connector_list ASSIGNING &lt;c&gt;
                WITH TABLE KEY object = &lt;t&gt;-type.
           IF sy-subrc &lt;&gt; 0.
-            RAISE EXCEPTION TYPE zaplink_cx_component EXPORTING
-                            textid = zaplink_cx_component=&gt;system_error
+            RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
+                            textid = zaplink_cx_connector=&gt;system_error
                            cx_name = &apos;TYPE NOT FOUND&apos;.
           ELSE.
             DELETE &lt;c&gt;-classes WHERE classname = class.
@@ -763,7 +773,7 @@
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Component" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -788,7 +798,7 @@
      <ITEM LANGU="E" DESCRIPT="Update default"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Exception for Component" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -857,6 +867,11 @@
      <ITEM LANGU="E" DESCRIPT="RAW component with data"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" VERSION="1" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TS_CLASS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="25 " SRCCOLUMN2="18 " TYPESRC_LENG="130 ">
     BEGIN OF ts_class.
   INCLUDE TYPE ts_conn_class.
@@ -868,7 +883,7 @@
      <ITEM LANGU="E"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_COMPONENT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="41 " SRCCOLUMN1="4 " SRCROW2="44 " SRCCOLUMN2="26 " TYPESRC_LENG="121 ">
+   <ITEM CMPNAME="TS_COMPONENT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="42 " SRCCOLUMN1="4 " SRCROW2="45 " SRCCOLUMN2="26 " TYPESRC_LENG="121 ">
     BEGIN OF ts_component,
           type TYPE td_comptype,
           name TYPE td_compname,

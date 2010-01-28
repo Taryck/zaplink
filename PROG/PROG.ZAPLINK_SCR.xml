@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D409ECE9DE2EBA317FF84E395726F9F3" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="68A780BF091D241105683EE2B3B46763" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000058" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
+  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000063" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
   <SOURCE>*&amp;---------------------------------------------------------------------*
 *&amp;  Include           ZAPLINLK_SCR
 *&amp;---------------------------------------------------------------------*
@@ -10,26 +10,26 @@
 */------------------------SELECTION SCREEN----------------------------\
 
 SELECTION-SCREEN BEGIN OF BLOCK main WITH FRAME.
-SELECTION-SCREEN BEGIN OF BLOCK mode WITH FRAME TITLE text-slk.
-PARAMETERS nugi TYPE c RADIOBUTTON GROUP r3 DEFAULT &apos;X&apos;
+SELECTION-SCREEN BEGIN OF BLOCK mode WITH FRAME TITLE text-bac.
+PARAMETERS a_import TYPE c RADIOBUTTON GROUP r3 DEFAULT &apos;X&apos;
   USER-COMMAND updown.
-PARAMETERS nugd TYPE c RADIOBUTTON GROUP r3.
+PARAMETERS a_dsp TYPE c RADIOBUTTON GROUP r3.
 SELECTION-SCREEN ULINE.
-PARAMETERS nugu TYPE c RADIOBUTTON GROUP r3.  &quot;uninstall
+PARAMETERS a_uninst TYPE c RADIOBUTTON GROUP r3.  &quot;uninstall
 SELECTION-SCREEN ULINE.
-PARAMETERS nugc TYPE c RADIOBUTTON GROUP r3.
-PARAMETERS nuga TYPE c RADIOBUTTON GROUP r3.
-PARAMETERS nugp TYPE c RADIOBUTTON GROUP r3.
-PARAMETERS nugr TYPE c RADIOBUTTON GROUP r3.
+PARAMETERS a_create TYPE c RADIOBUTTON GROUP r3.
+PARAMETERS a_add TYPE c RADIOBUTTON GROUP r3.
+PARAMETERS a_add_p TYPE c RADIOBUTTON GROUP r3.
+PARAMETERS a_add_tr TYPE c RADIOBUTTON GROUP r3.
 SELECTION-SCREEN END OF BLOCK mode.
 
-SELECTION-SCREEN BEGIN OF BLOCK opt WITH FRAME TITLE text-opt.
-PARAMETERS nuggnam(300) TYPE c MODIF ID nnm.
-PARAMETERS nplugin TYPE  ko100-object MODIF ID npg.
-PARAMETERS nobjnam(40) TYPE c MODIF ID npg.
-*      parameters nPlugIn type  KO100-object modif id npg.
+SELECTION-SCREEN BEGIN OF BLOCK opt WITH FRAME TITLE text-bop.
+PARAMETERS c_name(300) TYPE c MODIF ID nnm.
+PARAMETERS co_type TYPE  ko100-object MODIF ID npg.
+PARAMETERS co_name(40) TYPE c MODIF ID npg.
+*      parameters co_type type  KO100-object modif id npg.
 PARAMETER package      TYPE tadir-devclass MODIF ID npc.
-SELECT-OPTIONS  reqnugg FOR e071-trkorr NO INTERVALS
+SELECT-OPTIONS  p_tr FOR e071-trkorr NO INTERVALS
   NO-EXTENSION MODIF ID rnm.
 PARAMETER p_file(300) LOWER CASE TYPE c MODIF ID nfl.
 
@@ -89,7 +89,7 @@ AT SELECTION-SCREEN.
 AT SELECTION-SCREEN OUTPUT.
 * Options : DEVC &amp; TR
   DATA _active TYPE i.
-  IF nugi IS INITIAL. _active = 0. ELSE. _active = 1. ENDIF.
+  IF a_import IS INITIAL. _active = 0. ELSE. _active = 1. ENDIF.
   LOOP AT SCREEN.
     CASE screen-name.
       WHEN &apos;%FDVF007_0110&apos; OR &apos;%_17NNJ0000543372_%_%_%_%_%_%_&apos; &quot; scr 110
@@ -99,7 +99,7 @@ AT SELECTION-SCREEN OUTPUT.
     ENDCASE.
   ENDLOOP.
   LOOP AT SCREEN.
-    IF nugc = &apos;X&apos;.
+    IF a_create = &apos;X&apos;.
       IF screen-group1 = &apos;NNM&apos;.
         screen-active = &apos;1&apos;.
         screen-invisible = &apos;0&apos;.
@@ -111,7 +111,7 @@ AT SELECTION-SCREEN OUTPUT.
         screen-invisible = &apos;1&apos;.
         MODIFY SCREEN.
       ENDIF.
-    ELSEIF nugi = &apos;X&apos;.
+    ELSEIF a_import = &apos;X&apos;.
       IF screen-group1 = &apos;NFL&apos; OR screen-group1 = &apos;NOW&apos;.
         screen-active = &apos;1&apos;.
         screen-invisible = &apos;0&apos;.
@@ -122,7 +122,7 @@ AT SELECTION-SCREEN OUTPUT.
         screen-invisible = &apos;1&apos;.
         MODIFY SCREEN.
       ENDIF.
-    ELSEIF nuga = &apos;X&apos;.
+    ELSEIF a_add = &apos;X&apos;.
       IF screen-group1 = &apos;NFL&apos; OR screen-group1 = &apos;NPG&apos;.
         screen-active = &apos;1&apos;.
         screen-invisible = &apos;0&apos;.
@@ -133,7 +133,7 @@ AT SELECTION-SCREEN OUTPUT.
         screen-invisible = &apos;1&apos;.
         MODIFY SCREEN.
       ENDIF.
-    ELSEIF nugp = &apos;X&apos;.
+    ELSEIF a_add_p = &apos;X&apos;.
       IF screen-group1 = &apos;NFL&apos; OR screen-group1 = &apos;NPC&apos;.
         screen-active = &apos;1&apos;.
         screen-invisible = &apos;0&apos;.
@@ -144,7 +144,7 @@ AT SELECTION-SCREEN OUTPUT.
         screen-invisible = &apos;1&apos;.
         MODIFY SCREEN.
       ENDIF.
-    ELSEIF nugd = &apos;X&apos; OR nugu = &apos;X&apos;.
+    ELSEIF a_dsp = &apos;X&apos; OR a_uninst = &apos;X&apos;.
       IF screen-group1 = &apos;NFL&apos;.
         screen-active = &apos;1&apos;.
         screen-invisible = &apos;0&apos;.
@@ -156,7 +156,7 @@ AT SELECTION-SCREEN OUTPUT.
         screen-invisible = &apos;1&apos;.
         MODIFY SCREEN.
       ENDIF.
-    ELSEIF nugr = &apos;X&apos;.
+    ELSEIF a_add_tr = &apos;X&apos;.
       IF screen-group1 = &apos;NFL&apos; OR screen-group1 = &apos;RNM&apos;.
         screen-active = &apos;1&apos;.
         screen-invisible = &apos;0&apos;.
@@ -171,45 +171,19 @@ AT SELECTION-SCREEN OUTPUT.
   ENDLOOP.
 
 *** value request for input fields
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR nplugin.
-  zaplink_connectors=&gt;get_values( CHANGING type = nplugin ).
-*  FIELD-SYMBOLS:
-*    &lt;c&gt; LIKE LINE OF zaplink_kernel=&gt;connector_list.
-*
-*  REFRESH pluginlist.
-*  LOOP AT zaplink_kernel=&gt;connector_list ASSIGNING &lt;c&gt;.
-*    MOVE-CORRESPONDING &lt;c&gt; TO pluginline.
-*    APPEND pluginline TO pluginlist.
-*  ENDLOOP.
-*
-*  CALL FUNCTION &apos;F4IF_INT_TABLE_VALUE_REQUEST&apos;
-*    EXPORTING
-*      retfield        = &apos;OBJECT&apos;
-*      window_title    = &apos;Installed Plugins&apos;
-*      dynpprog        = sy-repid
-*      dynpnr          = &apos;1000&apos;
-*      dynprofield     = &apos;NPLUGIN&apos;
-*      value_org       = &apos;S&apos;
-*    TABLES
-*      value_tab       = pluginlist
-*    EXCEPTIONS
-*      parameter_error = 0
-*      no_values_found = 0
-*      OTHERS          = 0.
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR co_type.
+  zaplink_connectors=&gt;get_values( CHANGING type = co_type ).
 
 AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
-  CALL METHOD cl_gui_frontend_services=&gt;file_open_dialog
-    EXPORTING
-      multiselection    = abap_false
-      file_filter       = &apos;*.nugg&apos;
-      default_extension = &apos;nugg&apos;
-    CHANGING
-      file_table        = retfiletable
-      rc                = retrc
-      user_action       = retuseraction.
-  READ TABLE retfiletable INTO p_file INDEX 1.
+  DATA l_file TYPE zaplink_gui=&gt;td_filename.
 
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR reqnugg-low.
+  l_file = p_file.
+  CALL METHOD zaplink_gui=&gt;containerfile_select
+    CHANGING
+      filename = l_file.
+  p_file = l_file.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_tr-low.
   iv_organizer_type = &apos;W&apos;.
 *  is_selection-reqstatus = &apos;R&apos;.
   CALL FUNCTION &apos;TR_PRESENT_REQUESTS_SEL_POPUP&apos;
@@ -220,7 +194,7 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR reqnugg-low.
       es_selected_request = es_selected_request
       es_selected_task    = es_selected_task.
 
-  reqnugg-low = es_selected_request-trkorr.
+  p_tr-low = es_selected_request-trkorr.
 
 *\--------------------------------------------------------------------/</SOURCE>
   <TEXTSPOOL>

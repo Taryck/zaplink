@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E71BBC2FD8FDB7E867EA21CB5997542E" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="D995BE573C1192E159EE0286450A5F78" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" VERN="000068" RMAND="220" RLOAD="E" UCCHECK="X"/>
+  <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" VERN="000070" RMAND="220" RLOAD="E" UCCHECK="X"/>
   <SOURCE>*&amp;---------------------------------------------------------------------*
 *&amp;  Include           ZAPLINK_FRM
 *&amp;---------------------------------------------------------------------*
@@ -218,7 +218,7 @@ ENDFORM.                    &quot; DSP_RESULT_DISPLAY
 *&amp;      Form  create
 *&amp;---------------------------------------------------------------------*
 FORM create .
-  d_name = nuggnam.
+  d_name = c_name.
   TRY.
       CALL METHOD zaplink_gui=&gt;create
         EXPORTING
@@ -235,8 +235,8 @@ ENDFORM.                    &quot; create
 *&amp;---------------------------------------------------------------------*
 FORM add .
   d_filename = p_file.
-  obj_type = nplugin.
-  obj_name = nobjnam.
+  obj_type = co_type.
+  obj_name = co_name.
   TRY.
       CALL METHOD zaplink_gui=&gt;add_object
         EXPORTING
@@ -383,12 +383,12 @@ FORM add_tr .
     r_tr TYPE zaplink_gui=&gt;tr_tr.
   DATA _keys TYPE zaplink_gui=&gt;tt_compkeys.
 
-  IF reqnugg[] IS INITIAL.
+  IF p_tr[] IS INITIAL.
     MESSAGE s208(00) WITH &apos;Transport Request required&apos;.
     EXIT.
   ENDIF.
 
-  r_tr = reqnugg[].
+  r_tr = p_tr[].
 
   _keys = zaplink_gui=&gt;get_keys_from_tr( r_tr ).
   CREATE OBJECT objlist.

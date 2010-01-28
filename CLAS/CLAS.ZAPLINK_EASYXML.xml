@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A12A2B6FC14455D61877A70045CE13E2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="DF3FB9BB95E580EEC71D0A89FFA6ADBA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="ECF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -8,14 +8,14 @@
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
+   <ITEM CMPNAME="APPLICATION_LOG" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTRDONLY="X" TYPTYPE="1" TYPE="TO_LOG">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Message Collector: Standard Implementation"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="BAL_LEVEL" VERSION="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="BALLEVEL">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Application Log: Level of detail"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="BAL_LOG" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTRDONLY="X" TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector: Standard Implementation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CONTEXT" VERSION="1" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="TT_CONTEXT">
@@ -33,11 +33,6 @@
      <ITEM LANGU="E" DESCRIPT="Element Name for Table&apos;s line"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="EXCEPTION" VERSION="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_CX">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
-    </TEXTS>
-   </ITEM>
    <ITEM CMPNAME="IXML" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="IF_IXML">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="IF_IXML"/>
@@ -46,6 +41,11 @@
    <ITEM CMPNAME="MSGID" VERSION="1" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;ZAPLINK_EASYXML&apos;" TYPTYPE="1" TYPE="SYMSGID">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Message Class"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="O_MYCX" VERSION="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TO_EXCEPTION">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="RC" VERSION="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="I">
@@ -89,22 +89,28 @@ AS</ITEM>
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
    <MACROS>*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* in the implementation part of the class
+
+
+* Add error message to application log.
 DEFINE mac_syserr_log.
-    IF &amp;1 &lt;&gt; 0.
-      IF not bal_log is bound. MESSAGE ID MSGID TYPE &apos;E&apos; NUMBER 000 WITH abap_true abap_true abap_true. ENDIF.
-      crc = &amp;1.
-      CALL METHOD bal_log-&gt;add_error
-        EXPORTING
+  if &amp;1 &lt;&gt; 0.
+    if 1 = 2. message id msgid type &apos;E&apos; number 000 with abap_true abap_true abap_true. endif.
+*      IF not application_log is bound. MESSAGE ID MSGID TYPE &apos;E&apos; NUMBER 000 WITH abap_true abap_true abap_true. ENDIF.
+* Assuming application log is created
+    crc = &amp;1.
+* System Error &amp;1 : on &amp;2 in &amp;3
+    call method application_log-&gt;add_error
+      exporting
 *          id_msgid     = MSGID
-          id_msgno     = &apos;000&apos;
-          id_msgv1     = crc
-          id_msgv2     = &amp;2
-          id_msgv3     = &amp;3
+        id_msgno     = &apos;000&apos;
+        id_msgv1     = crc
+        id_msgv2     = &amp;2
+        id_msgv3     = &amp;3
 *          id_msgv4     =
 *          id_detlevel  =
 *          id_probclass =
-          .
-    ENDIF.
+        .
+  endif.
 END-OF-DEFINITION.</MACROS>
   </LOCAL>
   <METHODS>
@@ -199,8 +205,10 @@ END-OF-DEFINITION.</MACROS>
     WHEN cl_abap_datadescr=&gt;kind_intf.
 * To be ignored
       string = _desc-&gt;get_relative_name( ).
-      IF NOT bal_log IS BOUND. MESSAGE ID MSGID TYPE &apos;E&apos; NUMBER 001 WITH abap_true abap_true. ENDIF.
-      CALL METHOD bal_log-&gt;add_warning
+*      IF NOT application_log IS BOUND. MESSAGE ID MSGID TYPE &apos;E&apos; NUMBER 001 WITH abap_true abap_true. ENDIF.
+* Assuming Application_log is bound
+      IF 1 = 2. MESSAGE ID MSGID TYPE &apos;E&apos; NUMBER 001 WITH name string. ENDIF.
+      CALL METHOD application_log-&gt;add_warning
         EXPORTING
 *          id_msgid     = MSGID
           id_msgno     = &apos;001&apos;
@@ -303,9 +311,9 @@ END-OF-DEFINITION.</MACROS>
           ENDIF.
         WHEN OTHERS.
 * Self field &apos;&amp;1&apos; of structure &amp;2 (&amp;3) must be simple data type, not &apos;&amp;4&apos;
-          IF NOT bal_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 004 WITH abap_true abap_true abap_true abap_true. ENDIF.
+          IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 004 WITH abap_true abap_true abap_true abap_true. ENDIF.
           svalue = typedescr-&gt;get_relative_name( ).
-          CALL METHOD bal_log-&gt;add_warning
+          CALL METHOD application_log-&gt;add_warning
             EXPORTING
 *              id_msgid     = MSGID
               id_msgno     = 004
@@ -426,9 +434,9 @@ END-OF-DEFINITION.</MACROS>
           ENDIF.
         WHEN OTHERS.
 * Self field &apos;&amp;1&apos; of structure &amp;2 (&amp;3) must be simple data type, not &apos;&amp;4&apos;
-          IF not bal_log is bound. MESSAGE ID MSGID TYPE &apos;E&apos; NUMBER 004 WITH abap_true abap_true abap_true abap_true. ENDIF.
+          IF not application_log is bound. MESSAGE ID MSGID TYPE &apos;E&apos; NUMBER 004 WITH abap_true abap_true abap_true abap_true. ENDIF.
           svalue = typedescr-&gt;get_relative_name( ).
-          CALL METHOD bal_log-&gt;add_warning
+          CALL METHOD application_log-&gt;add_warning
             EXPORTING
 *              id_msgid     = MSGID
               id_msgno     = 004
@@ -558,7 +566,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -623,10 +631,10 @@ END-OF-DEFINITION.</MACROS>
   rc = xmldoc-&gt;append_child( xml_node ).
   mac_syserr_log rc &apos;append_child&apos; &apos;ZAPLINK_EASYXML-&gt;ANY2XML&apos;.
 
-  IF bal_log-&gt;has_messages_of_msgt( id_msgty     = &apos;E&apos; ) IS INITIAL.
+  IF application_log-&gt;has_messages_of_msgt( id_msgty     = &apos;E&apos; ) IS INITIAL.
 * Successfull conversion data to XML.
-    IF NOT bal_log IS BOUND. MESSAGE ID MSGID TYPE &apos;S&apos; NUMBER 006. ENDIF.
-    CALL METHOD bal_log-&gt;add_success
+    IF NOT application_log IS BOUND. MESSAGE ID MSGID TYPE &apos;S&apos; NUMBER 006. ENDIF.
+    CALL METHOD application_log-&gt;add_success
       EXPORTING
 *          id_msgid     = MSGID
         id_msgno     = &apos;006&apos;
@@ -644,30 +652,28 @@ END-OF-DEFINITION.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>DATA: obj TYPE balobj.
+    <SOURCE>  DATA: obj TYPE balobj.
   DATA: sobj TYPE balsub.
 *&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
-*&lt;nugget name=&quot;BALLOG&quot;&gt;
 * &lt;TABU TABNAME=&quot;BALOBJ&quot;&gt;
-*  &lt;DataRow OBJECT=&quot;ZSAPLINK&quot;/&gt;
+*  &lt;DataRow OBJECT=&quot;ZAPLINK&quot;/&gt;
 * &lt;/TABU&gt;
 * &lt;TABU TABNAME=&quot;BALOBJT&quot;&gt;
-*  &lt;DataRow SPRAS=&quot;D&quot; OBJECT=&quot;ZSAPLINK&quot; OBJTXT=&quot;SAP Link - Logs&quot;/&gt;
-*  &lt;DataRow SPRAS=&quot;E&quot; OBJECT=&quot;ZSAPLINK&quot; OBJTXT=&quot;SAP Link - Logs&quot;/&gt;
-*  &lt;DataRow SPRAS=&quot;F&quot; OBJECT=&quot;ZSAPLINK&quot; OBJTXT=&quot;SAP Link - Logs&quot;/&gt;
+*  &lt;DataRow SPRAS=&quot;D&quot; OBJECT=&quot;ZAPLINK&quot; OBJTXT=&quot;SAP Link - Logs&quot;/&gt;
+*  &lt;DataRow SPRAS=&quot;E&quot; OBJECT=&quot;ZAPLINK&quot; OBJTXT=&quot;SAP Link - Logs&quot;/&gt;
+*  &lt;DataRow SPRAS=&quot;F&quot; OBJECT=&quot;ZAPLINK&quot; OBJTXT=&quot;SAP Link - Logs&quot;/&gt;
 * &lt;/TABU&gt;
 * &lt;TABU TABNAME=&quot;BALSUB&quot;&gt;
-*  &lt;DataRow OBJECT=&quot;ZSAPLINK&quot; SUBOBJECT=&quot;DEVC&quot;/&gt;
+*  &lt;DataRow OBJECT=&quot;ZAPLINK&quot; SUBOBJECT=&quot;DEVC&quot;/&gt;
 * &lt;/TABU&gt;
 * &lt;TABU TABNAME=&quot;BALSUBT&quot;&gt;
-*  &lt;DataRow SPRAS=&quot;D&quot; OBJECT=&quot;ZSAPLINK&quot; SUBOBJECT=&quot;DEVC&quot; SUBOBJTXT=&quot;Devlopment class&quot;/&gt;
-*  &lt;DataRow SPRAS=&quot;E&quot; OBJECT=&quot;ZSAPLINK&quot; SUBOBJECT=&quot;DEVC&quot; SUBOBJTXT=&quot;Devlopment class&quot;/&gt;
-*  &lt;DataRow SPRAS=&quot;F&quot; OBJECT=&quot;ZSAPLINK&quot; SUBOBJECT=&quot;DEVC&quot; SUBOBJTXT=&quot;Devlopment class&quot;/&gt;
+*  &lt;DataRow SPRAS=&quot;D&quot; OBJECT=&quot;ZAPLINK&quot; SUBOBJECT=&quot;DEVC&quot; SUBOBJTXT=&quot;Devlopment class&quot;/&gt;
+*  &lt;DataRow SPRAS=&quot;E&quot; OBJECT=&quot;ZAPLINK&quot; SUBOBJECT=&quot;DEVC&quot; SUBOBJTXT=&quot;Devlopment class&quot;/&gt;
+*  &lt;DataRow SPRAS=&quot;F&quot; OBJECT=&quot;ZAPLINK&quot; SUBOBJECT=&quot;DEVC&quot; SUBOBJTXT=&quot;Devlopment class&quot;/&gt;
 * &lt;/TABU&gt;
-*&lt;/nugget&gt;
 
 * Check BALOBJ
-  obj-object = &apos;ZAPLINK&apos;.
+  obj-object = zaplink_datatypes=&gt;ballog_object.
   SELECT SINGLE * INTO obj
     FROM balobj
     WHERE object = obj-object.
@@ -745,8 +751,8 @@ END-OF-DEFINITION.</MACROS>
             IMPORTING
               data = string.
         CATCH cx_root INTO exception.
-          IF NOT bal_log IS BOUND. RAISE EXCEPTION exception. ENDIF.
-          bal_log-&gt;add_exception( exception = exception ).
+          IF NOT application_log IS BOUND. RAISE EXCEPTION exception. ENDIF.
+          application_log-&gt;add_exception( exception = exception ).
       ENDTRY.
     WHEN cl_abap_typedescr=&gt;typekind_char
       OR cl_abap_typedescr=&gt;typekind_clike
@@ -767,8 +773,8 @@ END-OF-DEFINITION.</MACROS>
       TRY.
           string = any.
         CATCH cx_root INTO exception.
-          IF NOT bal_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 002 WITH abap_true abap_true abap_true. ENDIF.
-          CALL METHOD bal_log-&gt;add_error
+          IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 002 WITH abap_true abap_true abap_true. ENDIF.
+          CALL METHOD application_log-&gt;add_error
             EXPORTING
 *             id_msgid     = MSGID
               id_msgno     = &apos;002&apos;
@@ -815,7 +821,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -1072,8 +1078,8 @@ END-OF-DEFINITION.</MACROS>
 * To be ignored
       string = _desc-&gt;get_relative_name( ).
       name = xml_node-&gt;get_name( ).
-      IF NOT bal_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 001 WITH space space. ENDIF.
-      CALL METHOD bal_log-&gt;add_warning
+      IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 001 WITH space space. ENDIF.
+      CALL METHOD application_log-&gt;add_warning
         EXPORTING
 *          id_msgid     = MSGID
           id_msgno     = &apos;001&apos;
@@ -1130,7 +1136,7 @@ END-OF-DEFINITION.</MACROS>
     TRY.
         CREATE OBJECT object TYPE (data_type).
       CATCH cx_root INTO _cx.
-        CALL METHOD bal_log-&gt;add_exception
+        CALL METHOD application_log-&gt;add_exception
           EXPORTING
             exception    = _cx
 *          id_detlevel  =
@@ -1193,8 +1199,8 @@ END-OF-DEFINITION.</MACROS>
 * Component not found
       data_type = o_obj-&gt;get_relative_name( ).
       name = xml_node-&gt;get_name( ).
-      IF NOT bal_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 003 WITH abap_true abap_true abap_true. ENDIF.
-      CALL METHOD bal_log-&gt;add_warning
+      IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 003 WITH abap_true abap_true abap_true. ENDIF.
+      CALL METHOD application_log-&gt;add_warning
         EXPORTING
 *          id_msgid     = MSGID
           id_msgno     = &apos;003&apos;
@@ -1238,7 +1244,7 @@ END-OF-DEFINITION.</MACROS>
                                 any = &lt;d&gt; ).
                 unstack( ).
               CATCH cx_root INTO _cx.
-                bal_log-&gt;add_exception( exception = _cx ).
+                application_log-&gt;add_exception( exception = _cx ).
             ENDTRY.
         ENDCASE.
       ENDIF.
@@ -1257,8 +1263,8 @@ END-OF-DEFINITION.</MACROS>
 * Attributes not found
       data_type = o_obj-&gt;get_relative_name( ).
       name = xml_node-&gt;get_name( ).
-      IF NOT bal_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 003 WITH abap_true abap_true abap_true. ENDIF.
-      CALL METHOD bal_log-&gt;add_warning
+      IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 003 WITH abap_true abap_true abap_true. ENDIF.
+      CALL METHOD application_log-&gt;add_warning
         EXPORTING
 *          id_msgid     = MSGID
           id_msgno     = &apos;003&apos;
@@ -1302,7 +1308,7 @@ END-OF-DEFINITION.</MACROS>
                                 any = &lt;d&gt; ).
                 unstack( ).
               CATCH cx_root INTO _cx.
-                bal_log-&gt;add_exception( exception = _cx ).
+                application_log-&gt;add_exception( exception = _cx ).
             ENDTRY.
         ENDCASE.
       ENDIF.
@@ -1383,8 +1389,8 @@ END-OF-DEFINITION.</MACROS>
 * Component not found
       data_type = structdescr-&gt;get_relative_name( ).
       name = xml_node-&gt;get_name( ).
-      IF NOT bal_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 003 WITH abap_true abap_true abap_true. ENDIF.
-      CALL METHOD bal_log-&gt;add_warning
+      IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 003 WITH abap_true abap_true abap_true. ENDIF.
+      CALL METHOD application_log-&gt;add_warning
         EXPORTING
 *          id_msgid     = MSGID
           id_msgno     = &apos;003&apos;
@@ -1428,7 +1434,7 @@ END-OF-DEFINITION.</MACROS>
                                 any = &lt;d&gt; ).
                 unstack( ).
               CATCH cx_root INTO exception.
-                bal_log-&gt;add_exception( exception = exception ).
+                application_log-&gt;add_exception( exception = exception ).
             ENDTRY.
         ENDCASE.
       ENDIF.
@@ -1448,8 +1454,8 @@ END-OF-DEFINITION.</MACROS>
 * Component not found
       data_type = structdescr-&gt;get_relative_name( ).
       name = xml_node-&gt;get_name( ).
-      IF NOT bal_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 003 WITH abap_true abap_true abap_true. ENDIF.
-      CALL METHOD bal_log-&gt;add_warning
+      IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 003 WITH abap_true abap_true abap_true. ENDIF.
+      CALL METHOD application_log-&gt;add_warning
         EXPORTING
 *          id_msgid     = MSGID
           id_msgno     = &apos;003&apos;
@@ -1554,12 +1560,12 @@ END-OF-DEFINITION.</MACROS>
   DATA subobject  TYPE balsubobj.
   DATA ext_id	TYPE balnrext.
 
-  IF bal_log IS BOUND.
-    bal_log-&gt;clear( ).
-    bal_log-&gt;free( ).
+  IF application_log IS BOUND.
+    application_log-&gt;clear( ).
+    application_log-&gt;free( ).
   ELSE.
-    CREATE OBJECT bal_log.
-    bal_log-&gt;msgid = msgid.
+    CREATE OBJECT application_log.
+    application_log-&gt;msgid = msgid.
 
     object = &apos;ZAPLINK&apos;.
     subobject	= &apos;EASYXML&apos;.
@@ -1572,7 +1578,7 @@ END-OF-DEFINITION.</MACROS>
 *11    Create defaults
 *12    Change defaults
 *13    Display defaults
-    CALL METHOD bal_log-&gt;init
+    CALL METHOD application_log-&gt;init
       EXPORTING
         id_object      = object
         id_subobject   = subobject
@@ -1668,8 +1674,8 @@ END-OF-DEFINITION.</MACROS>
 *             EX_LEN            =
                     .
         CATCH cx_root INTO exception.
-          if not bal_log is bound. raise exception exception. endif.
-          bal_log-&gt;add_exception( exception = exception ).
+          if not application_log is bound. raise exception exception. endif.
+          application_log-&gt;add_exception( exception = exception ).
       ENDTRY.
     WHEN cl_abap_typedescr=&gt;typekind_char
       OR cl_abap_typedescr=&gt;typekind_clike
@@ -1690,8 +1696,8 @@ END-OF-DEFINITION.</MACROS>
       TRY.
           any = string.
         CATCH cx_root INTO exception.
-          if not bal_log is bound. raise exception exception. endif.
-          bal_log-&gt;add_exception( exception = exception ).
+          if not application_log is bound. raise exception exception. endif.
+          application_log-&gt;add_exception( exception = exception ).
       ENDTRY.
     WHEN OTHERS.
 * Unexpected =&gt; Dump
@@ -1743,7 +1749,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -1778,10 +1784,10 @@ END-OF-DEFINITION.</MACROS>
                xml_node = root_node
                CHANGING
                     any = any ).
-    IF bal_log-&gt;has_messages_of_msgt( id_msgty     = &apos;E&apos; ) IS INITIAL.
+    IF application_log-&gt;has_messages_of_msgt( id_msgty     = &apos;E&apos; ) IS INITIAL.
 * Successfull conversion XML to data.
-      IF not bal_log is bound. MESSAGE ID msgid TYPE &apos;S&apos; NUMBER 005. ENDIF.
-      CALL METHOD bal_log-&gt;add_success
+      IF not application_log is bound. MESSAGE ID msgid TYPE &apos;S&apos; NUMBER 005. ENDIF.
+      CALL METHOD application_log-&gt;add_success
         EXPORTING
 *          id_msgid     = MSGID
           id_msgno     = &apos;005&apos;
@@ -1846,6 +1852,21 @@ END-OF-DEFINITION.</MACROS>
    <ITEM TYPEGROUP="SLIS" VERSION="1" IMPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
+   <ITEM CMPNAME="TO_EXCEPTION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_LOG" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Message Collector"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TS_ELE" VERSION="1" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="12 " SRCCOLUMN2="14 " TYPESRC_LENG="182 ">
     BEGIN OF ts_ele,
     select    TYPE flag,
@@ -1871,7 +1892,7 @@ END-OF-DEFINITION.</MACROS>
    <ITEM CMPNAME="TT_CONTEXT" VERSION="1" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="24 " SRCCOLUMN1="4 " SRCROW2="24 " SRCCOLUMN2="60 " TYPESRC_LENG="57 ">
     TT_CONTEXT type STANDARD TABLE OF string with DEFAULT KEY
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="For debug porpuse"/>
+     <ITEM LANGU="E" DESCRIPT="For debug porpuse :Stack of calls"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_ELE" VERSION="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="14 " SRCCOLUMN1="4 " SRCROW2="14 " SRCCOLUMN2="67 " TYPESRC_LENG="64 ">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0A856691F4C405577D10A5EC889DF25C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="7B2BF24525251B82CA52B33C9FE44E03" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="46F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -91,24 +91,6 @@
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
-  <DOCUMENTATION>
-   <ITEM APPLICATION="DOKU" ID="CA" OBJECT="ZAPLINK_OBJECT_DATA           A0_MAINDATA" LANGU="E" MASTERLANG="X" TYP="E" DOKFORM="S_DOCU_SHOW" DOKSTYLE="S_DOCUS1">
-    <TEXTS>
-     <ITEM TDSPRAS="E" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20090909" TDFTIME="102620" TDLRELES="700" TDLINESIZE="072">U1&amp;MEANING&amp;
-ASUsing &quot;/&quot; ensure that this attributes will be the first in alphabetic
-  order.
-ASUsing &quot;/&quot;, for SAP, means namespace. In order to work you should also
-  add another &quot;/&quot; which is the end of the namespace prefix.
-ASBecause this attributes doesn&apos;t have anything after the second &quot;/&quot;, this
-  namespace prefix is not controlled against the authorized namespaces
-  list.
-U1&amp;HINTS&amp;
-ASUse with care or prefer simple attribute names without &quot;/&quot;.
-ASHaving XML node with / (which means end of node) make nugget display
-  difficult in many XML viewer. So no longer use &quot;/&quot;.</ITEM>
-    </TEXTS>
-   </ITEM>
-  </DOCUMENTATION>
   <INTERFACES>
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
@@ -336,7 +318,7 @@ ASHaving XML node with / (which means end of node) make nugget display
     _ex-texts = fd_subc_desc( descriptions = fm_data-subcomponent_desc
                                  component = &lt;ex&gt;-cmpname
                              sub_component = &lt;ex&gt;-sconame ).
-    CLEAR: _ex-clsname, _ex-cmpname. &quot; VERSION
+    CLEAR: _ex-clsname, _ex-cmpname, _ex-descript. &quot; VERSION
     INSERT _ex INTO TABLE exceptions.
   ENDLOOP.</SOURCE>
    </ITEM>

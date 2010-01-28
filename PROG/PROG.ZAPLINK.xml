@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0FF88C37503290B85FDFF742374AFD96" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="E931C313771D25CCEB2264CF6C7A52C9" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VARCL="X" SUBC="1" APPL="S" VERN="000041" RSTAT="S" RMAND="321" RLOAD="E" FIXPT="X" UCCHECK="X"/>
+  <A0_MAINDATA VARCL="X" SUBC="1" APPL="S" VERN="000046" RSTAT="S" RMAND="321" RLOAD="E" FIXPT="X" UCCHECK="X"/>
   <DOCUMENTATION>
    <ITEM APPLICATION="DOKU" ID="RE" OBJECT="ZAPLINK" LANGU="E" MASTERLANG="X" TYP="E" DOKFORM="S_DOCU_SHOW" DOKSTYLE="S_DOCUS1">
     <TEXTS>
@@ -28,7 +28,7 @@ AS</ITEM>
     </TEXTS>
    </ITEM>
   </DOCUMENTATION>
-  <SOURCE>*    This program is part of ZAP link framework. https://code.google.com/p/zaplink/
+  <SOURCE>*    This program is part of ZAPLink framework. https://code.google.com/p/zaplink/
 *    Copyright (C) 2010  Taryck BENSIALI
 *
 *    This program is free software: you can redistribute it and/or modify
@@ -51,23 +51,23 @@ INCLUDE zaplink_scr.
 */----------------------main------------------------------------------\
 START-OF-SELECTION.
 *   create empty Container
-  IF nugc = &apos;X&apos;.
+  IF a_create = &apos;X&apos;.
     PERFORM create.
 *   add object to Container
-  ELSEIF nuga = &apos;X&apos;.
+  ELSEIF a_add = &apos;X&apos;.
     PERFORM add.
 *   import Container
-  ELSEIF nugi = &apos;X&apos;.
+  ELSEIF a_import = &apos;X&apos;.
     PERFORM import.
 *   display objects in a Container
-  ELSEIF nugd = &apos;X&apos;.
+  ELSEIF a_dsp = &apos;X&apos;.
     PERFORM display.
 *   Un install a Container
-  ELSEIF nugu = &apos;X&apos;.
+  ELSEIF a_uninst = &apos;X&apos;.
     PERFORM uninstall.
-  ELSEIF nugp = &apos;X&apos;.
+  ELSEIF a_add_p = &apos;X&apos;.
     PERFORM add_package.
-  ELSEIF nugr = &apos;X&apos;.
+  ELSEIF a_add_tr = &apos;X&apos;.
     PERFORM add_tr.
   ENDIF.
 
@@ -75,241 +75,200 @@ END-OF-SELECTION.
 *\--------------------------------------------------------------------/
   INCLUDE zaplink_frm.</SOURCE>
   <TEXTSPOOL>
+   <ITEM ID="I" KEY="BAC">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="Actions :" LENGTH="25 "/>
+     <ITEM LANGU="E" ENTRY="Actions :" LENGTH="25 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="BOP">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="Options :" LENGTH="25 "/>
+     <ITEM LANGU="E" ENTRY="Options :" LENGTH="25 "/>
+    </TEXTS>
+   </ITEM>
    <ITEM ID="I" KEY="DEV">
     <TEXTS>
+     <ITEM LANGU="D" ENTRY="Package" LENGTH="7 "/>
      <ITEM LANGU="E" ENTRY="Package" LENGTH="7 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="DVF">
     <TEXTS>
+     <ITEM LANGU="D" ENTRY="Fixed package value :" LENGTH="35 "/>
      <ITEM LANGU="E" ENTRY="Fixed package value :" LENGTH="35 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="I" KEY="NGA">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="Objekt zum Nugget hinzufügen" LENGTH="28 "/>
-     <ITEM LANGU="E" ENTRY="Add Object to Nugget" LENGTH="20 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="I" KEY="NGC">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="Neues Nugget anlegen" LENGTH="20 "/>
-     <ITEM LANGU="E" ENTRY="Create Empty Nugget" LENGTH="19 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="I" KEY="NGI">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="Nugget importieren" LENGTH="18 "/>
-     <ITEM LANGU="E" ENTRY="Import Nugget" LENGTH="13 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="I" KEY="OPT">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="Optionen" LENGTH="8 "/>
-     <ITEM LANGU="E" ENTRY="Options" LENGTH="7 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="I" KEY="SLK">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="SAPlink" LENGTH="7 "/>
-     <ITEM LANGU="E" ENTRY="SAPlink" LENGTH="7 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="I" KEY="TB1">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="Objekt" LENGTH="6 "/>
-     <ITEM LANGU="E" ENTRY="Slinkee" LENGTH="7 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="I" KEY="TB2">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="Nugget" LENGTH="6 "/>
-     <ITEM LANGU="E" ENTRY="Nugget" LENGTH="6 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="TRF">
     <TEXTS>
+     <ITEM LANGU="D" ENTRY="Fixed value Transport Request :" LENGTH="35 "/>
      <ITEM LANGU="E" ENTRY="Fixed value Transport Request :" LENGTH="35 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="TRO">
     <TEXTS>
+     <ITEM LANGU="D" ENTRY="Transport Request" LENGTH="132 "/>
      <ITEM LANGU="E" ENTRY="Transport Request" LENGTH="132 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="R">
     <TEXTS>
-     <ITEM LANGU="D" ENTRY="SAPlink" LENGTH="7 "/>
-     <ITEM LANGU="E" ENTRY="SAPlink 0.2.0" LENGTH="13 "/>
+     <ITEM LANGU="D" ENTRY="ZAPlink" LENGTH="7 "/>
+     <ITEM LANGU="E" ENTRY="ZAPlink V0.0.001" LENGTH="16 "/>
+     <ITEM LANGU="F" ENTRY="ZAPlink V0.0.001" LENGTH="70 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="A_ADD">
+    <TEXTS>
+     <ITEM LANGU="D" LENGTH="36 "/>
+     <ITEM LANGU="E" ENTRY="        Add a component to container" LENGTH="36 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="A_ADD_P">
+    <TEXTS>
+     <ITEM LANGU="D" LENGTH="35 "/>
+     <ITEM LANGU="E" ENTRY="        Add components from Package" LENGTH="35 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="A_ADD_TR">
+    <TEXTS>
+     <ITEM LANGU="D" LENGTH="37 "/>
+     <ITEM LANGU="E" ENTRY="        Add components from Transport" LENGTH="37 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="A_CREATE">
+    <TEXTS>
+     <ITEM LANGU="D" LENGTH="28 "/>
+     <ITEM LANGU="E" ENTRY="        Create new container" LENGTH="28 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="A_DSP">
+    <TEXTS>
+     <ITEM LANGU="D" LENGTH="35 "/>
+     <ITEM LANGU="E" ENTRY="        Display container&apos;s content" LENGTH="35 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="A_IMPORT">
+    <TEXTS>
+     <ITEM LANGU="D" LENGTH="33 "/>
+     <ITEM LANGU="E" ENTRY="        Import container&apos;s to SAP" LENGTH="33 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="A_UNINST">
+    <TEXTS>
+     <ITEM LANGU="D" LENGTH="36 "/>
+     <ITEM LANGU="E" ENTRY="        Uninstall container from SAP" LENGTH="36 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="CO_NAME">
+    <TEXTS>
+     <ITEM LANGU="D" LENGTH="19 "/>
+     <ITEM LANGU="E" ENTRY="        Object Name" LENGTH="19 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="CO_TYPE">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="D       ." LENGTH="17 "/>
+     <ITEM LANGU="E" ENTRY="D       ." LENGTH="19 "/>
+     <ITEM LANGU="F" ENTRY="D       ." LENGTH="19 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="C_NAME">
+    <TEXTS>
+     <ITEM LANGU="D" LENGTH="22 "/>
+     <ITEM LANGU="E" ENTRY="        Container Name" LENGTH="22 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="DEVCLASS">
     <TEXTS>
+     <ITEM LANGU="D" ENTRY="D       ." LENGTH="13 "/>
      <ITEM LANGU="E" ENTRY="D       ." LENGTH="15 "/>
+     <ITEM LANGU="F" ENTRY="D       ." LENGTH="15 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="DEVC_F">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="21 "/>
      <ITEM LANGU="E" ENTRY="        Fixed value :" LENGTH="21 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="DEVC_KE">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="21 "/>
      <ITEM LANGU="E" ENTRY="        Keep existing" LENGTH="21 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="DEVC_LO">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="28 "/>
      <ITEM LANGU="E" ENTRY="        Local objects ($TMP)" LENGTH="28 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="DEVC_NO">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="20 "/>
      <ITEM LANGU="E" ENTRY="        No overwrite" LENGTH="20 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="DEVC_UC">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="29 "/>
      <ITEM LANGU="E" ENTRY="        Use container package" LENGTH="29 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="EXPORT">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Objekt exportieren" LENGTH="26 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="FILENAME">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        SAPlink Dateiname" LENGTH="33 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="IMPORT">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Objekt importieren" LENGTH="26 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NOBJNAM">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Objektname" LENGTH="19 "/>
-     <ITEM LANGU="E" ENTRY="        Object Name" LENGTH="19 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NOVRWR">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Originale überschreiben" LENGTH="31 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NPLUGIN">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Objekttyp" LENGTH="19 "/>
-     <ITEM LANGU="E" ENTRY="        Object Type" LENGTH="19 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NUGA">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Zum Nugget hinzufügen" LENGTH="29 "/>
-     <ITEM LANGU="E" ENTRY="        Add Object to Nugget" LENGTH="28 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NUGC">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Neues Nugget anlegen" LENGTH="28 "/>
-     <ITEM LANGU="E" ENTRY="        Create New Nugget" LENGTH="27 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NUGD">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Objekte des Nuggets anzeigen" LENGTH="36 "/>
-     <ITEM LANGU="E" ENTRY="        Display Nugget" LENGTH="33 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NUGFILE">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Nugget Dateiname" LENGTH="32 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NUGGNAM">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Nuggetname" LENGTH="19 "/>
-     <ITEM LANGU="E" ENTRY="        Nugget Name" LENGTH="19 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NUGI">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Nugget importieren" LENGTH="26 "/>
-     <ITEM LANGU="E" ENTRY="        Import Nugget" LENGTH="21 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NUGP">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Fügen Sie Paket Nugget hinzu" LENGTH="36 "/>
-     <ITEM LANGU="E" ENTRY="        Add Objects from a Package" LENGTH="34 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NUGR">
-    <TEXTS>
-     <ITEM LANGU="E" ENTRY="        Add Objects from a Transport" LENGTH="36 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="NUGU">
-    <TEXTS>
-     <ITEM LANGU="E" ENTRY="        Uninstall Nuget&apos;s objects" LENGTH="33 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="OBJNAME">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Objektname" LENGTH="19 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="OVERWR">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Originale Überschreiben" LENGTH="31 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="PACKAGE">
     <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Packet Name" LENGTH="20 "/>
+     <ITEM LANGU="D" ENTRY="D       ." LENGTH="20 "/>
      <ITEM LANGU="E" ENTRY="        Package Name" LENGTH="20 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="S" KEY="PLUGIN">
-    <TEXTS>
-     <ITEM LANGU="D" ENTRY="        Objekttyp" LENGTH="19 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="P_FILE">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="17 "/>
      <ITEM LANGU="E" ENTRY="        File Name" LENGTH="17 "/>
     </TEXTS>
    </ITEM>
-   <ITEM ID="S" KEY="REQNUGG">
+   <ITEM ID="S" KEY="P_TR">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="        Transport Number" LENGTH="24 "/>
+     <ITEM LANGU="D" ENTRY="D       ." LENGTH="23 "/>
+     <ITEM LANGU="E" ENTRY="D       ." LENGTH="20 "/>
+     <ITEM LANGU="F" ENTRY="D       ." LENGTH="20 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="TR">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="25 "/>
      <ITEM LANGU="E" ENTRY="        Transport Request" LENGTH="25 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="TR_FI">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="19 "/>
      <ITEM LANGU="E" ENTRY="        Fixed value" LENGTH="19 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="TR_IN">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="37 "/>
      <ITEM LANGU="E" ENTRY="        User Input for each component" LENGTH="37 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="TR_UC">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="29 "/>
      <ITEM LANGU="E" ENTRY="        Use container&apos;s value" LENGTH="29 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="TR_US">
     <TEXTS>
+     <ITEM LANGU="D" LENGTH="36 "/>
      <ITEM LANGU="E" ENTRY="        Same transport for all comp." LENGTH="36 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="T">
+    <TEXTS>
+     <ITEM LANGU="D" ENTRY="ZAP Link : ABAP Component Import/Export tools" LENGTH="45 "/>
+     <ITEM LANGU="E" ENTRY="ZAP Link : ABAP Component Import/Export tools" LENGTH="45 "/>
     </TEXTS>
    </ITEM>
   </TEXTSPOOL>
