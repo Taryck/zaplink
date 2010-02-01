@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7A1A04AE486364810D72DC00B14729BA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="D95F70E76396A2FC95CD02948E63EDFD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="16F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -9,67 +9,26 @@
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
-   <ITEM CMPNAME="TD_COMPNAME" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPNAME">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TD_COMPTYPE" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPTYPE">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TD_LIGHT" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_LIGHT">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TD_ORDERKIND" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_ORDERKIND">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TD_SEL_ACTION" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_SEL_ACTION">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TD_TYPE_AS_TEXT" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TYPE_AS_TEXT">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TS_COMPKEY" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPKEY">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TT_COMPKEYS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_COMPKEYS">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+   <ITEM CMPNAME="TD_COMPNAME" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPNAME"/>
+   <ITEM CMPNAME="TD_COMPTYPE" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPTYPE"/>
+   <ITEM CMPNAME="TD_LIGHT" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_LIGHT"/>
+   <ITEM CMPNAME="TD_ORDERKIND" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_ORDERKIND"/>
+   <ITEM CMPNAME="TD_SEL_ACTION" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_SEL_ACTION"/>
+   <ITEM CMPNAME="TD_TYPE_AS_TEXT" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TYPE_AS_TEXT"/>
+   <ITEM CMPNAME="TS_COMPKEY" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPKEY"/>
+   <ITEM CMPNAME="TT_COMPKEYS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_COMPKEYS"/>
   </ALIASES>
   <ATTRIBUTS>
-   <ITEM CMPNAME="ALV" VERSION="1" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="TD_ALV">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
    <ITEM CMPNAME="ALV_CONF" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_ALV_CONFS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ALV configuration"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="ALV_H_TABLES" VERSION="1" STATE="1" EDITORDER="8 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="20 " SRCCOLUMN1="4 " SRCROW2="23 " SRCCOLUMN2="22 " TYPESRC_LENG="145 " TYPESRC="BEGIN OF alv_h_tables,
+   <ITEM CMPNAME="ALV_H_TABLES" VERSION="1" STATE="1" EDITORDER="6 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="18 " SRCCOLUMN1="4 " SRCROW2="21 " SRCCOLUMN2="22 " TYPESRC_LENG="145 " TYPESRC="BEGIN OF alv_h_tables,
       header    TYPE slis_tabname VALUE &apos;HDR&apos;,
       item      TYPE slis_tabname VALUE &apos;ITM&apos;,
     END OF alv_h_tables
-">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+"/>
    <ITEM CMPNAME="DISPLAY_PROGRESS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="ABAP_BOOL">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Display SAPGUI progress indication while iterating"/>
@@ -95,19 +54,16 @@
      <ITEM LANGU="E" DESCRIPT="Lights icons"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="ORDER_KIND" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="ABAP_BOOL">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="ORDER_KINDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="35 " SRCCOLUMN1="4 " SRCROW2="39 " SRCCOLUMN2="21 " TYPESRC_LENG="212 " TYPESRC="begin of ORDER_KINDS,
+   <ITEM CMPNAME="ORDER_KIND" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="ABAP_BOOL"/>
+   <ITEM CMPNAME="ORDER_KINDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="36 " SRCCOLUMN1="4 " SRCROW2="40 " SRCCOLUMN2="21 " TYPESRC_LENG="212 " TYPESRC="begin of ORDER_KINDS,
       no_order  type td_orderkind value space,
       install   type td_orderkind value &apos;B&apos;,  &quot; Bottom up
       uninstall type td_orderkind value &apos;T&apos;,  &quot; Top down
     end of ORDER_KINDS
-">
+"/>
+   <ITEM CMPNAME="O_CX" VERSION="1" STATE="1" EDITORDER="9 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E"/>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_EXCEPTION" VERSION="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TO_EXCEPTION">
@@ -115,7 +71,12 @@
      <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="SEL_ACTIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="26 " SRCCOLUMN1="4 " SRCROW2="30 " SRCCOLUMN2="21 " TYPESRC_LENG="188 " TYPESRC="BEGIN OF sel_actions,
+   <ITEM CMPNAME="O_MYCX" VERSION="1" STATE="1" EDITORDER="8 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for List"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="SEL_ACTIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="27 " SRCCOLUMN1="4 " SRCROW2="31 " SRCCOLUMN2="21 " TYPESRC_LENG="188 " TYPESRC="BEGIN OF sel_actions,
       export    TYPE td_sel_action VALUE &apos;E&apos;,
       import    TYPE td_sel_action VALUE &apos;I&apos;,
       uninstall TYPE td_sel_action VALUE &apos;U&apos;,
@@ -125,11 +86,7 @@
      <ITEM LANGU="E" DESCRIPT="Selction actions"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="T_CURSORS" VERSION="1" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="TT_CURSORS">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+   <ITEM CMPNAME="T_CURSORS" VERSION="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_CURSORS"/>
    <ITEM CMPNAME="_ALLCOMP" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_ALLCOMPLIST">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="All Component list index"/>
@@ -145,22 +102,12 @@
      <ITEM LANGU="E" DESCRIPT="Index of Internal Tables"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_ITERATOR_END" VERSION="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="ABAP_BOOL">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="_ITERATOR_PREV" VERSION="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TO_COMPONENT">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="_ITERATOR_TABIX" VERSION="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="SY-TABIX">
+   <ITEM CMPNAME="_ITERATOR_TABIX" VERSION="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SY-TABIX">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Index of Internal Tables"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_ITERATOR_TYPE" VERSION="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TD_ITERATOR_TYPE">
+   <ITEM CMPNAME="_ITERATOR_TYPE" VERSION="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TD_ITERATOR_TYPE">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Iterator type : all, selected, ...."/>
     </TEXTS>
@@ -170,14 +117,19 @@
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
   <LOCAL>
-   <TYPES>*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+   <TYPES>
+*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+   <IMPLEMENTATIONS>
+*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
-*&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
+   <MACROS>
+*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+*&quot;* in the implementation part of the class
+
+INCLUDE ZAPLINK_MACROS.</MACROS>
   </LOCAL>
   <METHODS>
    <ITEM CMPNAME="ADD" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
@@ -185,20 +137,17 @@
      <ITEM LANGU="E" DESCRIPT="Add component to list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>DATA _idx  LIKE LINE OF _index.
+    <SOURCE>
+DATA _idx  LIKE LINE OF _index.
   DATA _comp LIKE LINE OF _allcomp.
 
   _idx = search_index( comp ).
@@ -220,22 +169,18 @@
      <ITEM LANGU="E" DESCRIPT="Add&amp;Create components from a key list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_COMPKEYS">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_COMPKEYS">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Raw list of Components Keys"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>DATA o_comp   TYPE to_component.
-  DATA _cx      TYPE REF TO zaplink_cx_list.
-  DATA _cx_comp TYPE REF TO zaplink_cx_component.
+    <SOURCE>
+  DATA o_comp   TYPE to_component.
+  DATA o_cx_comp TYPE REF TO zaplink_cx_component.
   DATA _list    TYPE tt_compkeys.
   FIELD-SYMBOLS:
     &lt;k&gt; LIKE LINE OF _list.
@@ -249,19 +194,19 @@
       LOOP AT _list ASSIGNING &lt;k&gt;.
         TRY.
             o_comp = zaplink_component=&gt;create_new( &lt;k&gt; ).
-          CATCH zaplink_cx_component INTO _cx_comp.
+          CATCH zaplink_cx_component INTO o_cx_comp.
 * Action failed due to exception &apos;&amp;CX_NAME&amp;&apos;
-            CREATE OBJECT _cx
+            CREATE OBJECT o_mycx
               EXPORTING
                 textid  = zaplink_cx_list=&gt;failed
-                prev_cx = _cx_comp.
-            _cx-&gt;update( ).
-            RAISE EXCEPTION _cx.
+                prev_cx = o_cx_comp.
+            o_mycx-&gt;update( ).
+            RAISE EXCEPTION o_mycx.
         ENDTRY.
         add( o_comp ).
       ENDLOOP.
-    CATCH zaplink_cx_list INTO _cx.
-      RAISE EXCEPTION _cx.
+    CATCH zaplink_cx_list INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ADD_LIST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
@@ -269,20 +214,17 @@
      <ITEM LANGU="E" DESCRIPT="Merge new components from a list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>DATA t_allcomp   TYPE	tt_allcomplist.
+    <SOURCE>
+DATA t_allcomp   TYPE	tt_allcomplist.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
@@ -304,13 +246,10 @@
      <ITEM LANGU="E" DESCRIPT="Change selection list"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  DATA alv TYPE td_alv.
+    <SOURCE>
+  DATA alv TYPE td_alv.
 
   alv = conv_to_alv( ).
 
@@ -333,7 +272,8 @@
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>  DATA field_s   LIKE LINE OF alv_conf-simple-fields.
+    <SOURCE>
+  DATA field_s   LIKE LINE OF alv_conf-simple-fields.
   DATA field_h   LIKE LINE OF alv_conf-hierar-fields.
   DATA i_pos     TYPE i VALUE 0. &quot; position d&apos;affichage des champs
   DATA t_desc    TYPE REF TO cl_abap_typedescr.
@@ -384,14 +324,15 @@
 *==========     ALV : Simple    ===============
 *==============================================
 
-  CALL FUNCTION &apos;REUSE_ALV_FIELDCATALOG_MERGE&apos;
-    EXPORTING
-      i_program_name     = &apos;ZAPLINK_LIST==================CP&apos;
-      i_internal_tabname = &apos;LIST&apos;
-*      i_inclname         = sy-repid
-      i_bypassing_buffer = &apos;X&apos;
-    CHANGING
-      ct_fieldcat        = alv_conf-simple-fields.
+* Not working :-(
+*  CALL FUNCTION &apos;REUSE_ALV_FIELDCATALOG_MERGE&apos;
+*    EXPORTING
+*      i_program_name     = &apos;ZAPLINK_LIST==================CP&apos;
+*      i_internal_tabname = &apos;LIST&apos;
+*      i_inclname         = &apos;ZAPLINK_LIST==================CM005&apos;
+*      i_bypassing_buffer = &apos;X&apos;
+*    CHANGING
+*      ct_fieldcat        = alv_conf-simple-fields.
 
   t_desc = cl_abap_structdescr=&gt;describe_by_data( line ).
 
@@ -460,21 +401,16 @@
      <ITEM LANGU="E" DESCRIPT="Clear component list"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  CLEAR:
+    <SOURCE>
+  CLEAR:
       display_progress,
       _allcomp,
       _index,
       o_exception,
       t_cursors,
       _iterator_count,
-      _iterator_end,
-      _iterator_prev,
       _iterator_tabix,
       _iterator_type.</SOURCE>
    </ITEM>
@@ -483,20 +419,17 @@
      <ITEM LANGU="E" DESCRIPT="Clone (copy) component to list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ME">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>DATA o_comp TYPE to_component.
+    <SOURCE>
+DATA o_comp TYPE to_component.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
@@ -516,30 +449,27 @@
      <ITEM LANGU="E" DESCRIPT="Convert component to ALV data"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="O_COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100120" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="O_COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Component"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20100120" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_ALV">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_ALV">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ALV informations"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="SELECTED" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20100120" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL">
+     <ITEM SCONAME="SELECTED" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Is selected"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100120">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  DATA _key TYPE ts_compkey.
+    <SOURCE>
+  DATA _key TYPE ts_compkey.
 
   _key = o_comp-&gt;_get_key( ).
   result-type = _key-type.
@@ -550,7 +480,7 @@
   IF o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-not_exists.
     result-plugin = lights-red.
     result-status = lights-no.
-* There is no ZAP Link connector installed for object type &apos;&amp;1&apos;
+* There is no ZAPLink connector installed for object type &apos;&amp;1&apos;
     MESSAGE e000(zaplink_gui) WITH result-type INTO result-msg.
   ELSE.
     result-plugin = lights-green.
@@ -559,7 +489,8 @@
       SELECT SINGLE devclass srcsystem
         INTO (result-devclass, result-srcsystem)
         FROM tadir
-        WHERE   object = result-type
+        WHERE    pgmid = &apos;R3TR&apos;
+          AND   object = result-type
           AND obj_name = result-name.
       CASE selected.
         WHEN abap_true.
@@ -588,64 +519,68 @@
      <ITEM LANGU="E" DESCRIPT="Create ALV table from collection"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ALV">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ALV">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ALV informations"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="W_ITEM" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100120" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
+     <ITEM SCONAME="W_ITEM" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="With Items"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  FIELD-SYMBOLS:
+    <SOURCE>
+  FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
-  DATA _key TYPE ts_compkey.
   DATA _line  LIKE LINE OF result-headers.
   DATA s_item LIKE LINE OF result-items.
   DATA o_list TYPE to_me.
   DATA o_comp TYPE to_component.
 
-  LOOP AT _index ASSIGNING &lt;i&gt;.
-    _line = comp_to_alv( o_comp = &lt;i&gt;-o_comp
-                       selected = &lt;i&gt;-selected ).
-    CALL FUNCTION &apos;GUID_CREATE&apos;
-      IMPORTING
-        ev_guid_16 = _line-id.
+  TRY.
 
-    _line-select = &lt;i&gt;-selected.
-    IF NOT w_item IS INITIAL.
-      o_list = &lt;i&gt;-o_comp-&gt;get_subcomponents( ).
-      IF o_list IS BOUND.
-        _line-expand = abap_true.
-      ENDIF.
-    ENDIF.
+      LOOP AT _index ASSIGNING &lt;i&gt;.
+        _line = comp_to_alv( o_comp = &lt;i&gt;-o_comp
+                           selected = &lt;i&gt;-selected ).
+        CALL FUNCTION &apos;GUID_CREATE&apos;
+          IMPORTING
+            ev_guid_16 = _line-id.
 
-    APPEND _line TO result-headers.
+        _line-select = &lt;i&gt;-selected.
+        IF NOT w_item IS INITIAL.
+          o_list = &lt;i&gt;-o_comp-&gt;get_subcomponents( ).
+          IF o_list IS BOUND.
+            _line-expand = abap_true.
+          ENDIF.
+        ENDIF.
 
-    IF NOT w_item IS INITIAL.
-      CHECK o_list IS BOUND.
-      o_list-&gt;display_progress = abap_false.
-      o_list-&gt;init_iter( ).
-      o_comp = o_list-&gt;get_next( ).
-      WHILE o_comp IS BOUND.
-        s_item = comp_to_alv( o_comp = o_comp
-                            selected = &lt;i&gt;-selected ).
-        o_comp = o_list-&gt;get_next( ).
-        s_item-id = _line-id.
-        s_item-select = _line-expand.
-        APPEND s_item TO result-items.
-      ENDWHILE.
-    ENDIF.
-  ENDLOOP.
+        APPEND _line TO result-headers.
+
+        IF NOT w_item IS INITIAL.
+          CHECK o_list IS BOUND.
+          o_list-&gt;display_progress = abap_false.
+          o_list-&gt;init_iter( ).
+          o_comp = o_list-&gt;get_next( ).
+          WHILE o_comp IS BOUND.
+            s_item = comp_to_alv( o_comp = o_comp
+                                selected = &lt;i&gt;-selected ).
+            o_comp = o_list-&gt;get_next( ).
+            s_item-id = _line-id.
+            s_item-select = _line-expand.
+            APPEND s_item TO result-items.
+          ENDWHILE.
+        ENDIF.
+      ENDLOOP.
+
+    CATCH zaplink_cx_list INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.
 </SOURCE>
    </ITEM>
    <ITEM CMPNAME="DISPLAY" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
@@ -653,13 +588,10 @@
      <ITEM LANGU="E" DESCRIPT="Display list content"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100120">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  DATA alv        TYPE td_alv.
+    <SOURCE>
+  DATA alv        TYPE td_alv.
   DATA s_keyinfo  TYPE slis_keyinfo_alv.
 
   s_keyinfo-header01 = s_keyinfo-item01 = &apos;ID&apos;.
@@ -720,20 +652,17 @@
      <ITEM LANGU="E" DESCRIPT="Iterator Get number of occurence"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100125" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="I">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="I">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Occurence count"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100125">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>CASE _iterator_type.
+    <SOURCE>
+CASE _iterator_type.
     WHEN iterator_types-selected.
       LOOP AT _index TRANSPORTING NO FIELDS
               WHERE selected = abap_true.
@@ -752,24 +681,19 @@
      <ITEM LANGU="E" DESCRIPT="Iterator Get next"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  DATA component TYPE ts_compkey.
+    <SOURCE>
+  DATA component TYPE ts_compkey.
   DATA msg       TYPE string.
   DATA _pos      TYPE i.
-  DATA _cx       TYPE REF TO zaplink_cx_list.
-  DATA _key TYPE ts_compkey.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF t_cursors.
 
@@ -890,17 +814,14 @@
      <ITEM LANGU="E" DESCRIPT="Initialize Iterator on all component of the list"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  DATA s_cursor LIKE LINE OF t_cursors.
+    <SOURCE>
+  DATA s_cursor LIKE LINE OF t_cursors.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
-  CLEAR: _iterator_tabix, _iterator_prev.
+  CLEAR: _iterator_tabix.
   _iterator_type = iterator_types-all.
   LOOP AT _index ASSIGNING &lt;i&gt;.
     MOVE-CORRESPONDING &lt;i&gt; TO s_cursor.
@@ -917,25 +838,21 @@
     WHEN OTHERS.
       SORT t_cursors BY key.
   ENDCASE.
-  DESCRIBE TABLE t_cursors LINES _iterator_count.
-  _iterator_end = abap_false.</SOURCE>
+  DESCRIBE TABLE t_cursors LINES _iterator_count.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="INIT_SEL_ITER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Initialize Iterator on selected component"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  DATA s_cursor LIKE LINE OF t_cursors.
+    <SOURCE>
+  DATA s_cursor LIKE LINE OF t_cursors.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
-  CLEAR: _iterator_tabix, _iterator_prev.
+  CLEAR: _iterator_tabix.
   _iterator_type = iterator_types-selected.
   LOOP AT _index ASSIGNING &lt;i&gt;
        WHERE selected = abap_true.
@@ -953,33 +870,25 @@
     WHEN OTHERS.
       SORT t_cursors BY key.
   ENDCASE.
-  DESCRIBE TABLE t_cursors LINES _iterator_count.
-  _iterator_end = abap_false.</SOURCE>
+  DESCRIBE TABLE t_cursors LINES _iterator_count.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IS_INCLUDED" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Search components into all component list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="LIST" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
+     <ITEM SCONAME="LIST" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>DATA t_allcomp TYPE tt_allcomplist.
+    <SOURCE>
+DATA t_allcomp TYPE tt_allcomplist.
   FIELD-SYMBOLS:
     &lt;c&gt; LIKE LINE OF _allcomp.
 
@@ -1002,25 +911,18 @@
      <ITEM LANGU="E" DESCRIPT="Is this component selected ?"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  DATA _idx LIKE LINE OF _index.
+    <SOURCE>
+  DATA _idx LIKE LINE OF _index.
 
   _idx = search_index( comp ).
   IF _idx-selected IS NOT INITIAL.
@@ -1035,20 +937,21 @@
      <ITEM LANGU="E" DESCRIPT="Keep only component in commun with an other list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>FIELD-SYMBOLS:
+    <SOURCE>
+FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
     READ TABLE data-&gt;_index TRANSPORTING NO FIELDS
                WITH TABLE KEY key = &lt;i&gt;-key.
     IF sy-subrc &lt;&gt; 0.
-      DELETE _index FROM &lt;i&gt;.
+      DELETE _index.
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
@@ -1057,20 +960,17 @@
      <ITEM LANGU="E" DESCRIPT="TODO====== Remove component from list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>DATA _idx LIKE LINE OF _index.
+    <SOURCE>
+DATA _idx LIKE LINE OF _index.
 
   TRY.
       _idx = search_index( comp ).
@@ -1086,20 +986,21 @@
      <ITEM LANGU="E" DESCRIPT="Remove component to list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>FIELD-SYMBOLS:
+    <SOURCE>
+FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
   LOOP AT data-&gt;_index ASSIGNING &lt;i&gt;.
@@ -1114,25 +1015,22 @@
      <ITEM LANGU="E" DESCRIPT="Search component into list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  DATA _idx LIKE LINE OF _index.
+    <SOURCE>
+  DATA _idx LIKE LINE OF _index.
 
   _idx = search_index( comp ).
   IF NOT _idx-o_comp IS BOUND.
@@ -1152,18 +1050,19 @@
      <ITEM LANGU="E" DESCRIPT="Search component into list &amp; get index"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_COMPLIST">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_COMPLIST">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Component list index"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  DATA _key TYPE ts_compkey.
+    <SOURCE>
+  DATA _key TYPE ts_compkey.
 
   check comp is bound.
   _key = comp-&gt;_get_key( ).
@@ -1179,20 +1078,18 @@
      <ITEM LANGU="E" DESCRIPT="Select the component"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  TRY.
+    <SOURCE>
+
+  TRY.
       _select( comp = comp
               value = abap_true ).
     CATCH zaplink_cx_list INTO o_exception.
@@ -1205,20 +1102,17 @@
      <ITEM LANGU="E" DESCRIPT="Select default components from list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="SEL_ACTION" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SEL_ACTION">
+     <ITEM SCONAME="SEL_ACTION" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SEL_ACTION">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Selection Action : Export, Import, Uninstall"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>TRY.
+    <SOURCE>
+TRY.
       CASE sel_action.
         WHEN sel_actions-export.
           select_export( ).
@@ -1240,13 +1134,10 @@
      <ITEM LANGU="E" DESCRIPT="Select components from list able to be exported"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>FIELD-SYMBOLS:
+    <SOURCE>
+FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
@@ -1262,13 +1153,10 @@
      <ITEM LANGU="E" DESCRIPT="Select components from list able to be exported"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>FIELD-SYMBOLS:
+    <SOURCE>
+FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
@@ -1284,20 +1172,18 @@
      <ITEM LANGU="E" DESCRIPT="Unselect the component"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  TRY.
+    <SOURCE>
+
+  TRY.
       _select( comp = comp
               value = abap_false ).
     CATCH zaplink_cx_list INTO o_exception.
@@ -1310,20 +1196,17 @@
      <ITEM LANGU="E" DESCRIPT="Update selection from ALV"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ALV">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ALV">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ALV data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  FIELD-SYMBOLS:
+    <SOURCE>
+  FIELD-SYMBOLS:
     &lt;a&gt; LIKE LINE OF data-headers,
     &lt;i&gt; LIKE LINE OF _index.
   DATA _key TYPE ts_compkey.
@@ -1342,54 +1225,56 @@
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_ADD_SUBCOMP" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 ">
+   <ITEM CMPNAME="_ADD_SUBCOMP" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Add sub components"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT"/>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E"/>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
-    </PARAMETERS>
-    <SOURCE>data o_list type to_me.
+    </EXCEPTIONS>
+    <SOURCE>
+  DATA o_list TYPE to_me.
   DATA _comp LIKE LINE OF _allcomp.
 
   CHECK data IS BOUND.
-  o_list = data-&gt;get_subcomponents( ).
+  TRY.
+      o_list = data-&gt;get_subcomponents( ).
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.
   CHECK o_list IS BOUND.
 
   LOOP AT o_list-&gt;_allcomp INTO _comp.
     _comp-as_sub = abap_true.
     _comp-o_comp = data.
     INSERT _comp INTO TABLE _allcomp.
-  ENDLOOP.</SOURCE>
+  ENDLOOP.
+</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_SELECT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Select the component ?"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="COMP" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="VALUE" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20100125" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="VALUE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>  DATA _idx LIKE LINE OF _index.
+    <SOURCE>
+  DATA _idx LIKE LINE OF _index.
 
   _idx = search_index( comp ).
   IF NOT _idx-o_comp IS BOUND.
@@ -1413,6 +1298,11 @@
    </ITEM>
   </METHODS>
   <TEXTSPOOL>
+   <ITEM ID="I" KEY="LST">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="Select objects" LENGTH="14 "/>
+    </TEXTS>
+   </ITEM>
    <ITEM ID="I" KEY="NF1">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="Type" LENGTH="4 "/>
@@ -1459,21 +1349,12 @@
    <ITEM TYPEGROUP="SLIS" VERSION="1" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TD_ALV" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="12 " TYPTYPE="4" SRCROW1="67 " SRCCOLUMN1="4 " SRCROW2="70 " SRCCOLUMN2="16 " TYPESRC_LENG="93 ">
-    BEGIN OF td_alv,
+   <ITEM CMPNAME="TD_ALV" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="12 " TYPTYPE="4" SRCROW1="67 " SRCCOLUMN1="4 " SRCROW2="70 " SRCCOLUMN2="16 " TYPESRC_LENG="93 ">BEGIN OF td_alv,
       headers TYPE tt_alv,
       items   TYPE tt_alv,
     END OF td_alv
-
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TD_ALVID" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="GUID_16">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+</ITEM>
+   <ITEM CMPNAME="TD_ALVID" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="GUID_16"/>
    <ITEM CMPNAME="TD_ITERATOR_TYPE" VERSION="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="CHAR1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Iterator type : all, selected, ...."/>
@@ -1492,6 +1373,11 @@
    <ITEM CMPNAME="TO_ME" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_LIST">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" VERSION="1" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_ALLCOMPLIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="31 " SRCCOLUMN1="4 " SRCROW2="35 " SRCCOLUMN2="22 " TYPESRC_LENG="145 ">
@@ -1535,16 +1421,11 @@
      <ITEM LANGU="E" DESCRIPT="ALV configuration"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ALV_CONFS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="4" SRCROW1="45 " SRCCOLUMN1="4 " SRCROW2="48 " SRCCOLUMN2="24 " TYPESRC_LENG="115 ">
-    BEGIN OF ts_alv_confs,
+   <ITEM CMPNAME="TS_ALV_CONFS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="4" SRCROW1="45 " SRCCOLUMN1="4 " SRCROW2="48 " SRCCOLUMN2="24 " TYPESRC_LENG="115 ">BEGIN OF ts_alv_confs,
       simple TYPE ts_alv_conf,
       hierar TYPE ts_alv_conf,
       END OF ts_alv_confs
-
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+</ITEM>
    <ITEM CMPNAME="TS_COMPLIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="23 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="19 " TYPESRC_LENG="139 ">
     BEGIN OF ts_complist,
     key      TYPE ts_compkey,
@@ -1556,17 +1437,12 @@
      <ITEM LANGU="E" DESCRIPT="Component list index"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CURSOR" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="15 " SRCCOLUMN1="4 " SRCROW2="19 " SRCCOLUMN2="17 " TYPESRC_LENG="127 ">
-    BEGIN OF ts_cursor,
+   <ITEM CMPNAME="TS_CURSOR" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="15 " SRCCOLUMN1="4 " SRCROW2="19 " SRCCOLUMN2="17 " TYPESRC_LENG="127 ">BEGIN OF ts_cursor,
     key      TYPE ts_compkey,
     o_comp   TYPE to_component,
     order    TYPE i,
   END OF ts_cursor
-
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+</ITEM>
    <ITEM CMPNAME="TT_ALLCOMPLIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="37 " SRCCOLUMN1="4 " SRCROW2="37 " SRCCOLUMN2="77 " TYPESRC_LENG="76 ">
     tt_allcomplist TYPE SORTED TABLE OF ts_allcomplist WITH NON-UNIQUE KEY KEY
 
@@ -1588,13 +1464,8 @@
      <ITEM LANGU="E" DESCRIPT="Component list index"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_CURSORS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="21 " SRCCOLUMN2="63 " TYPESRC_LENG="62 ">
-    tt_cursors TYPE STANDARD TABLE OF ts_cursor WITH DEFAULT KEY
-
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+   <ITEM CMPNAME="TT_CURSORS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="21 " SRCCOLUMN2="63 " TYPESRC_LENG="62 ">tt_cursors TYPE STANDARD TABLE OF ts_cursor WITH DEFAULT KEY
+</ITEM>
   </TYPES>
  </RAW>
 </ZL_OBJECT>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="DF3FB9BB95E580EEC71D0A89FFA6ADBA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="8D13D2F851E6A55C788374E30C24BACC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="ECF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -81,13 +81,16 @@ AS</ITEM>
    </ITEM>
   </DOCUMENTATION>
   <LOCAL>
-   <TYPES>*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+   <TYPES>
+*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+   <IMPLEMENTATIONS>
+*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+   <MACROS>
+*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* in the implementation part of the class
 
 
@@ -119,33 +122,26 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Transform any data to XML"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="TYPEDESC" VERSION="1" CMPTYPE="1" EDITORDER="5 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
+     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
+     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
+     <ITEM SCONAME="TYPEDESC" VERSION="1" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
+     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_DOCUMENT"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>*/---------------------------------------------------------------------\
+    <SOURCE>
+*/---------------------------------------------------------------------\
 *|   This plugin have been done by : Taryck BENSIALI                   |
 *|                                                                     |
 *|   e-mail : taryck@bensiali.net                                      |
@@ -227,36 +223,27 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Transform Object to XML"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="OBJECT" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="TYPEDESC" VERSION="1" CMPTYPE="1" EDITORDER="5 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
+     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
+     <ITEM SCONAME="OBJECT" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT"/>
+     <ITEM SCONAME="TYPEDESC" VERSION="1" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
+     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_DOCUMENT"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  DATA o_ref     TYPE REF TO cl_abap_refdescr.
+    <SOURCE>
   DATA node      TYPE REF TO if_ixml_element.
   DATA o_obj     TYPE REF TO cl_abap_classdescr.
-  DATA _type     TYPE REF TO cl_abap_typedescr.
   DATA typedescr TYPE REF TO cl_abap_typedescr.
   DATA svalue    TYPE string.
   DATA sname     TYPE string.
@@ -268,18 +255,18 @@ END-OF-DEFINITION.</MACROS>
 
   IF NOT object IS BOUND. EXIT. ENDIF.
 
-  IF typedesc IS BOUND.
-    o_obj ?= typedesc.
-  ELSE.
-    o_obj ?= cl_abap_classdescr=&gt;describe_by_object_ref( p_object_ref = object ).
-  ENDIF.
-  IF o_obj-&gt;absolute_name = &apos;\CLASS=OBJECT&apos;.
+*  IF typedesc IS BOUND.
+*    o_obj ?= typedesc.
+*  ELSE.
+*    o_obj ?= cl_abap_classdescr=&gt;describe_by_object_ref( p_object_ref = object ).
+*  ENDIF.
+*  IF o_obj-&gt;absolute_name = &apos;\CLASS=OBJECT&apos;.
     o_obj ?= cl_abap_classdescr=&gt;describe_by_object_ref( p_object_ref = object ).
 * Replace in stack &apos;\CLASS=OBJECT&apos; =&gt; &apos;\CLASS=XXXX&apos;
     unstack( ).
     attr_name = o_obj-&gt;absolute_name.
     stack( attr_name ).
-  ENDIF.
+*  ENDIF.
 
   IF name IS INITIAL.
     node = xml_node.
@@ -294,7 +281,7 @@ END-OF-DEFINITION.</MACROS>
     ASSIGN object-&gt;(self_fieldname) TO &lt;d&gt;.
     IF sy-subrc &lt;&gt; 0.
 *Error handling
-      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT &lt;c&gt;-name OF STRUCTURE structure&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;.
+      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT &lt;c&gt;-name OF STRUCTURE structure&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;.       &quot;#EC NOTEXT
     ELSE.
       typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
       typedescr = get_ref_type( typedescr ).
@@ -304,7 +291,7 @@ END-OF-DEFINITION.</MACROS>
                             type_desc = typedescr ).
           IF svalue IS NOT INITIAL.
             rc = node-&gt;set_value( svalue ).
-            mac_syserr_log rc &apos;set_value&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.
+            mac_syserr_log rc &apos;set_value&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.         &quot;#EC NOTEXT
             IF rc = 0.
               self_done = abap_true.
             ENDIF.
@@ -338,7 +325,7 @@ END-OF-DEFINITION.</MACROS>
     ASSIGN object-&gt;(&lt;a&gt;-name) TO &lt;d&gt;.
     IF sy-subrc &lt;&gt; 0.
 * error handling
-      mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(&lt;a&gt;-name)&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;.
+      mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(&lt;a&gt;-name)&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;.        &quot;#EC NOTEXT
       CONTINUE.
     ENDIF.
     typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -351,7 +338,7 @@ END-OF-DEFINITION.</MACROS>
         IF svalue IS NOT INITIAL AND ( &lt;a&gt;-name &lt;&gt; self_fieldname OR self_done &lt;&gt; abap_true ).
           rc = node-&gt;set_attribute( name = sname
                                    value = svalue ).
-          mac_syserr_log rc &apos;set_attribute&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;.
+          mac_syserr_log rc &apos;set_attribute&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;.                      &quot;#EC NOTEXT
         ENDIF.
       WHEN OTHERS.
         attr_name = &lt;a&gt;-name.
@@ -366,7 +353,7 @@ END-OF-DEFINITION.</MACROS>
 
   IF node IS BOUND AND NOT name IS INITIAL.
     rc = xml_node-&gt;append_child( node ).
-    mac_syserr_log rc &apos;append_child&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;.
+    mac_syserr_log rc &apos;append_child&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;.                            &quot;#EC NOTEXT
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ADD_STRUCTURE" VERSION="1" STATE="1" EDITORDER="3 ">
@@ -374,28 +361,21 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Transform Structure to XML"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="STRUCTURE" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="DATA">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
+     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
+     <ITEM SCONAME="STRUCTURE" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="DATA"/>
+     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_DOCUMENT"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA node        TYPE REF TO if_ixml_element.
+    <SOURCE>
+DATA node        TYPE REF TO if_ixml_element.
   DATA sname TYPE string.
   DATA svalue TYPE string.
   DATA structdescr TYPE REF TO cl_abap_structdescr.
@@ -420,7 +400,7 @@ END-OF-DEFINITION.</MACROS>
     ASSIGN COMPONENT self_fieldname OF STRUCTURE structure TO &lt;fieldvalue&gt;.
     IF sy-subrc &lt;&gt; 0.
 *Error handling
-      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT &lt;c&gt;-name OF STRUCTURE structure&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.
+      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT &lt;c&gt;-name OF STRUCTURE structure&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.    &quot;#EC NOTEXT
     ELSE.
       typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;fieldvalue&gt; ).
       typedescr = get_ref_type( typedescr ).
@@ -430,7 +410,7 @@ END-OF-DEFINITION.</MACROS>
                             type_desc = typedescr ).
           IF svalue IS NOT INITIAL.
             rc = node-&gt;set_value( svalue ).
-            mac_syserr_log rc &apos;set_value&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.
+            mac_syserr_log rc &apos;set_value&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.                   &quot;#EC NOTEXT
           ENDIF.
         WHEN OTHERS.
 * Self field &apos;&amp;1&apos; of structure &amp;2 (&amp;3) must be simple data type, not &apos;&amp;4&apos;
@@ -454,7 +434,7 @@ END-OF-DEFINITION.</MACROS>
     ASSIGN COMPONENT &lt;c&gt;-name OF STRUCTURE structure TO &lt;fieldvalue&gt;.
     IF sy-subrc &lt;&gt; 0.
 *Error handling
-      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT &lt;c&gt;-name OF STRUCTURE structure&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.
+      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT &lt;c&gt;-name OF STRUCTURE structure&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.      &quot;#EC NOTEXT
       CONTINUE.
     ENDIF.
     typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;fieldvalue&gt; ).
@@ -463,14 +443,14 @@ END-OF-DEFINITION.</MACROS>
     CASE typedescr-&gt;kind.
       WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-        mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.
+        mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.       &quot;#EC NOTEXT
       WHEN cl_abap_datadescr=&gt;kind_elem.
         svalue = elem_2_string( any = &lt;fieldvalue&gt;
                           type_desc = typedescr ).
         IF svalue IS NOT INITIAL AND &lt;c&gt;-name &lt;&gt; self_fieldname.
           rc = node-&gt;set_attribute( name = sname
                                    value = svalue ).
-          mac_syserr_log rc &apos;set_attribute&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.
+          mac_syserr_log rc &apos;set_attribute&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.                   &quot;#EC NOTEXT
         ENDIF.
 * cl_abap_datadescr=&gt;kind_struct cl_abap_datadescr=&gt;kind_table cl_abap_datadescr=&gt;kind_class cl_abap_datadescr=&gt;kind_intf.
       WHEN OTHERS.
@@ -486,7 +466,7 @@ END-OF-DEFINITION.</MACROS>
 
   IF node IS BOUND AND NOT name IS INITIAL.
     rc = xml_node-&gt;append_child( node ).
-    mac_syserr_log rc &apos;append_child&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.
+    mac_syserr_log rc &apos;append_child&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.                          &quot;#EC NOTEXT
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ADD_TABLE" VERSION="1" STATE="1" EDITORDER="4 ">
@@ -494,28 +474,21 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Transform table to XML"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="TABLE" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY TABLE">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
+     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
+     <ITEM SCONAME="TABLE" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY TABLE"/>
+     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_DOCUMENT"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA node        TYPE REF TO if_ixml_element.
+    <SOURCE>
+DATA node        TYPE REF TO if_ixml_element.
   FIELD-SYMBOLS:
     &lt;l&gt; TYPE ANY.
 
@@ -544,35 +517,36 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Any data =&gt; XML"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
+     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Data to convert"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="ATTRIBUTS" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY" PAROPTIONL="X">
+     <ITEM SCONAME="ATTRIBUTS" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Structure of attributs"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TYPE" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
+     <ITEM SCONAME="TYPE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Root node name = Object Type"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="4 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="3" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
+     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="XML Document generated"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>*/---------------------------------------------------------------------\
+    <SOURCE>
+*/---------------------------------------------------------------------\
 *|   This plugin have been done by : Taryck BENSIALI                   |
 *|                                                                     |
 *|   e-mail : taryck@bensiali.net                                      |
@@ -652,7 +626,8 @@ END-OF-DEFINITION.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>  DATA: obj TYPE balobj.
+    <SOURCE>
+  DATA: obj TYPE balobj.
   DATA: sobj TYPE balsub.
 *&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;
 * &lt;TABU TABNAME=&quot;BALOBJ&quot;&gt;
@@ -699,7 +674,8 @@ END-OF-DEFINITION.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>ixml = cl_ixml=&gt;create( ).
+    <SOURCE>
+ixml = cl_ixml=&gt;create( ).
 
   reset( ).</SOURCE>
    </ITEM>
@@ -708,23 +684,16 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Convert Elementary type to string"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="STRING" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="TYPE_DESC" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
+     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
+     <ITEM SCONAME="STRING" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
+     <ITEM SCONAME="TYPE_DESC" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  DATA _desc     TYPE REF TO cl_abap_typedescr.
+    <SOURCE>
+  DATA _desc     TYPE REF TO cl_abap_typedescr.
   DATA exception TYPE REF TO cx_root.
   DATA l_convin  TYPE REF TO cl_abap_conv_in_ce.
 
@@ -751,7 +720,6 @@ END-OF-DEFINITION.</MACROS>
             IMPORTING
               data = string.
         CATCH cx_root INTO exception.
-          IF NOT application_log IS BOUND. RAISE EXCEPTION exception. ENDIF.
           application_log-&gt;add_exception( exception = exception ).
       ENDTRY.
     WHEN cl_abap_typedescr=&gt;typekind_char
@@ -809,25 +777,26 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Get XML root Attributes"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ATTRIBUTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
+     <ITEM SCONAME="ATTRIBUTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Structure of attributs"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
+     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="XML document"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>*/---------------------------------------------------------------------\
+    <SOURCE>
+*/---------------------------------------------------------------------\
 *|   This plugin have been done by : Taryck BENSIALI                   |
 *|                                                                     |
 *|   e-mail : taryck@bensiali.net                                      |
@@ -875,18 +844,19 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="For Ref data (like object) type get target type"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="REF_TYPE" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="3" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
+     <ITEM SCONAME="REF_TYPE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TYPEDESC" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
+     <ITEM SCONAME="TYPEDESC" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA o_ref      TYPE REF TO cl_abap_refdescr.
+    <SOURCE>
+DATA o_ref      TYPE REF TO cl_abap_refdescr.
 
   IF typedesc-&gt;kind = cl_abap_datadescr=&gt;kind_ref.
     o_ref ?= typedesc.
@@ -900,18 +870,11 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Determine Kind from Type kind for simple kind"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="TYPE_KIND" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_TYPEKIND">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
+     <ITEM SCONAME="TYPE_KIND" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_TYPEKIND"/>
     </PARAMETERS>
-    <SOURCE>result = &apos;?&apos;.  &quot; unknow
+    <SOURCE>
+result = &apos;?&apos;.  &quot; unknow
 
   CASE TYPE_KIND.
 *          WHEN cl_abap_typedescr=&gt;typekind_clike.
@@ -970,18 +933,15 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Convert node to String"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="STRING" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+     <ITEM SCONAME="STRING" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
+     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA _ixml TYPE REF TO if_ixml.
+    <SOURCE>
+DATA _ixml TYPE REF TO if_ixml.
   DATA _streamfactory TYPE REF TO if_ixml_stream_factory.
   DATA _outputstream TYPE REF TO if_ixml_ostream.
 *  DATA _renderer TYPE REF TO if_ixml_renderer.
@@ -1003,23 +963,20 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Read XML to Any data"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="TYPEDESC" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
+     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
+     <ITEM SCONAME="TYPEDESC" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>*/---------------------------------------------------------------------\
+    <SOURCE>
+*/---------------------------------------------------------------------\
 *|   This plugin have been done by : Taryck BENSIALI                   |
 *|                                                                     |
 *|   e-mail : taryck@bensiali.net                                      |
@@ -1098,23 +1055,20 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Read XML to Object"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="OBJECT" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="TYPEDESC" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
+     <ITEM SCONAME="OBJECT" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT"/>
+     <ITEM SCONAME="TYPEDESC" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  DATA o_ref      TYPE REF TO cl_abap_refdescr.
+    <SOURCE>
+  DATA o_ref      TYPE REF TO cl_abap_refdescr.
   DATA elem       TYPE REF TO if_ixml_element.
   DATA node       TYPE REF TO if_ixml_node.
   DATA o_obj      TYPE REF TO cl_abap_classdescr.
@@ -1166,7 +1120,7 @@ END-OF-DEFINITION.</MACROS>
     ASSIGN object-&gt;(self_fieldname) TO &lt;d&gt;.
     IF sy-subrc &lt;&gt; 0.
 * Error to raise
-      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT self_fieldname OF STRUCTURE structure (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.
+      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT self_fieldname OF STRUCTURE structure (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.      &quot;#EC NOTEXT
     ELSE.
 * attribute assigned
       typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1174,7 +1128,7 @@ END-OF-DEFINITION.</MACROS>
       CASE typedescr-&gt;kind.
         WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-          mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.
+          mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.         &quot;#EC NOTEXT
         WHEN cl_abap_datadescr=&gt;kind_elem.
           string_2_elem( EXPORTING
                             string = svalue
@@ -1183,7 +1137,7 @@ END-OF-DEFINITION.</MACROS>
                               any = &lt;d&gt; ).
 * cl_abap_datadescr=&gt;kind_struct cl_abap_datadescr=&gt;kind_table cl_abap_datadescr=&gt;kind_class cl_abap_datadescr=&gt;kind_intf.
         WHEN OTHERS.
-          mac_syserr_log -1 &apos;NOT cl_abap_datadescr=&gt;kind_elem (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.
+          mac_syserr_log -1 &apos;NOT cl_abap_datadescr=&gt;kind_elem (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.    &quot;#EC NOTEXT
       ENDCASE.
     ENDIF.
   ENDIF.
@@ -1215,7 +1169,7 @@ END-OF-DEFINITION.</MACROS>
       ASSIGN object-&gt;(attr_name) TO &lt;d&gt;.
       IF sy-subrc &lt;&gt; 0.
 * Error to raise
-        mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(attr_name) TO &lt;d&gt; (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.
+        mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(attr_name) TO &lt;d&gt; (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.    &quot;#EC NOTEXT
       ELSE.
 * attribute assigned
         typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1223,7 +1177,7 @@ END-OF-DEFINITION.</MACROS>
         CASE typedescr-&gt;kind.
           WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.
+            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.             &quot;#EC NOTEXT
           WHEN cl_abap_datadescr=&gt;kind_elem.
 *            svalue = xml_node-&gt;get_attribute( name = attr_name ). &quot; equivalent to =&gt;
             svalue = node-&gt;get_value( ).
@@ -1279,7 +1233,7 @@ END-OF-DEFINITION.</MACROS>
       ASSIGN object-&gt;(attr_name) TO &lt;d&gt;.
       IF sy-subrc &lt;&gt; 0.
 * Error to raise
-        mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(attr_name)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.
+        mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(attr_name)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.            &quot;#EC NOTEXT
       ELSE.
 * attribute assigned
         typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1321,20 +1275,16 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Read XML to Structure"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="STRUCTURE" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="DATA">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+     <ITEM SCONAME="STRUCTURE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="DATA"/>
+     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  DATA elem        TYPE REF TO if_ixml_element.
+    <SOURCE>
+  DATA elem        TYPE REF TO if_ixml_element.
   DATA node        TYPE REF TO if_ixml_node.
-  DATA object      TYPE REF TO object.
   DATA structdescr TYPE REF TO cl_abap_structdescr.
   DATA typedescr   TYPE REF TO cl_abap_typedescr.
   DATA svalue      TYPE string.
@@ -1355,7 +1305,7 @@ END-OF-DEFINITION.</MACROS>
     ASSIGN COMPONENT self_fieldname OF STRUCTURE structure TO &lt;d&gt;.
     IF sy-subrc &lt;&gt; 0.
 * Error to raise
-      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT self_fieldname OF STRUCTURE structure (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.
+      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT self_fieldname OF STRUCTURE structure (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.     &quot;#EC NOTEXT
     ELSE.
 * attribute assigned
       typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1363,7 +1313,7 @@ END-OF-DEFINITION.</MACROS>
       CASE typedescr-&gt;kind.
         WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-          mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.
+          mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.            &quot;#EC NOTEXT
         WHEN cl_abap_datadescr=&gt;kind_elem.
           string_2_elem( EXPORTING
                             string = svalue
@@ -1372,7 +1322,7 @@ END-OF-DEFINITION.</MACROS>
                               any = &lt;d&gt; ).
 * cl_abap_datadescr=&gt;kind_struct cl_abap_datadescr=&gt;kind_table cl_abap_datadescr=&gt;kind_class cl_abap_datadescr=&gt;kind_intf.
         WHEN OTHERS.
-          mac_syserr_log -1 &apos;NOT cl_abap_datadescr=&gt;kind_elem (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.
+          mac_syserr_log -1 &apos;NOT cl_abap_datadescr=&gt;kind_elem (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.       &quot;#EC NOTEXT
       ENDCASE.
     ENDIF.
   ENDIF.
@@ -1405,7 +1355,7 @@ END-OF-DEFINITION.</MACROS>
       ASSIGN COMPONENT attr_name OF STRUCTURE structure TO &lt;d&gt;.
       IF sy-subrc &lt;&gt; 0.
 * Error to raise
-        mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT attr_name OF STRUCTURE structure (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.
+        mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT attr_name OF STRUCTURE structure (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.      &quot;#EC NOTEXT
       ELSE.
 * attribute assigned
         typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1413,7 +1363,7 @@ END-OF-DEFINITION.</MACROS>
         CASE typedescr-&gt;kind.
           WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.
+            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.        &quot;#EC NOTEXT
           WHEN cl_abap_datadescr=&gt;kind_elem.
 *            svalue = xml_node-&gt;get_attribute( name = attr_name ). &quot; equivalent to =&gt;
             svalue = node-&gt;get_value( ).
@@ -1470,7 +1420,7 @@ END-OF-DEFINITION.</MACROS>
       ASSIGN COMPONENT attr_name OF STRUCTURE structure TO &lt;d&gt;.
       IF sy-subrc &lt;&gt; 0.
 * Error to raise
-        mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT attr_name OF STRUCTURE structure (Childs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.
+        mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT attr_name OF STRUCTURE structure (Childs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.     &quot;#EC NOTEXT
       ELSE.
 * attribute assigned
         typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1478,7 +1428,7 @@ END-OF-DEFINITION.</MACROS>
         CASE typedescr-&gt;kind.
           WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Childs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.
+            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Childs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.         &quot;#EC NOTEXT
           WHEN cl_abap_datadescr=&gt;kind_elem.
             svalue = node-&gt;get_value( ).
             string_2_elem( EXPORTING
@@ -1507,18 +1457,15 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Read XML to Table"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="TABLE" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY TABLE">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+     <ITEM SCONAME="TABLE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY TABLE"/>
+     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA node       TYPE REF TO if_ixml_element.
+    <SOURCE>
+DATA node       TYPE REF TO if_ixml_element.
   DATA iterator   TYPE REF TO if_ixml_node_iterator.
   DATA childs     TYPE REF TO if_ixml_node_list.
   DATA dref       TYPE REF TO data.
@@ -1539,14 +1486,14 @@ END-OF-DEFINITION.</MACROS>
       ASSIGN dref-&gt;* TO &lt;d&gt;.
       IF sy-subrc &lt;&gt; 0.
 * Assign error
-        mac_syserr_log sy-subrc &apos;ASSIGN dref-&gt;*&apos; &apos;ZAPLINK_EASYXML-&gt;READ_TABLE&apos;.
+        mac_syserr_log sy-subrc &apos;ASSIGN dref-&gt;*&apos; &apos;ZAPLINK_EASYXML-&gt;READ_TABLE&apos;.               &quot;#EC NOTEXT
       ELSE.
         read_any( EXPORTING
                    xml_node = node
                    CHANGING
                         any = &lt;d&gt; ).
         INSERT &lt;d&gt; INTO TABLE table.
-        mac_syserr_log sy-subrc &apos;INSERT &lt;d&gt; INTO TABLE table.&apos; &apos;ZAPLINK_EASYXML-&gt;READ_TABLE&apos;.
+        mac_syserr_log sy-subrc &apos;INSERT &lt;d&gt; INTO TABLE table.&apos; &apos;ZAPLINK_EASYXML-&gt;READ_TABLE&apos;. &quot;#EC NOTEXT
       ENDIF.
     ENDIF.
     node ?= iterator-&gt;get_next( ).
@@ -1556,7 +1503,8 @@ END-OF-DEFINITION.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Reste attributs"/>
     </TEXTS>
-    <SOURCE>DATA object	TYPE balobj_d.
+    <SOURCE>
+DATA object	TYPE balobj_d.
   DATA subobject  TYPE balsubobj.
   DATA ext_id	TYPE balnrext.
 
@@ -1600,13 +1548,10 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Add context to context stack"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ITEM" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ITEM" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING"/>
     </PARAMETERS>
-    <SOURCE>IF NOT item IS INITIAL.
+    <SOURCE>
+IF NOT item IS INITIAL.
     INSERT item INTO context INDEX 1.
   ENDIF.</SOURCE>
    </ITEM>
@@ -1615,13 +1560,14 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Add context to context stack from description object"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DESC" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
+     <ITEM SCONAME="DESC" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA name TYPE string.
+    <SOURCE>
+DATA name TYPE string.
 
   name = desc-&gt;absolute_name.
 
@@ -1632,23 +1578,16 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Convert Elementary type to string"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="STRING" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" TYPTYPE="1" TYPE="STRING">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="TYPE_DESC" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
+     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
+     <ITEM SCONAME="STRING" VERSION="1" CMPTYPE="1" EDITORDER="2 " TYPTYPE="1" TYPE="STRING"/>
+     <ITEM SCONAME="TYPE_DESC" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  DATA _desc     TYPE REF TO cl_abap_typedescr.
+    <SOURCE>
+  DATA _desc     TYPE REF TO cl_abap_typedescr.
   DATA exception TYPE REF TO cx_root.
 
   IF string IS INITIAL. EXIT. ENDIF.
@@ -1674,7 +1613,6 @@ END-OF-DEFINITION.</MACROS>
 *             EX_LEN            =
                     .
         CATCH cx_root INTO exception.
-          if not application_log is bound. raise exception exception. endif.
           application_log-&gt;add_exception( exception = exception ).
       ENDTRY.
     WHEN cl_abap_typedescr=&gt;typekind_char
@@ -1696,7 +1634,6 @@ END-OF-DEFINITION.</MACROS>
       TRY.
           any = string.
         CATCH cx_root INTO exception.
-          if not application_log is bound. raise exception exception. endif.
           application_log-&gt;add_exception( exception = exception ).
       ENDTRY.
     WHEN OTHERS.
@@ -1723,7 +1660,8 @@ END-OF-DEFINITION.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Remove stack entry"/>
     </TEXTS>
-    <SOURCE>IF NOT context IS INITIAL.
+    <SOURCE>
+IF NOT context IS INITIAL.
     DELETE context INDEX 1.
   ENDIF.</SOURCE>
    </ITEM>
@@ -1732,30 +1670,31 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="XML =&gt; Any data"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
+     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Data to map from XML Doc"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="ATTRIBUTS" VERSION="1" CMPTYPE="1" EDITORDER="3 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY" PAROPTIONL="X">
+     <ITEM SCONAME="ATTRIBUTS" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Structure of attributs"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
+     <ITEM SCONAME="XMLDOC" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="XML document"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>*/---------------------------------------------------------------------\
+    <SOURCE>
+*/---------------------------------------------------------------------\
 *|   This plugin have been done by : Taryck BENSIALI                   |
 *|                                                                     |
 *|   e-mail : taryck@bensiali.net                                      |
@@ -1806,18 +1745,15 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="XML =&gt; Any data"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="XML" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
+     <ITEM SCONAME="ANY" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
+     <ITEM SCONAME="XML" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_DOCUMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>*/---------------------------------------------------------------------\
+    <SOURCE>
+*/---------------------------------------------------------------------\
 *|   This plugin have been done by : Taryck BENSIALI                   |
 *|                                                                     |
 *|   e-mail : taryck@bensiali.net                                      |
@@ -1879,28 +1815,18 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Donnée pour"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ITF_EL" VERSION="1" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="16 " SRCCOLUMN1="4 " SRCROW2="20 " SRCCOLUMN2="17 " TYPESRC_LENG="270 ">
-    BEGIN OF ts_itf_el,
+   <ITEM CMPNAME="TS_ITF_EL" VERSION="1" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="16 " SRCCOLUMN1="4 " SRCROW2="20 " SRCCOLUMN2="17 " TYPESRC_LENG="270 ">BEGIN OF ts_itf_el,
     interface	TYPE REF TO if_package_interface,
     elements  TYPE STANDARD TABLE OF scomeldtln WITH NON-UNIQUE DEFAULT KEY, &quot;SCOMELDATA,
     acls      TYPE STANDARD TABLE OF scomaclstr WITH NON-UNIQUE DEFAULT KEY, &quot;SCOMACLTAB,
-  END OF ts_itf_el
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+  END OF ts_itf_el</ITEM>
    <ITEM CMPNAME="TT_CONTEXT" VERSION="1" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="24 " SRCCOLUMN1="4 " SRCROW2="24 " SRCCOLUMN2="60 " TYPESRC_LENG="57 ">
     TT_CONTEXT type STANDARD TABLE OF string with DEFAULT KEY
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="For debug porpuse :Stack of calls"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_ELE" VERSION="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="14 " SRCCOLUMN1="4 " SRCROW2="14 " SRCCOLUMN2="67 " TYPESRC_LENG="64 ">
-    tt_ele TYPE STANDARD TABLE OF ts_ele WITH NON-UNIQUE DEFAULT KEY
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+   <ITEM CMPNAME="TT_ELE" VERSION="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="14 " SRCCOLUMN1="4 " SRCROW2="14 " SRCCOLUMN2="67 " TYPESRC_LENG="64 ">tt_ele TYPE STANDARD TABLE OF ts_ele WITH NON-UNIQUE DEFAULT KEY</ITEM>
    <ITEM CMPNAME="TT_ITF_EL" VERSION="1" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="22 " SRCCOLUMN1="4 " SRCROW2="22 " SRCCOLUMN2="73 " TYPESRC_LENG="70 ">
     tt_itf_el TYPE STANDARD TABLE OF ts_itf_el WITH NON-UNIQUE DEFAULT KEY
     <TEXTS>

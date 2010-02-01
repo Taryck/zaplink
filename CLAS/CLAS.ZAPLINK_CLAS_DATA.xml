@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="220F1052072C8BE1B64B4DF088D78950" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="CE11879F096766D498CA14828271B0E2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="66FF044B26B30C5BE1000000AC120173" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -14,11 +14,7 @@
      <ITEM LANGU="E" DESCRIPT="Maindata of Class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_EXCEPTIONS_TEXTS">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+   <ITEM CMPNAME="EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_EXCEPTIONS_TEXTS"/>
    <ITEM CMPNAME="FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_FRIENDS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class Friends list"/>
@@ -80,13 +76,16 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
    </ITEM>
   </DOCUMENTATION>
   <LOCAL>
-   <TYPES>*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+   <TYPES>
+*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+   <IMPLEMENTATIONS>
+*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+   <MACROS>
+*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
   <METHODS>
@@ -95,18 +94,15 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      <ITEM LANGU="E" DESCRIPT="Clean ABAP Source code"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="PROGRAM" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" PARPASSTYP="1" TYPTYPE="1" TYPE="PROGRAMM">
+     <ITEM SCONAME="PROGRAM" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="PROGRAMM">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ABAP Program Name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="SOURCE" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_SOURCE">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="SOURCE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_SOURCE"/>
     </PARAMETERS>
-    <SOURCE>  DATA code TYPE zaplink_object=&gt;tt_abaprawsource.
+    <SOURCE>
+  DATA code TYPE zaplink_object=&gt;tt_abaprawsource.
   DATA linecount TYPE i.
   FIELD-SYMBOLS:
     &lt;l&gt; LIKE LINE OF code.
@@ -123,7 +119,7 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
       ENDIF.
     ENDIF.
     READ TABLE code ASSIGNING &lt;l&gt; INDEX 1.
-    TRANSLATE &lt;l&gt; TO UPPER CASE.
+    TRANSLATE &lt;l&gt; TO UPPER CASE.  &quot;#EC *
     IF &lt;l&gt; CP &apos;METHOD *&apos;. &quot;#EC SYNTCHAR
       DELETE code INDEX 1.
     ENDIF.
@@ -136,43 +132,41 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      <ITEM LANGU="E" DESCRIPT="Convert SOTR_CONC to Attrvalue"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Initial value"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091119" PARDECLTYP="3" TYPTYPE="1" TYPE="SEOVALUE">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="SEOVALUE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  concatenate &apos;&apos;&apos;&apos; data &apos;&apos;&apos;&apos; into result.</SOURCE>
+    <SOURCE>
+  concatenate &apos;&apos;&apos;&apos; data &apos;&apos;&apos;&apos; into result.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_CONCEPT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Update Concepts"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FM_DATA">
-      <TEXTS>
-       <ITEM LANGU="E"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="MSG_COL" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" CHANGEDBY="TBENSIAL" CHANGEDON="20091120" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_MSG_COL">
+     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FM_DATA"/>
+     <ITEM SCONAME="MSG_COL" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_MSG_COL">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Message Collector"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20100127">
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>  DATA lt_types TYPE sotr_objects.
+    <SOURCE>
+  DATA lt_types TYPE sotr_objects.
   DATA _type    LIKE LINE OF lt_types.
   DATA _paket   TYPE sotr_pack.
   DATA _entries TYPE sotr_text_tt.
@@ -376,18 +370,19 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      <ITEM LANGU="E" DESCRIPT="Convert Attrvalue to SOTR_CONC"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091119" PARPASSTYP="1" TYPTYPE="1" TYPE="SEOVALUE">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOVALUE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Initial value"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091119" PARDECLTYP="3" TYPTYPE="1" TYPE="SOTR_CONC">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="SOTR_CONC">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  DATA _val TYPE seovalue.
+    <SOURCE>
+  DATA _val TYPE seovalue.
 
   _val = data.
   REPLACE ALL OCCURRENCES OF &apos;&apos;&apos;&apos; IN _val WITH space.
@@ -398,7 +393,8 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="ANONYMIZE">
-    <SOURCE>  super-&gt;anonymize( ).
+    <SOURCE>
+  super-&gt;anonymize( ).
   CLEAR:
     a0_maindata-author,
     a0_maindata-createdon,
@@ -427,7 +423,8 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
 </SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="COMPLETE_DATA">
-    <SOURCE>  DATA _val TYPE seovalue.
+    <SOURCE>
+  DATA _val TYPE seovalue.
   DATA _sotr LIKE LINE OF fm_data-exceptions_texts.
   DATA _text TYPE STANDARD TABLE OF sotr_text.
   DATA _attr_text LIKE LINE OF fm_data-component_desc.
@@ -436,6 +433,7 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
     &lt;st&gt; LIKE LINE OF _sotr-texts,
     &lt;a&gt; LIKE LINE OF fm_data-attributes.
 
+  obj_name = fm_data-class-clsname.                         &quot; Issue 23
   CALL METHOD super-&gt;complete_data
     CHANGING
       fm_data = fm_data.
@@ -488,7 +486,8 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
 </SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="FROM_DATA">
-    <SOURCE>  DATA _in  LIKE LINE OF interfaces.
+    <SOURCE>
+  DATA _in  LIKE LINE OF interfaces.
 *  DATA _ia  LIKE LINE OF _in-attributes_redefinition.
   DATA _ia  LIKE LINE OF _in-components.
   DATA _t   LIKE LINE OF a0_maindata-texts.
@@ -684,7 +683,8 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
 </SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="TO_DATA">
-    <SOURCE>  DATA _t   LIKE LINE OF a0_maindata-texts.
+    <SOURCE>
+  DATA _t   LIKE LINE OF a0_maindata-texts.
   DATA _in  LIKE LINE OF fm_data-implementings.
   DATA _fr  LIKE LINE OF fm_data-friendships.
   DATA _id  LIKE LINE OF fm_data-impl_details.
@@ -815,6 +815,13 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
 </SOURCE>
    </ITEM>
   </REDEFINITIONS>
+  <TEXTSPOOL>
+   <ITEM ID="I" KEY="SCE">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="Source code Expected" LENGTH="20 "/>
+    </TEXTS>
+   </ITEM>
+  </TEXTSPOOL>
   <TYPEGROUPS>
    <ITEM TYPEGROUP="ABAP" VERSION="1" IMPLICIT="X"/>
    <ITEM TYPEGROUP="SEOF" VERSION="1" EXPLICIT="X"/>
@@ -825,22 +832,12 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
    <ITEM TYPEGROUP="SEOT" VERSION="1" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TO_EXCEPTION" VERSION="1" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-    </TEXTS>
-   </ITEM>
    <ITEM CMPNAME="TO_MSG_COL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Message Collector"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" VERSION="1" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TS_CLASS_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4" SRCROW1="51 " SRCCOLUMN1="4 " SRCROW2="71 " SRCCOLUMN2="25 " TYPESRC_LENG="888 ">
+   <ITEM CMPNAME="TS_CLASS_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4" SRCROW1="49 " SRCCOLUMN1="4 " SRCROW2="69 " SRCCOLUMN2="25 " TYPESRC_LENG="888 ">
     BEGIN OF ts_class_data.
     INCLUDE TYPE vseoclass AS hdr.
 *      Include type VSEOEXTEND as Inh.  &quot; Duplicate name for some fields
@@ -867,20 +864,15 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      <ITEM LANGU="E" DESCRIPT="Maindata of Class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_EXCEPTION_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="29 " TYPESRC_LENG="232 ">
-    BEGIN OF ts_exception_text.
+   <ITEM CMPNAME="TS_EXCEPTION_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="19 " SRCCOLUMN1="4 " SRCROW2="25 " SRCCOLUMN2="29 " TYPESRC_LENG="232 ">BEGIN OF ts_exception_text.
     INCLUDE TYPE seoo_attribute_r AS attr.
     INCLUDE TYPE sotr_head AS cx.
     TYPES:
         texts     TYPE tt_seocompotx_l,
         longtexts TYPE tt_sotr_texts,
       END OF ts_exception_text
-
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TS_LOCALS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="35 " SRCCOLUMN1="4 " SRCROW2="39 " SRCCOLUMN2="23 " TYPESRC_LENG="179 ">
+</ITEM>
+   <ITEM CMPNAME="TS_LOCALS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="33 " SRCCOLUMN1="4 " SRCROW2="37 " SRCCOLUMN2="23 " TYPESRC_LENG="179 ">
     BEGIN OF ts_locals,
           types           TYPE ts_source_,
           implementations TYPE ts_source_,
@@ -891,7 +883,7 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      <ITEM LANGU="E" DESCRIPT="Local data : Type, Implementaiton &amp; Macros"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_REDEFINITION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="41 " SRCCOLUMN1="4 " SRCROW2="45 " SRCCOLUMN2="27 " TYPESRC_LENG="191 ">
+   <ITEM CMPNAME="TS_REDEFINITION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="39 " SRCCOLUMN1="4 " SRCROW2="43 " SRCCOLUMN2="27 " TYPESRC_LENG="191 ">
     BEGIN OF ts_redefinition.
     INCLUDE TYPE seoredef AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
     TYPES:
@@ -902,30 +894,20 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      <ITEM LANGU="E" DESCRIPT="Method&apos;s redefinition data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCE_" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="31 " SRCCOLUMN1="4 " SRCROW2="33 " SRCCOLUMN2="20 " TYPESRC_LENG="70 ">
-    begin of ts_source_,
+   <ITEM CMPNAME="TS_SOURCE_" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="31 " SRCCOLUMN2="20 " TYPESRC_LENG="70 ">begin of ts_source_,
       _ type ts_source,
     end of ts_source_
-
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="29 " SRCCOLUMN2="85 " TYPESRC_LENG="84 ">
-    tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname
-
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TT_FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="49 " SRCCOLUMN1="4 " SRCROW2="49 " SRCCOLUMN2="86 " TYPESRC_LENG="85 ">
+</ITEM>
+   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="27 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="85 " TYPESRC_LENG="84 ">tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname
+</ITEM>
+   <ITEM CMPNAME="TT_FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="47 " SRCCOLUMN1="4 " SRCROW2="47 " SRCCOLUMN2="86 " TYPESRC_LENG="85 ">
     tt_friends    TYPE SORTED TABLE OF seofriends WITH UNIQUE KEY refclsname friendtype
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class Friends list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="47 " SRCCOLUMN1="4 " SRCROW2="47 " SRCCOLUMN2="80 " TYPESRC_LENG="79 ">
+   <ITEM CMPNAME="TT_REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="45 " SRCCOLUMN1="4 " SRCROW2="45 " SRCCOLUMN2="80 " TYPESRC_LENG="79 ">
     tt_redefinitions TYPE SORTED TABLE OF ts_redefinition WITH UNIQUE KEY mtdname
 
     <TEXTS>

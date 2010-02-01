@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="68A780BF091D241105683EE2B3B46763" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="BF64B85938D95A4DFC46F5465C0E47C0" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000063" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
-  <SOURCE>*&amp;---------------------------------------------------------------------*
+  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000064" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
+  <SOURCE>
+*&amp;---------------------------------------------------------------------*
 *&amp;  Include           ZAPLINLK_SCR
 *&amp;---------------------------------------------------------------------*
 
@@ -93,7 +94,7 @@ AT SELECTION-SCREEN OUTPUT.
   LOOP AT SCREEN.
     CASE screen-name.
       WHEN &apos;%FDVF007_0110&apos; OR &apos;%_17NNJ0000543372_%_%_%_%_%_%_&apos; &quot; scr 110
-        OR &apos;%FTRF003_0120&apos; OR &apos;%_17NNJ0000543372_%_%_%_%_%_%_&apos; &quot; scr 120
+        OR &apos;%FTRF003_0120&apos; OR &apos;%_17NNJ0000543372_%_%_%_%_%_%_&apos; &quot; scr 120  &quot;#EC *
         OR &apos;TABSTRIP_T_BLOCK&apos; OR &apos;%PDEV020_1000&apos; OR &apos;%PTRO021_1000&apos; OR &apos;%_SUBSCREEN_T_BLOCK&apos; OR &apos;%_17SNS0000543372_%_%_%_%_%_%_&apos;. &quot; Scr 1000
         screen-active = _active. MODIFY SCREEN.
     ENDCASE.

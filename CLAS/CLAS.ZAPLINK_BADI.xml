@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="1BF591A80FB292ABC86EF9B19660BB45" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="B27FA2B49311880E30C4A17B07A03097" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="AC08064B8305595DE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -9,16 +9,8 @@
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
-   <ITEM CMPNAME="R_DOC_ID_DEFINITION" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="R_DOC_ID_IMPLEMENTATION" VERSION="1" STATE="1" EDITORDER="4 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+   <ITEM CMPNAME="R_DOC_ID_DEFINITION" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID"/>
+   <ITEM CMPNAME="R_DOC_ID_IMPLEMENTATION" VERSION="1" STATE="1" EDITORDER="4 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID"/>
    <ITEM CMPNAME="ST_BADI_DEF" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;SXSD&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Transport category"/>
@@ -51,13 +43,16 @@
    </ITEM>
   </ATTRIBUTS>
   <LOCAL>
-   <TYPES>*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+   <TYPES>
+*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+   <IMPLEMENTATIONS>
+*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+   <MACROS>
+*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
   <METHODS>
@@ -65,7 +60,8 @@
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>*table TDCLT
+    <SOURCE>
+*table TDCLT
 *DOKCLASS DOKTITEL
 *BI       Business Add-Ins: Implementations
   DATA _id LIKE LINE OF r_doc_id_definition.
@@ -80,7 +76,8 @@
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>  DATA type LIKE LINE OF supported_types.
+    <SOURCE>
+  DATA type LIKE LINE OF supported_types.
 
   CALL METHOD super-&gt;constructor.
 
@@ -95,13 +92,14 @@
      <ITEM LANGU="E" DESCRIPT="Create document key"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DOC_KEY" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_DOC_KEY">
+     <ITEM SCONAME="DOC_KEY" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_DOC_KEY">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="DOCU key structure"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>* SELECT WHERE &quot;ID&quot; = &apos;HY&apos; AND &quot;OBJECT&quot; = &apos;SIMGZAPLINK_ACTION&apos; AND &quot;LANGU&quot; = &apos;E&apos; AND &quot;TYP&quot; = &apos;E&apos; AND &quot;DOKVERSION&quot; = 0001 ORDER BY
+    <SOURCE>
+* SELECT WHERE &quot;ID&quot; = &apos;HY&apos; AND &quot;OBJECT&quot; = &apos;SIMGZAPLINK_ACTION&apos; AND &quot;LANGU&quot; = &apos;E&apos; AND &quot;TYP&quot; = &apos;E&apos; AND &quot;DOKVERSION&quot; = 0001 ORDER BY
   doc_key-simg = &apos;SIMG&apos;.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="DO_EXISTS_IMPL" VERSION="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
@@ -109,18 +107,19 @@
      <ITEM LANGU="E" DESCRIPT="Do Implementation exists in SAP System"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARPASSTYP="1" TYPTYPE="1" TYPE="RSEXSCRN-IMP_NAME">
+     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="RSEXSCRN-IMP_NAME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Component key"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="_EXISTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPEXISTS">
+     <ITEM SCONAME="_EXISTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPEXISTS">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Object exists (&apos;X&apos;) or non exists (&apos; &apos;)"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>_exists = ZAPLINK_BADI=&gt;exists-not_exists.
+    <SOURCE>
+_exists = ZAPLINK_BADI=&gt;exists-not_exists.
   CALL FUNCTION &apos;SXV_IMP_EXISTS&apos;
     EXPORTING
       imp_name           = name
@@ -137,18 +136,19 @@
      <ITEM LANGU="E" DESCRIPT="Export BADI Definiition from SAP System"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMPONENT" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="COMPONENT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Component key"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_BADI_DEF">
+     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_BADI_DEF">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="SAP Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  DATA obj_mask    TYPE doku_obj.
+    <SOURCE>
+  DATA obj_mask    TYPE doku_obj.
   DATA docu_key    TYPE ts_doc_key.
   DATA _d          TYPE zaplink_sxsd_data=&gt;t_fm_data.
   DATA exit_name   TYPE rsexscrn-exit_name.
@@ -219,18 +219,19 @@
      <ITEM LANGU="E" DESCRIPT="Export BADI Implementation from SAP System"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMPONENT" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+     <ITEM SCONAME="COMPONENT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Component key"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_BADI_IMPL">
+     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_BADI_IMPL">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="SAP Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>DATA obj_mask    TYPE doku_obj.
+    <SOURCE>
+DATA obj_mask    TYPE doku_obj.
 *  DATA docu_key    TYPE ts_doc_key.
   DATA _d          TYPE zaplink_badi_data=&gt;t_fm_data.
   DATA imp_name    TYPE rsexscrn-imp_name.
@@ -241,8 +242,8 @@
   DATA _comp       TYPE to_component.
   DATA badi_info   TYPE badi_data.
   DATA filter_obj  TYPE REF TO cl_badi_flt_struct.
-  DATA impl        TYPE impl_data.
-  DATA mast_langu  TYPE sy-langu.
+*  DATA impl        TYPE impl_data.
+*  DATA mast_langu  TYPE sy-langu.
   DATA t_fcodes    TYPE seex_fcode_table.
   DATA t_cocos     TYPE seex_coco_table.
   DATA t_intas     TYPE seex_table_table.
@@ -373,18 +374,19 @@
      <ITEM LANGU="E" DESCRIPT="Import BADI Definiition into SAP system"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMPONENTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
+     <ITEM SCONAME="COMPONENTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Components"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_BADI_DEF">
+     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_BADI_DEF">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="SAP Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  DATA _d               TYPE zaplink_sxsd_data=&gt;t_fm_data.
+    <SOURCE>
+  DATA _d               TYPE zaplink_sxsd_data=&gt;t_fm_data.
   DATA i_korrnr         TYPE trkorr.
   DATA i_devclass       TYPE devclass.
   DATA _component       TYPE to_component.
@@ -476,25 +478,25 @@
      <ITEM LANGU="E" DESCRIPT="Import BADI Implementation into SAP system"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="COMPONENTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
+     <ITEM SCONAME="COMPONENTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Components"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091120" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_BADI_IMPL">
+     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_BADI_IMPL">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Badi Implémentation Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>  DATA _d               TYPE zaplink_badi_data=&gt;t_fm_data.
+    <SOURCE>
+  DATA _d               TYPE zaplink_badi_data=&gt;t_fm_data.
   DATA i_korrnr         TYPE trkorr.
   DATA i_devclass       TYPE devclass.
   DATA _component       type to_component.
   DATA mast_langu       TYPE sy-langu.
   DATA o_conn           TYPE to_connector.
   DATA transport_key    TYPE trkey.
-  DATA _type            TYPE td_comptype.
   DATA o_filter         TYPE REF TO cl_badi_flt_struct.
   DATA o_filter_val     TYPE REF TO cl_badi_flt_values_alv.
   DATA badi_data        TYPE badi_data.
@@ -666,7 +668,8 @@
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
-    <SOURCE>  DATA o_conn   TYPE to_connector.
+    <SOURCE>
+  DATA o_conn   TYPE to_connector.
   DATA o_sxsd   TYPE to_badi_def.
   DATA o_sxci   TYPE to_badi_impl.
   DATA _type    TYPE td_comptype.
@@ -681,7 +684,7 @@
         _type = t_badi_itf.
         o_sxsd-&gt;interface = o_conn-&gt;create_new_raw( _type ).
       ENDIF.
-      object-&gt;raw ?= o_sxsd.
+      object-&gt;raw = o_sxsd.
 *      create object object type TO_CLASS.
     WHEN st_badi_impl.
       CREATE OBJECT o_sxci.
@@ -691,7 +694,7 @@
         _type = t_badi_impl.
         o_sxci-&gt;implementation = o_conn-&gt;create_new_raw( _type ).
       ENDIF.
-      object-&gt;raw ?= o_sxci.
+      object-&gt;raw = o_sxci.
 *      create object object type TO_CLASS.
     WHEN OTHERS.
       CLEAR object.
@@ -699,7 +702,8 @@
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
-    <SOURCE>DATA exit_name  TYPE rsexscrn-exit_name.
+    <SOURCE>
+DATA exit_name  TYPE rsexscrn-exit_name.
 *  DATA not_active TYPE  seox_boolean.
 
   CASE component-&gt;get_type( ).
@@ -756,7 +760,8 @@
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
-    <SOURCE>DATA exit_name  TYPE rsexscrn-exit_name.
+    <SOURCE>
+DATA exit_name  TYPE rsexscrn-exit_name.
   DATA imp_name   TYPE rsexscrn-imp_name.
 
   exists = me-&gt;exists-not_exists.
@@ -782,30 +787,33 @@
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
-    <SOURCE>  result = abap_false.
+    <SOURCE>
+  result = abap_false.
   if version = _ver.
     result = abap_true.
   endif.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP">
-    <SOURCE>  data o_bdef TYPE TO_BADI_DEF.
+    <SOURCE>
+  data o_bdef TYPE TO_BADI_DEF.
   data o_impl TYPE TO_BADI_impl.
 
   CREATE OBJECT object.
   CASE component-&gt;get_type( ).
     WHEN st_badi_def.
       o_bdef = export_from_sap_def( component ).
-      object-&gt;raw ?= o_bdef.
+      object-&gt;raw = o_bdef.
     WHEN st_badi_impl.
       o_impl = export_from_sap_impl( component ).
-      object-&gt;raw ?= o_impl.
+      object-&gt;raw = o_impl.
     WHEN OTHERS.
       CLEAR object.
       RAISE EXCEPTION TYPE zaplink_cx.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
-    <SOURCE>  DATA _o_def         TYPE to_badi_def.
+    <SOURCE>
+  DATA _o_def         TYPE to_badi_def.
   DATA _o_impl        TYPE to_badi_impl.
 
   CASE object-&gt;type.

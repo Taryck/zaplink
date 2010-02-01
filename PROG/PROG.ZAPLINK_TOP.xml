@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2332B9F16BAD3A85F4656421A5D0A4B6" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOP" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="1A249F94CF2FF3B75C5C874E64F01A05" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOP" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" VERN="000040" LEVL="700" RMAND="220" RLOAD="E" UCCHECK="X"/>
-  <SOURCE>*&amp;---------------------------------------------------------------------*
+  <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" VERN="000045" LEVL="700" RMAND="220" RLOAD="E" UCCHECK="X"/>
+  <SOURCE>
+*&amp;---------------------------------------------------------------------*
 *&amp;  Include           ZAPLINLK_TOP
 *&amp;---------------------------------------------------------------------*
 */------------------------DATA----------------------------\
@@ -54,15 +55,6 @@ TYPES: BEGIN OF t_objects_package,
           msg        TYPE string,
        END OF t_objects_package.
 
-DATA pluginline TYPE t_plugin.
-DATA pluginlist TYPE TABLE OF t_plugin.
-DATA hidid(3)   TYPE c.
-DATA isslinkee(1) TYPE c VALUE &apos; &apos;.
-DATA _objname TYPE string.
-DATA _objtype TYPE string.
-DATA retfiletable TYPE filetable.
-DATA retrc TYPE sysubrc.
-DATA retuseraction TYPE i.
 DATA stemp TYPE string.
 
 DATA:

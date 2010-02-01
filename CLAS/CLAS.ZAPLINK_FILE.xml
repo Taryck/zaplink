@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9B3F0D9B6A4A0C2E7C1051F0F08AF55A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="6513D65BB3C3396D2E1BB45617A635EB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="F5F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_FILE">
@@ -22,11 +22,7 @@
         local     TYPE t_filetype VALUE &apos;L&apos;,                &quot;#EC NOTEXT
         server    TYPE t_filetype VALUE &apos;S&apos;,                &quot;#EC NOTEXT
       END OF filetypes
-">
-    <TEXTS>
-     <ITEM LANGU="E"/>
-    </TEXTS>
-   </ITEM>
+"/>
    <ITEM CMPNAME="_CONTENT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="T_CONTENT">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="File content"/>
@@ -44,88 +40,173 @@
    </ITEM>
   </ATTRIBUTS>
   <LOCAL>
-   <TYPES>*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+   <TYPES>
+*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+   <IMPLEMENTATIONS>
+*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+   <MACROS>
+*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
   <METHODS>
+   <ITEM CMPNAME="FILE_EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Do file exists"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Do exists"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>
+  DATA tmptable TYPE table_of_strings.
+  DATA cx_name TYPE string.
+  DATA cx TYPE REF TO cx_root.
+  DATA _cx TYPE REF TO zaplink_cx_file.
+  DATA _str LIKE LINE OF tmptable.
+  FIELD-SYMBOLS:
+    &lt;s&gt; LIKE LINE OF tmptable.
+
+  CASE _filetype.
+    WHEN c_ft_local.
+      CALL METHOD cl_gui_frontend_services=&gt;file_exist
+        EXPORTING
+          file                 = _filename
+        RECEIVING
+          result               = result
+        EXCEPTIONS
+          cntl_error           = 1
+          error_no_gui         = 2
+          wrong_parameter      = 3
+          not_supported_by_gui = 4
+          OTHERS               = 5.
+      IF sy-subrc &lt;&gt; 0.
+        CASE sy-subrc.
+          WHEN &apos;1&apos;.
+            cx_name = &apos;FILE_OPEN_ERROR&apos;.
+          WHEN OTHERS.
+            cx_name = &apos;OTHERS&apos;.
+        ENDCASE.
+* Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
+        RAISE EXCEPTION TYPE zaplink_cx_file
+              EXPORTING textid = zaplink_cx_file=&gt;load_error
+                      filename = _filename
+                      filetype = _filetype
+                       cx_name = cx_name.
+      ENDIF.
+    WHEN c_ft_server.
+      TRY.
+          OPEN DATASET _filename FOR INPUT IN TEXT MODE ENCODING DEFAULT.
+        CATCH cx_root INTO cx.
+* Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
+          CREATE OBJECT _cx
+            EXPORTING
+              textid   = zaplink_cx_file=&gt;load_error
+              filename = _filename
+              filetype = _filetype
+              previous = cx.
+          _cx-&gt;update( ).
+          RAISE EXCEPTION _cx.
+      ENDTRY.
+      IF sy-subrc &lt;&gt; 0.
+        result = abap_false.
+        EXIT.
+      ENDIF.
+
+      result = abap_true.
+      TRY.
+          CLOSE DATASET _filename.
+        CATCH cx_root INTO cx.
+          EXIT.
+      ENDTRY.
+    WHEN OTHERS.
+      RAISE EXCEPTION TYPE zaplink_cx_file
+            EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+                    filetype = _filetype.
+  ENDCASE.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="GET_FILECONTENT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Filecontent : Getter"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="File Content as String"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>result = _content.</SOURCE>
+    <SOURCE>
+result = _content.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_FILENAME" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Filename : Getter"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="3" TYPTYPE="1" TYPE="T_FILENAME">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="T_FILENAME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Filename"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>result = _filename.</SOURCE>
+    <SOURCE>
+result = _filename.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_FILETYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Filetype : Getter"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARDECLTYP="3" TYPTYPE="1" TYPE="T_FILETYPE">
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="T_FILETYPE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Filetype : Local or Server"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>result = _filetype.</SOURCE>
+    <SOURCE>
+result = _filetype.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Load file content"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>DATA tmptable TYPE table_of_strings.
+    <SOURCE>
+  DATA tmptable TYPE table_of_strings.
   DATA cx_name TYPE string.
   DATA cx TYPE REF TO cx_root.
   DATA _cx TYPE REF TO zaplink_cx_file.
@@ -252,20 +333,21 @@
      <ITEM LANGU="E" DESCRIPT="Load Dialog"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FILENAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FILENAME" PAROPTIONL="X">
+     <ITEM SCONAME="FILENAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="T_FILENAME" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Filename"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>  DATA ft TYPE filetable.
+    <SOURCE>
+  DATA ft TYPE filetable.
   DATA filecount TYPE i.
   DATA cx_name TYPE string.
 
@@ -325,13 +407,14 @@
      <ITEM LANGU="E" DESCRIPT="Save file content"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>  DATA tmptable  TYPE table_of_strings.
+    <SOURCE>
+  DATA tmptable  TYPE table_of_strings.
 *  DATA cx_name   TYPE string.
   DATA o_cx      TYPE REF TO cx_root.
   DATA o_cx_file TYPE REF TO zaplink_cx_file.
@@ -495,20 +578,21 @@
      <ITEM LANGU="E" DESCRIPT="Save Dialog"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FILENAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FILENAME" PAROPTIONL="X">
+     <ITEM SCONAME="FILENAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="T_FILENAME" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Filename"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>DATA retfilename TYPE string.
+    <SOURCE>
+DATA retfilename TYPE string.
   DATA retpath TYPE string.
   DATA retfullpath TYPE string.
   DATA retuseract TYPE i.
@@ -549,40 +633,42 @@
      <ITEM LANGU="E" DESCRIPT="Filecontent : Setter"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="File Content as String"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>_content = data.</SOURCE>
+    <SOURCE>
+_content = data.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_FILENAME" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Filename : Setter"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FILENAME">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="T_FILENAME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Filename"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>IF data IS INITIAL.
+    <SOURCE>
+IF data IS INITIAL.
 * Filename &apos;&amp;file&amp;&apos; is invalid. Please provide a valid filename for filetype &apos;&amp;filetype&amp;&apos;
     RAISE EXCEPTION TYPE zaplink_cx_file
           EXPORTING textid = zaplink_cx_file=&gt;invalid_filename
@@ -599,20 +685,21 @@
      <ITEM LANGU="E" DESCRIPT="Filetype : Setter"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FILETYPE">
+     <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="T_FILETYPE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Filetype : Local or Server"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 " AUTHOR="TBENSIAL" CREATEDON="20091118">
+     <ITEM SCONAME="ZAPLINK_CX_FILE" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>IF data &lt;&gt; c_ft_local AND data &lt;&gt; c_ft_server.
+    <SOURCE>
+IF data &lt;&gt; c_ft_local AND data &lt;&gt; c_ft_server.
     RAISE EXCEPTION TYPE zaplink_cx_file
           EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
                   filetype = data.
@@ -623,6 +710,9 @@
   _filetype = data.</SOURCE>
    </ITEM>
   </METHODS>
+  <TYPEGROUPS>
+   <ITEM TYPEGROUP="ABAP" VERSION="1" IMPLICIT="X"/>
+  </TYPEGROUPS>
   <TYPES>
    <ITEM CMPNAME="T_CONTENT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="STRING">
     <TEXTS>
