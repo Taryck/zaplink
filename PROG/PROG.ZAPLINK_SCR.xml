@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BF64B85938D95A4DFC46F5465C0E47C0" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="ABD4FFFEA380BDF170EE9FF22FC53C20" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000064" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
+  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000065" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
   <SOURCE>
 *&amp;---------------------------------------------------------------------*
 *&amp;  Include           ZAPLINLK_SCR
@@ -185,17 +185,21 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
   p_file = l_file.
 
 AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_tr-low.
-  iv_organizer_type = &apos;W&apos;.
+  data:
+    d_org_type   TYPE trwbo_calling_organizer,
+    d_request TYPE trwbo_request_header,
+    d_task    TYPE trwbo_request_header.
+  d_org_type = &apos;W&apos;.
 *  is_selection-reqstatus = &apos;R&apos;.
   CALL FUNCTION &apos;TR_PRESENT_REQUESTS_SEL_POPUP&apos;
     EXPORTING
-      iv_organizer_type   = iv_organizer_type
+      iv_organizer_type   = d_org_type
       is_selection        = is_selection
     IMPORTING
-      es_selected_request = es_selected_request
-      es_selected_task    = es_selected_task.
+      es_selected_request = d_request
+      es_selected_task    = d_task.
 
-  p_tr-low = es_selected_request-trkorr.
+  p_tr-low = d_request-trkorr.
 
 *\--------------------------------------------------------------------/</SOURCE>
   <TEXTSPOOL>

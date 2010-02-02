@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="CE11879F096766D498CA14828271B0E2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="B6BEACC6A66DE5E294B04EBBA06B507C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="66FF044B26B30C5BE1000000AC120173" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -25,12 +25,12 @@
      <ITEM LANGU="E" DESCRIPT="Local data : Type, Implementaiton &amp; Macros"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="O_CX" VERSION="1" STATE="1" EDITORDER="8 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
+   <ITEM CMPNAME="O_CX" VERSION="1" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="O_MYCX" VERSION="1" STATE="1" EDITORDER="7 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
+   <ITEM CMPNAME="O_MYCX" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
@@ -99,7 +99,7 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
        <ITEM LANGU="E" DESCRIPT="ABAP Program Name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="SOURCE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_SOURCE"/>
+     <ITEM SCONAME="SOURCE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ABAPSOURCE"/>
     </PARAMETERS>
     <SOURCE>
   DATA code TYPE zaplink_object=&gt;tt_abaprawsource.
@@ -837,7 +837,7 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      <ITEM LANGU="E" DESCRIPT="Message Collector"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CLASS_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4" SRCROW1="49 " SRCCOLUMN1="4 " SRCROW2="69 " SRCCOLUMN2="25 " TYPESRC_LENG="888 ">
+   <ITEM CMPNAME="TS_CLASS_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="50 " SRCCOLUMN1="6 " SRCROW2="70 " SRCCOLUMN2="25 " TYPESRC_LENG="876 ">
     BEGIN OF ts_class_data.
     INCLUDE TYPE vseoclass AS hdr.
 *      Include type VSEOEXTEND as Inh.  &quot; Duplicate name for some fields
@@ -856,7 +856,7 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
 *        interfaces  TYPE tt_interfaces,
 *        friends     TYPE tt_friends,
         texts       TYPE tt_seoclasstx_s,
-        textpool    TYPE zaplink_program=&gt;tt_textpools,
+        textpool    TYPE tt_txtp_textpools,
         sources     TYPE ts_sources,
       END OF ts_class_data
 
@@ -864,7 +864,7 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      <ITEM LANGU="E" DESCRIPT="Maindata of Class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_EXCEPTION_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="19 " SRCCOLUMN1="4 " SRCROW2="25 " SRCCOLUMN2="29 " TYPESRC_LENG="232 ">BEGIN OF ts_exception_text.
+   <ITEM CMPNAME="TS_EXCEPTION_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="24 " SRCCOLUMN1="6 " SRCROW2="30 " SRCCOLUMN2="29 " TYPESRC_LENG="232 ">BEGIN OF ts_exception_text.
     INCLUDE TYPE seoo_attribute_r AS attr.
     INCLUDE TYPE sotr_head AS cx.
     TYPES:
@@ -872,18 +872,18 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
         longtexts TYPE tt_sotr_texts,
       END OF ts_exception_text
 </ITEM>
-   <ITEM CMPNAME="TS_LOCALS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="33 " SRCCOLUMN1="4 " SRCROW2="37 " SRCCOLUMN2="23 " TYPESRC_LENG="179 ">
+   <ITEM CMPNAME="TS_LOCALS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="34 " SRCCOLUMN1="6 " SRCROW2="38 " SRCCOLUMN2="21 " TYPESRC_LENG="189 ">
     BEGIN OF ts_locals,
-          types           TYPE ts_source_,
-          implementations TYPE ts_source_,
-          macros          TYPE ts_source_,
-        END OF ts_locals
+        types           TYPE ts_sourceasstruc,
+        implementations TYPE ts_sourceasstruc,
+        macros          TYPE ts_sourceasstruc,
+      END OF ts_locals
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Local data : Type, Implementaiton &amp; Macros"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_REDEFINITION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="39 " SRCCOLUMN1="4 " SRCROW2="43 " SRCCOLUMN2="27 " TYPESRC_LENG="191 ">
+   <ITEM CMPNAME="TS_REDEFINITION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="40 " SRCCOLUMN1="6 " SRCROW2="44 " SRCCOLUMN2="27 " TYPESRC_LENG="191 ">
     BEGIN OF ts_redefinition.
     INCLUDE TYPE seoredef AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
     TYPES:
@@ -894,20 +894,16 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      <ITEM LANGU="E" DESCRIPT="Method&apos;s redefinition data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCE_" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="31 " SRCCOLUMN2="20 " TYPESRC_LENG="70 ">begin of ts_source_,
-      _ type ts_source,
-    end of ts_source_
+   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="32 " SRCCOLUMN1="6 " SRCROW2="32 " SRCCOLUMN2="87 " TYPESRC_LENG="84 ">tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname
 </ITEM>
-   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="27 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="85 " TYPESRC_LENG="84 ">tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname
-</ITEM>
-   <ITEM CMPNAME="TT_FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="47 " SRCCOLUMN1="4 " SRCROW2="47 " SRCCOLUMN2="86 " TYPESRC_LENG="85 ">
+   <ITEM CMPNAME="TT_FRIENDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="48 " SRCCOLUMN1="6 " SRCROW2="48 " SRCCOLUMN2="88 " TYPESRC_LENG="85 ">
     tt_friends    TYPE SORTED TABLE OF seofriends WITH UNIQUE KEY refclsname friendtype
 
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class Friends list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="45 " SRCCOLUMN1="4 " SRCROW2="45 " SRCCOLUMN2="80 " TYPESRC_LENG="79 ">
+   <ITEM CMPNAME="TT_REDEFINITIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="46 " SRCCOLUMN1="6 " SRCROW2="46 " SRCCOLUMN2="82 " TYPESRC_LENG="79 ">
     tt_redefinitions TYPE SORTED TABLE OF ts_redefinition WITH UNIQUE KEY mtdname
 
     <TEXTS>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0218F6E82C6C5356A6EC68E9E27DB66B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="1E5BF58EA7913B38C6BD044CD6CDE114" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="B32B044B702B371EE1000000AC120173" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -249,7 +249,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     END OF ts_doc.
   DATA s_obj TYPE ts_doc.
 *Issue:7
-  DATA _data TYPE REF TO zaplink_prog_data.
+  DATA o_data TYPE REF TO zaplink_prog_data.
   DATA _prog TYPE td_progname.
   DATA _name TYPE td_compname.
   DATA _obj  TYPE doku_obj.
@@ -262,37 +262,43 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       CASE type.
         WHEN st_program.
           _prog = _name = object-&gt;name.
-          CREATE OBJECT _data.
+          CREATE OBJECT o_data.
           SELECT SINGLE *
-            INTO CORRESPONDING FIELDS OF _data-&gt;a0_maindata
+            INTO CORRESPONDING FIELDS OF o_data-&gt;a0_maindata
             FROM progdir    &quot; reposrc
 *The databae view &quot;REPOSRC&quot; is write-protected, so it cannot be changed.
             WHERE name = _name
               AND state = &apos;A&apos;.        &quot; Active
           IF sy-subrc &lt;&gt; 0.
             SELECT SINGLE *
-              INTO CORRESPONDING FIELDS OF _data-&gt;a0_maindata
+              INTO CORRESPONDING FIELDS OF o_data-&gt;a0_maindata
               FROM progdir    &quot;reposrc
               WHERE name = _name
                 AND state = &apos;I&apos;.      &quot; Inactive
           ENDIF.
-          CLEAR _data-&gt;a0_maindata-state.
+          CLEAR o_data-&gt;a0_maindata-state.
+
 * Source code
-          _data-&gt;source-_ = get_prog_source( _prog ).
-*      IF NOT _data-&gt;source IS INITIAL. CLEAR _data-&gt;a0_main-data. ENDIF.
+          o_data-&gt;source-_ = get_prog_source( _prog ).
+*      IF NOT o_data-&gt;source IS INITIAL. CLEAR o_data-&gt;a0_main-data. ENDIF.
 *    INCLUDE TYPE reposrc. &quot;The databae view &quot;REPOSRC&quot; is write-protected, so it cannot be changed.
+
 * Texts Pool
-          _data-&gt;textspool = get_prog_textpool( _prog ).
+          o_data-&gt;textspool = get_prog_textpool( _prog ).
+
+* Dynpro : Issue 8
+          o_data-&gt;dynpros = get_dynpros( _prog ).
+
 * Documentation
 *      CONCATENATE _name &apos;*&apos; INTO _obj. &quot; Issue:7
           s_obj-prog = _name.
           s_obj-wildcard = &apos;*&apos;.
           _obj = s_obj.
 *Issue:7
-          _data-&gt;documentation = zaplink_documentation=&gt;get( ids = r_doc_id
+          o_data-&gt;documentation = zaplink_documentation=&gt;get( ids = r_doc_id
                                                           object = _obj ).
-          CLEAR _data-&gt;a0_maindata-name.
-          object-&gt;raw = _data.
+          CLEAR o_data-&gt;a0_maindata-name.
+          object-&gt;raw = o_data.
         WHEN OTHERS.
 * Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
           RAISE EXCEPTION TYPE zaplink_cx_connector
@@ -310,7 +316,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>
-  DATA _data  TYPE REF TO zaplink_prog_data.
+  DATA o_data  TYPE REF TO zaplink_prog_data.
   DATA _prog  TYPE programm.
   DATA _oname TYPE e071-obj_name.
   DATA _rep   TYPE progdir.
@@ -321,8 +327,8 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
       CASE object-&gt;type.
         WHEN st_program.
-          _data ?= object-&gt;raw.
-          _prog = _data-&gt;a0_maindata-name = object-&gt;name.
+          o_data ?= object-&gt;raw.
+          _prog = o_data-&gt;a0_maindata-name = object-&gt;name.
 ** Program
 ** Add program to tadir with $TMP
 ** This prevent include to be inconsistent
@@ -393,7 +399,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
                     WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
           ENDIF.
 
-          MOVE-CORRESPONDING _data-&gt;a0_maindata TO _rep.
+          MOVE-CORRESPONDING o_data-&gt;a0_maindata TO _rep.
           _rep-state = &apos;I&apos;.
 *      MODIFY reposrc FROM _rep. &quot;The databae view &quot;REPOSRC&quot; is write-protected, so it cannot be changed.
           MODIFY progdir FROM _rep.
@@ -402,12 +408,16 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
           MODIFY progdir FROM _rep.
 * Source code
           set_prog_source( program = _prog
-                            source = _data-&gt;source-_ ).
+                            source = o_data-&gt;source-_ ).
 * Text Pool
           set_prog_textpool( program = _prog
-                            textpool = _data-&gt;textspool ).
+                            textpool = o_data-&gt;textspool ).
+* Dynpro : Issue 8
+          set_dynpros( program = _prog
+                       dynpros = o_data-&gt;dynpros ).
+
 * Documentation
-          zaplink_documentation=&gt;set( t_docs = _data-&gt;documentation ).
+          zaplink_documentation=&gt;set( t_docs = o_data-&gt;documentation ).
 
 *      COMMIT WORK AND WAIT. &quot; why ?
 

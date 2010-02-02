@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="08CBADD93C1D33995438A347CE46FEEF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="97BBD492D4B988508BE7408CCA7930F3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="DCFD034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -168,7 +168,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
   TRY.
       reset_connectors( ).
-    CATCH zaplink_cx.
+    CATCH zaplink_cx INTO o_cx.
+      IF o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_uuid OR
+         o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_class.
+        RAISE EXCEPTION o_cx.
+      ENDIF.
   ENDTRY.
 </SOURCE>
    </ITEM>
@@ -510,8 +514,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
             _add_connector( class = &lt;im_cl&gt;-clsname ).
 
-          CATCH cx_root.
-            CONTINUE.
+          CATCH zaplink_cx INTO o_cx.
+            IF o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_uuid OR
+               o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_class.
+              RAISE EXCEPTION o_cx.
+            ENDIF.
         ENDTRY.
 
       ENDLOOP.
@@ -525,8 +532,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
             _add_connector( class = &lt;s_cl&gt;-clsname ).
 
-          CATCH cx_root.
-            CONTINUE.
+          CATCH zaplink_cx INTO o_cx.
+            IF o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_uuid OR
+               o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_class.
+              RAISE EXCEPTION o_cx.
+            ENDIF.
         ENDTRY.
 
       ENDLOOP.
@@ -604,7 +614,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         WHEN cx_sy_create_object_error=&gt;abstract_class
           OR cx_sy_create_object_error=&gt;private_constructor
           OR cx_sy_create_object_error=&gt;protected_constructor.
-* Ignore exception
+* Ignore these exceptions
         WHEN OTHERS.
           mac_cascade_raise_root o_mycx o_cx_create.
       ENDCASE.
@@ -621,7 +631,13 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     READ TABLE _classes ASSIGNING &lt;cl&gt;
                WITH TABLE KEY uuid = the_class-uuid.
     IF sy-subrc = 0.
-      IF NOT ( &lt;cl&gt;-devclass &lt;&gt; local_devclass AND devclass = local_devclass ).
+      IF &lt;cl&gt;-classname &lt;&gt; class.                                             &quot; Issue 25
+        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
+                        textid = zaplink_cx_connector=&gt;twice_uuid
+                     connclass = class
+                    otherclass = &lt;cl&gt;-classname
+                      connuuid = &lt;cl&gt;-uuid.
+      elseIF NOT ( &lt;cl&gt;-devclass &lt;&gt; local_devclass AND devclass = local_devclass ).
         RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
                         textid = zaplink_cx_connector=&gt;twice_class
                      connclass = class.

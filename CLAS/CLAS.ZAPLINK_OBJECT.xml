@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BC3E6BD1C2073ABC0A1FEAA54F9EF185" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="C6ED7996792595E821607DF80BF28D06" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="A32B044B702B371EE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_OBJECT">
@@ -396,8 +396,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 ** i guess if we made it this far, we will assume success
 ** successful install
         WHEN OTHERS.
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_CREATE_COMPLETE&apos;
+                                                      subrc = sy-subrc
+                                                  classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+          application_log-&gt;add_symsg( ).
+          RAISE EXCEPTION o_mycx.
       ENDCASE.
 
 * Exceptions texts

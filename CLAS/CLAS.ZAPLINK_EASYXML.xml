@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8D13D2F851E6A55C788374E30C24BACC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="44FA0609F73BE5796752A0A9D458A9EE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="ECF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -141,18 +141,6 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-*/---------------------------------------------------------------------\
-*|   This plugin have been done by : Taryck BENSIALI                   |
-*|                                                                     |
-*|   e-mail : taryck@bensiali.net                                      |
-*|                                                                     |
-*|   this plugin is distributed in the hope that it will be useful,    |
-*|   but WITHOUT ANY WARRANTY; without even the implied warranty of    |
-*|   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
-*|   GNU General Public License for more details.                      |
-*|                                                                     |
-*\---------------------------------------------------------------------/
-
   DATA _desc     TYPE REF TO cl_abap_typedescr.
   DATA string    TYPE string.
   DATA node      TYPE REF TO if_ixml_element.
@@ -255,6 +243,7 @@ END-OF-DEFINITION.</MACROS>
 
   IF NOT object IS BOUND. EXIT. ENDIF.
 
+* Issue 26 : describe_by_object_ref all the time
 *  IF typedesc IS BOUND.
 *    o_obj ?= typedesc.
 *  ELSE.
@@ -262,7 +251,7 @@ END-OF-DEFINITION.</MACROS>
 *  ENDIF.
 *  IF o_obj-&gt;absolute_name = &apos;\CLASS=OBJECT&apos;.
     o_obj ?= cl_abap_classdescr=&gt;describe_by_object_ref( p_object_ref = object ).
-* Replace in stack &apos;\CLASS=OBJECT&apos; =&gt; &apos;\CLASS=XXXX&apos;
+* Replace in stack &apos;\CLASS=YYYY&apos; =&gt; &apos;\CLASS=XXXX&apos;
     unstack( ).
     attr_name = o_obj-&gt;absolute_name.
     stack( attr_name ).
@@ -375,7 +364,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-DATA node        TYPE REF TO if_ixml_element.
+  DATA node        TYPE REF TO if_ixml_element.
   DATA sname TYPE string.
   DATA svalue TYPE string.
   DATA structdescr TYPE REF TO cl_abap_structdescr.
@@ -488,7 +477,7 @@ DATA node        TYPE REF TO if_ixml_element.
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-DATA node        TYPE REF TO if_ixml_element.
+  DATA node        TYPE REF TO if_ixml_element.
   FIELD-SYMBOLS:
     &lt;l&gt; TYPE ANY.
 
@@ -546,18 +535,6 @@ DATA node        TYPE REF TO if_ixml_element.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>
-*/---------------------------------------------------------------------\
-*|   This plugin have been done by : Taryck BENSIALI                   |
-*|                                                                     |
-*|   e-mail : taryck@bensiali.net                                      |
-*|                                                                     |
-*|   this plugin is distributed in the hope that it will be useful,    |
-*|   but WITHOUT ANY WARRANTY; without even the implied warranty of    |
-*|   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
-*|   GNU General Public License for more details.                      |
-*|                                                                     |
-*\---------------------------------------------------------------------/
-
   DATA xml_node  TYPE REF TO if_ixml_element.
   DATA _desc     TYPE REF TO cl_abap_typedescr.
   DATA string    TYPE string.
@@ -675,8 +652,7 @@ DATA node        TYPE REF TO if_ixml_element.
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>
-ixml = cl_ixml=&gt;create( ).
-
+  ixml = cl_ixml=&gt;create( ).
   reset( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ELEM_2_STRING" VERSION="1" STATE="1" EDITORDER="8 ">
@@ -796,18 +772,6 @@ ixml = cl_ixml=&gt;create( ).
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>
-*/---------------------------------------------------------------------\
-*|   This plugin have been done by : Taryck BENSIALI                   |
-*|                                                                     |
-*|   e-mail : taryck@bensiali.net                                      |
-*|                                                                     |
-*|   this plugin is distributed in the hope that it will be useful,    |
-*|   but WITHOUT ANY WARRANTY; without even the implied warranty of    |
-*|   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
-*|   GNU General Public License for more details.                      |
-*|                                                                     |
-*\---------------------------------------------------------------------/
-
   DATA root_node   TYPE REF TO if_ixml_element.
   DATA _desc     TYPE REF TO cl_abap_typedescr.
   DATA string    TYPE string.
@@ -856,7 +820,7 @@ ixml = cl_ixml=&gt;create( ).
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-DATA o_ref      TYPE REF TO cl_abap_refdescr.
+  DATA o_ref      TYPE REF TO cl_abap_refdescr.
 
   IF typedesc-&gt;kind = cl_abap_datadescr=&gt;kind_ref.
     o_ref ?= typedesc.
@@ -874,7 +838,7 @@ DATA o_ref      TYPE REF TO cl_abap_refdescr.
      <ITEM SCONAME="TYPE_KIND" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_TYPEKIND"/>
     </PARAMETERS>
     <SOURCE>
-result = &apos;?&apos;.  &quot; unknow
+  result = &apos;?&apos;.  &quot; unknow
 
   CASE TYPE_KIND.
 *          WHEN cl_abap_typedescr=&gt;typekind_clike.
@@ -941,10 +905,9 @@ result = &apos;?&apos;.  &quot; unknow
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-DATA _ixml TYPE REF TO if_ixml.
+  DATA _ixml TYPE REF TO if_ixml.
   DATA _streamfactory TYPE REF TO if_ixml_stream_factory.
   DATA _outputstream TYPE REF TO if_ixml_ostream.
-*  DATA _renderer TYPE REF TO if_ixml_renderer.
   DATA _printxmldoc TYPE REF TO cl_xml_document.
 
   _ixml = cl_ixml=&gt;create( ).
@@ -952,9 +915,7 @@ DATA _ixml TYPE REF TO if_ixml.
   _outputstream = _streamfactory-&gt;create_ostream_cstring( string ).
   CALL METHOD xml_node-&gt;render
     EXPORTING
-      ostream   = _outputstream
-*      recursive = &apos;X&apos;
-      .
+      ostream   = _outputstream.
   CREATE OBJECT _printxmldoc.
   _printxmldoc-&gt;parse_string( string ).</SOURCE>
    </ITEM>
@@ -976,18 +937,6 @@ DATA _ixml TYPE REF TO if_ixml.
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-*/---------------------------------------------------------------------\
-*|   This plugin have been done by : Taryck BENSIALI                   |
-*|                                                                     |
-*|   e-mail : taryck@bensiali.net                                      |
-*|                                                                     |
-*|   this plugin is distributed in the hope that it will be useful,    |
-*|   but WITHOUT ANY WARRANTY; without even the implied warranty of    |
-*|   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
-*|   GNU General Public License for more details.                      |
-*|                                                                     |
-*\---------------------------------------------------------------------/
-
   DATA _desc     TYPE REF TO cl_abap_typedescr.
   DATA string    TYPE string.
   DATA name      TYPE string.
@@ -1100,19 +1049,20 @@ DATA _ixml TYPE REF TO if_ixml.
     ENDTRY.
   ENDIF.
 
-  IF typedesc IS BOUND.
-    o_obj ?= typedesc.
-  ELSE.
-    o_ref ?= cl_abap_classdescr=&gt;describe_by_data( p_data = object ).
-    o_obj ?= get_ref_type( o_ref ).
-  ENDIF.
-  IF o_obj-&gt;absolute_name = &apos;\CLASS=OBJECT&apos;.
+* Issue 26 : describe_by_object_ref all the time
+*  IF typedesc IS BOUND.
+*    o_obj ?= typedesc.
+*  ELSE.
+*    o_ref ?= cl_abap_classdescr=&gt;describe_by_data( p_data = object ).
+*    o_obj ?= get_ref_type( o_ref ).
+*  ENDIF.
+*  IF o_obj-&gt;absolute_name = &apos;\CLASS=OBJECT&apos;.
     o_obj ?= cl_abap_classdescr=&gt;describe_by_object_ref( p_object_ref = object ).
-* Replace in stack &apos;\CLASS=OBJECT&apos; =&gt; &apos;\CLASS=XXXX&apos;
+* Replace in stack &apos;\CLASS=YYYY&apos; =&gt; &apos;\CLASS=XXXX&apos;
     unstack( ).
     attr_name = o_obj-&gt;absolute_name.
     stack( attr_name ).
-  ENDIF.
+*  ENDIF.
 
 * XML Value
   svalue = xml_node-&gt;get_value( ).
@@ -1465,7 +1415,7 @@ DATA _ixml TYPE REF TO if_ixml.
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-DATA node       TYPE REF TO if_ixml_element.
+  DATA node       TYPE REF TO if_ixml_element.
   DATA iterator   TYPE REF TO if_ixml_node_iterator.
   DATA childs     TYPE REF TO if_ixml_node_list.
   DATA dref       TYPE REF TO data.
@@ -1504,7 +1454,7 @@ DATA node       TYPE REF TO if_ixml_element.
      <ITEM LANGU="E" DESCRIPT="Reste attributs"/>
     </TEXTS>
     <SOURCE>
-DATA object	TYPE balobj_d.
+  DATA object	TYPE balobj_d.
   DATA subobject  TYPE balsubobj.
   DATA ext_id	TYPE balnrext.
 
@@ -1551,7 +1501,7 @@ DATA object	TYPE balobj_d.
      <ITEM SCONAME="ITEM" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING"/>
     </PARAMETERS>
     <SOURCE>
-IF NOT item IS INITIAL.
+  IF NOT item IS INITIAL.
     INSERT item INTO context INDEX 1.
   ENDIF.</SOURCE>
    </ITEM>
@@ -1567,7 +1517,7 @@ IF NOT item IS INITIAL.
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-DATA name TYPE string.
+  DATA name TYPE string.
 
   name = desc-&gt;absolute_name.
 
@@ -1661,7 +1611,7 @@ DATA name TYPE string.
      <ITEM LANGU="E" DESCRIPT="Remove stack entry"/>
     </TEXTS>
     <SOURCE>
-IF NOT context IS INITIAL.
+  IF NOT context IS INITIAL.
     DELETE context INDEX 1.
   ENDIF.</SOURCE>
    </ITEM>
@@ -1694,18 +1644,6 @@ IF NOT context IS INITIAL.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>
-*/---------------------------------------------------------------------\
-*|   This plugin have been done by : Taryck BENSIALI                   |
-*|                                                                     |
-*|   e-mail : taryck@bensiali.net                                      |
-*|                                                                     |
-*|   this plugin is distributed in the hope that it will be useful,    |
-*|   but WITHOUT ANY WARRANTY; without even the implied warranty of    |
-*|   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
-*|   GNU General Public License for more details.                      |
-*|                                                                     |
-*\---------------------------------------------------------------------/
-
   DATA root_node   TYPE REF TO if_ixml_element.
 
   root_node = xmldoc-&gt;get_root_element( ).
@@ -1725,7 +1663,7 @@ IF NOT context IS INITIAL.
                     any = any ).
     IF application_log-&gt;has_messages_of_msgt( id_msgty     = &apos;E&apos; ) IS INITIAL.
 * Successfull conversion XML to data.
-      IF not application_log is bound. MESSAGE ID msgid TYPE &apos;S&apos; NUMBER 005. ENDIF.
+      IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;S&apos; NUMBER 005. ENDIF.
       CALL METHOD application_log-&gt;add_success
         EXPORTING
 *          id_msgid     = MSGID
@@ -1753,26 +1691,14 @@ IF NOT context IS INITIAL.
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-*/---------------------------------------------------------------------\
-*|   This plugin have been done by : Taryck BENSIALI                   |
-*|                                                                     |
-*|   e-mail : taryck@bensiali.net                                      |
-*|                                                                     |
-*|   this plugin is distributed in the hope that it will be useful,    |
-*|   but WITHOUT ANY WARRANTY; without even the implied warranty of    |
-*|   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
-*|   GNU General Public License for more details.                      |
-*|                                                                     |
-*\---------------------------------------------------------------------/
-
   DATA root_node   TYPE REF TO if_ixml_element.
   DATA _doc        TYPE REF TO if_ixml_document.
 
   TRY.
       _doc ?= xml.
       root_node = _doc-&gt;get_root_element( ).
-    CATCH CX_SY_MOVE_CAST_ERROR.
-    root_node ?= xml.
+    CATCH cx_sy_move_cast_error.
+      root_node ?= xml.
   ENDTRY.
 
   IF root_node IS BOUND.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D95F70E76396A2FC95CD02948E63EDFD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="9157E93DE42B1DD975F414DC77AE0DDF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="16F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -478,12 +478,12 @@ DATA o_comp TYPE to_component.
   result-typ_txt = zaplink_connectors=&gt;type2text( result-type ).
 
   IF o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-not_exists.
-    result-plugin = lights-red.
+    result-connector = lights-red.
     result-status = lights-no.
 * There is no ZAPLink connector installed for object type &apos;&amp;1&apos;
     MESSAGE e000(zaplink_gui) WITH result-type INTO result-msg.
   ELSE.
-    result-plugin = lights-green.
+    result-connector = lights-green.
 
     IF o_comp-&gt;_exists = zaplink_connector=&gt;exists.
       SELECT SINGLE devclass srcsystem
@@ -1391,20 +1391,20 @@ FIELD-SYMBOLS:
      <ITEM LANGU="E" DESCRIPT="All Component list index line"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ALV" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="4" SRCROW1="50 " SRCCOLUMN1="4 " SRCROW2="63 " SRCCOLUMN2="14 " TYPESRC_LENG="450 ">
+   <ITEM CMPNAME="TS_ALV" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="4" SRCROW1="50 " SRCCOLUMN1="4 " SRCROW2="63 " SRCCOLUMN2="14 " TYPESRC_LENG="472 ">
     BEGIN OF ts_alv,
-    type       TYPE td_comptype,
-    typ_txt    TYPE td_type_as_text,
-    name       TYPE td_compname,
-    plugin     TYPE td_light, &quot;type pools ICON
-    status     TYPE td_light, &quot;type pools ICON
-    msg        TYPE string,
-    devclass   TYPE tadir-devclass,
-    srcsystem  TYPE tadir-srcsystem,
+      type       TYPE td_comptype,
+      typ_txt    TYPE td_type_as_text,
+      name       TYPE td_compname,
+      connector  TYPE td_light, &quot;type pools ICON
+      status     TYPE td_light, &quot;type pools ICON
+      msg        TYPE string,
+      devclass   TYPE tadir-devclass,
+      srcsystem  TYPE tadir-srcsystem,
 * Not displayed fields
-    select     TYPE flag,
-    id         TYPE td_alvid,
-    expand     TYPE flag,
+      select     TYPE flag,
+      id         TYPE td_alvid,
+      expand     TYPE flag,
   END OF ts_alv
 
     <TEXTS>
