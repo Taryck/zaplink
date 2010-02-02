@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ZL_OBJECT CHECKSUM="968CCA7F28315864AEEA887E11C1BEE4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.0">
+ <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
+ <RAW>
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="4767664B7448937BE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+   <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" STATE="1"/>
+   <TEXTS>
+    <ITEM LANGU="E" DESCRIPT="Data for Class"/>
+   </TEXTS>
+  </A0_MAINDATA>
+  <ATTRIBUTS>
+   <ITEM CMPNAME="C_MSG_ID" VERSION="1" STATE="1" EDITORDER="5 " ATTDECLTYP="2" ATTVALUE="&apos;NA&apos;" TYPTYPE="1" TYPE="TD_DOC_ID">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Document class for message"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="R_DOC_ID" VERSION="1" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Documentation Object"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="ST_TRANSACTION" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;TRAN&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Transport category : ABAP Object"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="_UUID" VERSION="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;A816684B5215E22AE1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="UUID for connector Message class"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="_VER" VERSION="1" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Connector Version"/>
+    </TEXTS>
+   </ITEM>
+  </ATTRIBUTS>
+  <DEFERRED>
+   <CLASSES>
+    <ITEM TYPEGROUP="ZAPLINK_DOCUMENTATION" VERSION="1" TPUTYPE="1" IMPLICIT="X"/>
+   </CLASSES>
+  </DEFERRED>
+  <LOCAL>
+   <TYPES>
+*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+*&quot;* definitions, interfaces or data types) you need for method
+*&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
+   <IMPLEMENTATIONS>
+*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+*&quot;* use this source file for the implementation part of
+*&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
+   <MACROS>
+*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+*&quot;* in the implementation part of the class
+
+INCLUDE ZAPLINK_MACROS.</MACROS>
+  </LOCAL>
+  <METHODS>
+   <ITEM CMPNAME="CLASS_CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+    </TEXTS>
+    <SOURCE>
+*table TDCLT
+*DOKCLASS DOKTITEL
+*NA       Message
+  DATA _id LIKE LINE OF r_doc_id.
+
+  _id-sign = &apos;I&apos;. _id-option = &apos;EQ&apos;.
+  _id-low = C_MSG_ID. APPEND _id TO r_doc_id.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+    </TEXTS>
+    <SOURCE>
+  DATA type LIKE LINE OF supported_types.
+
+  CALL METHOD super-&gt;constructor.
+
+  type-type = st_transaction. INSERT type INTO TABLE supported_types.
+
+  uuid = _uuid.
+  version = _ver.</SOURCE>
+   </ITEM>
+  </METHODS>
+  <REDEFINITIONS>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
+    <SOURCE>
+*  DATA o_msag TYPE to_data.
+*  DATA s_msg LIKE LINE OF o_msag-&gt;messages.
+*
+*  TRY.
+*      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
+*    CATCH zaplink_cx_connector INTO o_mycx.
+*      RAISE EXCEPTION o_mycx.
+*  ENDTRY.
+*
+*  o_msag ?= object-&gt;raw.
+*  CLEAR:
+**    o_msag-&gt;A0_MAINDATA-RESPUSER,
+*    o_msag-&gt;a0_maindata-lastuser,
+*    o_msag-&gt;a0_maindata-ldate,
+*    o_msag-&gt;a0_maindata-ltime.
+*
+*  MODIFY o_msag-&gt;messages FROM s_msg TRANSPORTING name datum
+*         WHERE msgnr IS INITIAL OR
+*               msgnr IS NOT INITIAL.
+</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
+    <SOURCE>
+*  DATA o_msag TYPE to_data.
+*  DATA s_msg LIKE LINE OF o_msag-&gt;messages.
+*
+*  TRY.
+*      super-&gt;zaplink_cnx_ext_cleaner~unanonymize( object ).
+*    CATCH zaplink_cx_connector INTO o_mycx.
+*      RAISE EXCEPTION o_mycx.
+*  ENDTRY.
+*
+*  o_msag ?= object-&gt;raw.
+*  if o_msag-&gt;A0_MAINDATA-RESPUSER is INITIAL. o_msag-&gt;A0_MAINDATA-RESPUSER = sy-uname. endif.
+*  s_msg-name = o_msag-&gt;A0_MAINDATA-RESPUSER.
+*  MODIFY o_msag-&gt;messages FROM s_msg TRANSPORTING name
+*         WHERE name IS INITIAL.
+</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
+    <SOURCE>
+  DATA o_data TYPE to_data.
+
+  CREATE OBJECT object.
+  CASE type.
+    WHEN st_transaction.
+      CREATE OBJECT o_data.
+      object-&gt;raw = o_data.
+    WHEN OTHERS.
+      CLEAR object.
+* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
+      RAISE EXCEPTION TYPE zaplink_cx_connector
+        EXPORTING
+          textid = zaplink_cx_connector=&gt;type_not_supported
+          type   = type
+          connclass = &apos;ZAPLINK_MESSAGE&apos;.
+  ENDCASE.
+</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
+    <SOURCE>
+  DATA d_name TYPE tstc-tcode.
+  DATA type   TYPE td_comptype.
+
+  TRY.
+
+      type = component-&gt;get_type( ).
+      CASE type.
+        WHEN st_transaction.
+          d_name = component-&gt;get_name( ).
+          CALL FUNCTION &apos;RPY_TRANSACTION_DELETE&apos;
+            EXPORTING
+              transaction                    = d_name
+*             TRANSPORT_NUMBER               =
+*             SUPPRESS_AUTHORITY_CHECK       = &apos; &apos;
+*             SUPPRESS_CORR_INSERT           = &apos; &apos;
+            EXCEPTIONS
+              not_excecuted                  = 1
+              object_not_found               = 2
+              OTHERS                         = 3.
+          IF sy-subrc &lt;&gt; 0. &quot; SAP NameSpace
+            CASE sy-subrc.
+              WHEN 2.
+                RAISE EXCEPTION TYPE zaplink_cx_connector
+                  EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+              WHEN OTHERS.
+                RAISE EXCEPTION TYPE zaplink_cx_connector
+                  EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+            ENDCASE.
+          ENDIF.
+        WHEN OTHERS.
+* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
+          RAISE EXCEPTION TYPE zaplink_cx_connector
+            EXPORTING
+              textid = zaplink_cx_connector=&gt;type_not_supported
+              type   = type
+              connclass = &apos;ZAPLINK_MESSAGE&apos;.
+      ENDCASE.
+
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
+    <SOURCE>
+  DATA d_name TYPE tstc-tcode.
+  DATA type  TYPE td_comptype.
+
+  exists = me-&gt;exists-not_exists.
+
+  TRY.
+      type = component-&gt;get_type( ).
+      CASE type.
+        WHEN st_transaction.
+          d_name = component-&gt;get_name( ).
+          SELECT SINGLE tcode INTO d_name      &quot; From MF RPY_TRANSACTION_READ
+            FROM tstc
+            WHERE tcode = d_name.
+          IF sy-subrc = 0.
+            exists = me-&gt;exists-exists.
+          ENDIF.
+        WHEN OTHERS.
+* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
+          RAISE EXCEPTION TYPE zaplink_cx_connector
+            EXPORTING
+              textid = zaplink_cx_connector=&gt;type_not_supported
+              type   = type
+              connclass = &apos;ZAPLINK_MESSAGE&apos;.
+      ENDCASE.
+
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.
+</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
+    <SOURCE>
+  result = abap_false.
+  if version = _ver.
+    result = abap_true.
+  endif.</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP">
+    <SOURCE>
+  DATA o_data  TYPE to_data.
+  DATA d_name  TYPE tstc-tcode.
+  DATA s_fm_data TYPE zaplink_tran_data=&gt;ts_fm_data.
+  DATA t_tstc  TYPE STANDARD TABLE OF tstc WITH DEFAULT KEY.
+  DATA t_tstcc TYPE STANDARD TABLE OF tstcc WITH DEFAULT KEY.
+  DATA d_remotedata TYPE string.
+  DATA t_param TYPE STANDARD TABLE OF rsparam.
+  FIELD-SYMBOLS:
+    &lt;param&gt; TYPE STANDARD TABLE,
+    &lt;scr&gt; TYPE rsstcd,
+    &lt;g&gt; TYPE s_gui_inhe,
+    &lt;t&gt; LIKE LINE OF t_tstc,
+    &lt;a&gt; LIKE LINE OF t_tstcc.
+
+  TRY.
+
+      CREATE OBJECT object.
+      CASE component-&gt;get_type( ).
+        WHEN st_transaction.
+          d_name = component-&gt;get_name( ).
+
+          CALL FUNCTION &apos;RPY_TRANSACTION_READ&apos;
+            EXPORTING
+              transaction            = d_name
+*             PROGRAM                =
+*             DYNPRO                 =
+*             TRANSACTION_TYPE       = &apos; &apos;
+            TABLES
+              tcodes                 = t_tstc
+              gui_attributes         = t_tstcc
+            EXCEPTIONS
+              permission_error       = 1
+              cancelled              = 2
+              not_found              = 3
+              object_not_found       = 4
+              OTHERS                 = 5.
+          IF sy-subrc &lt;&gt; 0.
+            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RPY_TRANSACTION_READ&apos;
+                                                        subrc = sy-subrc
+                                                    classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+            application_log-&gt;add_symsg( ).
+            RAISE EXCEPTION o_mycx.
+          ENDIF.
+
+          READ TABLE t_tstc ASSIGNING &lt;t&gt;
+               WITH KEY tcode = d_name.
+          CHECK sy-subrc = 0.
+
+          CREATE OBJECT o_data.
+          s_fm_data-tstc = &lt;t&gt;.
+
+          PERFORM select_tstc_tables_new IN PROGRAM saplseuk USING d_name space space.
+
+          d_remotedata = &apos;(SAPLSEUK)G_GUI_INHE&apos;.
+          ASSIGN (d_remotedata) TO &lt;g&gt;.
+          IF sy-subrc = 0. s_fm_data-gui_inh = &lt;g&gt;. ENDIF.
+
+          d_remotedata = &apos;(SAPLSEUK)param[]&apos;.
+          ASSIGN (d_remotedata) TO &lt;param&gt;.
+          IF sy-subrc = 0. s_fm_data-t_params = &lt;param&gt;. ENDIF.
+
+          d_remotedata = &apos;(SAPLSEUK)RSSTCD&apos;.
+          ASSIGN (d_remotedata) TO &lt;scr&gt;.
+          IF sy-subrc = 0. s_fm_data-rsstcd = &lt;scr&gt;. ENDIF.
+
+          SELECT * INTO TABLE s_fm_data-tstct
+            FROM tstct
+            WHERE tcode = d_name.
+
+          SELECT * INTO TABLE s_fm_data-tstca
+            FROM tstca
+            WHERE tcode = d_name.
+
+          READ TABLE t_tstcc ASSIGNING &lt;a&gt;
+               WITH KEY tcode = d_name.
+          IF sy-subrc = 0.
+            s_fm_data-tstcc = &lt;a&gt;.
+** From MF : RPY_TRANSACTION_INSERT
+**      if not easy_web_transaction is initial.
+**        tstcc-s_webgui = &apos;2&apos;.
+**      elseif not html_enabled is initial.
+**        tstcc-s_webgui = &apos;1&apos;.
+**      else.
+**        clear tstcc-s_webgui.
+**      endif.
+*            CASE &lt;a&gt;-s_webgui.
+*              WHEN &apos;2&apos;.
+*                s_fm_data-easy_web_t = abap_true.
+*              WHEN &apos;1&apos;.
+*                s_fm_data-html_en = abap_true.
+*            ENDCASE.
+*            s_fm_data-wingui_en = &lt;a&gt;-s_win32.
+*            s_fm_data-java_en = &lt;a&gt;-s_platin.
+*            s_fm_data-servicefile = &lt;a&gt;-s_service.
+**            s_fm_data-??? = &lt;a&gt;-s_pervas.
+          ENDIF.
+
+          CREATE OBJECT o_data.
+          o_data-&gt;from_data( s_fm_data ).
+          object-&gt;set_component( component ).
+          CLEAR o_data-&gt;a0_maindata-tcode.
+          object-&gt;raw = o_data.
+        WHEN OTHERS.
+          CLEAR object.
+* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
+          RAISE EXCEPTION TYPE zaplink_cx_connector
+            EXPORTING
+              textid = zaplink_cx_connector=&gt;type_not_supported
+              type   = object-&gt;type
+              connclass = &apos;ZAPLINK_MESSAGE&apos;.
+      ENDCASE.
+
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.
+</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
+    <SOURCE>
+  DATA o_data TYPE to_data.
+  DATA o_comp TYPE to_component.
+  DATA d_name TYPE td_compname.
+  DATA s_fm_data TYPE zaplink_tran_data=&gt;ts_fm_data.
+*  DATA t_docs TYPE zaplink_documentation=&gt;tt_docs.
+*  DATA ls_doc LIKE LINE OF t_docs.
+*  FIELD-SYMBOLS:
+*    &lt;m&gt; LIKE LINE OF _data-&gt;messages,
+*    &lt;l&gt; LIKE LINE OF &lt;m&gt;-texts,
+*    &lt;t&gt; LIKE LINE OF _data-&gt;texts.
+
+  TRY.
+
+      CASE object-&gt;type.
+        WHEN st_transaction.
+          o_data ?= object-&gt;raw.
+* Main data
+          o_data-&gt;a0_maindata-tcode = object-&gt;name.
+          s_fm_data = o_data-&gt;to_data( ).
+
+* SEUK
+*      perform save_tcode.
+*      perform save_classification.
+
+*          CALL FUNCTION &apos;RPY_TRANSACTION_INSERT&apos;
+*            EXPORTING
+*              transaction                         = o_data-&gt;a0_maindata-code
+*              PROGRAM                             = o_data-&gt;a0_maindata-PGMNA
+*              DYNPRO                              = o_data-&gt;a0_maindata-DYPNO
+**             LANGUAGE                            = SY-LANGU
+**             WITH_DOCU                           = &apos; &apos;
+**             DOCUTYPE                            = &apos;T&apos;
+**             DEVELOPMENT_CLASS                   = &apos;$TMP&apos;
+**             TRANSPORT_NUMBER                    =
+*              TRANSACTION_TYPE                    =
+*              shorttext                           =
+**             CALLED_TRANSACTION                  =
+**             CALLED_TRANSACTION_SKIP             =
+**             VARIANT                             =
+**             CL_INDEPENDEND                      =
+**             EASY_WEB_TRANSACTION                =
+**             PROFESSIONEL_USER_TRANSACTION       =
+**             HTML_ENABLED                        =
+**             JAVA_ENABLED                        =
+**             WINGUI_ENABLED                      =
+**             SERVICEFILE                         =
+**             GENFLAG                             = &apos; &apos;
+**             SUPPRESS_AUTHORITY_CHECK            = &apos; &apos;
+**             SUPPRESS_CORR_INSERT                = &apos; &apos;
+**           TABLES
+**             DOCU_TABLE_USER                     =
+**             DOCU_TABLE_TECH                     =
+**             PARAM_VALUES                        =
+**           EXCEPTIONS
+**             CANCELLED                           = 1
+**             ALREADY_EXIST                       = 2
+**             PERMISSION_ERROR                    = 3
+**             NAME_NOT_ALLOWED                    = 4
+**             NAME_CONFLICT                       = 5
+**             ILLEGAL_TYPE                        = 6
+**             OBJECT_INCONSISTENT                 = 7
+**             DB_ACCESS_ERROR                     = 8
+**             OTHERS                              = 9
+*                    .
+*          IF sy-subrc &lt;&gt; 0.
+** MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+**         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+*          ENDIF.
+
+
+          CREATE OBJECT o_comp.
+          o_comp-&gt;set_type( st_transaction ).
+          d_name = o_data-&gt;a0_maindata-tcode.
+          o_comp-&gt;set_name( d_name ).
+          CREATE OBJECT components.
+          components-&gt;add( o_comp ).
+        WHEN OTHERS.
+* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
+          RAISE EXCEPTION TYPE zaplink_cx_connector
+            EXPORTING
+              textid = zaplink_cx_connector=&gt;type_not_supported
+              type   = object-&gt;type
+              connclass = &apos;ZAPLINK_MESSAGE&apos;.
+      ENDCASE.
+
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.
+</SOURCE>
+   </ITEM>
+  </REDEFINITIONS>
+  <TYPEGROUPS>
+   <ITEM TYPEGROUP="ABAP" VERSION="1" IMPLICIT="X"/>
+  </TYPEGROUPS>
+  <TYPES>
+   <ITEM CMPNAME="TO_DATA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_TRAN_DATA">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Commun Data for Class &amp; Interface"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="11 " SRCCOLUMN1="4 " SRCROW2="15 " SRCCOLUMN2="17 " TYPESRC_LENG="128 ">begin of ts_text,
+      langu   type SPRAS,
+      ENTRY	  type TEXTPOOLTX,
+      LENGTH  type TEXTPOOLLN,
+    end of ts_text</ITEM>
+   <ITEM CMPNAME="TT_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="17 " SRCCOLUMN1="4 " SRCROW2="17 " SRCCOLUMN2="62 " TYPESRC_LENG="59 ">tt_texts type SORTED TABLE OF ts_text WITH UNIQUE KEY langu</ITEM>
+  </TYPES>
+ </RAW>
+</ZL_OBJECT>
