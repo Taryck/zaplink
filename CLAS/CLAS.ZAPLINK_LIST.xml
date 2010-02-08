@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9157E93DE42B1DD975F414DC77AE0DDF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="DC385D8703E1F0F80658E15B4AE2A76F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="16F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -147,7 +147,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>
-DATA _idx  LIKE LINE OF _index.
+  DATA _idx  LIKE LINE OF _index.
   DATA _comp LIKE LINE OF _allcomp.
 
   _idx = search_index( comp ).
@@ -821,7 +821,7 @@ CASE _iterator_type.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
-  CLEAR: _iterator_tabix.
+  CLEAR: _iterator_tabix, _iterator_count, t_cursors.    &quot; Issue 30
   _iterator_type = iterator_types-all.
   LOOP AT _index ASSIGNING &lt;i&gt;.
     MOVE-CORRESPONDING &lt;i&gt; TO s_cursor.
@@ -852,7 +852,7 @@ CASE _iterator_type.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
-  CLEAR: _iterator_tabix.
+  CLEAR: _iterator_tabix, _iterator_count, t_cursors.    &quot; Issue 30
   _iterator_type = iterator_types-selected.
   LOOP AT _index ASSIGNING &lt;i&gt;
        WHERE selected = abap_true.

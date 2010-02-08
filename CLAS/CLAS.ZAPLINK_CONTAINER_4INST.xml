@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F9CC256555215A28D39BFB3384CF2A47" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="2C814F7A1D331B8C700258E6435379FB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="57F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -434,10 +434,8 @@ check data &lt;&gt; _options.
             o_comp-&gt;set_exception( _cx_connector ).
             CALL METHOD log-&gt;add_exception
               EXPORTING
-                exception    = _cx_connector
-*            id_detlevel  =
-*            id_probclass =
-                .
+                exception    = _cx_connector.
+            mac_add_log o_connector-&gt;application_log o_log &apos;E&apos;.   &quot; append application log if error is present
         ENDTRY.
 
         o_comp = object_list-&gt;get_next( ).
@@ -488,7 +486,9 @@ check data &lt;&gt; _options.
             _done = o_connector-&gt;delete_from_sap( o_comp ).
             IF _done = abap_true.
 * Succesfully deleted &amp;1 &amp;2
+              SET EXTENDED CHECK OFF.
               IF 1 = 2. MESSAGE s001(zaplink_connector) WITH space space. ENDIF.
+              SET EXTENDED CHECK ON.
               CALL METHOD log-&gt;add_success
                 EXPORTING
                   id_msgid     = &apos;ZAPLINK_CONNECTOR&apos;
@@ -500,7 +500,9 @@ check data &lt;&gt; _options.
                  .
             ELSE.
 * Failed to delete &amp;1 &amp;2
+              SET EXTENDED CHECK OFF.
               IF 1 = 2. MESSAGE e003(zaplink_connector) WITH space space. ENDIF.
+              SET EXTENDED CHECK ON.
               CALL METHOD log-&gt;add_error
                 EXPORTING
                   id_msgid     = &apos;ZAPLINK_CONNECTOR&apos;
@@ -512,25 +514,17 @@ check data &lt;&gt; _options.
                   .
             ENDIF.
             IF o_connector-&gt;application_log IS BOUND.
-              CALL METHOD o_connector-&gt;application_log-&gt;get_first_message
-                 EXPORTING
-                   id_msgty     = &apos;W&apos;
-                   if_or_higher = abap_true
-                 EXCEPTIONS
-                   not_found    = 1
-                   OTHERS       = 2.
-              IF sy-subrc = 0.
+              IF o_connector-&gt;application_log-&gt;has_messages_of_msgt( id_msgty     = &apos;W&apos; ) = abap_true.
                 CALL METHOD log-&gt;add_from_instance
                   EXPORTING
                     io_msglist        = o_connector-&gt;application_log
-                    if_add_as_subnode = abap_true
-                    .
+                    if_add_as_subnode = abap_true.
               ENDIF.
             ENDIF.
           CATCH zaplink_cx_connector INTO _cx_connector.
             CALL METHOD log-&gt;add_exception
               EXPORTING
-                exception    = _cx_connector.
+                exception = _cx_connector.
         ENDTRY.
 
         o_comp = object_list-&gt;get_next( ).

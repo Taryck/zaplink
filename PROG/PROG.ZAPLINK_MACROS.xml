@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="45C61C1EEA94F3EB01D67FC50C0A8B97" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MACROS" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="540DE4BE96954905F970C8C43763B068" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MACROS" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000007" RSTAT="K" RMAND="200" RLOAD="E" UCCHECK="X"/>
+  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000009" RSTAT="K" RMAND="200" RLOAD="E" UCCHECK="X"/>
   <SOURCE>
 *---------------------------------------------------------------------*
 *  Include           ZAPLINK_MACROS
@@ -64,12 +64,45 @@ DEFINE mac_cascade_raise_root.
   raise exception &amp;1.
 END-OF-DEFINITION.
 
+* Add application logs if message present
+DEFINE mac_add_log.
+  if &amp;1 is bound and &amp;2 is bound.             &quot; for security
+    if &amp;1-&gt;has_messages_of_msgt( id_msgty = &amp;3 ) = abap_true.
+      &amp;2-&gt;add_from_instance( io_msglist = &amp;1
+                      if_add_as_subnode = abap_true ).
+    endif.
+  endif.
+END-OF-DEFINITION.
+
+* Create application_log
+* &amp;1 Aplication log
+* &amp;2 Sub_object
+* &amp;3 Ext number
+DEFINE mac_create_log.
+  if not &amp;1 is bound. create object &amp;1. endif.
+  if &amp;1-&gt;get_handle( ) is initial.
+    call method &amp;1-&gt;init
+      exporting
+        id_object      = zaplink_datatypes=&gt;ballog_object
+        id_subobject   = &amp;2
+        id_extnumber   = &amp;3
+        auto_upd_custo = abap_true
+        id_activity    = zaplink_message_collector=&gt;actions-create
+      exceptions
+        error          = 1
+        others         = 2.
+    if sy-subrc &lt;&gt; 0.
+      message id sy-msgid type &apos;I&apos; number sy-msgno with sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    endif.
+  endif.
+END-OF-DEFINITION.
+
 * Default catch : Catch and raise component exception or cascade any other ZAPLINK exception
 DEFINE mac_def_catch.
-    CATCH &amp;1 INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+  catch &amp;1 into o_mycx.
+    raise exception o_mycx.
+  catch zaplink_cx into o_cx.
+    mac_cascade_raise o_mycx o_cx.
 END-OF-DEFINITION.</SOURCE>
   <TEXTSPOOL>
    <ITEM ID="R">

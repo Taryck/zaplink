@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C90120C6539AF4B5119C06D32CA4B689" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="3D3CE466AE22B555E32BBF68A8F2EAA9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="05F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_GUI">
@@ -46,6 +46,7 @@
    <ITEM CMPNAME="TD_TXTP_TEXT" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TXTP_TEXT"/>
    <ITEM CMPNAME="TD_TYPEORDER" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TYPEORDER"/>
    <ITEM CMPNAME="TD_TYPE_AS_TEXT" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TYPE_AS_TEXT"/>
+   <ITEM CMPNAME="TD_WITH_SUBCOMP" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_WITH_SUBCOMP"/>
    <ITEM CMPNAME="TEXTPOOL_KINDS" VERSION="1" EXPOSURE="2" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TEXTPOOL_KINDS"/>
    <ITEM CMPNAME="TO_COMPONENT" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_TYPES" REFCMPNAME="TO_COMPONENT"/>
    <ITEM CMPNAME="TO_CONTAINER" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_TYPES" REFCMPNAME="TO_CONTAINER"/>
@@ -162,6 +163,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
        <ITEM LANGU="E" DESCRIPT="Object Type"/>
       </TEXTS>
      </ITEM>
+     <ITEM SCONAME="WITH_SUBCOMP" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="with sub components"/>
+      </TEXTS>
+     </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" VERSION="1" LANGU="E" EDITORDER="1 ">
@@ -194,6 +200,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       obj-&gt;set_type( objtype ).
       _objname = name.
       obj-&gt;set_name( _objname ).
+      obj-&gt;set_with_subcomp( with_subcomp ).
 
       IF obj-&gt;connector_exists( ) = zaplink_component=&gt;connexists-not_exists. &quot; OR NOT obj-&gt;connector( ) IS BOUND.
         RAISE EXCEPTION TYPE zaplink_cx_gui EXPORTING
@@ -278,7 +285,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       id_subobject   = ballog_subobject
 *      id_extnumber   =
       auto_upd_custo = abap_true
-      id_activity    = zaplink_message_collector=&gt;act_create
+      id_activity    = zaplink_message_collector=&gt;actions-create
      EXCEPTIONS
        error          = 1
        OTHERS         = 2.
@@ -482,9 +489,14 @@ DATA _cx TYPE REF TO zaplink_cx_file.
        <ITEM LANGU="E" DESCRIPT="File name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="OBJLIST" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
+     <ITEM SCONAME="OBJLIST" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Component List to export"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="WITH_SUBCOMP" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="With sub component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -510,6 +522,8 @@ DATA _cx TYPE REF TO zaplink_cx_file.
         o_cont-&gt;set_options( o_options ).
       ENDIF.
 
+      _update_subobj( o_list = objlist
+                       f_sub = with_subcomp ).
       o_cont-&gt;add_components( objlist ).
 
       CALL METHOD _save
@@ -689,14 +703,19 @@ DATA objlist TYPE tt_e071.
        <ITEM LANGU="E" DESCRIPT="File name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="LIST" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
+     <ITEM SCONAME="LIST" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Component List to import"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONTNAME">
+     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONTNAME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="For info : Container&apos;s name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="WITH_SUBCOMP" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="with sub components"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -732,6 +751,8 @@ DATA objlist TYPE tt_e071.
 *    ENDTRY.
 *  ENDIF.
 
+      _update_subobj( o_list = list
+                       f_sub = with_subcomp ).
       list-&gt;select_default( zaplink_list=&gt;sel_actions-import ).
       list-&gt;change_selection( ).
 
@@ -800,6 +821,11 @@ DATA objlist TYPE tt_e071.
        <ITEM LANGU="E" DESCRIPT="For info : Container&apos;s name"/>
       </TEXTS>
      </ITEM>
+     <ITEM SCONAME="WITH_SUBCOMP" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="with sub components"/>
+      </TEXTS>
+     </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" VERSION="1" LANGU="E" EDITORDER="1 ">
@@ -825,6 +851,8 @@ DATA objlist TYPE tt_e071.
         o_list-&gt;keep_commun_list( list ).
       ENDIF.
 
+      _update_subobj( o_list = o_list
+                       f_sub = with_subcomp ).
       o_list-&gt;select_default( zaplink_list=&gt;sel_actions-uninstall ).
       o_list-&gt;change_selection( ).
 
@@ -996,6 +1024,33 @@ DATA objlist TYPE tt_e071.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="_UPDATE_SUBOBJ" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Update sub object in list"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="F_SUB" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Also sub objects"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="O_LIST" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component List to export"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>
+  DATA o_comp TYPE to_component.
+
+  o_list-&gt;init_iter( ).
+  o_list-&gt;display_progress = abap_false.
+  o_comp = o_list-&gt;get_next( ).
+  WHILE o_comp IS BOUND.
+    o_comp-&gt;set_with_subcomp( f_sub ).
+    o_comp = o_list-&gt;get_next( ).
+  ENDWHILE.</SOURCE>
    </ITEM>
   </METHODS>
   <TYPEGROUPS>

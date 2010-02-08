@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="DDBA6BF55C6CE671D2F4DF360D8FF183" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="72CBD0CCB3103FDFB5075119B2D3EBE0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="47F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -45,6 +45,7 @@
    <ITEM CMPNAME="TD_TXTP_KIND" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TXTP_KIND"/>
    <ITEM CMPNAME="TD_TXTP_LEN" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TXTP_LEN"/>
    <ITEM CMPNAME="TD_TXTP_TEXT" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TXTP_TEXT"/>
+   <ITEM CMPNAME="TD_WITH_SUBCOMP" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_WITH_SUBCOMP"/>
    <ITEM CMPNAME="TEXTPOOL_KINDS" VERSION="1" EXPOSURE="2" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TEXTPOOL_KINDS"/>
    <ITEM CMPNAME="TO_COMPONENT" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_COMPONENT"/>
    <ITEM CMPNAME="TO_CONNECTOR" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_CONNECTOR"/>
@@ -266,29 +267,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   s_type-low = rpyty_dynp_ftype-frame.      APPEND s_type TO r_text_fields.
   s_type-low = rpyty_dynp_ftype-push.       APPEND s_type TO r_text_fields.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
-    </TEXTS>
-    <SOURCE>
-  CREATE OBJECT application_log.
-*  CALL METHOD application_log-&gt;init
-*    EXPORTING
-*      id_object      = ballog_object
-*      id_subobject   = space
-**      id_extnumber   =
-*      auto_upd_custo = abap_true
-**      id_activity    = ACT_CREATE
-*    EXCEPTIONS
-*      error          = 1
-*      OTHERS         = 2.
-*  IF sy-subrc &lt;&gt; 0.
-*    MESSAGE ID sy-msgid TYPE &apos;I&apos; NUMBER sy-msgno
-*               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-*  ENDIF.
-</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="CONV_ABAPSOURCE2FLOWLOGIC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CONV_ABAPSOURCE2FLOWLOGIC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Structured ABAP source to flow logic"/>
     </TEXTS>
@@ -304,7 +283,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_ABAP_RAW2SOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CONV_ABAP_RAW2SOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Raw data to structured source data"/>
     </TEXTS>
@@ -320,7 +299,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     CONCATENATE result &lt;c&gt; INTO result SEPARATED BY line_separator. &quot; will start with line_sep better for XML display and required because get_value remove spaces
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_ABAP_SOURCE2RAW" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CONV_ABAP_SOURCE2RAW" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Structured source data to Raw data"/>
     </TEXTS>
@@ -336,7 +315,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_FLOWLOGIC2ABAPSOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CONV_FLOWLOGIC2ABAPSOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="14 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert flow logic table to ABAP Source"/>
     </TEXTS>
@@ -352,7 +331,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     CONCATENATE result &lt;c&gt; INTO result SEPARATED BY line_separator. &quot; will start with line_sep better for XML display and required because get_value remove spaces
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_DYNPROS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_DYNPROS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="12 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get program Dynpros"/>
     </TEXTS>
@@ -361,7 +340,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_DYNPROS"/>
     </PARAMETERS>
     <SOURCE>
+  SET EXTENDED CHECK OFF.
   INCLUDE mseusbit. &quot; for c_type_dynp_select_norm, c_type_dynp_select_mod, c_type_dynp_select_incl
+  SET EXTENDED CHECK ON.
 *  DATA:
 *    BEGIN OF dynp_id,
 *      prog TYPE d020s-prog,
@@ -390,6 +371,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 *  DATA s_field  LIKE LINE OF &lt;r&gt;-fields.
   DATA s_field  LIKE LINE OF s_cont-fields.
   DATA s_text   LIKE LINE OF s_field-texts.
+  DATA f_clear  TYPE abap_bool.
 
 *  SELECT * INTO CORRESPONDING FIELDS OF TABLE result
   SELECT prog dnum INTO TABLE t_dynpros
@@ -400,11 +382,22 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   SELECT *
     INTO TABLE t_d021t
     FROM d021t
-    WHERE prog = program.
+    WHERE prog = program
+      AND dtxt &lt;&gt; space.
 
 *  loop at result assigning &lt;r&gt;.
   LOOP AT t_dynpros ASSIGNING &lt;r&gt;.
     CLEAR s_result.
+
+* Processing Dynpro #&amp;2 (&amp;1)
+      SET EXTENDED CHECK OFF.
+      IF 1 = 2. MESSAGE i004(zaplink_connector) WITH space space. ENDIF.
+      SET EXTENDED CHECK ON.
+      application_log-&gt;add_info( id_msgid = &apos;ZAPLINK_CONNECTOR&apos;
+                                 id_msgno = &apos;004&apos;
+                                 id_msgv1 = &lt;r&gt;-prog
+                                 id_msgv2 = &lt;r&gt;-dnum ).
+
     SELECT lang dtxt
       INTO CORRESPONDING FIELDS OF TABLE s_result-texts
       FROM d020t
@@ -444,7 +437,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       LOOP AT t_fields ASSIGNING &lt;f&gt;
            WHERE cont_type = &lt;c&gt;-type
              AND cont_name = &lt;c&gt;-name.
-        CLEAR s_field.
+        CLEAR: s_field, f_clear.
         s_field-hdr = &lt;f&gt;.
         CLEAR: s_field-cont_type, s_field-cont_name.
         IF &lt;f&gt;-type IN r_text_fields.       &quot; field may have texts
@@ -455,8 +448,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
             s_text-langu = &lt;t&gt;-lang.
             s_text-short_txt = &lt;t&gt;-dtxt.
             INSERT s_text INTO TABLE s_field-texts.
+            IF &lt;t&gt;-dtxt = s_field-text. f_clear = abap_true. ENDIF.
           ENDLOOP.
-          IF NOT s_field-texts IS INITIAL AND NOT s_field-text CO &apos;_&apos;. CLEAR s_field-text. ENDIF.
+          IF NOT s_field-texts IS INITIAL AND NOT s_field-text CO &apos;_&apos; AND f_clear = abap_true. CLEAR s_field-text. ENDIF.
         ENDIF.
         INSERT s_field INTO TABLE s_cont-fields.
       ENDLOOP.
@@ -471,7 +465,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDLOOP.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_PROG_RAWSOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_PROG_RAWSOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get program RAW source code"/>
     </TEXTS>
@@ -485,7 +479,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     READ REPORT PROGRAM INTO result STATE &apos;A&apos;.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_PROG_SOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_PROG_SOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get program source code"/>
     </TEXTS>
@@ -503,7 +497,7 @@ DATA code TYPE tt_abaprawsource.
   code = get_prog_rawsource( program ).
   result = conv_abap_raw2source( code ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_PROG_TEXTPOOL" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_PROG_TEXTPOOL" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get program Texts pool"/>
     </TEXTS>
@@ -574,7 +568,7 @@ DATA code TYPE tt_abaprawsource.
 
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPE_FROM_XML" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TYPE_FROM_XML" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get component type"/>
     </TEXTS>
@@ -619,7 +613,7 @@ DATA code TYPE tt_abaprawsource.
   ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_BASE_ATTRIBUTS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_BASE_ATTRIBUTS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Build default Connector Base Attributs"/>
     </TEXTS>
@@ -666,7 +660,7 @@ DATA code TYPE tt_abaprawsource.
 *     EV_EXIST           =
             .</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_DYNPROS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_DYNPROS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="set program Dynpros"/>
     </TEXTS>
@@ -695,29 +689,62 @@ DATA code TYPE tt_abaprawsource.
   DATA s_cont  LIKE LINE OF t_containers.
   DATA t_fields TYPE dyfatc_tab.
   DATA s_field LIKE LINE OF t_fields.
+  DATA t_descs TYPE SORTED TABLE OF d020t WITH UNIQUE KEY prog dynr.
+  DATA s_desc LIKE LINE OF t_descs.
+  DATA t_texts TYPE SORTED TABLE OF d021t WITH UNIQUE KEY prog dynr fldn lang.
+  DATA s_text LIKE LINE OF t_texts.
+  DATA f_fill TYPE abap_bool.
   FIELD-SYMBOLS:
     &lt;r&gt; LIKE LINE OF dynpros,
+    &lt;l&gt; LIKE LINE OF &lt;r&gt;-texts,
     &lt;c&gt; LIKE LINE OF &lt;r&gt;-containers,
     &lt;f&gt; LIKE LINE OF &lt;c&gt;-fields,
     &lt;t&gt; LIKE LINE OF &lt;f&gt;-texts.
 
   CLEAR o_mycx.
   LOOP AT dynpros ASSIGNING &lt;r&gt;.
+    CLEAR: header, t_containers, t_fields, t_texts, t_descs.
     header = &lt;r&gt;-hdr.
     header-program = program.
+
+* Processing Dynpro #&amp;2 (&amp;1)
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE i004(zaplink_connector) WITH space space. ENDIF.
+    SET EXTENDED CHECK ON.
+    application_log-&gt;add_info( id_msgid = &apos;ZAPLINK_CONNECTOR&apos;
+                               id_msgno = &apos;004&apos;
+                               id_msgv1 = header-program
+                               id_msgv2 = header-screen ).
+
+* Texts
+    LOOP AT &lt;r&gt;-texts ASSIGNING &lt;l&gt;.
+      CLEAR s_desc.
+      MOVE-CORRESPONDING &lt;l&gt; TO s_desc.
+      INSERT s_desc INTO TABLE t_descs.
+    ENDLOOP.
+
     t_flowlogic = conv_abapsource2flowlogic( &lt;r&gt;-flow_logic-_ ).
     LOOP AT &lt;r&gt;-containers ASSIGNING &lt;c&gt;.
+      CLEAR s_cont.
       s_cont = &lt;c&gt;-hdr.
-      INSERT s_cont INTO TABLE t_containers.
       LOOP AT &lt;c&gt;-fields ASSIGNING &lt;f&gt;.
         s_field = &lt;f&gt;-hdr.
         s_field-cont_type = &lt;c&gt;-type.
         s_field-cont_name = &lt;c&gt;-name.
-        INSERT s_field INTO TABLE t_fields.
+        IF s_field-text IS INITIAL. f_fill = abap_true. ENDIF.    &quot; protect data
         LOOP AT &lt;f&gt;-texts ASSIGNING &lt;t&gt;.
-
+          IF f_fill = abap_true AND ( sy-tabix = 1 OR &lt;t&gt;-langu = sy-langu ). s_field-text = &lt;t&gt;-short_txt. ENDIF.
+          CLEAR s_text.
+          s_text-prog = header-program.
+          s_text-dynr = header-screen.
+          s_text-fldn = &lt;f&gt;-name.
+          s_text-lang = &lt;t&gt;-langu.
+          s_text-dtxt = &lt;t&gt;-short_txt.
+          INSERT s_text INTO TABLE t_texts.
         ENDLOOP.
+        INSERT s_field INTO TABLE t_fields.
       ENDLOOP.
+      INSERT s_cont INTO TABLE t_containers.
     ENDLOOP.
 *    CALL FUNCTION &apos;RS_SCRP_DYNPRO_CHECK&apos;
 *      TABLES
@@ -742,7 +769,7 @@ DATA code TYPE tt_abaprawsource.
       EXPORTING
 *       SUPPRESS_CORR_CHECKS           = &apos; &apos;
 *       CORRNUM                        = &apos; &apos;
-*       SUPPRESS_EXIST_CHECKS          = &apos; &apos;
+        suppress_exist_checks          = abap_true
 *       SUPPRESS_GENERATE              = &apos; &apos;
 *       SUPPRESS_DICT_SUPPORT          = &apos; &apos;
 *       SUPPRESS_EXTENDED_CHECKS       = &apos; &apos;
@@ -753,17 +780,17 @@ DATA code TYPE tt_abaprawsource.
         containers                     = t_containers
         fields_to_containers           = t_fields
         flow_logic                     = t_flowlogic
-        PARAMS                         = &lt;r&gt;-matchcodes
+        params                         = &lt;r&gt;-matchcodes
       EXCEPTIONS
-        CANCELLED                      = 1
-        ALREADY_EXISTS                 = 2
-        PROGRAM_NOT_EXISTS             = 3
-        NOT_EXECUTED                   = 4
-        MISSING_REQUIRED_FIELD         = 5
-        ILLEGAL_FIELD_VALUE            = 6
-        FIELD_NOT_ALLOWED              = 7
-        NOT_GENERATED                  = 8
-        ILLEGAL_FIELD_POSITION         = 9
+        cancelled                      = 1
+        already_exists                 = 2
+        program_not_exists             = 3
+        not_executed                   = 4
+        missing_required_field         = 5
+        illegal_field_value            = 6
+        field_not_allowed              = 7
+        not_generated                  = 8
+        illegal_field_position         = 9
         OTHERS                         = 10.
     IF sy-subrc &lt;&gt; 0.
       o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RPY_DYNPRO_INSERT&apos;
@@ -771,7 +798,10 @@ DATA code TYPE tt_abaprawsource.
                                               classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
       application_log-&gt;add_symsg( ).
       application_log-&gt;add_exception( o_mycx ).
+      CONTINUE.
     ENDIF.
+    MODIFY d020t FROM TABLE t_descs.
+    MODIFY d021t FROM TABLE t_texts.
 *    CALL FUNCTION &apos;RPY_DYNPRO_INSERT_NATIVE&apos;
 *      EXPORTING
 **     SUPPRESS_CORR_CHECKS           = &apos; &apos;
@@ -804,7 +834,7 @@ DATA code TYPE tt_abaprawsource.
   ENDIF.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_PROG_RAWSOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="9 " MTDDECLTYP="1">
+   <ITEM CMPNAME="SET_PROG_RAWSOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Set program RAW source code"/>
     </TEXTS>
@@ -818,7 +848,7 @@ INSERT REPORT program FROM raw STATE &apos;I&apos;.
     INSERT REPORT program FROM raw STATE &apos;A&apos;.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_PROG_SOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
+   <ITEM CMPNAME="SET_PROG_SOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="9 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Set program source code"/>
     </TEXTS>
@@ -833,7 +863,7 @@ DATA _raw TYPE tt_abaprawsource.
   set_prog_rawsource( program = program
                           raw = _raw ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_PROG_TEXTPOOL" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="12 " MTDDECLTYP="1">
+   <ITEM CMPNAME="SET_PROG_TEXTPOOL" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Set program Texts pool"/>
     </TEXTS>

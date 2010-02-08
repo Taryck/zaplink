@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F8EEA6ECF6E3F1D6B6C25763EAF6689E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="F1EDF18532BEB13D4CE85AD499C90A3C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-LOG" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="2EF9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -16,21 +16,6 @@
 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Activity on Logs"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="ACT_CHANGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " ATTDECLTYP="2" ATTVALUE="&apos;02&apos;" TYPTYPE="1" TYPE="BU_AKTYP">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Activity : Change"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="ACT_CREATE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " ATTDECLTYP="2" ATTVALUE="&apos;01&apos;" TYPTYPE="1" TYPE="BU_AKTYP">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Activity : Create"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="ACT_DISPLAY" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " ATTDECLTYP="2" ATTVALUE="&apos;03&apos;" TYPTYPE="1" TYPE="BU_AKTYP">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Activity : Display"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="EXT_ID" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " ATTRDONLY="X" TYPTYPE="1" TYPE="BALNREXT">
@@ -78,7 +63,7 @@
      <ITEM LANGU="E" DESCRIPT="Support Mode Only: Calling Position of Instantiation"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="MSGID" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="SYMSGID">
+   <ITEM CMPNAME="MSGID" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="SYMSGID">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Default Message Class"/>
     </TEXTS>
@@ -98,7 +83,7 @@
      <ITEM LANGU="E" DESCRIPT="Application Log: Object Name (Application Code)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="PROBCL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="35 " SRCCOLUMN2="18 " TYPESRC_LENG="380 " TYPESRC="BEGIN OF probcl,
+   <ITEM CMPNAME="PROBCL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="26 " SRCCOLUMN1="4 " SRCROW2="32 " SRCCOLUMN2="18 " TYPESRC_LENG="380 " TYPESRC="BEGIN OF probcl,
         very_imp    TYPE balprobcl VALUE &apos;1&apos;,               &quot;#EC NOTEXT
         important   TYPE balprobcl VALUE &apos;2&apos;,               &quot;#EC NOTEXT
         medium      TYPE balprobcl VALUE &apos;3&apos;,               &quot;#EC NOTEXT
@@ -755,7 +740,7 @@ DATA: _detlevel	TYPE ballevel.
 *      es_message   =
       .</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_EXCEPTION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 ">
+   <ITEM CMPNAME="ADD_EXCEPTION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Add exception to bal log"/>
     </TEXTS>
@@ -824,7 +809,9 @@ DATA: _detlevel	TYPE ballevel.
   ENDIF.
 
   cx_text = exception-&gt;if_message~get_text( ).
-  IF 1 = 2. MESSAGE ID &apos;ZAPLINK_EASYXML&apos; TYPE &apos;E&apos; NUMBER 002 WITH abap_true abap_true abap_true. ENDIF.
+  SET EXTENDED CHECK OFF.
+  IF 1 = 2. MESSAGE e002(zaplink_easyxml) WITH abap_true abap_true abap_true. ENDIF.
+  SET EXTENDED CHECK ON.
   CALL METHOD add_error
     EXPORTING
       id_msgid     = &apos;ZAPLINK_EASYXML&apos;
@@ -838,7 +825,7 @@ DATA: _detlevel	TYPE ballevel.
       .
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_FROM_BAPI" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 ">
+   <ITEM CMPNAME="ADD_FROM_BAPI" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Adds All Messages from BAPI Format"/>
     </TEXTS>
@@ -926,7 +913,7 @@ FIELD-SYMBOLS:
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_FROM_INSTANCE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 ">
+   <ITEM CMPNAME="ADD_FROM_INSTANCE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Inserts All Messages of Another Log"/>
     </TEXTS>
@@ -1017,7 +1004,7 @@ DATA:
     set_detail_level( id_relative = -1 ).
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_INFO" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 ">
+   <ITEM CMPNAME="ADD_INFO" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Add info message to bal log"/>
     </TEXTS>
@@ -1079,7 +1066,7 @@ DATA: _detlevel	TYPE ballevel.
 *      es_message   =
       .</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_SUCCESS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 ">
+   <ITEM CMPNAME="ADD_SUCCESS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Add Success message to bal log"/>
     </TEXTS>
@@ -1141,7 +1128,7 @@ DATA: _detlevel	TYPE ballevel.
 *      es_message   =
       .</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_SYMSG" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 ">
+   <ITEM CMPNAME="ADD_SYMSG" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Adds Message from SY-MSG* Variables"/>
     </TEXTS>
@@ -1216,7 +1203,7 @@ DATA: _detlevel	TYPE ballevel.
     IMPORTING
       es_message   = es_message.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_WARNING" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 ">
+   <ITEM CMPNAME="ADD_WARNING" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Add Warning message to bal log"/>
     </TEXTS>
@@ -1278,7 +1265,7 @@ DATA: _detlevel	TYPE ballevel.
 *      es_message   =
       .</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="AS_CHAR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDDECLTYP="1">
+   <ITEM CMPNAME="AS_CHAR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Converts Date into CHAR Field"/>
     </TEXTS>
@@ -1308,7 +1295,7 @@ DATA: _detlevel	TYPE ballevel.
     CLEAR rd_date.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CHANGE_MSG_TYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="13 ">
+   <ITEM CMPNAME="CHANGE_MSG_TYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="12 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Changes Type of Message, e.g. from E to W"/>
     </TEXTS>
@@ -1402,7 +1389,7 @@ DATA:
 ** also refresh support message list
 *  mac_refresh_support_list.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CHECK_CUSTO" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="14 ">
+   <ITEM CMPNAME="CHECK_CUSTO" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="13 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Auto create custo entries"/>
     </TEXTS>
@@ -1459,7 +1446,7 @@ DATA:
     INSERT balobj FROM obj.
     obj_t-spras = sy-langu.
     obj_t-object = obj-object.
-    obj_t-objtxt = &apos;Entry auto created by ZAPLINK_MSG_COLLECTOR&apos;(blt).
+    obj_t-objtxt = &apos;Entry auto created by ZAPLINK_MESSAGE_COLLECTOR&apos;(blt).
     INSERT balobjt FROM obj_t.
     _commit = abap_true.
 *  ENDIF.
@@ -1477,7 +1464,7 @@ DATA:
     sobj_t-spras = sy-langu.
     sobj_t-object = sobj-object.
     sobj_t-subobject = sobj-subobject.
-    sobj_t-subobjtxt = &apos;Entry auto created by ZAPLINK_MSG_COLLECTOR&apos;(blt).
+    sobj_t-subobjtxt = &apos;Entry auto created by ZAPLINK_MESSAGE_COLLECTOR&apos;(blt).
     INSERT balsubt FROM sobj_t.
     _commit = abap_true.
   ENDIF.
@@ -1517,7 +1504,7 @@ DATA:
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CLEAR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="15 ">
+   <ITEM CMPNAME="CLEAR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="14 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Deletes All Collected Messages"/>
     </TEXTS>
@@ -1538,7 +1525,7 @@ DATA:
     md_sup_count,
     mt_sup_msg.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONVERT_DATE_TO_STRING" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CONVERT_DATE_TO_STRING" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Converts the Date into a String (Text Field)"/>
     </TEXTS>
@@ -1576,7 +1563,7 @@ DATA:
 
   ed_date_string = ld_char.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="COUNT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="17 ">
+   <ITEM CMPNAME="COUNT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="16 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Gets Number of Messages"/>
     </TEXTS>
@@ -1611,7 +1598,7 @@ DATA:
     rd_count = 0.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="DELETE_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="18 ">
+   <ITEM CMPNAME="DELETE_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="17 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Deletes Individual Message"/>
     </TEXTS>
@@ -1651,7 +1638,7 @@ DATA:
 ** also refresh support message list
 *  mac_refresh_support_list.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FREE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="19 ">
+   <ITEM CMPNAME="FREE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="18 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Releases Resources of Instance"/>
     </TEXTS>
@@ -1669,7 +1656,7 @@ DATA:
   CLEAR md_handle.
   CLEAR ms_log.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_FIRST_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="20 ">
+   <ITEM CMPNAME="GET_FIRST_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="19 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Supplies First Message"/>
     </TEXTS>
@@ -1756,7 +1743,7 @@ DATA:
 
   es_message = ls_msg.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_HANDLE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="21 ">
+   <ITEM CMPNAME="GET_HANDLE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="20 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Supplies Internal Log Handle"/>
     </TEXTS>
@@ -1768,10 +1755,9 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-* BODY
   rd_handle = md_handle.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_LAST_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="22 ">
+   <ITEM CMPNAME="GET_LAST_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="21 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Supplies Last Message"/>
     </TEXTS>
@@ -1860,7 +1846,7 @@ DATA:
 
   es_message = ls_msg.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_LIST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="23 ">
+   <ITEM CMPNAME="GET_LIST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="22 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Supplies All Collected Messages"/>
     </TEXTS>
@@ -1890,7 +1876,7 @@ DATA:
     APPEND &lt;ls_msglist_x&gt;-msg TO et_list.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_LIST_AS_BAPIRET" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="24 ">
+   <ITEM CMPNAME="GET_LIST_AS_BAPIRET" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="23 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Supplies All Collected Messages as a BAPI Error"/>
     </TEXTS>
@@ -1970,7 +1956,7 @@ DATA:
     APPEND ls_list TO et_list.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_LIST_X" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="25 ">
+   <ITEM CMPNAME="GET_LIST_X" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="24 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Supplies All Collected Messages with Additional Techn.Fields"/>
     </TEXTS>
@@ -2051,7 +2037,7 @@ DATA:
 
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_MSG_FILTER" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="26 ">
+   <ITEM CMPNAME="GET_MSG_FILTER" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="25 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Supplies Filter Settings for Selecting Messages"/>
     </TEXTS>
@@ -2131,7 +2117,7 @@ DATA:
     ENDCASE.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_REF_TYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="27 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_REF_TYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="26 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="For Ref data (like object) type get target type"/>
     </TEXTS>
@@ -2157,7 +2143,7 @@ DATA o_ref      TYPE REF TO cl_abap_refdescr.
     ref_type = typedesc.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_STATISTICS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="28 ">
+   <ITEM CMPNAME="GET_STATISTICS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="27 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Supplies Summary of Number of Messages, etc."/>
     </TEXTS>
@@ -2181,7 +2167,7 @@ DATA o_ref      TYPE REF TO cl_abap_refdescr.
     EXCEPTIONS
       OTHERS       = 0.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_STATISTICS_AS_TE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="29 ">
+   <ITEM CMPNAME="GET_STATISTICS_AS_TEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="28 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Gets Summary as Text Using Message Number"/>
     </TEXTS>
@@ -2293,7 +2279,7 @@ DATA:
 * SET RESULT
   ed_text = ld_result.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="HAS_MESSAGES_OF_MSGT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="30 ">
+   <ITEM CMPNAME="HAS_MESSAGES_OF_MSGT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="29 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Are There Messages of a Given Type (I; W; E; A)?"/>
     </TEXTS>
@@ -2369,7 +2355,7 @@ DATA:
 
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INIT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="31 ">
+   <ITEM CMPNAME="INIT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="30 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="&lt;Only For Factory Methods&gt;"/>
     </TEXTS>
@@ -2379,7 +2365,7 @@ DATA:
        <ITEM LANGU="E" DESCRIPT="Auto Update customizing tables"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="ID_ACTIVITY" VERSION="1" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="1" TYPE="BU_AKTYP" PARVALUE="ACT_CREATE" PAROPTIONL="X">
+     <ITEM SCONAME="ID_ACTIVITY" VERSION="1" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="1" TYPE="BU_AKTYP" PARVALUE="ACTIONS-CREATE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Activity (Change/Display Not Differentiated)"/>
       </TEXTS>
@@ -2429,7 +2415,7 @@ DATA:
   ENDIF.
 
 * BODY
-  IF id_activity = act_create.                    &quot;create
+  IF id_activity = actions-create.                    &quot;create
 
 *   initialize application log data
     ms_log-object     = id_object.
@@ -2524,7 +2510,7 @@ DATA:
 * initialize detail level
   md_level = mc_min_level.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INIT_BY_HANDLE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="32 ">
+   <ITEM CMPNAME="INIT_BY_HANDLE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="31 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="&lt;Only For Factory Methods&gt;"/>
     </TEXTS>
@@ -2587,7 +2573,7 @@ DATA:
   ext_id = md_extnumber = ms_log-extnumber.
   md_level     = mc_min_level.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INSERT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="33 ">
+   <ITEM CMPNAME="INSERT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="32 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Inserts Message at a Given Position"/>
     </TEXTS>
@@ -2823,7 +2809,7 @@ DATA:
 
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IS_DATE_INITIAL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="34 " MTDDECLTYP="1">
+   <ITEM CMPNAME="IS_DATE_INITIAL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="33 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT='Bool: Date = &quot;Initial&quot;'/>
     </TEXTS>
@@ -2853,7 +2839,7 @@ DATA:
     rf_initial = abap_true.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IS_EMPTY" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="35 ">
+   <ITEM CMPNAME="IS_EMPTY" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="34 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Is the List of Collected Messages Empty?"/>
     </TEXTS>
@@ -2883,7 +2869,7 @@ DATA:
     rf_empty = abap_true.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="NEW" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="36 " MTDDECLTYP="1">
+   <ITEM CMPNAME="NEW" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="35 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Create new instance"/>
     </TEXTS>
@@ -2897,7 +2883,7 @@ DATA:
     <SOURCE>
 CREATE OBJECT obj.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="RAISE_FIRST_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="37 ">
+   <ITEM CMPNAME="RAISE_FIRST_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="36 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Gets First Message as Exception"/>
     </TEXTS>
@@ -2940,7 +2926,7 @@ DATA:
             RAISING first_message.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="RAISE_ON_ERROR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="38 " MTDNEWEXC="X">
+   <ITEM CMPNAME="RAISE_ON_ERROR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="37 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Raise exception when error in BAL Log"/>
     </TEXTS>
@@ -2956,7 +2942,9 @@ DATA:
 
   IF NOT has_messages_of_msgt( id_msgty = &apos;E&apos; ) IS INITIAL.
 * Fatal Errors occurs, check ba log (SLG1) : &apos;&amp;1&apos; &apos;&amp;2&apos; &apos;&amp;3&apos;
-    IF 1 = 2. MESSAGE ID &apos;ZAPLINK_PACKAGE&apos; TYPE &apos;E&apos; NUMBER 012 WITH space space space. ENDIF.
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE e012(zaplink_package) WITH space space space. ENDIF.
+    SET EXTENDED CHECK ON.
     add_abend( id_msgid = &apos;ZAPLINK_PACKAGE&apos;
                id_msgno = &apos;012&apos;
                id_msgv1 = object
@@ -2972,7 +2960,7 @@ DATA:
     RAISE EXCEPTION o_exception.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_DETAIL_LEVEL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="39 ">
+   <ITEM CMPNAME="SET_DETAIL_LEVEL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="38 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Changes Level of Detail for Following Messages"/>
     </TEXTS>
@@ -3027,7 +3015,7 @@ DATA:
 
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_EXTNUMBER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="40 ">
+   <ITEM CMPNAME="SET_EXTNUMBER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="39 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Changes External Identification of Log"/>
     </TEXTS>
@@ -3065,7 +3053,7 @@ DATA:
   ms_log-extnumber = id_extnumber.
   ext_id = md_extnumber     = id_extnumber.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="STORE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="41 ">
+   <ITEM CMPNAME="STORE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="40 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Saves Log with Collected Messages"/>
     </TEXTS>
@@ -3107,7 +3095,7 @@ DATA:
     mac_symsg_raise error.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="WRITE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="42 ">
+   <ITEM CMPNAME="WRITE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="41 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Write message to screen"/>
     </TEXTS>
@@ -3140,7 +3128,7 @@ DATA lt_messages  TYPE t_msg_x.
     WRITE:/ _offset, _light AS ICON, _msg.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_ADD_ZL_CX" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 ">
+   <ITEM CMPNAME="_ADD_ZL_CX" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="42 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Add Zaplink exception to bal log"/>
     </TEXTS>
@@ -3205,7 +3193,9 @@ DATA lt_messages  TYPE t_msg_x.
   ENDIF.
 
   cx_text = exception-&gt;if_message~get_text( ).
-  IF 1 = 2. MESSAGE ID &apos;ZAPLINK_EASYXML&apos; TYPE &apos;E&apos; NUMBER 002 WITH abap_true abap_true abap_true. ENDIF.
+  SET EXTENDED CHECK OFF.
+  IF 1 = 2. MESSAGE e002(zaplink_easyxml) WITH abap_true abap_true abap_true. ENDIF.
+  SET EXTENDED CHECK ON.
   CALL METHOD add_error
     EXPORTING
       id_msgid     = &apos;ZAPLINK_EASYXML&apos;
@@ -3232,7 +3222,37 @@ DATA lt_messages  TYPE t_msg_x.
   <TEXTSPOOL>
    <ITEM ID="I" KEY="BLT">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Entry auto created by ZAPLINK_MSG_COLLECTOR" LENGTH="60 "/>
+     <ITEM LANGU="E" ENTRY="Entry auto created by ZAPLINK_MESSAGE_COLLECTOR" LENGTH="60 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="SE0">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="&amp;1 Errors" LENGTH="9 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="SE1">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="1 Error" LENGTH="7 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="SI0">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="&amp;1 Messages" LENGTH="11 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="SI1">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="1 Message" LENGTH="9 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="SW0">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="&amp;1 Warnings" LENGTH="11 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="SW1">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="1 Warning" LENGTH="9 "/>
     </TEXTS>
    </ITEM>
   </TEXTSPOOL>

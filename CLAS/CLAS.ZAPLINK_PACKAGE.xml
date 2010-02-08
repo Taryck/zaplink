@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A2ACD984111D9CBB3BFBFB95972B71CD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="778CECD2F88D42A704D706A38C7A633E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="AB2B044B702B371EE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_PACKAGE">
@@ -75,7 +75,7 @@
 INCLUDE ZAPLINK_MACROS.</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="ADD_ELEMENTS_LIST" VERSION="1" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_ELEMENTS_LIST" VERSION="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Create new elements in interface"/>
      <ITEM LANGU="F" DESCRIPT="Create new elements in interface"/>
@@ -304,7 +304,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     object-&gt;a0_maindata-changed_on.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ANONYMIZE_PACKAGE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ANONYMIZE_PACKAGE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Package : Anonymized component data"/>
      <ITEM LANGU="F" DESCRIPT="Package : Anonymized component data"/>
@@ -348,7 +348,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDLOOP.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="BUILD_ERROR_MSG" VERSION="1" STATE="1" EDITORDER="20 " MTDDECLTYP="1">
+   <ITEM CMPNAME="BUILD_ERROR_MSG" VERSION="1" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert elements list to ALV table"/>
      <ITEM LANGU="F" DESCRIPT="Convert elements list to ALV table"/>
@@ -376,7 +376,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CHANGE_TADIR" VERSION="1" STATE="1" EDITORDER="22 ">
+   <ITEM CMPNAME="CHANGE_TADIR" VERSION="1" STATE="1" EDITORDER="5 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Change TADIR entries"/>
      <ITEM LANGU="F" DESCRIPT="Change TADIR entries"/>
@@ -462,7 +462,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CLASS_CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2" MTDDECLTYP="1">
+   <ITEM CMPNAME="CLASS_CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
      <ITEM LANGU="F" DESCRIPT="CLASS_CONSTRUCTOR"/>
@@ -493,7 +493,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   cat_layout-colwidth_optimize = &apos;X&apos;.
 *  ls_layout-f2code            = &apos;MYPICK&apos; .</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
+   <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDTYPE="2">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
      <ITEM LANGU="F" DESCRIPT="CONSTRUCTOR"/>
@@ -502,30 +502,15 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   DATA type LIKE LINE OF supported_types.
 
   call method super-&gt;constructor.
-
+  mac_create_log application_log ballog_subobject space.      &quot; create my application before parent do the same
+  application_log-&gt;msgid = &apos;ZAPLINK_PACKAGE&apos;.
   type-type = st_package. INSERT type INTO TABLE supported_types.
   type-type = st_interface. INSERT type INTO TABLE supported_types.
-  CREATE OBJECT application_log.
-  application_log-&gt;msgid = &apos;ZAPLINK_PACKAGE&apos;.
 
   uuid = _uuid.
-  version = _ver.
-  CALL METHOD application_log-&gt;init
-    EXPORTING
-      id_object      = BALLOG_OBJECT
-      id_subobject   = BALLOG_SUBOBJECT
-*      id_extnumber   =
-      auto_upd_custo = ABAP_true
-*      id_activity    = ACT_CREATE
-    EXCEPTIONS
-      error          = 1
-      others         = 2.
-  IF sy-subrc &lt;&gt; 0.
-   MESSAGE ID SY-MSGID TYPE &apos;I&apos; NUMBER SY-MSGNO
-              WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
-  ENDIF.</SOURCE>
+  version = _ver.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_INTERFACE" VERSION="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_INTERFACE" VERSION="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get interfaces info"/>
      <ITEM LANGU="F" DESCRIPT="Get interfaces info"/>
@@ -639,7 +624,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_INTERFACE_RAW" VERSION="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_INTERFACE_RAW" VERSION="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get interfaces info as RAW"/>
      <ITEM LANGU="F" DESCRIPT="Get interfaces info as RAW"/>
@@ -690,13 +675,13 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       raise EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_PACKAGE" VERSION="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_PACKAGE" VERSION="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get package info"/>
      <ITEM LANGU="F" DESCRIPT="Get package info"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_PACKAGE">
+     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_PACKAGE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Package data"/>
        <ITEM LANGU="F" DESCRIPT="Package data"/>
@@ -709,6 +694,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SUBCOMPONENTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
+     <ITEM SCONAME="WITH_SUBCOMP" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="With Sub components"/>
+      </TEXTS>
+     </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 ">
@@ -777,54 +767,57 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         ENDLOOP.
       ENDIF.
 
+      IF with_subcomp = abap_true.
 * Interfaces
-      CALL METHOD package-&gt;get_interfaces
-        IMPORTING
-          e_package_interfaces = interfaces
-        EXCEPTIONS
-          object_invalid       = 1
-          unexpected_error     = 2
-          intern_err           = 3
-          OTHERS               = 4.
-      IF sy-subrc &lt;&gt; 0.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
-          EXPORTING
-            textid = zaplink_cx_connector=&gt;system_error.
-      ELSEIF NOT interfaces IS INITIAL.
-        LOOP AT interfaces ASSIGNING &lt;itf&gt;.
-          TRY.
-              intf-zl_object = conv_interface_raw( interface = &lt;itf&gt;
-                                               subcomponents = subcomponents ).
-            CATCH zaplink_cx_connector INTO o_mycx.
-              application_log-&gt;add_exception( o_mycx ).
-          ENDTRY.
-          APPEND intf TO o_data-&gt;interfaces.
-        ENDLOOP.
-      ENDIF.
+        CALL METHOD package-&gt;get_interfaces
+          IMPORTING
+            e_package_interfaces = interfaces
+          EXCEPTIONS
+            object_invalid       = 1
+            unexpected_error     = 2
+            intern_err           = 3
+            OTHERS               = 4.
+        IF sy-subrc &lt;&gt; 0.
+          RAISE EXCEPTION TYPE zaplink_cx_connector
+            EXPORTING
+              textid = zaplink_cx_connector=&gt;system_error.
+        ELSEIF NOT interfaces IS INITIAL.
+          LOOP AT interfaces ASSIGNING &lt;itf&gt;.
+            TRY.
+                intf-zl_object = conv_interface_raw( interface = &lt;itf&gt;
+                                                 subcomponents = subcomponents ).
+              CATCH zaplink_cx_connector INTO o_mycx.
+                application_log-&gt;add_exception( o_mycx ).
+            ENDTRY.
+            APPEND intf TO o_data-&gt;interfaces.
+          ENDLOOP.
+        ENDIF.
 
 * Packages
-      CALL METHOD package-&gt;get_sub_packages
-        IMPORTING
-          e_sub_packages   = packages
-        EXCEPTIONS
-          object_invalid   = 1
-          leaf_package     = 0   &quot; 053(PAK) : Package &amp;1 does not contain any sub-packages
-          unexpected_error = 3
-          OTHERS           = 4.
-      IF sy-subrc &lt;&gt; 0.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
-          EXPORTING
-            textid = zaplink_cx_connector=&gt;system_error.
-      ELSEIF NOT packages IS INITIAL.
-        LOOP AT packages ASSIGNING &lt;pack&gt;.
-          TRY.
-              pack-zl_object = conv_package_raw( package = &lt;pack&gt;
-                                           subcomponents = subcomponents ).
-            CATCH zaplink_cx_connector INTO o_mycx.
-              application_log-&gt;add_exception( o_mycx ).
-          ENDTRY.
-          APPEND pack TO o_data-&gt;packages.
-        ENDLOOP.
+        CALL METHOD package-&gt;get_sub_packages
+          IMPORTING
+            e_sub_packages   = packages
+          EXCEPTIONS
+            object_invalid   = 1
+            leaf_package     = 0   &quot; 053(PAK) : Package &amp;1 does not contain any sub-packages
+            unexpected_error = 3
+            OTHERS           = 4.
+        IF sy-subrc &lt;&gt; 0.
+          RAISE EXCEPTION TYPE zaplink_cx_connector
+            EXPORTING
+              textid = zaplink_cx_connector=&gt;system_error.
+        ELSEIF NOT packages IS INITIAL.
+          LOOP AT packages ASSIGNING &lt;pack&gt;.
+            TRY.
+                pack-zl_object = conv_package_raw( package = &lt;pack&gt;
+                                             subcomponents = subcomponents ).
+              CATCH zaplink_cx_connector INTO o_mycx.
+                application_log-&gt;add_exception( o_mycx ).
+            ENDTRY.
+            APPEND pack TO o_data-&gt;packages.
+          ENDLOOP.
+        ENDIF.
+
       ENDIF.
 
     CATCH zaplink_cx_connector INTO o_mycx.
@@ -838,7 +831,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDIF.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_PACKAGE_RAW" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_PACKAGE_RAW" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get package info as RAW"/>
      <ITEM LANGU="F" DESCRIPT="Get package info as RAW"/>
@@ -890,7 +883,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CREATE_INTERFACE" VERSION="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CREATE_INTERFACE" VERSION="1" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Create new interface"/>
      <ITEM LANGU="F" DESCRIPT="Create new interface"/>
@@ -925,7 +918,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
   name = interface-&gt;a0_maindata-intf_name.
 * Processing Interface &amp;1
+  SET EXTENDED CHECK OFF.
   IF 1 = 2. MESSAGE e013 WITH name. ENDIF.
+  SET EXTENDED CHECK ON.
   application_log-&gt;add_info( id_msgno = 013
                              id_msgv1 = name ).
 
@@ -979,7 +974,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDTRY.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CREATE_PACKAGE" VERSION="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CREATE_PACKAGE" VERSION="1" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Create new Package"/>
      <ITEM LANGU="F" DESCRIPT="Create new Package"/>
@@ -1019,7 +1014,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
   name = package-&gt;a0_maindata-devclass.
 * Processing Package &amp;1
+  SET EXTENDED CHECK OFF.
   IF 1 = 2. MESSAGE e003 WITH space. ENDIF.
+  SET EXTENDED CHECK ON.
   application_log-&gt;add_info( id_msgno = 003
                              id_msgv1 = name ).
 
@@ -1058,7 +1055,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       intern_err            = 6
       OTHERS                = 7.
   IF sy-subrc &lt;&gt; 0.
+    SET EXTENDED CHECK OFF.
     IF 1 = 2. MESSAGE e009 WITH space. ENDIF.
+    SET EXTENDED CHECK ON.
 * Can&apos;t save package &amp;1
     application_log-&gt;add_error( id_msgno = 009
                                 id_msgv1 = name ).
@@ -1104,7 +1103,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDTRY.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ELEMENTS2ALV" VERSION="1" STATE="1" EDITORDER="21 " MTDDECLTYP="1">
+   <ITEM CMPNAME="ELEMENTS2ALV" VERSION="1" STATE="1" EDITORDER="14 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert elements list to ALV table"/>
      <ITEM LANGU="F" DESCRIPT="Convert elements list to ALV table"/>
@@ -1139,7 +1138,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     APPEND _wa TO alv_data.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXPORT_FROM_SAP_INTERFACE" VERSION="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
+   <ITEM CMPNAME="EXPORT_FROM_SAP_INTERFACE" VERSION="1" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export Interface from SAP System"/>
      <ITEM LANGU="F" DESCRIPT="Export Package Interface from SAP System"/>
@@ -1192,7 +1191,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXPORT_FROM_SAP_PACKAGE" VERSION="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
+   <ITEM CMPNAME="EXPORT_FROM_SAP_PACKAGE" VERSION="1" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export Package from SAP System"/>
      <ITEM LANGU="F" DESCRIPT="Export Package from SAP System"/>
@@ -1223,10 +1222,12 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   DATA sap_obj    TYPE REF TO if_package.
   DATA devclass	  TYPE devclass.
   DATA o_list     TYPE to_list.
+  DATA f_subcomp  TYPE td_with_subcomp.
 
   TRY.
 
       CHECK component-&gt;get_type( ) = st_package.
+      f_subcomp = component-&gt;get_with_subcomp( ).
 
       devclass = component-&gt;get_name( ).
 
@@ -1236,6 +1237,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       sap_obj = load_devc( devclass ).
 
       object = conv_package( package = sap_obj
+                        with_subcomp = f_subcomp
                        subcomponents = o_list ).
 
       o_list-&gt;remove( component ).
@@ -1247,7 +1249,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_TO_SAP_INTERFACE" VERSION="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_TO_SAP_INTERFACE" VERSION="1" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import Interface into SAP system"/>
      <ITEM LANGU="F" DESCRIPT="Import Package Interface into SAP system"/>
@@ -1294,7 +1296,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_TO_SAP_PACKAGE" VERSION="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_TO_SAP_PACKAGE" VERSION="1" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import Package into SAP system"/>
      <ITEM LANGU="F" DESCRIPT="Import Package into SAP system"/>
@@ -1340,7 +1342,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="LOAD_DEVC" VERSION="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
+   <ITEM CMPNAME="LOAD_DEVC" VERSION="1" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Load IF_Package"/>
      <ITEM LANGU="F" DESCRIPT="Load IF_Package"/>
@@ -1402,7 +1404,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 *            msg = &apos;Object Locked&apos;.
       WHEN OTHERS.
 * Unexpected error on &amp;1-&gt;&amp;2
+        SET EXTENDED CHECK OFF.
         IF 1 = 2. MESSAGE e008 WITH space. ENDIF.
+        SET EXTENDED CHECK ON.
         application_log-&gt;add_warning( id_msgno = 008
                      id_msgv1 = &apos;ZAPLINK_PACKAGE&apos;
                      id_msgv2 = &apos;LOAD_DEVC&apos; ).
@@ -1412,7 +1416,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDCASE.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="LOAD_INTF" VERSION="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
+   <ITEM CMPNAME="LOAD_INTF" VERSION="1" STATE="1" EDITORDER="20 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Load IF_Package_Interface"/>
      <ITEM LANGU="F" DESCRIPT="Load IF_Package_Interface"/>
@@ -1473,7 +1477,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDCASE.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_INTERFACE_ATTRIB" VERSION="1" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_INTERFACE_ATTRIB" VERSION="1" STATE="1" EDITORDER="21 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Set interface attributs (ACLS, Elements,...)"/>
      <ITEM LANGU="F" DESCRIPT="Set interface attributs (ACLS, Elements,...)"/>
@@ -1501,13 +1505,17 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
   name = interface-&gt;a0_maindata-intf_name.
 * Processing Interface &amp;1 attributs (ACLs, Elements, ...)
+  SET EXTENDED CHECK OFF.
   IF 1 = 2. MESSAGE i014 WITH space. ENDIF.
+  SET EXTENDED CHECK ON.
   application_log-&gt;add_info( id_msgno = 014
                              id_msgv1 = name ).
 
   IF NOT interface-&gt;if IS BOUND.
 * System Error : Object &apos;&amp;3&apos; is not bound in method &amp;1-&gt;&amp;2
+    SET EXTENDED CHECK OFF.
     IF 1 = 2. MESSAGE a016 WITH space space space. ENDIF.
+    SET EXTENDED CHECK ON.
     application_log-&gt;add_abend( id_msgno = 016
                                 id_msgv1 = &apos;ZAPLINK_PACKAGE&apos;
                                 id_msgv2 = &apos;SET_INTERFACE_ATTRIB&apos;
@@ -1532,7 +1540,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         OTHERS                 = 7.
     IF sy-subrc &lt;&gt; 0.
       csubrc = sy-subrc.
+      SET EXTENDED CHECK OFF.
       IF 1 = 2. MESSAGE e017 WITH space space space space. ENDIF.
+      SET EXTENDED CHECK ON.
       application_log-&gt;add_error( id_msgno = 017
                                   id_msgv1 = &apos;ZAPLINK_PACKAGE&apos;
                                   id_msgv2 = &apos;SET_INTERFACE_ATTRIB&apos;
@@ -1572,7 +1582,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         msg = &apos;Package interface save failed !&apos;.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_PACKAGE_ATTRIB" VERSION="1" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_PACKAGE_ATTRIB" VERSION="1" STATE="1" EDITORDER="22 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Set Package attributs"/>
      <ITEM LANGU="F" DESCRIPT="Set Package attributs"/>
@@ -1605,13 +1615,17 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
   name = package-&gt;a0_maindata-devclass.
 * Processing Package &amp;1 attributs
+  SET EXTENDED CHECK OFF.
   IF 1 = 2. MESSAGE e015 WITH space. ENDIF.
+  SET EXTENDED CHECK ON.
   application_log-&gt;add_info( id_msgno = 015
                              id_msgv1 = name ).
 
   IF NOT package-&gt;if IS BOUND.
 * System Error : Object &apos;&amp;3&apos; is not bound in method &amp;1-&gt;&amp;2
+    SET EXTENDED CHECK OFF.
     IF 1 = 2. MESSAGE e016 WITH space space space. ENDIF.
+    SET EXTENDED CHECK ON.
     application_log-&gt;add_abend( id_msgno = 016
                                 id_msgv1 = &apos;ZAPLINK_PACKAGE&apos;
                                 id_msgv2 = &apos;SET_PACKAGE_ATTRIB&apos;
@@ -1638,7 +1652,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
             .
     IF sy-subrc &lt;&gt; 0.
       csubrc = sy-subrc.
+      SET EXTENDED CHECK OFF.
       IF 1 = 2. MESSAGE e017 WITH space space space space. ENDIF.
+      SET EXTENDED CHECK ON.
       application_log-&gt;add_error( id_msgno = 017
                                   id_msgv1 = &apos;ZAPLINK_PACKAGE&apos;
                                   id_msgv2 = &apos;SET_PACKAGE_ATTRIB&apos;
@@ -1669,7 +1685,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDTRY.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNANONYMIZE_INTERFACE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
+   <ITEM CMPNAME="UNANONYMIZE_INTERFACE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="23 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Interface : unanonymized component data"/>
      <ITEM LANGU="F" DESCRIPT="Interface : unanonymized component data"/>
@@ -1698,7 +1714,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 *    object-&gt;a0_maindata-changed_on.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNANONYMIZE_PACKAGE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
+   <ITEM CMPNAME="UNANONYMIZE_PACKAGE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="24 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Package : unanonymized component data"/>
      <ITEM LANGU="F" DESCRIPT="Package : unanonymized component data"/>
@@ -1741,7 +1757,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDLOOP.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UPDATE_INTERFACE" VERSION="1" STATE="1" EDITORDER="17 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="UPDATE_INTERFACE" VERSION="1" STATE="1" EDITORDER="25 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Create new interface or update it"/>
      <ITEM LANGU="F" DESCRIPT="Create new interface or update it"/>
@@ -1860,7 +1876,7 @@ DATA _data      TYPE scompidtln.
     ENDCASE.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UPDATE_PACKAGE" VERSION="1" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
+   <ITEM CMPNAME="UPDATE_PACKAGE" VERSION="1" STATE="1" EDITORDER="26 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Create new package or update it"/>
      <ITEM LANGU="F" DESCRIPT="Create new package or update it"/>
@@ -2029,7 +2045,7 @@ DATA _data      TYPE scompidtln.
     ENDCASE.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_DELETE_DEVC" VERSION="1" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
+   <ITEM CMPNAME="_DELETE_DEVC" VERSION="1" STATE="1" EDITORDER="27 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Delete package object"/>
      <ITEM LANGU="F" DESCRIPT="Delete package object"/>
@@ -2181,7 +2197,7 @@ DATA _data      TYPE scompidtln.
         textid = zaplink_cx_connector=&gt;system_error.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_DELETE_ELEMENTS" VERSION="1" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
+   <ITEM CMPNAME="_DELETE_ELEMENTS" VERSION="1" STATE="1" EDITORDER="28 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Delete package&apos;s elements (component that use this DEVC)"/>
      <ITEM LANGU="F" DESCRIPT="Delete package&apos;s elements (component that use this DEVC)"/>
@@ -2241,7 +2257,9 @@ DATA _data      TYPE scompidtln.
           CALL METHOD application_log-&gt;add_symsg( ).
 * Because message is not engouth =&gt;
 * Object TADIR entry : &amp;1 &amp;2 &amp;3
+          SET EXTENDED CHECK OFF.
           IF 1 = 2. MESSAGE i020(zaplink_package) WITH &lt;e&gt;-&gt;dev_elem_pgmid &lt;e&gt;-&gt;dev_elem_type d_name. ENDIF.
+          SET EXTENDED CHECK ON.
           CALL METHOD application_log-&gt;add
              EXPORTING
 *            is_message   =
@@ -2293,7 +2311,9 @@ DATA _data      TYPE scompidtln.
         EXIT.
       ELSEIF NOT f_exists IS INITIAL.
 * Delete TADIR entry of &amp;1 &amp;2 &amp;3 (not existing)
+        SET EXTENDED CHECK OFF.
         IF 1 = 2. MESSAGE w018(zaplink_package) WITH &lt;e&gt;-&gt;dev_elem_pgmid &lt;e&gt;-&gt;dev_elem_type d_name. ENDIF.
+        SET EXTENDED CHECK ON.
         CALL METHOD application_log-&gt;add
            EXPORTING
 *            is_message   =
@@ -2306,7 +2326,9 @@ DATA _data      TYPE scompidtln.
 *            id_msgv4     =
             .
 * TADIR entry : Source System (&amp;1) Author (&amp;2) GenFlag (&amp;3)
+        SET EXTENDED CHECK OFF.
         IF 1 = 2. MESSAGE i019(zaplink_package) WITH &lt;e&gt;-&gt;dev_elem_pgmid &lt;e&gt;-&gt;dev_elem_type d_name. ENDIF.
+        SET EXTENDED CHECK ON.
         CALL METHOD application_log-&gt;add
            EXPORTING
 *            is_message   =
@@ -2322,7 +2344,7 @@ DATA _data      TYPE scompidtln.
     ENDLOOP.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_DELETE_INTF" VERSION="1" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
+   <ITEM CMPNAME="_DELETE_INTF" VERSION="1" STATE="1" EDITORDER="29 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Delete Interface object"/>
      <ITEM LANGU="F" DESCRIPT="Delete Interface object"/>
@@ -2487,43 +2509,42 @@ DATA _data      TYPE scompidtln.
   DATA key_intf TYPE scomifnam.
   DATA package  TYPE REF TO if_package.
   DATA interface  TYPE REF TO if_package_interface.
+  DATA d_type TYPE td_comptype.
 
   TRY.
+    d_type = component-&gt;get_type( ).
+    CASE d_type.
+      WHEN st_package.
+        key_devc = component-&gt;get_name( ).
+        TRY.
+            package = load_devc( key_devc ).
+            _delete_devc( package ).
+          CATCH zaplink_cx_connector INTO o_mycx.
+            IF NOT o_mycx-&gt;messages IS BOUND.
+              o_mycx-&gt;messages = application_log.
+              o_mycx-&gt;update( ).
+            ENDIF.
+            RAISE EXCEPTION o_mycx.
+        ENDTRY.
+      WHEN st_interface.
+        key_intf = component-&gt;get_name( ).
+        TRY.
+            interface = load_intf( key_intf ).
+            _delete_intf( interface ).
+          CATCH zaplink_cx_connector INTO o_mycx.
+            IF NOT o_mycx-&gt;messages IS BOUND.
+              o_mycx-&gt;messages = application_log.
+              o_mycx-&gt;update( ).
+            ENDIF.
+            RAISE EXCEPTION o_mycx.
+        ENDTRY.
+      WHEN OTHERS.
+        mac_raise_type_not_supported &apos;ZAPLINK_PACKAGE&apos; d_type.
+    ENDCASE.
 
-      CASE component-&gt;get_type( ).
-        WHEN st_package.
-          key_devc = component-&gt;get_name( ).
-          TRY.
-              package = load_devc( key_devc ).
-              _delete_devc( package ).
-            CATCH zaplink_cx_connector INTO o_mycx.
-              IF NOT o_mycx-&gt;messages IS BOUND.
-                o_mycx-&gt;messages = application_log.
-                o_mycx-&gt;update( ).
-              ENDIF.
-              RAISE EXCEPTION o_mycx.
-          ENDTRY.
-        WHEN st_interface.
-          key_intf = component-&gt;get_name( ).
-          TRY.
-              interface = load_intf( key_intf ).
-              _delete_intf( interface ).
-            CATCH zaplink_cx_connector INTO o_mycx.
-              IF NOT o_mycx-&gt;messages IS BOUND.
-                o_mycx-&gt;messages = application_log.
-                o_mycx-&gt;update( ).
-              ENDIF.
-              RAISE EXCEPTION o_mycx.
-          ENDTRY.
-        WHEN OTHERS.
-      ENDCASE.
-
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.
-</SOURCE>
+  result = abap_true.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>
@@ -2732,6 +2753,7 @@ DATA _data      TYPE scompidtln.
    </ITEM>
   </TEXTSPOOL>
   <TYPEGROUPS>
+   <ITEM TYPEGROUP="ABAP" VERSION="1" IMPLICIT="X"/>
    <ITEM TYPEGROUP="SEOF" VERSION="1" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEOK" VERSION="1" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEOP" VERSION="1" EXPLICIT="X"/>
