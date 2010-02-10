@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7D9297E8748957FB09C26DB5A3455B56" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="13B81F43CC9C248F6844F722AAE9D161" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="ECF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -310,10 +310,11 @@ END-OF-DEFINITION.</MACROS>
 
   LOOP AT o_obj-&gt;attributes ASSIGNING &lt;a&gt;
     WHERE ( visibility = cl_abap_classdescr=&gt;public or
-            visibility = cl_abap_classdescr=&gt;protected )
-      AND is_constant IS INITIAL
-      AND alias_for IS INITIAL
-      AND is_virtual IS INITIAL.
+            visibility = cl_abap_classdescr=&gt;protected )  &quot; May be friend of the class
+      AND is_constant IS INITIAL  &quot; Do not handle constants
+      AND is_class    IS INITIAL  &quot; Do not handle class attribute
+      AND alias_for   IS INITIAL
+      AND is_virtual  IS INITIAL.
 
     ASSIGN object-&gt;(&lt;a&gt;-name) TO &lt;d&gt;.
     IF sy-subrc &lt;&gt; 0.
