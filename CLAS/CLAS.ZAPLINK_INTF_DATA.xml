@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="04F6D86EA6E68A50DB0129B225BD1D55" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="333564BD07A3BEDCEF60ACAD004790AE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="B348064B8305545DE1000000AC120173" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -11,14 +11,8 @@
   <ATTRIBUTS>
    <ITEM CMPNAME="A0_MAINDATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_MAIN_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Maindata of Class"/>
-    </TEXTS>
-   </ITEM>
-  </ATTRIBUTS>
-  <DOCUMENTATION>
-   <ITEM APPLICATION="DOKU" ID="CA" OBJECT="ZAPLINK_INTF_DATA             A0_MAINDATA" LANGU="E" MASTERLANG="X" TYP="E" DOKFORM="S_DOCU_SHOW" DOKSTYLE="S_DOCUS1">
-    <TEXTS>
-     <ITEM TDSPRAS="E" TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100126" TDFTIME="122329" TDLINESIZE="072">U1&amp;MEANING&amp;
+     <ITEM LANGU="E" DESCRIPT="Maindata of Class">
+      <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100126" TDFTIME="122329" TDLINESIZE="072">U1&amp;MEANING&amp;
 ASStore Interface main data. &quot;A0_&quot; prefix has been use to keep this
   segment on the top of the list.
 U1History
@@ -41,10 +35,11 @@ ASUsing &quot;_&quot; as prefix let this attributes at the end in the alphabetic
 U1&amp;HINTS&amp;
 ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
   &quot;/&quot;.
-*</ITEM>
+*</DOCUMENTATION>
+     </ITEM>
     </TEXTS>
    </ITEM>
-  </DOCUMENTATION>
+  </ATTRIBUTS>
   <LOCAL>
    <TYPES>
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
@@ -86,16 +81,27 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
   FIELD-SYMBOLS:
     &lt;co&gt;  LIKE LINE OF fm_data-comprisings,
     &lt;ec&gt;  LIKE LINE OF fm_data-explore_comprisings.
+* added for documentation move
+  FIELD-SYMBOLS:
+    &lt;desc&gt; LIKE LINE OF fm_data-class_desc,
+    &lt;doc&gt;  LIKE LINE OF fm_data-documentation,
+    &lt;dt&gt;   LIKE LINE OF &lt;doc&gt;-texts.
+  DATA s_txt  LIKE LINE OF a0_maindata-texts.
+  DATA s_key  TYPE ts_doc_key.
 
   a0_maindata-hdr = fm_data-interface.
   obj_name = a0_maindata-clsname.
   obj_version = a0_maindata-version.
   obj_langu = a0_maindata-langu.
+  obj_type = object_types-interface.
 
 *CLASS_DESC  TYPE tt_SEOCLASSTX,
-  a0_maindata-texts = fm_data-class_desc.
-  MODIFY a0_maindata-texts FROM _t TRANSPORTING clsname WHERE clsname &lt;&gt; _t-clsname.
-  CLEAR a0_maindata-descript.
+* Issue 33 : Documentation connected to text
+  a0_maindata-texts = fd_text( descriptions  = fm_data-class_desc
+                                   classname = obj_name
+                                          id = doc_ids-interface-header
+                               documentation = fm_data-documentation ).
+  IF NOT a0_maindata-texts IS INITIAL. CLEAR a0_maindata-descript. ENDIF.
 
 * Get all common attributes between Class and Interface
   CALL METHOD super-&gt;from_data
@@ -114,15 +120,20 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="TO_DATA">
     <SOURCE>
-DATA _t   LIKE LINE OF a0_maindata-texts.
+  DATA _t   LIKE LINE OF a0_maindata-texts.
+  DATA _ct  LIKE LINE OF fm_data-class_desc.
   DATA _co  LIKE LINE OF fm_data-comprisings.
   DATA _ec  LIKE LINE OF fm_data-explore_comprisings.
+  DATA _d   LIKE LINE OF documentation.
+  DATA _dt  LIKE LINE OF _d-texts.
   FIELD-SYMBOLS:
+    &lt;t&gt;   LIKE LINE OF a0_maindata-texts,
     &lt;in&gt;  LIKE LINE OF interfaces.
 
   obj_name = a0_maindata-clsname.
   obj_version = a0_maindata-version.
   obj_langu = a0_maindata-langu.
+  obj_type = object_types-interface.
 
 * Warning recieving (will reset FM_DATA)
   CALL METHOD super-&gt;to_data
@@ -137,9 +148,15 @@ DATA _t   LIKE LINE OF a0_maindata-texts.
   ENDIF.
 
 *CLASS_DESC  TYPE tt_SEOCLASSTX,
-  fm_data-class_desc = a0_maindata-texts.
-  _t-clsname = a0_maindata-clsname.
-  MODIFY fm_data-class_desc FROM _t TRANSPORTING clsname WHERE clsname &lt;&gt; _t-clsname.
+* Issue 33 : Documentation connected to text
+  CALL METHOD td_text
+    EXPORTING
+      classname     = a0_maindata-clsname
+      texts         = a0_maindata-texts
+      id            = doc_ids-interface-header
+    changing
+      documentation = fm_data-documentation
+      descriptions  = fm_data-class_desc.
 
 *COMPRISINGS TYPE  SEOR_COMPRISINGS_R
   LOOP AT interfaces ASSIGNING &lt;in&gt;.

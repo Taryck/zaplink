@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="13B81F43CC9C248F6844F722AAE9D161" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="91868723550CEB42A4D6021B6DC27993" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="ECF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -55,7 +55,13 @@
    </ITEM>
    <ITEM CMPNAME="SELF_FIELDNAME" VERSION="1" STATE="1" EDITORDER="9 " ATTDECLTYP="2" ATTVALUE="&apos;_&apos;" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Special FieldName in structure"/>
+     <ITEM LANGU="E" DESCRIPT="Special FieldName in structure">
+      <DOCUMENTATION TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20090630" TDFTIME="181333" TDLINESIZE="072">U1&amp;MEANING&amp;
+ASField Name in structure to switch XML storage location from attribute to
+  value
+U1&amp;HINTS&amp;
+AS</DOCUMENTATION>
+     </ITEM>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TN_NAME" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;ZSL_NAME&apos;" TYPTYPE="1" TYPE="STRING">
@@ -69,17 +75,6 @@
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
-  <DOCUMENTATION>
-   <ITEM APPLICATION="DOKU" ID="CA" OBJECT="ZAPLINK_EASYXML               SELF_FIELDNAME" LANGU="E" MASTERLANG="X" TYP="E" DOKFORM="S_DOCU_SHOW" DOKSTYLE="S_DOCUS1">
-    <TEXTS>
-     <ITEM TDSPRAS="E" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20090630" TDFTIME="181333" TDLINESIZE="072">U1&amp;MEANING&amp;
-ASField Name in structure to switch XML storage location from attribute to
-  value
-U1&amp;HINTS&amp;
-AS</ITEM>
-    </TEXTS>
-   </ITEM>
-  </DOCUMENTATION>
   <LOCAL>
    <TYPES>
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
@@ -370,8 +365,8 @@ END-OF-DEFINITION.</MACROS>
     </PARAMETERS>
     <SOURCE>
   DATA node        TYPE REF TO if_ixml_element.
-  DATA sname TYPE string.
-  DATA svalue TYPE string.
+  DATA sname       TYPE string.
+  DATA svalue      TYPE string.
   DATA structdescr TYPE REF TO cl_abap_structdescr.
   DATA typedescr   TYPE REF TO cl_abap_typedescr.
   FIELD-SYMBOLS:
@@ -808,6 +803,32 @@ END-OF-DEFINITION.</MACROS>
     unstack( ).
   ENDIF.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="GET_NODE_TEXT" VERSION="1" STATE="1" EDITORDER="24 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Read XML node for text"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
+     <ITEM SCONAME="XML_NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>
+  DATA o_filter   TYPE REF TO if_ixml_node_filter.
+  DATA o_iterator TYPE REF TO if_ixml_node_iterator.
+  DATA o_text     TYPE REF TO if_ixml_node.
+
+* XML Value
+  check xml_node-&gt;contains( if_ixml_node=&gt;co_node_text ) = abap_true.    &quot; value returned by get_value is the right one.
+  o_filter = xml_node-&gt;create_filter_node_type( if_ixml_node=&gt;co_node_text ).
+  o_iterator = xml_node-&gt;create_iterator_filtered( depth = 1
+                                                  filter = o_filter ).
+  o_text = o_iterator-&gt;get_next( ).
+  result = o_text-&gt;get_value( ).
+</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="GET_REF_TYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="For Ref data (like object) type get target type"/>
@@ -1062,21 +1083,20 @@ END-OF-DEFINITION.</MACROS>
 *    o_obj ?= get_ref_type( o_ref ).
 *  ENDIF.
 *  IF o_obj-&gt;absolute_name = &apos;\CLASS=OBJECT&apos;.
-    o_obj ?= cl_abap_classdescr=&gt;describe_by_object_ref( p_object_ref = object ).
+  o_obj ?= cl_abap_classdescr=&gt;describe_by_object_ref( p_object_ref = object ).
 * Replace in stack &apos;\CLASS=YYYY&apos; =&gt; &apos;\CLASS=XXXX&apos;
-    unstack( ).
-    attr_name = o_obj-&gt;absolute_name.
-    stack( attr_name ).
+  unstack( ).
+  attr_name = o_obj-&gt;absolute_name.
+  stack( attr_name ).
 *  ENDIF.
 
 * XML Value
-  svalue = xml_node-&gt;get_value( ).
+  svalue = get_node_text( xml_node ).       &quot; Issue 38
   IF NOT svalue IS INITIAL.
     ASSIGN object-&gt;(self_fieldname) TO &lt;d&gt;.
     IF sy-subrc &lt;&gt; 0.
 * Error to raise
-* Because of get_value that retrieve value of sub node raising message error is suspended
-*      mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(self_fieldname) TO &lt;d&gt;&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.      &quot;#EC NOTEXT
+      mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(self_fieldname) TO &lt;d&gt;&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;. &quot;#EC NOTEXT
     ELSE.
 * attribute assigned
       typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1084,7 +1104,7 @@ END-OF-DEFINITION.</MACROS>
       CASE typedescr-&gt;kind.
         WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-          mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.         &quot;#EC NOTEXT
+          mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;. &quot;#EC NOTEXT
         WHEN cl_abap_datadescr=&gt;kind_elem.
           string_2_elem( EXPORTING
                             string = svalue
@@ -1093,7 +1113,7 @@ END-OF-DEFINITION.</MACROS>
                               any = &lt;d&gt; ).
 * cl_abap_datadescr=&gt;kind_struct cl_abap_datadescr=&gt;kind_table cl_abap_datadescr=&gt;kind_class cl_abap_datadescr=&gt;kind_intf.
         WHEN OTHERS.
-          mac_syserr_log -1 &apos;NOT cl_abap_datadescr=&gt;kind_elem (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.    &quot;#EC NOTEXT
+          mac_syserr_log -1 &apos;NOT cl_abap_datadescr=&gt;kind_elem (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;. &quot;#EC NOTEXT
       ENDCASE.
     ENDIF.
   ENDIF.
@@ -1125,7 +1145,7 @@ END-OF-DEFINITION.</MACROS>
       ASSIGN object-&gt;(attr_name) TO &lt;d&gt;.
       IF sy-subrc &lt;&gt; 0.
 * Error to raise
-        mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(attr_name) TO &lt;d&gt; (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.    &quot;#EC NOTEXT
+        mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(attr_name) TO &lt;d&gt; (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;. &quot;#EC NOTEXT
       ELSE.
 * attribute assigned
         typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1133,7 +1153,7 @@ END-OF-DEFINITION.</MACROS>
         CASE typedescr-&gt;kind.
           WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.             &quot;#EC NOTEXT
+            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;. &quot;#EC NOTEXT
           WHEN cl_abap_datadescr=&gt;kind_elem.
 *            svalue = xml_node-&gt;get_attribute( name = attr_name ). &quot; equivalent to =&gt;
             svalue = node-&gt;get_value( ).
@@ -1189,7 +1209,7 @@ END-OF-DEFINITION.</MACROS>
       ASSIGN object-&gt;(attr_name) TO &lt;d&gt;.
       IF sy-subrc &lt;&gt; 0.
 * Error to raise
-        mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(attr_name)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;.            &quot;#EC NOTEXT
+        mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(attr_name)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_OBJECT&apos;. &quot;#EC NOTEXT
       ELSE.
 * attribute assigned
         typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1253,16 +1273,18 @@ END-OF-DEFINITION.</MACROS>
   DATA attr_name  TYPE string.
   DATA name       TYPE string.
   DATA data_type  TYPE string.
-  DATA exception TYPE REF TO cx_root.
+  DATA exception  TYPE REF TO cx_root.
+  DATA o_filter   TYPE REF TO if_ixml_node_filter.
+  DATA o_iterator TYPE REF TO if_ixml_node_iterator.
+  DATA o_text     TYPE REF TO if_ixml_node.
 
 * XML Value
-  svalue = xml_node-&gt;get_value( ).
+  svalue = get_node_text( xml_node ).   &quot; Issue 38
   IF NOT svalue IS INITIAL.
     ASSIGN COMPONENT self_fieldname OF STRUCTURE structure TO &lt;d&gt;.
     IF sy-subrc &lt;&gt; 0.
 * Error to raise
-* Because of get_value that retrieve value of sub node raising message error is suspended
-*      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT self_fieldname OF STRUCTURE structure (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.     &quot;#EC NOTEXT
+      mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT self_fieldname OF STRUCTURE structure (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;. &quot;#EC NOTEXT
     ELSE.
 * attribute assigned
       typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1270,7 +1292,7 @@ END-OF-DEFINITION.</MACROS>
       CASE typedescr-&gt;kind.
         WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-          mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.            &quot;#EC NOTEXT
+          mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;. &quot;#EC NOTEXT
         WHEN cl_abap_datadescr=&gt;kind_elem.
           string_2_elem( EXPORTING
                             string = svalue
@@ -1279,7 +1301,7 @@ END-OF-DEFINITION.</MACROS>
                               any = &lt;d&gt; ).
 * cl_abap_datadescr=&gt;kind_struct cl_abap_datadescr=&gt;kind_table cl_abap_datadescr=&gt;kind_class cl_abap_datadescr=&gt;kind_intf.
         WHEN OTHERS.
-          mac_syserr_log -1 &apos;NOT cl_abap_datadescr=&gt;kind_elem (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.       &quot;#EC NOTEXT
+          mac_syserr_log -1 &apos;NOT cl_abap_datadescr=&gt;kind_elem (Value)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;. &quot;#EC NOTEXT
       ENDCASE.
     ENDIF.
   ENDIF.
@@ -1312,7 +1334,7 @@ END-OF-DEFINITION.</MACROS>
       ASSIGN COMPONENT attr_name OF STRUCTURE structure TO &lt;d&gt;.
       IF sy-subrc &lt;&gt; 0.
 * Error to raise
-        mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT attr_name OF STRUCTURE structure (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.      &quot;#EC NOTEXT
+        mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT attr_name OF STRUCTURE structure (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;. &quot;#EC NOTEXT
       ELSE.
 * attribute assigned
         typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1320,7 +1342,7 @@ END-OF-DEFINITION.</MACROS>
         CASE typedescr-&gt;kind.
           WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.        &quot;#EC NOTEXT
+            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Attrs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;. &quot;#EC NOTEXT
           WHEN cl_abap_datadescr=&gt;kind_elem.
 *            svalue = xml_node-&gt;get_attribute( name = attr_name ). &quot; equivalent to =&gt;
             svalue = node-&gt;get_value( ).
@@ -1377,7 +1399,7 @@ END-OF-DEFINITION.</MACROS>
       ASSIGN COMPONENT attr_name OF STRUCTURE structure TO &lt;d&gt;.
       IF sy-subrc &lt;&gt; 0.
 * Error to raise
-        mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT attr_name OF STRUCTURE structure (Childs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.     &quot;#EC NOTEXT
+        mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT attr_name OF STRUCTURE structure (Childs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;. &quot;#EC NOTEXT
       ELSE.
 * attribute assigned
         typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
@@ -1385,7 +1407,7 @@ END-OF-DEFINITION.</MACROS>
         CASE typedescr-&gt;kind.
           WHEN cl_abap_datadescr=&gt;kind_ref.
 * Exception ref of ref ?
-            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Childs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;.         &quot;#EC NOTEXT
+            mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref (Childs)&apos; &apos;ZAPLINK_EASYXML-&gt;READ_STRUCTURE&apos;. &quot;#EC NOTEXT
           WHEN cl_abap_datadescr=&gt;kind_elem.
             svalue = node-&gt;get_value( ).
             string_2_elem( EXPORTING

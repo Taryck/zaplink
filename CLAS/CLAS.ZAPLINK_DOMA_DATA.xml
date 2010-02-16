@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="75CD621B5E6F8E872993EBB9B055DFC4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOMA_DATA" TYPE="CLAS" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="B459983A5E6A46D37EE69B664B55B1D9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOMA_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="C967724B6223AA5BE1000000AC120173" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="C967724B6223AA5BE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" VERSION="1" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Type Pool Datas"/>
+    <ITEM LANGU="E" DESCRIPT="Domain (SE11) Datas"/>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -62,6 +62,19 @@
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
   <METHODS>
+   <ITEM CMPNAME="ANONYMIZE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
+    </TEXTS>
+    <SOURCE>
+  FIELD-SYMBOLS:
+    &lt;t&gt; like LINE OF texts.
+
+  clear: a0_maindata-AS4USER, a0_maindata-AS4DATE, a0_maindata-AS4TIME.
+  loop at texts ASSIGNING &lt;t&gt;.
+    clear: &lt;t&gt;-LONG_TXT-TDFUSER, &lt;t&gt;-LONG_TXT-TDFDATE, &lt;t&gt;-LONG_TXT-TDFTIME.
+  endloop.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
@@ -151,7 +164,7 @@
   FIELD-SYMBOLS:
     &lt;v&gt; LIKE LINE OF values,
     &lt;t&gt; LIKE LINE OF texts,
-*    &lt;dt&gt; LIKE LINE OF &lt;d&gt;-texts,
+    &lt;d&gt; LIKE LINE OF fm_data-docs,
     &lt;vt&gt; LIKE LINE OF &lt;v&gt;-texts.
 
   fm_data-header = a0_maindata-hdr.
@@ -162,6 +175,7 @@
     INSERT s_value INTO TABLE fm_data-values.
     LOOP AT &lt;v&gt;-texts ASSIGNING &lt;vt&gt;.
       CLEAR s_vtext.
+      MOVE-CORRESPONDING &lt;v&gt; TO s_vtext.
       s_vtext-domname = fm_data-header-domname.
       s_vtext-ddlanguage = &lt;vt&gt;-langu.
       s_vtext-as4local = &apos;A&apos;. &quot; Active
@@ -182,19 +196,41 @@
     s_text-ddtext = &lt;t&gt;-short_txt.
     INSERT s_text INTO TABLE fm_data-texts.
     IF NOT &lt;t&gt;-long_txt IS INITIAL.
-      CLEAR s_doc.
+      IF fm_data-docs IS INITIAL.
+        CLEAR s_doc.
+*APPLICATION    DOKU
+*ID	            DO
+*OBJECT	        ____
+*LANGU          E
+*MASTERLANG	    X
+*TYP            T
+*DOKFORM        S_DOCU_SHOW
+*DOKSTYLE	      S_DOCUS1
+*SELFDEF
+        s_doc-application = &apos;DOKU&apos;.
+        s_doc-id = doc_ids-header.
+        s_doc-object = fm_data-header-domname.
+        s_doc-langu = &lt;t&gt;-langu.
+        s_doc-masterlang = abap_true.
+        s_doc-typ = &apos;T&apos;.
+        s_doc-dokform = &apos;S_DOCU_SHOW&apos;.
+        s_doc-dokstyle = &apos;S_DOCUS1&apos;.
+        INSERT s_doc INTO TABLE fm_data-docs.
+      ENDIF.
       s_dtxt = &lt;t&gt;-long_txt.
       s_dtxt-tdspras = &lt;t&gt;-langu.
       INSERT s_dtxt INTO TABLE s_doc-texts.
-      s_doc-id = doc_ids-header.
-      s_doc-object = fm_data-header-domname.
-      INSERT s_doc INTO TABLE fm_data-docs.
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="UNANONYMIZE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
+    </TEXTS>
+   </ITEM>
   </METHODS>
   <TYPES>
-   <ITEM CMPNAME="TS_FM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="32 " SRCCOLUMN1="6 " SRCROW2="39 " SRCCOLUMN2="30 " TYPESRC_LENG="301 ">
+   <ITEM CMPNAME="TS_FM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="27 " SRCCOLUMN1="4 " SRCROW2="34 " SRCCOLUMN2="30 " TYPESRC_LENG="301 ">
     BEGIN OF ts_fm_data,
 * DO pour type doc
                 header        TYPE dd01v,
@@ -208,7 +244,7 @@
      <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_MAINDATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="41 " SRCCOLUMN1="6 " SRCROW2="44 " SRCCOLUMN2="23 " TYPESRC_LENG="93 ">
+   <ITEM CMPNAME="TS_MAINDATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="36 " SRCCOLUMN1="4 " SRCROW2="39 " SRCCOLUMN2="23 " TYPESRC_LENG="93 ">
     BEGIN OF ts_maindata.
     INCLUDE TYPE dd01v AS hdr.
     TYPES:
@@ -218,20 +254,20 @@
      <ITEM LANGU="E" DESCRIPT="General Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_VALUE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="46 " SRCCOLUMN1="6 " SRCROW2="50 " SRCCOLUMN2="20 " TYPESRC_LENG="118 ">BEGIN OF ts_value.
+   <ITEM CMPNAME="TS_VALUE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="41 " SRCCOLUMN1="4 " SRCROW2="45 " SRCCOLUMN2="20 " TYPESRC_LENG="118 ">BEGIN OF ts_value.
     INCLUDE TYPE dd07v AS main.
     TYPES:
         texts TYPE tt_texts,
       END OF ts_value
 </ITEM>
-   <ITEM CMPNAME="TT_DD01T" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="6 " SRCROW2="29 " SRCCOLUMN2="67 " TYPESRC_LENG="64 ">tt_dd01t TYPE SORTED TABLE OF dd01t WITH UNIQUE KEY ddlanguage
+   <ITEM CMPNAME="TT_DD01T" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="23 " SRCCOLUMN1="4 " SRCROW2="23 " SRCCOLUMN2="65 " TYPESRC_LENG="64 ">tt_dd01t TYPE SORTED TABLE OF dd01t WITH UNIQUE KEY ddlanguage
 </ITEM>
-   <ITEM CMPNAME="TT_DD07T" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="27 " SRCCOLUMN1="6 " SRCROW2="27 " SRCCOLUMN2="74 " TYPESRC_LENG="71 ">tt_dd07t TYPE SORTED TABLE OF dd07t WITH UNIQUE KEY valpos ddlanguage
+   <ITEM CMPNAME="TT_DD07T" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="21 " SRCCOLUMN2="72 " TYPESRC_LENG="71 ">tt_dd07t TYPE SORTED TABLE OF dd07t WITH UNIQUE KEY valpos ddlanguage
 </ITEM>
-   <ITEM CMPNAME="TT_DD07V" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="25 " SRCCOLUMN1="6 " SRCROW2="25 " SRCCOLUMN2="59 " TYPESRC_LENG="56 ">tt_dd07v TYPE STANDARD TABLE OF dd07v WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_DD07V" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="19 " SRCCOLUMN1="4 " SRCROW2="19 " SRCCOLUMN2="57 " TYPESRC_LENG="56 ">tt_dd07v TYPE STANDARD TABLE OF dd07v WITH DEFAULT KEY
 </ITEM>
    <ITEM CMPNAME="TT_DOCS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="ZAPLINK_DOCUMENTATION=&gt;TT_DOCS"/>
-   <ITEM CMPNAME="TT_VALUES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="52 " SRCCOLUMN1="6 " SRCROW2="52 " SRCCOLUMN2="67 " TYPESRC_LENG="64 ">tt_values TYPE SORTED TABLE OF ts_value WITH UNIQUE KEY valpos
+   <ITEM CMPNAME="TT_VALUES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="47 " SRCCOLUMN1="4 " SRCROW2="47 " SRCCOLUMN2="65 " TYPESRC_LENG="64 ">tt_values TYPE SORTED TABLE OF ts_value WITH UNIQUE KEY valpos
 </ITEM>
   </TYPES>
  </RAW>
