@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="039DADD9BAB8799B2A9B0D87984D3DC1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3ED91E06F252387F61E4443F65EC3910" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="B32B044B702B371EE1000000AC120173" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -297,6 +297,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Dynpro : Issue 8
           o_data-&gt;dynpros = get_dynpros( _prog ).
 
+* Menu Painter : Issue 9
+          o_data-&gt;menupainter = get_menus( _prog ).
+
 * Documentation
 *      CONCATENATE _name &apos;*&apos; INTO _obj. &quot; Issue:7
           s_obj-prog = _name.
@@ -423,6 +426,10 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Dynpro : Issue 8
           set_dynpros( program = _prog
                        dynpros = o_data-&gt;dynpros ).
+
+* Menu Painter : Issue 9
+          set_menus( program = _prog
+                       menus = o_data-&gt;menupainter ).
 
 * Documentation
           zaplink_documentation=&gt;set( t_docs = o_data-&gt;documentation ).

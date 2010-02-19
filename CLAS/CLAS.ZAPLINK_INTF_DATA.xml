@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="333564BD07A3BEDCEF60ACAD004790AE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="BFD7E6787289F2B42742A56B8A11D491" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="B348064B8305545DE1000000AC120173" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -40,6 +40,10 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
+  <FRIENDS>
+   <ITEM REFCLSNAME="ZAPLINK_EASYXML" VERSION="1" STATE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_OBJECT" VERSION="1" STATE="1"/>
+  </FRIENDS>
   <LOCAL>
    <TYPES>
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
@@ -112,11 +116,12 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
   LOOP AT fm_data-comprisings ASSIGNING &lt;co&gt;
     WHERE clsname = a0_maindata-clsname.
     CLEAR _in.
-    MOVE-CORRESPONDING &lt;co&gt; to _in.
+    MOVE-CORRESPONDING &lt;co&gt; TO _in.
 
     CLEAR _in-clsname.
     INSERT _in INTO TABLE interfaces.
-  ENDLOOP.</SOURCE>
+  ENDLOOP.
+  clear_tags( ).</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="TO_DATA">
     <SOURCE>
@@ -154,17 +159,18 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
       classname     = a0_maindata-clsname
       texts         = a0_maindata-texts
       id            = doc_ids-interface-header
-    changing
+    CHANGING
       documentation = fm_data-documentation
       descriptions  = fm_data-class_desc.
 
 *COMPRISINGS TYPE  SEOR_COMPRISINGS_R
   LOOP AT interfaces ASSIGNING &lt;in&gt;.
     CLEAR: _co.
-    MOVE-CORRESPONDING &lt;in&gt; to _co.
+    MOVE-CORRESPONDING &lt;in&gt; TO _co.
     _co-clsname = a0_maindata-clsname.
     INSERT _co INTO TABLE fm_data-comprisings.
-  ENDLOOP.</SOURCE>
+  ENDLOOP.
+  clear_tags( ).</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>
@@ -177,7 +183,7 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
    <ITEM TYPEGROUP="SEOT" VERSION="1" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TS_MAIN_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="18 " SRCCOLUMN1="4 " SRCROW2="23 " SRCCOLUMN2="24 " TYPESRC_LENG="188 ">
+   <ITEM CMPNAME="TS_MAIN_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="26 " SRCCOLUMN2="24 " TYPESRC_LENG="188 ">
     BEGIN OF ts_main_data.
     INCLUDE TYPE vseointerf AS hdr.
     TYPES:

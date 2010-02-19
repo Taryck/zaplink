@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A8976E9ED1B21D0CBB24819040DF8FF8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5CF35404EBB5B162F8B41C775564ACE5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="47F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -465,6 +465,67 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDLOOP.
 </SOURCE>
    </ITEM>
+   <ITEM CMPNAME="GET_MENUS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Get program Menus"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="PROGRAM" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME"/>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_MENUPAINTER">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Menu painter Data"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>
+  DATA s_fm_data TYPE zaplink_menupainter_data=&gt;ts_fm_data.
+
+  CALL FUNCTION &apos;RS_CUA_INTERNAL_FETCH&apos;
+    EXPORTING
+      program                    = program
+*     LANGUAGE                   =
+      state                      = &apos;A&apos;
+*     WITH_SECOND_LANGUAGE       = &apos; &apos;
+    IMPORTING
+      adm                        = s_fm_data-header
+*      LANGU                      =
+*      AUTHOR                     =
+*      DATE                       =
+*      TIME                       =
+*      CAUTHOR                    =
+*      CDATE                      =
+*      CTIME                      =
+*      GDATE                      =
+*      GTIME                      =
+    TABLES
+      sta                        = s_fm_data-status
+      fun                        = s_fm_data-functions
+      men                        = s_fm_data-menus_det
+      mtx                        = s_fm_data-menus
+      act                        = s_fm_data-bars_det
+      but                        = s_fm_data-buttons_det
+      pfk                        = s_fm_data-keyboards
+      set                        = s_fm_data-stat_funcs
+      doc                        = s_fm_data-attributes
+      tit                        = s_fm_data-titles
+      biv                        = s_fm_data-ffuncs
+    EXCEPTIONS
+      not_found                  = 1
+      unknown_version            = 2
+      OTHERS                     = 3.
+  IF sy-subrc &lt;&gt; 0 OR s_fm_data IS INITIAL.
+    EXIT.
+  ENDIF.
+
+  SELECT *
+    INTO TABLE s_fm_data-texts
+    FROM rsmptexts
+    WHERE progname = program.
+
+  CREATE OBJECT result.
+  result-&gt;from_data( s_fm_data ).
+</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="GET_PROG_RAWSOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get program RAW source code"/>
@@ -834,6 +895,60 @@ DATA code TYPE tt_abaprawsource.
   ENDIF.
 </SOURCE>
    </ITEM>
+   <ITEM CMPNAME="SET_MENUS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="17 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Set program Menus"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="MENUS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_MENUPAINTER">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Menu painter Data"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="PROGRAM" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME"/>
+    </PARAMETERS>
+    <SOURCE>
+  DATA s_fm_data TYPE zaplink_menupainter_data=&gt;ts_fm_data.
+  DATA d_trkey   TYPE trkey.
+
+  CHECK menus IS BOUND.
+  s_fm_data = menus-&gt;to_data( ).
+
+  d_trkey-obj_type = &apos;PROG&apos;.
+  d_trkey-sub_name = d_trkey-obj_name = program.
+  d_trkey-sub_type = &apos;CUAD&apos;.
+
+  CALL FUNCTION &apos;RS_CUA_INTERNAL_WRITE&apos;
+    EXPORTING
+      program   = program
+      language  = s_fm_data-header-mod_langu
+      tr_key    = d_trkey
+      adm       = s_fm_data-header
+      state     = &apos;I&apos;
+    TABLES
+      sta       = s_fm_data-status
+      fun       = s_fm_data-functions
+      men       = s_fm_data-menus_det
+      mtx       = s_fm_data-menus
+      act       = s_fm_data-bars_det
+      but       = s_fm_data-buttons_det
+      pfk       = s_fm_data-keyboards
+      set       = s_fm_data-stat_funcs
+      doc       = s_fm_data-attributes
+      tit       = s_fm_data-titles
+      biv       = s_fm_data-ffuncs
+    EXCEPTIONS
+      not_found = 1
+      OTHERS    = 2.
+  IF sy-subrc &lt;&gt; 0.
+* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+  ENDIF.
+
+  DELETE FROM rsmptexts WHERE progname = program.
+  MODIFY rsmptexts FROM TABLE s_fm_data-texts.
+</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="SET_PROG_RAWSOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Set program RAW source code"/>
@@ -934,6 +1049,11 @@ DATA _raw TYPE tt_abaprawsource.
    <ITEM CMPNAME="TO_EXCEPTION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_MENUPAINTER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_MENUPAINTER_DATA">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Menu painter Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ROOT_EXCEPTION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
