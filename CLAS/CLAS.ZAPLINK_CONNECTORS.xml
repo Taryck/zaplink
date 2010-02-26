@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="976F2B86C7181E27DC839344934AC55E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0EDFC61898339802E3B554F6A3661FEC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="DCFD034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -23,10 +23,10 @@
    <ITEM CMPNAME="TS_CONN_CLASS" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_CONN_CLASS"/>
    <ITEM CMPNAME="TS_CONN_DEF" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_CONN_DEF"/>
    <ITEM CMPNAME="TT_TYPELIST" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TYPELIST"/>
-   <ITEM CMPNAME="TT_TYPES" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TYPES"/>
+   <ITEM CMPNAME="TT_TYPES" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TYPES"/>
   </ALIASES>
   <ATTRIBUTS>
-   <ITEM CMPNAME="EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="46 " SRCCOLUMN1="4 " SRCROW2="49 " SRCCOLUMN2="20 " TYPESRC_LENG="205 " TYPESRC="BEGIN OF exists,
+   <ITEM CMPNAME="EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="48 " SRCCOLUMN1="4 " SRCROW2="51 " SRCCOLUMN2="20 " TYPESRC_LENG="205 " TYPESRC="BEGIN OF exists,
           exists     TYPE td_connexists VALUE ZAPLINK_DATATYPES~EXISTS-exists,
           not_exists TYPE td_connexists VALUE ZAPLINK_DATATYPES~EXISTS-not_exists,
         END OF exists
@@ -58,6 +58,18 @@
    <ITEM CMPNAME="SAPTYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_SAPTYPES">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="List of SAP Types"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="SUPPORTED_TYPES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="1" ATTRDONLY="X" TYPTYPE="1" TYPE="TT_TYPES">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="List of all supported types">
+      <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100223" TDFTIME="105751" TDLINESIZE="072">U1&amp;MEANING&amp;
+ASList all component types that is supported by one or more connector.
+  Each component of a type listed in this table could be exported using a
+  connector installed in this SAP System.
+U1&amp;HINTS&amp;
+AS</DOCUMENTATION>
+     </ITEM>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TYPE_LIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_TYPELIST">
@@ -310,7 +322,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_CLASSNAME" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get conenctor&apos;s classname"/>
+     <ITEM LANGU="E" DESCRIPT="Get connector&apos;s classname"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="O_CONN" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_CONNECTOR">
@@ -631,13 +643,13 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     READ TABLE _classes ASSIGNING &lt;cl&gt;
                WITH TABLE KEY uuid = the_class-uuid.
     IF sy-subrc = 0.
-      IF &lt;cl&gt;-classname &lt;&gt; class.                                             &quot; Issue 25
+      IF &lt;cl&gt;-classname &lt;&gt; class.                           &quot; Issue 25
         RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
                         textid = zaplink_cx_connector=&gt;twice_uuid
                      connclass = class
                     otherclass = &lt;cl&gt;-classname
                       connuuid = &lt;cl&gt;-uuid.
-      elseIF NOT ( &lt;cl&gt;-devclass &lt;&gt; local_devclass AND devclass = local_devclass ).
+      ELSEIF NOT ( &lt;cl&gt;-devclass &lt;&gt; local_devclass AND devclass = local_devclass ).
         RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
                         textid = zaplink_cx_connector=&gt;twice_class
                      connclass = class.
@@ -741,7 +753,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>
-TYPES:
+  TYPES:
     BEGIN OF t_classlist,
       class TYPE seoclsname,
     END OF t_classlist.
@@ -751,29 +763,32 @@ TYPES:
   DATA _conn LIKE LINE OF type_list.
   DATA _class LIKE LINE OF _conn-classes.
   DATA _types TYPE STANDARD TABLE OF ko100 WITH DEFAULT KEY.
+  DATA s_type LIKE LINE OF supported_types.
   FIELD-SYMBOLS:
     &lt;c&gt; LIKE LINE OF type_list.
 
+  REFRESH supported_types.
 * Default class
   LOOP AT type_list ASSIGNING &lt;c&gt;.
+    CLEAR: s_type.    s_type-type = &lt;c&gt;-object.   INSERT s_type INTO TABLE supported_types.
     CHECK NOT &lt;c&gt;-classes IS INITIAL.
-    LOOP AT &lt;c&gt;-classes INTO _class   WHERE devclass = LOCAL_DEVCLASS.
+    LOOP AT &lt;c&gt;-classes INTO _class   WHERE devclass = local_devclass.
       EXIT.
     ENDLOOP.
     LOOP AT &lt;c&gt;-classes INTO _class   WHERE devclass = &apos;ZAPLINK-CONNECTORS-MAIN&apos;.
       EXIT.
     ENDLOOP.
-    IF sy-subrc &lt;&gt; 0 or _class-classname is INITIAL.
+    IF sy-subrc &lt;&gt; 0 OR _class-classname IS INITIAL.
       LOOP AT &lt;c&gt;-classes INTO _class WHERE devclass CP &apos;ZAPLINK-CONNECTORS*&apos;.
         EXIT.
       ENDLOOP.
     ENDIF.
-    IF sy-subrc &lt;&gt; 0 or _class-classname is INITIAL.
+    IF sy-subrc &lt;&gt; 0 OR _class-classname IS INITIAL.
       LOOP AT &lt;c&gt;-classes INTO _class WHERE devclass CP &apos;ZAPLINK*&apos;.
         EXIT.
       ENDLOOP.
     ENDIF.
-    IF sy-subrc &lt;&gt; 0 or _class-classname is INITIAL.
+    IF sy-subrc &lt;&gt; 0 OR _class-classname IS INITIAL.
       READ TABLE &lt;c&gt;-classes INTO _class INDEX 1.
     ENDIF.
     &lt;c&gt;-default_class = _class-classname.
@@ -816,18 +831,18 @@ TYPES:
      <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CLASS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="23 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="18 " TYPESRC_LENG="130 ">BEGIN OF ts_class.
+   <ITEM CMPNAME="TS_CLASS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="25 " SRCCOLUMN2="18 " TYPESRC_LENG="130 ">BEGIN OF ts_class.
   INCLUDE TYPE ts_conn_class.
   TYPES:
       types TYPE tt_types,   &quot; supported_types
     END OF ts_class
 </ITEM>
-   <ITEM CMPNAME="TS_COMPONENT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="40 " SRCCOLUMN1="4 " SRCROW2="43 " SRCCOLUMN2="26 " TYPESRC_LENG="121 ">BEGIN OF ts_component,
+   <ITEM CMPNAME="TS_COMPONENT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="42 " SRCCOLUMN1="4 " SRCROW2="45 " SRCCOLUMN2="26 " TYPESRC_LENG="121 ">BEGIN OF ts_component,
           type TYPE td_comptype,
           name TYPE td_compname,
         END OF ts_component
 </ITEM>
-   <ITEM CMPNAME="TS_CONNDATA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="17 " SRCCOLUMN1="4 " SRCROW2="21 " SRCCOLUMN2="25 " TYPESRC_LENG="166 ">
+   <ITEM CMPNAME="TS_CONNDATA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="15 " SRCCOLUMN1="4 " SRCROW2="19 " SRCCOLUMN2="25 " TYPESRC_LENG="166 ">
     BEGIN OF ts_conndata,
           exists TYPE td_connexists,
           classname TYPE td_connclass,
@@ -838,7 +853,7 @@ TYPES:
      <ITEM LANGU="E" DESCRIPT="Connector Info"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SAPTYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="31 " SRCCOLUMN1="4 " SRCROW2="35 " SRCCOLUMN2="21 " TYPESRC_LENG="148 ">BEGIN OF ts_saptypes.
+   <ITEM CMPNAME="TS_SAPTYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="33 " SRCCOLUMN2="21 " TYPESRC_LENG="148 ">BEGIN OF ts_saptypes.
   INCLUDE TYPE ko100 AS hdr.
   TYPES:
       order TYPE td_typeorder,     &quot; order of prefered load
@@ -849,9 +864,9 @@ TYPES:
            text   TYPE td_comptext,
          END OF ts_value
 </ITEM>
-   <ITEM CMPNAME="TT_CLASSES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="29 " SRCCOLUMN2="64 " TYPESRC_LENG="63 ">tt_classes TYPE SORTED TABLE OF ts_class WITH UNIQUE KEY uuid
+   <ITEM CMPNAME="TT_CLASSES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="27 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="64 " TYPESRC_LENG="63 ">tt_classes TYPE SORTED TABLE OF ts_class WITH UNIQUE KEY uuid
 </ITEM>
-   <ITEM CMPNAME="TT_SAPTYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="37 " SRCCOLUMN1="4 " SRCROW2="37 " SRCCOLUMN2="70 " TYPESRC_LENG="69 ">
+   <ITEM CMPNAME="TT_SAPTYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="35 " SRCCOLUMN1="4 " SRCROW2="35 " SRCCOLUMN2="70 " TYPESRC_LENG="69 ">
     tt_saptypes TYPE HASHED TABLE OF ts_saptypes WITH UNIQUE KEY object
 
     <TEXTS>
