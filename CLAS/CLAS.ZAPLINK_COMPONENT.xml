@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0D76B960BEE5D3D9980AFE6637B50580" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E1FC2AAA99FF8A1B0D7706D3E239512E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="3FF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -447,6 +447,11 @@ result = type.</SOURCE>
       CATCH zaplink_cx_connector INTO o_cx_cnx.
         mac_cascade_raise o_mycx o_cx_cnx.
     ENDTRY.
+    SELECT SINGLE devclass INTO _devclass
+      FROM tadir
+      WHERE pgmid = &apos;R3TR&apos;
+       AND object = type
+       AND obj_name = name.
     _connector-uuid = _connector-o_conn-&gt;uuid.
   ENDIF.</SOURCE>
    </ITEM>
@@ -706,16 +711,10 @@ DATA cx TYPE REF TO cx_root.
   TRY.
       o_conn = zaplink_connectors=&gt;create_connector( type = data ).
 
-      type = data.
-      CLEAR _connector.
+      type = data.    CLEAR _connector.
       on_change_clear( ).
       _connector-o_conn = o_conn.
-*      CLEAR _connector-classname.
-      IF o_conn IS BOUND.
-        _connector-exists = connexists-exists.
-      ELSE.
-        _connector-exists = connexists-not_exists.
-      ENDIF.
+      IF o_conn IS BOUND.   _connector-exists = connexists-exists.    ELSE.     _connector-exists = connexists-not_exists.    ENDIF.
       on_change_update( ).
 
     CATCH zaplink_cx INTO o_cx.

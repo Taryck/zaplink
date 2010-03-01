@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="38800509A9882D4765C8E3FA7D3DFCB0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE_ZIP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="ACB998F2CCB829984DD2C86885256691" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE_ZIP" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE-EXT" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="FDF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_FILE">
@@ -14,6 +14,16 @@
         zipped    TYPE td_filekind VALUE &apos;Z&apos;,                &quot;#EC NOTEXT
       END OF filekinds
 "/>
+   <ITEM CMPNAME="FILENAME_IN_ZIP" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;content.xml&apos;" TYPTYPE="1" TYPE="T_FILENAME">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Filename in ZIP file"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="ZIP_FILE_EXTENSION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;.zip&apos;" TYPTYPE="1" TYPE="T_FILENAME">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZIP file extention"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="_FILEKIND" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TD_FILEKIND">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="File Kind : Normal, Compressed"/>
@@ -87,14 +97,18 @@ IF     data &lt;&gt; filekinds-normal
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_FILE" VERSION="1" MTDNAME="LOAD">
     <SOURCE>
-DATA _cx TYPE REF TO zaplink_cx_file.
-  DATA tmptable TYPE STANDARD TABLE OF x.
-  DATA cx_name TYPE string.
-  DATA cx TYPE REF TO cx_root.
-  DATA x_string TYPE xstring.
+  DATA _cx       TYPE REF TO zaplink_cx_file.
+  DATA tmptable  TYPE STANDARD TABLE OF x.
+  DATA cx_name   TYPE string.
+  DATA cx        TYPE REF TO cx_root.
+  DATA x_string  TYPE xstring.
+  DATA string_size  TYPE i.
   DATA file_type TYPE char10.
   DATA file_size TYPE i.
-  DATA _str LIKE LINE OF tmptable.
+  DATA _str    LIKE LINE OF tmptable.
+  DATA o_zip   TYPE REF TO cl_abap_zip.
+  DATA o_conv  TYPE REF TO cl_abap_conv_in_ce.
+  DATA x TYPE string.
   FIELD-SYMBOLS:
     &lt;s&gt; LIKE LINE OF tmptable.
 
@@ -111,7 +125,7 @@ DATA _cx TYPE REF TO zaplink_cx_file.
         IF _filename IS INITIAL.
           load_dialog( ).
         ELSE.
-          file_type = &apos;BIN&apos;.
+          file_type = &apos;BIN&apos;.      &quot; change in debug
           CALL METHOD cl_gui_frontend_services=&gt;gui_upload
             EXPORTING
               filename                 = _filename
@@ -178,8 +192,8 @@ DATA _cx TYPE REF TO zaplink_cx_file.
              OTHERS             = 2
                     .
           IF sy-subrc &lt;&gt; 0.
-* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+            MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+                    WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
           ENDIF.
 
         ENDIF.
@@ -208,7 +222,7 @@ DATA _cx TYPE REF TO zaplink_cx_file.
 
 *    DO.
         TRY.
-            READ DATASET _filename into x_string.
+            READ DATASET _filename INTO x_string.
           CATCH cx_root INTO cx.
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
             CREATE OBJECT _cx
@@ -250,19 +264,47 @@ DATA _cx TYPE REF TO zaplink_cx_file.
       ENDIF.
 
       TRY.
-          CALL METHOD cl_abap_gzip=&gt;decompress_text
+          CREATE OBJECT o_zip.
+          CALL METHOD o_zip-&gt;load
             EXPORTING
-              gzip_in      = x_string
-*              gzip_in_len  = -1
-*              conversion   = &apos;DEFAULT&apos;
-            IMPORTING
-              text_out     = _content
-*              text_out_len =
-              .
-*           CATCH cx_parameter_invalid_range .
-*           CATCH cx_sy_buffer_overflow .
-*           CATCH cx_sy_conversion_codepage .
-*           CATCH cx_sy_compression_error .
+              zip             = x_string
+            EXCEPTIONS
+              zip_parse_error = 1
+              OTHERS          = 2.
+          IF sy-subrc &lt;&gt; 0.
+            MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+                       WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+          ENDIF.
+          CALL METHOD o_zip-&gt;get
+             EXPORTING
+               name                    = filename_in_zip
+*              index                   = 0
+             IMPORTING
+               content                 = x_string
+             EXCEPTIONS
+               zip_index_error         = 1
+               zip_decompression_error = 2
+               OTHERS                  = 3.
+          IF sy-subrc &lt;&gt; 0.
+            CALL METHOD o_zip-&gt;get
+               EXPORTING
+*               name                    = filename_in_zip
+                 index                   = 1
+               IMPORTING
+                 content                 = x_string
+               EXCEPTIONS
+                 zip_index_error         = 1
+                 zip_decompression_error = 2
+                 OTHERS                  = 3.
+            IF sy-subrc &lt;&gt; 0.
+              MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+                         WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+            ENDIF.
+          ENDIF.
+
+          o_conv = cl_abap_conv_in_ce=&gt;create( ).
+          o_conv-&gt;convert( EXPORTING input = x_string
+                           IMPORTING  data = _content ).
         CATCH cx_root INTO cx.
           CREATE OBJECT _cx
             EXPORTING
@@ -282,13 +324,15 @@ DATA _cx TYPE REF TO zaplink_cx_file.
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_FILE" VERSION="1" MTDNAME="SAVE">
     <SOURCE>
-DATA _cx TYPE REF TO zaplink_cx_file.
+  DATA _cx TYPE REF TO zaplink_cx_file.
   DATA tmptable TYPE STANDARD TABLE OF x.
   DATA cx_name TYPE string.
   DATA cx TYPE REF TO cx_root.
   DATA x_string TYPE xstring.
   DATA file_type TYPE char10.
   DATA file_size TYPE i.
+  DATA o_zip   TYPE REF TO cl_abap_zip.
+  DATA o_conv  TYPE REF TO cl_abap_conv_out_ce.
   FIELD-SYMBOLS:
     &lt;s&gt; LIKE LINE OF tmptable.
 
@@ -302,21 +346,15 @@ DATA _cx TYPE REF TO zaplink_cx_file.
     WHEN filekinds-zipped.
 
       TRY.
-          CALL METHOD cl_abap_gzip=&gt;compress_text
+          o_conv = cl_abap_conv_out_ce=&gt;create( ).
+          o_conv-&gt;convert( EXPORTING   data = _content
+                           IMPORTING buffer = x_string ).
+          CREATE OBJECT o_zip.
+          CALL METHOD o_zip-&gt;add
             EXPORTING
-              text_in        = _content
-*        text_in_len    = -1
-*        compress_level = 6
-*        conversion     = &apos;DEFAULT&apos;
-            IMPORTING
-              gzip_out       = x_string
-*        gzip_out_len   =
-              .
-          file_type = &apos;BIN&apos;.
-          file_size = XSTRLEN( x_string ).
-*     CATCH cx_parameter_invalid_range into cx.
-*     CATCH cx_sy_buffer_overflow into cx.
-*     CATCH cx_sy_conversion_codepage into cx.
+              name    = filename_in_zip
+              content = x_string.
+          x_string = o_zip-&gt;save( ).
         CATCH cx_root INTO cx.
           CREATE OBJECT _cx
             EXPORTING
@@ -341,6 +379,8 @@ DATA _cx TYPE REF TO zaplink_cx_file.
             TABLES
               binary_tab            =  tmptable.
 
+          CONCATENATE _filename zip_file_extension INTO _filename.
+          file_type = &apos;BIN&apos;.      &quot; change in debug
           CALL METHOD cl_gui_frontend_services=&gt;gui_download
             EXPORTING
               bin_filesize              = file_size
