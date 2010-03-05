@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ZL_OBJECT CHECKSUM="22FAF2F2DF4780FC22A6CEBDFA1734DE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUGR_DATA" TYPE="CLAS" VERSION="1.01">
+ <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
+ <RAW>
+  <A0_MAINDATA VERSION="1" LANGU="E" UUID="81C48F4B0E2C2006E1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+   <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" VERSION="1" STATE="1"/>
+   <TEXTS>
+    <ITEM LANGU="E" DESCRIPT="Commun Data for Class &amp; Interface"/>
+   </TEXTS>
+  </A0_MAINDATA>
+  <ALIASES>
+   <ITEM CMPNAME="LINE_SEPARATOR" VERSION="1" EXPOSURE="2" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="LINE_SEPARATOR"/>
+   <ITEM CMPNAME="TD_ABAPSOURCE" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_ABAPSOURCE"/>
+   <ITEM CMPNAME="TT_DOCS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_DOCS"/>
+   <ITEM CMPNAME="TT_DYNPROS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_DYNPROS"/>
+   <ITEM CMPNAME="TT_TEXTS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TEXTS"/>
+   <ITEM CMPNAME="TT_TXTP_TEXTPOOLS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TXTP_TEXTPOOLS"/>
+  </ALIASES>
+  <ATTRIBUTS>
+   <ITEM CMPNAME="A0_MAINDATA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TS_MAINDATA">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Program main data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="DYNPROS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_DYNPROS"/>
+   <ITEM CMPNAME="FUNCTIONS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_FUNCTIONS"/>
+   <ITEM CMPNAME="INCLUDES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TT_INCLUDES"/>
+   <ITEM CMPNAME="MENUPAINTER" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TO_MENUPAINTER">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Menu painter Data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="PARAMETER_KINDS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="105 " SRCCOLUMN1="4 " SRCROW2="111 " SRCCOLUMN2="25 " TYPESRC_LENG="296 " TYPESRC="BEGIN OF parameter_kinds,
+      importing   TYPE td_paramkind VALUE &apos;I&apos;,
+      changing    TYPE td_paramkind VALUE &apos;C&apos;,
+      exporting   TYPE td_paramkind VALUE &apos;E&apos;,
+      table       TYPE td_paramkind VALUE &apos;T&apos;,
+*      exceptions  type td_paramkind value &apos;X&apos;,
+    END OF parameter_kinds
+"/>
+   <ITEM CMPNAME="SOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TS_SOURCE">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ABAP Source code"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TEXTSPOOL" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_TXTP_TEXTPOOLS">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Textpool table"/>
+    </TEXTS>
+   </ITEM>
+  </ATTRIBUTS>
+  <FRIENDS>
+   <ITEM REFCLSNAME="ZAPLINK_EASYXML" VERSION="1" STATE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_FUNCTION_GROUP" VERSION="1" STATE="1"/>
+  </FRIENDS>
+  <INTERFACES>
+   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+  </INTERFACES>
+  <LOCAL>
+   <TYPES>
+*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+*&quot;* definitions, interfaces or data types) you need for method
+*&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
+   <IMPLEMENTATIONS>
+*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+*&quot;* use this source file for the implementation part of
+*&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
+   <MACROS>
+*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+*&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
+  </LOCAL>
+  <METHODS>
+   <ITEM CMPNAME="ANONYMIZE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="CLASS_CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+    </TEXTS>
+    <SOURCE>
+*&apos;FU&apos;</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="FROM_DATA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Function Modules object Data"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>
+  DATA s_func   LIKE LINE OF functions.
+  DATA s_f_txt  LIKE LINE OF s_func-texts.
+  DATA s_param  LIKE LINE OF s_func-parameters.
+  DATA s_excep  LIKE LINE OF s_func-exceptions.
+  FIELD-SYMBOLS:
+    &lt;ft&gt; LIKE LINE OF fm_data-function_texts,
+    &lt;f&gt;  LIKE LINE OF fm_data-functions,
+    &lt;i&gt;  LIKE LINE OF &lt;f&gt;-import_p,
+    &lt;c&gt;  LIKE LINE OF &lt;f&gt;-changing_p,
+    &lt;e&gt;  LIKE LINE OF &lt;f&gt;-export_p,
+    &lt;p&gt;  LIKE LINE OF s_func-parameters,
+    &lt;pt&gt; LIKE LINE OF fm_data-param_texts,
+    &lt;x&gt;  LIKE LINE OF &lt;f&gt;-exceptions,
+    &lt;t&gt;  LIKE LINE OF &lt;f&gt;-tables.
+
+  a0_maindata = fm_data-header.
+  textspool = fm_data-textspool.
+  dynpros = fm_data-dynpros.
+  menupainter = fm_data-menupainter.
+  includes = fm_data-includes.
+  LOOP AT fm_data-functions ASSIGNING &lt;f&gt;.
+    CLEAR s_func.   MOVE-CORRESPONDING &lt;f&gt;-header TO s_func.    s_func-source-_ = &lt;f&gt;-source.
+    LOOP AT fm_data-function_texts ASSIGNING &lt;ft&gt;
+            WHERE funcname = s_func-name.
+      CLEAR s_f_txt.    s_f_txt-langu = &lt;ft&gt;-spras.   s_f_txt-short_txt = &lt;ft&gt;-stext.   INSERT s_f_txt INTO TABLE s_func-texts.
+    ENDLOOP.
+
+    LOOP AT &lt;f&gt;-import_p ASSIGNING &lt;i&gt;.
+      CLEAR s_param.    s_param-hdr = &lt;i&gt;.    s_param-kind = parameter_kinds-importing.   INSERT s_param INTO TABLE s_func-parameters.
+    ENDLOOP.
+    LOOP AT &lt;f&gt;-changing_p ASSIGNING &lt;c&gt;.
+      CLEAR s_param.    s_param-hdr = &lt;c&gt;.    s_param-kind = parameter_kinds-changing.   INSERT s_param INTO TABLE s_func-parameters.
+    ENDLOOP.
+    LOOP AT &lt;f&gt;-export_p ASSIGNING &lt;e&gt;.
+      CLEAR s_param.    MOVE-CORRESPONDING &lt;e&gt; TO s_param-hdr.    s_param-kind = parameter_kinds-exporting.   INSERT s_param INTO TABLE s_func-parameters.
+    ENDLOOP.
+    LOOP AT &lt;f&gt;-tables ASSIGNING &lt;t&gt;.
+      CLEAR s_param.    MOVE-CORRESPONDING &lt;t&gt; TO s_param-hdr.    s_param-dbfield = &lt;t&gt;-dbstruct.   s_param-kind = parameter_kinds-table.   INSERT s_param INTO TABLE s_func-parameters.
+    ENDLOOP.
+    LOOP AT s_func-parameters ASSIGNING &lt;p&gt;.
+      LOOP AT fm_data-param_texts ASSIGNING &lt;pt&gt;
+           WHERE funcname = s_func-name
+             AND parameter = &lt;p&gt;-parameter
+             AND kind = &apos;P&apos;.
+        CLEAR s_f_txt.    s_f_txt-langu = &lt;pt&gt;-spras.   s_f_txt-short_txt = &lt;pt&gt;-stext.    INSERT s_f_txt INTO TABLE &lt;p&gt;-texts.
+      ENDLOOP.
+    ENDLOOP.
+
+    LOOP AT &lt;f&gt;-exceptions ASSIGNING &lt;x&gt;.
+      CLEAR s_excep.    s_excep-hdr = &lt;X&gt;.
+      LOOP AT fm_data-param_texts ASSIGNING &lt;pt&gt;
+           WHERE funcname = s_func-name
+             AND parameter = &lt;X&gt;-exception
+             AND kind = &apos;X&apos;.
+        CLEAR s_f_txt.    s_f_txt-langu = &lt;pt&gt;-spras.   s_f_txt-short_txt = &lt;pt&gt;-stext.    INSERT s_f_txt INTO TABLE s_excep-texts.
+      ENDLOOP.
+      INSERT s_excep INTO TABLE s_func-exceptions.
+    ENDLOOP.
+
+    INSERT s_func INTO TABLE functions.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="TO_DATA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert object attributes to FM Data"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FM_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Function Modules object Data"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+   </ITEM>
+   <ITEM CMPNAME="UNANONYMIZE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
+    </TEXTS>
+   </ITEM>
+  </METHODS>
+  <TYPEGROUPS>
+   <ITEM TYPEGROUP="ABAP" VERSION="1" IMPLICIT="X"/>
+  </TYPEGROUPS>
+  <TYPES>
+   <ITEM CMPNAME="TD_PARAMKIND" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="20 " TYPTYPE="1" TYPE="KIND"/>
+   <ITEM CMPNAME="TO_MENUPAINTER" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_MENUPAINTER_DATA">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Menu painter Data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_EXCEP" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="23 " TYPTYPE="4" SRCROW1="83 " SRCCOLUMN1="4 " SRCROW2="87 " SRCCOLUMN2="18 " TYPESRC_LENG="115 ">BEGIN OF ts_excep.
+  INCLUDE TYPE rsexc AS hdr.
+  TYPES:
+      texts       TYPE tt_texts,
+    END OF ts_excep
+</ITEM>
+   <ITEM CMPNAME="TS_FM_DATA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="15 " TYPTYPE="4" SRCROW1="42 " SRCCOLUMN1="4 " SRCROW2="54 " SRCCOLUMN2="30 " TYPESRC_LENG="571 ">
+    BEGIN OF ts_fm_data,
+* DO pour type doc
+                header          TYPE tlibg,
+                texts           TYPE tt_tlibt,
+                docs            TYPE tt_docs,
+                textspool	      TYPE tt_txtp_textpools,
+                dynpros	        TYPE tt_dynpros,
+                menupainter	    TYPE to_menupainter,
+                includes        TYPE tt_includes,
+                functions       TYPE tt_funcs,
+                function_texts  TYPE tt_tftit,
+                param_texts     TYPE tt_funct,
+              END OF ts_fm_data
+
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_FUNC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="13 " TYPTYPE="4" SRCROW1="30 " SRCCOLUMN1="4 " SRCROW2="38 " SRCCOLUMN2="19 " TYPESRC_LENG="379 ">BEGIN OF ts_func,
+                header          TYPE rs38l,
+                import_p        TYPE tt_rsimp,
+                changing_p      TYPE tt_rscha,
+                export_p        TYPE tt_rsexp,
+                tables          TYPE tt_rstbl,
+                exceptions      TYPE tt_rsexc,
+                source          TYPE td_abapsource,
+      END OF ts_func
+</ITEM>
+   <ITEM CMPNAME="TS_FUNCTION" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="25 " TYPTYPE="4" SRCROW1="91 " SRCCOLUMN1="4 " SRCROW2="100 " SRCCOLUMN2="21 " TYPESRC_LENG="339 ">BEGIN OF ts_function,
+      name        TYPE rs38l-name,
+      global      TYPE rs38l-global,
+      remote      TYPE rs38l-remote,
+      utask       TYPE rs38l-utask,
+      texts       TYPE tt_texts,
+      parameters  TYPE tt_params,
+      exceptions  TYPE tt_exceptions,
+      source      TYPE ts_source,
+    END OF ts_function
+</ITEM>
+   <ITEM CMPNAME="TS_MAINDATA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="16 " TYPTYPE="4" SRCROW1="56 " SRCCOLUMN1="4 " SRCROW2="59 " SRCCOLUMN2="21 " TYPESRC_LENG="80 ">
+    BEGIN OF ts_maindata.
+  INCLUDE TYPE tlibg.
+  TYPES:
+    END OF ts_maindata
+
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Function Module main data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_PARAM" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="21 " TYPTYPE="4" SRCROW1="74 " SRCCOLUMN1="4 " SRCROW2="79 " SRCCOLUMN2="18 " TYPESRC_LENG="146 ">BEGIN OF ts_param,
+      kind TYPE td_paramkind.
+  INCLUDE TYPE rsimp AS hdr.
+  TYPES:
+      texts       TYPE tt_texts,
+    END OF ts_param
+</ITEM>
+   <ITEM CMPNAME="TS_SOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="19 " TYPTYPE="4" SRCROW1="69 " SRCCOLUMN1="4 " SRCROW2="71 " SRCCOLUMN2="25 " TYPESRC_LENG="77 ">
+    BEGIN OF ts_source,
+            _ TYPE string,
+          END OF ts_source
+
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ABAP Source code"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_TEXTPOOL" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="17 " TYPTYPE="4" SRCROW1="61 " SRCCOLUMN1="4 " SRCROW2="65 " SRCCOLUMN2="25 " TYPESRC_LENG="154 ">
+    BEGIN OF ts_textpool,
+          id    TYPE  textpoolid,
+          key	  TYPE  textpoolky,
+          texts TYPE  tt_texts,
+        END OF ts_textpool
+
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Textpool"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_EXCEPTIONS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="24 " TYPTYPE="4" SRCROW1="89 " SRCCOLUMN1="4 " SRCROW2="89 " SRCCOLUMN2="72 " TYPESRC_LENG="71 ">tt_exceptions TYPE SORTED TABLE OF ts_excep WITH UNIQUE KEY exception
+</ITEM>
+   <ITEM CMPNAME="TT_FUNCS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="14 " TYPTYPE="4" SRCROW1="40 " SRCCOLUMN1="4 " SRCROW2="40 " SRCCOLUMN2="68 " TYPESRC_LENG="67 ">tt_funcs TYPE SORTED TABLE OF ts_func WITH UNIQUE KEY header-name
+</ITEM>
+   <ITEM CMPNAME="TT_FUNCT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="12 " SRCCOLUMN1="4 " SRCROW2="12 " SRCCOLUMN2="84 " TYPESRC_LENG="83 ">tt_funct TYPE SORTED TABLE OF funct WITH UNIQUE KEY funcname parameter kind spras
+</ITEM>
+   <ITEM CMPNAME="TT_FUNCTIONS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="26 " TYPTYPE="4" SRCROW1="102 " SRCCOLUMN1="4 " SRCROW2="102 " SRCCOLUMN2="69 " TYPESRC_LENG="68 ">tt_functions TYPE SORTED TABLE OF ts_function WITH UNIQUE KEY name
+</ITEM>
+   <ITEM CMPNAME="TT_INCLUDES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="12 " TYPTYPE="4" SRCROW1="28 " SRCCOLUMN1="4 " SRCROW2="28 " SRCCOLUMN2="72 " TYPESRC_LENG="71 ">tt_includes TYPE STANDARD TABLE OF t_include WITH NON-UNIQUE KEY name
+</ITEM>
+   <ITEM CMPNAME="TT_PARAMS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="22 " TYPTYPE="4" SRCROW1="81 " SRCCOLUMN1="4 " SRCROW2="81 " SRCCOLUMN2="68 " TYPESRC_LENG="67 ">tt_params TYPE SORTED TABLE OF ts_param WITH UNIQUE KEY parameter
+</ITEM>
+   <ITEM CMPNAME="TT_RSCHA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="16 " SRCCOLUMN1="4 " SRCROW2="16 " SRCCOLUMN2="57 " TYPESRC_LENG="56 ">tt_rscha TYPE STANDARD TABLE OF rscha WITH DEFAULT KEY
+</ITEM>
+   <ITEM CMPNAME="TT_RSEXC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="4" SRCROW1="22 " SRCCOLUMN1="4 " SRCROW2="22 " SRCCOLUMN2="57 " TYPESRC_LENG="56 ">tt_rsexc TYPE STANDARD TABLE OF rsexc WITH DEFAULT KEY
+</ITEM>
+   <ITEM CMPNAME="TT_RSEXP" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="18 " SRCCOLUMN1="4 " SRCROW2="18 " SRCCOLUMN2="57 " TYPESRC_LENG="56 ">tt_rsexp TYPE STANDARD TABLE OF rsexp WITH DEFAULT KEY
+</ITEM>
+   <ITEM CMPNAME="TT_RSIMP" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="14 " SRCCOLUMN1="4 " SRCROW2="14 " SRCCOLUMN2="57 " TYPESRC_LENG="56 ">tt_rsimp TYPE STANDARD TABLE OF rsimp WITH DEFAULT KEY
+</ITEM>
+   <ITEM CMPNAME="TT_RSTBL" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="4" SRCROW1="20 " SRCCOLUMN1="4 " SRCROW2="20 " SRCCOLUMN2="57 " TYPESRC_LENG="56 ">tt_rstbl TYPE STANDARD TABLE OF rstbl WITH DEFAULT KEY
+</ITEM>
+   <ITEM CMPNAME="TT_TEXTPOOLS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="18 " TYPTYPE="4" SRCROW1="67 " SRCCOLUMN1="4 " SRCROW2="67 " SRCCOLUMN2="71 " TYPESRC_LENG="70 ">
+    tt_textpools TYPE SORTED TABLE OF ts_textpool WITH UNIQUE KEY id KEY
+
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Textpool table"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_TFTIT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="10 " SRCCOLUMN1="4 " SRCROW2="10 " SRCCOLUMN2="69 " TYPESRC_LENG="68 ">tt_tftit TYPE SORTED TABLE OF tftit WITH UNIQUE KEY funcname spras
+</ITEM>
+   <ITEM CMPNAME="TT_TLIBT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="8 " SRCCOLUMN1="4 " SRCROW2="8 " SRCCOLUMN2="60 " TYPESRC_LENG="59 ">tt_tlibt TYPE SORTED TABLE OF tlibt WITH UNIQUE KEY spras
+</ITEM>
+   <ITEM CMPNAME="T_INCLUDE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="11 " TYPTYPE="4" SRCROW1="24 " SRCCOLUMN1="4 " SRCROW2="26 " SRCCOLUMN2="19 " TYPESRC_LENG="77 ">BEGIN OF t_include,
+      name TYPE d010inc-include,
+    END OF t_include
+</ITEM>
+   <ITEM CMPNAME="T_RAW" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="RSWSOURCET">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ABAP Source table"/>
+    </TEXTS>
+   </ITEM>
+  </TYPES>
+ </RAW>
+</ZL_OBJECT>
