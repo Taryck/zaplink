@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="91868723550CEB42A4D6021B6DC27993" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="85E03E3B679047F058A25B4B8E370398" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="ECF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -31,6 +31,16 @@
    <ITEM CMPNAME="EN_LINE" VERSION="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;ITEM&apos;" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Element Name for Table&apos;s line"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="ISSUE46_PREFIX" VERSION="1" STATE="1" EDITORDER="11 " ATTDECLTYP="2" ATTVALUE="&apos;_&apos;" TYPTYPE="1" TYPE="CHAR01">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Prefix for attribut name"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="ISSUE46_REGEX" VERSION="1" STATE="1" EDITORDER="12 " ATTDECLTYP="1" TYPTYPE="1" TYPE="STRING">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Regex to convert back fieldname"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="IXML" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="IF_IXML">
@@ -370,8 +380,9 @@ END-OF-DEFINITION.</MACROS>
   DATA structdescr TYPE REF TO cl_abap_structdescr.
   DATA typedescr   TYPE REF TO cl_abap_typedescr.
   FIELD-SYMBOLS:
+    &lt;fieldvalue&gt; TYPE ANY,
+    &lt;fld&gt; type any,
     &lt;c&gt; LIKE LINE OF structdescr-&gt;components.
-  FIELD-SYMBOLS &lt;fieldvalue&gt; TYPE ANY.
 
   IF structure IS INITIAL. EXIT. ENDIF.
 
@@ -437,6 +448,10 @@ END-OF-DEFINITION.</MACROS>
         svalue = elem_2_string( any = &lt;fieldvalue&gt;
                           type_desc = typedescr ).
         IF svalue IS NOT INITIAL AND &lt;c&gt;-name &lt;&gt; self_fieldname.
+          IF sname(1) CO &apos;0123456789&apos;.    &quot; Issue 46 : Field names strating with numbre in attributes
+            CONCATENATE ISSUE46_PREFIX sname into sname. UNASSIGN &lt;fld&gt;. ASSIGN COMPONENT sname OF STRUCTURE structure TO &lt;fld&gt;.
+            while &lt;fld&gt; is ASSIGNED. CONCATENATE ISSUE46_PREFIX sname into sname. UNASSIGN &lt;fld&gt;. ASSIGN COMPONENT sname OF STRUCTURE structure TO &lt;fld&gt;. ENDWHILE.
+          endif.
           rc = node-&gt;set_attribute( name = sname
                                    value = svalue ).
           mac_syserr_log rc &apos;set_attribute&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;.                   &quot;#EC NOTEXT
@@ -623,6 +638,9 @@ END-OF-DEFINITION.</MACROS>
 *  &lt;DataRow SPRAS=&quot;E&quot; OBJECT=&quot;ZAPLINK&quot; SUBOBJECT=&quot;DEVC&quot; SUBOBJTXT=&quot;Devlopment class&quot;/&gt;
 *  &lt;DataRow SPRAS=&quot;F&quot; OBJECT=&quot;ZAPLINK&quot; SUBOBJECT=&quot;DEVC&quot; SUBOBJTXT=&quot;Devlopment class&quot;/&gt;
 * &lt;/TABU&gt;
+
+* Issue 46 : &apos;^[_]*&apos;
+  CONCATENATE &apos;^[&apos; issue46_prefix &apos;]*&apos; INTO issue46_regex.
 
 * Check BALOBJ
   obj-object = zaplink_datatypes=&gt;ballog_object.
@@ -825,8 +843,7 @@ END-OF-DEFINITION.</MACROS>
   o_filter = xml_node-&gt;create_filter_node_type( if_ixml_node=&gt;co_node_text ).
   o_iterator = xml_node-&gt;create_iterator_filtered( depth = 1
                                                   filter = o_filter ).
-  o_text = o_iterator-&gt;get_next( ).
-  result = o_text-&gt;get_value( ).
+  o_text = o_iterator-&gt;get_next( ).   result = o_text-&gt;get_value( ).    IF result = &apos;#&apos;. clear result. endif.
 </SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_REF_TYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
@@ -945,6 +962,52 @@ END-OF-DEFINITION.</MACROS>
   CREATE OBJECT _printxmldoc.
   _printxmldoc-&gt;parse_string( string ).</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="NODE_IS_NOT_TYPE" VERSION="1" STATE="1" EDITORDER="25 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Do node is not a speficied type"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
+     <ITEM SCONAME="TYPE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="I"/>
+    </PARAMETERS>
+    <SOURCE>
+  DATA d_mask(8)  TYPE x.
+  DATA d_txt_m(8) TYPE x.
+
+  check node is bound.
+  d_mask = node-&gt;get_type( ).   d_txt_m = type.
+  d_mask = d_mask BIT-AND d_txt_m.
+  if d_mask = 00000000.   result = abap_true.   endif.
+</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="NODE_IS_TYPE" VERSION="1" STATE="1" EDITORDER="26 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Do node is the speficied type"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="NODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
+     <ITEM SCONAME="TYPE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="I"/>
+    </PARAMETERS>
+    <SOURCE>
+  DATA d_mask(8)  TYPE x.
+  DATA d_txt_m(8) TYPE x.
+
+  check node is bound.
+  d_mask = node-&gt;get_type( ).   d_txt_m = type.
+  d_mask = d_mask BIT-AND d_txt_m.
+  if d_mask = d_txt_m.    result = abap_true.   endif.
+</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="READ_ANY" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="13 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Read XML to Any data"/>
@@ -1045,6 +1108,7 @@ END-OF-DEFINITION.</MACROS>
     <SOURCE>
   DATA o_ref      TYPE REF TO cl_abap_refdescr.
   DATA elem       TYPE REF TO if_ixml_element.
+  DATA next_node  TYPE REF TO if_ixml_node.
   DATA node       TYPE REF TO if_ixml_node.
   DATA o_obj      TYPE REF TO cl_abap_classdescr.
   DATA iterator   TYPE REF TO if_ixml_node_iterator.
@@ -1091,7 +1155,7 @@ END-OF-DEFINITION.</MACROS>
 *  ENDIF.
 
 * XML Value
-  svalue = get_node_text( xml_node ).       &quot; Issue 38
+  svalue = get_node_text( xml_node ).                       &quot; Issue 38
   IF NOT svalue IS INITIAL.
     ASSIGN object-&gt;(self_fieldname) TO &lt;d&gt;.
     IF sy-subrc &lt;&gt; 0.
@@ -1121,8 +1185,9 @@ END-OF-DEFINITION.</MACROS>
 * XML Attributs
   attrs = xml_node-&gt;get_attributes( ).
   iterator = attrs-&gt;create_iterator( ).
-  node = iterator-&gt;get_next( ).
-  WHILE node IS BOUND.
+  next_node = iterator-&gt;get_next( ).
+  WHILE next_node IS BOUND.
+    node = next_node.    next_node ?= iterator-&gt;get_next( ).
     attr_name = node-&gt;get_name( ).
     READ TABLE o_obj-&gt;attributes TRANSPORTING NO FIELDS WITH KEY name = attr_name.
     IF sy-subrc &lt;&gt; 0.
@@ -1179,15 +1244,18 @@ END-OF-DEFINITION.</MACROS>
         ENDCASE.
       ENDIF.
     ENDIF.
-    node ?= iterator-&gt;get_next( ).
   ENDWHILE.
 
 * XML Childs
   childs = xml_node-&gt;get_children( ).
   iterator = childs-&gt;create_iterator( ).
-  node = iterator-&gt;get_next( ).
-  WHILE node IS NOT INITIAL.
+  next_node = iterator-&gt;get_next( ).
+  WHILE next_node IS BOUND.
+    node = next_node.    next_node ?= iterator-&gt;get_next( ).
+
     attr_name = node-&gt;get_name( ).
+    CHECK node_is_not_type( node = node type = if_ixml_node=&gt;co_node_text ) = abap_true. &quot; not text node
+
     READ TABLE o_obj-&gt;attributes TRANSPORTING NO FIELDS WITH KEY name = attr_name.
     IF sy-subrc &lt;&gt; 0.
 * Attributes not found
@@ -1243,7 +1311,6 @@ END-OF-DEFINITION.</MACROS>
         ENDCASE.
       ENDIF.
     ENDIF.
-    node = iterator-&gt;get_next( ).
   ENDWHILE.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="READ_STRUCTURE" VERSION="1" STATE="1" EDITORDER="15 ">
@@ -1279,7 +1346,7 @@ END-OF-DEFINITION.</MACROS>
   DATA o_text     TYPE REF TO if_ixml_node.
 
 * XML Value
-  svalue = get_node_text( xml_node ).   &quot; Issue 38
+  svalue = get_node_text( xml_node ).                       &quot; Issue 38
   IF NOT svalue IS INITIAL.
     ASSIGN COMPONENT self_fieldname OF STRUCTURE structure TO &lt;d&gt;.
     IF sy-subrc &lt;&gt; 0.
@@ -1312,9 +1379,18 @@ END-OF-DEFINITION.</MACROS>
   iterator = attrs-&gt;create_iterator( ).
   node = iterator-&gt;get_next( ).
   WHILE node IS BOUND.
-    attr_name = node-&gt;get_name( ).
+    attr_name = node-&gt;get_name( ).    UNASSIGN &lt;c&gt;.
     READ TABLE structdescr-&gt;components ASSIGNING &lt;c&gt; WITH KEY name = attr_name.
     IF sy-subrc &lt;&gt; 0.
+      REPLACE FIRST OCCURRENCE OF REGEX issue46_regex IN attr_name WITH ``.
+      IF sy-subrc = 0 AND STRLEN( attr_name ) &gt; 0.
+        IF attr_name(1) CO &apos;0123456789&apos;.    &quot; Issue 46 : Field names strating with numbre in attributes
+          READ TABLE structdescr-&gt;components ASSIGNING &lt;c&gt; WITH KEY name = attr_name.
+        ENDIF.
+      ENDIF.
+      IF NOT &lt;c&gt; IS ASSIGNED.   attr_name = node-&gt;get_name( ).    endif.
+    ENDIF.
+    IF NOT &lt;c&gt; IS ASSIGNED.
 * Component not found
       data_type = structdescr-&gt;get_relative_name( ).
       name = xml_node-&gt;get_name( ).
@@ -1444,38 +1520,79 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>
-  DATA node       TYPE REF TO if_ixml_element.
-  DATA iterator   TYPE REF TO if_ixml_node_iterator.
-  DATA childs     TYPE REF TO if_ixml_node_list.
+  DATA o_node     TYPE REF TO if_ixml_node.
+  DATA o_n_elem   TYPE REF TO if_ixml_element.
+  DATA o_elem     TYPE REF TO if_ixml_element.
+  DATA o_iterator TYPE REF TO if_ixml_node_iterator.
+  DATA o_childs   TYPE REF TO if_ixml_node_list.
+  DATA o_filter   TYPE REF TO if_ixml_node_filter.
   DATA dref       TYPE REF TO data.
+  DATA d_name     TYPE string.
+  DATA d_context  LIKE LINE OF context.
+  DATA _cx        TYPE REF TO cx_root.
   FIELD-SYMBOLS:
     &lt;d&gt; TYPE ANY.
+*  TYPES:
+*    BEGIN OF ts_child,
+*      node   TYPE REF TO if_ixml_node,
+*      name   TYPE string,
+*      type   TYPE i,
+*      parent TYPE REF TO if_ixml_node,
+*    END OF ts_child.
+*  DATA t_childs TYPE STANDARD TABLE OF ts_child WITH DEFAULT KEY.
+*  DATA s_child LIKE LINE OF t_childs.
 
-  childs = xml_node-&gt;get_children( ).
-  iterator = childs-&gt;create_iterator( ).
-  node ?= iterator-&gt;get_next( ).
-  WHILE node IS NOT INITIAL.
-    IF en_line &lt;&gt; node-&gt;get_name( ).
-* Unexpected node name
+  o_childs = xml_node-&gt;get_children( ).
+*  o_iterator = o_childs-&gt;create_iterator( ).
+*  s_child-node = o_iterator-&gt;get_next( ).
+*  WHILE s_child-node IS BOUND.    s_child-name = s_child-node-&gt;get_name( ).   s_child-type = s_child-node-&gt;get_type( ).   s_child-parent = s_child-node-&gt;get_parent( ). INSERT s_child INTO TABLE t_childs.   s_child-node = o_iterator-&gt;get_next( ).
+*ENDWHILE.   &quot; for debug
+*  CLEAR t_childs.
+  o_filter = xml_node-&gt;create_filter_node_type( if_ixml_node=&gt;co_node_element ).
+  o_iterator = xml_node-&gt;create_iterator_filtered( depth = 1
+                                                  filter = o_filter ).
+*  s_child-node = o_iterator-&gt;get_next( ).
+*  WHILE s_child-node IS BOUND.    s_child-name = s_child-node-&gt;get_name( ).   s_child-type = s_child-node-&gt;get_type( ).   INSERT s_child INTO TABLE t_childs.   s_child-node = o_iterator-&gt;get_next( ).   ENDWHILE.   &quot; for debug
+*  o_iterator = xml_node-&gt;create_iterator_filtered( depth = 1
+*                                                  filter = o_filter ).
+  o_n_elem ?= o_iterator-&gt;get_next( ).
+  WHILE o_n_elem IS BOUND.
+    o_elem = o_n_elem.    o_n_elem ?= o_iterator-&gt;get_next( ).
+    d_name = o_elem-&gt;get_name( ).
+    IF en_line &lt;&gt; d_name.
+* Unexpected node name : Node name of table line should be &apos;&amp;1&apos; but is &apos;&amp;2&apos; within &amp;3
+      IF NOT context IS INITIAL. READ TABLE context INTO d_context INDEX 1. ENDIF.
+      CALL METHOD application_log-&gt;add_error
+        EXPORTING
+*             id_msgid     = MSGID
+          id_msgno     = &apos;007&apos;
+          id_msgv1     = en_line
+          id_msgv2     = d_name
+          id_msgv3     = d_context
+*             id_msgv4     =
+*             id_detlevel  =
+*             id_probclass =
+          .
     ELSE.
-*      TRY.
+      TRY.
           CREATE DATA dref LIKE LINE OF table.
-*        CATCH cx_root.
-*      ENDTRY.
+        CATCH cx_root INTO _cx.
+          application_log-&gt;add_exception( exception = _cx ).
+          CONTINUE.
+      ENDTRY.
       ASSIGN dref-&gt;* TO &lt;d&gt;.
       IF sy-subrc &lt;&gt; 0.
 * Assign error
-        mac_syserr_log sy-subrc &apos;ASSIGN dref-&gt;*&apos; &apos;ZAPLINK_EASYXML-&gt;READ_TABLE&apos;.               &quot;#EC NOTEXT
+        mac_syserr_log sy-subrc &apos;ASSIGN dref-&gt;*&apos; &apos;ZAPLINK_EASYXML-&gt;READ_TABLE&apos;. &quot;#EC NOTEXT
       ELSE.
         read_any( EXPORTING
-                   xml_node = node
+                   xml_node = o_elem
                    CHANGING
                         any = &lt;d&gt; ).
         INSERT &lt;d&gt; INTO TABLE table.
         mac_syserr_log sy-subrc &apos;INSERT &lt;d&gt; INTO TABLE table.&apos; &apos;ZAPLINK_EASYXML-&gt;READ_TABLE&apos;. &quot;#EC NOTEXT
       ENDIF.
     ENDIF.
-    node ?= iterator-&gt;get_next( ).
   ENDWHILE.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="RESET" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="17 ">
