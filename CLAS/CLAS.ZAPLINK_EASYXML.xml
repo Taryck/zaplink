@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="85E03E3B679047F058A25B4B8E370398" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9FC857AB09F15D234E36F4C643E3D004" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="ECF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -1545,16 +1545,13 @@ END-OF-DEFINITION.</MACROS>
   o_childs = xml_node-&gt;get_children( ).
 *  o_iterator = o_childs-&gt;create_iterator( ).
 *  s_child-node = o_iterator-&gt;get_next( ).
-*  WHILE s_child-node IS BOUND.    s_child-name = s_child-node-&gt;get_name( ).   s_child-type = s_child-node-&gt;get_type( ).   s_child-parent = s_child-node-&gt;get_parent( ). INSERT s_child INTO TABLE t_childs.   s_child-node = o_iterator-&gt;get_next( ).
-*ENDWHILE.   &quot; for debug
+*  WHILE s_child-node IS BOUND. s_child-name = s_child-node-&gt;get_name( ). s_child-type = s_child-node-&gt;get_type( ). s_child-parent = s_child-node-&gt;get_parent( ). INSERT s_child INTO TABLE t_childs. s_child-node = o_iterator-&gt;get_next( ). ENDWHILE.&quot;debug
 *  CLEAR t_childs.
   o_filter = xml_node-&gt;create_filter_node_type( if_ixml_node=&gt;co_node_element ).
-  o_iterator = xml_node-&gt;create_iterator_filtered( depth = 1
-                                                  filter = o_filter ).
+  o_iterator = o_childs-&gt;create_iterator_filtered( filter = o_filter ).
 *  s_child-node = o_iterator-&gt;get_next( ).
 *  WHILE s_child-node IS BOUND.    s_child-name = s_child-node-&gt;get_name( ).   s_child-type = s_child-node-&gt;get_type( ).   INSERT s_child INTO TABLE t_childs.   s_child-node = o_iterator-&gt;get_next( ).   ENDWHILE.   &quot; for debug
-*  o_iterator = xml_node-&gt;create_iterator_filtered( depth = 1
-*                                                  filter = o_filter ).
+*  o_iterator = o_childs-&gt;create_iterator_filtered( filter = o_filter ).
   o_n_elem ?= o_iterator-&gt;get_next( ).
   WHILE o_n_elem IS BOUND.
     o_elem = o_n_elem.    o_n_elem ?= o_iterator-&gt;get_next( ).

@@ -1,36 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2B997C68E457B0810A3B6876387F3F8D" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="C7B8E002A93CCC4C5B1E01FB750FA773" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="1" APPL="S" VERN="000049" RSTAT="S" RMAND="321" RLOAD="E" FIXPT="X" UCCHECK="X"/>
-  <DOCUMENTATION>
-   <ITEM APPLICATION="DOKU" ID="RE" OBJECT="ZAPLINK" LANGU="E" MASTERLANG="X" TYP="E" DOKFORM="S_DOCU_SHOW" DOKSTYLE="S_DOCUS1">
-    <TEXTS>
-     <ITEM TDSPRAS="E" TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100309" TDFTIME="155458" TDLINESIZE="072">U1&amp;PURPOSE&amp;
-ASThis is the ZAPLink basic framework interface program. This program
-  allow you to :
-AS- Install component from XML container&lt;(&gt;,&lt;)&gt;
-AS- Export component to XML container
-AS- Uninstall component
-U1&amp;INTEGRATION&amp;
-AS
-U1&amp;PREREQUISITES&amp;
-AS
-U1&amp;FEATURES&amp;
-AS
-U2&amp;SELECTION&amp;
-AS
-U2&amp;STANDARD_VARIANTS&amp;
-AS
-U2&amp;OUTPUT&amp;
-AS
-U1&amp;ACTIVITIES&amp;
-AS
-U1&amp;EXAMPLE&amp;
-AS</ITEM>
-    </TEXTS>
-   </ITEM>
-  </DOCUMENTATION>
+  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="1" APPL="S" VERN="000054" RSTAT="S" RMAND="321" RLOAD="E" FIXPT="X" UCCHECK="X"/>
   <SOURCE>
 *    This program is part of ZAPLink framework. https://code.google.com/p/zaplink/
 *    Copyright (C) 2010  Taryck BENSIALI
@@ -54,14 +26,17 @@ INCLUDE zaplink_scr.
 
 */----------------------main------------------------------------------\
 START-OF-SELECTION.
+  PERFORM create_file.
 *   create empty Container
   IF a_create = &apos;X&apos;.
     PERFORM create.
-*   add object to Container
+  ELSEIF a_auto = &apos;X&apos;.
+    PERFORM auto.
   ELSEIF a_add = &apos;X&apos;.
+*   add object to Container
     PERFORM add.
-*   import Container
   ELSEIF a_import = &apos;X&apos;.
+*   import Container
     PERFORM import.
 *   display objects in a Container
   ELSEIF a_dsp = &apos;X&apos;.
@@ -69,8 +44,8 @@ START-OF-SELECTION.
 *   Un install a Container
   ELSEIF a_uninst = &apos;X&apos;.
     PERFORM uninstall.
-  ELSEIF a_add_p = &apos;X&apos;.
-    PERFORM add_package.
+*  ELSEIF a_add_p = &apos;X&apos;.
+*    PERFORM add_package.
   ELSEIF a_add_tr = &apos;X&apos;.
     PERFORM add_tr.
   ENDIF.
@@ -78,6 +53,32 @@ START-OF-SELECTION.
 END-OF-SELECTION.
 *\--------------------------------------------------------------------/
   INCLUDE zaplink_frm.</SOURCE>
+  <TEXTS>
+   <ITEM LANGU="E">
+    <LONG_TXT TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100309" TDFTIME="155458" TDLINESIZE="072">U1&amp;PURPOSE&amp;
+ASThis is the ZAPLink basic framework interface program. This program
+  allow you to :
+AS- Install component from XML container&lt;(&gt;,&lt;)&gt;
+AS- Export component to XML container
+AS- Uninstall component
+U1&amp;INTEGRATION&amp;
+AS
+U1&amp;PREREQUISITES&amp;
+AS
+U1&amp;FEATURES&amp;
+AS
+U2&amp;SELECTION&amp;
+AS
+U2&amp;STANDARD_VARIANTS&amp;
+AS
+U2&amp;OUTPUT&amp;
+AS
+U1&amp;ACTIVITIES&amp;
+AS
+U1&amp;EXAMPLE&amp;
+AS</LONG_TXT>
+   </ITEM>
+  </TEXTS>
   <TEXTSPOOL>
    <ITEM ID="I" KEY="001">
     <TEXTS>
@@ -99,6 +100,11 @@ END-OF-SELECTION.
      <ITEM LANGU="D" ENTRY="Actions :" LENGTH="25 "/>
      <ITEM LANGU="E" ENTRY="Actions :" LENGTH="25 "/>
      <ITEM LANGU="F" ENTRY="Actions :" LENGTH="25 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="BFI">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="Container&apos;s file" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="BOP">
@@ -181,19 +187,23 @@ END-OF-SELECTION.
    <ITEM ID="S" KEY="A_ADD">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="36 "/>
-     <ITEM LANGU="E" ENTRY="        Add a component to container" LENGTH="36 "/>
+     <ITEM LANGU="E" ENTRY="        Add a components to container" LENGTH="37 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_ADD_P">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="35 "/>
-     <ITEM LANGU="E" ENTRY="        Add components from Package" LENGTH="35 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_ADD_TR">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="37 "/>
      <ITEM LANGU="E" ENTRY="        Add components from Transport" LENGTH="37 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="A_AUTO">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        One Step export (4 background)" LENGTH="38 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_CREATE">
@@ -223,13 +233,11 @@ END-OF-SELECTION.
    <ITEM ID="S" KEY="CO_NAME">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="19 "/>
-     <ITEM LANGU="E" ENTRY="        Object Name" LENGTH="19 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="CO_TYPE">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="D       ." LENGTH="17 "/>
-     <ITEM LANGU="E" ENTRY="D       ." LENGTH="19 "/>
      <ITEM LANGU="F" ENTRY="D       ." LENGTH="19 "/>
     </TEXTS>
    </ITEM>
@@ -278,9 +286,19 @@ END-OF-SELECTION.
      <ITEM LANGU="E" ENTRY="        Use container package" LENGTH="29 "/>
     </TEXTS>
    </ITEM>
+   <ITEM ID="S" KEY="F_LOCAL">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        Local/workstation file" LENGTH="30 "/>
+    </TEXTS>
+   </ITEM>
    <ITEM ID="S" KEY="F_NOSUB">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="        Only specified component" LENGTH="32 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="F_SERVER">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        Server file" LENGTH="19 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="F_SUB">
@@ -292,6 +310,11 @@ END-OF-SELECTION.
     <TEXTS>
      <ITEM LANGU="D" ENTRY="D       ." LENGTH="20 "/>
      <ITEM LANGU="E" ENTRY="        Package Name" LENGTH="20 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="P_EXT">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        Extend to sub-packages" LENGTH="30 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="P_FILE">
@@ -306,6 +329,36 @@ END-OF-SELECTION.
      <ITEM LANGU="D" ENTRY="D       ." LENGTH="23 "/>
      <ITEM LANGU="E" ENTRY="D       ." LENGTH="20 "/>
      <ITEM LANGU="F" ENTRY="D       ." LENGTH="20 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="P_ZIP">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        ZIP File" LENGTH="16 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="S_AUTHOR">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="D       ." LENGTH="26 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="S_NAME">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="D       ." LENGTH="19 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="S_PACK">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="D       ." LENGTH="15 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="S_SRCS">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="D       ." LENGTH="23 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="S_TYPE">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="D       ." LENGTH="19 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="TR">
@@ -342,7 +395,7 @@ END-OF-SELECTION.
    <ITEM ID="T">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="ZAP Link : ABAP Component Import/Export tools" LENGTH="45 "/>
-     <ITEM LANGU="E" ENTRY="ZAP Link : ABAP Component Import/Export tools" LENGTH="45 "/>
+     <ITEM LANGU="E" ENTRY="ZAPLink : ABAP Component Import/Export tools" LENGTH="44 "/>
     </TEXTS>
    </ITEM>
   </TEXTSPOOL>

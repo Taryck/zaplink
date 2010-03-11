@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4914969607E01ACDA2625AA773F84942" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="1F3E087D9A839BD496B89360CBC5227C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="05F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_GUI">
@@ -82,9 +82,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Add object to container"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME">
+     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File name"/>
+       <ITEM LANGU="E" DESCRIPT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME">
@@ -261,9 +261,9 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Create empty container"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FILENAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME" PAROPTIONL="X">
+     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File name"/>
+       <ITEM LANGU="E" DESCRIPT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONTNAME">
@@ -283,23 +283,23 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   DATA s_info    TYPE ts_contdata.
   DATA container TYPE to_container.
   DATA def_fn    TYPE td_filename.
-  DATA o_file    TYPE to_file.
+*  DATA o_file    TYPE to_file.
 
   IF name IS INITIAL.
     RAISE EXCEPTION TYPE zaplink_cx_gui EXPORTING textid = zaplink_cx_gui=&gt;missing_container_name.
   ENDIF.
 
   TRY.
-      CONCATENATE name ext_sep file_ext INTO def_fn.
-      IF filename IS INITIAL.
-        o_file = create_file( filename = def_fn ).
-      ELSE.
-        o_file = create_file( filename = filename ).
-      ENDIF.
-      o_file-&gt;save_dialog( def_fn ).
+*      CONCATENATE name ext_sep file_ext INTO def_fn.
+*      IF filename IS INITIAL.
+*        o_file = create_file( filename = def_fn ).
+*      ELSE.
+*        o_file = create_file( filename = filename ).
+*      ENDIF.
+*      o_file-&gt;save_dialog( def_fn ).
 
       s_info-name = name.
-      container = zaplink_container=&gt;create_new( o_file = o_file
+      container = zaplink_container=&gt;create_new( o_file = file
                                                    data = s_info ).
       container-&gt;save_to_file( ).
     CATCH zaplink_cx_gui INTO o_mycx.
@@ -337,7 +337,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>
-DATA _cx TYPE REF TO zaplink_cx_file.
+  DATA _cx TYPE REF TO zaplink_cx_file.
   TRY.
       CREATE OBJECT o_file.
       o_file-&gt;set_filetype( filetype ).
@@ -351,7 +351,7 @@ DATA _cx TYPE REF TO zaplink_cx_file.
      <ITEM LANGU="E" DESCRIPT="Export object list to container"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME">
+     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="File name"/>
       </TEXTS>
@@ -411,9 +411,9 @@ DATA _cx TYPE REF TO zaplink_cx_file.
      <ITEM LANGU="E" DESCRIPT="Get container content"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME">
+     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File name"/>
+       <ITEM LANGU="E" DESCRIPT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="LIST" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
@@ -430,30 +430,24 @@ DATA _cx TYPE REF TO zaplink_cx_file.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>
-*  DATA o_cont TYPE to_container.
-
   TRY.
       CALL METHOD _get_objlist
         EXPORTING
           file         = file
          IMPORTING
-           list        = list
-*           container   = o_cont
-*           cont_name   =
-          .
+           list        = list.
     CATCH zaplink_cx_gui INTO o_mycx.
       RAISE EXCEPTION o_mycx.
-  ENDTRY.
-</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import container"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME">
+     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File name"/>
+       <ITEM LANGU="E" DESCRIPT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="LIST" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
@@ -559,9 +553,9 @@ DATA _cx TYPE REF TO zaplink_cx_file.
      <ITEM LANGU="E" DESCRIPT="Uninstall container content is system"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME">
+     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File name"/>
+       <ITEM LANGU="E" DESCRIPT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="LIST" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
@@ -634,9 +628,9 @@ DATA _cx TYPE REF TO zaplink_cx_file.
        <ITEM LANGU="E" DESCRIPT="Container&apos;s name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME">
+     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File name"/>
+       <ITEM LANGU="E" DESCRIPT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="LIST" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
@@ -686,9 +680,9 @@ DATA _cx TYPE REF TO zaplink_cx_file.
        <ITEM LANGU="E" DESCRIPT="Container&apos;s name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME">
+     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File name"/>
+       <ITEM LANGU="E" DESCRIPT="File"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -700,32 +694,51 @@ DATA _cx TYPE REF TO zaplink_cx_file.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>
-  DATA o_file TYPE to_file.
+*  DATA o_file TYPE to_file.
+  DATA d_filename TYPE td_filename.
 
-  IF file IS INITIAL.
+  IF NOT file IS BOUND.
     RAISE EXCEPTION TYPE zaplink_cx_gui EXPORTING textid = zaplink_cx_gui=&gt;missing_filename.
   ENDIF.
 
   TRY.
-      CALL METHOD application_log-&gt;add
-        EXPORTING
+      d_filename = file-&gt;get_filename( ).
+      IF file-&gt;get_filetype( ) = zaplink_file=&gt;filetypes-local.
+* Openning file &apos;&amp;1&apos; on local machine
+        IF 1 = 2. MESSAGE i002 WITH d_filename. ENDIF.
+        CALL METHOD application_log-&gt;add
+          EXPORTING
 *      is_message   =
-           id_msgty     = &apos;I&apos;
-           id_msgid     = &apos;ZAPLINK_GUI&apos;
-           id_msgno     = &apos;002&apos;
-           id_msgv1     = file
+             id_msgty     = &apos;I&apos;
+             id_msgid     = &apos;ZAPLINK_GUI&apos;
+             id_msgno     = &apos;002&apos;
+             id_msgv1     = d_filename
 *      id_msgv2     =
 *      id_msgv3     =
 *      id_msgv4     =
-          .
-
-      CREATE OBJECT o_file.
-      o_file-&gt;set_filetype( zaplink_file=&gt;c_ft_local ).
-      o_file-&gt;set_filename( file ).
-*  o_file-&gt;set_filekind( zaplink_file_zip=&gt;filekinds-zipped ).
+            .
+      ELSEIF file-&gt;get_filetype( ) = zaplink_file=&gt;filetypes-server.
+* Openning file &apos;&amp;1&apos; on ABAP Server
+        IF 1 = 2. MESSAGE i004 WITH d_filename. ENDIF.
+        CALL METHOD application_log-&gt;add
+          EXPORTING
+*      is_message   =
+             id_msgty     = &apos;I&apos;
+             id_msgid     = &apos;ZAPLINK_GUI&apos;
+             id_msgno     = &apos;004&apos;
+             id_msgv1     = d_filename
+*      id_msgv2     =
+*      id_msgv3     =
+*      id_msgv4     =
+            .
+      ENDIF.
+*      CREATE OBJECT o_file.
+*      o_file-&gt;set_filetype( zaplink_file=&gt;c_ft_local ).
+*      o_file-&gt;set_filename( file ).
+**  o_file-&gt;set_filekind( zaplink_file_zip=&gt;filekinds-zipped ).
       CREATE OBJECT container
         EXPORTING
-          o_file = o_file.
+          o_file = file.
 
       container-&gt;load_from_file( ).
 
@@ -743,9 +756,9 @@ DATA _cx TYPE REF TO zaplink_cx_file.
        <ITEM LANGU="E" DESCRIPT="ZAPLink Container"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME">
+     <ITEM SCONAME="FILE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File name"/>
+       <ITEM LANGU="E" DESCRIPT="File"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -757,21 +770,21 @@ DATA _cx TYPE REF TO zaplink_cx_file.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>
-  DATA o_file TYPE to_file.
+*  DATA o_file TYPE to_file.
   DATA _fn    TYPE td_filename.
 
   TRY.
-      CREATE OBJECT o_file.
-      o_file-&gt;set_filetype( zaplink_file=&gt;c_ft_local ).
-      _fn = file.
+*      CREATE OBJECT o_file.
+*      o_file-&gt;set_filetype( zaplink_file=&gt;c_ft_local ).
+      _fn = file-&gt;get_filename( ).
       IF _fn IS INITIAL.
-        CALL METHOD o_file-&gt;save_dialog
+        CALL METHOD file-&gt;save_dialog
           EXPORTING
             filename = _fn.
       ENDIF.
-      o_file-&gt;set_filename( _fn ).
+      file-&gt;set_filename( _fn ).
 
-      container-&gt;save_to_file( o_file ).
+      container-&gt;save_to_file( file ).
     CATCH zaplink_cx_gui INTO o_mycx.
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.

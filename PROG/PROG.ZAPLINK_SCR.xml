@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D6AF8B0D75E1C7EEE33213E8216F1396" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="907522F3209A1D574109F1812DC68B59" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000088" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
+  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000101" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
   <SOURCE>
 *&amp;---------------------------------------------------------------------*
 *&amp;  Include           ZAPLINLK_SCR
@@ -19,18 +19,37 @@ PARAMETER a_import TYPE c RADIOBUTTON GROUP r3. &quot;
 SELECTION-SCREEN ULINE.
 PARAMETER a_uninst TYPE c RADIOBUTTON GROUP r3.  &quot;uninstall
 SELECTION-SCREEN ULINE.
+PARAMETER a_auto TYPE c RADIOBUTTON GROUP r3.
+SELECTION-SCREEN ULINE.
 PARAMETER a_add TYPE c RADIOBUTTON GROUP r3.
-PARAMETER a_add_p TYPE c RADIOBUTTON GROUP r3.
+*PARAMETER a_add_p TYPE c RADIOBUTTON GROUP r3.
 PARAMETER a_add_tr TYPE c RADIOBUTTON GROUP r3.
 SELECTION-SCREEN END OF BLOCK mode.
 
+* File
+SELECTION-SCREEN BEGIN OF BLOCK fil WITH FRAME TITLE text-bfi.
+PARAMETER f_local TYPE c RADIOBUTTON GROUP fil MODIF ID fil DEFAULT &apos;X&apos; USER-COMMAND just_to_call_event.
+PARAMETER f_server TYPE c RADIOBUTTON GROUP fil MODIF ID fil.
+PARAMETERS p_file LOWER CASE TYPE string MODIF ID fil.
+PARAMETERS p_zip AS CHECKBOX TYPE abap_bool MODIF ID fil.
+SELECTION-SCREEN END OF BLOCK fil.
+
+*Options
 SELECTION-SCREEN BEGIN OF BLOCK opt WITH FRAME TITLE text-bop.
 PARAMETER c_name  TYPE zaplink_gui=&gt;td_contname MODIF ID cre.
-PARAMETER co_type TYPE ko100-object MODIF ID add.
-PARAMETER co_name TYPE zaplink_gui=&gt;td_compname MODIF ID add.
+*PARAMETER co_type TYPE ko100-object MODIF ID add.
+*PARAMETER co_name TYPE zaplink_gui=&gt;td_compname MODIF ID add.
+SELECT-OPTIONS:
+  s_srcs FOR tadir-srcsystem MODIF ID add DEFAULT sy-sysid,
+  s_type FOR tadir-object MODIF ID add,
+  s_name FOR tadir-obj_name MODIF ID add,
+  s_pack FOR tadir-devclass MODIF ID add.
+PARAMETERS:
+  p_ext TYPE abap_bool AS CHECKBOX MODIF ID add DEFAULT abap_true.
+SELECT-OPTIONS:
+  s_author FOR tadir-author  MODIF ID add DEFAULT sy-uname.
 PARAMETER package      TYPE tadir-devclass MODIF ID adp.
 SELECT-OPTIONS p_tr FOR e071-trkorr NO INTERVALS NO-EXTENSION MODIF ID atr.
-PARAMETER p_file(300) LOWER CASE TYPE c MODIF ID fil.
 
 SELECTION-SCREEN:
   BEGIN OF TABBED BLOCK t_block FOR 5 LINES ,
@@ -74,6 +93,7 @@ SELECTION-SCREEN END OF SCREEN 130.
 DATA s_scr_name_create TYPE RANGE OF screen-name.
 DATA s_scr_name_display TYPE RANGE OF screen-name.
 DATA s_scr_name_import TYPE RANGE OF screen-name.
+DATA s_scr_name_auto TYPE RANGE OF screen-name.
 DATA s_scr_name_add TYPE RANGE OF screen-name.
 DATA s_scr_name_add_tr TYPE RANGE OF screen-name.
 DATA s_scr_name_add_p TYPE RANGE OF screen-name.
@@ -82,13 +102,34 @@ DATA s_scr_name_tabs TYPE RANGE OF screen-name.
 DATA s_scr_name_activetabs TYPE RANGE OF screen-name.
 DATA s_scr_name_frame TYPE RANGE OF screen-name.
 DATA s_scr_name_all TYPE RANGE OF screen-name.
+DATA d_file_type TYPE string.
 */----------------------selection screen events-----------------------\
 INITIALIZATION.
-  CREATE OBJECT zaplink_gui=&gt;o_options.
+  DATA clskey TYPE seoclskey.
+  DATA not_active TYPE seox_boolean.
   DATA t_fields TYPE  dyfatc_tab.
   DATA _scr LIKE LINE OF s_scr_name_import.
   FIELD-SYMBOLS:
     &lt;f&gt; LIKE LINE OF t_fields.
+
+  clskey-clsname = &apos;ZAPLINK_FILE_ZIP&apos;.
+  CALL FUNCTION &apos;SEO_CLASS_EXISTENCE_CHECK&apos;
+    EXPORTING
+      clskey        = clskey
+    IMPORTING
+      not_active    = not_active
+    EXCEPTIONS
+      not_specified = 1
+      not_existing  = 2
+      is_interface  = 3
+      no_text       = 4
+      inconsistent  = 5
+      OTHERS        = 6.
+  IF sy-subrc = 0 AND not_active IS INITIAL.
+    d_file_type = clskey-clsname.
+  ENDIF.
+
+  CREATE OBJECT zaplink_gui=&gt;o_options.
 
   CALL FUNCTION &apos;RPY_DYNPRO_READ&apos;
     EXPORTING
@@ -119,15 +160,18 @@ INITIALIZATION.
     CASE &lt;f&gt;-group1.
       WHEN &apos;CRE&apos;.
         APPEND _scr TO s_scr_name_create.
+        APPEND _scr TO s_scr_name_auto.
         APPEND _scr TO s_scr_name_all.
       WHEN &apos;ADD&apos;.
         APPEND _scr TO s_scr_name_add.
+        APPEND _scr TO s_scr_name_auto.
         APPEND _scr TO s_scr_name_all.
       WHEN &apos;110&apos; OR &apos;120&apos;.
         APPEND _scr TO s_scr_name_import.
         APPEND _scr TO s_scr_name_all.
       WHEN &apos;130&apos;.
         APPEND _scr TO s_scr_name_add.
+        APPEND _scr TO s_scr_name_auto.
         APPEND _scr TO s_scr_name_add_p.
         APPEND _scr TO s_scr_name_add_tr.
         APPEND _scr TO s_scr_name_uninst.
@@ -140,7 +184,10 @@ INITIALIZATION.
         APPEND _scr TO s_scr_name_add_tr.
         APPEND _scr TO s_scr_name_all.
       WHEN &apos;FIL&apos;.
+        IF &lt;f&gt;-name = &apos;P_ZIP&apos; AND d_file_type IS INITIAL. CONTINUE. ENDIF.
+        APPEND _scr TO s_scr_name_create.
         APPEND _scr TO s_scr_name_add.
+        APPEND _scr TO s_scr_name_auto.
         APPEND _scr TO s_scr_name_add_p.
         APPEND _scr TO s_scr_name_add_tr.
         APPEND _scr TO s_scr_name_display.
@@ -157,6 +204,7 @@ INITIALIZATION.
       WHEN &apos;SUB&apos;.
         APPEND _scr TO s_scr_name_tabs.
         APPEND _scr TO s_scr_name_add.
+        APPEND _scr TO s_scr_name_auto.
         APPEND _scr TO s_scr_name_add_p.
         APPEND _scr TO s_scr_name_add_tr.
         APPEND _scr TO s_scr_name_uninst.
@@ -188,8 +236,10 @@ AT SELECTION-SCREEN OUTPUT.
           _active = 1.
         ELSEIF a_add = &apos;X&apos; AND screen-name IN s_scr_name_add.
           _active = 1.
-        ELSEIF a_add_p = &apos;X&apos; AND screen-name IN s_scr_name_add_p.
+        ELSEIF a_auto = &apos;X&apos; AND screen-name IN s_scr_name_auto.
           _active = 1.
+*        ELSEIF a_add_p = &apos;X&apos; AND screen-name IN s_scr_name_add_p.
+*          _active = 1.
         ELSEIF a_add_tr = &apos;X&apos; AND screen-name IN s_scr_name_add_tr.
           _active = 1.
         ELSEIF a_dsp = &apos;X&apos; AND screen-name IN s_scr_name_display.
@@ -238,17 +288,38 @@ AT SELECTION-SCREEN OUTPUT.
   ENDCASE.
 
 *** value request for input fields
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR co_type.
-  zaplink_connectors=&gt;get_values( CHANGING type = co_type ).
+*AT SELECTION-SCREEN ON VALUE-REQUEST FOR co_type.
+*  zaplink_connectors=&gt;get_values( CHANGING type = co_type ).
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR s_type-low.
+  zaplink_connectors=&gt;get_values( CHANGING type = s_type-low ).
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR s_type-high.
+  zaplink_connectors=&gt;get_values( CHANGING type = s_type-high ).
 
 AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
   DATA l_file TYPE zaplink_gui=&gt;td_filename.
 
-  l_file = p_file.
-  CALL METHOD zaplink_gui=&gt;containerfile_select
-    CHANGING
-      filename = l_file.
-  p_file = l_file.
+  IF f_local IS NOT INITIAL.
+    l_file = p_file.
+    CALL METHOD zaplink_gui=&gt;containerfile_select
+      CHANGING
+        filename = l_file.
+    p_file = l_file.
+  ELSEIF f_server IS NOT INITIAL.
+    CALL FUNCTION &apos;/SAPDMC/LSM_F4_SERVER_FILE&apos;
+*     EXPORTING
+*       DIRECTORY              = &apos; &apos;
+*       FILEMASK               = &apos; &apos;
+      IMPORTING
+        serverfile             = l_file
+      EXCEPTIONS
+        canceled_by_user       = 1
+        OTHERS                 = 2.
+    IF sy-subrc = 0.
+      p_file = l_file.
+    ENDIF.
+  ENDIF.
 
 AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_tr-low.
   DATA:

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B5BD1BAABFCC061E1E77098F25BADACE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="97F62A3CA5347ACAA441AAB7D246BA78" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="A576624B87531F63E1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -90,27 +90,18 @@
 
 INCLUDE zaplink_macros.
 
-define mac_obj_data.
-  DATA o_typegroup TYPE to_typegroup.
-  DATA o_domain    TYPE to_domain.
-  DATA o_data_e    TYPE to_data_element.
-  DATA o_view      TYPE to_view.
-  DATA o_table     TYPE to_table.
+DEFINE mac_obj_data.
+  data o_typegroup type to_typegroup.
+  data o_domain    type to_domain.
+  data o_data_e    type to_data_element.
+  data o_view      type to_view.
+  data o_table     type to_table.
+  data o_tab_type  type to_table_type.
+  data o_s_help    type to_search_help.
+  data o_lock_obj  type to_lock_object.
 END-OF-DEFINITION.</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="CLASS_CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2" MTDDECLTYP="1">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
-    </TEXTS>
-    <SOURCE>
-*table TDCLT
-*DOKCLASS DOKTITEL
-*  DATA _id LIKE LINE OF r_doc_id.
-*
-*  _id-sign = &apos;I&apos;. _id-option = &apos;EQ&apos;.
-*  _id-low = C_MSG_ID. APPEND _id TO r_doc_id.</SOURCE>
-   </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
@@ -125,6 +116,9 @@ END-OF-DEFINITION.</MACROS>
   type-type = supportedtypes-data_element.  INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-view.          INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-table.         INSERT type INTO TABLE supported_types.
+  type-type = supportedtypes-table_type.    INSERT type INTO TABLE supported_types.
+  type-type = supportedtypes-search_help.   INSERT type INTO TABLE supported_types.
+  type-type = supportedtypes-lock_object.   INSERT type INTO TABLE supported_types.
 
   uuid = _uuid.
   version = _ver.</SOURCE>
@@ -268,6 +262,146 @@ END-OF-DEFINITION.</MACROS>
   ENDTRY.
 </SOURCE>
    </ITEM>
+   <ITEM CMPNAME="EXPORT_LOCK_OBJECT" VERSION="1" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Export Lock Object from SAP System"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component key"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="OBJECT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LOCK_OBJECT">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Lock object (SE11) Datas"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>
+  DATA d_name     TYPE ddobjname.
+  DATA str        TYPE string.
+  DATA subrc      TYPE sy-subrc.
+  DATA s_fm_data  TYPE zaplink_enqu_data=&gt;ts_fm_data.
+  DATA d_mask     TYPE doku_obj.
+  FIELD-SYMBOLS:
+    &lt;o_s&gt; TYPE REF TO cl_wb_source.
+
+  TRY.
+    d_name = component-&gt;get_name( ).
+    CALL FUNCTION &apos;DDIF_ENQU_GET&apos;
+      EXPORTING
+        name                = d_name
+*       STATE               = &apos;A&apos;
+*       LANGU               = &apos; &apos;
+      IMPORTING
+*       GOTSTATE            =
+        dd25v_wa            = s_fm_data-header
+      TABLES
+        dd26e_tab           = s_fm_data-tables
+        dd27p_tab           = s_fm_data-fields
+*       DDENA_TAB           =
+      EXCEPTIONS
+        illegal_input       = 1
+        OTHERS              = 2.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;DDIF_ENQU_GET&apos; sy-subrc.
+    ENDIF.
+
+    SELECT *
+      INTO TABLE s_fm_data-texts
+      FROM dd25t
+      WHERE viewname = d_name
+        AND ddtext &lt;&gt; space.
+
+    d_mask = d_name.
+    s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_enqu_data=&gt;r_doc_ids
+                                              object = d_mask ).
+
+    CREATE OBJECT object.
+    object-&gt;from_data( s_fm_data ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.
+</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="EXPORT_SEARCH_HELP" VERSION="1" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Export Search Help from SAP System"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component key"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="OBJECT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_SEARCH_HELP">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Search Help (SE11) Datas"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>
+  DATA d_name     TYPE ddobjname.
+  DATA str        TYPE string.
+  DATA subrc      TYPE sy-subrc.
+  DATA s_fm_data  TYPE zaplink_shlp_data=&gt;ts_fm_data.
+  DATA d_mask     TYPE doku_obj.
+  FIELD-SYMBOLS:
+    &lt;o_s&gt; TYPE REF TO cl_wb_source.
+
+  TRY.
+    d_name = component-&gt;get_name( ).
+    CALL FUNCTION &apos;DDIF_SHLP_GET&apos;
+      EXPORTING
+        name                = d_name
+        STATE               = space
+*       LANGU               = &apos; &apos;
+      IMPORTING
+*       GOTSTATE            =
+        DD30V_WA            = s_fm_data-header
+      TABLES
+        DD31V_TAB           = s_fm_data-sub_sh
+        DD32P_TAB           = s_fm_data-fields
+        DD33V_TAB           = s_fm_data-ssh_params
+      EXCEPTIONS
+        ILLEGAL_INPUT       = 1
+        OTHERS              = 2.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;DDIF_SHLP_GET&apos; sy-subrc.
+    ENDIF.
+
+    SELECT *
+      INTO TABLE s_fm_data-texts
+      FROM dd30t
+      WHERE SHLPNAME = d_name
+        AND ddtext &lt;&gt; space.
+
+    d_mask = d_name.
+    s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_shlp_data=&gt;r_doc_ids
+                                              object = d_mask ).
+
+    CREATE OBJECT object.
+    object-&gt;from_data( s_fm_data ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.
+</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="EXPORT_TABLE" VERSION="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export table from SAP System"/>
@@ -339,7 +473,75 @@ END-OF-DEFINITION.</MACROS>
         AND ddtext &lt;&gt; space.
 
     d_mask = d_name.
-    s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_view_data=&gt;r_doc_ids
+    s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_tabl_data=&gt;r_doc_ids
+                                              object = d_mask ).
+
+    CREATE OBJECT object.
+    object-&gt;from_data( s_fm_data ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.
+</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="EXPORT_TABLE_TYPE" VERSION="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Export table type from SAP System"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component key"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="OBJECT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_TABLE_TYPE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Table type (SE11) Datas"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>
+  DATA d_name     TYPE ddobjname.
+  DATA str        TYPE string.
+  DATA subrc      TYPE sy-subrc.
+  DATA s_fm_data  TYPE zaplink_ttyp_data=&gt;ts_fm_data.
+  DATA d_mask     TYPE doku_obj.
+  FIELD-SYMBOLS:
+    &lt;o_s&gt; TYPE REF TO cl_wb_source.
+
+  TRY.
+    d_name = component-&gt;get_name( ).
+    CALL FUNCTION &apos;DDIF_TTYP_GET&apos;
+      EXPORTING
+        name                = d_name
+        STATE               = space
+*       LANGU               = &apos; &apos;
+      IMPORTING
+*       GOTSTATE            =
+        DD40V_WA            = s_fm_data-header
+      TABLES
+        DD42V_TAB           = s_fm_data-keys
+      EXCEPTIONS
+        ILLEGAL_INPUT       = 1
+        OTHERS              = 2.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;DDIF_TTYP_GET&apos; sy-subrc.
+    ENDIF.
+
+    SELECT *
+      INTO TABLE s_fm_data-texts
+      FROM dd40t
+      WHERE typename = d_name
+        AND ddtext &lt;&gt; space.
+
+    d_mask = d_name.
+    s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_ttyp_data=&gt;r_doc_ids
                                               object = d_mask ).
 
     CREATE OBJECT object.
@@ -648,6 +850,149 @@ END-OF-DEFINITION.</MACROS>
 
   zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="IMPORT_LOCK_OBJECT" VERSION="1" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Import Lock Object to SAP System"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component key"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LOCK_OBJECT">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Table type (SE11) Datas"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>
+  DATA d_name         TYPE rsedd0-ddobjname.
+  DATA d_subrc        TYPE sy-subrc.
+  DATA s_fm_data      TYPE zaplink_enqu_data=&gt;ts_fm_data.
+
+  s_fm_data = o_data-&gt;to_data( ).
+  d_name = s_fm_data-header-viewname.
+  CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+    EXPORTING
+      no_ask                     = abap_true
+      objname                    = d_name
+      objtype                    = dd_eu_type-lock_object
+*     CHANGING
+*       CORRNUM                    = &apos; &apos;
+    EXCEPTIONS
+      not_executed               = 1
+      object_not_found           = 0
+      object_not_specified       = 3
+      permission_failure         = 4
+      dialog_needed              = 5
+      OTHERS                     = 6.
+  IF sy-subrc &lt;&gt; 0.
+    mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+  ENDIF.
+
+  CALL FUNCTION &apos;DDIF_ENQU_PUT&apos;
+    EXPORTING
+      name              = d_name
+      dd25v_wa          = s_fm_data-header
+    TABLES
+      dd26e_tab         = s_fm_data-tables
+      dd27p_tab         = s_fm_data-fields
+    EXCEPTIONS
+      enqu_not_found    = 1
+      name_inconsistent = 2
+      enqu_inconsistent = 3
+      put_failure       = 4
+      put_refused       = 5
+      OTHERS            = 6.
+  IF sy-subrc &lt;&gt; 0.
+    mac_add_mf_and_raise &apos;DDIF_ENQU_PUT&apos; sy-subrc.
+  ENDIF.
+
+  DELETE FROM dd25t WHERE viewname = s_fm_data-header-viewname.
+  MODIFY dd25t FROM TABLE s_fm_data-texts.
+
+  zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="IMPORT_SEARCH_HELP" VERSION="1" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Import Search Help to SAP System"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component key"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_SEARCH_HELP">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Table type (SE11) Datas"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>
+  DATA d_name         TYPE rsedd0-ddobjname.
+  DATA d_subrc        TYPE sy-subrc.
+  DATA s_fm_data      TYPE zaplink_shlp_data=&gt;ts_fm_data.
+
+  s_fm_data = o_data-&gt;to_data( ).
+  d_name = s_fm_data-header-shlpname.
+  CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+    EXPORTING
+      no_ask                     = abap_true
+      objname                    = d_name
+      objtype                    = dd_eu_type-search_help
+*     CHANGING
+*       CORRNUM                    = &apos; &apos;
+    EXCEPTIONS
+      not_executed               = 1
+      object_not_found           = 0
+      object_not_specified       = 3
+      permission_failure         = 4
+      dialog_needed              = 5
+      OTHERS                     = 6.
+  IF sy-subrc &lt;&gt; 0.
+    mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+  ENDIF.
+
+  CALL FUNCTION &apos;DDIF_SHLP_PUT&apos;
+    EXPORTING
+      name                    = d_name
+      DD30V_WA                = s_fm_data-header
+    TABLES
+      DD31V_TAB               = s_fm_data-sub_sh
+      DD32P_TAB               = s_fm_data-fields
+      DD33V_TAB               = s_fm_data-ssh_params
+    EXCEPTIONS
+      SHLP_NOT_FOUND          = 1
+      NAME_INCONSISTENT       = 2
+      SHLP_INCONSISTENT       = 3
+      PUT_FAILURE             = 4
+      PUT_REFUSED             = 5
+      OTHERS                  = 6.
+  IF sy-subrc &lt;&gt; 0.
+    mac_add_mf_and_raise &apos;DDIF_SHLP_PUT&apos; sy-subrc.
+  ENDIF.
+
+  DELETE FROM dd30t WHERE shlpname = s_fm_data-header-shlpname.
+  MODIFY dd30t FROM TABLE s_fm_data-texts.
+
+  zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="IMPORT_TABLE" VERSION="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import table to SAP System"/>
@@ -748,6 +1093,76 @@ END-OF-DEFINITION.</MACROS>
 
   DELETE FROM dd03t WHERE tabname = s_fm_data-header-tabname.
   MODIFY dd03t FROM TABLE s_fm_data-fields_texts.
+
+  zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="IMPORT_TABLE_TYPE" VERSION="1" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Import table type to SAP System"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component key"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="O_DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_TABLE_TYPE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Table type (SE11) Datas"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>
+  DATA d_name         TYPE rsedd0-ddobjname.
+  DATA d_subrc        TYPE sy-subrc.
+  DATA s_fm_data      TYPE zaplink_ttyp_data=&gt;ts_fm_data.
+
+  s_fm_data = o_data-&gt;to_data( ).
+  d_name = s_fm_data-header-typename.
+  CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+    EXPORTING
+      no_ask                     = abap_true
+      objname                    = d_name
+      objtype                    = dd_eu_type-table_type
+*     CHANGING
+*       CORRNUM                    = &apos; &apos;
+    EXCEPTIONS
+      not_executed               = 1
+      object_not_found           = 0
+      object_not_specified       = 3
+      permission_failure         = 4
+      dialog_needed              = 5
+      OTHERS                     = 6.
+  IF sy-subrc &lt;&gt; 0.
+    mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+  ENDIF.
+
+  CALL FUNCTION &apos;DDIF_TTYP_PUT&apos;
+    EXPORTING
+      name                    = d_name
+      DD40V_WA                = s_fm_data-header
+    TABLES
+      DD42V_TAB               = s_fm_data-keys
+    EXCEPTIONS
+      TTYP_NOT_FOUND          = 1
+      NAME_INCONSISTENT       = 2
+      TTYP_INCONSISTENT       = 3
+      PUT_FAILURE             = 4
+      PUT_REFUSED             = 5
+      OTHERS                  = 6.
+  IF sy-subrc &lt;&gt; 0.
+    mac_add_mf_and_raise &apos;DDIF_TTYP_PUT&apos; sy-subrc.
+  ENDIF.
+
+  DELETE FROM dd40t WHERE typename = s_fm_data-header-typename.
+  MODIFY dd40t FROM TABLE s_fm_data-texts.
 
   zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
    </ITEM>
@@ -1008,6 +1423,9 @@ END-OF-DEFINITION.</MACROS>
     WHEN supportedtypes-data_element.   mac_obj_create o_data_e.
     WHEN supportedtypes-view.           mac_obj_create o_view.
     WHEN supportedtypes-table.          mac_obj_create o_table.
+    WHEN supportedtypes-table_type.     mac_obj_create o_tab_type.
+    WHEN supportedtypes-search_help.    mac_obj_create o_s_help.
+    WHEN supportedtypes-lock_object.    mac_obj_create o_lock_obj.
     WHEN OTHERS.
       CLEAR object.
 * Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
@@ -1244,6 +1662,27 @@ END-OF-DEFINITION.</MACROS>
           ENDTRY.
           CLEAR o_table-&gt;a0_maindata-tabname.
           object-&gt;raw = o_table.
+        WHEN supportedtypes-table_type.
+          TRY.
+            o_tab_type = export_table_type( component ).
+            mac_catch_local_cx.
+          ENDTRY.
+          CLEAR o_tab_type-&gt;a0_maindata-typename.
+          object-&gt;raw = o_tab_type.
+        WHEN supportedtypes-search_help.
+          TRY.
+            o_s_help = export_search_help( component ).
+            mac_catch_local_cx.
+          ENDTRY.
+          CLEAR o_s_help-&gt;a0_maindata-shlpname.
+          object-&gt;raw = o_s_help.
+        WHEN supportedtypes-lock_object.
+          TRY.
+            o_lock_obj = export_lock_object( component ).
+            mac_catch_local_cx.
+          ENDTRY.
+          CLEAR o_lock_obj-&gt;a0_maindata-viewname.
+          object-&gt;raw = o_lock_obj.
         WHEN OTHERS.
           CLEAR object.
 * Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
@@ -1272,7 +1711,7 @@ END-OF-DEFINITION.</MACROS>
         o_mycx-&gt;messages = application_log.
         o_mycx-&gt;update( ).
       endif.
-    raise exception o_mycx.
+      raise exception o_mycx.
   END-OF-DEFINITION.
 
   TRY.
@@ -1311,6 +1750,27 @@ END-OF-DEFINITION.</MACROS>
           o_table-&gt;a0_maindata-tabname = object-&gt;name.
           TRY.
             components = import_table( o_table ).
+            mac_catch_local_cx.
+          ENDTRY.
+        WHEN supportedtypes-table_type.
+          o_tab_type ?= object-&gt;raw.
+          o_tab_type-&gt;a0_maindata-typename = object-&gt;name.
+          TRY.
+            components = import_table_type( o_tab_type ).
+            mac_catch_local_cx.
+          ENDTRY.
+        WHEN supportedtypes-search_help.
+          o_s_help ?= object-&gt;raw.
+          o_s_help-&gt;a0_maindata-shlpname = object-&gt;name.
+          TRY.
+            components = import_search_help( o_s_help ).
+            mac_catch_local_cx.
+          ENDTRY.
+        WHEN supportedtypes-lock_object.
+          o_lock_obj ?= object-&gt;raw.
+          o_lock_obj-&gt;a0_maindata-viewname = object-&gt;name.
+          TRY.
+            components = import_lock_object( o_lock_obj ).
             mac_catch_local_cx.
           ENDTRY.
         WHEN OTHERS.
@@ -1355,9 +1815,24 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANGU="E" DESCRIPT="Data for Domain"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TO_LOCK_OBJECT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="3" TYPE="ZAPLINK_ENQU_DATA">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Lock object (SE11) Datas"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_SEARCH_HELP" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="3" TYPE="ZAPLINK_SHLP_DATA">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Search Help (SE11) Datas"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TO_TABLE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="ZAPLINK_TABL_DATA">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Table (SE11) Datas"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_TABLE_TYPE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="3" TYPE="ZAPLINK_TTYP_DATA">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Table Type (SE11) Datas"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_TYPEGROUP" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_TYPE_DATA">
