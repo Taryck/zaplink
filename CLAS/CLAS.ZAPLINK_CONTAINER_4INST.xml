@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="77BCF5AB491BB47677A2F2AAD97730E2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="20595733D4B4AD3967DF0F12D34F4D2A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="57F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -341,66 +341,88 @@ check data &lt;&gt; _options.
     <SOURCE>
   DATA o_connector  TYPE to_connector.
   DATA o_comp       TYPE to_component.
+  DATA o_comp_n     TYPE to_component.
   DATA o_comp_s     TYPE to_component.
   DATA o_listsub    TYPE to_list.
   DATA o_subcomp    TYPE to_component.
   DATA o_subcomp_s  TYPE to_component.
-  DATA object       TYPE to_raw.
+  DATA object_off        TYPE to_raw.
   DATA _components  TYPE to_list.
   DATA _xml_comp    TYPE REF TO if_ixml_document.
   DATA _clone       TYPE REF TO	if_ixml_node.
   DATA _cx_connector TYPE REF TO zaplink_cx_connector.
-  DATA o_raw        TYPE to_raw.
+  DATA o_raw        TYPE to_raw_base.
   DATA _directory   TYPE ts_directory.
   DATA o_log        TYPE to_log.
+* Issue 47 : handling dependencies  --&gt; Start
+  DATA o_todo       TYPE to_list.
+  DATA o_remain     TYPE to_list.
+  DATA o_skiplist   TYPE to_list.
+  DATA o_deplist    TYPE to_list.
+* Issue 47 : handling dependencies  &lt;-- END
 
   CHECK object_list IS BOUND.
   TRY.
       object_list-&gt;keep_commun_list( _complist ).
-      object_list-&gt;display_progress = abap_true.
-      object_list-&gt;order_kind = zaplink_list=&gt;order_kinds-install.
-      object_list-&gt;init_sel_iter( ).
-      o_comp = object_list-&gt;get_next( ).
-      WHILE o_comp IS BOUND.
-        o_comp_s = _complist-&gt;search( o_comp ).
-        o_connector = o_comp_s-&gt;connector( ).
-        o_connector-&gt;options = _options.
-        o_log = o_comp_s-&gt;get_msg_coll( ).
-        IF NOT o_log IS BOUND.
-          CREATE OBJECT o_log.
-          o_comp_s-&gt;set_msg_coll( o_log ).
-          CALL METHOD o_log-&gt;init
-            EXPORTING
-              id_object      = ballog_object
-              id_subobject   = ballog_subobject
+* Issue 47 : handling dependencies  --&gt; Start
+      o_todo = object_list-&gt;clone( ).
+      DO.
+        CREATE OBJECT o_skiplist.
+        o_remain = o_todo-&gt;clone( ).
+* Issue 47 : handling dependencies  &lt;-- END
+        o_todo-&gt;display_progress = abap_true.
+        o_todo-&gt;order_kind = zaplink_list=&gt;order_kinds-install.
+        o_todo-&gt;init_sel_iter( ).
+        o_comp_n = o_todo-&gt;get_next( ).
+        WHILE o_comp_n IS BOUND.
+          o_comp = o_comp_n.    o_comp_n = o_todo-&gt;get_next( ).    &quot; to allow continue
+          o_comp_s = _complist-&gt;search( o_comp ).
+          o_connector = o_comp_s-&gt;connector( ).
+          o_connector-&gt;options = _options.
+          o_log = o_comp_s-&gt;get_msg_coll( ).
+          IF NOT o_log IS BOUND.
+            CREATE OBJECT o_log.
+            o_comp_s-&gt;set_msg_coll( o_log ).
+            CALL METHOD o_log-&gt;init
+              EXPORTING
+                id_object      = ballog_object
+                id_subobject   = ballog_subobject
 *          id_extnumber   =
-              auto_upd_custo = abap_true
+                auto_upd_custo = abap_true
 *          id_activity    = ACT_CREATE
-            EXCEPTIONS
-              error          = 1
-              OTHERS         = 2.
-          IF sy-subrc &lt;&gt; 0.
-            log-&gt;add_symsg( ).
+              EXCEPTIONS
+                error          = 1
+                OTHERS         = 2.
+            IF sy-subrc &lt;&gt; 0.
+              log-&gt;add_symsg( ).
+            ENDIF.
           ENDIF.
-        ENDIF.
 
-        _xml_comp = xmlengine-&gt;create_document( ).
-        _clone = _find_component_node( o_comp_s ).
-        _clone = _clone-&gt;clone( ).
-        _xml_comp-&gt;if_ixml_node~append_child( _clone ).
+          _xml_comp = xmlengine-&gt;create_document( ).
+          _clone = _find_component_node( o_comp_s ).
+          _clone = _clone-&gt;clone( ).
+          _xml_comp-&gt;if_ixml_node~append_child( _clone ).
 
-        TRY.
+          TRY.
 * Make directory entry
-            o_raw = zaplink_connectors=&gt;node_2_raw( _clone ).
-            _directory = _options-&gt;directory-&gt;set_directory( o_raw ).
-            o_log-&gt;add_from_instance( _options-&gt;directory-&gt;o_log ).
+              o_raw = zaplink_connectors=&gt;node_2_raw( _clone ).
+* Issue 47 : handling dependencies  --&gt; Start
+              CREATE OBJECT o_deplist.
+              o_deplist-&gt;add_keys( o_raw-&gt;dependencies ).
+              IF o_remain-&gt;has_any( o_deplist ) = abap_true.
+                o_skiplist-&gt;add( o_comp ). &quot; because dependcies will be processed
+                CONTINUE.
+              ENDIF.
+* Issue 47 : handling dependencies  &lt;-- END
+              _directory = _options-&gt;directory-&gt;set_directory( o_raw ).
+              o_log-&gt;add_from_instance( _options-&gt;directory-&gt;o_log ).
 * Sub components
-            o_listsub = o_comp_s-&gt;get_subcomponents( ).
-            IF o_listsub IS BOUND.
-              o_listsub-&gt;display_progress = abap_false.
-              o_listsub-&gt;init_iter( ).
-              o_subcomp = o_listsub-&gt;get_next( ).
-              WHILE o_subcomp IS BOUND.
+              o_listsub = o_comp_s-&gt;get_subcomponents( ).
+              IF o_listsub IS BOUND.
+                o_listsub-&gt;display_progress = abap_false.
+                o_listsub-&gt;init_iter( ).
+                o_subcomp = o_listsub-&gt;get_next( ).
+                WHILE o_subcomp IS BOUND.
 * ISSUE 10 : Workaround
 *            o_subcomp_s = o_listsub-&gt;search( o_subcomp ).
 *            _clone = _find_component_node( o_subcomp_s ).
@@ -410,36 +432,32 @@ check data &lt;&gt; _options.
 *            IF _options-&gt;directory-&gt;log IS BOUND.
 *              o_log-&gt;add_from_instance( _options-&gt;directory-&gt;log ).
 *            ENDIF.
-                o_subcomp = o_listsub-&gt;get_next( ).
-              ENDWHILE.
-            ENDIF.
+                  o_subcomp = o_listsub-&gt;get_next( ).
+                ENDWHILE.
+              ENDIF.
 
-            _components = o_connector-&gt;import_to_sap( _xml_comp ).
-            o_comp-&gt;set_subcomponents( _components ).
-            IF _components-&gt;search( o_comp ) IS BOUND.
-*          CALL METHOD log-&gt;add_success
-*            EXPORTING
-**              id_msgid     =
-*              id_msgno     =
-**              id_msgv1     =
-**              id_msgv2     =
-**              id_msgv3     =
-**              id_msgv4     =
-**              id_detlevel  =
-**              id_probclass =
-*              .
-              _components-&gt;remove( o_comp ).
-            ENDIF.
-          CATCH zaplink_cx_connector INTO _cx_connector.
-            o_comp-&gt;set_exception( _cx_connector ).
-            CALL METHOD log-&gt;add_exception
-              EXPORTING
-                exception    = _cx_connector.
-            mac_add_log o_connector-&gt;application_log o_log &apos;E&apos;.   &quot; append application log if error is present
-        ENDTRY.
+              _components = o_connector-&gt;import_to_sap( _xml_comp ).
+              o_comp-&gt;set_subcomponents( _components ).
+              IF _components-&gt;search( o_comp ) IS BOUND.    _components-&gt;remove( o_comp ).    ENDIF.
+              o_remain-&gt;remove( o_comp ).                   &quot; Issue 47
+            CATCH zaplink_cx_connector INTO _cx_connector.
+              o_comp-&gt;set_exception( _cx_connector ).
+              CALL METHOD log-&gt;add_exception
+                EXPORTING
+                  exception = _cx_connector.
+              mac_add_log o_connector-&gt;application_log o_log &apos;E&apos;.   &quot; append application log if error is present
+          ENDTRY.
 
-        o_comp = object_list-&gt;get_next( ).
-      ENDWHILE.
+        ENDWHILE.
+* Issue 47 : handling dependencies  --&gt; Start
+        IF o_skiplist-&gt;is_empty( ) = abap_true.   EXIT.   ENDIF.
+        IF o_todo-&gt;get_count( ) = o_skiplist-&gt;get_count( ).
+* error : circular dependencies
+          RAISE EXCEPTION TYPE zaplink_cx_container EXPORTING textid = zaplink_cx_container=&gt;circular_dependencies.
+        ENDIF.
+        o_todo = o_skiplist-&gt;clone( ).    o_todo-&gt;select_all( ).
+      ENDDO.
+* Issue 47 : handling dependencies  &lt;-- END
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
@@ -553,8 +571,7 @@ check data &lt;&gt; _options.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>
-*  DATA o_element   TYPE REF TO  if_ixml_element.
-  DATA o_raw       TYPE to_raw.
+  DATA o_raw       TYPE to_raw_base.
   DATA o_comp      TYPE to_component.
   DATA o_comp_p    TYPE to_component.
   DATA o_cx_comp   TYPE REF TO zaplink_cx_component.
@@ -895,6 +912,11 @@ check data &lt;&gt; _options.
    <ITEM CMPNAME="TO_RAW" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_RAW">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="RAW component with data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_RAW_BASE" VERSION="1" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_RAW_BASE">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Base RAW component without data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ROOT_EXCEPTION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="3" TYPE="ZAPLINK_CX">

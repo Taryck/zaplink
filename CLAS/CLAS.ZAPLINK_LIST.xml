@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FB7B07DC854A3386CE95B50A6470CEC8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="392AEFBCF9BDAC73AADD623EC5057692" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="16F9034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -429,7 +429,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>
-DATA o_comp TYPE to_component.
+  DATA o_comp TYPE to_component.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
@@ -439,6 +439,7 @@ DATA o_comp TYPE to_component.
       LOOP AT _index ASSIGNING &lt;i&gt;.
         o_comp = &lt;i&gt;-o_comp-&gt;clone( ).
         result-&gt;add( o_comp ).
+        If &lt;i&gt;-selected = abap_true.    result-&gt;select( o_comp ).    endif.
       ENDLOOP.
     CATCH zaplink_cx.
       CLEAR result.
@@ -647,36 +648,30 @@ DATA o_comp TYPE to_component.
   ENDIF.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_COUNT_OFF" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_COUNT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="24 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Iterator Get number of occurence"/>
+     <ITEM LANGU="E" DESCRIPT="Get number of component in list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="I">
+     <ITEM SCONAME="IS_SELECTED" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Occurence count"/>
+       <ITEM LANGU="E" DESCRIPT="count only selected component"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="I">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Number of component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
-    </EXCEPTIONS>
     <SOURCE>
-CASE _iterator_type.
-    WHEN iterator_types-selected.
-      LOOP AT _index TRANSPORTING NO FIELDS
-              WHERE selected = abap_true.
-        ADD 1 TO result.
-      ENDLOOP.
-    WHEN iterator_types-all.
-      result = LINES( _index ).
-    WHEN OTHERS.
-* GET_NEXT has been called without initialize a iterator.
-      RAISE EXCEPTION TYPE zaplink_cx_list
-                 EXPORTING textid = zaplink_cx_list=&gt;iterator_not_initialize.
-  ENDCASE.</SOURCE>
+  IF is_selected IS INITIAL.
+    result = LINES( _index ).
+  ELSE.
+    LOOP AT _index TRANSPORTING NO FIELDS WHERE selected = abap_true. ADD 1 TO result. ENDLOOP.
+  ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_NEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_NEXT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Iterator Get next"/>
     </TEXTS>
@@ -809,7 +804,41 @@ CASE _iterator_type.
 *  ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INIT_ITER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
+   <ITEM CMPNAME="HAS_ANY" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Search components into all component list"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="LIST" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
+    </EXCEPTIONS>
+    <SOURCE>
+  DATA t_allcomp TYPE tt_allcomplist.
+  FIELD-SYMBOLS:
+    &lt;c&gt; LIKE LINE OF _allcomp.
+
+  t_allcomp = list-&gt;_allcomp.
+
+  DELETE ADJACENT DUPLICATES FROM t_allcomp COMPARING key.
+
+  result = abap_false.
+  LOOP AT t_allcomp ASSIGNING &lt;c&gt;.
+    READ TABLE _allcomp TRANSPORTING NO FIELDS
+         WITH TABLE KEY key = &lt;c&gt;-key.
+    IF sy-subrc = 0.
+      result = abap_true.
+      EXIT.
+    ENDIF.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="INIT_ITER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Initialize Iterator on all component of the list"/>
     </TEXTS>
@@ -840,7 +869,7 @@ CASE _iterator_type.
   ENDCASE.
   DESCRIBE TABLE t_cursors LINES _iterator_count.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INIT_SEL_ITER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
+   <ITEM CMPNAME="INIT_SEL_ITER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Initialize Iterator on selected component"/>
     </TEXTS>
@@ -872,7 +901,20 @@ CASE _iterator_type.
   ENDCASE.
   DESCRIBE TABLE t_cursors LINES _iterator_count.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IS_INCLUDED" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IS_EMPTY" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Is the list empty"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
+    </EXCEPTIONS>
+    <SOURCE>
+  IF _index IS INITIAL.   result = abap_true.   ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="IS_INCLUDED" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Search components into all component list"/>
     </TEXTS>
@@ -932,7 +974,7 @@ DATA t_allcomp TYPE tt_allcomplist.
   ENDIF.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="KEEP_COMMUN_LIST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="13 ">
+   <ITEM CMPNAME="KEEP_COMMUN_LIST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="12 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Keep only component in commun with an other list"/>
     </TEXTS>
@@ -955,7 +997,7 @@ FIELD-SYMBOLS:
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="REMOVE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
+   <ITEM CMPNAME="REMOVE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="TODO====== Remove component from list"/>
     </TEXTS>
@@ -981,7 +1023,7 @@ DATA _idx LIKE LINE OF _index.
   DELETE _allcomp WHERE o_comp = _idx-o_comp.
   DELETE TABLE _index FROM _idx.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="REMOVE_LIST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
+   <ITEM CMPNAME="REMOVE_LIST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Remove component to list"/>
     </TEXTS>
@@ -1010,7 +1052,7 @@ FIELD-SYMBOLS:
     ENDTRY.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SEARCH" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SEARCH" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="20 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Search component into list"/>
     </TEXTS>
@@ -1073,7 +1115,7 @@ FIELD-SYMBOLS:
     result-key = _key.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SELECT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SELECT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Select the component"/>
     </TEXTS>
@@ -1097,7 +1139,19 @@ FIELD-SYMBOLS:
   ENDTRY.
 </SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SELECT_DEFAULT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="20 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SELECT_ALL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="21 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Select all components from list"/>
+    </TEXTS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
+    </EXCEPTIONS>
+    <SOURCE>
+  DATA s_idx LIKE LINE OF _index.
+
+  s_idx-selected = abap_true.   MODIFY _index FROM s_idx TRANSPORTING selected WHERE selected &lt;&gt; s_idx-selected.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="SELECT_DEFAULT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="22 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Select default components from list"/>
     </TEXTS>
@@ -1137,7 +1191,7 @@ TRY.
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>
-FIELD-SYMBOLS:
+  FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
@@ -1167,7 +1221,7 @@ FIELD-SYMBOLS:
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNSELECT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="21 " MTDNEWEXC="X">
+   <ITEM CMPNAME="UNSELECT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="23 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Unselect the component"/>
     </TEXTS>
