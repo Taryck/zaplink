@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="EA13BF8FEDC1C192237171D13B7AFCA1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2D979C021E39939DE8054A31F475E659" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="47F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -54,6 +54,8 @@
    <ITEM CMPNAME="TO_MSG_COLL" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_MSG_COLL"/>
    <ITEM CMPNAME="TO_OPTIONS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_OPTIONS"/>
    <ITEM CMPNAME="TO_RAW" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_RAW"/>
+   <ITEM CMPNAME="TO_RAW_BASE" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_RAW_BASE"/>
+   <ITEM CMPNAME="TO_RAW_DATA" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_RAW_DATA"/>
    <ITEM CMPNAME="TO_XML" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_XML"/>
    <ITEM CMPNAME="TR_DLVUNIT" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_DLVUNIT"/>
    <ITEM CMPNAME="TR_DOCID" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_DOCID"/>
@@ -133,8 +135,7 @@
 
   o_data = read_from_sap( component ).
   IF o_data IS BOUND.
-    o_data-&gt;connector = me-&gt;uuid.
-    o_data-&gt;version = me-&gt;version.
+    o_data-&gt;update_connector_data( me ).
     CREATE OBJECT ez_xml.
 
     TRY.
@@ -170,6 +171,7 @@
      <ITEM VERSION="1" MTDNAME="IMPORT_TO_SAP">
       <SOURCE>
   DATA root_node TYPE REF TO if_ixml_node.
+  DATA o_raw_b   TYPE to_raw_base.
   DATA o_raw     TYPE to_raw.
   DATA _name     TYPE string.
   DATA ez_xml    TYPE REF TO zaplink_easyxml.
@@ -195,20 +197,20 @@
       ENDIF.
 
       TRY.
-          o_raw = zaplink_connectors=&gt;node_2_raw( root_node ).
+          o_raw_b = zaplink_connectors=&gt;node_2_raw( root_node ).
         CATCH zaplink_cx_connector INTO o_mycx.
           RAISE EXCEPTION o_mycx.
       ENDTRY.
 
 * Version handling to develop
-      IF is_supported_version( o_raw-&gt;version ) = abap_false.
+      IF is_supported_version( o_raw_b-&gt;version ) = abap_false.
 * Version &apos;&amp;CONN_VER&amp;&apos; is not (or no longer) suported by this connector.
         RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
               textid = zaplink_cx_connector=&gt;unsuported_version
-            conn_ver = o_raw-&gt;version.
+            conn_ver = o_raw_b-&gt;version.
       ENDIF.
 
-      o_raw = create_new_raw( o_raw-&gt;type ).
+      o_raw = create_new_raw( o_raw_b-&gt;type ).
       CREATE OBJECT ez_xml.
       CALL METHOD ez_xml-&gt;xml2any
         EXPORTING
@@ -671,7 +673,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     </EXCEPTIONS>
     <SOURCE>
   DATA root_node TYPE REF TO if_ixml_node.
-  DATA o_raw     TYPE to_raw.
+  DATA o_raw     TYPE to_raw_base.
   DATA _name     TYPE string.
 
   CHECK object IS BOUND.
