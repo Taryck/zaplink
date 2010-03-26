@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2D979C021E39939DE8054A31F475E659" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="40747636D806648770B6035064CF5458" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="47F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -88,6 +88,11 @@
    <ITEM CMPNAME="WRITE_TO_SAP" VERSION="1" EXPOSURE="2" CMPTYPE="1" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="WRITE_TO_SAP"/>
   </ALIASES>
   <ATTRIBUTS>
+   <ITEM CMPNAME="BALLOG_SUBOBJECT" VERSION="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;CNX_COMMUN&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="O_CX" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
@@ -174,7 +179,11 @@
   DATA o_raw_b   TYPE to_raw_base.
   DATA o_raw     TYPE to_raw.
   DATA _name     TYPE string.
-  DATA ez_xml    TYPE REF TO zaplink_easyxml.
+*  DATA o_comp    TYPE to_component.
+*  DATA o_c_in_l  TYPE to_component.
+*  DATA o_msgs    TYPE to_msg_coll.
+*  DATA o_msgs_2  TYPE to_msg_coll.
+  DATA ez_xml    TYPE to_ez_xml.
   DATA o_cx      TYPE REF TO cx_root.
   DATA o_zlcx    TYPE REF TO zaplink_cx.
 
@@ -218,6 +227,8 @@
         CHANGING
           any    = o_raw.
       IF ez_xml-&gt;application_log-&gt;has_messages_of_msgt( id_msgty = &apos;W&apos;) = abap_true.
+*        CREATE OBJECT o_comp.   o_comp-&gt;set_type( o_raw_b-&gt;type ).    o_comp-&gt;set_name( o_raw_b-&gt;name ).
+*        mac_create_log o_msgs ballog_subobject space.   o_comp-&gt;set_msg_coll( o_msgs ).
         application_log-&gt;add_from_instance( io_msglist = ez_xml-&gt;application_log
                                      if_add_as_subnode = abap_true ).
 *Issue 45
@@ -243,6 +254,14 @@
       ENDIF.
 
       components = write_to_sap( o_raw ).
+*      o_c_in_l = components-&gt;search( o_comp ).
+*      IF o_c_in_l IS INITIAL.
+*        components-&gt;add( o_comp ).
+*      ELSE.
+*        o_msgs_2 = o_c_in_l-&gt;get_msg_coll( ).
+*        IF NOT o_msgs_2 IS INITIAL.   o_msgs-&gt;add_from_instance( io_msglist = o_msgs_2 ).   ENDIF.
+*        o_c_in_l-&gt;set_msg_coll( o_msgs ).
+*      ENDIF.
     CATCH zaplink_cx_connector INTO o_mycx.
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_zlcx.

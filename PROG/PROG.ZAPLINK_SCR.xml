@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="907522F3209A1D574109F1812DC68B59" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="1C660687B2D119F3D1C794CB52AF1C4A" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000101" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
+  <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" VERN="000104" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
   <SOURCE>
 *&amp;---------------------------------------------------------------------*
 *&amp;  Include           ZAPLINLK_SCR
@@ -296,6 +296,38 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR s_type-low.
 
 AT SELECTION-SCREEN ON VALUE-REQUEST FOR s_type-high.
   zaplink_connectors=&gt;get_values( CHANGING type = s_type-high ).
+
+AT SELECTION-SCREEN ON HELP-REQUEST FOR p_file.
+  DATA t_links TYPE STANDARD TABLE OF tline WITH DEFAULT KEY.
+  CALL FUNCTION &apos;HELP_OBJECT_SHOW&apos;
+    EXPORTING
+      dokclass                            = &apos;TX&apos;
+*     DOKLANGU                            = SY-LANGU
+      dokname                             = &apos;ZAPLINK-P_FILE&apos;
+      DOKTITLE                            = &apos;Filename documentation&apos;(hfi)
+      called_by_program                   = sy-repid
+      called_by_dynp                      = sy-dynnr
+*     CALLED_FOR_TAB                      = &apos; &apos;
+      called_for_field                    = &apos;P_FILE&apos;
+*     CALLED_FOR_TAB_FLD_BTCH_INPUT       = &apos; &apos;
+*     MSG_VAR_1                           = &apos; &apos;
+*     MSG_VAR_2                           = &apos; &apos;
+*     MSG_VAR_3                           = &apos; &apos;
+*     MSG_VAR_4                           = &apos; &apos;
+*     CALLED_BY_CUAPROG                   = &apos; &apos;
+*     CALLED_BY_CUASTAT                   =
+*     SHORT_TEXT                          = &apos; &apos;
+*     CLASSIC_SAPSCRIPT                   = &apos; &apos;
+    TABLES
+      links                               = t_links
+    EXCEPTIONS
+      object_not_found                    = 1
+      sapscript_error                     = 2
+      OTHERS                              = 3.
+  IF sy-subrc &lt;&gt; 0.
+    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+  ENDIF.
 
 AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
   DATA l_file TYPE zaplink_gui=&gt;td_filename.

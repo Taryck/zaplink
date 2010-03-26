@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7D98B6E7360A8A5B175D6327203BB44C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SXSD_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="315A7F54F4394F7E1777C5F3CB0E6E0E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SXSD_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_BADI_DATA"/>
  </DEPENDENCIES>
@@ -36,6 +36,32 @@
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
+  <METHODS>
+   <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+    </TEXTS>
+    <SOURCE>
+  super-&gt;constructor( ).
+*  DATA o_conn   TYPE to_connector.
+*  DATA o_sxsd   TYPE to_badi_def.
+*  DATA o_sxci   TYPE to_badi_impl.
+*  DATA _type    TYPE td_comptype.
+*
+*  CREATE OBJECT object.
+*  CASE type.
+*    WHEN st_badi_def.
+*      CREATE OBJECT o_sxsd.
+** Create empty interface object
+*      o_conn = zaplink_connectors=&gt;create_connector( type = t_badi_itf ).
+*      IF o_conn IS BOUND.
+*        _type = t_badi_itf.
+*        o_sxsd-&gt;interface = o_conn-&gt;create_new_raw( _type ).
+*      ENDIF.
+*      object-&gt;raw = o_sxsd.
+**      create object object type TO_CLASS.</SOURCE>
+   </ITEM>
+  </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_BADI_DATA" VERSION="1" MTDNAME="FROM_DATA">
     <SOURCE>

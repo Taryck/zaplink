@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3F0B3244BA02F6ABDDA4E75379F05370" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9795DB6ED3633060B4B8A38580CA2CD3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="4FF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -151,6 +151,8 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
         o_subcomps = o_comp-&gt;get_subcomponents( ).
         IF o_subcomps IS NOT BOUND.
           CREATE OBJECT o_subcomps.
+        else.
+          o_subcomps = o_subcomps-&gt;clone( ).    &quot; Issue 49 : DO not use list itself because generate nested loop
         ENDIF.
         o_subcomps-&gt;add( o_comp ).
         IF o_list-&gt;is_included( o_subcomps ) = abap_true.

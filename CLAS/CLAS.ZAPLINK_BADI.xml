@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="923A1B327BFF5A614A7D97DCA54E05F4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9035B6C1E1F0F742C093B656F5EFFFE3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -756,7 +756,7 @@ _exists = ZAPLINK_BADI=&gt;exists-not_exists.
   CASE type.
     WHEN st_badi_def.
       CREATE OBJECT o_sxsd.
-* Crete empty interface object
+* Create empty interface object
       o_conn = zaplink_connectors=&gt;create_connector( type = t_badi_itf ).
       IF o_conn IS BOUND.
         _type = t_badi_itf.

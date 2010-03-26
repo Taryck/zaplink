@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="20595733D4B4AD3967DF0F12D34F4D2A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="37A9DC527316B85A32B903157EA189BC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="57F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -345,7 +345,6 @@ check data &lt;&gt; _options.
   DATA o_comp_s     TYPE to_component.
   DATA o_listsub    TYPE to_list.
   DATA o_subcomp    TYPE to_component.
-  DATA o_subcomp_s  TYPE to_component.
   DATA object_off        TYPE to_raw.
   DATA _components  TYPE to_list.
   DATA _xml_comp    TYPE REF TO if_ixml_document.
@@ -423,21 +422,20 @@ check data &lt;&gt; _options.
                 o_listsub-&gt;init_iter( ).
                 o_subcomp = o_listsub-&gt;get_next( ).
                 WHILE o_subcomp IS BOUND.
-* ISSUE 10 : Workaround
-*            o_subcomp_s = o_listsub-&gt;search( o_subcomp ).
-*            _clone = _find_component_node( o_subcomp_s ).
-*            o_raw = zaplink_connectors=&gt;node_2_raw( _clone ).
-**            _directory =
-*            _options-&gt;directory-&gt;set_directory( o_raw ).
-*            IF _options-&gt;directory-&gt;log IS BOUND.
-*              o_log-&gt;add_from_instance( _options-&gt;directory-&gt;log ).
-*            ENDIF.
+                  _clone = _find_component_node( component = o_comp_s
+                                                  sub_comp = o_subcomp ).
+                  o_raw = zaplink_connectors=&gt;node_2_raw( _clone ).
+                  _options-&gt;directory-&gt;set_directory( o_raw ).
+                  IF _options-&gt;directory-&gt;o_log IS BOUND.
+                    o_log-&gt;add_from_instance( _options-&gt;directory-&gt;o_log ).
+                  ENDIF.
                   o_subcomp = o_listsub-&gt;get_next( ).
                 ENDWHILE.
               ENDIF.
 
               _components = o_connector-&gt;import_to_sap( _xml_comp ).
               o_comp-&gt;set_subcomponents( _components ).
+              o_comp-&gt;set_msg_coll( o_connector-&gt;application_log ).
               IF _components-&gt;search( o_comp ) IS BOUND.    _components-&gt;remove( o_comp ).    ENDIF.
               o_remain-&gt;remove( o_comp ).                   &quot; Issue 47
             CATCH zaplink_cx_connector INTO _cx_connector.
@@ -621,13 +619,15 @@ check data &lt;&gt; _options.
         ENDIF.
       ENDIF.
 
+* Issue 10 : update node list
+      _index-key = o_comp.
+      MODIFY TABLE _nodeindex FROM _index.
+      IF sy-subrc &lt;&gt; 0.
+        INSERT _index INTO TABLE _nodeindex.
+      ENDIF.
+
       IF _is_subcomponent( _index-node ) = abap_false.
         _complist-&gt;add( o_comp ).
-        _index-key = o_comp.
-        MODIFY TABLE _nodeindex FROM _index.
-        IF sy-subrc &lt;&gt; 0.
-          INSERT _index INTO TABLE _nodeindex.
-        ENDIF.
       ELSE.
 * Not working : node are the same but it&apos;s a new object. :(
 *      READ TABLE _nodeindex INTO _index
@@ -653,11 +653,12 @@ check data &lt;&gt; _options.
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT"/>
-     <ITEM SCONAME="NODE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_IXML_NODE">
+     <ITEM SCONAME="NODE" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_IXML_NODE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
       </TEXTS>
      </ITEM>
+     <ITEM SCONAME="SUB_COMP" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT" PAROPTIONL="X"/>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" VERSION="1" LANGU="E" EDITORDER="1 ">
@@ -668,6 +669,7 @@ check data &lt;&gt; _options.
     </EXCEPTIONS>
     <SOURCE>
   DATA o_comp   TYPE to_component.
+  data o_list   type to_list.
   DATA _cx_list TYPE REF TO zaplink_cx_list.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _nodeindex.
@@ -675,9 +677,7 @@ check data &lt;&gt; _options.
   TRY.
       o_comp = _complist-&gt;search( component ).
     CATCH zaplink_cx_list INTO _cx_list.
-      IF _cx_list-&gt;textid = zaplink_cx_list=&gt;not_found.
-        EXIT.
-      ELSE.
+      IF _cx_list-&gt;textid = zaplink_cx_list=&gt;not_found.   EXIT.   ELSE.
         CREATE OBJECT o_mycx
           EXPORTING
             textid  = zaplink_cx=&gt;system_error
@@ -686,6 +686,14 @@ check data &lt;&gt; _options.
         RAISE EXCEPTION o_mycx.
       ENDIF.
   ENDTRY.
+
+* Issue 10 : sub comp lookup
+  check o_comp is bound.
+  o_list = o_comp-&gt;GET_SUBCOMPONENTS( ).
+  If sub_comp is bound and o_list is bound.
+    o_comp = o_list-&gt;search( sub_comp ).
+  endif.
+* Issue 10 : end
 
   READ TABLE _nodeindex ASSIGNING &lt;i&gt;
        WITH TABLE KEY key = o_comp.

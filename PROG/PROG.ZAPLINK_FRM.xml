@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9EA85DF9E850465DA2B1A8F4AABB1423" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="914CDE9DA7579E003D1EC510D2D769FA" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" VERN="000094" RMAND="220" RLOAD="E" UCCHECK="X"/>
+  <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" VERN="000097" RMAND="220" RLOAD="E" UCCHECK="X"/>
   <SOURCE>
 *---------------------------------------------------------------------*
 *  Include           ZAPLINK_FRM
@@ -150,6 +150,10 @@
               PERFORM writemessage USING &apos;E&apos; msg.
               IF _cx IS BOUND.
                 _cx-&gt;write( ).
+                _msg_col = t_comp-&gt;get_msg_coll( ).
+                IF _msg_col IS BOUND.
+                  _msg_col-&gt;write( ).
+                ENDIF.
               ELSE.
                 IF _msg_col IS BOUND.
                   _msg_col-&gt;write( ).
@@ -159,11 +163,12 @@
               CONCATENATE offset _type &apos;-&apos; _name &apos;SUCCEED&apos;(suc)
                   INTO msg SEPARATED BY space.
               PERFORM writemessage USING &apos;S&apos; msg.
-            ENDIF.
-
-            _msg_col = t_comp-&gt;get_msg_coll( ).
-            IF _msg_col IS BOUND.
-              _msg_col-&gt;write( ).
+              _msg_col = t_comp-&gt;get_msg_coll( ).
+              IF _msg_col IS BOUND.
+                IF _msg_col-&gt;has_messages_of_msgt( &apos;W&apos; ) = abap_true .
+                  _msg_col-&gt;write( ).
+                ENDIF.
+              ENDIF.
             ENDIF.
 
           ENDIF.
@@ -440,7 +445,7 @@
   FORM create_file .
     DATA d_file TYPE t_filename.
 
-    IF d_file_type IS INITIAL or p_zip is INITIAL.
+    IF d_file_type IS INITIAL OR p_zip IS INITIAL.
       CREATE OBJECT o_file.
     ELSE.
       CREATE OBJECT o_file TYPE (d_file_type).

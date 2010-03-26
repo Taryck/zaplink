@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7969A663322A72C23B813565BAF160D2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9B8C59C3B7C339CBEC108FEF31F0CC84" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -878,6 +878,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         EXPORTING
           o_comp = o_comp.
       o_data-&gt;raw = _data.
+      CLEAR: _data-&gt;a0_maindata-devclass, _data-&gt;a0_maindata-parentcl.    &quot; Issue 48
     CATCH zaplink_cx INTO _cx.
       CREATE OBJECT o_mycx
         EXPORTING
@@ -1097,6 +1098,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   LOOP AT package-&gt;packages ASSIGNING &lt;p&gt;.
     TRY.
         o_package ?= &lt;p&gt;-zl_object-&gt;raw.
+        o_package-&gt;a0_maindata-devclass = &lt;p&gt;-zl_object-&gt;name.    o_package-&gt;a0_maindata-parentcl = package-&gt;a0_maindata-devclass. &quot; Issue 48
         CALL METHOD create_package
           EXPORTING
             package    = o_package
