@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C908428304FDEAD2D5D4EC64EBD1E458" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="235F69155E33D021B876F284A2018645" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -85,7 +85,7 @@ END-OF-DEFINITION.</MACROS>
   super-&gt;constructor( ).
   mac_create_log application_log ballog_subobject space.
   type-type = supportedtypes-general. INSERT type INTO TABLE supported_types.
-  type-type = supportedtypes-indep. INSERT type INTO TABLE supported_types.
+  type-type = supportedtypes-indep.   INSERT type INTO TABLE supported_types.
 
   uuid = _uuid.
   version = _ver.</SOURCE>
@@ -113,50 +113,54 @@ END-OF-DEFINITION.</MACROS>
     <SOURCE>
   DATA _text  TYPE tt_rawtext.
 
-  head-id = docu-id.
-  head-object = docu-object.
-  head-masterlang = docu-masterlang.
-  head-langu = docu-langu.
-  head-typ = docu-typ.
-  head-selfdef = docu-selfdef.
-  IF docu-selfdef = space.
-    CALL FUNCTION &apos;DOCU_GET&apos;
-      EXPORTING
+  TRY.
+    head-id = docu-id.
+    head-object = docu-object.
+    head-masterlang = docu-masterlang.
+    head-langu = docu-langu.
+    head-typ = docu-typ.
+    head-selfdef = docu-selfdef.
+    IF docu-selfdef = space.
+      CALL FUNCTION &apos;DOCU_GET&apos;
+        EXPORTING
 *       EXTEND_EXCEPT                = &apos; &apos;
-        id                           = docu-id
-        langu                        = docu-langu
-        object                       = docu-object
-        typ                          = docu-typ
-        version                      = docu-version
-        version_active_or_last       = &apos;A&apos;
+          id                           = docu-id
+          langu                        = docu-langu
+          object                       = docu-object
+          typ                          = docu-typ
+          version                      = docu-version
+          version_active_or_last       = &apos;A&apos;
 *         PRINT_PARAM_GET              = &apos;X&apos;
-      IMPORTING
-        dokstate                     = lang-state
+        IMPORTING
+          dokstate                     = lang-state
 *         DOKTITLE                     =
-        head                         = lang-head
+          head                         = lang-head
 *        doktyp                       = head-typ
-      TABLES
-        line                         = _text
-      EXCEPTIONS
-        no_docu_on_screen            = 1
-        no_docu_self_def             = 2
-        no_docu_temp                 = 3
-        ret_code                     = 4
-        OTHERS                       = 5.
-    IF sy-subrc &lt;&gt; 0.
-      lmac_add_mf_and_raise &apos;DOCU_GET&apos; sy-subrc.
+        TABLES
+          line                         = _text
+        EXCEPTIONS
+          no_docu_on_screen            = 1
+          no_docu_self_def             = 2
+          no_docu_temp                 = 3
+          ret_code                     = 4
+          OTHERS                       = 5.
+      IF sy-subrc &lt;&gt; 0.
+        lmac_add_mf_and_raise &apos;DOCU_GET&apos; sy-subrc.
+      ENDIF.
+      lang-_ = raw2string( _text ).
+      head-application = lang-tdobject.
+      head-dokform = lang-tdform.
+      head-dokstyle = lang-tdstyle.
+      CLEAR:
+        lang-tdobject,
+        lang-tdname,
+        lang-tdid,
+        lang-tdform,
+        lang-tdstyle.
     ENDIF.
-    lang-_ = raw2string( _text ).
-    head-application = lang-tdobject.
-    head-dokform = lang-tdform.
-    head-dokstyle = lang-tdstyle.
-    CLEAR:
-      lang-tdobject,
-      lang-tdname,
-      lang-tdid,
-      lang-tdform,
-      lang-tdstyle.
-  ENDIF.</SOURCE>
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <PARAMETERS>
@@ -308,6 +312,21 @@ END-OF-DEFINITION.</MACROS>
   t_docs = get( ids = r_ids
              object = object ).
   IF NOT t_docs IS INITIAL.   READ TABLE t_docs INTO result INDEX 1.    ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="NAME_2_MASK" VERSION="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert Component name to mask depending of component type"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_NAME_MASK"/>
+     <ITEM SCONAME="TYPE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
+    </PARAMETERS>
+    <SOURCE>
+  CASE type.
+    WHEN supportedtypes-general. result-id = &apos;TX&apos;.    result-object = name.
+    WHEN supportedtypes-indep.   result = name.
+  ENDCASE.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="RAW2STRING" VERSION="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
@@ -625,19 +644,21 @@ SPLIT string AT LINE_SEPARATOR
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>
   DATA type     TYPE td_comptype.
-  data s_mask   type ts_name_mask.
+  DATA s_mask   TYPE ts_name_mask.
+  DATA d_name   TYPE td_compname.
 
   exists = me-&gt;exists-not_exists.
 
   TRY.
       type = component-&gt;get_type( ).
       CASE type.
-        WHEN supportedtypes-general or supportedtypes-indep..
-          s_mask = component-&gt;get_name( ).
-          select single id into s_mask-id
-            from dokil
-            where     id = s_mask-id
-              and object = s_mask-object.
+        WHEN supportedtypes-general OR supportedtypes-indep..
+          d_name = component-&gt;get_name( ).
+          s_mask = name_2_mask( type = type    name = d_name ).
+          SELECT SINGLE id INTO s_mask-id
+            FROM dokil
+            WHERE     id = s_mask-id
+              AND object = s_mask-object.
           IF sy-subrc = 0.    exists = me-&gt;exists-exists.   ENDIF.
 *          CALL FUNCTION &apos;DOCU_INIT&apos;
 *            EXPORTING
@@ -684,7 +705,8 @@ SPLIT string AT LINE_SEPARATOR
       object-&gt;set_component( component ).
       CASE type.
         WHEN supportedtypes-general OR supportedtypes-indep.
-          s_mask = component-&gt;get_name( ).
+          d_name = component-&gt;get_name( ).
+          s_mask = name_2_mask( type = type    name = d_name ).
           s_doc = get_single( ids = s_mask-id
                            object = s_mask-object ).
 
@@ -711,20 +733,23 @@ SPLIT string AT LINE_SEPARATOR
     <SOURCE>
   DATA o_data   TYPE to_doc.
   DATA o_comp   TYPE to_component.
-  data d_name   type td_compname.
   DATA s_mask   TYPE ts_name_mask.
   DATA s_doc    TYPE ts_doc.
 
   TRY.
 
       CASE object-&gt;type.
-        WHEN supportedtypes-general or supportedtypes-indep.
+        WHEN supportedtypes-general OR supportedtypes-indep.
           o_data ?= object-&gt;raw.
-          s_mask = object-&gt;name.    o_data-&gt;a0_maindata-id = s_mask-id.   o_data-&gt;a0_maindata-object = s_mask-object.
+          CASE object-&gt;type.
+            WHEN supportedtypes-general. s_mask-id = &apos;TX&apos;.    s_mask-object = object-&gt;name.
+            WHEN supportedtypes-indep.   s_mask = object-&gt;name.
+          ENDCASE.
+          o_data-&gt;a0_maindata-id = s_mask-id.   o_data-&gt;a0_maindata-object = s_mask-object.
           s_doc = o_data-&gt;to_data( ).
           set_single( s_doc ).
           CREATE OBJECT o_comp.
-          o_comp-&gt;set_type( object-&gt;type ).   d_name = s_mask.    o_comp-&gt;set_name( d_name ).
+          o_comp-&gt;set_type( object-&gt;type ).   o_comp-&gt;set_name( object-&gt;name ).
           CREATE OBJECT components.
           components-&gt;add( o_comp ).
         WHEN OTHERS.

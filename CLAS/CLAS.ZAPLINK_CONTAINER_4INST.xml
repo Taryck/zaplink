@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="37A9DC527316B85A32B903157EA189BC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="67FB59E3C9A1F237C0162BEA708FE62D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="57F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -669,37 +669,40 @@ check data &lt;&gt; _options.
     </EXCEPTIONS>
     <SOURCE>
   DATA o_comp   TYPE to_component.
-  data o_list   type to_list.
+  DATA o_list   TYPE to_list.
   DATA _cx_list TYPE REF TO zaplink_cx_list.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _nodeindex.
 
   TRY.
-      o_comp = _complist-&gt;search( component ).
-    CATCH zaplink_cx_list INTO _cx_list.
-      IF _cx_list-&gt;textid = zaplink_cx_list=&gt;not_found.   EXIT.   ELSE.
-        CREATE OBJECT o_mycx
-          EXPORTING
-            textid  = zaplink_cx=&gt;system_error
-            prev_cx = _cx_list.
-        o_mycx-&gt;update( ).
-        RAISE EXCEPTION o_mycx.
-      ENDIF.
-  ENDTRY.
+    TRY.
+        o_comp = _complist-&gt;search( component ).
+      CATCH zaplink_cx_list INTO _cx_list.
+        IF _cx_list-&gt;textid = zaplink_cx_list=&gt;not_found.
+          EXIT.
+        ELSE.
+          CREATE OBJECT o_mycx
+            EXPORTING
+              textid  = zaplink_cx=&gt;system_error
+              prev_cx = _cx_list.
+          o_mycx-&gt;update( ).
+          RAISE EXCEPTION o_mycx.
+        ENDIF.
+    ENDTRY.
 
 * Issue 10 : sub comp lookup
-  check o_comp is bound.
-  o_list = o_comp-&gt;GET_SUBCOMPONENTS( ).
-  If sub_comp is bound and o_list is bound.
-    o_comp = o_list-&gt;search( sub_comp ).
-  endif.
+    CHECK o_comp IS BOUND.
+    o_list = o_comp-&gt;get_subcomponents( ).
+    IF sub_comp IS BOUND AND o_list IS BOUND.
+      o_comp = o_list-&gt;search( sub_comp ).
+    ENDIF.
 * Issue 10 : end
 
-  READ TABLE _nodeindex ASSIGNING &lt;i&gt;
-       WITH TABLE KEY key = o_comp.
-  IF sy-subrc = 0.
-    node = &lt;i&gt;-node.
-  ENDIF.
+    READ TABLE _nodeindex ASSIGNING &lt;i&gt;
+         WITH TABLE KEY key = o_comp.
+    IF sy-subrc = 0.
+      node = &lt;i&gt;-node.
+    ENDIF.
 
 *  DATA _type     TYPE td_comptype.
 *  DATA _name     TYPE td_compname.
@@ -740,7 +743,9 @@ check data &lt;&gt; _options.
 *    IF NOT node IS BOUND.
 *      EXIT.
 *    ENDIF.
-*  ENDWHILE.</SOURCE>
+*  ENDWHILE.
+    mac_def_catch ZAPLINK_CX_CONTAINER.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_IS_SUBCOMPONENT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>

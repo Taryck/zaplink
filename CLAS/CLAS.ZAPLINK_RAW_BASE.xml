@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C28CF1CE26B49976068787C3AE53BF1C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_BASE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="636EA6D33E4B9E0A2FD878B36E5E9880" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_BASE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="49E6954BE4BE5E12E1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -211,12 +211,10 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   DATA ez_xml          TYPE to_ez_xml.
   DATA o_xml           TYPE to_xml.
 
-  TRY.
-    CREATE OBJECT ez_xml.
-    clear checksum.  &quot; Issue 21 : clear previous checksum
-    o_xml = ez_xml-&gt;any2xml( any       = me
-                             type      = comp_nodename ).
-  ENDTRY.
+  CREATE OBJECT ez_xml.
+  CLEAR checksum.  &quot; Issue 21 : clear previous checksum
+  o_xml = ez_xml-&gt;any2xml( any       = me
+                           type      = comp_nodename ).
 
   result = o_xml.</SOURCE>
    </ITEM>

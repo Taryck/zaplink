@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="914CDE9DA7579E003D1EC510D2D769FA" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="917A86FBE8AB08DD56BF40A2A7B909EC" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" VERN="000097" RMAND="220" RLOAD="E" UCCHECK="X"/>
+  <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" VERN="000098" RMAND="220" RLOAD="E" UCCHECK="X"/>
   <SOURCE>
 *---------------------------------------------------------------------*
 *  Include           ZAPLINK_FRM
@@ -445,19 +445,25 @@
   FORM create_file .
     DATA d_file TYPE t_filename.
 
-    IF d_file_type IS INITIAL OR p_zip IS INITIAL.
-      CREATE OBJECT o_file.
-    ELSE.
-      CREATE OBJECT o_file TYPE (d_file_type).
-    ENDIF.
-    IF NOT f_local IS INITIAL.
-      o_file-&gt;set_filetype( zaplink_file=&gt;filetypes-local ).
-    ELSEIF NOT f_server IS INITIAL.
-      o_file-&gt;set_filetype( zaplink_file=&gt;filetypes-server ).
-    ENDIF.
-    d_file = p_file.
-    mac_replace d_file: uname, sysid, datum, uzeit.
-    o_file-&gt;set_filename( d_file ).
+    TRY.
+        IF d_file_type IS INITIAL OR p_zip IS INITIAL.
+          CREATE OBJECT o_file.
+        ELSE.
+          CREATE OBJECT o_file TYPE (d_file_type).
+        ENDIF.
+        IF NOT f_local IS INITIAL.
+          o_file-&gt;set_filetype( zaplink_file=&gt;filetypes-local ).
+        ELSEIF NOT f_server IS INITIAL.
+          o_file-&gt;set_filetype( zaplink_file=&gt;filetypes-server ).
+        ENDIF.
+        d_file = p_file.
+        mac_replace d_file: uname, sysid, datum, uzeit.
+        o_file-&gt;set_filename( d_file ).
+
+      CATCH zaplink_cx INTO o_exception.
+        o_exception-&gt;write( ).
+        leave program.
+    ENDTRY.
 
   ENDFORM.                    &quot; CREATE_FILE</SOURCE>
   <TEXTSPOOL>

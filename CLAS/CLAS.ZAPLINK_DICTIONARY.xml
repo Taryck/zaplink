@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="650176BED95F36BC27B682CBFD8D7839" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B20DBDFD603A72071996F67E2141877D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -740,45 +740,49 @@ END-OF-DEFINITION.</MACROS>
   DATA d_subrc        TYPE sy-subrc.
   DATA s_fm_data      TYPE zaplink_dtel_data=&gt;ts_fm_data.
 
-  s_fm_data = o_data-&gt;to_data( ).
-  d_name = s_fm_data-header-rollname.
-  CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
-    EXPORTING
-      NO_ASK                     = abap_true
-      objname                    = d_name
-      objtype                    = dd_eu_type-data_element
+  TRY.
+    s_fm_data = o_data-&gt;to_data( ).
+    d_name = s_fm_data-header-rollname.
+    CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+      EXPORTING
+        no_ask                     = abap_true
+        objname                    = d_name
+        objtype                    = dd_eu_type-data_element
 *     CHANGING
 *       CORRNUM                    = &apos; &apos;
-    EXCEPTIONS
-      not_executed               = 1
-      object_not_found           = 0
-      object_not_specified       = 3
-      permission_failure         = 4
-      dialog_needed              = 5
-      OTHERS                     = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
-  ENDIF.
+      EXCEPTIONS
+        not_executed               = 1
+        object_not_found           = 0
+        object_not_specified       = 3
+        permission_failure         = 4
+        dialog_needed              = 5
+        OTHERS                     = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+    ENDIF.
 
-  CALL FUNCTION &apos;DDIF_DTEL_PUT&apos;
-    EXPORTING
-      name                    = d_name
-      DD04V_WA                = s_fm_data-header
-    EXCEPTIONS
-      DTEL_NOT_FOUND          = 1
-      NAME_INCONSISTENT       = 2
-      DTEL_INCONSISTENT       = 3
-      PUT_FAILURE             = 4
-      PUT_REFUSED             = 5
-      OTHERS                  = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;DDIF_DTEL_PUT&apos; sy-subrc.
-  ENDIF.
+    CALL FUNCTION &apos;DDIF_DTEL_PUT&apos;
+      EXPORTING
+        name              = d_name
+        dd04v_wa          = s_fm_data-header
+      EXCEPTIONS
+        dtel_not_found    = 1
+        name_inconsistent = 2
+        dtel_inconsistent = 3
+        put_failure       = 4
+        put_refused       = 5
+        OTHERS            = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;DDIF_DTEL_PUT&apos; sy-subrc.
+    ENDIF.
 
-  DELETE FROM dd04t WHERE rollname = s_fm_data-header-rollname.
-  MODIFY dd04t FROM TABLE s_fm_data-texts.
+    DELETE FROM dd04t WHERE rollname = s_fm_data-header-rollname.
+    MODIFY dd04t FROM TABLE s_fm_data-texts.
 
-  zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
+    zaplink_documentation=&gt;set( s_fm_data-docs ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_DOMAIN" VERSION="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
@@ -808,50 +812,54 @@ END-OF-DEFINITION.</MACROS>
   DATA d_subrc        TYPE sy-subrc.
   DATA s_fm_data      TYPE zaplink_doma_data=&gt;ts_fm_data.
 
-  s_fm_data = o_data-&gt;to_data( ).
-  d_name = s_fm_data-header-domname.
-  CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
-    EXPORTING
-      NO_ASK                     = abap_true
-      objname                    = d_name
-      objtype                    = dd_eu_type-domain
+  TRY.
+    s_fm_data = o_data-&gt;to_data( ).
+    d_name = s_fm_data-header-domname.
+    CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+      EXPORTING
+        no_ask                     = abap_true
+        objname                    = d_name
+        objtype                    = dd_eu_type-domain
 *     CHANGING
 *       CORRNUM                    = &apos; &apos;
-    EXCEPTIONS
-      not_executed               = 1
-      object_not_found           = 0
-      object_not_specified       = 3
-      permission_failure         = 4
-      dialog_needed              = 5
-      OTHERS                     = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
-  ENDIF.
+      EXCEPTIONS
+        not_executed               = 1
+        object_not_found           = 0
+        object_not_specified       = 3
+        permission_failure         = 4
+        dialog_needed              = 5
+        OTHERS                     = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+    ENDIF.
 
-  CALL FUNCTION &apos;DDIF_DOMA_PUT&apos;
-    EXPORTING
-      name              = d_name
-      dd01v_wa          = s_fm_data-header
-    TABLES
-      dd07v_tab         = s_fm_data-values
-    EXCEPTIONS
-      doma_not_found    = 1
-      name_inconsistent = 2
-      doma_inconsistent = 3
-      put_failure       = 4
-      put_refused       = 5
-      OTHERS            = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;DDIF_DOMA_PUT&apos; sy-subrc.
-  ENDIF.
+    CALL FUNCTION &apos;DDIF_DOMA_PUT&apos;
+      EXPORTING
+        name              = d_name
+        dd01v_wa          = s_fm_data-header
+      TABLES
+        dd07v_tab         = s_fm_data-values
+      EXCEPTIONS
+        doma_not_found    = 1
+        name_inconsistent = 2
+        doma_inconsistent = 3
+        put_failure       = 4
+        put_refused       = 5
+        OTHERS            = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;DDIF_DOMA_PUT&apos; sy-subrc.
+    ENDIF.
 
-  DELETE FROM dd01t WHERE domname = s_fm_data-header-domname.
-  MODIFY dd01t FROM TABLE s_fm_data-texts.
+    DELETE FROM dd01t WHERE domname = s_fm_data-header-domname.
+    MODIFY dd01t FROM TABLE s_fm_data-texts.
 
-  DELETE FROM dd07t WHERE domname = s_fm_data-header-domname.
-  MODIFY dd07t FROM TABLE s_fm_data-values_texts.
+    DELETE FROM dd07t WHERE domname = s_fm_data-header-domname.
+    MODIFY dd07t FROM TABLE s_fm_data-values_texts.
 
-  zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
+    zaplink_documentation=&gt;set( s_fm_data-docs ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_LOCK_OBJECT" VERSION="1" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
@@ -881,48 +889,52 @@ END-OF-DEFINITION.</MACROS>
   DATA d_subrc        TYPE sy-subrc.
   DATA s_fm_data      TYPE zaplink_enqu_data=&gt;ts_fm_data.
 
-  s_fm_data = o_data-&gt;to_data( ).
-  d_name = s_fm_data-header-viewname.
-  CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
-    EXPORTING
-      no_ask                     = abap_true
-      objname                    = d_name
-      objtype                    = dd_eu_type-lock_object
+  TRY.
+    s_fm_data = o_data-&gt;to_data( ).
+    d_name = s_fm_data-header-viewname.
+    CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+      EXPORTING
+        no_ask                     = abap_true
+        objname                    = d_name
+        objtype                    = dd_eu_type-lock_object
 *     CHANGING
 *       CORRNUM                    = &apos; &apos;
-    EXCEPTIONS
-      not_executed               = 1
-      object_not_found           = 0
-      object_not_specified       = 3
-      permission_failure         = 4
-      dialog_needed              = 5
-      OTHERS                     = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
-  ENDIF.
+      EXCEPTIONS
+        not_executed               = 1
+        object_not_found           = 0
+        object_not_specified       = 3
+        permission_failure         = 4
+        dialog_needed              = 5
+        OTHERS                     = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+    ENDIF.
 
-  CALL FUNCTION &apos;DDIF_ENQU_PUT&apos;
-    EXPORTING
-      name              = d_name
-      dd25v_wa          = s_fm_data-header
-    TABLES
-      dd26e_tab         = s_fm_data-tables
-      dd27p_tab         = s_fm_data-fields
-    EXCEPTIONS
-      enqu_not_found    = 1
-      name_inconsistent = 2
-      enqu_inconsistent = 3
-      put_failure       = 4
-      put_refused       = 5
-      OTHERS            = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;DDIF_ENQU_PUT&apos; sy-subrc.
-  ENDIF.
+    CALL FUNCTION &apos;DDIF_ENQU_PUT&apos;
+      EXPORTING
+        name              = d_name
+        dd25v_wa          = s_fm_data-header
+      TABLES
+        dd26e_tab         = s_fm_data-tables
+        dd27p_tab         = s_fm_data-fields
+      EXCEPTIONS
+        enqu_not_found    = 1
+        name_inconsistent = 2
+        enqu_inconsistent = 3
+        put_failure       = 4
+        put_refused       = 5
+        OTHERS            = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;DDIF_ENQU_PUT&apos; sy-subrc.
+    ENDIF.
 
-  DELETE FROM dd25t WHERE viewname = s_fm_data-header-viewname.
-  MODIFY dd25t FROM TABLE s_fm_data-texts.
+    DELETE FROM dd25t WHERE viewname = s_fm_data-header-viewname.
+    MODIFY dd25t FROM TABLE s_fm_data-texts.
 
-  zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
+    zaplink_documentation=&gt;set( s_fm_data-docs ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_SEARCH_HELP" VERSION="1" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
@@ -952,49 +964,53 @@ END-OF-DEFINITION.</MACROS>
   DATA d_subrc        TYPE sy-subrc.
   DATA s_fm_data      TYPE zaplink_shlp_data=&gt;ts_fm_data.
 
-  s_fm_data = o_data-&gt;to_data( ).
-  d_name = s_fm_data-header-shlpname.
-  CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
-    EXPORTING
-      no_ask                     = abap_true
-      objname                    = d_name
-      objtype                    = dd_eu_type-search_help
+  TRY.
+    s_fm_data = o_data-&gt;to_data( ).
+    d_name = s_fm_data-header-shlpname.
+    CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+      EXPORTING
+        no_ask                     = abap_true
+        objname                    = d_name
+        objtype                    = dd_eu_type-search_help
 *     CHANGING
 *       CORRNUM                    = &apos; &apos;
-    EXCEPTIONS
-      not_executed               = 1
-      object_not_found           = 0
-      object_not_specified       = 3
-      permission_failure         = 4
-      dialog_needed              = 5
-      OTHERS                     = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
-  ENDIF.
+      EXCEPTIONS
+        not_executed               = 1
+        object_not_found           = 0
+        object_not_specified       = 3
+        permission_failure         = 4
+        dialog_needed              = 5
+        OTHERS                     = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+    ENDIF.
 
-  CALL FUNCTION &apos;DDIF_SHLP_PUT&apos;
-    EXPORTING
-      name                    = d_name
-      DD30V_WA                = s_fm_data-header
-    TABLES
-      DD31V_TAB               = s_fm_data-sub_sh
-      DD32P_TAB               = s_fm_data-fields
-      DD33V_TAB               = s_fm_data-ssh_params
-    EXCEPTIONS
-      SHLP_NOT_FOUND          = 1
-      NAME_INCONSISTENT       = 2
-      SHLP_INCONSISTENT       = 3
-      PUT_FAILURE             = 4
-      PUT_REFUSED             = 5
-      OTHERS                  = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;DDIF_SHLP_PUT&apos; sy-subrc.
-  ENDIF.
+    CALL FUNCTION &apos;DDIF_SHLP_PUT&apos;
+      EXPORTING
+        name              = d_name
+        dd30v_wa          = s_fm_data-header
+      TABLES
+        dd31v_tab         = s_fm_data-sub_sh
+        dd32p_tab         = s_fm_data-fields
+        dd33v_tab         = s_fm_data-ssh_params
+      EXCEPTIONS
+        shlp_not_found    = 1
+        name_inconsistent = 2
+        shlp_inconsistent = 3
+        put_failure       = 4
+        put_refused       = 5
+        OTHERS            = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;DDIF_SHLP_PUT&apos; sy-subrc.
+    ENDIF.
 
-  DELETE FROM dd30t WHERE shlpname = s_fm_data-header-shlpname.
-  MODIFY dd30t FROM TABLE s_fm_data-texts.
+    DELETE FROM dd30t WHERE shlpname = s_fm_data-header-shlpname.
+    MODIFY dd30t FROM TABLE s_fm_data-texts.
 
-  zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
+    zaplink_documentation=&gt;set( s_fm_data-docs ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TABLE" VERSION="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
@@ -1026,78 +1042,82 @@ END-OF-DEFINITION.</MACROS>
   DATA t_idx_flds     TYPE zaplink_tabl_data=&gt;tt_dd17v.
   FIELD-SYMBOLS: &lt;i&gt; LIKE LINE OF s_fm_data-indexes.
 
-  s_fm_data = o_data-&gt;to_data( ).
-  d_name = s_fm_data-header-tabname.
-  CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
-    EXPORTING
-      no_ask                     = abap_true
-      objname                    = d_name
-      objtype                    = dd_eu_type-transp_table
+  TRY.
+    s_fm_data = o_data-&gt;to_data( ).
+    d_name = s_fm_data-header-tabname.
+    CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+      EXPORTING
+        no_ask                     = abap_true
+        objname                    = d_name
+        objtype                    = dd_eu_type-transp_table
 *     CHANGING
 *       CORRNUM                    = &apos; &apos;
-    EXCEPTIONS
-      not_executed               = 1
-      object_not_found           = 0
-      object_not_specified       = 3
-      permission_failure         = 4
-      dialog_needed              = 5
-      OTHERS                     = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
-  ENDIF.
+      EXCEPTIONS
+        not_executed               = 1
+        object_not_found           = 0
+        object_not_specified       = 3
+        permission_failure         = 4
+        dialog_needed              = 5
+        OTHERS                     = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+    ENDIF.
 
-  CALL FUNCTION &apos;DDIF_TABL_PUT&apos;
-    EXPORTING
-      name                    = d_name
-      dd02v_wa                = s_fm_data-header
-      dd09l_wa                = s_fm_data-tech
-    TABLES
-        dd03p_tab           = s_fm_data-fields
-        dd05m_tab           = s_fm_data-fk_fields
-        dd08v_tab           = s_fm_data-forein_keys
+    CALL FUNCTION &apos;DDIF_TABL_PUT&apos;
+      EXPORTING
+        name                    = d_name
+        dd02v_wa                = s_fm_data-header
+        dd09l_wa                = s_fm_data-tech
+      TABLES
+          dd03p_tab           = s_fm_data-fields
+          dd05m_tab           = s_fm_data-fk_fields
+          dd08v_tab           = s_fm_data-forein_keys
 *        dd12v_tab           = s_fm_data-indexes
 *        dd17v_tab           = s_fm_data-idx_fields
-        dd35v_tab           = s_fm_data-search_helps
-        dd36m_tab           = s_fm_data-sh_fields
-    EXCEPTIONS
-      tabl_not_found          = 1
-      name_inconsistent       = 2
-      tabl_inconsistent       = 3
-      put_failure             = 4
-      put_refused             = 5
-      OTHERS                  = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;DDIF_TABL_PUT&apos; sy-subrc.
-  ENDIF.
-
-  LOOP AT s_fm_data-indexes ASSIGNING &lt;i&gt;.
-    t_idx_flds = s_fm_data-idx_fields.    DELETE t_idx_flds WHERE indexname &lt;&gt; &lt;i&gt;-indexname.
-    CALL FUNCTION &apos;DDIF_INDX_PUT&apos;
-      EXPORTING
-        name              = d_name
-        id                = &lt;i&gt;-indexname
-        dd12v_wa          = &lt;i&gt;
-      TABLES
-        dd17v_tab         = t_idx_flds
+          dd35v_tab           = s_fm_data-search_helps
+          dd36m_tab           = s_fm_data-sh_fields
       EXCEPTIONS
-        indx_not_found    = 1
-        name_inconsistent = 2
-        indx_inconsistent = 3
-        put_failure       = 4
-        put_refused       = 5
-        OTHERS            = 6.
+        tabl_not_found          = 1
+        name_inconsistent       = 2
+        tabl_inconsistent       = 3
+        put_failure             = 4
+        put_refused             = 5
+        OTHERS                  = 6.
     IF sy-subrc &lt;&gt; 0.
-      mac_add_mf_and_raise &apos;DDIF_INDX_PUT&apos; sy-subrc.
+      mac_add_mf_and_raise &apos;DDIF_TABL_PUT&apos; sy-subrc.
     ENDIF.
-  ENDLOOP.
 
-  DELETE FROM dd02t WHERE tabname = s_fm_data-header-tabname.
-  MODIFY dd02t FROM TABLE s_fm_data-texts.
+    LOOP AT s_fm_data-indexes ASSIGNING &lt;i&gt;.
+      t_idx_flds = s_fm_data-idx_fields.    DELETE t_idx_flds WHERE indexname &lt;&gt; &lt;i&gt;-indexname.
+      CALL FUNCTION &apos;DDIF_INDX_PUT&apos;
+        EXPORTING
+          name              = d_name
+          id                = &lt;i&gt;-indexname
+          dd12v_wa          = &lt;i&gt;
+        TABLES
+          dd17v_tab         = t_idx_flds
+        EXCEPTIONS
+          indx_not_found    = 1
+          name_inconsistent = 2
+          indx_inconsistent = 3
+          put_failure       = 4
+          put_refused       = 5
+          OTHERS            = 6.
+      IF sy-subrc &lt;&gt; 0.
+        mac_add_mf_and_raise &apos;DDIF_INDX_PUT&apos; sy-subrc.
+      ENDIF.
+    ENDLOOP.
 
-  DELETE FROM dd03t WHERE tabname = s_fm_data-header-tabname.
-  MODIFY dd03t FROM TABLE s_fm_data-fields_texts.
+    DELETE FROM dd02t WHERE tabname = s_fm_data-header-tabname.
+    MODIFY dd02t FROM TABLE s_fm_data-texts.
 
-  zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
+    DELETE FROM dd03t WHERE tabname = s_fm_data-header-tabname.
+    MODIFY dd03t FROM TABLE s_fm_data-fields_texts.
+
+    zaplink_documentation=&gt;set( s_fm_data-docs ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TABLE_TYPE" VERSION="1" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
@@ -1127,47 +1147,51 @@ END-OF-DEFINITION.</MACROS>
   DATA d_subrc        TYPE sy-subrc.
   DATA s_fm_data      TYPE zaplink_ttyp_data=&gt;ts_fm_data.
 
-  s_fm_data = o_data-&gt;to_data( ).
-  d_name = s_fm_data-header-typename.
-  CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
-    EXPORTING
-      no_ask                     = abap_true
-      objname                    = d_name
-      objtype                    = dd_eu_type-table_type
+  TRY.
+    s_fm_data = o_data-&gt;to_data( ).
+    d_name = s_fm_data-header-typename.
+    CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+      EXPORTING
+        no_ask                     = abap_true
+        objname                    = d_name
+        objtype                    = dd_eu_type-table_type
 *     CHANGING
 *       CORRNUM                    = &apos; &apos;
-    EXCEPTIONS
-      not_executed               = 1
-      object_not_found           = 0
-      object_not_specified       = 3
-      permission_failure         = 4
-      dialog_needed              = 5
-      OTHERS                     = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
-  ENDIF.
+      EXCEPTIONS
+        not_executed               = 1
+        object_not_found           = 0
+        object_not_specified       = 3
+        permission_failure         = 4
+        dialog_needed              = 5
+        OTHERS                     = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+    ENDIF.
 
-  CALL FUNCTION &apos;DDIF_TTYP_PUT&apos;
-    EXPORTING
-      name                    = d_name
-      DD40V_WA                = s_fm_data-header
-    TABLES
-      DD42V_TAB               = s_fm_data-keys
-    EXCEPTIONS
-      TTYP_NOT_FOUND          = 1
-      NAME_INCONSISTENT       = 2
-      TTYP_INCONSISTENT       = 3
-      PUT_FAILURE             = 4
-      PUT_REFUSED             = 5
-      OTHERS                  = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;DDIF_TTYP_PUT&apos; sy-subrc.
-  ENDIF.
+    CALL FUNCTION &apos;DDIF_TTYP_PUT&apos;
+      EXPORTING
+        name              = d_name
+        dd40v_wa          = s_fm_data-header
+      TABLES
+        dd42v_tab         = s_fm_data-keys
+      EXCEPTIONS
+        ttyp_not_found    = 1
+        name_inconsistent = 2
+        ttyp_inconsistent = 3
+        put_failure       = 4
+        put_refused       = 5
+        OTHERS            = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;DDIF_TTYP_PUT&apos; sy-subrc.
+    ENDIF.
 
-  DELETE FROM dd40t WHERE typename = s_fm_data-header-typename.
-  MODIFY dd40t FROM TABLE s_fm_data-texts.
+    DELETE FROM dd40t WHERE typename = s_fm_data-header-typename.
+    MODIFY dd40t FROM TABLE s_fm_data-texts.
 
-  zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
+    zaplink_documentation=&gt;set( s_fm_data-docs ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TYPE_GROUP" VERSION="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
@@ -1194,6 +1218,7 @@ END-OF-DEFINITION.</MACROS>
     </EXCEPTIONS>
     <SOURCE>
   DATA d_typegroup    TYPE td_typegroup.
+  DATA d_name         TYPE rsedd0-ddobjname.
   DATA d_subrc        TYPE sy-subrc.
   DATA t_source       TYPE zaplink_type_data=&gt;tt_string.
   DATA d_program      TYPE progdir.
@@ -1201,94 +1226,98 @@ END-OF-DEFINITION.</MACROS>
   FIELD-SYMBOLS:
     &lt;prog&gt; TYPE sy-repid.          &quot;Typgruppeninclude
 
-  d_typegroup = o_data-&gt;a0_maindata-name.
+  TRY.
+    d_typegroup = o_data-&gt;a0_maindata-name.
 * Check existence
-  PERFORM tygr_exists IN PROGRAM saplsd31
-        USING    d_typegroup
-        CHANGING d_subrc.
-
-  IF d_subrc = 0.
-    CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
-      EXPORTING
-*       NO_ASK                     = &apos; &apos;
-        objname                    = d_typegroup
-        objtype                    = dd_eu_type-type_group
-*     CHANGING
-*       CORRNUM                    = &apos; &apos;
-      EXCEPTIONS
-        not_executed               = 1
-        object_not_found           = 0
-        object_not_specified       = 3
-        permission_failure         = 4
-        dialog_needed              = 5
-        OTHERS                     = 6.
-    IF sy-subrc &lt;&gt; 0.
-      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
-    ENDIF.
-  ENDIF.
-
-  t_source = o_data-&gt;get_source( ).
-  CALL FUNCTION &apos;RS_DD_TYGR_INSERT_SOURCES&apos;
-    EXPORTING
-      typegroupname        = o_data-&gt;a0_maindata-name
-      ddtext               = o_data-&gt;a0_maindata-text
-      corrnum              = space
-      devclass             = space
-    TABLES
-      SOURCE               = t_source
-    EXCEPTIONS
-      already_exists       = 1
-      not_executed         = 2
-      permission_failure   = 3
-      object_not_specified = 4
-      illegal_name         = 5
-      OTHERS               = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;RS_DD_TYGR_INSERT_SOURCES&apos; sy-subrc.
-  ENDIF.
-
-  PERFORM tygr_exists IN PROGRAM saplsd31
+    PERFORM tygr_exists IN PROGRAM saplsd31
           USING    d_typegroup
           CHANGING d_subrc.
-  IF d_subrc &lt;&gt; 0.
-    EXIT.
-  ENDIF.
 
-  str = &apos;(SAPLSD31)PROGNAME&apos;.
-  ASSIGN (str) TO &lt;prog&gt;.
-  IF sy-subrc &lt;&gt; 0.
-    EXIT.
-  ENDIF.
-
-  CALL FUNCTION &apos;READ_PROGDIR&apos;
-    EXPORTING
-      i_progname          = &lt;prog&gt;
-*     I_STATE             = &apos; &apos;
-    IMPORTING
-      e_progdir           = d_program
-*     E_PROGDIR_TAB       =
-    EXCEPTIONS
-      not_exists          = 1
-      OTHERS              = 2.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;READ_PROGDIR&apos; sy-subrc.
-  ENDIF.
-
-  IF d_program-uccheck &lt;&gt; o_data-&gt;a0_maindata-uccheck.
-    d_program-uccheck = o_data-&gt;a0_maindata-uccheck.
-    CALL FUNCTION &apos;UPDATE_PROGDIR&apos;
-      EXPORTING
-        i_progdir    = d_program
-        i_progname   = &lt;prog&gt;
-        i_state      = d_program-state
-      EXCEPTIONS
-        not_executed = 1
-        OTHERS       = 2.
-    IF sy-subrc &lt;&gt; 0.
-      mac_add_mf_and_raise &apos;UPDATE_PROGDIR&apos; sy-subrc.
+    IF d_subrc = 0.
+      d_name = d_typegroup.
+      CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+        EXPORTING
+*       NO_ASK                     = &apos; &apos;
+          objname                    = d_name
+          objtype                    = dd_eu_type-type_group
+*     CHANGING
+*       CORRNUM                    = &apos; &apos;
+        EXCEPTIONS
+          not_executed               = 1
+          object_not_found           = 0
+          object_not_specified       = 3
+          permission_failure         = 4
+          dialog_needed              = 5
+          OTHERS                     = 6.
+      IF sy-subrc &lt;&gt; 0.
+        mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+      ENDIF.
     ENDIF.
-  ENDIF.
-</SOURCE>
+
+    t_source = o_data-&gt;get_source( ).
+    CALL FUNCTION &apos;RS_DD_TYGR_INSERT_SOURCES&apos;
+      EXPORTING
+        typegroupname        = o_data-&gt;a0_maindata-name
+        ddtext               = o_data-&gt;a0_maindata-text
+        corrnum              = space
+        devclass             = space
+      TABLES
+        SOURCE               = t_source
+      EXCEPTIONS
+        already_exists       = 1
+        not_executed         = 2
+        permission_failure   = 3
+        object_not_specified = 4
+        illegal_name         = 5
+        OTHERS               = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_DD_TYGR_INSERT_SOURCES&apos; sy-subrc.
+    ENDIF.
+
+    PERFORM tygr_exists IN PROGRAM saplsd31
+            USING    d_typegroup
+            CHANGING d_subrc.
+    IF d_subrc &lt;&gt; 0.
+      EXIT.
+    ENDIF.
+
+    str = &apos;(SAPLSD31)PROGNAME&apos;.
+    ASSIGN (str) TO &lt;prog&gt;.
+    IF sy-subrc &lt;&gt; 0.
+      EXIT.
+    ENDIF.
+
+    CALL FUNCTION &apos;READ_PROGDIR&apos;
+      EXPORTING
+        i_progname          = &lt;prog&gt;
+*     I_STATE             = &apos; &apos;
+      IMPORTING
+        e_progdir           = d_program
+*     E_PROGDIR_TAB       =
+      EXCEPTIONS
+        not_exists          = 1
+        OTHERS              = 2.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;READ_PROGDIR&apos; sy-subrc.
+    ENDIF.
+
+    IF d_program-uccheck &lt;&gt; o_data-&gt;a0_maindata-uccheck.
+      d_program-uccheck = o_data-&gt;a0_maindata-uccheck.
+      CALL FUNCTION &apos;UPDATE_PROGDIR&apos;
+        EXPORTING
+          i_progdir    = d_program
+          i_progname   = &lt;prog&gt;
+          i_state      = d_program-state
+        EXCEPTIONS
+          not_executed = 1
+          OTHERS       = 2.
+      IF sy-subrc &lt;&gt; 0.
+        mac_add_mf_and_raise &apos;UPDATE_PROGDIR&apos; sy-subrc.
+      ENDIF.
+    ENDIF.
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_VIEW" VERSION="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
@@ -1318,51 +1347,55 @@ END-OF-DEFINITION.</MACROS>
   DATA d_subrc        TYPE sy-subrc.
   DATA s_fm_data      TYPE zaplink_view_data=&gt;ts_fm_data.
 
-  s_fm_data = o_data-&gt;to_data( ).
-  d_name = s_fm_data-header-viewname.
-  CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
-    EXPORTING
-      NO_ASK                     = abap_true
-      objname                    = d_name
-      objtype                    = dd_eu_type-view
+  TRY.
+    s_fm_data = o_data-&gt;to_data( ).
+    d_name = s_fm_data-header-viewname.
+    CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+      EXPORTING
+        no_ask                     = abap_true
+        objname                    = d_name
+        objtype                    = dd_eu_type-view
 *     CHANGING
 *       CORRNUM                    = &apos; &apos;
-    EXCEPTIONS
-      not_executed               = 1
-      object_not_found           = 0
-      object_not_specified       = 3
-      permission_failure         = 4
-      dialog_needed              = 5
-      OTHERS                     = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
-  ENDIF.
+      EXCEPTIONS
+        not_executed               = 1
+        object_not_found           = 0
+        object_not_specified       = 3
+        permission_failure         = 4
+        dialog_needed              = 5
+        OTHERS                     = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+    ENDIF.
 
-  CALL FUNCTION &apos;DDIF_VIEW_PUT&apos;
-    EXPORTING
-      name                    = d_name
-      DD25V_WA                = s_fm_data-header
-      DD09L_WA                = s_fm_data-tech
-    TABLES
-      DD26V_TAB               = s_fm_data-tables
-      DD27P_TAB               = s_fm_data-fields
-      DD28J_TAB               = s_fm_data-joins
-      DD28V_TAB               = s_fm_data-wheres
-    EXCEPTIONS
-      VIEW_NOT_FOUND          = 1
-      NAME_INCONSISTENT       = 2
-      VIEW_INCONSISTENT       = 3
-      PUT_FAILURE             = 4
-      PUT_REFUSED             = 5
-      OTHERS                  = 6.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;DDIF_VIEW_PUT&apos; sy-subrc.
-  ENDIF.
+    CALL FUNCTION &apos;DDIF_VIEW_PUT&apos;
+      EXPORTING
+        name              = d_name
+        dd25v_wa          = s_fm_data-header
+        dd09l_wa          = s_fm_data-tech
+      TABLES
+        dd26v_tab         = s_fm_data-tables
+        dd27p_tab         = s_fm_data-fields
+        dd28j_tab         = s_fm_data-joins
+        dd28v_tab         = s_fm_data-wheres
+      EXCEPTIONS
+        view_not_found    = 1
+        name_inconsistent = 2
+        view_inconsistent = 3
+        put_failure       = 4
+        put_refused       = 5
+        OTHERS            = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;DDIF_VIEW_PUT&apos; sy-subrc.
+    ENDIF.
 
-  DELETE FROM dd25t WHERE viewname = s_fm_data-header-viewname.
-  MODIFY dd25t FROM TABLE s_fm_data-texts.
+    DELETE FROM dd25t WHERE viewname = s_fm_data-header-viewname.
+    MODIFY dd25t FROM TABLE s_fm_data-texts.
 
-  zaplink_documentation=&gt;set( s_fm_data-docs ).</SOURCE>
+    zaplink_documentation=&gt;set( s_fm_data-docs ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>

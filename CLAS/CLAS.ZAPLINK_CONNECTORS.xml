@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="63905E6192F33F1793EB36A5C1E70A5E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="29DFDA59AC1C58BFE0E35CD2775907FF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="DCFD034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -183,7 +183,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     CATCH zaplink_cx INTO o_cx.
       IF o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_uuid OR
          o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_class.
-        RAISE EXCEPTION o_cx.
+        RAISE EXCEPTION o_cx.   &quot;  Major failure that will cause Short Dump
       ENDIF.
   ENDTRY.
 </SOURCE>
@@ -414,12 +414,15 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     EXCEPTIONS
       parameter_error        = 1
       no_values_found        = 2
-      OTHERS                 = 3
-            .
+      OTHERS                 = 3.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;F4IF_INT_TABLE_VALUE_REQUEST&apos;
-                                                subrc = sy-subrc
-                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+    TRY.
+        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;F4IF_INT_TABLE_VALUE_REQUEST&apos;
+                                                    subrc = sy-subrc
+                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+      CATCH zaplink_cx INTO o_cx.
+        mac_cascade_raise o_mycx o_cx.
+    ENDTRY.
   ELSE.
     type = d_value.
   ENDIF.
@@ -529,7 +532,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
           CATCH zaplink_cx INTO o_cx.
             IF o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_uuid OR
                o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_class.
-              RAISE EXCEPTION o_cx.
+              mac_cascade_raise o_mycx o_cx.
             ENDIF.
         ENDTRY.
 
@@ -547,7 +550,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
           CATCH zaplink_cx INTO o_cx.
             IF o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_uuid OR
                o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_class.
-              RAISE EXCEPTION o_cx.
+              mac_cascade_raise o_mycx o_cx.
             ENDIF.
         ENDTRY.
 

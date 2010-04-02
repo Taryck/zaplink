@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="40747636D806648770B6035064CF5458" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B9F76FCD0E7744534AEB74CFB4820B58" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" UUID="47F8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -900,9 +900,13 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         illegal_field_position         = 9
         OTHERS                         = 10.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RPY_DYNPRO_INSERT&apos;
-                                                  subrc = sy-subrc
-                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+      TRY.
+          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RPY_DYNPRO_INSERT&apos;
+                                                      subrc = sy-subrc
+                                                  classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+        CATCH zaplink_cx INTO o_cx.
+          mac_cascade_raise o_mycx o_cx.
+      ENDTRY.
       application_log-&gt;add_symsg( ).
       application_log-&gt;add_exception( o_mycx ).
       CONTINUE.

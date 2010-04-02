@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8D1CF3AFF1EF5430F3A5E1CC6B1D7475" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OS_COMMAND" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E6340C4FA36DFF7D092B2A02B87821C5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OS_COMMAND" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -133,7 +133,7 @@ CONCATENATE data-name field_separator data-opsystem INTO result.</SOURCE>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
     <SOURCE>
-DATA o_data TYPE to_data.
+  DATA o_data TYPE to_data.
 
   CREATE OBJECT object.
   CASE type.
@@ -142,7 +142,7 @@ DATA o_data TYPE to_data.
       object-&gt;raw ?= o_data.
     WHEN OTHERS.
       CLEAR object.
-      RAISE EXCEPTION TYPE zaplink_cx.
+      mac_raise_type_not_supported &apos;ZAPLINK_OS_COMMAND&apos; type.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
@@ -303,29 +303,36 @@ DATA o_data TYPE to_data.
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>
-DATA d_name TYPE td_compname.
+  DATA d_name TYPE td_compname.
+  DATA d_type TYPE td_comptype.
   DATA s_name TYPE ts_os_cmd_key.
 
-  exists = me-&gt;exists-not_exists.
-  CASE component-&gt;get_type( ).
-    WHEN st_os_cmd.
-      d_name = component-&gt;get_name( ).
-      s_name = comp_to_key( d_name ).
-      CALL FUNCTION &apos;SXPG_COMMAND_GET&apos;
-        EXPORTING
-          commandname             = s_name-name
-          operatingsystem         = s_name-opsystem
+  TRY.
+    exists = me-&gt;exists-not_exists.
+    d_type = component-&gt;get_type( ).
+    CASE d_type.
+      WHEN st_os_cmd.
+        d_name = component-&gt;get_name( ).
+        s_name = comp_to_key( d_name ).
+        CALL FUNCTION &apos;SXPG_COMMAND_GET&apos;
+          EXPORTING
+            commandname             = s_name-name
+            operatingsystem         = s_name-opsystem
 *         TARGETSYSTEM            = &apos;*&apos;
 *       IMPORTING
 *         COMMAND                 =
-        EXCEPTIONS
-          command_not_found       = 1
-          OTHERS                  = 2.
-      IF sy-subrc = 0.
-        exists = me-&gt;exists-exists.
-      ENDIF.
-    WHEN OTHERS.
-  ENDCASE.</SOURCE>
+          EXCEPTIONS
+            command_not_found       = 1
+            OTHERS                  = 2.
+        IF sy-subrc = 0.
+          exists = me-&gt;exists-exists.
+        ENDIF.
+      WHEN OTHERS.
+        mac_raise_type_not_supported &apos;ZAPLINK_OS_COMMAND&apos; d_type.
+    ENDCASE.
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
     <SOURCE>
@@ -336,12 +343,14 @@ result = abap_false.
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP">
     <SOURCE>
-DATA d_name TYPE td_compname.
+  DATA d_name TYPE td_compname.
+  data d_type type td_comptype.
   DATA s_name TYPE ts_os_cmd_key.
   DATA o_data  TYPE to_data.
 
   CREATE OBJECT object.
-  CASE component-&gt;get_type( ).
+  d_type = component-&gt;get_type( ).
+  CASE d_type.
     WHEN st_os_cmd.
       d_name = component-&gt;get_name( ).
       s_name = comp_to_key( d_name ).
@@ -371,17 +380,19 @@ DATA d_name TYPE td_compname.
       object-&gt;raw ?= o_data.
     WHEN OTHERS.
       CLEAR object.
-      RAISE EXCEPTION TYPE zaplink_cx.
+      mac_raise_type_not_supported &apos;ZAPLINK_OS_COMMAND&apos; d_type.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>
-DATA d_name TYPE td_compname.
+  DATA d_name TYPE td_compname.
+  DATA d_type TYPE td_comptype.
   DATA s_name TYPE ts_os_cmd_key.
   DATA o_data  TYPE to_data.
   DATA o_comp  TYPE to_component.
 
-  CASE object-&gt;type.
+  d_type = object-&gt;type.
+  CASE d_type.
     WHEN st_os_cmd.
       o_data ?= object-&gt;raw.
 *      CALL FUNCTION &apos;RS_CORR_INSERT&apos;
@@ -474,7 +485,7 @@ DATA d_name TYPE td_compname.
       CREATE OBJECT components.
       components-&gt;add( o_comp ).
     WHEN OTHERS.
-      RAISE EXCEPTION TYPE zaplink_cx.
+      mac_raise_type_not_supported &apos;ZAPLINK_OS_COMMAND&apos; d_type.
   ENDCASE.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
