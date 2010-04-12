@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="991683931DBF353389BEB4CA1ABD7E72" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="512567E406D9F4403786CB9042B67BF3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-LOG" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -113,15 +113,15 @@ AS</DOCUMENTATION>
    </ITEM>
   </ATTRIBUTS>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *======================================================================
 * standard sy-messages
 *======================================================================
@@ -427,7 +427,7 @@ END-OF-DEFINITION.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     ls_message    TYPE bal_s_msg,
 *    ls_msgcontext TYPE recamsgcontext,
@@ -657,7 +657,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _detlevel	TYPE ballevel.
 
   IF id_detlevel IS INITIAL.
@@ -719,7 +719,7 @@ DATA: _detlevel	TYPE ballevel.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _detlevel	TYPE ballevel.
 
   IF id_detlevel IS INITIAL.
@@ -764,7 +764,7 @@ DATA: _detlevel	TYPE ballevel.
      <ITEM SCONAME="ID_DETLEVEL" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X"/>
      <ITEM SCONAME="ID_PROBCLASS" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _detlevel  TYPE ballevel.
   DATA cx_text    TYPE string.
   DATA o_ref      TYPE REF TO cl_abap_refdescr.
@@ -867,7 +867,7 @@ DATA: _detlevel	TYPE ballevel.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 FIELD-SYMBOLS:
     &lt;ls_bapiret&gt; LIKE is_bapiret.
 
@@ -945,7 +945,7 @@ FIELD-SYMBOLS:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_msglist            TYPE t_msg,
     ls_msglist            TYPE BAL_S_MSG,
@@ -1045,7 +1045,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _detlevel	TYPE ballevel.
 
   IF id_detlevel IS INITIAL.
@@ -1107,7 +1107,7 @@ DATA: _detlevel	TYPE ballevel.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _detlevel	TYPE ballevel.
 
   IF id_detlevel IS INITIAL.
@@ -1175,7 +1175,7 @@ DATA: _detlevel	TYPE ballevel.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA ls_symsg TYPE symsg.
 
   check not sy-msgid is INITIAL AND
@@ -1244,7 +1244,7 @@ DATA: _detlevel	TYPE ballevel.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _detlevel	TYPE ballevel.
 
   IF id_detlevel IS INITIAL.
@@ -1292,7 +1292,7 @@ DATA: _detlevel	TYPE ballevel.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 * BODY
   CALL FUNCTION &apos;CONVERT_DATE_TO_EXTERNAL&apos;
     EXPORTING
@@ -1327,7 +1327,7 @@ DATA: _detlevel	TYPE ballevel.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_log_handle   TYPE bal_t_logh,
     lt_msg_handle   TYPE bal_t_msgh,
@@ -1423,7 +1423,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _commit  TYPE flag.
   DATA obj      TYPE balobj.
   DATA obj_t    TYPE balobjt.
@@ -1519,7 +1519,7 @@ DATA:
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Deletes All Collected Messages"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
 * BODY
 * delete all messages
   CALL FUNCTION &apos;BAL_LOG_MSG_DELETE_ALL&apos;
@@ -1552,7 +1552,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 * local data
   DATA:
     ld_date     TYPE sydatum,
@@ -1585,7 +1585,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_log_handle TYPE bal_t_logh,
     lt_msg_handle TYPE bal_t_msgh.
@@ -1627,7 +1627,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     ls_msg_handle TYPE balmsghndl.
 
@@ -1653,7 +1653,7 @@ DATA:
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Releases Resources of Instance"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
 * BODY
   IF mf_log_not_stored = abap_false.
     CALL FUNCTION &apos;BAL_LOG_REFRESH&apos;
@@ -1695,7 +1695,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_log_handle TYPE bal_t_logh,
     lt_msg_handle TYPE bal_t_msgh,
@@ -1765,7 +1765,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   rd_handle = md_handle.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_LAST_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="21 ">
@@ -1796,7 +1796,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_log_handle TYPE bal_t_logh,
     lt_msg_handle TYPE bal_t_msgh,
@@ -1868,7 +1868,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_msglist_x   TYPE t_msg_x.
 
@@ -1898,7 +1898,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_msglist_x  TYPE t_msg_x,
     ls_list       LIKE LINE OF et_list,
@@ -1983,7 +1983,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_log_handle   TYPE bal_t_logh,
     lt_msg_handle   TYPE bal_t_msgh,
@@ -2069,7 +2069,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     ls_so_msgty LIKE LINE OF es_msg_filter-msgty.
 
@@ -2144,7 +2144,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA o_ref      TYPE REF TO cl_abap_refdescr.
 
   IF typedesc-&gt;kind = cl_abap_datadescr=&gt;kind_ref.
@@ -2165,7 +2165,7 @@ DATA o_ref      TYPE REF TO cl_abap_refdescr.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 * clear result
   CLEAR rs_statistics.
 
@@ -2209,7 +2209,7 @@ DATA o_ref      TYPE REF TO cl_abap_refdescr.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     ls_statistics   TYPE bal_s_scnt,
     ld_result       TYPE string,
@@ -2311,7 +2311,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     ls_statistics TYPE bal_s_scnt,
     ld_msg_count  TYPE i.
@@ -2404,7 +2404,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_log_header TYPE balhdr_t,
     ls_log_header TYPE balhdr,
@@ -2539,7 +2539,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_log_handle TYPE bal_t_logh,
     lf_load_error TYPE abap_bool.
@@ -2680,7 +2680,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_msglist_x              TYPE t_msg_x,
     ld_insert_index           TYPE i,
@@ -2836,7 +2836,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 * PRECONDITION
   IF ( id_date(1) &gt;= &apos;1&apos; ).
     rf_initial = abap_false.
@@ -2861,7 +2861,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_log_handle TYPE bal_t_logh.
 
@@ -2891,7 +2891,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 CREATE OBJECT obj.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="RAISE_FIRST_MESSAGE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="36 ">
@@ -2917,7 +2917,7 @@ CREATE OBJECT obj.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     ls_msg TYPE BAL_S_MSG.
 
@@ -2948,7 +2948,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_exception TYPE REF TO zaplink_cx.
 
   IF NOT has_messages_of_msgt( id_msgty = &apos;E&apos; ) IS INITIAL.
@@ -2987,7 +2987,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     ld_num_min_level    LIKE id_relative,
     ld_num_max_level    LIKE id_relative,
@@ -3037,7 +3037,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     ls_log_temp LIKE ms_log.
 
@@ -3082,7 +3082,7 @@ DATA:
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA:
     lt_log_handle TYPE bal_t_logh.
 
@@ -3113,7 +3113,7 @@ DATA:
     <PARAMETERS>
      <ITEM SCONAME="_OFFSET" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA lt_messages  TYPE t_msg_x.
   DATA _msg TYPE string.
   DATA _light TYPE icon_d.
@@ -3152,7 +3152,7 @@ DATA lt_messages  TYPE t_msg_x.
      <ITEM SCONAME="ID_DETLEVEL" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X"/>
      <ITEM SCONAME="ID_PROBCLASS" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _detlevel  TYPE ballevel.
   DATA cx_text    TYPE string.
   DATA o_ref      TYPE REF TO cl_abap_refdescr.

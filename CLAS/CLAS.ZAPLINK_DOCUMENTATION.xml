@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="28041C3DADEAB1BA939FE581C1B0BAF1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="97B306989425A36926ED302A584AA025" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -57,15 +57,15 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
    </ITEM>
   </ATTRIBUTS>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS
 
@@ -85,14 +85,14 @@ END-OF-DEFINITION.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   mac_create_log log ballog_subobject space.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   DATA type LIKE LINE OF supported_types.
 
   super-&gt;constructor( ).
@@ -123,7 +123,7 @@ END-OF-DEFINITION.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _text  TYPE tt_rawtext.
 
   TRY.
@@ -193,7 +193,7 @@ END-OF-DEFINITION.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _obj   TYPE RANGE OF doku_obj.
   DATA my_obj LIKE LINE OF _obj.
   DATA docs   TYPE STANDARD TABLE OF dokil WITH DEFAULT KEY.
@@ -276,7 +276,7 @@ END-OF-DEFINITION.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 *  DATA ezxml  TYPE REF TO zaplink_easyxml.
 *  DATA t_docs TYPE tt_docs.
 *
@@ -316,7 +316,7 @@ END-OF-DEFINITION.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA r_ids  TYPE tr_docid.
   DATA my_id  LIKE LINE OF r_ids.
   DATA t_docs TYPE tt_docs.
@@ -335,7 +335,7 @@ END-OF-DEFINITION.</MACROS>
      <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_NAME_MASK"/>
      <ITEM SCONAME="TYPE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   CASE type.
     WHEN supportedtypes-general. result-id = &apos;TX&apos;.    result-object = name.
     WHEN supportedtypes-indep.   result = name.
@@ -349,7 +349,7 @@ END-OF-DEFINITION.</MACROS>
      <ITEM SCONAME="RAW" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_RAWTEXT"/>
      <ITEM SCONAME="STRING" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
   DATA str TYPE string.
 
@@ -366,7 +366,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Reset Bal Log"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   DATA object	TYPE balobj_d.
   DATA subobject  TYPE balsubobj.
   DATA ext_id	TYPE balnrext.
@@ -406,7 +406,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _text  TYPE tt_rawtext.
   DATA _dokil TYPE dokil.
   DATA _head  TYPE thead.
@@ -469,7 +469,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 *  DATA t_docs TYPE tt_docs.
 *  DATA ezxml  TYPE REF TO zaplink_easyxml.
 *
@@ -506,7 +506,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA t_docs TYPE tt_docs.
 
   append data to t_docs.
@@ -520,14 +520,14 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
      <ITEM SCONAME="RAW" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_RAWTEXT"/>
      <ITEM SCONAME="STRING" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 SPLIT string AT LINE_SEPARATOR
         INTO TABLE raw.</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
-    <SOURCE>
+    <SOURCE>`
   DATA o_doc TYPE to_doc.
 
   CREATE OBJECT object.
@@ -546,7 +546,7 @@ SPLIT string AT LINE_SEPARATOR
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
-    <SOURCE>
+    <SOURCE>`
   DATA pool     TYPE rs38l-area.
   DATA type     TYPE td_comptype.
   DATA s_mask   TYPE ts_name_mask.
@@ -559,7 +559,10 @@ SPLIT string AT LINE_SEPARATOR
       type = component-&gt;get_type( ).
       CASE type.
         WHEN supportedtypes-general OR supportedtypes-indep.
-          s_mask = component-&gt;get_name( ).
+          CASE type.
+            WHEN supportedtypes-general. s_mask-id = &apos;TX&apos;.    s_mask-object = component-&gt;get_name( ).     &quot; Issue 60
+            WHEN supportedtypes-indep.   s_mask = component-&gt;get_name( ).
+          ENDCASE.
 * FROM MSDCUI01 : MODULE d0100_get_docuobject (583)
           CALL FUNCTION &apos;EXT_MODIFY_ORIGINAL_CHECK&apos;
             EXPORTING
@@ -655,7 +658,7 @@ SPLIT string AT LINE_SEPARATOR
 </SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
-    <SOURCE>
+    <SOURCE>`
   DATA type     TYPE td_comptype.
   DATA s_mask   TYPE ts_name_mask.
   DATA d_name   TYPE td_compname.
@@ -700,12 +703,12 @@ SPLIT string AT LINE_SEPARATOR
 </SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
-    <SOURCE>
+    <SOURCE>`
   result = abap_false.
   if version = _ver.    result = abap_true.   endif.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP">
-    <SOURCE>
+    <SOURCE>`
   DATA o_data   TYPE to_doc.
   DATA d_name   TYPE td_compname.
   DATA type     TYPE td_comptype.
@@ -743,7 +746,7 @@ SPLIT string AT LINE_SEPARATOR
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
-    <SOURCE>
+    <SOURCE>`
   DATA o_data   TYPE to_doc.
   DATA o_comp   TYPE to_component.
   DATA s_mask   TYPE ts_name_mask.

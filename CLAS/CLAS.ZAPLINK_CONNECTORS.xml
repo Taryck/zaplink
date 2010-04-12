@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7A6EFB389B81E0652544E7B14890B861" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="69CC481E7AB6A326DA185D9F97485905" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -110,15 +110,15 @@ AS</DOCUMENTATION>
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* in the implementation part of the class
 
@@ -143,7 +143,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 
   TRY.
 
@@ -159,7 +159,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   DATA t_types    TYPE STANDARD TABLE OF ko100 WITH DEFAULT KEY.
   DATA s_saptypes LIKE LINE OF saptypes.
   DATA t_saptypes TYPE STANDARD TABLE OF ts_saptypes.
@@ -211,7 +211,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   clear type_list.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CREATE_CONNECTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -234,7 +234,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _cx        TYPE REF TO cx_root.
   DATA _conn      LIKE LINE OF type_list.
   DATA _classname TYPE td_connclass.
@@ -317,7 +317,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _conn LIKE LINE OF type_list.
 
   TRY.
@@ -351,7 +351,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_typedesc TYPE REF TO cl_abap_objectdescr.
 
   CHECK o_conn IS BOUND.
@@ -367,7 +367,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
      <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_TYPEORDER"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   FIELD-SYMBOLS:
     &lt;t&gt; LIKE LINE OF saptypes.
 
@@ -394,7 +394,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA lt_return TYPE STANDARD TABLE OF ddshretval.
   DATA d_value   TYPE help_info-fldvalue.
 
@@ -463,7 +463,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA ez_xml    TYPE REF TO zaplink_easyxml.
   DATA _xml_comp TYPE REF TO if_ixml_document.
   DATA _clone    TYPE REF TO if_ixml_node.
@@ -500,7 +500,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_conn      TYPE REF TO zaplink_connector.
   DATA _connectors TYPE REF TO cl_oo_if_relations.
   DATA o_desc      TYPE REF TO cl_abap_typedescr.
@@ -580,7 +580,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM SCONAME="DATA" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
      <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_TYPE_AS_TEXT"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   FIELD-SYMBOLS:
     &lt;t&gt; LIKE LINE OF saptypes.
 
@@ -614,7 +614,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA connector TYPE REF TO zaplink_connector.
   DATA o_cx_root TYPE REF TO cx_root.
   DATA o_cx_create TYPE REF TO cx_sy_create_object_error.
@@ -740,7 +740,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 
   READ TABLE type_list INTO result
              WITH TABLE KEY object = type.
@@ -767,7 +767,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   TYPES:
     BEGIN OF t_classlist,
       class TYPE seoclsname,

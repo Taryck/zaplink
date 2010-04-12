@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0E932E91423F607E47F59C24E27DF28B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_BASE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8FA26CEF7000EF55B5E1DC8829B26551" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_BASE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -143,17 +143,17 @@ AS</DOCUMENTATION>
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* implementation or private method&apos;s signature
 </TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* local helper classes
 </IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* in the implementation part of the class
 
@@ -171,7 +171,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   clear:
     me-&gt;DIRECTORY-korrnum,
     me-&gt;DIRECTORY-srcsystem,
@@ -195,7 +195,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   xmlengine = cl_ixml=&gt;create( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2">
@@ -209,7 +209,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   TRY.
       IF o_comp IS BOUND.
         set_component( o_comp ).
@@ -224,7 +224,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_XML"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA ez_xml          TYPE to_ez_xml.
   DATA o_xml           TYPE to_xml.
 
@@ -253,7 +253,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 * result = type.  &quot; Issue 21
   result = checksum.</SOURCE>
    </ITEM>
@@ -275,7 +275,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   TRY.
       CREATE OBJECT o_comp.
 
@@ -305,7 +305,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   result = name.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_TYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
@@ -326,7 +326,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   result = type.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="REFRESH_DIRECTORY" VERSION="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
@@ -340,7 +340,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   SELECT SINGLE *
     INTO CORRESPONDING FIELDS OF directory
     FROM tadir
@@ -357,7 +357,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Checkcum calculate"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   DATA ez_xml          TYPE to_ez_xml.
   DATA o_xml           TYPE to_xml.
   DATA _tempstring     TYPE string.
@@ -411,7 +411,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   CHECK o_comp IS BOUND.
 
   TRY.
@@ -439,7 +439,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 *     me-&gt;DIRECTORY-korrnum,
   If me-&gt;DIRECTORY-srcsystem is INITIAL. me-&gt;DIRECTORY-srcsystem = Sy-sysid. endif.
   if me-&gt;DIRECTORY-author is INITIAL. me-&gt;DIRECTORY-author = sy-uname. endif.
@@ -456,7 +456,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   me-&gt;connector = o_connector-&gt;uuid.
   me-&gt;version = o_connector-&gt;version.</SOURCE>
    </ITEM>
@@ -472,7 +472,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
      <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _streamfactory  TYPE REF TO if_ixml_stream_factory.
   DATA _outputstream   TYPE REF TO if_ixml_ostream.
   DATA _renderer       TYPE REF TO if_ixml_renderer.

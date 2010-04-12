@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="15925891FC760AC41E1B9450A1F33256" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3562EC8111A50350D4F323ABCA90AC3D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -161,15 +161,15 @@ AS</DOCUMENTATION>
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
@@ -178,7 +178,7 @@ AS</DOCUMENTATION>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
 *  DATA s_al  LIKE LINE OF aliases.
   DATA s_at LIKE LINE OF attributs.
 *  DATA s_ev LIKE LINE OF events.
@@ -248,7 +248,7 @@ AS</DOCUMENTATION>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   DATA _id LIKE LINE OF r_doc_ids-class.
 
   _id-sign = &apos;I&apos;.
@@ -269,7 +269,7 @@ AS</DOCUMENTATION>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Clear work tags"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   CLEAR: obj_name, obj_version, obj_langu, obj_type.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="COMPLETE_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 ">
@@ -283,7 +283,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA s_impl_detail LIKE LINE OF fm_data-impl_details.
   FIELD-SYMBOLS:
     &lt;m&gt; LIKE LINE OF fm_data-includes-methods.
@@ -391,7 +391,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _t     LIKE LINE OF texts.
   DATA s_key  TYPE ts_doc_key.
   FIELD-SYMBOLS:
@@ -442,7 +442,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _ex  LIKE LINE OF exceptions.
   FIELD-SYMBOLS:
     &lt;ex&gt;  LIKE LINE OF fm_data-exceps.
@@ -480,7 +480,7 @@ DATA: _ex  LIKE LINE OF exceptions.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _pa  LIKE LINE OF parameters.
   FIELD-SYMBOLS:
     &lt;pa&gt;  LIKE LINE OF fm_data-parameters.
@@ -519,7 +519,7 @@ DATA: _pa  LIKE LINE OF parameters.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _t   LIKE LINE OF texts.
   FIELD-SYMBOLS:
     &lt;desc&gt; LIKE LINE OF DESCRIPTIONS.
@@ -564,7 +564,7 @@ DATA: _t   LIKE LINE OF texts.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _t     LIKE LINE OF texts.
   DATA s_key  TYPE ts_doc_key.
   DATA s_txt  LIKE LINE OF texts.
@@ -621,7 +621,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _at  LIKE LINE OF attributs.
   DATA _ty  LIKE LINE OF types.
   DATA _tg  LIKE LINE OF typegroups.
@@ -808,7 +808,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   includes-classpool = cl_oo_classname_service=&gt;get_classpool_name( clsname ).
   includes-pubsec    = cl_oo_classname_service=&gt;get_pubsec_name( clsname ).
   includes-prosec    = cl_oo_classname_service=&gt;get_prosec_name( clsname ).
@@ -858,7 +858,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _t     LIKE LINE OF descriptions.
   DATA _d     LIKE LINE OF documentation.
   DATA _dt    LIKE LINE OF _d-texts.
@@ -912,7 +912,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _ex  LIKE LINE OF fm_data-exceps.
   FIELD-SYMBOLS:
     &lt;ex&gt;  LIKE LINE OF exception,
@@ -963,7 +963,7 @@ DATA: _ex  LIKE LINE OF fm_data-exceps.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _pa  LIKE LINE OF fm_data-parameters.
   FIELD-SYMBOLS:
     &lt;pa&gt;  LIKE LINE OF parameters,
@@ -1014,7 +1014,7 @@ DATA: _pa  LIKE LINE OF fm_data-parameters.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA: _t   LIKE LINE OF texts.
 
   LOOP AT texts into _t.
@@ -1052,7 +1052,7 @@ DATA: _t   LIKE LINE OF texts.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _d   LIKE LINE OF documentation.
   DATA _dt  LIKE LINE OF _d-texts.
   DATA _ct  LIKE LINE OF descriptions.
@@ -1093,7 +1093,7 @@ DATA: _t   LIKE LINE OF texts.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _id  LIKE LINE OF fm_data-impl_details.
   DATA _at  LIKE LINE OF fm_data-attributes.
   DATA _ty  LIKE LINE OF fm_data-types.
@@ -1336,7 +1336,7 @@ DATA: _t   LIKE LINE OF texts.
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
 * Every thing should be done by SAP injection (data will be completed)
 **  DATA s_al  LIKE LINE OF aliases.
 *  DATA s_at LIKE LINE OF attributs.

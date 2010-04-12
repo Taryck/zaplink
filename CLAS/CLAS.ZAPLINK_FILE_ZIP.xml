@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B703A4F471A7D22124DF1CF389ABBEBF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE_ZIP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="AF715B7D5CB62717DAF222EC4ACB814B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE_ZIP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FILE"/>
  </DEPENDENCIES>
@@ -45,15 +45,15 @@ AS</DOCUMENTATION>
    </ITEM>
   </ATTRIBUTS>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
@@ -76,7 +76,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 result = _filekind.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_FILEKIND" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
@@ -97,7 +97,7 @@ result = _filekind.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 IF     data &lt;&gt; filekinds-normal
      AND data &lt;&gt; filekinds-zipped.
     RAISE EXCEPTION TYPE zaplink_cx_file
@@ -110,7 +110,7 @@ IF     data &lt;&gt; filekinds-normal
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_FILE" VERSION="1" MTDNAME="LOAD">
-    <SOURCE>
+    <SOURCE>`
   DATA _cx       TYPE REF TO zaplink_cx_file.
   DATA tmptable  TYPE STANDARD TABLE OF x.
   DATA cx_name   TYPE string.
@@ -337,7 +337,7 @@ IF     data &lt;&gt; filekinds-normal
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_FILE" VERSION="1" MTDNAME="SAVE">
-    <SOURCE>
+    <SOURCE>`
   DATA _cx TYPE REF TO zaplink_cx_file.
   DATA tmptable TYPE STANDARD TABLE OF x.
   DATA cx_name TYPE string.

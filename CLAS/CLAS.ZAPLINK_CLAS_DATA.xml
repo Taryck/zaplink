@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A7D9B5F45E13590F7C5A693E17688AAF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E7135A1419C9F77045F1AF917B474AF0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -110,15 +110,15 @@ AS</DOCUMENTATION>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT" VERSION="1" STATE="1"/>
   </FRIENDS>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* in the implementation part of the class
 
@@ -137,7 +137,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
      <ITEM SCONAME="SOURCE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ABAPSOURCE"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA code TYPE zaplink_object=&gt;tt_abaprawsource.
   DATA linecount TYPE i.
   FIELD-SYMBOLS:
@@ -179,7 +179,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   concatenate &apos;&apos;&apos;&apos; data &apos;&apos;&apos;&apos; into result.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_CONCEPT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -201,7 +201,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA lt_types TYPE sotr_objects.
   DATA _type    LIKE LINE OF lt_types.
   DATA _paket   TYPE sotr_pack.
@@ -437,7 +437,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _val TYPE seovalue.
 
   _val = data.
@@ -449,7 +449,7 @@ AS</DOCUMENTATION>
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="ANONYMIZE">
-    <SOURCE>
+    <SOURCE>`
   super-&gt;anonymize( ).
   CLEAR:
     a0_maindata-author,
@@ -479,7 +479,7 @@ AS</DOCUMENTATION>
 </SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="COMPLETE_DATA">
-    <SOURCE>
+    <SOURCE>`
   DATA _val TYPE seovalue.
   DATA _sotr LIKE LINE OF fm_data-exceptions_texts.
   DATA _text TYPE STANDARD TABLE OF sotr_text.
@@ -542,7 +542,7 @@ AS</DOCUMENTATION>
 </SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="FROM_DATA">
-    <SOURCE>
+    <SOURCE>`
   DATA _in  LIKE LINE OF interfaces.
   DATA _ia  LIKE LINE OF _in-components.
   DATA _t   LIKE LINE OF a0_maindata-texts.
@@ -765,7 +765,7 @@ AS</DOCUMENTATION>
   clear_tags( ).</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="TO_DATA">
-    <SOURCE>
+    <SOURCE>`
   DATA _t   LIKE LINE OF a0_maindata-texts.
   DATA _ct  LIKE LINE OF fm_data-class_desc.
   DATA _in  LIKE LINE OF fm_data-implementings.

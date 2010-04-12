@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3C7B11316CF9252430FA892944CFC306" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F75347E350564A9B8A33C8669BA0DEAB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -116,15 +116,15 @@
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* in the implementation part of the class
 
@@ -145,7 +145,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _idx  LIKE LINE OF _index.
   DATA _comp LIKE LINE OF _allcomp.
 
@@ -177,7 +177,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_comp   TYPE to_component.
   DATA o_cx_comp TYPE REF TO zaplink_cx_component.
   DATA _list    TYPE tt_compkeys.
@@ -222,7 +222,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA t_allcomp   TYPE	tt_allcomplist.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
@@ -247,7 +247,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA alv TYPE td_alv.
 
   alv = conv_to_alv( ).
@@ -271,7 +271,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   DATA field_s   LIKE LINE OF alv_conf-simple-fields.
   DATA field_h   LIKE LINE OF alv_conf-hierar-fields.
   DATA i_pos     TYPE i VALUE 0. &quot; position d&apos;affichage des champs
@@ -402,7 +402,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   CLEAR:
       display_progress,
       _allcomp,
@@ -427,7 +427,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_comp TYPE to_component.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
@@ -468,7 +468,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _key TYPE ts_compkey.
 
   _key = o_comp-&gt;_get_key( ).
@@ -533,7 +533,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
   DATA _line  LIKE LINE OF result-headers.
@@ -590,7 +590,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA alv        TYPE td_alv.
   DATA s_keyinfo  TYPE slis_keyinfo_alv.
 
@@ -663,7 +663,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   IF is_selected IS INITIAL.
     result = LINES( _index ).
   ELSE.
@@ -684,7 +684,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA component TYPE ts_compkey.
   DATA msg       TYPE string.
   DATA _pos      TYPE i.
@@ -818,7 +818,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA t_allcomp TYPE tt_allcomplist.
   FIELD-SYMBOLS:
     &lt;c&gt; LIKE LINE OF _allcomp.
@@ -844,7 +844,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA s_cursor LIKE LINE OF t_cursors.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
@@ -875,7 +875,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA s_cursor LIKE LINE OF t_cursors.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
@@ -910,7 +910,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   IF _index IS INITIAL.   result = abap_true.   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IS_INCLUDED" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
@@ -928,7 +928,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA t_allcomp TYPE tt_allcomplist.
   FIELD-SYMBOLS:
     &lt;c&gt; LIKE LINE OF _allcomp.
@@ -962,7 +962,7 @@ DATA t_allcomp TYPE tt_allcomplist.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _idx LIKE LINE OF _index.
 
   _idx = search_index( comp ).
@@ -984,7 +984,7 @@ DATA t_allcomp TYPE tt_allcomplist.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
@@ -1010,7 +1010,7 @@ FIELD-SYMBOLS:
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA _idx LIKE LINE OF _index.
 
   TRY.
@@ -1040,7 +1040,7 @@ DATA _idx LIKE LINE OF _index.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
@@ -1070,7 +1070,7 @@ FIELD-SYMBOLS:
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _idx LIKE LINE OF _index.
 
   _idx = search_index( comp ).
@@ -1102,7 +1102,7 @@ FIELD-SYMBOLS:
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA _key TYPE ts_compkey.
 
   check comp is bound.
@@ -1128,7 +1128,7 @@ FIELD-SYMBOLS:
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 
   TRY.
       _select( comp = comp
@@ -1145,7 +1145,7 @@ FIELD-SYMBOLS:
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA s_idx LIKE LINE OF _index.
 
   s_idx-selected = abap_true.   MODIFY _index FROM s_idx TRANSPORTING selected WHERE selected &lt;&gt; s_idx-selected.</SOURCE>
@@ -1164,7 +1164,7 @@ FIELD-SYMBOLS:
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 TRY.
       CASE sel_action.
         WHEN sel_actions-export.
@@ -1189,7 +1189,7 @@ TRY.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
@@ -1208,7 +1208,7 @@ TRY.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
@@ -1234,7 +1234,7 @@ FIELD-SYMBOLS:
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 
   TRY.
       _select( comp = comp
@@ -1258,7 +1258,7 @@ FIELD-SYMBOLS:
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   FIELD-SYMBOLS:
     &lt;a&gt; LIKE LINE OF data-headers,
     &lt;i&gt; LIKE LINE OF _index.
@@ -1292,7 +1292,7 @@ FIELD-SYMBOLS:
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_list TYPE to_me.
   DATA _comp LIKE LINE OF _allcomp.
 
@@ -1326,7 +1326,7 @@ FIELD-SYMBOLS:
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" VERSION="1" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _idx LIKE LINE OF _index.
 
   _idx = search_index( comp ).

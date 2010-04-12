@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BA55EC99BAEAFA2078F75743A73A8690" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="554BF677F8239912DC3E2C4DFB584EE0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_FILE">
@@ -51,15 +51,15 @@ AS</DOCUMENTATION>
    </ITEM>
   </ATTRIBUTS>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
@@ -75,7 +75,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA tmptable TYPE table_of_strings.
   DATA cx_name TYPE string.
   DATA cx TYPE REF TO cx_root.
@@ -160,7 +160,7 @@ AS</DOCUMENTATION>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 result = _content.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_FILENAME" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
@@ -181,7 +181,7 @@ result = _content.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 result = _filename.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_FILETYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
@@ -202,7 +202,7 @@ result = _filename.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 result = _filetype.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
@@ -216,7 +216,7 @@ result = _filetype.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA tmptable TYPE table_of_strings.
   DATA cx_name TYPE string.
   DATA cx TYPE REF TO cx_root.
@@ -357,7 +357,7 @@ result = _filetype.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA ft TYPE filetable.
   DATA filecount TYPE i.
   DATA cx_name TYPE string.
@@ -424,7 +424,7 @@ result = _filetype.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA tmptable  TYPE table_of_strings.
 *  DATA cx_name   TYPE string.
   DATA o_cx      TYPE REF TO cx_root.
@@ -602,7 +602,7 @@ result = _filetype.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 DATA retfilename TYPE string.
   DATA retpath TYPE string.
   DATA retfullpath TYPE string.
@@ -657,7 +657,7 @@ DATA retfilename TYPE string.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 _content = data.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_FILENAME" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
@@ -678,7 +678,7 @@ _content = data.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 IF data IS INITIAL.
 * Filename &apos;&amp;file&amp;&apos; is invalid. Please provide a valid filename for filetype &apos;&amp;filetype&amp;&apos;
     RAISE EXCEPTION TYPE zaplink_cx_file
@@ -709,7 +709,7 @@ IF data IS INITIAL.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 IF data &lt;&gt; c_ft_local AND data &lt;&gt; c_ft_server.
     RAISE EXCEPTION TYPE zaplink_cx_file
           EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype

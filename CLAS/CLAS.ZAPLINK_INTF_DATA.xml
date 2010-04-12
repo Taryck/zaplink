@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E35D87287696D6F4B6CA6BA5C22CB06F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0B2F237A0F07AA7F7F16B403D302FF17" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -60,21 +60,21 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
    <ITEM REFCLSNAME="ZAPLINK_OBJECT" VERSION="1" STATE="1"/>
   </FRIENDS>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="ANONYMIZE">
-    <SOURCE>
+    <SOURCE>`
   super-&gt;anonymize( ).
   CLEAR:
     a0_maindata-author,
@@ -87,14 +87,14 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
 </SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="COMPLETE_DATA">
-    <SOURCE>
+    <SOURCE>`
 * Issue 23 : start
   obj_name = fm_data-interface-clsname.
   super-&gt;complete_data( CHANGING fm_data = fm_data ).
 * Issue 23 : end</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="FROM_DATA">
-    <SOURCE>
+    <SOURCE>`
   DATA _t   LIKE LINE OF a0_maindata-texts.
   DATA _in  LIKE LINE OF interfaces.
   FIELD-SYMBOLS:
@@ -140,7 +140,7 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
   clear_tags( ).</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="TO_DATA">
-    <SOURCE>
+    <SOURCE>`
   DATA _t   LIKE LINE OF a0_maindata-texts.
   DATA _ct  LIKE LINE OF fm_data-class_desc.
   DATA _co  LIKE LINE OF fm_data-comprisings.

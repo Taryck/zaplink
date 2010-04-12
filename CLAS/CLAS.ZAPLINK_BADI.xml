@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BF89CC917088118C1579A8B0089D4F18" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="EFBF1AEEB767C70C1A618634ECEE5223" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -65,15 +65,15 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
    </ITEM>
   </ATTRIBUTS>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS
 
@@ -84,7 +84,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
 *table TDCLT
 *DOKCLASS DOKTITEL
 *BI       Business Add-Ins: Implementations
@@ -100,7 +100,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   DATA type LIKE LINE OF supported_types.
 
   CALL METHOD super-&gt;constructor.
@@ -122,7 +122,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 * SELECT WHERE &quot;ID&quot; = &apos;HY&apos; AND &quot;OBJECT&quot; = &apos;SIMGZAPLINK_ACTION&apos; AND &quot;LANGU&quot; = &apos;E&apos; AND &quot;TYP&quot; = &apos;E&apos; AND &quot;DOKVERSION&quot; = 0001 ORDER BY
   doc_key-simg = &apos;SIMG&apos;.</SOURCE>
    </ITEM>
@@ -142,7 +142,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 _exists = ZAPLINK_BADI=&gt;exists-not_exists.
   CALL FUNCTION &apos;SXV_IMP_EXISTS&apos;
     EXPORTING
@@ -178,7 +178,7 @@ _exists = ZAPLINK_BADI=&gt;exists-not_exists.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA obj_mask    TYPE doku_obj.
   DATA docu_key    TYPE ts_doc_key.
   DATA _d          TYPE zaplink_sxsd_data=&gt;t_fm_data.
@@ -276,7 +276,7 @@ _exists = ZAPLINK_BADI=&gt;exists-not_exists.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA obj_mask    TYPE doku_obj.
   DATA _d          TYPE zaplink_badi_data=&gt;t_fm_data.
   DATA imp_name    TYPE rsexscrn-imp_name.
@@ -458,7 +458,7 @@ _exists = ZAPLINK_BADI=&gt;exists-not_exists.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _d               TYPE zaplink_sxsd_data=&gt;t_fm_data.
   DATA i_korrnr         TYPE trkorr.
   DATA i_devclass       TYPE devclass.
@@ -575,7 +575,7 @@ _exists = ZAPLINK_BADI=&gt;exists-not_exists.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _d               TYPE zaplink_badi_data=&gt;t_fm_data.
   DATA i_korrnr         TYPE trkorr.
   DATA i_devclass       TYPE devclass.
@@ -760,7 +760,7 @@ _exists = ZAPLINK_BADI=&gt;exists-not_exists.
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
-    <SOURCE>
+    <SOURCE>`
   DATA o_conn   TYPE to_connector.
   DATA o_sxsd   TYPE to_badi_def.
   DATA o_sxci   TYPE to_badi_impl.
@@ -794,7 +794,7 @@ _exists = ZAPLINK_BADI=&gt;exists-not_exists.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
-    <SOURCE>
+    <SOURCE>`
   DATA exit_name  TYPE rsexscrn-exit_name.
   DATA d_type TYPE td_comptype.
 
@@ -859,7 +859,7 @@ _exists = ZAPLINK_BADI=&gt;exists-not_exists.
   result = abap_true.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
-    <SOURCE>
+    <SOURCE>`
   DATA exit_name  TYPE rsexscrn-exit_name.
   DATA imp_name   TYPE rsexscrn-imp_name.
 
@@ -892,14 +892,14 @@ _exists = ZAPLINK_BADI=&gt;exists-not_exists.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
-    <SOURCE>
+    <SOURCE>`
   result = abap_false.
   if version = _ver.
     result = abap_true.
   endif.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP">
-    <SOURCE>
+    <SOURCE>`
   DATA o_bdef TYPE to_badi_def.
   DATA o_impl TYPE to_badi_impl.
   DATA d_type TYPE td_comptype.
@@ -923,7 +923,7 @@ _exists = ZAPLINK_BADI=&gt;exists-not_exists.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
-    <SOURCE>
+    <SOURCE>`
   DATA _o_def         TYPE to_badi_def.
   DATA _o_impl        TYPE to_badi_impl.
 

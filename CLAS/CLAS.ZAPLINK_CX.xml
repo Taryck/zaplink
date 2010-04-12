@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="11465DE3B1E91E9DCB8F8A71BB1936E2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="51D0D2F0909BB6439B2133C8150F2036" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S" MSG_ID="ZAPLINK_CX">
@@ -99,15 +99,15 @@ AS</DOCUMENTATION>
    <ITEM REFCLSNAME="ZAPLINK_CX" VERSION="1" STATE="1"/>
   </FRIENDS>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS
 
@@ -118,7 +118,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   DATA _exceptions TYPE REF TO CL_OO_CLASS_RELATIONS.
   DATA s_list      LIKE LINE OF _cx_list.
   DATA t_list      LIKE STANDARD TABLE OF s_list.
@@ -184,7 +184,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM SCONAME="TEXTID" VERSION="1" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " PARPASSTYP="1" TYPE="TEXTID" PAROPTIONL="X"/>
      <ITEM SCONAME="_CX_LIST" VERSION="1" CMPTYPE="1" MTDTYPE="2" EDITORDER="10 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_CX_LIST" PAROPTIONL="X"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 CALL METHOD SUPER-&gt;CONSTRUCTOR
 EXPORTING
 TEXTID = TEXTID
@@ -223,7 +223,7 @@ me-&gt;_CX_LIST = _CX_LIST .</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA p_wb_request	TYPE REF TO cl_wb_request.
   DATA p_ex_request	TYPE REF TO cl_wb_request.
   DATA p_wb_source_req_dispatcher TYPE REF TO cl_wb_source_req_dispatcher.
@@ -334,7 +334,7 @@ me-&gt;_CX_LIST = _CX_LIST .</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   result = _CREATE_CX( cx_name = cx_name
                         textid = textid ).
 
@@ -381,7 +381,7 @@ me-&gt;_CX_LIST = _CX_LIST .</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 CONSTANTS c_cx_kind TYPE funct-kind VALUE &apos;X&apos;. &quot; Exception
 
   data _FUNCNAME      TYPE RS38L-NAME.
@@ -497,7 +497,7 @@ CONSTANTS c_cx_kind TYPE funct-kind VALUE &apos;X&apos;. &quot; Exception
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 
   result = _create_cx( cx_name = classname
                         textid = textid ).
@@ -512,7 +512,7 @@ CONSTANTS c_cx_kind TYPE funct-kind VALUE &apos;X&apos;. &quot; Exception
     <PARAMETERS>
      <ITEM SCONAME="STR" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 str = source_position_as_string( me ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SOURCE_POSITION_AS_STRING" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
@@ -531,7 +531,7 @@ str = source_position_as_string( me ).</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
 DATA _pos TYPE ts_source_pos.
   DATA _key TYPE seu_objkey.
   DATA _prog TYPE ts_source_def.
@@ -553,7 +553,7 @@ DATA _pos TYPE ts_source_pos.
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Màj parameters"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
 * BAl_log
   IF messages IS BOUND.
     object = messages-&gt;object.
@@ -576,7 +576,7 @@ DATA _pos TYPE ts_source_pos.
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Write exception as text"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   DATA _exceptions TYPE STANDARD TABLE OF string.
   DATA _msg TYPE string.
   DATA _pos TYPE string.
@@ -649,7 +649,7 @@ DATA _pos TYPE ts_source_pos.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA f_exists TYPE abap_bool.
 
   IF NOT cx_name IS INITIAL.

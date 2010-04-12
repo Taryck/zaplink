@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="07EC583A1E0F44E9FD59C07086FA8A86" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DEVCLASS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="39B6637A13C4053F9CBE59E0D9EF09FE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DEVCLASS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -53,15 +53,15 @@
    </CLASSES>
   </DEFERRED>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* in the implementation part of the class
 
@@ -72,7 +72,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   super-&gt;constructor( ).
   _substitution = substitutionkinds-keep_existing.</SOURCE>
    </ITEM>
@@ -91,7 +91,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 
   result = abap_false.
   CHECK NOT data IS INITIAL.
@@ -131,7 +131,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 result = _devclass.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_EXISTING" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
@@ -157,7 +157,7 @@ result = _devclass.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _name        TYPE tadir-obj_name.
   DATA _type        TYPE tadir-object.
   DATA _exists      TYPE saus_dpara-tadirexist.
@@ -206,7 +206,7 @@ result = _devclass.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   result = _substitution.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_DEVCLASS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
@@ -227,7 +227,7 @@ result = _devclass.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 CHECK data &lt;&gt; _devclass.
 
   IF _devclass IS INITIAL AND _substitution = substitutionkinds-fixed.
@@ -255,7 +255,7 @@ CHECK data &lt;&gt; _devclass.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   CHECK data &lt;&gt; _substitution.
 
   CASE data.
@@ -299,7 +299,7 @@ CHECK data &lt;&gt; _devclass.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA comp_devc TYPE td_devclass.
 
   CHECK component IS BOUND.

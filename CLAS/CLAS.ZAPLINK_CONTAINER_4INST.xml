@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="DD41416A4AB8C6C4555AD89471CDF1A6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="571F6C9C52D71C5E52DC5963B01ACB07" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -154,15 +154,15 @@ AS</DOCUMENTATION>
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* in the implementation part of the class
 
@@ -173,7 +173,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   xmlengine = cl_ixml=&gt;create( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2">
@@ -187,7 +187,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   CREATE OBJECT _complist.
   CREATE OBJECT _options.
   CREATE OBJECT log.
@@ -226,7 +226,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   TRY.
       result = _complist-&gt;clone( ).
     CATCH zaplink_cx INTO o_cx.
@@ -247,7 +247,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 result = _options.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_ROOT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 ">
@@ -257,7 +257,7 @@ result = _options.</SOURCE>
     <PARAMETERS>
      <ITEM SCONAME="ROOT" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_IXML_NODE"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   root = xmldata-&gt;get_first_child( ).
   check root is bound.
 *  IF root-&gt;get_name( ) &lt;&gt; tn_container_root.
@@ -282,7 +282,7 @@ result = _options.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA _streamfactory TYPE REF TO if_ixml_stream_factory.
   DATA _stream TYPE REF TO if_ixml_istream.
   DATA _parser TYPE REF TO if_ixml_parser.
@@ -331,7 +331,7 @@ result = _options.</SOURCE>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 check data &lt;&gt; _options.
   _options = data.</SOURCE>
    </ITEM>
@@ -353,7 +353,7 @@ check data &lt;&gt; _options.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_connector  TYPE to_connector.
   DATA o_comp       TYPE to_component.
   DATA o_comp_n     TYPE to_component.
@@ -493,7 +493,7 @@ check data &lt;&gt; _options.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_connector  TYPE to_connector.
   DATA o_comp       TYPE to_component.
   DATA object       TYPE to_raw.
@@ -583,7 +583,7 @@ check data &lt;&gt; _options.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_raw       TYPE to_raw_base.
   DATA o_comp      TYPE to_component.
   DATA o_comp_p    TYPE to_component.
@@ -682,7 +682,7 @@ check data &lt;&gt; _options.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_comp   TYPE to_component.
   DATA o_list   TYPE to_list.
   DATA _cx_list TYPE REF TO zaplink_cx_list.
@@ -778,7 +778,7 @@ check data &lt;&gt; _options.
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   data _cursor type ref to IF_IXML_NODE.
 
   result = abap_false.
@@ -811,7 +811,7 @@ check data &lt;&gt; _options.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
   DATA o_iterator  TYPE REF TO if_ixml_node_iterator.
   DATA o_filt_name TYPE REF TO if_ixml_node_filter.
   DATA o_node      TYPE REF TO  if_ixml_node.
@@ -853,7 +853,7 @@ check data &lt;&gt; _options.
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
-    <SOURCE>
+    <SOURCE>`
 *  CALL METHOD SUPER-&gt;_UPDATE_COMPONENTSLIST.
   DATA o_iterator  TYPE REF TO if_ixml_node_iterator.
   DATA o_node      TYPE REF TO if_ixml_node.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3727A563D74973E20853088605CD4965" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F6944FECEF5995290C7968D3A738F038" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -129,16 +129,16 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
   <LOCAL>
-   <TYPES>
+   <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE
  CLASS ZAPLINK_DOCUMENTATION DEFINITION LOAD.</TYPES>
-   <IMPLEMENTATIONS>
+   <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
-   <MACROS>
+   <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
@@ -147,7 +147,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
 *  FIELD-SYMBOLS:
 *    &lt;t&gt; like LINE OF texts.
 *
@@ -160,7 +160,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
-    <SOURCE>
+    <SOURCE>`
   DATA _id LIKE LINE OF r_doc_ids.
 
   _id-sign = &apos;I&apos;. _id-option = &apos;EQ&apos;.
@@ -177,7 +177,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA t_tmp   TYPE tt_atrt.
   DATA t_attr  TYPE SORTED TABLE OF rsmpe_atrt WITH UNIQUE KEY obj_code sub_code obj_type.
   DATA s_attr  LIKE LINE OF t_attr.
@@ -392,7 +392,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
      </ITEM>
      <ITEM SCONAME="TEXTS" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_STEXTS"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA s_txt LIKE LINE OF result.
   FIELD-SYMBOLS:
     &lt;r&gt; LIKE LINE OF result,
@@ -454,7 +454,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA s_txt LIKE LINE OF result.
   FIELD-SYMBOLS:
     &lt;t&gt; LIKE LINE OF texts.
@@ -487,7 +487,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
      </ITEM>
      <ITEM SCONAME="TEXTS" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_MP_FTEXTS"/>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA s_txt LIKE LINE OF result.
   FIELD-SYMBOLS:
     &lt;t&gt; LIKE LINE OF texts.
@@ -532,7 +532,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA s_txt LIKE LINE OF result.
   FIELD-SYMBOLS:
     &lt;t&gt; LIKE LINE OF texts.
@@ -558,7 +558,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <SOURCE>
+    <SOURCE>`
   DATA s_title LIKE LINE OF fm_data-titles.
   DATA s_func  LIKE LINE OF fm_data-functions.
   DATA s_statu LIKE LINE OF fm_data-status.
