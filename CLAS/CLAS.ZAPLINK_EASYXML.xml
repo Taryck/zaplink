@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="CA242C6B8453FF91295058D5C4250E7D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E411944BDED377EA1B93A0ECD2557EA3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" UUID="ECF8034B756EB95AE1000000AC120173" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="ZapLink Easy XML Tools">
      <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100406" TDFTIME="180935" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
@@ -655,28 +655,29 @@ END-OF-DEFINITION.</MACROS>
 * Issue 46 : &apos;^[_]*&apos;
   CONCATENATE &apos;^[&apos; issue46_prefix &apos;]*&apos; INTO issue46_regex.
 
-* Check BALOBJ
-  obj-object = zaplink_datatypes=&gt;ballog_object.
-  SELECT SINGLE * INTO obj
-    FROM balobj
-    WHERE object = obj-object.
-  IF sy-subrc &lt;&gt; 0.
-    INSERT balobj FROM obj.
-  ENDIF.
-
-* Check BALSUB
-  sobj-object = obj-object.
-  sobj-subobject = &apos;EASYXML&apos;.
-  SELECT SINGLE * INTO sobj
-    FROM balsub
-    WHERE    object = sobj-object
-      AND subobject = sobj-subobject.
-  IF sy-subrc &lt;&gt; 0.
-    INSERT balsub FROM sobj.
-  ENDIF.
-  IF sy-subrc &lt;&gt; 0.
-    COMMIT WORK AND WAIT.
-  ENDIF.</SOURCE>
+* Issue 56 : BAL Log object are set in ZAPLINK_MESSAGE_COLLECTOR=&gt;CHECK_CUSTO( )
+** Check BALOBJ
+*  obj-object = zaplink_datatypes=&gt;ballog_object.
+*  SELECT SINGLE * INTO obj
+*    FROM balobj
+*    WHERE object = obj-object.
+*  IF sy-subrc &lt;&gt; 0.
+*    INSERT balobj FROM obj.
+*  ENDIF.
+*
+** Check BALSUB
+*  sobj-object = obj-object.
+*  sobj-subobject = &apos;EASYXML&apos;.
+*  SELECT SINGLE * INTO sobj
+*    FROM balsub
+*    WHERE    object = sobj-object
+*      AND subobject = sobj-subobject.
+*  IF sy-subrc &lt;&gt; 0.
+*    INSERT balsub FROM sobj.
+*  ENDIF.
+*  IF sy-subrc &lt;&gt; 0.
+*    COMMIT WORK AND WAIT.
+*  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDTYPE="2">
     <TEXTS>
