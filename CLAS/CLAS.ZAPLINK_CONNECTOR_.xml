@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="1E3DF13AF5AF38D0C948DDCE78D3B855" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9A8740A4B415CD855FE54286FBFA34A9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -203,6 +203,7 @@ AS</DOCUMENTATION>
   DATA ez_xml    TYPE to_ez_xml.
   DATA o_cx      TYPE REF TO cx_root.
   DATA o_zlcx    TYPE REF TO zaplink_cx.
+  DATA t_bapiret TYPE bapirettab.
 
   CHECK object IS BOUND.
 
@@ -248,26 +249,57 @@ AS</DOCUMENTATION>
 *        mac_create_log o_msgs ballog_subobject space.   o_comp-&gt;set_msg_coll( o_msgs ).
         application_log-&gt;add_from_instance( io_msglist = ez_xml-&gt;application_log
                                      if_add_as_subnode = abap_true ).
-*Issue 45
-*        CALL FUNCTION &apos;POPUP_WITH_TABLE&apos;
-*          EXPORTING
-*            endpos_col         =
-*            endpos_row         =
-*            startpos_col       =
-*            startpos_row       =
-*            titletext          =
-**         IMPORTING
-**           CHOICE             =
-*          tables
-*            valuetab           =
-**         EXCEPTIONS
-**           BREAK_OFF          = 1
-**           OTHERS             = 2
-*                  .
-*        IF sy-subrc &lt;&gt; 0.
-** MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-**         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
-*        ENDIF.
+        DATA t_handle TYPE bal_t_logh.
+        DATA s_profil TYPE bal_s_prof.
+        DATA s_choice TYPE bal_s_excm.
+
+        APPEND application_log-&gt;md_handle TO t_handle.
+        CALL FUNCTION &apos;BAL_DSP_PROFILE_SINGLE_LOG_GET&apos;
+          IMPORTING
+            e_s_display_profile = s_profil
+          EXCEPTIONS
+            OTHERS              = 0.
+        s_profil-langu = sy-langu.
+* Error with &amp;1 &amp;2 : Confirm or abort this comp.
+        MESSAGE i010(zaplink_easyxml) WITH o_raw_b-&gt;type o_raw_b-&gt;name INTO s_profil-title.
+        s_profil-use_grid = s_profil-no_toolbar = s_profil-show_all = s_profil-cwidth_opt = abap_true.
+*        s_profil-tree_ontop = abap_false. = s_profil-pop_adjst = s_profil-tree_adjst
+* XML Errors for component &amp;1 &amp;2
+        MESSAGE i009(zaplink_easyxml) WITH o_raw_b-&gt;type o_raw_b-&gt;name INTO s_profil-grid_title-gridtitle.
+        s_profil-start_col = s_profil-start_row = 5.
+        s_profil-end_col = 120.
+        s_profil-end_row = 40.
+        s_profil-head_size = 10.
+
+* Issue 45
+        CALL FUNCTION &apos;BAL_DSP_LOG_DISPLAY&apos;
+          EXPORTING
+            i_s_display_profile          = s_profil
+            i_t_log_handle               = t_handle
+*           I_T_MSG_HANDLE               =
+*           I_S_LOG_FILTER               =
+*           I_S_MSG_FILTER               =
+*           I_T_LOG_CONTEXT_FILTER       =
+*           I_T_MSG_CONTEXT_FILTER       =
+            i_amodal                     = abap_false
+*           I_SRT_BY_TIMSTMP             = &apos; &apos;
+          IMPORTING
+            e_s_exit_command             = s_choice
+          EXCEPTIONS
+            profile_inconsistent         = 1
+            internal_error               = 2
+            no_data_available            = 3
+            no_authority                 = 4
+            OTHERS                       = 5.
+        IF sy-subrc &lt;&gt; 0 OR s_choice-continue IS INITIAL.
+          CREATE OBJECT o_mycx
+            EXPORTING
+              textid = zaplink_cx_connector=&gt;xml_error
+              TYPE   = o_raw_b-&gt;type
+              name   = o_raw_b-&gt;name.
+          o_mycx-&gt;update( ).
+          RAISE EXCEPTION o_mycx.
+        ENDIF.
       ENDIF.
 
       components = write_to_sap( o_raw ).

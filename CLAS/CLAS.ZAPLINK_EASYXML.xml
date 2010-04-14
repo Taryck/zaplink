@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D65B98A5050EE49F364BC225CEF747B8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="AC1D2779E8CDF6373B7B67F161D2BAFF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -1383,6 +1383,7 @@ END-OF-DEFINITION.</MACROS>
     <SOURCE>`
   DATA elem        TYPE REF TO if_ixml_element.
   DATA node        TYPE REF TO if_ixml_node.
+  DATA next_node   TYPE REF TO if_ixml_node.
   DATA structdescr TYPE REF TO cl_abap_structdescr.
   DATA typedescr   TYPE REF TO cl_abap_typedescr.
   DATA svalue      TYPE string.
@@ -1506,10 +1507,11 @@ END-OF-DEFINITION.</MACROS>
 * XML Childs
   childs = xml_node-&gt;get_children( ).
   iterator = childs-&gt;create_iterator( ).
-*  node ?= iterator-&gt;get_next( ).
-  node = iterator-&gt;get_next( ).
-  WHILE node IS BOUND.
+  next_node ?= iterator-&gt;get_next( ).
+  WHILE next_node IS BOUND.
+    node = next_node.    next_node ?= iterator-&gt;get_next( ).
     attr_name = node-&gt;get_name( ).
+    CHECK node_is_not_type( node = node type = if_ixml_node=&gt;co_node_text ) = abap_true. &quot; not text node
     READ TABLE structdescr-&gt;components ASSIGNING &lt;c&gt; WITH KEY name = attr_name.
     IF sy-subrc &lt;&gt; 0.
 * Component not found
@@ -1560,7 +1562,6 @@ END-OF-DEFINITION.</MACROS>
         ENDCASE.
       ENDIF.
     ENDIF.
-    node ?= iterator-&gt;get_next( ).
   ENDWHILE.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="READ_TABLE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="9 ">
@@ -1586,30 +1587,16 @@ END-OF-DEFINITION.</MACROS>
   DATA d_name     TYPE string.
   DATA d_context  LIKE LINE OF context.
   DATA _cx        TYPE REF TO cx_root.
+  DATA _count     TYPE string.
   FIELD-SYMBOLS:
     &lt;d&gt; TYPE ANY.
-*  TYPES:
-*    BEGIN OF ts_child,
-*      node   TYPE REF TO if_ixml_node,
-*      name   TYPE string,
-*      type   TYPE i,
-*      parent TYPE REF TO if_ixml_node,
-*    END OF ts_child.
-*  DATA t_childs TYPE STANDARD TABLE OF ts_child WITH DEFAULT KEY.
-*  DATA s_child LIKE LINE OF t_childs.
 
   o_childs = xml_node-&gt;get_children( ).
-*  o_iterator = o_childs-&gt;create_iterator( ).
-*  s_child-node = o_iterator-&gt;get_next( ).
-*  WHILE s_child-node IS BOUND. s_child-name = s_child-node-&gt;get_name( ). s_child-type = s_child-node-&gt;get_type( ). s_child-parent = s_child-node-&gt;get_parent( ). INSERT s_child INTO TABLE t_childs. s_child-node = o_iterator-&gt;get_next( ). ENDWHILE.&quot;debug
-*  CLEAR t_childs.
   o_filter = xml_node-&gt;create_filter_node_type( if_ixml_node=&gt;co_node_element ).
   o_iterator = o_childs-&gt;create_iterator_filtered( filter = o_filter ).
-*  s_child-node = o_iterator-&gt;get_next( ).
-*  WHILE s_child-node IS BOUND.    s_child-name = s_child-node-&gt;get_name( ).   s_child-type = s_child-node-&gt;get_type( ).   INSERT s_child INTO TABLE t_childs.   s_child-node = o_iterator-&gt;get_next( ).   ENDWHILE.   &quot; for debug
-*  o_iterator = o_childs-&gt;create_iterator_filtered( filter = o_filter ).
   o_n_elem ?= o_iterator-&gt;get_next( ).
   WHILE o_n_elem IS BOUND.
+    ADD 1 TO _count.    stack( _count ).
     o_elem = o_n_elem.    o_n_elem ?= o_iterator-&gt;get_next( ).
     d_name = o_elem-&gt;get_name( ).
     IF en_line &lt;&gt; d_name.
@@ -1646,6 +1633,7 @@ END-OF-DEFINITION.</MACROS>
         mac_syserr_log sy-subrc &apos;INSERT &lt;d&gt; INTO TABLE table.&apos; &apos;ZAPLINK_EASYXML-&gt;READ_TABLE&apos;. &quot;#EC NOTEXT
       ENDIF.
     ENDIF.
+    unstack( ).
   ENDWHILE.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="RESET" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 ">

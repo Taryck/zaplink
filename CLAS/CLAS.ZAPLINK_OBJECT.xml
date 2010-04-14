@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AEE0325D02B33CF04DA09B4FE5C0D7C6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="894CEAD9F76DAF56EF22A83EC60F1740" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -311,6 +311,12 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
       _d = o_data-&gt;to_data( ).
 
+* Exceptions texts
+      IF NOT _d-exceptions_texts IS INITIAL.
+        zaplink_clas_data=&gt;update_concept( EXPORTING msg_col = application_log
+                                           CHANGING  fm_data = _d ).
+      ENDIF.
+
       CALL FUNCTION &apos;SEO_BUFFER_INIT&apos;.
       CALL FUNCTION &apos;SEO_CLASS_CREATE_COMPLETE&apos;
        EXPORTING
@@ -371,18 +377,12 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
           RAISE EXCEPTION o_mycx.
       ENDCASE.
 
-* Exceptions texts
-      IF NOT _d-exceptions_texts IS INITIAL.
-*  zaplink_clas_data=&gt;update_concept( EXPORTING msg_col = application_log
-*                                     CHANGING  fm_data = _d ).
-      ENDIF.
-
       _d-includes = zaplink_object_data=&gt;get_includes( _d-class-clsname ).
-      set_dynpros( program = _d-includes-classpool                            &quot; Issue 8
+      set_dynpros( program = _d-includes-classpool          &quot; Issue 8
                    dynpros = _d-dynpros ).
-      set_menus( program = _d-includes-classpool                              &quot; Issue 9
+      set_menus( program = _d-includes-classpool            &quot; Issue 9
                    menus = _d-menupainter ).
-      set_prog_textpool( program = _d-includes-classpool                      &quot; Issue 1
+      set_prog_textpool( program = _d-includes-classpool    &quot; Issue 1
                         textpool = _d-textspool ).
 
       zaplink_documentation=&gt;set( _d-documentation ).

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2D54F579BA1C6E641BFFA577214A53FB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="196C7059260D0289E8BFCEB6AC40C65E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -540,7 +540,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
           mac_assign &apos;(SAPLSEUK)RSSTCD&apos; s_fm_data-rsstcd.
           IF NOT s_fm_data-rsstcd-call_tcode IS INITIAL. mac_assign &apos;(SAPLSEUK)PARAM_VARI&apos; abap_true. ENDIF.      &quot; For transaction parameter @*
 *   action
-          mac_assign &apos;(SAPLSEUK)ACTION&apos; &apos;ADD&apos;.
+*          mac_assign &apos;(SAPLSEUK)ACTION&apos; &apos;ADD&apos;. Issue 57
 *   tstc
           mac_assign &apos;(SAPLSEUK)TSTC&apos; s_fm_data-tstc.
 *   tran_langu &amp; tstct
