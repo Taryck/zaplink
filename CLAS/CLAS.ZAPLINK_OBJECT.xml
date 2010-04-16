@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="894CEAD9F76DAF56EF22A83EC60F1740" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A6B05F39AB0B4B71E8EDF55500EE8C8B" CODE_SIGNATURE="A06D11905A58D6346A50A2D73C67220D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -71,7 +71,7 @@ AS,,Introducing : Screen &amp; Menu data</DOCUMENTATION>
 INCLUDE ZAPLINK_MACROS.</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
+   <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDTYPE="2">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
@@ -181,6 +181,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       _d-menupainter = get_menus( _d-includes-classpool ).  &quot; Issue 9
       _d-textspool = get_prog_textpool( _d-includes-classpool ). &quot; Issue 1
       object-&gt;from_data( _d ).
+      object-&gt;_code_signature = get_class_signature( classkey ).
 
     CATCH zaplink_cx_connector INTO o_mycx.
       RAISE EXCEPTION o_mycx.
@@ -259,17 +260,19 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 *         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
 *      ENDIF.
 
-      CREATE OBJECT object.
-      object-&gt;complete_data( CHANGING fm_data = _d ).
-      object-&gt;from_data( _d ).
-
 * Documentations
       docu_key-name = component-&gt;get_name( ).
       docu_key-other = &apos;*&apos;.
       obj_mask = docu_key.
 
-      object-&gt;documentation = zaplink_documentation=&gt;get( ids = zaplink_object_data=&gt;r_doc_ids-interface
-                                                       object = obj_mask ).
+      _d-documentation = zaplink_documentation=&gt;get( ids = zaplink_object_data=&gt;r_doc_ids-interface
+                                                  object = obj_mask ).
+
+      CREATE OBJECT object.
+      object-&gt;complete_data( CHANGING fm_data = _d ).
+      object-&gt;from_data( _d ).
+      object-&gt;_code_signature = get_interface_signature( classkey ).
+
 
     CATCH zaplink_cx_connector INTO o_mycx.
       RAISE EXCEPTION o_mycx.
@@ -277,6 +280,202 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
 </SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_CLASS_GLOBALSOURCE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Provide Global source of a class"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="CLASS_NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSKEY">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Key structure of a class"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SOURCECODE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="FAILED" VERSION="1" LANGU="E" EDITORDER="2 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Other system errors"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="NOT_A_CLASS" VERSION="1" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="The specified object is not a Class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA o_source    TYPE REF TO cl_oo_source.
+  DATA t_upcode    TYPE td_sourcecode.
+  DATA _line       LIKE LINE OF t_upcode.
+
+  CREATE OBJECT o_source
+    EXPORTING
+      clskey             = class_name
+    EXCEPTIONS
+      class_not_existing = 1
+      OTHERS             = 2.
+  IF sy-subrc &lt;&gt; 0.
+    IF sy-subrc = 1.
+      RAISE not_a_class.
+    ELSE.
+      RAISE failed.
+    ENDIF.
+  ENDIF.
+  result = o_source-&gt;source.    CLEAR o_source.
+  zaplink_tools=&gt;condense_abap_source( CHANGING table = result ).
+  t_upcode = result.
+  zaplink_tools=&gt;conv_table_2upcase( CHANGING table = t_upcode ).
+
+*Remove text before CLASS Zxxx DEFINITION
+  CONCATENATE &apos;CLASS&apos; class_name &apos;DEFINITION&apos; INTO _line SEPARATED BY space.
+  READ TABLE t_upcode TRANSPORTING NO FIELDS  FROM _line.
+  CHECK sy-subrc = 0.
+  SUBTRACT 1 FROM sy-tabix.   CHECK sy-tabix &gt;= 1.    DELETE result TO sy-tabix.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_CLASS_SIGNATURE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Get Source code Signature of class">
+      <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100416" TDFTIME="112440" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+ASRetrieve MD5 Hash from ABAP Class source code. After removing :
+B1Blank lines
+B1Comment lines
+U1&amp;PRECONDITION&amp;
+AS
+U1&amp;RESULT&amp;
+AS
+U1&amp;PARAMETERS&amp;
+AS
+U1&amp;EXCEPTIONS&amp;
+AS
+U1&amp;HINTS&amp;
+AS</DOCUMENTATION>
+     </ITEM>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="CLASS_NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSKEY">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Key structure of a class"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_DATATYPES~TD_CHECKSUM">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Source Code Signature (Checksum)"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA d_type    TYPE td_comptype.
+  DATA t_code    TYPE td_sourcecode.
+  DATA d_src     TYPE string.
+
+  t_code = get_class_globalsource( class_name ).
+  d_src = zaplink_tools=&gt;table_2_string( t_code ).
+  result = zaplink_tools=&gt;calculate_md5_hash( d_src ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_INTERFACE_GLOBALSOURCE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Provide Global source of a interface"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="INTERFACE_NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSKEY">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Key structure of a class"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SOURCECODE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="FAILED" VERSION="1" LANGU="E" EDITORDER="2 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Other system errors"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="NOT_A_CLASS" VERSION="1" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="The specified object is not a Class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA d_prog     TYPE program.
+  DATA t_upcode   TYPE td_sourcecode.
+  DATA _line      LIKE LINE OF t_upcode.
+
+  d_prog = cl_oo_classname_service=&gt;get_intfsec_name( interface_name-clsname ).
+
+  READ REPORT d_prog INTO result.
+  zaplink_tools=&gt;condense_abap_source( CHANGING table = result ).
+  t_upcode = result.    zaplink_tools=&gt;conv_table_2upcase( CHANGING table = t_upcode ).
+
+*Remove text before CLASS Zxxx DEFINITION
+  CONCATENATE &apos;INTERFACE&apos; interface_name INTO _line SEPARATED BY space.
+  READ TABLE t_upcode TRANSPORTING NO FIELDS  FROM _line.
+  CHECK sy-subrc = 0.
+  SUBTRACT 1 FROM sy-tabix.   CHECK sy-tabix &gt;= 1.   DELETE result TO sy-tabix.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_INTERFACE_SIGNATURE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Get Source code Signature of interface">
+      <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100416" TDFTIME="113102" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+ASRetrieve MD5 Hash from ABAP Class source code. After removing :
+B1Blank lines
+B1Comment lines
+U1&amp;PRECONDITION&amp;
+AS
+U1&amp;RESULT&amp;
+AS
+U1&amp;PARAMETERS&amp;
+AS
+U1&amp;EXCEPTIONS&amp;
+AS
+U1&amp;HINTS&amp;
+AS</DOCUMENTATION>
+     </ITEM>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="INTERFACE_NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSKEY">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Key structure of a class"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_DATATYPES~TD_CHECKSUM">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Source Code Signature (Checksum)"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" VERSION="1" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA d_type    TYPE td_comptype.
+  DATA t_code    TYPE td_sourcecode.
+  DATA d_src     TYPE string.
+
+  t_code = get_interface_globalsource( interface_name ).
+  d_src = zaplink_tools=&gt;table_2_string( t_code ).
+  result = zaplink_tools=&gt;calculate_md5_hash( d_src ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_CLASS" VERSION="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
@@ -584,6 +783,26 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ENDCASE.
 </SOURCE>
    </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
+    <SOURCE>`
+  DATA clskey TYPE seoclskey.
+  DATA d_type TYPE td_comptype.
+
+  TRY.
+    d_type = component-&gt;get_type( ).
+    CASE d_type.
+      WHEN zaplink_object_data=&gt;object_types-class.
+        clskey-clsname = component-&gt;get_name( ).
+        result = get_class_signature( clskey ).
+      WHEN zaplink_object_data=&gt;object_types-interface.
+        clskey-clsname = component-&gt;get_name( ).
+        result = get_interface_signature( clskey ).
+      WHEN OTHERS.
+        mac_raise_type_not_supported &apos;ZAPLINK_OBJECT&apos; d_type.
+    ENDCASE.
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
+   </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
     <SOURCE>`
   DATA o_clas TYPE to_class.
@@ -837,6 +1056,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
    <ITEM TYPEGROUP="SEOX" VERSION="1" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
+   <ITEM CMPNAME="TD_SOURCECODE" VERSION="1" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="SEOP_SOURCE_STRING">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TO_CLASS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CLAS_DATA">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class data"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B9CA7DBC7073FFF69DAB9A7B017C96BD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0F1A9CE8AD2F18293DDAFCE29829B220" CODE_SIGNATURE="C938F104ABE53A538D3D7B1386A634AD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -52,7 +52,7 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
   </ATTRIBUTS>
   <DEFERRED>
    <CLASSES>
-    <ITEM TYPEGROUP="ZAPLINK_PROG_DATA" TPUTYPE="1" IMPLICIT="X"/>
+    <ITEM TYPEGROUP="ZAPLINK_PROG_DATA" VERSION="1" TPUTYPE="1" IMPLICIT="X"/>
    </CLASSES>
   </DEFERRED>
   <LOCAL>
@@ -103,6 +103,31 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   uuid = _uuid.
   version = _ver.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="GET_PROGRAM_SIGNATURE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Get Source code Signature of a program"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="PROGRAM_NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Program Name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_DATATYPES~TD_CHECKSUM">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="MD5 Hash"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA t_code TYPE tt_abaprawsource.
+  DATA d_src  TYPE string.
+
+  t_code = get_prog_rawsource( program_name ).
+  zaplink_tools=&gt;condense_abap_source( CHANGING table = t_code ).
+  d_src = zaplink_tools=&gt;table_2_string( t_code ).
+  result = zaplink_tools=&gt;calculate_md5_hash( d_src ).</SOURCE>
+   </ITEM>
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
@@ -145,6 +170,27 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 *    o_prog-&gt;A0_MAINDATA-STIME,
 *    o_prog-&gt;A0_MAINDATA-IDATE,
 *    o_prog-&gt;A0_MAINDATA-ITIME.</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
+    <SOURCE>`
+  DATA d_type TYPE td_comptype.
+  DATA d_prog TYPE td_progname.
+
+  TRY.
+      d_type = component-&gt;get_type( ).
+      CASE d_type.
+        WHEN st_program.
+          d_prog = component-&gt;get_name( ).
+          result = get_program_signature( d_prog ).
+        WHEN OTHERS.
+          mac_raise_type_not_supported &apos;ZAPLINK_PROGRAM&apos; d_type.
+      ENDCASE.
+
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
     <SOURCE>`
@@ -334,6 +380,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
                                                     object = _obj ).
 
           o_data-&gt;from_data( s_fm_data ).
+          o_data-&gt;_code_signature = get_program_signature( o_data-&gt;a0_maindata-name ).
 
           CLEAR o_data-&gt;a0_maindata-name.
           object-&gt;raw = o_data.

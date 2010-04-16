@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B2530ED7212B4A2D36D9C639B574086F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="61F6844ACC300A3570D79C9888393FFA" CODE_SIGNATURE="A6C25488A8944981B6D932A6846F898E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -94,12 +94,17 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM LANGU="E" DESCRIPT="In subtitution to MF &apos;RS_GET_ALL_INCLUDES&apos;"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="RS38L-AREA">
+     <ITEM SCONAME="NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FUNCTIONGROUP_NAME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Function group, to which the function module belongs"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULTS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_INCLUDES"/>
+     <ITEM SCONAME="RESULTS" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_INCLUDES"/>
+     <ITEM SCONAME="WITH_CODE" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Not only form include but all include with ABAP Code"/>
+      </TEXTS>
+     </ITEM>
     </PARAMETERS>
     <SOURCE>`
   DATA: _result           LIKE LINE OF results.
@@ -170,14 +175,72 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         namespace_too_long                 = 10
         area_length_error                  = 11
         OTHERS                             = 12.
-    IF sy-subrc = 0 AND _fugr_name = name AND d_is_extern = abap_false AND d_not_funct = abap_true AND d_is_hidden = abap_false
-                    AND ( d_suffix = &apos;TOP&apos; OR _is_reserved_name = abap_false ).
+    IF sy-subrc = 0 AND _fugr_name = name AND d_is_extern = abap_false AND
+      ( with_code = abap_true OR
+              ( d_not_funct = abap_true AND d_is_hidden = abap_false AND
+                        ( d_suffix = &apos;TOP&apos; OR _is_reserved_name = abap_false ) ) ) .
       _result-name = &lt;wa&gt;-include.
       _result-source = get_prog_rawsource( _result-name ).
       APPEND _result TO results.
     ENDIF.
   ENDLOOP.
 </SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_GROUP_SIGNATURE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Get Source code Signature of a function group"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="GROUP_NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FUNCTIONGROUP_NAME">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Function Group Name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_DATATYPES~TD_CHECKSUM">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="MD5 Hash"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA t_includes  TYPE tt_includes.
+  DATA t_code      TYPE tt_abaprawsource.
+*  DATA t_code_tmp  TYPE tt_abaprawsource.
+  DATA d_src       TYPE string.
+  DATA d_mainprog  TYPE td_progname.
+  DATA t_functions TYPE tt_rs38l_incl.
+  FIELD-SYMBOLS:
+    &lt;i&gt; LIKE LINE OF t_includes,
+    &lt;f&gt; LIKE LINE OF t_functions.
+
+* Main Prog
+  d_mainprog = get_mainprogram( group_name ).
+  t_code = get_prog_rawsource( d_mainprog ).
+
+** Functions
+*  CALL FUNCTION &apos;RS_FUNCTION_POOL_CONTENTS&apos;
+*    EXPORTING
+*      function_pool           = group_name
+*    TABLES
+*      functab                 = t_functions
+*    EXCEPTIONS
+*      function_pool_not_found = 1
+*      OTHERS                  = 2.
+*  IF sy-subrc &lt;&gt; 0.
+*    MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+*            WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+*  ENDIF.
+*  LOOP AT t_functions ASSIGNING &lt;f&gt;.  t_code_tmp = get_prog_rawsource( &lt;f&gt;-include ).     APPEND LINES OF t_code_tmp TO t_code.   ENDLOOP.
+
+* Includes
+  t_includes = get_all_includes( name = group_name
+                            with_code = abap_true  ).
+  LOOP AT t_includes ASSIGNING &lt;i&gt;.   APPEND LINES OF &lt;i&gt;-source TO t_code.   ENDLOOP.
+
+* Calcul MD5
+  zaplink_tools=&gt;condense_abap_source( CHANGING table = t_code ).
+  d_src = zaplink_tools=&gt;table_2_string( t_code ).
+  result = zaplink_tools=&gt;calculate_md5_hash( d_src ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_MAINPROGRAM" VERSION="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
@@ -252,6 +315,24 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 **    o_prog-&gt;A0_MAINDATA-IDATE,
 **    o_prog-&gt;A0_MAINDATA-ITIME.</SOURCE>
    </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
+    <SOURCE>`
+  DATA d_name TYPE td_functiongroup_name.
+  DATA d_type  TYPE td_comptype.
+
+  TRY.
+    d_type = component-&gt;get_type( ).
+    CASE d_type.
+      WHEN st_function_group.
+        d_name = component-&gt;get_name( ).
+        result = get_group_signature( d_name ).
+      WHEN OTHERS.
+        mac_raise_type_not_supported &apos;ZAPLINK_MESSAGE&apos; d_type.
+    ENDCASE.
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
+   </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
     <SOURCE>`
   DATA o_group TYPE to_group.
@@ -316,7 +397,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>`
-  DATA _name TYPE tlibg-area.
+  DATA _name TYPE td_functiongroup_name.
   DATA type  TYPE td_comptype.
 
   exists = me-&gt;exists-not_exists.
@@ -370,7 +451,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   DATA t_src TYPE STANDARD TABLE OF rssource WITH DEFAULT KEY.
   DATA t_tmp_doc TYPE tt_docs.
   DATA d_doc TYPE doku_obj.
-  DATA s_doc_param type zaplink_fugr_data=&gt;ts_doc_param.
+  DATA s_doc_param TYPE zaplink_fugr_data=&gt;ts_doc_param.
 *    BEGIN OF s_doc_param,
 *      func   TYPE rs38l_fnam,
 *      param TYPE rs38l_par_,
@@ -469,6 +550,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 *                                                          object = _obj ).
           CREATE OBJECT o_data.
           o_data-&gt;from_data( s_fm_data ).
+          o_data-&gt;_code_signature = get_group_signature( o_data-&gt;a0_maindata-area ).
           CLEAR o_data-&gt;a0_maindata-area.
           object-&gt;raw = o_data.
         WHEN OTHERS.
@@ -819,6 +901,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
    <ITEM TYPEGROUP="ABAP" VERSION="1" IMPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
+   <ITEM CMPNAME="TD_FUNCTIONGROUP_NAME" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TLIBG-AREA">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Function group, to which the function module belongs"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TD_INCLUDENAME" VERSION="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="ZAPLINK_FUGR_DATA=&gt;TD_INCLUDENAME"/>
    <ITEM CMPNAME="TO_GROUP" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_FUGR_DATA">
     <TEXTS>
@@ -846,7 +933,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       ENTRY	  type TEXTPOOLTX,
       LENGTH  type TEXTPOOLLN,
     end of ts_text</ITEM>
-   <ITEM CMPNAME="TS_TEXTPOOL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="22 " SRCCOLUMN1="4 " SRCROW2="26 " SRCCOLUMN2="21 " TYPESRC_LENG="136 ">begin of ts_textpool,
+   <ITEM CMPNAME="TS_TEXTPOOL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="23 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="21 " TYPESRC_LENG="136 ">begin of ts_textpool,
       ID    type  TEXTPOOLID,
       KEY	  type  TEXTPOOLKY,
       texts type  tt_texts,
@@ -859,13 +946,13 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM LANGU="E" DESCRIPT="standard table of rs38l_incl"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TEXTPOOLS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="28 " SRCCOLUMN1="4 " SRCROW2="28 " SRCCOLUMN2="71 " TYPESRC_LENG="68 ">
+   <ITEM CMPNAME="TT_TEXTPOOLS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="29 " SRCCOLUMN1="4 " SRCROW2="29 " SRCCOLUMN2="71 " TYPESRC_LENG="68 ">
     TT_TEXTPOOLs type SORTED TABLE OF ts_textpool WITH UNIQUE key ID KEY
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Table of textppool"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="20 " SRCCOLUMN1="4 " SRCROW2="20 " SRCCOLUMN2="62 " TYPESRC_LENG="59 ">tt_texts type SORTED TABLE OF ts_text WITH UNIQUE KEY langu</ITEM>
+   <ITEM CMPNAME="TT_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="21 " SRCCOLUMN1="4 " SRCROW2="21 " SRCCOLUMN2="62 " TYPESRC_LENG="59 ">tt_texts type SORTED TABLE OF ts_text WITH UNIQUE KEY langu</ITEM>
    <ITEM CMPNAME="T_RAW" VERSION="1" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="RSWSOURCET">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ABAP Source"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8F54943FDB69FAAD093E00FEFA03FD51" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TYPE_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E6A2C3CCBEEE6164B3ADE35266FAA181" CODE_SIGNATURE="DFAFB43CA9B7A808AB1D2C65F5545277" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TYPE_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -69,28 +69,7 @@ SPLIT me-&gt;source AT cl_abap_char_utilities=&gt;newline
      <ITEM SCONAME="SOURCE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STANDARD TABLE"/>
     </PARAMETERS>
     <SOURCE>`
-*  FIELD-SYMBOLS:
-*    &lt;l&gt; like LINE OF source.
-*
-*  clear me-&gt;source.
-*  LOOP AT source ASSIGNING &lt;l&gt;.
-*    IF me-&gt;source IS INITIAL.
-*      me-&gt;source = &lt;l&gt;.
-*    ELSE.
-*      CONCATENATE me-&gt;source cl_abap_char_utilities=&gt;newline &lt;l&gt; INTO me-&gt;source.
-*    ENDIF.
-*  ENDLOOP.
-
-  data s type string.
-
-  clear me-&gt;source.
-  LOOP AT source into s.
-    IF me-&gt;source IS INITIAL.
-      me-&gt;source = s.
-    ELSE.
-      CONCATENATE me-&gt;source cl_abap_char_utilities=&gt;newline s INTO me-&gt;source.
-    ENDIF.
-  ENDLOOP.</SOURCE>
+  me-&gt;source = zaplink_tools=&gt;table_2_string( source ).</SOURCE>
    </ITEM>
   </METHODS>
   <TYPES>
