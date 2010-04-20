@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="6F5ABF29342AF94F1330D34EC587E4EF" CODE_SIGNATURE="D01E972CCE6276C492D48AB5E2E3CC11" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E9106420D2D69F4BE30D2165E229ECA1" CODE_SIGNATURE="D01E972CCE6276C492D48AB5E2E3CC11" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1809,79 +1809,78 @@ END-OF-DEFINITION.</MACROS>
         o_mycx-&gt;update( ).
       endif.
       raise exception o_mycx.
-    END-OF-DEFINITION.
+  END-OF-DEFINITION.
 
-    TRY.
-      d_type = component-&gt;get_type( ).
-      CREATE OBJECT object.
-      object-&gt;set_component( component ).
+  TRY.
+    d_type = component-&gt;get_type( ).
+    CREATE OBJECT object.
+    object-&gt;set_component( component ).
 
-      CASE d_type.
-        WHEN supportedtypes-type_group.
-          TRY.
-            o_typegroup = export_type_group( component ).
-            mac_catch_local_cx.
-          ENDTRY.
-          CLEAR o_typegroup-&gt;a0_maindata-name.
-          object-&gt;raw = o_typegroup.
-        WHEN supportedtypes-domain.
-          TRY.
-            o_domain = export_domain( component ).
-            mac_catch_local_cx.
-          ENDTRY.
-          CLEAR o_domain-&gt;a0_maindata-domname.
-          object-&gt;raw = o_domain.
-        WHEN supportedtypes-data_element.
-          TRY.
-            o_data_e = export_data_element( component ).
-            mac_catch_local_cx.
-          ENDTRY.
-          CLEAR o_data_e-&gt;a0_maindata-rollname.
-          object-&gt;raw = o_data_e.
-        WHEN supportedtypes-view.
-          TRY.
-            o_view = export_view( component ).
-            mac_catch_local_cx.
-          ENDTRY.
-          CLEAR o_view-&gt;a0_maindata-viewname.
-          object-&gt;raw = o_view.
-        WHEN supportedtypes-table.
-          TRY.
-            o_table = export_table( component ).
-            mac_catch_local_cx.
-          ENDTRY.
-          CLEAR o_table-&gt;a0_maindata-tabname.
-          object-&gt;raw = o_table.
-        WHEN supportedtypes-table_type.
-          TRY.
-            o_tab_type = export_table_type( component ).
-            mac_catch_local_cx.
-          ENDTRY.
-          CLEAR o_tab_type-&gt;a0_maindata-typename.
-          object-&gt;raw = o_tab_type.
-        WHEN supportedtypes-search_help.
-          TRY.
-            o_s_help = export_search_help( component ).
-            mac_catch_local_cx.
-          ENDTRY.
-          CLEAR o_s_help-&gt;a0_maindata-shlpname.
-          object-&gt;raw = o_s_help.
-        WHEN supportedtypes-lock_object.
-          TRY.
-            o_lock_obj = export_lock_object( component ).
-            mac_catch_local_cx.
-          ENDTRY.
-          CLEAR o_lock_obj-&gt;a0_maindata-viewname.
-          object-&gt;raw = o_lock_obj.
-        WHEN OTHERS.
-          CLEAR object.
-          mac_raise_type_not_supported &apos;ZAPLINK_DICTIONARY&apos; d_type.
-      ENDCASE.
-      object-&gt;update_connector_data( me ).                     &quot; Issue 66
-      mac_def_catch zaplink_cx_connector.
-    ENDTRY.
-
-  ENDMETHOD.</SOURCE>
+    CASE d_type.
+      WHEN supportedtypes-type_group.
+        TRY.
+          o_typegroup = export_type_group( component ).
+          mac_catch_local_cx.
+        ENDTRY.
+        CLEAR o_typegroup-&gt;a0_maindata-name.
+        object-&gt;raw = o_typegroup.
+      WHEN supportedtypes-domain.
+        TRY.
+          o_domain = export_domain( component ).
+          mac_catch_local_cx.
+        ENDTRY.
+        CLEAR o_domain-&gt;a0_maindata-domname.
+        object-&gt;raw = o_domain.
+      WHEN supportedtypes-data_element.
+        TRY.
+          o_data_e = export_data_element( component ).
+          mac_catch_local_cx.
+        ENDTRY.
+        CLEAR o_data_e-&gt;a0_maindata-rollname.
+        object-&gt;raw = o_data_e.
+      WHEN supportedtypes-view.
+        TRY.
+          o_view = export_view( component ).
+          mac_catch_local_cx.
+        ENDTRY.
+        CLEAR o_view-&gt;a0_maindata-viewname.
+        object-&gt;raw = o_view.
+      WHEN supportedtypes-table.
+        TRY.
+          o_table = export_table( component ).
+          mac_catch_local_cx.
+        ENDTRY.
+        CLEAR o_table-&gt;a0_maindata-tabname.
+        object-&gt;raw = o_table.
+      WHEN supportedtypes-table_type.
+        TRY.
+          o_tab_type = export_table_type( component ).
+          mac_catch_local_cx.
+        ENDTRY.
+        CLEAR o_tab_type-&gt;a0_maindata-typename.
+        object-&gt;raw = o_tab_type.
+      WHEN supportedtypes-search_help.
+        TRY.
+          o_s_help = export_search_help( component ).
+          mac_catch_local_cx.
+        ENDTRY.
+        CLEAR o_s_help-&gt;a0_maindata-shlpname.
+        object-&gt;raw = o_s_help.
+      WHEN supportedtypes-lock_object.
+        TRY.
+          o_lock_obj = export_lock_object( component ).
+          mac_catch_local_cx.
+        ENDTRY.
+        CLEAR o_lock_obj-&gt;a0_maindata-viewname.
+        object-&gt;raw = o_lock_obj.
+      WHEN OTHERS.
+        CLEAR object.
+        mac_raise_type_not_supported &apos;ZAPLINK_DICTIONARY&apos; d_type.
+    ENDCASE.
+    object-&gt;update_connector_data( me ).                    &quot; Issue 66
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.
+</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>`
