@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="DAEF473EC6A947630D17D95A94929598" CODE_SIGNATURE="057A1E32918590E55697967388B49EEF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8EDA9FB7B90B33C1FF2DC1C809C67D21" CODE_SIGNATURE="8114E357F25CAB934BC011244A59484D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -286,6 +286,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   DATA o_conn  TYPE to_connector.
   DATA o_comp  TYPE to_component.
   DATA _name   TYPE td_compname.
+  DATA d_type TYPE td_comptype.
   FIELD-SYMBOLS:
     &lt;param&gt; TYPE STANDARD TABLE,
     &lt;scr&gt; TYPE rsstcd,
@@ -296,68 +297,69 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
   TRY.
 
-      CREATE OBJECT object.
-      CASE component-&gt;get_type( ).
-        WHEN st_transaction.
-          f_subcomp = component-&gt;get_with_subcomp( ).
-          d_name = component-&gt;get_name( ).
+    CREATE OBJECT object.
+    d_type = component-&gt;get_type( ).
+    CASE d_type.
+      WHEN st_transaction.
+        f_subcomp = component-&gt;get_with_subcomp( ).
+        d_name = component-&gt;get_name( ).
 
-          CALL FUNCTION &apos;RPY_TRANSACTION_READ&apos;
-            EXPORTING
-              transaction            = d_name
+        CALL FUNCTION &apos;RPY_TRANSACTION_READ&apos;
+          EXPORTING
+            transaction            = d_name
 *             PROGRAM                =
 *             DYNPRO                 =
 *             TRANSACTION_TYPE       = &apos; &apos;
-            TABLES
-              tcodes                 = t_tstc
-              gui_attributes         = t_tstcc
-            EXCEPTIONS
-              permission_error       = 1
-              cancelled              = 2
-              not_found              = 3
-              object_not_found       = 4
-              OTHERS                 = 5.
-          IF sy-subrc &lt;&gt; 0.
-            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RPY_TRANSACTION_READ&apos;
-                                                        subrc = sy-subrc
-                                                    classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-            application_log-&gt;add_symsg( ).
-            RAISE EXCEPTION o_mycx.
-          ENDIF.
+          TABLES
+            tcodes                 = t_tstc
+            gui_attributes         = t_tstcc
+          EXCEPTIONS
+            permission_error       = 1
+            cancelled              = 2
+            not_found              = 3
+            object_not_found       = 4
+            OTHERS                 = 5.
+        IF sy-subrc &lt;&gt; 0.
+          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RPY_TRANSACTION_READ&apos;
+                                                      subrc = sy-subrc
+                                                  classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+          application_log-&gt;add_symsg( ).
+          RAISE EXCEPTION o_mycx.
+        ENDIF.
 
-          READ TABLE t_tstc ASSIGNING &lt;t&gt;
-               WITH KEY tcode = d_name.
-          CHECK sy-subrc = 0.
+        READ TABLE t_tstc ASSIGNING &lt;t&gt;
+             WITH KEY tcode = d_name.
+        CHECK sy-subrc = 0.
 
-          CREATE OBJECT o_data.
-          s_fm_data-tstc = &lt;t&gt;.
+        CREATE OBJECT o_data.
+        s_fm_data-tstc = &lt;t&gt;.
 
-          PERFORM select_tstc_tables_new IN PROGRAM saplseuk USING d_name space space.
+        PERFORM select_tstc_tables_new IN PROGRAM saplseuk USING d_name space space.
 
-          d_remotedata = &apos;(SAPLSEUK)G_GUI_INHE&apos;.
-          ASSIGN (d_remotedata) TO &lt;g&gt;.
-          IF sy-subrc = 0. s_fm_data-gui_inh = &lt;g&gt;. ENDIF.
+        d_remotedata = &apos;(SAPLSEUK)G_GUI_INHE&apos;.
+        ASSIGN (d_remotedata) TO &lt;g&gt;.
+        IF sy-subrc = 0. s_fm_data-gui_inh = &lt;g&gt;. ENDIF.
 
-          d_remotedata = &apos;(SAPLSEUK)param[]&apos;.
-          ASSIGN (d_remotedata) TO &lt;param&gt;.
-          IF sy-subrc = 0. s_fm_data-t_params = &lt;param&gt;. ENDIF.
+        d_remotedata = &apos;(SAPLSEUK)param[]&apos;.
+        ASSIGN (d_remotedata) TO &lt;param&gt;.
+        IF sy-subrc = 0. s_fm_data-t_params = &lt;param&gt;. ENDIF.
 
-          d_remotedata = &apos;(SAPLSEUK)RSSTCD&apos;.
-          ASSIGN (d_remotedata) TO &lt;scr&gt;.
-          IF sy-subrc = 0. s_fm_data-rsstcd = &lt;scr&gt;. ENDIF.
+        d_remotedata = &apos;(SAPLSEUK)RSSTCD&apos;.
+        ASSIGN (d_remotedata) TO &lt;scr&gt;.
+        IF sy-subrc = 0. s_fm_data-rsstcd = &lt;scr&gt;. ENDIF.
 
-          SELECT * INTO TABLE s_fm_data-tstct
-            FROM tstct
-            WHERE tcode = d_name.
+        SELECT * INTO TABLE s_fm_data-tstct
+          FROM tstct
+          WHERE tcode = d_name.
 
-          SELECT * INTO TABLE s_fm_data-tstca
-            FROM tstca
-            WHERE tcode = d_name.
+        SELECT * INTO TABLE s_fm_data-tstca
+          FROM tstca
+          WHERE tcode = d_name.
 
-          READ TABLE t_tstcc ASSIGNING &lt;a&gt;
-               WITH KEY tcode = d_name.
-          IF sy-subrc = 0.
-            s_fm_data-tstcc = &lt;a&gt;.
+        READ TABLE t_tstcc ASSIGNING &lt;a&gt;
+             WITH KEY tcode = d_name.
+        IF sy-subrc = 0.
+          s_fm_data-tstcc = &lt;a&gt;.
 ** From MF : RPY_TRANSACTION_INSERT
 **      if not easy_web_transaction is initial.
 **        tstcc-s_webgui = &apos;2&apos;.
@@ -376,76 +378,68 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 *            s_fm_data-java_en = &lt;a&gt;-s_platin.
 *            s_fm_data-servicefile = &lt;a&gt;-s_service.
 **            s_fm_data-??? = &lt;a&gt;-s_pervas.
-          ENDIF.
+        ENDIF.
 
-          CREATE OBJECT o_data.
-          o_data-&gt;from_data( s_fm_data ).
+        CREATE OBJECT o_data.
+        o_data-&gt;from_data( s_fm_data ).
 
 * Issue 40 : Sub object has been disabled in V0.0.003 and is working in V0.0.004
 * Sub component
-          IF f_subcomp = abap_true.
-            IF o_data-&gt;a0_maindata-cinfo O transaction_types-object.
+        IF f_subcomp = abap_true.
+          IF o_data-&gt;a0_maindata-cinfo O transaction_types-object.
 * Object
-              _name = o_data-&gt;a0_maindata-classname.
-              IF NOT _name IS INITIAL.
-                o_conn = zaplink_connectors=&gt;create_connector( type = t_component-object ).
-                IF o_conn IS BOUND.
-                  CREATE OBJECT o_comp.
-                  o_comp-&gt;set_type( t_component-object ).
-                  o_comp-&gt;set_name( _name ).
-                  o_data-&gt;zl_object = o_conn-&gt;read_from_sap( o_comp ).
-                  IF o_data-&gt;zl_object IS BOUND.
-                    CLEAR o_data-&gt;a0_maindata-classname.
-                  ENDIF.
-                ENDIF.
-              ENDIF.
-            ELSEIF o_data-&gt;a0_maindata-cinfo O transaction_types-program.
-* Program
-              _name = o_data-&gt;a0_maindata-pgmna.
-              IF NOT _name IS INITIAL.
-                o_conn = zaplink_connectors=&gt;create_connector( type = t_component-program ).
-                IF o_conn IS BOUND.
-                  CREATE OBJECT o_comp.
-                  o_comp-&gt;set_type( t_component-program ).
-                  o_comp-&gt;set_name( _name ).
-                  o_data-&gt;zl_object = o_conn-&gt;read_from_sap( o_comp ).
-                  IF o_data-&gt;zl_object IS BOUND.
-                    CLEAR o_data-&gt;a0_maindata-pgmna.
-                  ENDIF.
-                ENDIF.
-              ENDIF.
-            ELSEIF o_data-&gt;a0_maindata-cinfo O transaction_types-transaction.
-* Transaction
-              _name = o_data-&gt;a0_maindata-call_tcode.
-              IF NOT _name IS INITIAL AND _name &lt;&gt; d_name.
+            _name = o_data-&gt;a0_maindata-classname.
+            IF NOT _name IS INITIAL.
+              o_conn = zaplink_connectors=&gt;create_connector( type = t_component-object ).
+              IF o_conn IS BOUND.
                 CREATE OBJECT o_comp.
-                o_comp-&gt;set_type( st_transaction ).
+                o_comp-&gt;set_type( t_component-object ).
                 o_comp-&gt;set_name( _name ).
-                o_data-&gt;zl_object = zaplink_connector~read_from_sap( o_comp ).
+                o_data-&gt;zl_object = o_conn-&gt;read_from_sap( o_comp ).
                 IF o_data-&gt;zl_object IS BOUND.
-                  CLEAR o_data-&gt;a0_maindata-call_tcode.
+                  CLEAR o_data-&gt;a0_maindata-classname.
                 ENDIF.
               ENDIF.
             ENDIF.
+          ELSEIF o_data-&gt;a0_maindata-cinfo O transaction_types-program.
+* Program
+            _name = o_data-&gt;a0_maindata-pgmna.
+            IF NOT _name IS INITIAL.
+              o_conn = zaplink_connectors=&gt;create_connector( type = t_component-program ).
+              IF o_conn IS BOUND.
+                CREATE OBJECT o_comp.
+                o_comp-&gt;set_type( t_component-program ).
+                o_comp-&gt;set_name( _name ).
+                o_data-&gt;zl_object = o_conn-&gt;read_from_sap( o_comp ).
+                IF o_data-&gt;zl_object IS BOUND.
+                  CLEAR o_data-&gt;a0_maindata-pgmna.
+                ENDIF.
+              ENDIF.
+            ENDIF.
+          ELSEIF o_data-&gt;a0_maindata-cinfo O transaction_types-transaction.
+* Transaction
+            _name = o_data-&gt;a0_maindata-call_tcode.
+            IF NOT _name IS INITIAL AND _name &lt;&gt; d_name.
+              CREATE OBJECT o_comp.
+              o_comp-&gt;set_type( st_transaction ).
+              o_comp-&gt;set_name( _name ).
+              o_data-&gt;zl_object = zaplink_connector~read_from_sap( o_comp ).
+              IF o_data-&gt;zl_object IS BOUND.
+                CLEAR o_data-&gt;a0_maindata-call_tcode.
+              ENDIF.
+            ENDIF.
           ENDIF.
+        ENDIF.
 
-          object-&gt;set_component( component ).
-          CLEAR o_data-&gt;a0_maindata-tcode.
-          object-&gt;raw = o_data.
-        WHEN OTHERS.
-          CLEAR object.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = object-&gt;type
-              connclass = &apos;ZAPLINK_MESSAGE&apos;.
-      ENDCASE.
-
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+        object-&gt;set_component( component ).
+        CLEAR o_data-&gt;a0_maindata-tcode.
+        object-&gt;raw = o_data.
+      WHEN OTHERS.
+        CLEAR object.
+        mac_raise_type_not_supported &apos;ZAPLINK_TRANSACTION&apos; d_type.
+    ENDCASE.
+    object-&gt;update_connector_data( me ).                    &quot; Issue 66
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.
 </SOURCE>
    </ITEM>

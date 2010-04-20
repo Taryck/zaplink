@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0F1A9CE8AD2F18293DDAFCE29829B220" CODE_SIGNATURE="C938F104ABE53A538D3D7B1386A634AD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B6CF7B0B683EEBFADB656FBD12F33D46" CODE_SIGNATURE="C00F5B87D0776CA5529E77423BADA72C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -126,6 +126,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   t_code = get_prog_rawsource( program_name ).
   zaplink_tools=&gt;condense_abap_source( CHANGING table = t_code ).
   d_src = zaplink_tools=&gt;table_2_string( t_code ).
+  d_src = zaplink_tools=&gt;clean_abap_string( d_src ).
   result = zaplink_tools=&gt;calculate_md5_hash( d_src ).</SOURCE>
    </ITEM>
   </METHODS>
@@ -331,72 +332,65 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   DATA type        TYPE td_comptype.
 
   TRY.
-      type = component-&gt;get_type( ).
-      CREATE OBJECT object.
-      object-&gt;set_component( component ).
-      CASE type.
-        WHEN st_program.
-          _prog = _name = object-&gt;name.
-          CREATE OBJECT o_data.
+    type = component-&gt;get_type( ).
+    CREATE OBJECT object.
+    object-&gt;set_component( component ).
+    CASE type.
+      WHEN st_program.
+        _prog = _name = object-&gt;name.
+        CREATE OBJECT o_data.
+        SELECT SINGLE *
+          INTO s_fm_data-header
+          FROM progdir    &quot; reposrc
+*The databae view &quot;REPOSRC&quot; is write-protected, so it cannot be changed.
+          WHERE name = _name
+            AND state = &apos;A&apos;.        &quot; Active
+        IF sy-subrc &lt;&gt; 0.
           SELECT SINGLE *
             INTO s_fm_data-header
-            FROM progdir    &quot; reposrc
-*The databae view &quot;REPOSRC&quot; is write-protected, so it cannot be changed.
+            FROM progdir    &quot;reposrc
             WHERE name = _name
-              AND state = &apos;A&apos;.        &quot; Active
-          IF sy-subrc &lt;&gt; 0.
-            SELECT SINGLE *
-              INTO s_fm_data-header
-              FROM progdir    &quot;reposrc
-              WHERE name = _name
-                AND state = &apos;I&apos;.      &quot; Inactive
-          ENDIF.
+              AND state = &apos;I&apos;.      &quot; Inactive
+        ENDIF.
 
 * Source code
-          s_fm_data-source = get_prog_source( _prog ).
+        s_fm_data-source = get_prog_source( _prog ).
 *    INCLUDE TYPE reposrc. &quot;The databae view &quot;REPOSRC&quot; is write-protected, so it cannot be changed.
 
 * Texts Pool
-          s_fm_data-textspool = get_prog_textpool( _prog ).
+        s_fm_data-textspool = get_prog_textpool( _prog ).
 
 * Dynpro : Issue 8
-          s_fm_data-dynpros = get_dynpros( _prog ).
+        s_fm_data-dynpros = get_dynpros( _prog ).
 
 * Menu Painter : Issue 9
-          s_fm_data-menupainter = get_menus( _prog ).
+        s_fm_data-menupainter = get_menus( _prog ).
 
-          SELECT *
-            INTO TABLE s_fm_data-texts
-            FROM trdirti
-            WHERE name = _name.
+        SELECT *
+          INTO TABLE s_fm_data-texts
+          FROM trdirti
+          WHERE name = _name.
 
 * Documentation
 *      CONCATENATE _name &apos;*&apos; INTO _obj. &quot; Issue:7
-          s_obj-prog = _name.
-          s_obj-wildcard = &apos;*&apos;.
-          _obj = s_obj.
+        s_obj-prog = _name.
+        s_obj-wildcard = &apos;*&apos;.
+        _obj = s_obj.
 *Issue:7
-          s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_prog_data=&gt;r_doc_ids-prog
-                                                    object = _obj ).
+        s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_prog_data=&gt;r_doc_ids-prog
+                                                  object = _obj ).
 
-          o_data-&gt;from_data( s_fm_data ).
-          o_data-&gt;_code_signature = get_program_signature( o_data-&gt;a0_maindata-name ).
+        o_data-&gt;from_data( s_fm_data ).
+        o_data-&gt;_code_signature = get_program_signature( o_data-&gt;a0_maindata-name ).
 
-          CLEAR o_data-&gt;a0_maindata-name.
-          object-&gt;raw = o_data.
-        WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = type
-              connclass = &apos;ZAPLINK_PROGRAM&apos;.
-      ENDCASE.
-
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+        CLEAR o_data-&gt;a0_maindata-name.
+        object-&gt;raw = o_data.
+      WHEN OTHERS.
+        CLEAR object.
+        mac_raise_type_not_supported &apos;ZAPLINK_PROGRAM&apos; type.
+    ENDCASE.
+    object-&gt;update_connector_data( me ).                    &quot; Issue 66
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="61F6844ACC300A3570D79C9888393FFA" CODE_SIGNATURE="A6C25488A8944981B6D932A6846F898E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="09B3C97846D6F60D32C4B4814B9400BB" CODE_SIGNATURE="476993D66EBAFB798EDC9F4C6CD92B81" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -240,6 +240,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Calcul MD5
   zaplink_tools=&gt;condense_abap_source( CHANGING table = t_code ).
   d_src = zaplink_tools=&gt;table_2_string( t_code ).
+  d_src = zaplink_tools=&gt;clean_abap_string( d_src ).
   result = zaplink_tools=&gt;calculate_md5_hash( d_src ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_MAINPROGRAM" VERSION="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
@@ -460,86 +461,86 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     &lt;f&gt; LIKE LINE OF t_functions.
 
   TRY.
-      type = component-&gt;get_type( ).
-      CREATE OBJECT object.
-      object-&gt;set_component( component ).
-      CASE type.
-        WHEN st_function_group.
-          s_fm_data-header-area = d_name = object-&gt;name.
-          CALL FUNCTION &apos;RS_FUNCTION_POOL_CONTENTS&apos;
+    type = component-&gt;get_type( ).
+    CREATE OBJECT object.
+    object-&gt;set_component( component ).
+    CASE type.
+      WHEN st_function_group.
+        s_fm_data-header-area = d_name = object-&gt;name.
+        CALL FUNCTION &apos;RS_FUNCTION_POOL_CONTENTS&apos;
+          EXPORTING
+            function_pool           = s_fm_data-header-area
+          TABLES
+            functab                 = t_functions
+          EXCEPTIONS
+            function_pool_not_found = 1
+            OTHERS                  = 2.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_CONTENTS&apos; sy-subrc.
+        ENDIF.
+
+        d_doc = d_mainprog = get_mainprogram( s_fm_data-header-area ).
+        s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_fugr_data=&gt;r_doc_ids-group
+                                                  object = d_doc  ).
+
+        SELECT * INTO TABLE s_fm_data-texts FROM tlibt WHERE area = s_fm_data-header-area.
+        SELECT * INTO TABLE s_fm_data-function_texts FROM tftit FOR ALL ENTRIES IN t_functions WHERE funcname = t_functions-funcname.
+        SELECT * INTO TABLE s_fm_data-param_texts FROM funct FOR ALL ENTRIES IN t_functions WHERE funcname = t_functions-funcname.
+        LOOP AT t_functions ASSIGNING &lt;f&gt;.
+          CLEAR s_func.   s_doc_param-func = s_func-header-name = &lt;f&gt;-funcname.   s_func-source = get_prog_rawsource( &lt;f&gt;-include ).
+          s_doc_param-param = &apos;*&apos;.    d_doc = s_doc_param.
+          t_tmp_doc = zaplink_documentation=&gt;get( ids = zaplink_fugr_data=&gt;r_doc_ids-function
+                                               object =  d_doc ).
+          APPEND LINES OF t_tmp_doc TO s_fm_data-docs.
+          CALL FUNCTION &apos;RPY_FUNCTIONMODULE_READ&apos;
             EXPORTING
-              function_pool           = s_fm_data-header-area
-            TABLES
-              functab                 = t_functions
-            EXCEPTIONS
-              function_pool_not_found = 1
-              OTHERS                  = 2.
-          IF sy-subrc &lt;&gt; 0.
-            mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_CONTENTS&apos; sy-subrc.
-          ENDIF.
-
-          d_doc = d_mainprog = get_mainprogram( s_fm_data-header-area ).
-          s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_fugr_data=&gt;r_doc_ids-group
-                                                    object = d_doc  ).
-
-          SELECT * INTO TABLE s_fm_data-texts FROM tlibt WHERE area = s_fm_data-header-area.
-          SELECT * INTO TABLE s_fm_data-function_texts FROM tftit FOR ALL ENTRIES IN t_functions WHERE funcname = t_functions-funcname.
-          SELECT * INTO TABLE s_fm_data-param_texts FROM funct FOR ALL ENTRIES IN t_functions WHERE funcname = t_functions-funcname.
-          LOOP AT t_functions ASSIGNING &lt;f&gt;.
-            CLEAR s_func.   s_doc_param-func = s_func-header-name = &lt;f&gt;-funcname.   s_func-source = get_prog_rawsource( &lt;f&gt;-include ).
-            s_doc_param-param = &apos;*&apos;.    d_doc = s_doc_param.
-            t_tmp_doc = zaplink_documentation=&gt;get( ids = zaplink_fugr_data=&gt;r_doc_ids-function
-                                                 object =  d_doc ).
-            APPEND LINES OF t_tmp_doc TO s_fm_data-docs.
-            CALL FUNCTION &apos;RPY_FUNCTIONMODULE_READ&apos;
-              EXPORTING
-                functionname             = s_func-header-name
-              IMPORTING
-                global_flag              = s_func-header-global
-                remote_call              = s_func-header-remote
-                update_task              = s_func-header-utask
+              functionname             = s_func-header-name
+            IMPORTING
+              global_flag              = s_func-header-global
+              remote_call              = s_func-header-remote
+              update_task              = s_func-header-utask
 *               SHORT_TEXT               =
 *               FUNCTION_POOL            =
-              TABLES
-                import_parameter         = s_func-import_p
-                changing_parameter       = s_func-changing_p
-                export_parameter         = s_func-export_p
-                tables_parameter         = s_func-tables
-                exception_list           = s_func-exceptions
-                documentation            = t_doc
-                SOURCE                   = t_src
-              EXCEPTIONS
-                error_message            = 1
-                function_not_found       = 2
-                invalid_name             = 3
-                OTHERS                   = 4.
-            IF sy-subrc &lt;&gt; 0.
+            TABLES
+              import_parameter         = s_func-import_p
+              changing_parameter       = s_func-changing_p
+              export_parameter         = s_func-export_p
+              tables_parameter         = s_func-tables
+              exception_list           = s_func-exceptions
+              documentation            = t_doc
+              SOURCE                   = t_src
+            EXCEPTIONS
+              error_message            = 1
+              function_not_found       = 2
+              invalid_name             = 3
+              OTHERS                   = 4.
+          IF sy-subrc &lt;&gt; 0.
 * MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
 *         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
-            ENDIF.
-            INSERT s_func INTO TABLE s_fm_data-functions.
-          ENDLOOP.
+          ENDIF.
+          INSERT s_func INTO TABLE s_fm_data-functions.
+        ENDLOOP.
 
-          SELECT SINGLE dlvunit INTO d_soft_comp
-            FROM v_tralan
-            WHERE pgmid = &apos;R3TR&apos;
-              AND object = &apos;FUGR&apos;
-              AND obj_name = s_fm_data-header-area.
+        SELECT SINGLE dlvunit INTO d_soft_comp
+          FROM v_tralan
+          WHERE pgmid = &apos;R3TR&apos;
+            AND object = &apos;FUGR&apos;
+            AND obj_name = s_fm_data-header-area.
 
-          s_fm_data-includes = get_all_includes( s_fm_data-header-area ).
+        s_fm_data-includes = get_all_includes( s_fm_data-header-area ).
 
 *          s_fm_data-includes = remove_unwanted_includes( includes = s_fm_data-includes
 *                                                        functions = t_functions
 *                                                        soft_comp = d_soft_comp ).
 
 * Texts Pool
-          s_fm_data-textspool = get_prog_textpool( d_mainprog ).
+        s_fm_data-textspool = get_prog_textpool( d_mainprog ).
 
 * Dynpro
-          s_fm_data-dynpros = get_dynpros( d_mainprog ).
+        s_fm_data-dynpros = get_dynpros( d_mainprog ).
 
 * Menu Painter
-          s_fm_data-menupainter = get_menus( d_mainprog ).
+        s_fm_data-menupainter = get_menus( d_mainprog ).
 ** Documentation
 **      CONCATENATE _name &apos;*&apos; INTO _obj. &quot; Issue:7
 *          s_obj-prog = _name.
@@ -548,24 +549,17 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 **Issue:7
 *          o_data-&gt;documentation = zaplink_documentation=&gt;get( ids = r_doc_id
 *                                                          object = _obj ).
-          CREATE OBJECT o_data.
-          o_data-&gt;from_data( s_fm_data ).
-          o_data-&gt;_code_signature = get_group_signature( o_data-&gt;a0_maindata-area ).
-          CLEAR o_data-&gt;a0_maindata-area.
-          object-&gt;raw = o_data.
-        WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = type
-              connclass = &apos;ZAPLINK_PROGRAM&apos;.
-      ENDCASE.
-
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+        CREATE OBJECT o_data.
+        o_data-&gt;from_data( s_fm_data ).
+        o_data-&gt;_code_signature = get_group_signature( o_data-&gt;a0_maindata-area ).
+        CLEAR o_data-&gt;a0_maindata-area.
+        object-&gt;raw = o_data.
+      WHEN OTHERS.
+        CLEAR object.
+        mac_raise_type_not_supported &apos;ZAPLINK_FUNCTION_GROUP&apos; type.
+    ENDCASE.
+    object-&gt;update_connector_data( me ).                    &quot; Issue 66
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C6F657052D857D7A151B23C6DDF28F98" CODE_SIGNATURE="0DAC534978904A12ECA5E0D412EF7339" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="61E825C32610E730377F55F711D5B908" CODE_SIGNATURE="7B6F66F5B33A957E7E93C1F37C94FC0B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -383,6 +383,7 @@ AS</DOCUMENTATION>
 
   t_code = get_class_globalsource( class_name ).
   d_src = zaplink_tools=&gt;table_2_string( t_code ).
+  d_src = zaplink_tools=&gt;clean_abap_string( d_src ).
   result = zaplink_tools=&gt;calculate_md5_hash( d_src ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_INTERFACE_GLOBALSOURCE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
@@ -475,6 +476,7 @@ AS</DOCUMENTATION>
 
   t_code = get_interface_globalsource( interface_name ).
   d_src = zaplink_tools=&gt;table_2_string( t_code ).
+  d_src = zaplink_tools=&gt;clean_abap_string( d_src ).
   result = zaplink_tools=&gt;calculate_md5_hash( d_src ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_CLASS" VERSION="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
@@ -1002,7 +1004,7 @@ AS</DOCUMENTATION>
         CLEAR object.
         mac_raise_type_not_supported &apos;ZAPLINK_OBJECT&apos; d_type.
     ENDCASE.
-
+    object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
 </SOURCE>

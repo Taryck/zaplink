@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="1378092EC176C053341E7BD0B1F23044" CODE_SIGNATURE="C8224E9DE6BC6F760DD39061146CFD23" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B608E6EF1D4D2601BE30E222A4F3909E" CODE_SIGNATURE="4E6B780AB24C10544F00585334890E3F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -269,124 +269,118 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   DATA _text LIKE LINE OF &lt;m&gt;-texts.
   DATA _htxt LIKE LINE OF _data-&gt;texts.
   DATA _key  TYPE doku_obj.
+  DATA d_type TYPE td_comptype.
 
   TRY.
 
-      CREATE OBJECT object.
-      CASE component-&gt;get_type( ).
-        WHEN st_msgclass.
-          _name = component-&gt;get_name( ).
+    CREATE OBJECT object.
+    d_type = component-&gt;get_type( ).
+    CASE d_type.
+      WHEN st_msgclass.
+        _name = component-&gt;get_name( ).
 * Documentation
 * example : ZAPLINK_EASYXML000
-          CONCATENATE _name &apos;+++&apos; INTO _obj.  &quot; +++ stand for message number
-          t_docs = zaplink_documentation=&gt;get( ids = r_doc_id
-                                            object = _obj ).
-          DELETE t_docs WHERE texts IS INITIAL.
+        CONCATENATE _name &apos;+++&apos; INTO _obj.  &quot; +++ stand for message number
+        t_docs = zaplink_documentation=&gt;get( ids = r_doc_id
+                                          object = _obj ).
+        DELETE t_docs WHERE texts IS INITIAL.
 
-          CREATE OBJECT _data.
+        CREATE OBJECT _data.
 * Main data
-          SELECT SINGLE *
-            INTO CORRESPONDING FIELDS OF _data-&gt;a0_maindata
-            FROM t100a
-            WHERE arbgb = _name.
+        SELECT SINGLE *
+          INTO CORRESPONDING FIELDS OF _data-&gt;a0_maindata
+          FROM t100a
+          WHERE arbgb = _name.
 
 * Descriptions
-          SELECT sprsl stext
-            INTO TABLE _data-&gt;texts
-            FROM t100t
-            WHERE arbgb = _name.
+        SELECT sprsl stext
+          INTO TABLE _data-&gt;texts
+          FROM t100t
+          WHERE arbgb = _name.
 
-          READ TABLE _data-&gt;texts TRANSPORTING NO FIELDS
-               WITH TABLE KEY langu = _data-&gt;a0_maindata-masterlang.
-          IF sy-subrc &lt;&gt; 0.
-            _htxt-langu = _data-&gt;a0_maindata-masterlang.
-            _htxt-short_txt = _data-&gt;a0_maindata-stext.
-            INSERT _htxt INTO TABLE _data-&gt;texts.
-          ENDIF.
-          CLEAR _data-&gt;a0_maindata-stext.
+        READ TABLE _data-&gt;texts TRANSPORTING NO FIELDS
+             WITH TABLE KEY langu = _data-&gt;a0_maindata-masterlang.
+        IF sy-subrc &lt;&gt; 0.
+          _htxt-langu = _data-&gt;a0_maindata-masterlang.
+          _htxt-short_txt = _data-&gt;a0_maindata-stext.
+          INSERT _htxt INTO TABLE _data-&gt;texts.
+        ENDIF.
+        CLEAR _data-&gt;a0_maindata-stext.
 
 * Messages
-          SELECT *
-            INTO CORRESPONDING FIELDS OF TABLE _data-&gt;messages
-            FROM t100u
-            WHERE arbgb = _name.
+        SELECT *
+          INTO CORRESPONDING FIELDS OF TABLE _data-&gt;messages
+          FROM t100u
+          WHERE arbgb = _name.
 * Messages texts
-          SELECT * INTO TABLE t_t100
-            FROM t100
-            WHERE arbgb = _name.
+        SELECT * INTO TABLE t_t100
+          FROM t100
+          WHERE arbgb = _name.
 
-          LOOP AT _data-&gt;messages ASSIGNING &lt;m&gt;.
-            LOOP AT t_t100 ASSIGNING &lt;t&gt;
-                    WHERE msgnr = &lt;m&gt;-msgnr.
-              CLEAR _text.
-              _text-langu = &lt;t&gt;-sprsl.
-              _text-short_txt = &lt;t&gt;-text.
-              INSERT _text INTO TABLE &lt;m&gt;-texts.
-            ENDLOOP.
-
-            CONCATENATE _name &lt;m&gt;-msgnr INTO _key.
-            LOOP AT t_docs ASSIGNING &lt;l&gt;
-                    WHERE object = _key.
-
-              IF &lt;m&gt;-application IS INITIAL.
-                &lt;m&gt;-application = &lt;l&gt;-application.
-              ELSEIF &lt;m&gt;-application &lt;&gt; &lt;l&gt;-application.
-                RAISE EXCEPTION TYPE zaplink_cx_connector.
-              ENDIF.
-
-              IF &lt;m&gt;-typ IS INITIAL.
-                &lt;m&gt;-typ = &lt;l&gt;-typ.
-              ELSEIF &lt;m&gt;-typ &lt;&gt; &lt;l&gt;-typ.
-                RAISE EXCEPTION TYPE zaplink_cx_connector.
-              ENDIF.
-
-              IF &lt;m&gt;-dokform IS INITIAL.
-                &lt;m&gt;-dokform = &lt;l&gt;-dokform.
-              ELSEIF &lt;m&gt;-dokform &lt;&gt; &lt;l&gt;-dokform.
-                RAISE EXCEPTION TYPE zaplink_cx_connector.
-              ENDIF.
-
-              IF &lt;m&gt;-dokstyle IS INITIAL.
-                &lt;m&gt;-dokstyle = &lt;l&gt;-dokstyle.
-              ELSEIF &lt;m&gt;-dokstyle &lt;&gt; &lt;l&gt;-dokstyle.
-                RAISE EXCEPTION TYPE zaplink_cx_connector.
-              ENDIF.
-
-              LOOP AT &lt;l&gt;-texts ASSIGNING &lt;lt&gt;.
-
-                READ TABLE &lt;m&gt;-texts ASSIGNING &lt;mt&gt;
-                     WITH TABLE KEY langu = &lt;lt&gt;-tdspras.
-                IF sy-subrc = 0.
-                  &lt;mt&gt;-long_txt = &lt;lt&gt;.
-                  CLEAR &lt;mt&gt;-long_txt-tdspras.
-                ELSE.
-                  CLEAR _text.
-                  _text-long_txt = &lt;lt&gt;.
-                  CLEAR _text-long_txt-tdspras.
-                  INSERT _text INTO TABLE &lt;m&gt;-texts.
-                ENDIF.
-              ENDLOOP.
-
-            ENDLOOP.
+        LOOP AT _data-&gt;messages ASSIGNING &lt;m&gt;.
+          LOOP AT t_t100 ASSIGNING &lt;t&gt;
+                  WHERE msgnr = &lt;m&gt;-msgnr.
+            CLEAR _text.
+            _text-langu = &lt;t&gt;-sprsl.
+            _text-short_txt = &lt;t&gt;-text.
+            INSERT _text INTO TABLE &lt;m&gt;-texts.
           ENDLOOP.
 
-          object-&gt;set_component( component ).
-          CLEAR _data-&gt;a0_maindata-arbgb.
-          object-&gt;raw = _data.
-        WHEN OTHERS.
-          CLEAR object.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = object-&gt;type
-              connclass = &apos;ZAPLINK_MESSAGE&apos;.
-      ENDCASE.
+          CONCATENATE _name &lt;m&gt;-msgnr INTO _key.
+          LOOP AT t_docs ASSIGNING &lt;l&gt;
+                  WHERE object = _key.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+            IF &lt;m&gt;-application IS INITIAL.
+              &lt;m&gt;-application = &lt;l&gt;-application.
+            ELSEIF &lt;m&gt;-application &lt;&gt; &lt;l&gt;-application.
+              RAISE EXCEPTION TYPE zaplink_cx_connector.
+            ENDIF.
+
+            IF &lt;m&gt;-typ IS INITIAL.
+              &lt;m&gt;-typ = &lt;l&gt;-typ.
+            ELSEIF &lt;m&gt;-typ &lt;&gt; &lt;l&gt;-typ.
+              RAISE EXCEPTION TYPE zaplink_cx_connector.
+            ENDIF.
+
+            IF &lt;m&gt;-dokform IS INITIAL.
+              &lt;m&gt;-dokform = &lt;l&gt;-dokform.
+            ELSEIF &lt;m&gt;-dokform &lt;&gt; &lt;l&gt;-dokform.
+              RAISE EXCEPTION TYPE zaplink_cx_connector.
+            ENDIF.
+
+            IF &lt;m&gt;-dokstyle IS INITIAL.
+              &lt;m&gt;-dokstyle = &lt;l&gt;-dokstyle.
+            ELSEIF &lt;m&gt;-dokstyle &lt;&gt; &lt;l&gt;-dokstyle.
+              RAISE EXCEPTION TYPE zaplink_cx_connector.
+            ENDIF.
+
+            LOOP AT &lt;l&gt;-texts ASSIGNING &lt;lt&gt;.
+
+              READ TABLE &lt;m&gt;-texts ASSIGNING &lt;mt&gt;
+                   WITH TABLE KEY langu = &lt;lt&gt;-tdspras.
+              IF sy-subrc = 0.
+                &lt;mt&gt;-long_txt = &lt;lt&gt;.
+                CLEAR &lt;mt&gt;-long_txt-tdspras.
+              ELSE.
+                CLEAR _text.
+                _text-long_txt = &lt;lt&gt;.
+                CLEAR _text-long_txt-tdspras.
+                INSERT _text INTO TABLE &lt;m&gt;-texts.
+              ENDIF.
+            ENDLOOP.
+
+          ENDLOOP.
+        ENDLOOP.
+
+        object-&gt;set_component( component ).
+        CLEAR _data-&gt;a0_maindata-arbgb.
+        object-&gt;raw = _data.
+      WHEN OTHERS.
+        CLEAR object.
+        mac_raise_type_not_supported &apos;ZAPLINK_MESSAGE&apos; d_type.
+    ENDCASE.
+    object-&gt;update_connector_data( me ).                    &quot; Issue 66
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.
 </SOURCE>
    </ITEM>

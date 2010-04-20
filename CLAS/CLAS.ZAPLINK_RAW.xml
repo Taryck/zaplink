@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4FAD0C1C63558F1E1559BF957DE8B4E5" CODE_SIGNATURE="DB98EF2811086FF4B907F44BA316407E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0D553DDDB7AC22B77CA000D05FBBC775" CODE_SIGNATURE="CC20C0FA69F25C9576FCB0A8F1111867" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_RAW_BASE"/>
  </DEPENDENCIES>
@@ -76,11 +76,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <SOURCE>`
   DATA o_raw_data      TYPE to_raw_data.
 
-  super-&gt;update_connector_data( o_connector = o_connector ).
   o_raw_data = me-&gt;raw.
-  me-&gt;dependencies = o_raw_data-&gt;_dependencies. CLEAR o_raw_data-&gt;_dependencies.          &quot; Issue 47 : Introducing dependencies
-  me-&gt;code_signature = o_raw_data-&gt;_code_signature. CLEAR o_raw_data-&gt;_code_signature.    &quot; Issue 65 : Source Code signature
-</SOURCE>
+  IF NOT o_raw_data-&gt;_dependencies IS INITIAL.    me-&gt;dependencies = o_raw_data-&gt;_dependencies.     CLEAR o_raw_data-&gt;_dependencies.    ENDIF.  &quot; Issue 47 : Introducing dependencies
+  IF NOT o_raw_data-&gt;_code_signature IS INITIAL.  me-&gt;code_signature = o_raw_data-&gt;_code_signature. CLEAR o_raw_data-&gt;_code_signature.  ENDIF.  &quot; Issue 65 : Source Code signature
+  super-&gt;update_connector_data( o_connector = o_connector ).
+  me-&gt;set_checksum( ).</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPES>
