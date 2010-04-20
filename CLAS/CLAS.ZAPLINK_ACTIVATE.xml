@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="37A89A614104E8102D267F19C996800C" CODE_SIGNATURE="828F7249C8F2678860CE44A86C6FCE8E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="70790FF036CC32869C9A1DFB99FD4118" CODE_SIGNATURE="9ED36C2FB8530D2614BADCF5AD95F33C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE-EXT" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -47,7 +47,7 @@
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     lb_actdone TYPE xflag,
     lc_before  TYPE i,
     lc_after   TYPE i,
@@ -75,7 +75,7 @@ DATA:
 
 * Try mass activation first (usefull for non DDIC objects)
   activate_ddic( CHANGING it_list = it_ddic ).
-  activate_nonddic( changing it_list = it_progs ).
+  activate_nonddic( CHANGING it_list = it_progs ).
   COMMIT WORK AND WAIT.
 
 * do the loop
@@ -96,11 +96,11 @@ DATA:
 *Active NON DDIC
     IF NOT it_progs IS INITIAL.
       lc_before = LINES( it_progs ).
-      activate_nonddic( exporting one_by_one = &apos;X&apos;
-                         changing    it_list = it_progs ).
+      activate_nonddic( EXPORTING one_by_one = &apos;X&apos;
+                         CHANGING    it_list = it_progs ).
       lc_after = LINES( it_progs ).
       IF lc_after &gt;= lc_before.
-        activate_nonddic( changing    it_list = it_progs ).    &quot; Try mass activation
+        activate_nonddic( CHANGING    it_list = it_progs ).    &quot; Try mass activation
         lc_after = LINES( it_progs ).
       ENDIF.
       IF lc_after &lt; lc_before.
@@ -112,8 +112,8 @@ DATA:
     IF lb_actdone IS INITIAL. EXIT. ENDIF.
   ENDDO.
 
-  APPEND LINES OF it_ddic to it_objlist.
-  APPEND LINES OF it_progs to it_objlist.
+  APPEND LINES OF it_ddic TO it_objlist.
+  APPEND LINES OF it_progs TO it_objlist.
   obj_list = objlist_2_compkeys( it_objlist ).
 ** Switch into activation and generation
 *  CALL FUNCTION &apos;RS_WORKING_OBJECTS_ACTIVATE&apos;
@@ -334,7 +334,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     it_debug TYPE STANDARD TABLE OF ddmsactrc WITH NON-UNIQUE DEFAULT KEY.
   FIELD-SYMBOLS:
     &lt;wa&gt; LIKE LINE OF it_debug.
@@ -344,12 +344,12 @@ DATA:
    EXPORTING
 *     CIFKEY        =
 *     VERSION       = SEOC_VERSION_INACTIVE
-      FORCE         = &apos;X&apos;.
+      force         = &apos;X&apos;.
   CALL FUNCTION &apos;SEO_BUFFER_REFRESH&apos;
    EXPORTING
 *     CIFKEY        =
-      VERSION       = 1
-      FORCE         = &apos;X&apos;.
+      version       = 1
+      force         = &apos;X&apos;.
 
 *  CALL FUNCTION &apos;RS_DD_WORKLIST_ACTIVATE&apos; in UPDATE TASK
 *    EXPORTING
@@ -378,7 +378,7 @@ DATA:
             AND obj_name = &lt;wa&gt;-name.
     ENDLOOP.
   ENDIF.
-  COMMIT work and wait.</SOURCE>
+  COMMIT WORK AND WAIT.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ACTIVATE_DDIC_V2" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <TEXTS>
@@ -473,7 +473,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     _wb_manager TYPE REF TO  if_wb_manager,
     it_obj TYPE tt_det_obj,
     it_det_obj TYPE tt_det_obj.
@@ -527,14 +527,14 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-FIELD-SYMBOLS:
-    &lt;it&gt; like LINE OF IT_ITEMS,
-    &lt;MP&gt; like line of Programs.
+  FIELD-SYMBOLS:
+    &lt;it&gt; LIKE LINE OF it_items,
+    &lt;mp&gt; LIKE LINE OF programs.
 
 * Code from LSEWORKINGAREAFGE (form generate_active_object)
-  DATA: l_w_area TYPE tT_ITEMS,
-        l_w_items TYPE tT_ITEMS,
-        l_master type rsnewleng-programm,
+  DATA: l_w_area TYPE tt_items,
+        l_w_items TYPE tt_items,
+        l_master TYPE rsnewleng-programm,
         BEGIN OF l_dynp_id,
           prog TYPE progname,
           dnum TYPE dynpronr,
@@ -542,8 +542,8 @@ FIELD-SYMBOLS:
         message(240) TYPE c,
         l_page TYPE seu_objkey,
         l_imp_name TYPE exit_imp,
-        l_navigate type sy-calld,
-        l_subrc type sy-subrc,
+        l_navigate TYPE sy-calld,
+        l_subrc TYPE sy-subrc,
         l_clskey TYPE seoclskey,
         l_wapd_class TYPE seoclskey-clsname
                    VALUE &apos;CL_O2_API_APPLICATION&apos;,
@@ -554,7 +554,7 @@ FIELD-SYMBOLS:
         l_exception TYPE REF TO cx_root,
         l_message_text TYPE string.
 
-  LOOP AT Programs ASSIGNING &lt;mp&gt;.
+  LOOP AT programs ASSIGNING &lt;mp&gt;.
     IF &lt;mp&gt;-master &lt;&gt; l_master.
       l_master = &lt;mp&gt;-master.
       CHECK &lt;mp&gt;-error IS INITIAL.
@@ -686,7 +686,7 @@ FIELD-SYMBOLS:
 
 
 ** Switch Framework:
-        WHEN &apos;SFBF&apos; OR &apos;SFSW&apos; OR &apos;SFBS&apos; or &apos;SF01&apos;.
+        WHEN &apos;SFBF&apos; OR &apos;SFSW&apos; OR &apos;SFBS&apos; OR &apos;SF01&apos;.
           l_obj_name = l_master.
           CALL FUNCTION &apos;SFW_WB_GENERATE&apos;
             EXPORTING
@@ -745,7 +745,7 @@ FIELD-SYMBOLS:
       ENDCASE.
     ENDIF.
   ENDLOOP.
-  LOOP AT ITEMS ASSIGNING &lt;it&gt;.
+  LOOP AT items ASSIGNING &lt;it&gt;.
     CASE &lt;it&gt;-object.
       WHEN &apos;DYNP&apos;.
         l_dynp_id = &lt;it&gt;-obj_name.
@@ -825,8 +825,7 @@ FIELD-SYMBOLS:
      <ITEM LANGU="E" DESCRIPT="Add objects to Work area"/>
     </TEXTS>
     <SOURCE>`
-FIELD-SYMBOLS:
-    &lt;wa&gt;   like LINE OF it_obj_list.
+  FIELD-SYMBOLS &lt;wa&gt;   LIKE LINE OF it_obj_list.
 
   LOOP AT it_obj_list ASSIGNING &lt;wa&gt;.
     CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
@@ -858,14 +857,12 @@ FIELD-SYMBOLS:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA: my_obj LIKE obj_list.
-  DATA: inact TYPE tt_items.
-  FIELD-SYMBOLS:
-    &lt;obj&gt; LIKE LINE OF obj_list.
+  DATA my_obj LIKE obj_list.
+  DATA inact TYPE tt_items.
+  FIELD-SYMBOLS &lt;obj&gt; LIKE LINE OF obj_list.
 
   LOOP AT obj_list ASSIGNING &lt;obj&gt;.
-    REFRESH: my_obj, inact.
-    APPEND &lt;obj&gt; TO my_obj.
+    REFRESH: my_obj, inact.   APPEND &lt;obj&gt; TO my_obj.
 * Get all inactive Objects of List
     CALL FUNCTION &apos;RS_INACTIVE_OBJECTS_WARNING&apos;
       EXPORTING
@@ -877,9 +874,7 @@ DATA: my_obj LIKE obj_list.
 *     P_XMSG                          =
         p_dwinactiv                     = inact.
 *     USERNAME                        =
-    IF inact IS INITIAL.
-      DELETE obj_list.
-    ENDIF.
+    IF inact IS INITIAL.    DELETE obj_list.    ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="COMPKEYS_2_OBJLIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
@@ -901,10 +896,7 @@ DATA: my_obj LIKE obj_list.
     <SOURCE>`
   DATA          s_obj LIKE LINE OF result.
   FIELD-SYMBOLS &lt;k&gt;   LIKE LINE OF keys.
-  LOOP AT keys ASSIGNING &lt;k&gt;.
-    CLEAR s_obj.  s_obj-object = &lt;k&gt;-type.    s_obj-obj_name = &lt;k&gt;-name.
-    APPEND s_obj TO result.
-  ENDLOOP.</SOURCE>
+  LOOP AT keys ASSIGNING &lt;k&gt;.   CLEAR s_obj.  s_obj-object = &lt;k&gt;-type.    s_obj-obj_name = &lt;k&gt;-name.  APPEND s_obj TO result.   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
@@ -939,14 +931,9 @@ DATA: my_obj LIKE obj_list.
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
-    _item like LINE OF item_list.
-  FIELD-SYMBOLS:
-    &lt;obj&gt;   like LINE OF obj_list.
-  LOOP AT obj_list ASSIGNING &lt;obj&gt;.
-    MOVE-CORRESPONDING &lt;obj&gt; TO _ITEM.
-    APPEND _ITEM to item_list.
-  ENDLOOP.</SOURCE>
+  DATA _item LIKE LINE OF item_list.
+  FIELD-SYMBOLS &lt;obj&gt;   LIKE LINE OF obj_list.
+  LOOP AT obj_list ASSIGNING &lt;obj&gt;.   MOVE-CORRESPONDING &lt;obj&gt; TO _item.    APPEND _item TO item_list.    ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_INACTIVE_OBJECTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <TEXTS>
@@ -992,10 +979,7 @@ DATA:
     <SOURCE>`
   DATA          s_obj LIKE LINE OF result.
   FIELD-SYMBOLS &lt;k&gt;   LIKE LINE OF keys.
-  LOOP AT keys ASSIGNING &lt;k&gt;.
-    CLEAR s_obj.  s_obj-type = &lt;k&gt;-object.    s_obj-name = &lt;k&gt;-obj_name.
-    APPEND s_obj TO result.
-  ENDLOOP.</SOURCE>
+  LOOP AT keys ASSIGNING &lt;k&gt;.   CLEAR s_obj.  s_obj-type = &lt;k&gt;-object.    s_obj-name = &lt;k&gt;-obj_name.    APPEND s_obj TO result.   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SPLIT_LIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
@@ -1019,25 +1003,24 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-FIELD-SYMBOLS:
-    &lt;obj&gt;   like LINE OF obj_list.
+  FIELD-SYMBOLS &lt;obj&gt;   LIKE LINE OF obj_list.
   LOOP AT obj_list ASSIGNING &lt;obj&gt;.
 
-    IF &lt;obj&gt;-OBJECT = &apos;DTEL&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;VIEW&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;DOMA&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;TTYP&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;INDX&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;XINX&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;SHLP&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;ENQU&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;MCOB&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;TABL&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;SQLT&apos; OR
-       &lt;obj&gt;-OBJECT = &apos;STRU&apos;.
-      APPEND &lt;obj&gt; to DDIC.
+    IF &lt;obj&gt;-object = &apos;DTEL&apos; OR
+       &lt;obj&gt;-object = &apos;VIEW&apos; OR
+       &lt;obj&gt;-object = &apos;DOMA&apos; OR
+       &lt;obj&gt;-object = &apos;TTYP&apos; OR
+       &lt;obj&gt;-object = &apos;INDX&apos; OR
+       &lt;obj&gt;-object = &apos;XINX&apos; OR
+       &lt;obj&gt;-object = &apos;SHLP&apos; OR
+       &lt;obj&gt;-object = &apos;ENQU&apos; OR
+       &lt;obj&gt;-object = &apos;MCOB&apos; OR
+       &lt;obj&gt;-object = &apos;TABL&apos; OR
+       &lt;obj&gt;-object = &apos;SQLT&apos; OR
+       &lt;obj&gt;-object = &apos;STRU&apos;.
+      APPEND &lt;obj&gt; TO ddic.
     ELSE.
-      APPEND &lt;obj&gt; to Prog_list.
+      APPEND &lt;obj&gt; TO prog_list.
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
