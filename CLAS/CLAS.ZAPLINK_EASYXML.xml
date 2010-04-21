@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="463DAE71ACA37BC5397A74D835DC61A3" CODE_SIGNATURE="A1945534DCD47E29C57491EAD779FF5E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B5C93F2C172E20983565383755F8C9B9" CODE_SIGNATURE="A1945534DCD47E29C57491EAD779FF5E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -877,8 +877,7 @@ END-OF-DEFINITION.</MACROS>
   o_filter = xml_node-&gt;create_filter_node_type( if_ixml_node=&gt;co_node_text ).
   o_iterator = xml_node-&gt;create_iterator_filtered( depth = 1
                                                   filter = o_filter ).
-  o_text = o_iterator-&gt;get_next( ).   result = o_text-&gt;get_value( ).    IF result = &apos;#&apos;. clear result. endif.
-`</SOURCE>
+  o_text = o_iterator-&gt;get_next( ).   result = o_text-&gt;get_value( ).    IF result = &apos;#&apos;. clear result. endif.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_REF_TYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
     <TEXTS>
@@ -1016,8 +1015,7 @@ END-OF-DEFINITION.</MACROS>
   check node is bound.
   d_mask = node-&gt;get_type( ).   d_txt_m = type.
   d_mask = d_mask BIT-AND d_txt_m.
-  if d_mask = 00000000.   result = abap_true.   endif.
-`</SOURCE>
+  if d_mask = 00000000.   result = abap_true.   endif.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="NODE_IS_TYPE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
     <TEXTS>
@@ -1039,8 +1037,7 @@ END-OF-DEFINITION.</MACROS>
   check node is bound.
   d_mask = node-&gt;get_type( ).   d_txt_m = type.
   d_mask = d_mask BIT-AND d_txt_m.
-  if d_mask = d_txt_m.    result = abap_true.   endif.
-`</SOURCE>
+  if d_mask = d_txt_m.    result = abap_true.   endif.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="PROTECT_STRING" VERSION="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>

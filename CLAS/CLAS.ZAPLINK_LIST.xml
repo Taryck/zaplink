@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9FFFF0DBED59F0AA89320E2A1F9ED5A9" CODE_SIGNATURE="209017DAF73BD2BC9DEB806B587065B1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="636A7227AACCD9199F90B7C32C9E9CA0" CODE_SIGNATURE="209017DAF73BD2BC9DEB806B587065B1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -393,8 +393,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
   alv_conf-hierar-layout-allow_switch_to_list = abap_true.
   DELETE alv_conf-hierar-fields WHERE fieldname = &apos;ID&apos;
                                    OR ( fieldname = fn_sel AND tabname = alv_h_tables-item )
-                                   OR fieldname = alv_conf-hierar-layout-expand_fieldname.
-`</SOURCE>
+                                   OR fieldname = alv_conf-hierar-layout-expand_fieldname.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLEAR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
@@ -514,8 +513,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
           result-status = lights-green.
       ENDCASE.
     ENDIF.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_TO_ALV" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
@@ -583,8 +581,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="DISPLAY" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
@@ -647,8 +644,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
   IF sy-subrc &lt;&gt; 0.
     MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
             WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_COUNT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 ">
     <TEXTS>
@@ -830,8 +826,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
 *      ENDIF.
 *    CATCH zaplink_cx_list INTO _cx.
 *      RAISE EXCEPTION _cx.
-*  ENDTRY.
-`</SOURCE>
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="HAS_ANY" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
@@ -1000,8 +995,7 @@ DATA t_allcomp TYPE tt_allcomplist.
     result = abap_true.
   ELSE.
     result = abap_false.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="KEEP_COMMUN_LIST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="20 ">
     <TEXTS>
@@ -1165,8 +1159,7 @@ FIELD-SYMBOLS:
               value = abap_true ).
     CATCH zaplink_cx_list INTO o_exception.
       RAISE EXCEPTION o_exception.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SELECT_ALL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="26 " MTDNEWEXC="X">
     <TEXTS>
@@ -1271,8 +1264,7 @@ FIELD-SYMBOLS:
               value = abap_false ).
     CATCH zaplink_cx_list INTO o_exception.
       RAISE EXCEPTION o_exception.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_FROM_ALV" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
@@ -1338,8 +1330,7 @@ FIELD-SYMBOLS:
     _comp-as_sub = abap_true.
     _comp-o_comp = data.
     INSERT _comp INTO TABLE _allcomp.
-  ENDLOOP.
-`</SOURCE>
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_SELECT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
@@ -1376,8 +1367,7 @@ FIELD-SYMBOLS:
                EXPORTING textid = zaplink_cx_list=&gt;system_error
                            type = _idx-key-type
                            name = _idx-key-name.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
   </METHODS>
   <TEXTSPOOL>

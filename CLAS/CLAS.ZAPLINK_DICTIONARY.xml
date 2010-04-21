@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="DDC82DB529B044F0547F1F34C73CD050" CODE_SIGNATURE="D01E972CCE6276C492D48AB5E2E3CC11" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5E27C4297C5EC1DE768FD8B2377F229B" CODE_SIGNATURE="D01E972CCE6276C492D48AB5E2E3CC11" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -214,8 +214,7 @@ END-OF-DEFINITION.</MACROS>
     object-&gt;from_data( s_fm_data ).
 
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_DOMAIN" VERSION="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
@@ -297,8 +296,7 @@ END-OF-DEFINITION.</MACROS>
     object-&gt;from_data( s_fm_data ).
 
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_LOCK_OBJECT" VERSION="1" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
@@ -371,8 +369,7 @@ END-OF-DEFINITION.</MACROS>
     object-&gt;from_data( s_fm_data ).
 
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_SEARCH_HELP" VERSION="1" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
@@ -445,8 +442,7 @@ END-OF-DEFINITION.</MACROS>
     object-&gt;from_data( s_fm_data ).
 
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_TABLE" VERSION="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
@@ -534,8 +530,7 @@ END-OF-DEFINITION.</MACROS>
     object-&gt;from_data( s_fm_data ).
 
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_TABLE_TYPE" VERSION="1" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
@@ -606,8 +601,7 @@ END-OF-DEFINITION.</MACROS>
     object-&gt;from_data( s_fm_data ).
 
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_TYPE_GROUP" VERSION="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
@@ -668,8 +662,7 @@ END-OF-DEFINITION.</MACROS>
     object-&gt;_code_signature = get_typegroup_signature( d_type ).
 
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_VIEW" VERSION="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
@@ -744,8 +737,7 @@ END-OF-DEFINITION.</MACROS>
     object-&gt;from_data( s_fm_data ).
 
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_TYPEGROUP_SIGNATURE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -844,8 +836,7 @@ END-OF-DEFINITION.</MACROS>
   IF sy-subrc &lt;&gt; 0.
     EXIT.
   ENDIF.
-  result = &lt;o_s&gt;.
-`</SOURCE>
+  result = &lt;o_s&gt;.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_DATA_ELEMENT" VERSION="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
@@ -1557,8 +1548,7 @@ END-OF-DEFINITION.</MACROS>
           textid = zaplink_cx_connector=&gt;type_not_supported
           type   = object-&gt;type
           connclass = &apos;ZAPLINK_DICTIONARY&apos;.
-  ENDCASE.
-`</SOURCE>
+  ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
     <SOURCE>`
@@ -1575,8 +1565,7 @@ END-OF-DEFINITION.</MACROS>
 *  if o_type-&gt;A0_MAINDATA-RESPUSER is INITIAL. o_type-&gt;A0_MAINDATA-RESPUSER = sy-uname. endif.
 *  s_msg-name = o_type-&gt;A0_MAINDATA-RESPUSER.
 *  MODIFY o_type-&gt;messages FROM s_msg TRANSPORTING name
-*         WHERE name IS INITIAL.
-`</SOURCE>
+*         WHERE name IS INITIAL.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
     <SOURCE>`
@@ -1624,8 +1613,7 @@ END-OF-DEFINITION.</MACROS>
           textid = zaplink_cx_connector=&gt;type_not_supported
           type   = type
           connclass = &apos;ZAPLINK_DICTIONARY&apos;.
-  ENDCASE.
-`</SOURCE>
+  ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
     <SOURCE>`
@@ -1789,8 +1777,7 @@ END-OF-DEFINITION.</MACROS>
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
     <SOURCE>`
@@ -1879,8 +1866,7 @@ END-OF-DEFINITION.</MACROS>
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>`
@@ -1974,8 +1960,7 @@ END-OF-DEFINITION.</MACROS>
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>

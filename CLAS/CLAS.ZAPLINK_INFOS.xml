@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="EF649AB899A8DF98CB92907DF5FA638B" CODE_SIGNATURE="4508EC6516AF981A4F53FECD384C5508" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="258827AAE9CB9A0FAE9FC9B96D951B78" CODE_SIGNATURE="4508EC6516AF981A4F53FECD384C5508" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -47,17 +47,14 @@
    <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
-*&quot;* implementation or private method&apos;s signature
-`</TYPES>
+*&quot;* implementation or private method&apos;s signature</TYPES>
    <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
-*&quot;* local helper classes
-`</IMPLEMENTATIONS>
+*&quot;* local helper classes</IMPLEMENTATIONS>
    <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
-*&quot;* in the implementation part of the class
-`</MACROS>
+*&quot;* in the implementation part of the class</MACROS>
   </LOCAL>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
@@ -247,8 +244,7 @@
               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
     ENDIF.
     APPEND s_comp TO sap-_components.
-  ENDLOOP.
-`</SOURCE>
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_ZL_DATA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="219F11C3482C1FE52AC75D407AB087D9" CODE_SIGNATURE="E34049A839DA8D4A6ED82B3A0011D202" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2AF77A7333DB0A2F7B9AD633435F0B15" CODE_SIGNATURE="E34049A839DA8D4A6ED82B3A0011D202" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -200,8 +200,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
          o_cx-&gt;textid = zaplink_cx_connector=&gt;twice_class.
         RAISE EXCEPTION o_cx.   &quot;  Major failure that will cause Short Dump
       ENDIF.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLEAR_CONNECTORS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -298,8 +297,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
                    EXPORTING textid = zaplink_cx=&gt;system_error
                            previous = _cx.
     ENDTRY.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="DO_EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -359,8 +357,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
   CHECK o_conn IS BOUND.
   o_typedesc ?= cl_abap_objectdescr=&gt;describe_by_object_ref( o_conn ).
-  result = o_typedesc-&gt;get_relative_name( ).
-`</SOURCE>
+  result = o_typedesc-&gt;get_relative_name( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_CONNECTORLIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
@@ -386,8 +383,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     o_comp-&gt;set_type( &apos;CLAS&apos; ).
     o_comp-&gt;set_name( &lt;c&gt;-classname ).
     result-&gt;add( o_comp ).
-  ENDLOOP.
-`</SOURCE>
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_TYPEORDER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
     <TEXTS>
@@ -407,8 +403,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     result = &lt;t&gt;-order.
   ELSE.
     result = max_order.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_VALUES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -467,8 +462,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDTRY.
   ELSE.
     type = d_value.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="NODE_2_RAW" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -516,8 +510,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
             prev_cx = _cx.
       o_mycx-&gt;update( ).
       RAISE EXCEPTION o_mycx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="RESET_CONNECTORS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -618,8 +611,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
        WITH TABLE KEY object = data.
   IF sy-subrc = 0.
     result = &lt;t&gt;-text.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_ADD_CONNECTOR" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -752,8 +744,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     _value-object = &lt;c&gt;-object.
     _value-text = &lt;c&gt;-text.
     APPEND _value TO value_table.
-  ENDLOOP.
-`</SOURCE>
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_SEARCH_CONNECTOR" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -783,8 +774,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
                  EXPORTING textid = zaplink_cx_connector=&gt;invalid_type
                              type = type.
     ENDIF.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_UPDATE_DEF_CLASS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>

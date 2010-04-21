@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2D854A751E5810CAF0FA047C51409A6A" CODE_SIGNATURE="E86C418A3170C97AD10638323E2C63BF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="738C8105B61B3246E09E189DDF36C437" CODE_SIGNATURE="E86C418A3170C97AD10638323E2C63BF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -330,8 +330,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     object-&gt;a0_maindata-created_by,
     object-&gt;a0_maindata-created_on,
     object-&gt;a0_maindata-changed_by,
-    object-&gt;a0_maindata-changed_on.
-`</SOURCE>
+    object-&gt;a0_maindata-changed_on.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ANONYMIZE_PACKAGE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
@@ -375,8 +374,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   LOOP AT object-&gt;packages INTO o_raw_p.
     o_package ?= o_raw_p-zl_object-&gt;raw.
     anonymize_package( o_package ).
-  ENDLOOP.
-`</SOURCE>
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="BUILD_ERROR_MSG" VERSION="1" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
@@ -651,8 +649,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_INTERFACE_RAW" VERSION="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
@@ -858,8 +855,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 
   IF o_mycx IS BOUND.
     RAISE EXCEPTION o_mycx.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_PACKAGE_RAW" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
@@ -1220,8 +1216,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_PACKAGE" VERSION="1" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
@@ -1278,8 +1273,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_INTERFACE" VERSION="1" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
     <TEXTS>
@@ -1325,8 +1319,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_PACKAGE" VERSION="1" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
     <TEXTS>
@@ -1371,8 +1364,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_DEVC" VERSION="1" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
@@ -1743,8 +1735,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   If object-&gt;a0_maindata-created_by is INITIAL. object-&gt;a0_maindata-created_by = sy-uname. endif.
   If object-&gt;a0_maindata-created_on is INITIAL. object-&gt;a0_maindata-created_on = sy-datum. endif.
 *    object-&gt;a0_maindata-changed_by,
-*    object-&gt;a0_maindata-changed_on.
-`</SOURCE>
+*    object-&gt;a0_maindata-changed_on.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE_PACKAGE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="24 " MTDNEWEXC="X">
     <TEXTS>
@@ -1785,8 +1776,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   LOOP AT object-&gt;packages INTO o_raw_p.
     o_package ?= o_raw_p-zl_object-&gt;raw.
     unanonymize_package( o_package ).
-  ENDLOOP.
-`</SOURCE>
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_INTERFACE" VERSION="1" STATE="1" EDITORDER="25 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -2484,8 +2474,7 @@ DATA _data      TYPE scompidtln.
       o_interface ?= object-&gt;raw.
       anonymize_interface( o_interface ).
     WHEN OTHERS.
-  ENDCASE.
-`</SOURCE>
+  ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
     <SOURCE>`
@@ -2506,8 +2495,7 @@ DATA _data      TYPE scompidtln.
       o_interface ?= object-&gt;raw.
       unanonymize_interface( o_interface ).
     WHEN OTHERS.
-  ENDCASE.
-`</SOURCE>
+  ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
     <SOURCE>`
@@ -2637,8 +2625,7 @@ DATA _data      TYPE scompidtln.
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
     <SOURCE>`
@@ -2690,8 +2677,7 @@ DATA _data      TYPE scompidtln.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>`

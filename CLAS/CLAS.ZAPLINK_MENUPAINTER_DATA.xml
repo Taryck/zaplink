@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="14850DBB045F8DF1CD7AEB65A0A39464" CODE_SIGNATURE="7255FB62829987ED46355B7D87E30FEB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A071F708BAA523C02D67EF265761E8A1" CODE_SIGNATURE="7255FB62829987ED46355B7D87E30FEB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -501,8 +501,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
     s_txt-texttype = text_types-object.     s_txt-text = &lt;t&gt;-text.      if not s_txt-text is INITIAL. INSERT s_txt INTO TABLE result. endif.
     s_txt-texttype = text_types-icon.       s_txt-text = &lt;t&gt;-icon.      if not s_txt-text is INITIAL. INSERT s_txt INTO TABLE result. endif.
     s_txt-texttype = text_types-quick_info. s_txt-text = &lt;t&gt;-info.      if not s_txt-text is INITIAL. INSERT s_txt INTO TABLE result. endif.
-  ENDLOOP.
-`</SOURCE>
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_TEXTS" VERSION="1" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <TEXTS>
