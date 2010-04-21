@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7225750ACF13304E3CFCFBBF4E3CB6FE" CODE_SIGNATURE="EF3398CF07315C53C5DC09CE19CA8DCD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F1505DC579FAFF52C8A49DB67318C079" CODE_SIGNATURE="EF3398CF07315C53C5DC09CE19CA8DCD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="ZapLink Container : For install purpose">
-     <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100406" TDFTIME="175120" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
 ASFor internal use. Use ZAPLINK_CONTAINER instead.
 ASThis object is use by ZAPLink installer only to reduce container
   functionality only to :
@@ -563,7 +563,7 @@ check data &lt;&gt; _options.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_ADD_TO_COMPONENTSLIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
@@ -660,7 +660,7 @@ check data &lt;&gt; _options.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_FIND_COMPONENT_NODE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
@@ -840,7 +840,7 @@ check data &lt;&gt; _options.
 
     ENDWHILE.
   ENDIF.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_UPDATE_COMPONENTSLIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
@@ -895,7 +895,7 @@ check data &lt;&gt; _options.
     o_node = o_iterator-&gt;get_next( ).&quot; get next one to allow to use &apos;continue&apos;
   ENDWHILE.
 * is equiv to : o_node = xmldata-&gt;get_root( ).
-</SOURCE>
+`</SOURCE>
    </ITEM>
   </METHODS>
   <TYPEGROUPS>

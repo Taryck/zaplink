@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="DDF728E21E3CDC104163DA9533D24BB7" CODE_SIGNATURE="E24085B53DA06E160172D9B227DEDB32" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="4BFE5599A987CDA33B921057B80E5D5D" CODE_SIGNATURE="3C5C20709B22B2DCAB51337BDA4FB4C2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" VERSION="1" STATE="1"/>
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="Commun Data for Class &amp; Interface">
-     <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100406" TDFTIME="165023" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_OBJECT
 U1&amp;RELATIONS&amp;
 AS
@@ -358,7 +358,7 @@ AS</DOCUMENTATION>
 * Method&apos;s doesn&apos;t exist as interface implementation =&gt; insert data
     s_impl_detail-version = &apos;1&apos;. APPEND s_impl_detail TO fm_data-impl_details.
   ENDLOOP.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="FD_COMP_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>
@@ -575,8 +575,8 @@ DATA: _t   LIKE LINE OF texts.
     &lt;desc&gt; LIKE LINE OF descriptions.
 
 * Issue 33 : Documentation connected to text
-  LOOP AT DESCRIPTIONS ASSIGNING &lt;desc&gt;
-       WHERE clsname = CLASSNAME.
+  LOOP AT descriptions ASSIGNING &lt;desc&gt;
+       WHERE clsname = classname.
     s_txt-main = &lt;desc&gt;.
     CLEAR: s_txt-clsname. &quot; VERSION
     s_key-name = obj_name.
@@ -588,17 +588,17 @@ DATA: _t   LIKE LINE OF texts.
           WITH KEY tdspras = s_txt-langu.
       IF sy-subrc = 0.
         s_txt-documentation = &lt;dt&gt;.
-        CLEAR s_txt-documentation-tdspras.
+        CLEAR: s_txt-documentation-tdspras.
       ENDIF.
     ENDIF.
     INSERT s_txt INTO TABLE texts.
   ENDLOOP.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="FROM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes">
-      <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100216" TDFTIME="154053" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+      <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
 ASConvert Function Module data to attribute of this class.
 ASThis method ensure the data transformation, removing every redundant
   data
@@ -1434,7 +1434,7 @@ DATA: _t   LIKE LINE OF texts.
     TYPES:
         texts   TYPE tt_seocompotx_l,
       END OF ts_alias_data
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Alias definition"/>
     </TEXTS>
@@ -1445,7 +1445,7 @@ DATA: _t   LIKE LINE OF texts.
     TYPES:
         texts   TYPE tt_seocompotx_l,
       END OF ts_attr_data
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Attribute definition"/>
     </TEXTS>
@@ -1454,7 +1454,7 @@ DATA: _t   LIKE LINE OF texts.
     BEGIN OF ts_component,
       cmpname TYPE seoo_method_r-cmpname,
     END OF ts_component
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Component (Types, alias, method, attribute) definition"/>
     </TEXTS>
@@ -1467,17 +1467,17 @@ DATA: _t   LIKE LINE OF texts.
         texts     TYPE tt_sotr_texts,
         longtexts TYPE tt_sotr_textus,
       END OF ts_cx_text
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TS_DEFERRED" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="43 " SRCCOLUMN1="6 " SRCROW2="46 " SRCCOLUMN2="29 " TYPESRC_LENG="241 ">BEGIN OF ts_deferred,                   &quot; used to handle
               classes TYPE seot_clsdeferrds_w,      &quot; class * definition load
               interfaces TYPE seot_intdeferrds_r,   &quot; interface * load
             END OF ts_deferred
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TS_DOC_KEY" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4" SRCROW1="13 " SRCCOLUMN1="4 " SRCROW2="16 " SRCCOLUMN2="20 " TYPESRC_LENG="204 ">BEGIN OF ts_doc_key,                                    &quot; equiv DOKU_OBJ = CHAR 60
       name       TYPE seoclsname,                           &quot; CHAR 30
       other(30)  TYPE c,
     END OF ts_doc_key
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TS_EVENT_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="23 " TYPTYPE="4" SRCROW1="169 " SRCCOLUMN1="6 " SRCROW2="177 " SRCCOLUMN2="25 " TYPESRC_LENG="313 ">
     BEGIN OF ts_event_data.
     INCLUDE TYPE seoo_event_r AS hdr.
@@ -1488,7 +1488,7 @@ DATA: _t   LIKE LINE OF texts.
 *        exceptions    TYPE tt_exceptions,
 *      _               TYPE ts_source,
       END OF ts_event_data
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Event definition"/>
     </TEXTS>
@@ -1499,7 +1499,7 @@ DATA: _t   LIKE LINE OF texts.
     TYPES:
         texts   TYPE tt_seosubcotx_l,
       END OF ts_excep_data
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Exception definition"/>
     </TEXTS>
@@ -1518,7 +1518,7 @@ DATA: _t   LIKE LINE OF texts.
                     intfsec       TYPE program,
                     methods       TYPE seop_methods_w_include,
                   END OF ts_includes
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="List of Class&apos;s include with ABAP Code"/>
     </TEXTS>
@@ -1529,7 +1529,7 @@ DATA: _t   LIKE LINE OF texts.
         components TYPE tt_comp_impl,   &quot; Interface public attribute default value &amp; Method implementation
 *      attributes_redefinition TYPE tt_itf_default_values,   &quot; Interface public attribute default value
       END OF ts_interface
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TS_METH_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="25 " TYPTYPE="4" SRCROW1="181 " SRCCOLUMN1="6 " SRCROW2="189 " SRCCOLUMN2="24 " TYPESRC_LENG="324 ">
     BEGIN OF ts_meth_data.
     INCLUDE TYPE seoo_method_r AS hdr.
@@ -1540,7 +1540,7 @@ DATA: _t   LIKE LINE OF texts.
         exceptions    TYPE tt_exceptions,
         source        TYPE ts_sourceasstruc,
       END OF ts_meth_data
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Method definition"/>
     </TEXTS>
@@ -1551,7 +1551,7 @@ DATA: _t   LIKE LINE OF texts.
     TYPES:
         texts   TYPE tt_seosubcotx_l,
       END OF ts_param_data
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Parameter definition"/>
     </TEXTS>
@@ -1561,20 +1561,20 @@ DATA: _t   LIKE LINE OF texts.
     TYPES:
         source        TYPE ts_sourceasstruc,
       END OF ts_redef_data
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TS_SEOCLASSTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="50 " SRCCOLUMN1="6 " SRCROW2="54 " SRCCOLUMN2="25 " TYPESRC_LENG="141 ">BEGIN OF ts_seoclasstx.
     INCLUDE TYPE seoclasstx AS main.
     TYPES:
         documentation  TYPE ts_lang,
       END OF ts_seoclasstx
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TS_SEOCOMPOTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4" SRCROW1="62 " SRCCOLUMN1="6 " SRCROW2="66 " SRCCOLUMN2="25 " TYPESRC_LENG="141 ">
     BEGIN OF ts_seocompotx.
     INCLUDE TYPE seocompotx AS main.
     TYPES:
         documentation  TYPE ts_lang,
       END OF ts_seocompotx
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description component (Langu key) + Documentation"/>
     </TEXTS>
@@ -1589,7 +1589,7 @@ DATA: _t   LIKE LINE OF texts.
                   private     TYPE  ts_sourceasstruc,
                   protected   TYPE  ts_sourceasstruc,
                 END OF ts_sources
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class ABAP Source codes as structure"/>
     </TEXTS>
@@ -1601,7 +1601,7 @@ DATA: _t   LIKE LINE OF texts.
         defered TYPE seot_clsdeferrd_r,
         itf_def TYPE seot_intdeferrd_r,
       END OF ts_tgrp_data
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Type pool used data"/>
     </TEXTS>
@@ -1613,141 +1613,141 @@ DATA: _t   LIKE LINE OF texts.
         texts   TYPE tt_seocompotx_l,
         _       TYPE td_abapsource,
       END OF ts_type_data
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Type definition"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_ALIAS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="28 " TYPTYPE="4" SRCROW1="199 " SRCCOLUMN1="6 " SRCROW2="199 " SRCCOLUMN2="72 " TYPESRC_LENG="69 ">
     tt_alias TYPE SORTED TABLE OF ts_alias_data WITH UNIQUE KEY cmpname
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Aliases"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_ATTRIBUTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="30 " TYPTYPE="4" SRCROW1="207 " SRCCOLUMN1="6 " SRCROW2="207 " SRCCOLUMN2="75 " TYPESRC_LENG="72 ">
     tt_attributs TYPE SORTED TABLE OF ts_attr_data WITH UNIQUE KEY cmpname
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s attributes"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_COMPONENTS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="22 " SRCCOLUMN1="4 " SRCROW2="22 " SRCCOLUMN2="74 " TYPESRC_LENG="73 ">
     tt_components TYPE SORTED TABLE OF ts_component WITH UNIQUE KEY cmpname
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Component&apos;s list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_COMP_IMPL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="36 " TYPTYPE="4" SRCROW1="233 " SRCCOLUMN1="6 " SRCROW2="233 " SRCCOLUMN2="76 " TYPESRC_LENG="73 ">tt_comp_impl TYPE SORTED TABLE OF ts_redef_data WITH UNIQUE KEY mtdname
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TT_CX_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4" SRCROW1="102 " SRCCOLUMN1="6 " SRCROW2="102 " SRCCOLUMN2="72 " TYPESRC_LENG="69 ">tt_cx_texts TYPE SORTED TABLE OF ts_cx_text WITH UNIQUE KEY cmpname
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TT_EVENTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="24 " TYPTYPE="4" SRCROW1="179 " SRCCOLUMN1="6 " SRCROW2="179 " SRCCOLUMN2="73 " TYPESRC_LENG="70 ">
     tt_events TYPE SORTED TABLE OF ts_event_data WITH UNIQUE KEY cmpname
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Events"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_EXCEPTIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="22 " TYPTYPE="4" SRCROW1="167 " SRCCOLUMN1="6 " SRCROW2="167 " SRCCOLUMN2="77 " TYPESRC_LENG="74 ">
     tt_exceptions TYPE SORTED TABLE OF ts_excep_data WITH UNIQUE KEY sconame
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Method&apos;s &amp; Event Exceptions"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_INTERFACES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="38 " TYPTYPE="4" SRCROW1="242 " SRCCOLUMN1="6 " SRCROW2="242 " SRCCOLUMN2="79 " TYPESRC_LENG="76 ">
     tt_interfaces TYPE SORTED TABLE OF ts_interface WITH UNIQUE KEY refclsname
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class interface use"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_METHODS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="26 " TYPTYPE="4" SRCROW1="191 " SRCCOLUMN1="6 " SRCROW2="191 " SRCCOLUMN2="73 " TYPESRC_LENG="70 ">
     tt_methods TYPE SORTED TABLE OF ts_meth_data WITH UNIQUE KEY cmpname
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s methods"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_PARAMETERS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="20 " TYPTYPE="4" SRCROW1="159 " SRCCOLUMN1="6 " SRCROW2="159 " SRCCOLUMN2="77 " TYPESRC_LENG="74 ">
     tt_parameters TYPE SORTED TABLE OF ts_param_data WITH UNIQUE KEY sconame
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Method&apos;s &amp; Event parameters"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_SEOCLASSTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="48 " SRCCOLUMN1="6 " SRCROW2="48 " SRCCOLUMN2="69 " TYPESRC_LENG="66 ">
     tt_seoclasstx TYPE STANDARD TABLE OF seoclasstx WITH DEFAULT KEY
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_SEOCLASSTX_S" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="56 " SRCCOLUMN1="6 " SRCROW2="56 " SRCCOLUMN2="77 " TYPESRC_LENG="74 ">
     tt_seoclasstx_s TYPE SORTED TABLE OF ts_seoclasstx WITH UNIQUE KEY langu
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description class With unique Key"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_SEOCOMPOTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="58 " SRCCOLUMN1="6 " SRCROW2="58 " SRCCOLUMN2="69 " TYPESRC_LENG="66 ">
     tt_seocompotx TYPE STANDARD TABLE OF seocompotx WITH DEFAULT KEY
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description component (full key)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_SEOCOMPOTX_L" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4" SRCROW1="68 " SRCCOLUMN1="6 " SRCROW2="68 " SRCCOLUMN2="77 " TYPESRC_LENG="74 ">
     tt_seocompotx_l TYPE SORTED TABLE OF ts_seocompotx WITH UNIQUE KEY langu
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description component (Langu key) + Documentation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_SEOCOMPOTX_S" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4" SRCROW1="60 " SRCCOLUMN1="6 " SRCROW2="60 " SRCCOLUMN2="82 " TYPESRC_LENG="79 ">
     tt_seocompotx_s TYPE SORTED TABLE OF seocompotx WITH UNIQUE KEY cmpname langu
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description component (With unique Key)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_SEOSUBCOTX" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="4" SRCROW1="70 " SRCCOLUMN1="6 " SRCROW2="70 " SRCCOLUMN2="69 " TYPESRC_LENG="66 ">
     tt_seosubcotx TYPE STANDARD TABLE OF seosubcotx WITH DEFAULT KEY
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description Sub component (full key)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_SEOSUBCOTX_L" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="12 " TYPTYPE="4" SRCROW1="74 " SRCCOLUMN1="6 " SRCROW2="74 " SRCCOLUMN2="74 " TYPESRC_LENG="71 ">
     tt_seosubcotx_l TYPE SORTED TABLE OF seosubcotx WITH UNIQUE KEY langu
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description Sub component (Langu key)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_SEOSUBCOTX_S" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " TYPTYPE="4" SRCROW1="72 " SRCCOLUMN1="6 " SRCROW2="72 " SRCCOLUMN2="90 " TYPESRC_LENG="87 ">
     tt_seosubcotx_s TYPE SORTED TABLE OF seosubcotx WITH UNIQUE KEY cmpname sconame langu
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Short description Sub component (With unique Key)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_SOTR_TEXTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="14 " TYPTYPE="4" SRCROW1="90 " SRCCOLUMN1="6 " SRCROW2="90 " SRCCOLUMN2="78 " TYPESRC_LENG="75 ">tt_sotr_texts TYPE SORTED TABLE OF sotr_text WITH UNIQUE KEY langu object
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TT_SOTR_TEXTUS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="15 " TYPTYPE="4" SRCROW1="91 " SRCCOLUMN1="10 " SRCROW2="91 " SRCCOLUMN2="74 " TYPESRC_LENG="67 ">tt_sotr_textus TYPE STANDARD TABLE OF sotr_textu WITH DEFAULT KEY
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TT_TYPEGROUPS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="34 " TYPTYPE="4" SRCROW1="225 " SRCCOLUMN1="6 " SRCROW2="225 " SRCCOLUMN2="78 " TYPESRC_LENG="75 ">
     tt_typegroups TYPE SORTED TABLE OF ts_tgrp_data WITH UNIQUE KEY typegroup
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s type pool used"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_TYPES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="32 " TYPTYPE="4" SRCROW1="216 " SRCCOLUMN1="6 " SRCROW2="216 " SRCCOLUMN2="71 " TYPESRC_LENG="68 ">
     tt_types TYPE SORTED TABLE OF ts_type_data WITH UNIQUE KEY cmpname
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s types"/>
     </TEXTS>
@@ -1801,7 +1801,7 @@ DATA: _t   LIKE LINE OF texts.
 * FOR documentation
         documentation TYPE tt_docs,
       END OF t_fm_data
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
     </TEXTS>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="12E5227F19B6D807F545DC3DD746B98B" CODE_SIGNATURE="209017DAF73BD2BC9DEB806B587065B1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9FFFF0DBED59F0AA89320E2A1F9ED5A9" CODE_SIGNATURE="209017DAF73BD2BC9DEB806B587065B1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -394,7 +394,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
   DELETE alv_conf-hierar-fields WHERE fieldname = &apos;ID&apos;
                                    OR ( fieldname = fn_sel AND tabname = alv_h_tables-item )
                                    OR fieldname = alv_conf-hierar-layout-expand_fieldname.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLEAR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
@@ -515,7 +515,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
       ENDCASE.
     ENDIF.
   ENDIF.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_TO_ALV" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
@@ -584,7 +584,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="DISPLAY" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
@@ -648,7 +648,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
             WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
   ENDIF.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_COUNT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 ">
     <TEXTS>
@@ -831,7 +831,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
 *    CATCH zaplink_cx_list INTO _cx.
 *      RAISE EXCEPTION _cx.
 *  ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="HAS_ANY" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
@@ -1001,7 +1001,7 @@ DATA t_allcomp TYPE tt_allcomplist.
   ELSE.
     result = abap_false.
   ENDIF.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="KEEP_COMMUN_LIST" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="20 ">
     <TEXTS>
@@ -1166,7 +1166,7 @@ FIELD-SYMBOLS:
     CATCH zaplink_cx_list INTO o_exception.
       RAISE EXCEPTION o_exception.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SELECT_ALL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="26 " MTDNEWEXC="X">
     <TEXTS>
@@ -1272,7 +1272,7 @@ FIELD-SYMBOLS:
     CATCH zaplink_cx_list INTO o_exception.
       RAISE EXCEPTION o_exception.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_FROM_ALV" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
@@ -1339,7 +1339,7 @@ FIELD-SYMBOLS:
     _comp-o_comp = data.
     INSERT _comp INTO TABLE _allcomp.
   ENDLOOP.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_SELECT" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
@@ -1377,7 +1377,7 @@ FIELD-SYMBOLS:
                            type = _idx-key-type
                            name = _idx-key-name.
   ENDIF.
-</SOURCE>
+`</SOURCE>
    </ITEM>
   </METHODS>
   <TEXTSPOOL>
@@ -1436,7 +1436,7 @@ FIELD-SYMBOLS:
       headers TYPE tt_alv,
       items   TYPE tt_alv,
     END OF td_alv
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TD_ALVID" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="GUID_16"/>
    <ITEM CMPNAME="TD_ITERATOR_TYPE" VERSION="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="CHAR1">
     <TEXTS>
@@ -1469,7 +1469,7 @@ FIELD-SYMBOLS:
     o_comp   TYPE to_component,
     as_sub   TYPE abap_bool,
   END OF ts_allcomplist
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="All Component list index line"/>
     </TEXTS>
@@ -1491,7 +1491,7 @@ FIELD-SYMBOLS:
       id         TYPE td_alvid,
       expand     TYPE flag,
   END OF ts_alv
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ALV line"/>
     </TEXTS>
@@ -1501,7 +1501,7 @@ FIELD-SYMBOLS:
         fields TYPE slis_t_fieldcat_alv,
         layout TYPE slis_layout_alv,
       END OF ts_alv_conf
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ALV configuration"/>
     </TEXTS>
@@ -1510,14 +1510,14 @@ FIELD-SYMBOLS:
       simple TYPE ts_alv_conf,
       hierar TYPE ts_alv_conf,
       END OF ts_alv_confs
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TS_COMPLIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4" SRCROW1="25 " SRCCOLUMN1="4 " SRCROW2="29 " SRCCOLUMN2="19 " TYPESRC_LENG="139 ">
     BEGIN OF ts_complist,
     key      TYPE ts_compkey,
     o_comp   TYPE to_component,
     selected TYPE abap_bool,
   END OF ts_complist
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Component list index"/>
     </TEXTS>
@@ -1527,30 +1527,30 @@ FIELD-SYMBOLS:
     o_comp   TYPE to_component,
     order    TYPE i,
   END OF ts_cursor
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TT_ALLCOMPLIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4" SRCROW1="39 " SRCCOLUMN1="4 " SRCROW2="39 " SRCCOLUMN2="77 " TYPESRC_LENG="76 ">
     tt_allcomplist TYPE SORTED TABLE OF ts_allcomplist WITH NON-UNIQUE KEY KEY
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="All Components (main and sub)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_ALV" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="11 " TYPTYPE="4" SRCROW1="69 " SRCCOLUMN1="4 " SRCROW2="69 " SRCCOLUMN2="56 " TYPESRC_LENG="55 ">
     tt_alv TYPE STANDARD TABLE OF ts_alv WITH DEFAULT KEY
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ALV table"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_COMPLIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="31 " SRCCOLUMN1="4 " SRCROW2="31 " SRCCOLUMN2="67 " TYPESRC_LENG="66 ">
     tt_complist TYPE SORTED TABLE OF ts_complist WITH UNIQUE KEY KEY
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Component list index"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_CURSORS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="23 " SRCCOLUMN1="4 " SRCROW2="23 " SRCCOLUMN2="63 " TYPESRC_LENG="62 ">tt_cursors TYPE STANDARD TABLE OF ts_cursor WITH DEFAULT KEY
-</ITEM>
+`</ITEM>
   </TYPES>
  </RAW>
 </ZL_OBJECT>

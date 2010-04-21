@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7B9738F813643CC42EE90E1CE9715B3D" CODE_SIGNATURE="E86C418A3170C97AD10638323E2C63BF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2D854A751E5810CAF0FA047C51409A6A" CODE_SIGNATURE="E86C418A3170C97AD10638323E2C63BF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -9,7 +9,7 @@
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" STATE="1"/>
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="ZAPLink Package &amp; Interface package connector">
-     <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100406" TDFTIME="163406" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
 ASConnector for :
 AS,,- DEVC : Package (Development class)
 AS,,- PINF : Package interface
@@ -23,7 +23,7 @@ U1&amp;FURTHER_SOURCES_OF_INF&amp;
 AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
     </ITEM>
     <ITEM LANGU="F" DESCRIPT="ZAPLink : Connecteur pour Classe &amp; Interface">
-     <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100406" TDFTIME="163406" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
 ASConnector for :
 AS,,- DEVC : Package (Development class)
 AS,,- PINF : Package interface
@@ -331,7 +331,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     object-&gt;a0_maindata-created_on,
     object-&gt;a0_maindata-changed_by,
     object-&gt;a0_maindata-changed_on.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ANONYMIZE_PACKAGE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
@@ -376,7 +376,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     o_package ?= o_raw_p-zl_object-&gt;raw.
     anonymize_package( o_package ).
   ENDLOOP.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="BUILD_ERROR_MSG" VERSION="1" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
@@ -652,7 +652,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_INTERFACE_RAW" VERSION="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
@@ -859,7 +859,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   IF o_mycx IS BOUND.
     RAISE EXCEPTION o_mycx.
   ENDIF.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_PACKAGE_RAW" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
@@ -1221,7 +1221,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_PACKAGE" VERSION="1" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
@@ -1279,7 +1279,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_INTERFACE" VERSION="1" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
     <TEXTS>
@@ -1326,7 +1326,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_PACKAGE" VERSION="1" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
     <TEXTS>
@@ -1372,7 +1372,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_DEVC" VERSION="1" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
@@ -1744,7 +1744,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   If object-&gt;a0_maindata-created_on is INITIAL. object-&gt;a0_maindata-created_on = sy-datum. endif.
 *    object-&gt;a0_maindata-changed_by,
 *    object-&gt;a0_maindata-changed_on.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE_PACKAGE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="24 " MTDNEWEXC="X">
     <TEXTS>
@@ -1786,7 +1786,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     o_package ?= o_raw_p-zl_object-&gt;raw.
     unanonymize_package( o_package ).
   ENDLOOP.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_INTERFACE" VERSION="1" STATE="1" EDITORDER="25 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -2485,7 +2485,7 @@ DATA _data      TYPE scompidtln.
       anonymize_interface( o_interface ).
     WHEN OTHERS.
   ENDCASE.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
     <SOURCE>`
@@ -2507,7 +2507,7 @@ DATA _data      TYPE scompidtln.
       unanonymize_interface( o_interface ).
     WHEN OTHERS.
   ENDCASE.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
     <SOURCE>`
@@ -2638,7 +2638,7 @@ DATA _data      TYPE scompidtln.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
     <SOURCE>`
@@ -2691,7 +2691,7 @@ DATA _data      TYPE scompidtln.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>`
