@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9D7B1222F886747DD643E1727220C5FB" CODE_SIGNATURE="9AABC0ED40F3A29701D791CF2D719BB5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5867D1EC626BFBF7C08C7F10189D84A2" CODE_SIGNATURE="BDD31355F7769216FA63E56CE1CDBD75" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="ZapLink Easy XML Tools">
-     <DOCUMENTATION TDVERSION="00001" TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20100406" TDFTIME="180935" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
 ASTransform any ABAP type into XML and read XML to store in a ABAP Type.
   Attributes (in structure, object,...) with special name &quot;_&quot; is stored in
   XML as a value. All other data is stored as attribute of an XML Node.
@@ -90,7 +90,7 @@ AS</DOCUMENTATION>
    <ITEM CMPNAME="SELF_FIELDNAME" VERSION="1" STATE="1" EDITORDER="9 " ATTDECLTYP="2" ATTVALUE="&apos;_&apos;" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Special FieldName in structure">
-      <DOCUMENTATION TDFUSER="TBENSIAL" TDFRELES="700" TDFDATE="20090630" TDFTIME="181333" TDLINESIZE="072">U1&amp;MEANING&amp;
+      <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;MEANING&amp;
 ASField Name in structure to switch XML storage location from attribute to
   value
 U1&amp;HINTS&amp;
@@ -878,7 +878,7 @@ END-OF-DEFINITION.</MACROS>
   o_iterator = xml_node-&gt;create_iterator_filtered( depth = 1
                                                   filter = o_filter ).
   o_text = o_iterator-&gt;get_next( ).   result = o_text-&gt;get_value( ).    IF result = &apos;#&apos;. clear result. endif.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_REF_TYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
     <TEXTS>
@@ -1017,7 +1017,7 @@ END-OF-DEFINITION.</MACROS>
   d_mask = node-&gt;get_type( ).   d_txt_m = type.
   d_mask = d_mask BIT-AND d_txt_m.
   if d_mask = 00000000.   result = abap_true.   endif.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="NODE_IS_TYPE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
     <TEXTS>
@@ -1040,7 +1040,7 @@ END-OF-DEFINITION.</MACROS>
   d_mask = node-&gt;get_type( ).   d_txt_m = type.
   d_mask = d_mask BIT-AND d_txt_m.
   if d_mask = d_txt_m.    result = abap_true.   endif.
-</SOURCE>
+`</SOURCE>
    </ITEM>
    <ITEM CMPNAME="PROTECT_STRING" VERSION="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
@@ -1055,12 +1055,15 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
+  DATA d_last TYPE i.
   CHECK NOT string IS INITIAL.
+  d_last = strlen( string ) - 1.
   IF NOT string(1) IN char_to_protect.
     result = string.
   ELSE.
     CONCATENATE protection_char string INTO result.
-  ENDIF.</SOURCE>
+  ENDIF.
+  IF string+d_last(1) IN char_to_protect.   CONCATENATE result protection_char INTO result.   ENDIF.    &quot; Issue 61 &amp; 68</SOURCE>
    </ITEM>
    <ITEM CMPNAME="READ_ANY" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 ">
     <TEXTS>
@@ -1806,11 +1809,18 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
+  DATA d_last TYPE i.
   CHECK NOT string IS INITIAL.
-  result = string.
-  IF string(1) = protection_char AND strlen( string ) &gt;= 2.
+  d_last = STRLEN( string ) - 1.    result = string.
+  IF string(1) = protection_char AND d_last &gt;= 1.
     IF string+1(1) IN char_to_protect.
       SHIFT result BY 1 PLACES LEFT.
+    ENDIF.
+  ENDIF.
+  IF string+d_last(1) = protection_char AND d_last &gt;= 2.      &quot; Issue 61 &amp; 68
+    SUBTRACT 1 FROM d_last.
+    IF string+d_last(1) IN char_to_protect.
+      SHIFT result BY 1 PLACES RIGHT.
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
@@ -1945,7 +1955,7 @@ END-OF-DEFINITION.</MACROS>
     td_pack  	TYPE devclass,
     elem_pack	TYPE devclass,
   END OF ts_ele
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Donnée pour"/>
     </TEXTS>
@@ -1955,19 +1965,19 @@ END-OF-DEFINITION.</MACROS>
     elements  TYPE STANDARD TABLE OF scomeldtln WITH NON-UNIQUE DEFAULT KEY, &quot;SCOMELDATA,
     acls      TYPE STANDARD TABLE OF scomaclstr WITH NON-UNIQUE DEFAULT KEY, &quot;SCOMACLTAB,
   END OF ts_itf_el
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TT_CONTEXT" VERSION="1" STATE="1" EDITORDER="5 " TYPTYPE="4" SRCROW1="24 " SRCCOLUMN1="4 " SRCROW2="24 " SRCCOLUMN2="60 " TYPESRC_LENG="59 ">
     tt_context TYPE STANDARD TABLE OF string WITH DEFAULT KEY
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="For debug porpuse :Stack of calls"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_ELE" VERSION="1" STATE="1" EDITORDER="2 " TYPTYPE="4" SRCROW1="14 " SRCCOLUMN1="4 " SRCROW2="14 " SRCCOLUMN2="67 " TYPESRC_LENG="66 ">tt_ele TYPE STANDARD TABLE OF ts_ele WITH NON-UNIQUE DEFAULT KEY
-</ITEM>
+`</ITEM>
    <ITEM CMPNAME="TT_ITF_EL" VERSION="1" STATE="1" EDITORDER="4 " TYPTYPE="4" SRCROW1="22 " SRCCOLUMN1="4 " SRCROW2="22 " SRCCOLUMN2="73 " TYPESRC_LENG="72 ">
     tt_itf_el TYPE STANDARD TABLE OF ts_itf_el WITH NON-UNIQUE DEFAULT KEY
-
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Interfaces &amp; it&apos;s Elements"/>
     </TEXTS>
