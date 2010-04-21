@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="00F4EC349BA75EFE4823A3AE01FD198C" CODE_SIGNATURE="D1E6293BD3B8C8ABB20E7D238E184C6A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="21B6199E6796F18F07A81B52BA77F24A" CODE_SIGNATURE="3CF9D2DC40FEFD73CB7EA4987A31F8C1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -46,16 +46,16 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Transport category : ABAP Object"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TRANSACTION_TYPES" VERSION="1" STATE="1" EDITORDER="7 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="18 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="27 " TYPESRC_LENG="682 " TYPESRC="BEGIN OF TRANSACTION_TYPES,   &quot; FROM LSEUKTOP(93)
+   <ITEM CMPNAME="TRANSACTION_TYPES" VERSION="1" STATE="1" EDITORDER="7 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="18 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="27 " TYPESRC_LENG="690 " TYPESRC="BEGIN OF transaction_types,   &quot; FROM LSEUKTOP(93)
       transaction  TYPE x VALUE &apos;00&apos;,               &quot; Transaktion         T
       menu         TYPE x VALUE &apos;01&apos;,               &quot; Bereichsmenü        M
       parameter    TYPE x VALUE &apos;02&apos;,               &quot; Parametertrans.     P
       program      TYPE x VALUE &apos;80&apos;,               &quot; Report              R
-      Prog_variant TYPE x VALUE &apos;10&apos;,               &quot; Report  with Variant
+      prog_variant TYPE x VALUE &apos;10&apos;,               &quot; Report  with Variant
       object       TYPE x VALUE &apos;08&apos;,               &quot; Transactional object
       check        TYPE x VALUE &apos;04&apos;,               &quot; With autjority check
-      enqueue      TYPE x VALUE &apos;20&apos;,               &quot; With SM01
-    end OF TRANSACTION_TYPES
+      enqueue      TYPE x VALUE &apos;20&apos;,                       &quot; With SM01
+    END OF transaction_types
 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Transaction type and flags"/>
@@ -380,6 +380,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 **            s_fm_data-??? = &lt;a&gt;-s_pervas.
         ENDIF.
 
+        IF s_fm_data-tstc-cinfo O transaction_types-prog_variant.    SUBTRACT transaction_types-prog_variant FROM s_fm_data-tstc-cinfo.   ENDIF.    &quot; Issue 67 : Transaction of program with variant
         CREATE OBJECT o_data.
         o_data-&gt;from_data( s_fm_data ).
 
