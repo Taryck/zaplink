@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5242E17AA896E3520519F9110E8422A4" CODE_SIGNATURE="77ECBA59817ABC89F729B093C01EFDEA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F6B1078C2AE5727BEE6705D9FCE044F0" CODE_SIGNATURE="8BCFA039F67F4B25859ECA1AF2A1AAF1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -94,7 +94,7 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
     </TEXTS>
     <SOURCE>`
-  clear: A0_MAINDATA-VERN.</SOURCE>
+  clear: A0_MAINDATA-CNAM, A0_MAINDATA-CDAT, A0_MAINDATA-UNAM, A0_MAINDATA-UDAT, A0_MAINDATA-SDATE, A0_MAINDATA-STIME, A0_MAINDATA-IDATE, A0_MAINDATA-ITIME, A0_MAINDATA-VERN.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
@@ -128,7 +128,7 @@ AS</DOCUMENTATION>
     &lt;dt&gt; LIKE LINE OF &lt;d&gt;-texts,
     &lt;t&gt;  LIKE LINE OF fm_data-texts.
 
-  a0_maindata = fm_data-header.   clear a0_maindata-state.
+  a0_maindata = fm_data-header.   CLEAR: a0_maindata-state, a0_maindata-vern. &quot; Issue 68
   textspool = fm_data-textspool.
   source-_ = fm_data-source.
   dynpros = fm_data-dynpros.
@@ -151,8 +151,7 @@ AS</DOCUMENTATION>
     LOOP AT &lt;d&gt;-texts ASSIGNING &lt;dt&gt;.
       CLEAR s_txt.    s_txt-langu = &lt;dt&gt;-tdspras.   s_txt-long_txt = &lt;dt&gt;.   CLEAR s_txt-long_txt-tdspras.    INSERT s_txt INTO TABLE texts.
     ENDLOOP.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 ">
     <TEXTS>
@@ -195,13 +194,14 @@ AS</DOCUMENTATION>
       IF s_doc-langu IS INITIAL.    s_doc-langu = s_doc_txt-tdspras.    ENDIF.
     ENDIF.
   ENDLOOP.
-  IF NOT s_doc-texts IS INITIAL.    INSERT s_doc INTO TABLE fm_data-docs.   ENDIF.
-`</SOURCE>
+  IF NOT s_doc-texts IS INITIAL.    INSERT s_doc INTO TABLE fm_data-docs.   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
     </TEXTS>
+    <SOURCE>`
+  a0_maindata-cnam = sy-uname.</SOURCE>
    </ITEM>
   </METHODS>
   <TYPEGROUPS>

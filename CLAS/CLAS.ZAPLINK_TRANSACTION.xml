@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5736EBCF4553AC28503B7B65E4A9CA05" CODE_SIGNATURE="AA10153820157A98F8D6AAECF9DB2AB3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9755E20097FACA00D1109ED6D425EE4F" CODE_SIGNATURE="10DF69D6562B71B436981300FD11244D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -135,26 +135,16 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
     <SOURCE>`
-*  DATA o_msag TYPE to_data.
-*  DATA s_msg LIKE LINE OF o_msag-&gt;messages.
+*  DATA o_data TYPE to_data.
 *
-*  TRY.
-*      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-*    CATCH zaplink_cx_connector INTO o_mycx.
-*      RAISE EXCEPTION o_mycx.
-*  ENDTRY.
+  TRY.
+      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.
 *
-*  o_msag ?= object-&gt;raw.
-*  CLEAR:
-**    o_msag-&gt;A0_MAINDATA-RESPUSER,
-*    o_msag-&gt;a0_maindata-lastuser,
-*    o_msag-&gt;a0_maindata-ldate,
-*    o_msag-&gt;a0_maindata-ltime.
-*
-*  MODIFY o_msag-&gt;messages FROM s_msg TRANSPORTING name datum
-*         WHERE msgnr IS INITIAL OR
-*               msgnr IS NOT INITIAL.
-`</SOURCE>
+*  o_data ?= object-&gt;raw.
+*  o_data-&gt;anonymize( ).</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
     <SOURCE>`
@@ -171,8 +161,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 *  if o_msag-&gt;A0_MAINDATA-RESPUSER is INITIAL. o_msag-&gt;A0_MAINDATA-RESPUSER = sy-uname. endif.
 *  s_msg-name = o_msag-&gt;A0_MAINDATA-RESPUSER.
 *  MODIFY o_msag-&gt;messages FROM s_msg TRANSPORTING name
-*         WHERE name IS INITIAL.
-`</SOURCE>
+*         WHERE name IS INITIAL.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
     <SOURCE>`
@@ -191,8 +180,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
           textid = zaplink_cx_connector=&gt;type_not_supported
           type   = type
           connclass = &apos;ZAPLINK_MESSAGE&apos;.
-  ENDCASE.
-`</SOURCE>
+  ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
     <SOURCE>`
@@ -264,8 +252,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
     <SOURCE>`
@@ -442,8 +429,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>`
@@ -580,8 +566,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>

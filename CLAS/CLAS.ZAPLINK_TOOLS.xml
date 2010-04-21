@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="13DD25276183F349217CB731F4D169C8" CODE_SIGNATURE="8208203752DEF9DB841788AE333E6D20" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A0F0DB0F2B38471E701D6ADC5595720F" CODE_SIGNATURE="3EA320E8F911D5878271D51140AF13B1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -108,17 +108,14 @@ AS</DOCUMENTATION>
    <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
 *&quot;* definitions, interfaces or data types) you need for method
-*&quot;* implementation or private method&apos;s signature
-`</TYPES>
+*&quot;* implementation or private method&apos;s signature</TYPES>
    <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
-*&quot;* local helper classes
-`</IMPLEMENTATIONS>
+*&quot;* local helper classes</IMPLEMENTATIONS>
    <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
-*&quot;* in the implementation part of the class
-`</MACROS>
+*&quot;* in the implementation part of the class</MACROS>
   </LOCAL>
   <METHODS>
    <ITEM CMPNAME="CALCULATE_MD5_HASH" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
@@ -449,6 +446,29 @@ AS</DOCUMENTATION>
 *    result-&gt;add_keys( keys  ).
     result = conv_limu_2_r3tr( objlist ).
   ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="INVERSE_TABLE_ORDER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Inverse standard table order"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="MY_TABLE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="STANDARD TABLE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Any Standard Table"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA x TYPE i.
+  FIELD-SYMBOLS &lt;o&gt; TYPE ANY.
+
+  CHECK NOT my_table IS INITIAL.
+  x = LINES( my_table ) + 1.
+  LOOP AT my_table ASSIGNING &lt;o&gt;.
+    IF sy-tabix &gt;= x.   EXIT.   ENDIF.
+    INSERT &lt;o&gt; INTO my_table INDEX x.
+  ENDLOOP.
+  SUBTRACT 1 FROM x.    CHECK x &gt; 0.   DELETE my_table FROM 1 TO x.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TABLE_2_STRING" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
     <TEXTS>
