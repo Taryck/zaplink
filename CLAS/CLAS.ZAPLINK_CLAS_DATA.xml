@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="148739284367D9D20C9E86B2EEEBA7D9" CODE_SIGNATURE="13D1306F0E22DDF09E249F136FF96665" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C72F2FA6FFFF5C78FCABDBD50DDCEE73" CODE_SIGNATURE="19CCBE5D41476D59203DDF33C753A958" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -152,16 +152,27 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     linecount = LINES( code ).
     IF linecount &gt; 1.
       READ TABLE code ASSIGNING &lt;l&gt; INDEX linecount.
-      TRANSLATE &lt;l&gt; TO UPPER CASE.  &quot;#EC SYNTCHAR
+      TRANSLATE &lt;l&gt; TO UPPER CASE.                        &quot;#EC SYNTCHAR
       IF &lt;l&gt; CP &apos;ENDMETHOD.*&apos;.
         DELETE code INDEX linecount.
       ENDIF.
     ENDIF.
     READ TABLE code ASSIGNING &lt;l&gt; INDEX 1.
-    TRANSLATE &lt;l&gt; TO UPPER CASE.  &quot;#EC *
-    IF &lt;l&gt; CP &apos;METHOD *&apos;. &quot;#EC SYNTCHAR
+    TRANSLATE &lt;l&gt; TO UPPER CASE.                            &quot;#EC *
+    IF &lt;l&gt; CP &apos;METHOD *&apos;.                                 &quot;#EC SYNTCHAR
       DELETE code INDEX 1.
     ENDIF.
+
+* Issue 68 Start : Blank line at the end of source code can&apos;t be imported =&gt; Remove it
+    linecount = LINES( code ).
+    READ TABLE code ASSIGNING &lt;l&gt; INDEX linecount.
+    WHILE &lt;l&gt; IS INITIAL.
+      DELETE code INDEX linecount.
+      linecount = LINES( code ).
+      READ TABLE code ASSIGNING &lt;l&gt; INDEX linecount.
+      IF NOT &lt;l&gt; IS ASSIGNED.   EXIT.   ENDIF.
+    ENDWHILE.
+* Issue 68 END
   ENDIF.
 
   source = zaplink_object=&gt;conv_abap_raw2source( code ).</SOURCE>
@@ -498,8 +509,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       RAISE EXCEPTION o_mycx.
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
-  ENDTRY.
-`</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="VALUE2SOTR" VERSION="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
@@ -537,8 +547,7 @@ AS</DOCUMENTATION>
   _val = data.
   REPLACE ALL OCCURRENCES OF &apos;&apos;&apos;&apos; IN _val WITH space.
   CONDENSE _val.
-  result = _val.
-`</SOURCE>
+  result = _val.</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
@@ -569,8 +578,7 @@ AS</DOCUMENTATION>
 *LOCAL : OK
 *EXCEPTIONS_TEXTS : OK &quot; Issue 62
 *  MODIFY exceptions_texts FROM s_et TRANSPORTING author createdon changedby changedon r3release crea_name crea_tstut chan_name chan_tstut
-*         WHERE NOT cmpname IS INITIAL.
-`</SOURCE>
+*         WHERE NOT cmpname IS INITIAL.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="COMPLETE_DATA">
     <SOURCE>`
@@ -646,8 +654,7 @@ AS</DOCUMENTATION>
       ENDLOOP.
 
     ENDLOOP.
-  ENDIF.
-`</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT_DATA" VERSION="1" MTDNAME="FROM_DATA">
     <SOURCE>`
