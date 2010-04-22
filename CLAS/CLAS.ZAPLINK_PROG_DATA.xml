@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F6B1078C2AE5727BEE6705D9FCE044F0" CODE_SIGNATURE="8BCFA039F67F4B25859ECA1AF2A1AAF1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B3706E7ED7ED0341BBCDA5CCCB53FEF0" CODE_SIGNATURE="E7AA1D66D29696789D40B86D9805B414" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -94,7 +94,8 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
     </TEXTS>
     <SOURCE>`
-  clear: A0_MAINDATA-CNAM, A0_MAINDATA-CDAT, A0_MAINDATA-UNAM, A0_MAINDATA-UDAT, A0_MAINDATA-SDATE, A0_MAINDATA-STIME, A0_MAINDATA-IDATE, A0_MAINDATA-ITIME, A0_MAINDATA-VERN.</SOURCE>
+  CLEAR: a0_maindata-cnam, a0_maindata-cdat, a0_maindata-unam, a0_maindata-udat, a0_maindata-sdate, a0_maindata-stime, a0_maindata-idate,
+         a0_maindata-itime, a0_maindata-vern, a0_maindata-state. &quot; Issue 68.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
@@ -128,7 +129,7 @@ AS</DOCUMENTATION>
     &lt;dt&gt; LIKE LINE OF &lt;d&gt;-texts,
     &lt;t&gt;  LIKE LINE OF fm_data-texts.
 
-  a0_maindata = fm_data-header.   CLEAR: a0_maindata-state, a0_maindata-vern. &quot; Issue 68
+  a0_maindata = fm_data-header.
   textspool = fm_data-textspool.
   source-_ = fm_data-source.
   dynpros = fm_data-dynpros.
