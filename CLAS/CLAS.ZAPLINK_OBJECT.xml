@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="59CF1B9C2D787CD444489459F965B804" CODE_SIGNATURE="96FB5A086ACDD92243580036145E00E1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C8D0D174086026506D44D694EFD9AD86" CODE_SIGNATURE="BCED3DF42A37C65C7AD5910A3B6BB61F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -296,11 +296,6 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="FAILED" VERSION="1" LANGU="E" EDITORDER="2 ">
-      <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Other system errors"/>
-      </TEXTS>
-     </ITEM>
      <ITEM SCONAME="NOT_A_CLASS" VERSION="1" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="The specified object is not a Class"/>
@@ -308,24 +303,24 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA o_source    TYPE REF TO cl_oo_source.
   DATA t_upcode    TYPE td_sourcecode.
   DATA _line       LIKE LINE OF t_upcode.
 
-  CREATE OBJECT o_source
+  CALL FUNCTION &apos;SEO_CLASS_GET&apos;
     EXPORTING
-      clskey             = class_name
+      clskey       = class_name
+      version      = seoc_version_inactive
+      state        = &apos;0&apos;
     EXCEPTIONS
-      class_not_existing = 1
-      OTHERS             = 2.
+      not_existing = 1
+      deleted      = 2
+      is_interface = 3
+      model_only   = 4
+      OTHERS       = 5.
   IF sy-subrc &lt;&gt; 0.
-    IF sy-subrc = 1.
-      RAISE not_a_class.
-    ELSE.
-      RAISE failed.
-    ENDIF.
+    RAISE not_a_class.
   ENDIF.
-  result = o_source-&gt;source.    CLEAR o_source.
+  result = get_class_globalsource_( class_name ).
   zaplink_tools=&gt;condense_abap_source( CHANGING table = result ).
   t_upcode = result.
   zaplink_tools=&gt;conv_table_2upcase( CHANGING table = t_upcode ).
@@ -335,6 +330,132 @@ INCLUDE zaplink_macros.</MACROS>
   READ TABLE t_upcode TRANSPORTING NO FIELDS  FROM _line.
   CHECK sy-subrc = 0.
   SUBTRACT 1 FROM sy-tabix.   CHECK sy-tabix &gt;= 1.    DELETE result TO sy-tabix.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_CLASS_GLOBALSOURCE_" VERSION="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Provide Global source of a class copy of CL_OO_SOURCE"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="CLASS_NAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSKEY">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Key structure of a class"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SOURCECODE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+* Copy of CL_OO_SOURCE-&gt;CONSTRUCTOR
+  DATA cpool TYPE seo_section_source.
+  DATA pubsec TYPE seo_section_source.
+  DATA prisec TYPE seo_section_source.
+  DATA prosec TYPE seo_section_source.
+  DATA cl TYPE seo_section_source.
+  DATA ccdef TYPE seop_source_string.
+  DATA ccimp TYPE seop_source_string.
+  DATA ccmac TYPE seop_source_string.
+
+  DATA incname TYPE program.
+  DATA pubsec_incname TYPE program.
+  DATA prisec_incname TYPE program.
+  DATA prosec_incname TYPE program.
+  DATA cl_incname TYPE program.
+  DATA ccdef_incname TYPE program.
+  DATA ccimp_incname TYPE program.
+  DATA ccmac_incname TYPE program.
+
+  DATA meth_inc TYPE seop_method_w_include.
+  DATA meth_incs TYPE seop_methods_w_include.
+  DATA source_tmp TYPE seop_source_string.
+
+  FIELD-SYMBOLS &lt;source_line&gt; TYPE seo_section_source_line.
+
+  incname = cl_oo_classname_service=&gt;get_classpool_name( class_name-clsname ).
+  READ REPORT incname INTO cpool STATE &apos;I&apos;.
+  IF sy-subrc &lt;&gt; 0.
+    READ REPORT incname INTO cpool STATE &apos;A&apos;.
+  ENDIF.
+
+  pubsec_incname = cl_oo_classname_service=&gt;get_pubsec_name( class_name-clsname ).
+  READ REPORT pubsec_incname INTO pubsec STATE &apos;I&apos;.
+  IF sy-subrc &lt;&gt; 0.
+    READ REPORT pubsec_incname INTO pubsec STATE &apos;A&apos;.
+  ENDIF.
+
+  prosec_incname = cl_oo_classname_service=&gt;get_prosec_name( class_name-clsname ).
+  READ REPORT prosec_incname INTO prosec STATE &apos;I&apos;.
+  IF sy-subrc &lt;&gt; 0.
+    READ REPORT prosec_incname INTO prosec STATE &apos;A&apos;.
+  ENDIF.
+
+  prisec_incname = cl_oo_classname_service=&gt;get_prisec_name( class_name-clsname ).
+  READ REPORT prisec_incname INTO prisec STATE &apos;I&apos;.
+  IF sy-subrc &lt;&gt; 0.
+    READ REPORT prisec_incname INTO prisec STATE &apos;A&apos;.
+  ENDIF.
+
+  cl_incname = cl_oo_classname_service=&gt;get_cl_name( class_name-clsname ).
+  READ REPORT cl_incname INTO cl STATE &apos;I&apos;.
+  IF sy-subrc &lt;&gt; 0.
+    READ REPORT cl_incname INTO cl STATE &apos;A&apos;.
+  ENDIF.
+
+  ccdef_incname = cl_oo_classname_service=&gt;get_ccdef_name( class_name-clsname ).
+  READ REPORT ccdef_incname INTO ccdef STATE &apos;I&apos;.
+  IF sy-subrc &lt;&gt; 0.
+    READ REPORT ccdef_incname INTO ccdef STATE &apos;A&apos;.
+  ENDIF.
+
+  ccimp_incname = cl_oo_classname_service=&gt;get_ccimp_name( class_name-clsname ).
+  READ REPORT ccimp_incname INTO ccimp STATE &apos;I&apos;.
+  IF sy-subrc &lt;&gt; 0.
+    READ REPORT ccimp_incname INTO ccimp STATE &apos;A&apos;.
+  ENDIF.
+
+  ccmac_incname = cl_oo_classname_service=&gt;get_ccmac_name( class_name-clsname ).
+  READ REPORT ccmac_incname INTO ccmac STATE &apos;I&apos;.
+  IF sy-subrc &lt;&gt; 0.
+    READ REPORT ccmac_incname INTO ccmac STATE &apos;A&apos;.
+  ENDIF.
+
+  meth_incs = cl_oo_classname_service=&gt;get_all_method_includes( class_name-clsname ).
+
+* Issue 68 : Methods are in historical order on the development system and in alphabetic order on a fresh install system
+  SORT meth_incs BY cpdkey.         &quot; Issue 68 : Force alphabetic order
+* End of change in Copy of CL_OO_SOURCE-&gt;CONSTRUCTOR
+
+  LOOP AT cpool ASSIGNING &lt;source_line&gt;.
+    IF &lt;source_line&gt; CS pubsec_incname.
+      APPEND LINES OF pubsec TO result.
+    ELSEIF &lt;source_line&gt; CS prosec_incname.
+      APPEND LINES OF prosec TO result.
+    ELSEIF &lt;source_line&gt; CS prisec_incname.
+      APPEND LINES OF prisec TO result.
+    ELSEIF &lt;source_line&gt; CS cl_incname.
+      APPEND LINES OF cl TO result.
+    ELSEIF &lt;source_line&gt; CS ccdef_incname.
+      APPEND LINES OF ccdef TO result.
+    ELSEIF &lt;source_line&gt; CS ccimp_incname.
+      APPEND LINES OF ccimp TO result.
+    ELSEIF &lt;source_line&gt; CS ccmac_incname.
+      APPEND LINES OF ccmac TO result.
+    ELSEIF &lt;source_line&gt; CS &apos;include methods&apos;.
+      LOOP AT meth_incs INTO meth_inc.
+        READ REPORT meth_inc-incname INTO source_tmp STATE &apos;I&apos;.
+        IF sy-subrc &lt;&gt; 0.
+          READ REPORT meth_inc-incname INTO source_tmp STATE &apos;A&apos;.
+        ENDIF.
+        IF sy-subrc = 0.
+          APPEND LINES OF source_tmp TO result.
+        ENDIF.
+      ENDLOOP.
+    ELSE.
+      APPEND &lt;source_line&gt; TO result.
+    ENDIF .
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_CLASS_SIGNATURE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
