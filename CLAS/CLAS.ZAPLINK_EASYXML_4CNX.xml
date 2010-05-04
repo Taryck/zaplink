@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="36085A109AF1A5BA552E694D63D3860C" CODE_SIGNATURE="10A2CA873121E0B97EF9C5AC457A333D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML_4CNX" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="4236A1C63FB8945AD66002C52EB15D98" CODE_SIGNATURE="10A2CA873121E0B97EF9C5AC457A333D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML_4CNX" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_EASYXML"/>
  </DEPENDENCIES>
@@ -27,15 +27,15 @@ AS</DOCUMENTATION>
   </A0_MAINDATA>
   <LOCAL>
    <TYPES>`
-*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+*&quot;* use this source file for any type declarations (class
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* implementation or private method&apos;s signature</TYPES>
    <IMPLEMENTATIONS>`
-*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+*&quot;* local class implementation for public class
 *&quot;* use this source file for the implementation part of
 *&quot;* local helper classes</IMPLEMENTATIONS>
    <MACROS>`
-*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+*&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</MACROS>
   </LOCAL>
   <REDEFINITIONS>

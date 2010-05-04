@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F0E5500A347F00054A1CE5AE59F7DB84" CODE_SIGNATURE="9BD89F04E369AAE1D9D47F8E94B343C5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PINF_RAW" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="011511EBBFA65E6155DBEFAE54A7849D" CODE_SIGNATURE="9BD89F04E369AAE1D9D47F8E94B343C5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PINF_RAW" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -24,15 +24,15 @@ AS</DOCUMENTATION>
   </FRIENDS>
   <LOCAL>
    <TYPES>`
-*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+*&quot;* use this source file for any type declarations (class
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* implementation or private method&apos;s signature</TYPES>
    <IMPLEMENTATIONS>`
-*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+*&quot;* local class implementation for public class
 *&quot;* use this source file for the implementation part of
 *&quot;* local helper classes</IMPLEMENTATIONS>
    <MACROS>`
-*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+*&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</MACROS>
   </LOCAL>
   <METHODS>
