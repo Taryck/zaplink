@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C31A804A416B33AEAC45486EEA138EEC" CODE_SIGNATURE="3FA19C501D9F1226DADD899A1412B980" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9967581A366D31B512B2806CBA3618EF" CODE_SIGNATURE="241D589EC070777BB65FA41D09B109BF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -289,7 +289,7 @@
   zaplink-framework_version = framework_version.
 
 * Connectors
-  o_list = zaplink_connectors=&gt;get_connectorlist( ).
+  o_list = zaplink_connectors_4inst=&gt;get_connectorlist( ).
   o_list-&gt;select_default( zaplink_list=&gt;sel_actions-export ).
 
 * Initialize Interator
@@ -378,7 +378,7 @@
       DELETE TABLE &lt;x&gt;-_components FROM &lt;sc&gt;.
     ENDLOOP.
     LOOP AT &lt;x&gt;-_components ASSIGNING &lt;sc&gt;.
-      o_comp = zaplink_component=&gt;create_new( &lt;sc&gt;-hdr ).
+      o_comp = zaplink_component_4inst=&gt;create_new( &lt;sc&gt;-hdr ).
       CHECK o_comp IS BOUND.    o_cnx = o_comp-&gt;connector( ).
       CHECK o_cnx IS BOUND.
       CHECK o_cnx-&gt;do_exists( o_comp ) = abap_true.
@@ -411,7 +411,7 @@
       ENDIF.
     ENDIF.
     CLEAR s_comp.   s_comp-hdr = &lt;c&gt;.
-    o_comp = zaplink_component=&gt;create_new( &lt;c&gt; ).
+    o_comp = zaplink_component_4inst=&gt;create_new( &lt;c&gt; ).
     CHECK o_comp IS BOUND.    o_cnx = o_comp-&gt;connector( ).
     CHECK o_cnx IS BOUND.
     CHECK o_cnx-&gt;do_exists( o_comp ) = abap_true.
