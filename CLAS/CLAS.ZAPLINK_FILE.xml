@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="274FF94E3E2BECC40157DBEEA556742A" CODE_SIGNATURE="D299A6CD6A1508DB2B0F065D6AED2B43" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E2D5AAD70AA4070025E7532C4E109AB3" CODE_SIGNATURE="06D59032DD1BAE0B7351C1AE3694E364" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_FILE">
@@ -265,10 +265,6 @@ result = _filetype.</SOURCE>
                     filetype = _filetype
                      cx_name = cx_name.
     ENDIF.
-    LOOP AT tmptable ASSIGNING &lt;s&gt;.
-      CONCATENATE _content &lt;s&gt; cl_abap_char_utilities=&gt;newline
-                  INTO _content.
-    ENDLOOP.
   ELSEIF _filetype = c_ft_server.
     TRY.
         OPEN DATASET _filename FOR INPUT IN TEXT MODE ENCODING DEFAULT.
@@ -337,7 +333,13 @@ result = _filetype.</SOURCE>
     RAISE EXCEPTION TYPE zaplink_cx_file
           EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
                   filetype = _filetype.
-  ENDIF.</SOURCE>
+  ENDIF.
+
+  CLEAR _content.
+  LOOP AT tmptable ASSIGNING &lt;s&gt;.
+    CONCATENATE _content &lt;s&gt; cl_abap_char_utilities=&gt;newline
+                INTO _content.
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_DIALOG" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
