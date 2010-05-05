@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C8D0D174086026506D44D694EFD9AD86" CODE_SIGNATURE="BCED3DF42A37C65C7AD5910A3B6BB61F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F6C94582087C368EC2609D0F720B4256" CODE_SIGNATURE="F19485EABA523B56473B1E569101E92E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -157,8 +157,7 @@ INCLUDE zaplink_macros.</MACROS>
           not_existing                        = 1
           is_interface                        = 2
           model_only                          = 3
-          OTHERS                              = 4
-                .
+          OTHERS                              = 4.
       IF sy-subrc &lt;&gt; 0.
         o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_TYPEINFO_GET&apos;
                                                     subrc = sy-subrc
@@ -254,10 +253,13 @@ INCLUDE zaplink_macros.</MACROS>
           is_class                      = 2
           model_only                    = 3
           OTHERS                        = 4.
-*      IF sy-subrc &lt;&gt; 0.
-* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
-*      ENDIF.
+      IF sy-subrc &lt;&gt; 0.
+        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_TYPEINFO_GET&apos;
+                                                    subrc = sy-subrc
+                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+        application_log-&gt;add_symsg( ).
+        RAISE EXCEPTION o_mycx.
+      ENDIF.
 
 * Documentations
       docu_key-name = component-&gt;get_name( ).
@@ -321,6 +323,7 @@ INCLUDE zaplink_macros.</MACROS>
     RAISE not_a_class.
   ENDIF.
   result = get_class_globalsource_( class_name ).
+  result = pretty_printer( result ).
   zaplink_tools=&gt;condense_abap_source( CHANGING table = result ).
   t_upcode = result.
   zaplink_tools=&gt;conv_table_2upcase( CHANGING table = t_upcode ).
@@ -331,7 +334,7 @@ INCLUDE zaplink_macros.</MACROS>
   CHECK sy-subrc = 0.
   SUBTRACT 1 FROM sy-tabix.   CHECK sy-tabix &gt;= 1.    DELETE result TO sy-tabix.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CLASS_GLOBALSOURCE_" VERSION="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_CLASS_GLOBALSOURCE_" VERSION="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Provide Global source of a class copy of CL_OO_SOURCE"/>
     </TEXTS>
@@ -348,6 +351,8 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
+*  DATA d_size TYPE i.
+*  FIELD-SYMBOLS &lt;line&gt; TYPE string.
 * Copy of CL_OO_SOURCE-&gt;CONSTRUCTOR
   DATA cpool TYPE seo_section_source.
   DATA pubsec TYPE seo_section_source.
@@ -449,6 +454,13 @@ INCLUDE zaplink_macros.</MACROS>
           READ REPORT meth_inc-incname INTO source_tmp STATE &apos;A&apos;.
         ENDIF.
         IF sy-subrc = 0.
+** Issue 68 : Method (and endmethod) declaration is not case sensible, but when using pretty printer method and endmethod could change from default (method MY_METHOD.) =&gt; UPCASE
+*          READ TABLE source_tmp ASSIGNING &lt;line&gt; INDEX 1.
+*          TRANSLATE &lt;line&gt; TO UPPER CASE.
+*          d_size = LINES( source_tmp ).
+*          READ TABLE source_tmp ASSIGNING &lt;line&gt; INDEX d_size.
+*          TRANSLATE &lt;line&gt; TO UPPER CASE.
+** End of change in Copy of CL_OO_SOURCE-&gt;CONSTRUCTOR
           APPEND LINES OF source_tmp TO result.
         ENDIF.
       ENDLOOP.
@@ -856,6 +868,395 @@ AS</DOCUMENTATION>
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="PRETTY_PRINTER" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Applie Pretty Printer to Source code"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="INDENT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Indent while Pretty Printer"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SOURCECODE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="SOURCECODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  FIELD-SYMBOLS &lt;a&gt;   TYPE ANY.
+  DATA d_remotedata   TYPE string.
+  DATA v_extend_mod   TYPE char255.
+  DATA v_komprmode(1) TYPE c VALUE &apos;0&apos;.
+  DATA v_edit_control TYPE c.
+  DATA v_status_flag  TYPE char255.
+  DATA v_convert_mode	TYPE rseumod.
+  DATA v_source_id    TYPE sy-repid.
+  DATA v_overflow_area TYPE char255.
+  DATA v_content_fill TYPE sy-index.
+  DATA v_msg          TYPE char255.
+  DATA v_incl         TYPE char255.
+  DATA v_row          TYPE char255.
+  DATA v_col          TYPE char255.
+  DATA v_wrd(30)      TYPE c.
+  DATA v_scanned      TYPE char255.
+  DATA t_mod_tab      TYPE smodi_mod_tab.
+  DATA t_lineindex    TYPE STANDARD TABLE OF edlineindx.
+  DATA t_tk           TYPE sedi_tk.
+  DATA t_stm          TYPE STANDARD TABLE OF sstmnt.
+
+  DEFINE mac_assign.
+    d_remotedata = &amp;1.
+    assign (d_remotedata) to &lt;a&gt;.
+    if sy-subrc = 0. &lt;a&gt; = &amp;2. endif.
+  END-OF-DEFINITION.
+
+* To load Funtion Group in memory
+  CALL FUNCTION &apos;CONVERT_EDITOR_SOURCE&apos;
+    EXPORTING
+      convert_mode        = v_convert_mode
+      source_id           = v_source_id
+      extend_mod          = v_extend_mod
+      komprmode           = v_komprmode
+      edit_control        = v_edit_control
+      status_flag         = v_status_flag
+*     C_EDITOR            =
+    TABLES
+      content             = result
+      tk                  = t_tk
+      stm                 = t_stm
+      lineindex           = t_lineindex
+      mod_tab             = t_mod_tab
+    CHANGING
+      overflow_area       = v_overflow_area
+      content_fill        = v_content_fill
+      msg                 = v_msg
+      incl                = v_incl
+      row                 = v_row
+      col                 = v_col
+      wrd                 = v_wrd
+      scanned             = v_scanned.
+
+  result = sourcecode.
+  v_convert_mode-indent = INDENT.
+* From FUNCTION &apos;CONVERT_EDITOR_SOURCE&apos;
+*  IF RSEUMOD-LOWERCASE = &apos;X&apos; AND RSEUMOD-STYLE NE SPACE.
+*    CASE_MODE = &apos;LOWER&apos;.
+*  ELSEIF RSEUMOD-LOWERCASE = &apos;G&apos; AND RSEUMOD-STYLE NE SPACE.
+*    CASE_MODE = &apos;HIKEY&apos;.
+*  ELSEIF RSEUMOD-STYLE NE SPACE.
+*    CASE_MODE = &apos;UPPER&apos;.
+*  ELSE.
+*    CASE_MODE = &apos;EMPTY&apos;.
+*  ENDIF.
+  mac_assign &apos;(SAPLLOCAL_EDT1)RSEUMOD-STYLE&apos; abap_true.   &quot; Change code to ....
+  mac_assign &apos;(SAPLLOCAL_EDT1)RSEUMOD-LOWERCASE&apos; space.   &quot; UPPER CASE
+  mac_assign &apos;(SAPLLOCAL_EDT1)EDIT-APP_ABAP&apos; abap_true.   &quot; ABAP Editor
+  mac_assign &apos;(SAPLLOCAL_EDT1)EDIT-LINE_SIZE&apos; swbse_c_max_line_width.       &quot; Line Size
+
+  CALL FUNCTION &apos;CONVERT_EDITOR_SOURCE&apos;
+    EXPORTING
+      convert_mode        = v_convert_mode
+      source_id           = v_source_id
+      extend_mod          = v_extend_mod
+      komprmode           = v_komprmode
+      edit_control        = v_edit_control
+      status_flag         = v_status_flag
+*     C_EDITOR            =
+    TABLES
+      content             = result
+      tk                  = t_tk
+      stm                 = t_stm
+      lineindex           = t_lineindex
+      mod_tab             = t_mod_tab
+    CHANGING
+      overflow_area       = v_overflow_area
+      content_fill        = v_content_fill
+      msg                 = v_msg
+      incl                = v_incl
+      row                 = v_row
+      col                 = v_col
+      wrd                 = v_wrd
+      scanned             = v_scanned.
+*     ENH_INSTANCE        =
+
+* Old way
+*  DATA t_step TYPE STANDARD TABLE OF edstep.
+*  DATA t_lineindex  TYPE STANDARD TABLE OF edlineindx.
+*  DATA t_usercom  TYPE STANDARD TABLE OF edusercoms.
+*  DATA t_page  TYPE rswsourcet.
+*  DATA t_tk  TYPE sedi_tk.
+*  DATA t_stm  TYPE STANDARD TABLE OF sstmnt.
+*  DATA t_linenum TYPE STANDARD TABLE OF edlinenum.
+*  DATA t_linecoms TYPE STANDARD TABLE OF edlinecoms.
+*  DATA t_delete_tab TYPE smodi_src_tab.
+*  DATA t_smodisrc_tab TYPE smodi_src_tab.
+**&quot;     VALUE(CALLBACK_USERCOM) TYPE  RSTXP-TDOBJECT DEFAULT SPACE
+**&quot;     VALUE(CALLBACK_CHECK) TYPE  RSTXP-TDOBJECT DEFAULT SPACE
+**&quot;     VALUE(CALLBACK_SAVE) TYPE  RSTXP-TDOBJECT DEFAULT SPACE
+**&quot;     VALUE(CALLBACK_PROGRAM) LIKE  TRDIR-NAME DEFAULT SPACE
+**&quot;     VALUE(CALLBACK_SET_PFKEY) TYPE  RSTXP-TDOBJECT DEFAULT SPACE
+**&quot;     VALUE(CALLBACK_BEFORE_FUNCTION) TYPE  RSTXP-TDOBJECT DEFAULT
+**&quot;       SPACE
+**&quot;     VALUE(CALLBACK_AFTER_FUNCTION) TYPE  RSTXP-TDOBJECT DEFAULT
+**&quot;       SPACE
+*  DATA v_editor_mode TYPE editormode.
+*  DATA v_case_mode(5) TYPE c VALUE &apos;UPPER&apos;.
+*  DATA v_komprmode(1) TYPE c VALUE &apos;0&apos;.
+*  DATA v_edit_control TYPE c.
+*  DATA v_cursor_i TYPE sedi_cursor.
+*  DATA v_control_content TYPE cxtab_control.
+*  DATA v_content_display TYPE sy-index.
+*  DATA v_content_fill TYPE sy-index.
+*  DATA v_content_fill_c TYPE sy-index.
+*  DATA v_linecom_shift_places TYPE sy-index.
+*  DATA v_fcode_i TYPE tse02-progfun VALUE &apos;PGPP&apos;.
+*  DATA v_flag_replconf TYPE boolean.
+*  DATA v_flag_auto_scroll TYPE boolean.
+*  DATA v_linecom_was_executed TYPE char255.
+*  DATA v_edit TYPE s38e.
+*  DATA v_new_content_display TYPE sy-index.
+*  DATA v_pcmode TYPE string VALUE &apos;2&apos;.
+*  DATA v_tdcommline TYPE  rstxp-tdcommline.
+*  DATA v_tdparam TYPE  rstxp-tdparam.
+*  DATA v_tdparam2 TYPE  rstxp-tdparam.
+*  DATA v_tdattach TYPE  rstxp-tdattach.
+*  DATA v_flag_linecom_reset TYPE char255.
+*  DATA v_undo_exported TYPE char255.
+*  DATA v_s_modified TYPE char255.
+*  DATA v_editor_content_modified TYPE char255.
+*  DATA:  BEGIN OF v_remember_i,
+*           index1 LIKE sy-tabix,
+*           offset1 LIKE sy-fdpos,
+*           linecom1(2),
+*           index2 LIKE sy-tabix,
+*           offset2 LIKE sy-fdpos,
+*           linecom2(2),
+*           content_display1 TYPE i,        &quot;CONTENT_DISPLAY zu INDEX1
+*           content_display2 TYPE i,        &quot;CONTENT_DISPLAY zu INDEX2
+*           side,
+*        END OF v_remember_i.
+**  DATA v_remember_i TYPE char255.
+*  DATA v_scanned TYPE char255.
+*  DATA v_new_source TYPE char255.
+*  DATA v_h TYPE d020s.
+*  DATA v_dynpro_language_import TYPE sy-langu.
+*  DATA v_dynpro_text TYPE char255.
+*  DATA v_motif TYPE char255.
+*  DATA v_content_app_id TYPE s38e-app_id VALUE &apos;PG&apos;.
+*  DATA v_status_flag TYPE char255.
+*  DATA v_lines_appended TYPE sy-index.
+*  DATA v_mark_flag TYPE char255.
+*  DATA v_lineal_mode TYPE char255.
+*  DATA v_auto_correct TYPE c.
+*  DATA v_suppress_dialog_flag TYPE string VALUE abap_true.
+*  DATA v_title TYPE char255.
+*  DATA v_content_display_new TYPE sy-index.
+*  DATA v_change_mod_flag TYPE char255.
+*  DATA v_dynpro_lines TYPE sy-index.
+*  DATA v_usercom_filled TYPE char255.
+*  DATA v_exclude_filled TYPE char255.
+*  DATA v_extend_mod TYPE char255.
+*  DATA v_dynpro_mod TYPE char255.
+*  DATA v_content_save_flag TYPE char255.
+*  DATA v_in_linenumber_field TYPE char255.
+*  DATA v_scrp_edtr_interface_flag TYPE char255.
+*  DATA v_with_next TYPE char255.
+*  DATA v_overflow_area TYPE char255.
+*  DATA v_msg TYPE char255.
+*  DATA v_incl TYPE char255.
+*  DATA v_row TYPE char255.
+*  DATA v_col TYPE char255.
+*  DATA v_wrd(30) TYPE c.
+*  DATA v_korrnum TYPE e070-trkorr.
+*  DATA v_f1_flag TYPE char255.
+**&quot;     VALUE(DYNPRO_IS_GENERATED) DEFAULT SPACE
+**&quot;     VALUE(DYNPRO_IS_IN_WA) DEFAULT SPACE
+**&quot;     VALUE(DYNPRO_IS_IN_FOREIGN_WA) DEFAULT SPACE
+**&quot;     VALUE(WITH_ACTIVE_SOURCES) DEFAULT SPACE
+*  DATA v_changed_max_line_neu TYPE sy-index VALUE 99999.
+*  DATA v_changed_max_line_neu_c TYPE sy-index VALUE 99999.
+*  DATA v_changed_min_line_neu TYPE sy-index.
+*  DATA v_changed_min_line_neu_c TYPE sy-index.
+*  DATA v_changed_min_line_alt TYPE sy-index.
+*  DATA v_changed_min_line_alt_c TYPE sy-index.
+*  DATA v_changed_max_line_alt TYPE sy-index VALUE 99999.
+*  DATA v_changed_max_line_alt_c TYPE sy-index VALUE 99999.
+*  DATA v_diff_altneu TYPE sy-index.
+*  DATA v_diff_altneu_c TYPE sy-index.
+*  DATA v_fb_name TYPE rs38l-name.
+*  DATA v_enter_w TYPE tse04-linecomtxt.
+**&quot;     VALUE(TRDIR_INF) LIKE  TRDIR STRUCTURE  TRDIR DEFAULT SPACE
+**&quot;     VALUE(FIND_LEN) LIKE  SY-FDPOS OPTIONAL
+**&quot;     VALUE(REPLACE_LEN) LIKE  SY-FDPOS OPTIONAL
+**&quot;     VALUE(C_EDITOR) TYPE REF TO  OBJECT OPTIONAL
+**&quot;     VALUE(CONTAINER_NEW) TYPE REF TO  CL_GUI_CUSTOM_CONTAINER OPTIONAL
+**data v_CONTAINER_NEW1) TYPE REF TO  CL_GUI_CONTAINER OPTIONAL
+**&quot;     VALUE(C1_EDITOR) TYPE REF TO  C_TEXTEDIT_CONTROL OPTIONAL
+**&quot;     VALUE(ERROR_HANDLE) TYPE  CNTL_HANDLE OPTIONAL
+**&quot;     VALUE(OLD_FCODE) LIKE  TSE02-PROGFUN OPTIONAL
+**&quot;     VALUE(IDENT_FLAG) TYPE  CHAR1 OPTIONAL
+**&quot;     VALUE(TRANSPORT_KEY) LIKE  TRKEY STRUCTURE  TRKEY OPTIONAL
+**&quot;     VALUE(P_DOCU_CONTAINER) TYPE REF TO  CL_GUI_CONTROL OPTIONAL
+**&quot;     REFERENCE(MOD_INSTANCE) TYPE REF TO  CL_CLM_TOOL_LOG OPTIONAL
+**&quot;     VALUE(CONTROL_TYPE) TYPE  C DEFAULT SPACE
+**&quot;     REFERENCE(ENH_INSTANCE) TYPE REF TO  CL_ENH_HOOK_CONTAINER
+**&quot;       OPTIONAL
+**&quot;     REFERENCE(SUBCONTAINER_TAB) TYPE  SEDI_SUB_CONT_TAB OPTIONAL
+*  mac_assign &apos;(SAPLLOCAL_EDT1)RSEUMOD-STYLE&apos; &apos;X&apos;.
+*  v_edit-app_id = &apos;PG&apos;.
+*  v_edit-app_disp = &apos;A&apos;.
+*  v_edit-app_obj  = &apos;ABAP&apos;.
+*  v_edit-app_abap = abap_true.
+**  v_edit-BUF_NAME                                      ZAPLINK_OBJECT================CM00P
+**                                     BUF_CULINE                                      000001
+**                                     BUF_SCLINE                                      000001
+**                                     BUF_CUOFFS                                      000
+**                                     BUF_CUWORD
+**                                     BUF_CUSTRG
+*  v_edit-line_size = 1024.
+*  v_edit-app_prog = abap_true.
+*
+*  CALL FUNCTION &apos;USERCOM_INPUT&apos;
+**   EXPORTING
+**     LINE_NAME                      = &apos;RSTXP-TDLINE&apos;
+**     FIRST_NAME                     = &apos;RSTXP-TDFIRST&apos;
+**     LAST_NAME                      = &apos;RSTXP-TDLAST&apos;
+**     TOTAL_NAME                     = &apos;RSTXP-TDTOTAL&apos;
+**     MARK_NAME                      = &apos;RSTXP-TDMARK&apos;
+**     MARK1_NAME                     = &apos;RSTXP-TDMARK1&apos;
+**     COMMLINE_NAME                  = &apos;RSTXP-TDCOMMLINE&apos;
+**     LINECOM_NAME                   = &apos;RSTXP-TDLINECOM&apos;
+**     SPLIT_CALL                     = &apos; &apos;
+**     INITIALIZE_EDIT_CONTROL        = &apos;X&apos;
+**     C_HANDLE                       =
+*    TABLES
+*      step                           = t_step
+*      content                        = sourcecode
+*      content_c                      = result
+*      lineindex                      = t_lineindex
+*      usercom                        = t_usercom
+*      page                           = t_page
+*      tk                             = t_tk
+*      stm                            = t_stm
+**     E                              =
+**     F                              =
+**     M                              =
+**     SMODILOG_ABAP                  =
+**     MOD_TAB                        =
+*      linenum                        = t_linenum
+*      linecoms                       = t_linecoms
+**     BUFFER                         =
+**     BUFFER_C                       =
+**     MESSAGE_TAB_I                  =
+*      delete_tab                     = t_delete_tab
+*      smodisrc_tab                   = t_smodisrc_tab
+*    CHANGING
+**     CALLBACK_USERCOM               = &apos; &apos;
+**     CALLBACK_CHECK                 = &apos; &apos;
+**     CALLBACK_SAVE                  = &apos; &apos;
+**     CALLBACK_PROGRAM               = &apos; &apos;
+**     CALLBACK_SET_PFKEY             = &apos; &apos;
+**     CALLBACK_BEFORE_FUNCTION       = &apos; &apos;
+**     CALLBACK_AFTER_FUNCTION        = &apos; &apos;
+*      editor_mode                    = v_editor_mode
+*      case_mode                      = v_case_mode
+*      komprmode                      = v_komprmode
+*      edit_control                   = v_edit_control
+*      cursor_i                       = v_cursor_i
+*      control_content                = v_control_content
+*      content_display                = v_content_display
+*      content_fill                   = v_content_fill
+*      content_fill_c                 = v_content_fill_c
+*      linecom_shift_places           = v_linecom_shift_places
+*      fcode_i                        = v_fcode_i
+*      flag_replconf                  = v_flag_replconf
+*      flag_auto_scroll               = v_flag_auto_scroll
+*      linecom_was_executed           = v_linecom_was_executed
+*      edit                           = v_edit
+*      new_content_display            = v_new_content_display
+*      pcmode                         = v_pcmode
+*      tdcommline                     = v_tdcommline
+*      tdparam                        = v_tdparam
+*      tdparam2                       = v_tdparam2
+*      tdattach                       = v_tdattach
+*      flag_linecom_reset             = v_flag_linecom_reset
+*      undo_exported                  = v_undo_exported
+*      s_modified                     = v_s_modified
+*      editor_content_modified        = v_editor_content_modified
+*      remember_i                     = v_remember_i
+*      scanned                        = v_scanned
+*      new_source                     = v_new_source
+*      h                              = v_h
+*      dynpro_language_import         = v_dynpro_language_import
+*      dynpro_text                    = v_dynpro_text
+*      motif                          = v_motif
+*      content_app_id                 = v_content_app_id
+*      status_flag                    = v_status_flag
+*      lines_appended                 = v_lines_appended
+*      mark_flag                      = v_mark_flag
+*      lineal_mode                    = v_lineal_mode
+*      auto_correct                   = v_auto_correct
+*      suppress_dialog_flag           = v_suppress_dialog_flag
+*      title                          = v_title
+*      content_display_new            = v_content_display_new
+*      change_mod_flag                = v_change_mod_flag
+*      dynpro_lines                   = v_dynpro_lines
+*      usercom_filled                 = v_usercom_filled
+*      exclude_filled                 = v_exclude_filled
+*      extend_mod                     = v_extend_mod
+*      dynpro_mod                     = v_dynpro_mod
+*      content_save_flag              = v_content_save_flag
+*      in_linenumber_field            = v_in_linenumber_field
+*      scrp_edtr_interface_flag       = v_scrp_edtr_interface_flag
+*      with_next                      = v_with_next
+*      overflow_area                  = v_overflow_area
+*      msg                            = v_msg
+*      incl                           = v_incl
+*      row                            = v_row
+*      col                            = v_col
+*      wrd                            = v_wrd
+*      korrnum                        = v_korrnum
+*      f1_flag                        = v_f1_flag
+**     DYNPRO_IS_GENERATED             = v_DYNPRO_IS_GENERATED
+**     DYNPRO_IS_IN_WA                 = v_DYNPRO_IS_IN_WA
+**     DYNPRO_IS_IN_FOREIGN_WA         = v_DYNPRO_IS_IN_FOREIGN_WA
+**     WITH_ACTIVE_SOURCES             = v_WITH_ACTIVE_SOURCES
+*      changed_max_line_neu           = v_changed_max_line_neu
+*      changed_max_line_neu_c         = v_changed_max_line_neu_c
+*      changed_min_line_neu           = v_changed_min_line_neu
+*      changed_min_line_neu_c         = v_changed_min_line_neu_c
+*      changed_min_line_alt           = v_changed_min_line_alt
+*      changed_min_line_alt_c         = v_changed_min_line_alt_c
+*      changed_max_line_alt           = v_changed_max_line_alt
+*      changed_max_line_alt_c         = v_changed_max_line_alt_c
+*      diff_altneu                    = v_diff_altneu
+*      diff_altneu_c                  = v_diff_altneu_c
+*      fb_name                        = v_fb_name
+*      enter_w                        = v_enter_w.
+**     TRDIR_INF                      = &apos; &apos;
+**     FIND_LEN                       =
+**     REPLACE_LEN                    =
+**     C_EDITOR                       =
+**     CONTAINER_NEW                  =
+**     CONTAINER_NEW1                 =
+**     C1_EDITOR                      =
+**     ERROR_HANDLE                   =
+**     OLD_FCODE                      =
+**     IDENT_FLAG                     =
+**     TRANSPORT_KEY                  =
+**     P_DOCU_CONTAINER               =
+**     MOD_INSTANCE                   =
+**     CONTROL_TYPE                   = &apos; &apos;
+**     ENH_INSTANCE                   =
+**     SUBCONTAINER_TAB               =</SOURCE>
+   </ITEM>
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" VERSION="1" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
@@ -1161,6 +1562,9 @@ AS</DOCUMENTATION>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>
+   <ITEM TYPEGROUP="ABAP" VERSION="1" IMPLICIT="X"/>
+   <ITEM TYPEGROUP="CXTAB" VERSION="1" EXPLICIT="X"/>
+   <ITEM TYPEGROUP="SEDI" VERSION="1" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEOF" VERSION="1" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEOK" VERSION="1" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEOP" VERSION="1" EXPLICIT="X"/>
@@ -1168,6 +1572,7 @@ AS</DOCUMENTATION>
    <ITEM TYPEGROUP="SEOS" VERSION="1" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEOT" VERSION="1" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEOX" VERSION="1" EXPLICIT="X"/>
+   <ITEM TYPEGROUP="SWBSE" VERSION="1" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
    <ITEM CMPNAME="TD_SOURCECODE" VERSION="1" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="SEOP_SOURCE_STRING">
