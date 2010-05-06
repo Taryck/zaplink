@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="68D7DF89F32048FDE51AD28D598204B8" CODE_SIGNATURE="407716604914F4335F54ED67517A7BB6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A8789F00EF68848DD4B1A57D1B3BB381" CODE_SIGNATURE="FFBA95151B431E964824FB739C16D38D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -124,6 +124,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA d_src  TYPE string.
 
   t_code = get_prog_rawsource( program_name ).
+  zaplink_tools=&gt;pretty_printer( CHANGING table = t_code ).
   zaplink_tools=&gt;condense_abap_source( CHANGING table = t_code ).
   d_src = zaplink_tools=&gt;table_2_string( t_code ).
   d_src = zaplink_tools=&gt;clean_abap_string( d_src ).

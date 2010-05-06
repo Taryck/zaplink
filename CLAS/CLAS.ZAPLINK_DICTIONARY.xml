@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FA39D476B902922877B2E1A811C9FC7B" CODE_SIGNATURE="1E8945DDB5B82EBFA109FA9D3D28B8A3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5EA0C919B1DC4B76AB607289783EA720" CODE_SIGNATURE="BEB817738A9FBDB7B6E714F7E9A0549D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -770,6 +770,7 @@ END-OF-DEFINITION.</MACROS>
   o_src = get_type_group( type_group ).
   CHECK o_src IS BOUND.
   o_src-&gt;get_source_old( IMPORTING old_source = t_src ).
+  zaplink_tools=&gt;pretty_printer( CHANGING table = t_src ).
   zaplink_tools=&gt;condense_abap_source( CHANGING table = t_src ).
   s_src = zaplink_tools=&gt;table_2_string( t_src ).
   result = zaplink_tools=&gt;calculate_md5_hash( s_src ).</SOURCE>
