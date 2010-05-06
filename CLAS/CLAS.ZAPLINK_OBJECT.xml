@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="1F06C712D34291C58A9D3066E5A8B7AE" CODE_SIGNATURE="06E8C6722112B014ECA896F8430FC608" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="FAEBC222301669402BC80A345191DB1A" CODE_SIGNATURE="673339B03A902A1AB06504CAF8BCA072" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -85,7 +85,8 @@ INCLUDE zaplink_macros.</MACROS>
   type-type = zaplink_object_data=&gt;object_types-interface.    INSERT type INTO TABLE supported_types.
 
   uuid = _uuid.
-  version = _ver.</SOURCE>
+  version = _ver.
+  CALL FUNCTION &apos;SEO_BUFFER_INIT&apos;.        &quot; Init buffers</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_CLASS" VERSION="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
@@ -1014,7 +1015,6 @@ AS</DOCUMENTATION>
                                            CHANGING  fm_data = _d ).
       ENDIF.
 
-      CALL FUNCTION &apos;SEO_BUFFER_INIT&apos;.
       CALL FUNCTION &apos;SEO_CLASS_CREATE_COMPLETE&apos;
        EXPORTING
 *     corrnr                             = e_corrnr
@@ -1130,7 +1130,6 @@ AS</DOCUMENTATION>
 
       _d = o_data-&gt;to_data( ).
 
-      CALL FUNCTION &apos;SEO_BUFFER_INIT&apos;.
       CALL FUNCTION &apos;SEO_INTERFACE_CREATE_COMPLETE&apos;
         EXPORTING
 *     CORRNR                             =
