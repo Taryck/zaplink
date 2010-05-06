@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="350832B31ED5C116DA630D17F607F347" CODE_SIGNATURE="0536978D08C125F0D8743B429CD69AA2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="1F06C712D34291C58A9D3066E5A8B7AE" CODE_SIGNATURE="06E8C6722112B014ECA896F8430FC608" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -575,7 +575,9 @@ INCLUDE zaplink_macros.</MACROS>
   DATA _line       LIKE LINE OF t_upcode.
   DATA d_class     TYPE  vseoclass.
   DATA t_attrs     TYPE  seoo_attributes_r.
-  FIELD-SYMBOLS &lt;a&gt; LIKE LINE OF t_attrs.
+  FIELD-SYMBOLS:
+    &lt;t&gt; LIKE LINE OF result,
+    &lt;a&gt; LIKE LINE OF t_attrs.
 
   CALL FUNCTION &apos;SEO_CLASS_GET&apos;
     EXPORTING
@@ -596,7 +598,7 @@ INCLUDE zaplink_macros.</MACROS>
   result = get_class_globalsource_( class_name ).
   zaplink_tools=&gt;pretty_printer( CHANGING table = result ).
   IF d_class-category = &apos;40&apos;.  &quot; 40	Exception Class
-* Issue 71
+* Issue 71 : Exception class SOTR GUID
     CALL FUNCTION &apos;SEO_CLASS_TYPEINFO_GET&apos;
       EXPORTING
         clskey                              = class_name
@@ -647,6 +649,10 @@ INCLUDE zaplink_macros.</MACROS>
       REPLACE ALL OCCURRENCES OF &lt;a&gt;-attvalue IN TABLE result WITH space.   &quot; Issue 71, remove SOTR GUID values when calculating code signature
     ENDLOOP.
   ENDIF.
+*  Issue 71 : dot at the end.
+  LOOP AT result ASSIGNING &lt;t&gt;.
+    REPLACE FIRST OCCURRENCE OF REGEX &apos;\.$&apos; IN &lt;t&gt; WITH &apos; .&apos;.   &quot; change &apos;.&apos; to &apos; .&apos;
+  ENDLOOP.
   zaplink_tools=&gt;condense_abap_source( CHANGING table = result ).
   t_upcode = result.
   zaplink_tools=&gt;conv_table_2upcase( CHANGING table = t_upcode ).
