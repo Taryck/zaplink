@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F1DB9D30D65F0734FC0A4C5CE2C01E43" CODE_SIGNATURE="ED13F998258585ADA420F10906FDFCC8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F03015005536E85BF9FD3BE4BD9F20A0" CODE_SIGNATURE="ED13F998258585ADA420F10906FDFCC8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-LOG" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -19,12 +19,13 @@ AS</DOCUMENTATION>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
-   <ITEM CMPNAME="ACTIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="19 " SRCCOLUMN1="4 " SRCROW2="23 " SRCCOLUMN2="17 " TYPESRC_LENG="204 " TYPESRC="begin of ACTIONS,
-      CREATE    type BU_AKTYP value &apos;01&apos;, &quot;#EC NOTEXT
-      CHANGE    type BU_AKTYP value &apos;02&apos;, &quot;#EC NOTEXT
-      DISPLAY   type BU_AKTYP value &apos;03&apos;, &quot;#EC NOTEXT
-    end of ACTIONS
-">
+   <ITEM CMPNAME="ACTIONS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " ATTDECLTYP="2" TYPTYPE="4">
+    begin of ACTIONS,
+      CREATE    type BU_AKTYP value &apos;01&apos;, &quot;#EC NOTEXT
+      CHANGE    type BU_AKTYP value &apos;02&apos;, &quot;#EC NOTEXT
+      DISPLAY   type BU_AKTYP value &apos;03&apos;, &quot;#EC NOTEXT
+    end of ACTIONS
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Activity on Logs"/>
     </TEXTS>
@@ -94,14 +95,15 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Application Log: Object Name (Application Code)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="PROBCL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="26 " SRCCOLUMN1="4 " SRCROW2="32 " SRCCOLUMN2="18 " TYPESRC_LENG="380 " TYPESRC="BEGIN OF probcl,
-        very_imp    TYPE balprobcl VALUE &apos;1&apos;,               &quot;#EC NOTEXT
-        important   TYPE balprobcl VALUE &apos;2&apos;,               &quot;#EC NOTEXT
-        medium      TYPE balprobcl VALUE &apos;3&apos;,               &quot;#EC NOTEXT
-        for_info    TYPE balprobcl VALUE &apos;4&apos;,               &quot;#EC NOTEXT
-        other       TYPE balprobcl VALUE space,
-      END OF probcl
-">
+   <ITEM CMPNAME="PROBCL" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="8 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF probcl,
+        very_imp    TYPE balprobcl VALUE &apos;1&apos;,               &quot;#EC NOTEXT
+        important   TYPE balprobcl VALUE &apos;2&apos;,               &quot;#EC NOTEXT
+        medium      TYPE balprobcl VALUE &apos;3&apos;,               &quot;#EC NOTEXT
+        for_info    TYPE balprobcl VALUE &apos;4&apos;,               &quot;#EC NOTEXT
+        other       TYPE balprobcl VALUE space,
+      END OF probcl
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Problem Classes"/>
     </TEXTS>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2E282046ACEE147495A83C04FF1534D9" CODE_SIGNATURE="B946883E4B604C08F1E29F4561E8C1AE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRAN_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="18950FFDFEF0FB023532C4D0E8647A2A" CODE_SIGNATURE="B946883E4B604C08F1E29F4561E8C1AE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRAN_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -56,30 +56,30 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Sub object : Transaction"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TRAN_KINDS" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="17 " SRCCOLUMN2="21 " TYPESRC_LENG="547 " TYPESRC="begin of tran_kinds,
-       Trans_d type TSTC-cinfo value &apos;00&apos;,
-       report  type TSTC-cinfo value &apos;80&apos;,
-       param   type TSTC-cinfo value &apos;02&apos;,
-       variant type TSTC-cinfo value &apos;10&apos;,    &quot; Variant mask with report
-       Object  type TSTC-cinfo value &apos;08&apos;,    &quot; Not supported yet
-* not used yet
-*      hex_men type x value &apos;01&apos;,               &quot; Bereichsmenü        M
-*      hex_chk type x value &apos;04&apos;,               &quot; mit Prüfobjekt
-*      hex_enq type x value &apos;20&apos;.               &quot; Gesperrt über SM01
-*
-     end of tran_kinds
-"/>
-   <ITEM CMPNAME="TRAN_TYPES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="144 " SRCCOLUMN1="4 " SRCROW2="153 " SRCCOLUMN2="27 " TYPESRC_LENG="477 " TYPESRC="BEGIN OF tran_types,
-             dialog  TYPE sychar01 VALUE ststc_c_type_dialog,
-             report  TYPE sychar01 VALUE ststc_c_type_report,
-             param   TYPE sychar01 VALUE ststc_c_type_parameters,
-             variant TYPE sychar01 VALUE ststc_c_type_variant,
-             object  TYPE sychar01 VALUE ststc_c_type_object,    &quot; Not supported yet
-* not used yet
-*  ststc_c_xxx     type sychar01 value &apos;A&apos;.           &quot;Objekt
-*
-           END OF tran_types
-"/>
+   <ITEM CMPNAME="TRAN_KINDS" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">begin of tran_kinds,
+       Trans_d type TSTC-cinfo value &apos;00&apos;,
+       report  type TSTC-cinfo value &apos;80&apos;,
+       param   type TSTC-cinfo value &apos;02&apos;,
+       variant type TSTC-cinfo value &apos;10&apos;,    &quot; Variant mask with report
+       Object  type TSTC-cinfo value &apos;08&apos;,    &quot; Not supported yet
+* not used yet
+*      hex_men type x value &apos;01&apos;,               &quot; Bereichsmenü        M
+*      hex_chk type x value &apos;04&apos;,               &quot; mit Prüfobjekt
+*      hex_enq type x value &apos;20&apos;.               &quot; Gesperrt über SM01
+*
+     end of tran_kinds
+`</ITEM>
+   <ITEM CMPNAME="TRAN_TYPES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF tran_types,
+             dialog  TYPE sychar01 VALUE ststc_c_type_dialog,
+             report  TYPE sychar01 VALUE ststc_c_type_report,
+             param   TYPE sychar01 VALUE ststc_c_type_parameters,
+             variant TYPE sychar01 VALUE ststc_c_type_variant,
+             object  TYPE sychar01 VALUE ststc_c_type_object,    &quot; Not supported yet
+* not used yet
+*  ststc_c_xxx     type sychar01 value &apos;A&apos;.           &quot;Objekt
+*
+           END OF tran_types
+`</ITEM>
    <ITEM CMPNAME="ZL_OBJECT" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TO_RAW">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Component of transaction : Program, object, pool"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7A3DCAA8BE07FB96E580823C0ECBA7D5" CODE_SIGNATURE="FAE41F13A8584544458891F83F9D36AC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUGR_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8380B1E3D3305527710D439670793C33" CODE_SIGNATURE="FAE41F13A8584544458891F83F9D36AC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUGR_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -37,18 +37,19 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Program main data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="DOC_IDS" VERSION="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="14 " SRCCOLUMN1="4 " SRCROW2="17 " SRCCOLUMN2="17 " TYPESRC_LENG="139 " TYPESRC="BEGIN OF DOC_IDS,
-      group     TYPE td_doc_id VALUE &apos;RE&apos;,    &quot; Report
-      function  TYPE td_doc_id VALUE &apos;FU&apos;,
-    END OF DOC_IDS
-"/>
+   <ITEM CMPNAME="DOC_IDS" VERSION="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF DOC_IDS,
+      group     TYPE td_doc_id VALUE &apos;RE&apos;,    &quot; Report
+      function  TYPE td_doc_id VALUE &apos;FU&apos;,
+    END OF DOC_IDS
+`</ITEM>
    <ITEM CMPNAME="DYNPROS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_DYNPROS"/>
    <ITEM CMPNAME="FUNCTIONS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_FUNCTIONS"/>
    <ITEM CMPNAME="INCLUDES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TT_INCLUDES"/>
-   <ITEM CMPNAME="MARKUPS" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="8 " SRCCOLUMN2="17 " TYPESRC_LENG="93 " TYPESRC="BEGIN OF markups,
-      area TYPE string VALUE &apos;[FUNCTIONGROUP NAME]&apos;,
-    END OF markups
-">
+   <ITEM CMPNAME="MARKUPS" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF markups,
+      area TYPE string VALUE &apos;[FUNCTIONGROUP NAME]&apos;,
+    END OF markups
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Markups for replacements"/>
     </TEXTS>
@@ -58,19 +59,20 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Menu painter Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="PARAMETER_KINDS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="125 " SRCCOLUMN1="4 " SRCROW2="131 " SRCCOLUMN2="25 " TYPESRC_LENG="296 " TYPESRC="BEGIN OF parameter_kinds,
-      importing   TYPE td_paramkind VALUE &apos;I&apos;,
-      changing    TYPE td_paramkind VALUE &apos;C&apos;,
-      exporting   TYPE td_paramkind VALUE &apos;E&apos;,
-      table       TYPE td_paramkind VALUE &apos;T&apos;,
-*      exceptions  type td_paramkind value &apos;X&apos;,
-    END OF parameter_kinds
-"/>
-   <ITEM CMPNAME="R_DOC_IDS" VERSION="1" STATE="1" EDITORDER="4 " ATTDECLTYP="1" TYPTYPE="4" SRCROW1="19 " SRCCOLUMN1="4 " SRCROW2="22 " SRCCOLUMN2="19 " TYPESRC_LENG="105 " TYPESRC="BEGIN OF R_DOC_IDS,
-      group    TYPE TR_DOCID,
-      function TYPE TR_DOCID,
-    END OF R_DOC_IDS
-">
+   <ITEM CMPNAME="PARAMETER_KINDS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF parameter_kinds,
+      importing   TYPE td_paramkind VALUE &apos;I&apos;,
+      changing    TYPE td_paramkind VALUE &apos;C&apos;,
+      exporting   TYPE td_paramkind VALUE &apos;E&apos;,
+      table       TYPE td_paramkind VALUE &apos;T&apos;,
+*      exceptions  type td_paramkind value &apos;X&apos;,
+    END OF parameter_kinds
+`</ITEM>
+   <ITEM CMPNAME="R_DOC_IDS" VERSION="1" STATE="1" EDITORDER="4 " ATTDECLTYP="1" TYPTYPE="4">
+    BEGIN OF R_DOC_IDS,
+      group    TYPE TR_DOCID,
+      function TYPE TR_DOCID,
+    END OF R_DOC_IDS
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Documentation Object"/>
     </TEXTS>
@@ -80,10 +82,11 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="ABAP Source code"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="SUFFIXES" VERSION="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="10 " SRCCOLUMN1="4 " SRCROW2="12 " SRCCOLUMN2="18 " TYPESRC_LENG="83 " TYPESRC="BEGIN OF suffixes,
-      top TYPE rs38l-suffix VALUE &apos;TOP&apos;,
-    END OF suffixes
-">
+   <ITEM CMPNAME="SUFFIXES" VERSION="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF suffixes,
+      top TYPE rs38l-suffix VALUE &apos;TOP&apos;,
+    END OF suffixes
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Special suffixes"/>
     </TEXTS>

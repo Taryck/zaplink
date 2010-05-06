@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E4AB1A41B6DFD26526A8EFC9442B2008" CODE_SIGNATURE="FE3A9ED4968F27F3FE7C4AC4B4D81CB3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0C8872843731750140D6FB7C19831E59" CODE_SIGNATURE="FE3A9ED4968F27F3FE7C4AC4B4D81CB3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -86,12 +86,13 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Class/interface Order"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="OBJTYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="105 " SRCCOLUMN1="4 " SRCROW2="109 " SRCCOLUMN2="23 " TYPESRC_LENG="356 " TYPESRC="BEGIN OF objtype,
-            class             TYPE td_classtype VALUE &apos;0&apos;, &quot;#EC NOTEXT      Object Type : Class
-            exception_class   TYPE td_classtype VALUE &apos;5&apos;, &quot;#EC NOTEXT      Local Object type : Exception_Class
-            interface         TYPE td_classtype VALUE &apos;1&apos;, &quot;#EC NOTEXT      Object Type : Interface
-          END OF objtype
-">
+   <ITEM CMPNAME="OBJTYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF objtype,
+            class             TYPE td_classtype VALUE &apos;0&apos;, &quot;#EC NOTEXT      Object Type : Class
+            exception_class   TYPE td_classtype VALUE &apos;5&apos;, &quot;#EC NOTEXT      Local Object type : Exception_Class
+            interface         TYPE td_classtype VALUE &apos;1&apos;, &quot;#EC NOTEXT      Object Type : Interface
+          END OF objtype
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Object types"/>
     </TEXTS>
@@ -133,14 +134,15 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Type Groups list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TYPETYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="97 " SRCCOLUMN1="4 " SRCROW2="103 " SRCCOLUMN2="24 " TYPESRC_LENG="477 " TYPESRC="BEGIN OF typetype,
-            like    TYPE seotyptype VALUE &apos;0&apos;, &quot;#EC NOTEXT      Attribute reference (LIKE)
-            type    TYPE seotyptype VALUE &apos;1&apos;, &quot;#EC NOTEXT      Type reference (TYPE)
-            otype   TYPE seotyptype VALUE &apos;2&apos;, &quot;#EC NOTEXT      Object (TYPE)
-            ref     TYPE seotyptype VALUE &apos;3&apos;, &quot;#EC NOTEXT      Object reference (TYPE REF TO)
-            code    TYPE seotyptype VALUE &apos;4&apos;, &quot;#EC NOTEXT      See coding
-          END OF typetype
-">
+   <ITEM CMPNAME="TYPETYPE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF typetype,
+            like    TYPE seotyptype VALUE &apos;0&apos;, &quot;#EC NOTEXT      Attribute reference (LIKE)
+            type    TYPE seotyptype VALUE &apos;1&apos;, &quot;#EC NOTEXT      Type reference (TYPE)
+            otype   TYPE seotyptype VALUE &apos;2&apos;, &quot;#EC NOTEXT      Object (TYPE)
+            ref     TYPE seotyptype VALUE &apos;3&apos;, &quot;#EC NOTEXT      Object reference (TYPE REF TO)
+            code    TYPE seotyptype VALUE &apos;4&apos;, &quot;#EC NOTEXT      See coding
+          END OF typetype
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Types of type definition"/>
     </TEXTS>

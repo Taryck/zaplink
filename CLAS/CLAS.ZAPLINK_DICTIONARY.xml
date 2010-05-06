@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5EA0C919B1DC4B76AB607289783EA720" CODE_SIGNATURE="BEB817738A9FBDB7B6E714F7E9A0549D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8F3583E96C3D8B87C4D4A2D1842A98B5" CODE_SIGNATURE="BEB817738A9FBDB7B6E714F7E9A0549D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -37,47 +37,49 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="DD_EU_TYPE" VERSION="1" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="24 " SRCCOLUMN1="4 " SRCROW2="43 " SRCCOLUMN2="20 " TYPESRC_LENG="1396 " TYPESRC="BEGIN OF dd_eu_type,          &quot; Domain DDEUTYPE
-      table_type        TYPE ddeutype VALUE &apos;A&apos;,     &quot; A  Table Type
-      domain            TYPE ddeutype VALUE &apos;D&apos;,     &quot; D  Domain
-      data_element      TYPE ddeutype VALUE &apos;E&apos;,     &quot; E  Data Element
-      table_field       TYPE ddeutype VALUE &apos;F&apos;,     &quot; F  Table Field
-      type_group        TYPE ddeutype VALUE &apos;G&apos;,     &quot; G  Type Group
-      search_help       TYPE ddeutype VALUE &apos;H&apos;,     &quot; H  Search Help
-      mactchcode_id     TYPE ddeutype VALUE &apos;I&apos;,     &quot; I  Matchcode ID
-      lock_object       TYPE ddeutype VALUE &apos;L&apos;,     &quot; L  Lock Object
-      matchcode_obj     TYPE ddeutype VALUE &apos;M&apos;,     &quot; M  Matchcode Object
-      table_index       TYPE ddeutype VALUE &apos;N&apos;,     &quot; N  Table Index
-      ext_index         TYPE ddeutype VALUE &apos;N&apos;,     &quot; O  Extention Index MF INTERN_TRANSL_EUTYPE
-      internal_struct   TYPE ddeutype VALUE &apos;S&apos;,     &quot; S  Internal Structure
-      transp_table      TYPE ddeutype VALUE &apos;T&apos;,     &quot; T  Transparent Table
-      structure         TYPE ddeutype VALUE &apos;U&apos;,     &quot; U  Table/Structure
-      view              TYPE ddeutype VALUE &apos;V&apos;,     &quot; V  View
-      table_pool        TYPE ddeutype VALUE &apos;X&apos;,     &quot; X  Table Pool
-      table_cluster     TYPE ddeutype VALUE &apos;Y&apos;,     &quot; Y  Table Cluster
-      t_cluster_pool    TYPE ddeutype VALUE &apos;Z&apos;,     &quot; Z  Table cluster/pool
-    END OF dd_eu_type
-">
+   <ITEM CMPNAME="DD_EU_TYPE" VERSION="1" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF dd_eu_type,          &quot; Domain DDEUTYPE
+      table_type        TYPE ddeutype VALUE &apos;A&apos;,     &quot; A  Table Type
+      domain            TYPE ddeutype VALUE &apos;D&apos;,     &quot; D  Domain
+      data_element      TYPE ddeutype VALUE &apos;E&apos;,     &quot; E  Data Element
+      table_field       TYPE ddeutype VALUE &apos;F&apos;,     &quot; F  Table Field
+      type_group        TYPE ddeutype VALUE &apos;G&apos;,     &quot; G  Type Group
+      search_help       TYPE ddeutype VALUE &apos;H&apos;,     &quot; H  Search Help
+      mactchcode_id     TYPE ddeutype VALUE &apos;I&apos;,     &quot; I  Matchcode ID
+      lock_object       TYPE ddeutype VALUE &apos;L&apos;,     &quot; L  Lock Object
+      matchcode_obj     TYPE ddeutype VALUE &apos;M&apos;,     &quot; M  Matchcode Object
+      table_index       TYPE ddeutype VALUE &apos;N&apos;,     &quot; N  Table Index
+      ext_index         TYPE ddeutype VALUE &apos;N&apos;,     &quot; O  Extention Index MF INTERN_TRANSL_EUTYPE
+      internal_struct   TYPE ddeutype VALUE &apos;S&apos;,     &quot; S  Internal Structure
+      transp_table      TYPE ddeutype VALUE &apos;T&apos;,     &quot; T  Transparent Table
+      structure         TYPE ddeutype VALUE &apos;U&apos;,     &quot; U  Table/Structure
+      view              TYPE ddeutype VALUE &apos;V&apos;,     &quot; V  View
+      table_pool        TYPE ddeutype VALUE &apos;X&apos;,     &quot; X  Table Pool
+      table_cluster     TYPE ddeutype VALUE &apos;Y&apos;,     &quot; Y  Table Cluster
+      t_cluster_pool    TYPE ddeutype VALUE &apos;Z&apos;,     &quot; Z  Table cluster/pool
+    END OF dd_eu_type
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="DD object type in EU management system (domain : DDEUTYPE)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="SUPPORTEDTYPES" VERSION="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="8 " SRCCOLUMN1="4 " SRCROW2="22 " SRCCOLUMN2="24 " TYPESRC_LENG="896 " TYPESRC="BEGIN OF supportedtypes,                                  &quot;#EC NOTEXT
-      type_group        TYPE td_comptype VALUE &apos;TYPE&apos;,
-      domain            TYPE td_comptype VALUE &apos;DOMA&apos;,
-      data_element      TYPE td_comptype VALUE &apos;DTEL&apos;,
-      table_type        TYPE td_comptype VALUE &apos;TTYP&apos;,
-      search_help       TYPE td_comptype VALUE &apos;SHLP&apos;,
-      mactchcode_id     TYPE td_comptype VALUE &apos;MCID&apos;,
-      lock_object       TYPE td_comptype VALUE &apos;ENQU&apos;,
-      matchcode_obj     TYPE td_comptype VALUE &apos;MCOB&apos;,
-      table_index       TYPE td_comptype VALUE &apos;INDX&apos;,     &quot; N  Table Index
-      ext_index         TYPE td_comptype VALUE &apos;XINX&apos;,     &quot; O  Extention Index MF INTERN_TRANSL_EUTYPE
-      table             TYPE td_comptype VALUE &apos;TABL&apos;,
-      view              TYPE td_comptype VALUE &apos;VIEW&apos;,
-      t_cluster_pool    TYPE td_comptype VALUE &apos;SQLT&apos;,
-    END OF supportedtypes
-">
+   <ITEM CMPNAME="SUPPORTEDTYPES" VERSION="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF supportedtypes,                                  &quot;#EC NOTEXT
+      type_group        TYPE td_comptype VALUE &apos;TYPE&apos;,
+      domain            TYPE td_comptype VALUE &apos;DOMA&apos;,
+      data_element      TYPE td_comptype VALUE &apos;DTEL&apos;,
+      table_type        TYPE td_comptype VALUE &apos;TTYP&apos;,
+      search_help       TYPE td_comptype VALUE &apos;SHLP&apos;,
+      mactchcode_id     TYPE td_comptype VALUE &apos;MCID&apos;,
+      lock_object       TYPE td_comptype VALUE &apos;ENQU&apos;,
+      matchcode_obj     TYPE td_comptype VALUE &apos;MCOB&apos;,
+      table_index       TYPE td_comptype VALUE &apos;INDX&apos;,     &quot; N  Table Index
+      ext_index         TYPE td_comptype VALUE &apos;XINX&apos;,     &quot; O  Extention Index MF INTERN_TRANSL_EUTYPE
+      table             TYPE td_comptype VALUE &apos;TABL&apos;,
+      view              TYPE td_comptype VALUE &apos;VIEW&apos;,
+      t_cluster_pool    TYPE td_comptype VALUE &apos;SQLT&apos;,
+    END OF supportedtypes
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Connector supported types"/>
     </TEXTS>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FD9EEC498292548B466445809ADAA010" CODE_SIGNATURE="A4296A9B49684D3A39E1EE88646188DA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F1BF9BBBCDCA774469CD768632EFDB4A" CODE_SIGNATURE="A4296A9B49684D3A39E1EE88646188DA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -42,10 +42,11 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
      <ITEM LANGU="E" DESCRIPT="Default function Menu code"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="DOC_IDS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="12 " SRCCOLUMN1="4 " SRCROW2="14 " SRCCOLUMN2="17 " TYPESRC_LENG="80 " TYPESRC="BEGIN OF doc_ids,
-      header TYPE td_doc_id VALUE &apos;DO&apos;,
-    END OF doc_ids
-">
+   <ITEM CMPNAME="DOC_IDS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF doc_ids,
+      header TYPE td_doc_id VALUE &apos;DO&apos;,
+    END OF doc_ids
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Documentation IDS"/>
     </TEXTS>
@@ -73,23 +74,24 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
    </ITEM>
    <ITEM CMPNAME="MENU_BARS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="13 " TYPTYPE="1" TYPE="TT_BARS"/>
    <ITEM CMPNAME="MENU_LIST" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="12 " TYPTYPE="1" TYPE="TT_MENUS"/>
-   <ITEM CMPNAME="OBJ_TYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="16 " SRCCOLUMN1="4 " SRCROW2="31 " SRCCOLUMN2="19 " TYPESRC_LENG="718 " TYPESRC="BEGIN OF obj_types,   &quot; FROM Include RSMPECON
-      menu      TYPE mp_o_type VALUE &apos;M&apos;,
-      function  TYPE mp_o_type VALUE &apos;F&apos;,
-      title     TYPE mp_o_type VALUE &apos;T&apos;,
-      menu_bar  TYPE mp_o_type VALUE &apos;A&apos;,
-      key_set   TYPE mp_o_type VALUE &apos;P&apos;,  &quot; Function Key Setting
-      button    TYPE mp_o_type VALUE &apos;B&apos;,  &quot; Pushbutton settings
-      status    TYPE mp_o_type VALUE &apos;C&apos;,
-      separator TYPE mp_o_type VALUE &apos;S&apos;,
-      icon      TYPE mp_o_type VALUE &apos;I&apos;,
-      program   TYPE mp_o_type VALUE &apos;D&apos;,
-      dynpro    TYPE mp_o_type VALUE &apos;E&apos;,
-      text      TYPE mp_o_type VALUE &apos;Z&apos;,
-      context   TYPE mp_o_type VALUE &apos;X&apos;,
-      symbolbar TYPE mp_o_type VALUE &apos;Y&apos;,
-    END OF obj_types
-">
+   <ITEM CMPNAME="OBJ_TYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF obj_types,   &quot; FROM Include RSMPECON
+      menu      TYPE mp_o_type VALUE &apos;M&apos;,
+      function  TYPE mp_o_type VALUE &apos;F&apos;,
+      title     TYPE mp_o_type VALUE &apos;T&apos;,
+      menu_bar  TYPE mp_o_type VALUE &apos;A&apos;,
+      key_set   TYPE mp_o_type VALUE &apos;P&apos;,  &quot; Function Key Setting
+      button    TYPE mp_o_type VALUE &apos;B&apos;,  &quot; Pushbutton settings
+      status    TYPE mp_o_type VALUE &apos;C&apos;,
+      separator TYPE mp_o_type VALUE &apos;S&apos;,
+      icon      TYPE mp_o_type VALUE &apos;I&apos;,
+      program   TYPE mp_o_type VALUE &apos;D&apos;,
+      dynpro    TYPE mp_o_type VALUE &apos;E&apos;,
+      text      TYPE mp_o_type VALUE &apos;Z&apos;,
+      context   TYPE mp_o_type VALUE &apos;X&apos;,
+      symbolbar TYPE mp_o_type VALUE &apos;Y&apos;,
+    END OF obj_types
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Menu Painter: Standards maintenance: Object type"/>
     </TEXTS>
@@ -100,13 +102,14 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="STATUS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="11 " TYPTYPE="1" TYPE="TT_STATUS"/>
-   <ITEM CMPNAME="TEXT_TYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="33 " SRCCOLUMN1="4 " SRCROW2="38 " SRCCOLUMN2="20 " TYPESRC_LENG="254 " TYPESRC="BEGIN OF text_types,
-      object      TYPE mp_txttype VALUE &apos;M&apos;,
-      icon        TYPE mp_txttype VALUE &apos;I&apos;,
-      quick_info  TYPE mp_txttype VALUE &apos;Q&apos;,
-      tech_info   TYPE mp_txttype VALUE &apos;T&apos;,  &quot; Technical Information
-    END OF text_types
-">
+   <ITEM CMPNAME="TEXT_TYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF text_types,
+      object      TYPE mp_txttype VALUE &apos;M&apos;,
+      icon        TYPE mp_txttype VALUE &apos;I&apos;,
+      quick_info  TYPE mp_txttype VALUE &apos;Q&apos;,
+      tech_info   TYPE mp_txttype VALUE &apos;T&apos;,  &quot; Technical Information
+    END OF text_types
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Menu Painter: Text type"/>
     </TEXTS>

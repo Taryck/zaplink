@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="046651ADE38113B55E2DB0F0752841F1" CODE_SIGNATURE="940A3FCB78A80DC027022D841988B737" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DEVCLASS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A6E7E8175AE0EC038DD3B00481406D64" CODE_SIGNATURE="940A3FCB78A80DC027022D841988B737" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DEVCLASS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -24,14 +24,15 @@
      <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for DevClass"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="SUBSTITUTIONKINDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="11 " SRCCOLUMN1="4 " SRCROW2="17 " SRCCOLUMN2="29 " TYPESRC_LENG="622 " TYPESRC="BEGIN OF substitutionkinds,
-        use_container  TYPE td_substitutionkind VALUE &apos;C&apos;,    &quot; Keep dev class in XML file
-        no_overwrite   TYPE td_substitutionkind VALUE &apos;N&apos;,    &quot; No overwrite : Use existing devclass, otherwise use container devclass otherwise use local otherwise let user choose
-        keep_existing  TYPE td_substitutionkind VALUE &apos;K&apos;,    &quot; Use devclass define in component
-        local          TYPE td_substitutionkind VALUE &apos;L&apos;,    &quot; Devclass = $TMP
-        fixed          TYPE td_substitutionkind VALUE &apos;F&apos;,    &quot; Assign allways the same specified devclass
-      END OF substitutionkinds
-">
+   <ITEM CMPNAME="SUBSTITUTIONKINDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF substitutionkinds,
+        use_container  TYPE td_substitutionkind VALUE &apos;C&apos;,    &quot; Keep dev class in XML file
+        no_overwrite   TYPE td_substitutionkind VALUE &apos;N&apos;,    &quot; No overwrite : Use existing devclass, otherwise use container devclass otherwise use local otherwise let user choose
+        keep_existing  TYPE td_substitutionkind VALUE &apos;K&apos;,    &quot; Use devclass define in component
+        local          TYPE td_substitutionkind VALUE &apos;L&apos;,    &quot; Devclass = $TMP
+        fixed          TYPE td_substitutionkind VALUE &apos;F&apos;,    &quot; Assign allways the same specified devclass
+      END OF substitutionkinds
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="All possible Devclass substitution Kinds"/>
     </TEXTS>

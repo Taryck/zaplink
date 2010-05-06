@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F009B76074FC88DED84C2E133748802C" CODE_SIGNATURE="F8AAFD2502655AC29E85FFB0FE43DA23" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="37B642CE3902F2BAC5DB96AF2127EFF2" CODE_SIGNATURE="F8AAFD2502655AC29E85FFB0FE43DA23" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -33,13 +33,14 @@
      <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Options"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="SUBSTITUTIONKINDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="28 " SRCCOLUMN1="4 " SRCROW2="33 " SRCCOLUMN2="29 " TYPESRC_LENG="440 " TYPESRC="BEGIN OF substitutionkinds,
-        fixed          TYPE td_substitutionkind VALUE &apos;F&apos;,    &quot; Assign allways the same specified devclass
-        keep_container TYPE td_substitutionkind VALUE &apos;K&apos;,    &quot; Keep dev class in XML file
-        use_component  TYPE td_substitutionkind VALUE &apos;C&apos;,    &quot; Use devclass define in component
-        local          TYPE td_substitutionkind VALUE &apos;L&apos;,    &quot; Devclass = $TMP
-      END OF substitutionkinds
-">
+   <ITEM CMPNAME="SUBSTITUTIONKINDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF substitutionkinds,
+        fixed          TYPE td_substitutionkind VALUE &apos;F&apos;,    &quot; Assign allways the same specified devclass
+        keep_container TYPE td_substitutionkind VALUE &apos;K&apos;,    &quot; Keep dev class in XML file
+        use_component  TYPE td_substitutionkind VALUE &apos;C&apos;,    &quot; Use devclass define in component
+        local          TYPE td_substitutionkind VALUE &apos;L&apos;,    &quot; Devclass = $TMP
+      END OF substitutionkinds
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="All possible Devclass substitution Kinds"/>
     </TEXTS>

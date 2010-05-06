@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9140E6B8FDE4CCBC35238C164768D0D2" CODE_SIGNATURE="53C608576D137E94D162C93D15EC58FF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E8A431CBAC9EB53E1752D0B67428B6F3" CODE_SIGNATURE="53C608576D137E94D162C93D15EC58FF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -40,11 +40,11 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Node name for documentaiton"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="SUPPORTEDTYPES" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="6 " SRCCOLUMN1="4 " SRCROW2="9 " SRCCOLUMN2="24 " TYPESRC_LENG="261 " TYPESRC="BEGIN OF supportedtypes,                                  &quot;#EC NOTEXT
-      general           TYPE td_comptype VALUE &apos;DOCT&apos;,    &quot; General Text
-      Indep             TYPE td_comptype VALUE &apos;DOCV&apos;,    &quot; Documentation (Independent)
-    END OF supportedtypes
-"/>
+   <ITEM CMPNAME="SUPPORTEDTYPES" VERSION="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF supportedtypes,                                  &quot;#EC NOTEXT
+      general           TYPE td_comptype VALUE &apos;DOCT&apos;,    &quot; General Text
+      Indep             TYPE td_comptype VALUE &apos;DOCV&apos;,    &quot; Documentation (Independent)
+    END OF supportedtypes
+`</ITEM>
    <ITEM CMPNAME="_UUID" VERSION="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;3D34954BEABE5F12E1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="UUID for connector Message class"/>

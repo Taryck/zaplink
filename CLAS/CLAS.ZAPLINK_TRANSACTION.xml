@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="63BFA18BC6872CA6EF8691D6D474C0D1" CODE_SIGNATURE="AFFEDCCA40139BEE0CCC79D0D857357F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C6A9CB83FC81A586B159CDAFFBE0C8EF" CODE_SIGNATURE="AFFEDCCA40139BEE0CCC79D0D857357F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -46,28 +46,30 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Transport category : ABAP Object"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TRANSACTION_TYPES" VERSION="1" STATE="1" EDITORDER="7 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="18 " SRCCOLUMN1="4 " SRCROW2="27 " SRCCOLUMN2="27 " TYPESRC_LENG="690 " TYPESRC="BEGIN OF transaction_types,   &quot; FROM LSEUKTOP(93)
-      transaction  TYPE x VALUE &apos;00&apos;,               &quot; Transaktion         T
-      menu         TYPE x VALUE &apos;01&apos;,               &quot; Bereichsmenü        M
-      parameter    TYPE x VALUE &apos;02&apos;,               &quot; Parametertrans.     P
-      program      TYPE x VALUE &apos;80&apos;,               &quot; Report              R
-      prog_variant TYPE x VALUE &apos;10&apos;,               &quot; Report  with Variant
-      object       TYPE x VALUE &apos;08&apos;,               &quot; Transactional object
-      check        TYPE x VALUE &apos;04&apos;,               &quot; With autjority check
-      enqueue      TYPE x VALUE &apos;20&apos;,                       &quot; With SM01
-    END OF transaction_types
-">
+   <ITEM CMPNAME="TRANSACTION_TYPES" VERSION="1" STATE="1" EDITORDER="7 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF transaction_types,   &quot; FROM LSEUKTOP(93)
+      transaction  TYPE x VALUE &apos;00&apos;,               &quot; Transaktion         T
+      menu         TYPE x VALUE &apos;01&apos;,               &quot; Bereichsmenü        M
+      parameter    TYPE x VALUE &apos;02&apos;,               &quot; Parametertrans.     P
+      program      TYPE x VALUE &apos;80&apos;,               &quot; Report              R
+      prog_variant TYPE x VALUE &apos;10&apos;,               &quot; Report  with Variant
+      object       TYPE x VALUE &apos;08&apos;,               &quot; Transactional object
+      check        TYPE x VALUE &apos;04&apos;,               &quot; With autjority check
+      enqueue      TYPE x VALUE &apos;20&apos;,                       &quot; With SM01
+    END OF transaction_types
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Transaction type and flags"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="T_COMPONENT" VERSION="1" STATE="1" EDITORDER="6 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="11 " SRCCOLUMN1="4 " SRCROW2="16 " SRCCOLUMN2="21 " TYPESRC_LENG="247 " TYPESRC="BEGIN OF t_component,
-      program TYPE td_comptype VALUE &apos;PROG&apos;,
-      object TYPE td_comptype VALUE &apos;CLAS&apos;,
-      transaction TYPE td_comptype VALUE st_transaction,
-      functionpool TYPE td_comptype VALUE &apos;FUGR&apos;,
-    END OF t_component
-">
+   <ITEM CMPNAME="T_COMPONENT" VERSION="1" STATE="1" EDITORDER="6 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF t_component,
+      program TYPE td_comptype VALUE &apos;PROG&apos;,
+      object TYPE td_comptype VALUE &apos;CLAS&apos;,
+      transaction TYPE td_comptype VALUE st_transaction,
+      functionpool TYPE td_comptype VALUE &apos;FUGR&apos;,
+    END OF t_component
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Component type"/>
     </TEXTS>
