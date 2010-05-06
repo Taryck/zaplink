@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F0E3F519CAC43EA3902F6FFE2C4F895B" CODE_SIGNATURE="22D8F7A77B52CA8EF8A4706F47696E86" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3BE9D5B9A50FCD82957054640A4576E3" CODE_SIGNATURE="5779DBF1F58FDCB0E52D5655E616D69F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -26,6 +26,7 @@ AS</DOCUMENTATION>
    <ITEM CMPNAME="TR_DOCID" VERSION="1" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_DOCID"/>
    <ITEM CMPNAME="TS_LANG" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_LANG"/>
    <ITEM CMPNAME="TS_SOURCEASSTRUC" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_SOURCEASSTRUC"/>
+   <ITEM CMPNAME="TT_ABAPRAWSOURCE" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_ABAPRAWSOURCE"/>
    <ITEM CMPNAME="TT_DOCS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_DOCS"/>
    <ITEM CMPNAME="TT_DYNPROS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_DYNPROS"/>
    <ITEM CMPNAME="TT_TXTP_TEXTPOOLS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TXTP_TEXTPOOLS"/>
@@ -153,6 +154,11 @@ AS</DOCUMENTATION>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
+  <DEFERRED>
+   <CLASSES>
+    <ITEM TYPEGROUP="ZAPLINK_OBJECT" VERSION="1" TPUTYPE="1" IMPLICIT="X"/>
+   </CLASSES>
+  </DEFERRED>
   <FRIENDS>
    <ITEM REFCLSNAME="ZAPLINK_EASYXML" VERSION="1" STATE="1"/>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT" VERSION="1" STATE="1"/>
@@ -174,7 +180,7 @@ AS</DOCUMENTATION>
 *&quot;* in the implementation part of the class</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="ANONYMIZE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 ">
+   <ITEM CMPNAME="ANONYMIZE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
     </TEXTS>
@@ -272,7 +278,7 @@ AS</DOCUMENTATION>
     <SOURCE>`
   CLEAR: obj_name, obj_version, obj_langu, obj_type.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="COMPLETE_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="5 ">
+   <ITEM CMPNAME="COMPLETE_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Complete FM Data from SAP data"/>
     </TEXTS>
@@ -308,9 +314,9 @@ AS</DOCUMENTATION>
   DELETE fm_data-subcomponent_desc WHERE descript IS INITIAL.
 * Issue 24 : End
 
-  IF NOT fm_data-class-clsname IS INITIAL.                  &quot; Issue 23
-    fm_data-includes = get_includes( fm_data-class-clsname ).
-  ENDIF.
+*  IF NOT fm_data-class-clsname IS INITIAL.                  &quot; Issue 23
+*    fm_data-includes = get_includes( fm_data-class-clsname ).
+*  ENDIF.
 
 * Issue 4
 *impl_details doesn&apos;t contains methods implemented when class is abstract
@@ -593,7 +599,63 @@ DATA: _t   LIKE LINE OF texts.
     INSERT s_txt INTO TABLE texts.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FROM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 ">
+   <ITEM CMPNAME="FIX_INCLUDED_TYPE_POOL" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="12 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Search for included type pools"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="NEW_SOURCECODE" VERSION="1" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE"/>
+     <ITEM SCONAME="NEW_TYPEPOOLS" VERSION="1" CMPTYPE="1" EDITORDER="5 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SEOT_TYPEPUSAGES_R"/>
+     <ITEM SCONAME="PUBLIC" VERSION="1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X"/>
+     <ITEM SCONAME="SOURCECODE" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE"/>
+     <ITEM SCONAME="TYPEPOOLS" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOT_TYPEPUSAGES_R"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA d_tabix TYPE sy-tabix.
+  DATA t_tokens TYPE STANDARD TABLE OF stokes.
+  DATA t_statments TYPE STANDARD TABLE OF sstmnt.
+  DATA s_tp     LIKE LINE OF NEW_TYPEPOOLS.
+  DATA d_flag TYPE abap_bool.
+  FIELD-SYMBOLS:
+    &lt;s&gt; LIKE LINE OF new_sourcecode,
+    &lt;t&gt; LIKE LINE OF t_tokens,
+    &lt;n&gt; LIKE LINE OF t_tokens.
+
+  CHECK NOT sourcecode IS INITIAL.
+  new_sourcecode = sourcecode.
+
+  SCAN ABAP-SOURCE sourcecode
+                   TOKENS INTO t_tokens
+                   STATEMENTS INTO t_statments.
+
+  LOOP AT t_tokens ASSIGNING &lt;t&gt;
+    WHERE str CP &apos;TYPE-POOLS&apos;.
+    d_tabix = sy-tabix + 1.
+    READ TABLE t_tokens ASSIGNING &lt;n&gt; INDEX d_tabix.
+    CHECK sy-subrc = 0.
+    CHECK &lt;n&gt;-row = &lt;t&gt;-row.    &quot; TYPE-POOLS ABAP.
+    READ TABLE typepools TRANSPORTING NO FIELDS
+         WITH KEY typegroup = &lt;n&gt;-str
+                   explicit = abap_true.
+    CHECK sy-subrc &lt;&gt; 0 OR public IS INITIAL.
+    IF sy-subrc &lt;&gt; 0.
+* Type pool doesn&apos;t exist in class definition but is declared in the middle of sections
+      CLEAR s_tp.
+      s_tp-typegroup = &lt;n&gt;-str.
+      s_tp-tputype = 0.     &quot; Type group use                (TYPE-POOLS tp)
+      s_tp-explicit = abap_true.
+      s_tp-implicit = abap_false.
+      APPEND s_tp TO new_typepools.
+    ENDIF.
+* Line has to be commented
+    READ TABLE new_sourcecode ASSIGNING &lt;s&gt; INDEX &lt;n&gt;-row.
+    CONCATENATE &apos;*&apos; &lt;s&gt; &apos;&quot;Auto commented by ZAPLINK_OBJECT connector and added as Explicit type group&apos;(cmt) INTO &lt;s&gt;.
+    d_flag = abap_true.
+  ENDLOOP.
+
+  IF d_flag IS INITIAL. CLEAR new_sourcecode. ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="FROM_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes">
       <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
@@ -790,41 +852,6 @@ AS</DOCUMENTATION>
 *ENHANCEMENT_atTTRIBUTES TYPE  ENHCLASSTABATTRIB
 *ENHANCEMENT_exVENTS TYPE  ENHCLASSTABEVENT
 *ENHANCEMENT_IMPLEMENTINGS  TYPE  ENHCLASSTABIMPLEMENTING</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="GET_INCLUDES" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get report includes names from class name"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="CLSNAME" VERSION="1" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSNAME">
-      <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Type Name"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="INCLUDES" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_INCLUDES">
-      <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="List of Class&apos;s include with ABAP Code"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <SOURCE>`
-  includes-classpool = cl_oo_classname_service=&gt;get_classpool_name( clsname ).
-  includes-pubsec    = cl_oo_classname_service=&gt;get_pubsec_name( clsname ).
-  includes-prosec    = cl_oo_classname_service=&gt;get_prosec_name( clsname ).
-  includes-prisec    = cl_oo_classname_service=&gt;get_prisec_name( clsname ).
-  includes-cl        = cl_oo_classname_service=&gt;get_cl_name( clsname ).
-  includes-ccdef     = cl_oo_classname_service=&gt;get_ccdef_name( clsname ).
-  includes-ccimp     = cl_oo_classname_service=&gt;get_ccimp_name( clsname ).
-  includes-ccmac     = cl_oo_classname_service=&gt;get_ccmac_name( clsname ).
-  CALL METHOD cl_oo_classname_service=&gt;get_all_method_includes
-    EXPORTING
-      clsname            = clsname
-    receiving
-      RESULT             = includes-methods
-    EXCEPTIONS
-      class_not_existing = 0
-      others             = 0.   &quot; Ignore exception : Class may not exits
-          .</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TD_COMP_DESC" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="6 ">
     <TEXTS>
@@ -1081,7 +1108,7 @@ DATA: _t   LIKE LINE OF texts.
   ENDLOOP.
   IF NOT _d-texts IS INITIAL. INSERT _d INTO TABLE documentation. ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TO_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 ">
+   <ITEM CMPNAME="TO_DATA" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert object attributes to FM Data"/>
     </TEXTS>
@@ -1331,7 +1358,7 @@ DATA: _t   LIKE LINE OF texts.
 *ENHANCEMENT_exVENTS TYPE  ENHCLASSTABEVENT
 *ENHANCEMENT_IMPLEMENTINGS  TYPE  ENHCLASSTABIMPLEMENTING</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNANONYMIZE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 ">
+   <ITEM CMPNAME="UNANONYMIZE" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="6 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
     </TEXTS>
@@ -1402,8 +1429,15 @@ DATA: _t   LIKE LINE OF texts.
 **DEFERRED : OK</SOURCE>
    </ITEM>
   </METHODS>
+  <TEXTSPOOL>
+   <ITEM ID="I" KEY="CMT">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY='&quot;Auto commented by ZAPLINK_OBJECT connector and added as Explicit type group' LENGTH="80 "/>
+    </TEXTS>
+   </ITEM>
+  </TEXTSPOOL>
   <TYPEGROUPS>
-   <ITEM TYPEGROUP="ABAP" VERSION="1" IMPLICIT="X"/>
+   <ITEM TYPEGROUP="ABAP" VERSION="1" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEOF" VERSION="1" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEOK" VERSION="1" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEOO" VERSION="1" EXPLICIT="X"/>

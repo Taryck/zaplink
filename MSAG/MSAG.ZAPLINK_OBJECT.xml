@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A16EE6264FE5C068E19A9F3F20274412" CONNECTOR="1FAC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="MSAG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="3F13EE39CC17C1675E6D41892018F2DE" CONNECTOR="1FAC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="MSAG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA MASTERLANG="E" RESPUSER="TBENSIAL"/>
@@ -21,6 +21,23 @@ ASCheck that class &amp;V2&amp; is OK (compile). If so try to copy it and use th
   new class for export.
 ASIf none of this solutions works please send this case for support the
   connector&apos;s developer, here goto ZAPLink home site.
+U1&amp;SYS_ADMIN&amp;
+AS</LONG_TXT>
+     </ITEM>
+    </TEXTS>
+   </ITEM>
+   <ITEM MSGNR="001" APPLICATION="DOKU" TYP="E" DOKFORM="S_DOCU_SHOW" DOKSTYLE="S_DOCUS1">
+    <TEXTS>
+     <ITEM LANGU="E" SHORT_TXT="Type-Pool &amp;1 has been added to &amp;2 as explicit">
+      <LONG_TXT TDFRELES="700" TDLINESIZE="072">U1&amp;CAUSE&amp;
+ASType-Pool &amp;V1&amp; has been added to &amp;V2&amp; as explicit, because implicit
+  type-pool declaration has been found in &amp;V3&amp;.
+U1&amp;SYSTEM_RESPONSE&amp;
+ASComponent &amp;V2&amp; has been modified : Type pool &amp;V1&amp; has been explicitly
+  added.
+U1&amp;WHAT_TO_DO&amp;
+ASCheck that component &amp;V2&amp; can be properly activated. If you have any
+  doubt, please re-export the component &amp;V2&amp;.
 U1&amp;SYS_ADMIN&amp;
 AS</LONG_TXT>
      </ITEM>
