@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9DAEB28379F9C38EEC600B148FED6678" CODE_SIGNATURE="9F94E834551D7282881ABE016014176D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_COMPONENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="18C59E9D537B493FEAE6E16D199DF217" CODE_SIGNATURE="31942E94E523303567FB4D39F1E68D6B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_COMPONENT" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S">
@@ -50,42 +50,42 @@ AS</DOCUMENTATION>
    </ITEM>
   </ATTRIBUTS>
   <EXCEPTIONS_TEXTS>
-   <ITEM>
+   <ITEM EDITORDER="13 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="SAP Link Component Root Exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_CLASS">
+   <ITEM CMPNAME="INVALID_CLASS" EDITORDER="13 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Class &apos;&amp;CONNCLASS&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNCLASS&amp;&apos;"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_CONNECTOR">
+   <ITEM CMPNAME="INVALID_CONNECTOR" EDITORDER="13 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Connector &apos;&amp;CONNCLASS&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; can&apos;t be instancied due to exception &apos;&amp;CX_NAME&amp;&apos;"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_EXCEPTION">
+   <ITEM CMPNAME="INVALID_EXCEPTION" EDITORDER="13 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Can&apos;t set Exception to the provided object type : &apos;&amp;OBJTYPE&amp;&apos;"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_MSG_COLL">
+   <ITEM CMPNAME="INVALID_MSG_COLL" EDITORDER="13 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Can&apos;t set Message Collector to the provided object type : &apos;&amp;OBJTYPE&amp;&apos;"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_SUBCOMPONENTS">
+   <ITEM CMPNAME="INVALID_SUBCOMPONENTS" EDITORDER="13 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Can&apos;t set sub-components list to the provided object type : &apos;&amp;OBJTYPE&amp;&apos;"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_TYPE">
+   <ITEM CMPNAME="INVALID_TYPE" EDITORDER="13 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Type &apos;&amp;TYPE&amp;&apos; is not assigned to a ZAPLINK connector and is not a known SAPobject type (transaction SE01)."/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TWICE_CLASS">
+   <ITEM CMPNAME="TWICE_CLASS" EDITORDER="13 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Class &apos;&amp;CONNCLASS&amp;&apos; loaded twice."/>
     </TEXTS>

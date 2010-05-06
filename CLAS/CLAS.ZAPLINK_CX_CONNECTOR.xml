@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="399323D5779F87E239120E3925A8582B" CODE_SIGNATURE="B24DD2E6405111FB2E415132906F8DB0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_CONNECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="4A3FC956EE0F96A7F4E96165F9487C79" CODE_SIGNATURE="A5D8151E79E2639EE902CE01D79AE1D0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_CONNECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S">
@@ -73,72 +73,72 @@ AS</DOCUMENTATION>
    </ITEM>
   </ATTRIBUTS>
   <EXCEPTIONS_TEXTS>
-   <ITEM>
+   <ITEM EDITORDER="5 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="ZapLink Connectors Root exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="FILE_ERROR">
+   <ITEM CMPNAME="FILE_ERROR" EDITORDER="1 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Error with file"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_CONNECTOR">
+   <ITEM CMPNAME="INVALID_CONNECTOR" EDITORDER="8 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Connector &apos;&amp;CONNCLASS&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; can&apos;t be instancied due to exception &apos;&amp;CX_NAME&amp;&apos;"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_TYPE">
+   <ITEM CMPNAME="INVALID_TYPE" EDITORDER="7 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Type &apos;&amp;TYPE&amp;&apos; is not assigned to a ZAPLINK connector and is not a known SAPobject type (transaction SE01)."/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_UUID">
+   <ITEM CMPNAME="INVALID_UUID" EDITORDER="9 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Class &apos;&amp;CONNUUID&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNUUID&amp;&apos;"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_XML">
+   <ITEM CMPNAME="INVALID_XML" EDITORDER="10 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Invalid XML : Component root node should be &apos;ZL_OBJECT&apos; and not &apos;&amp;NODE_NAME&amp;&apos;"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="NOT_AUTHORIZED">
+   <ITEM CMPNAME="NOT_AUTHORIZED" EDITORDER="2 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Object &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;) can&apos;t be found"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="NOT_FOUND">
+   <ITEM CMPNAME="NOT_FOUND" EDITORDER="3 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Object &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;) can&apos;t be found"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="OBJECT_LOCKED">
+   <ITEM CMPNAME="OBJECT_LOCKED" EDITORDER="4 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Object &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;) is allready locked"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TWICE_CLASS">
+   <ITEM CMPNAME="TWICE_CLASS" EDITORDER="6 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Class &apos;&amp;CONNCLASS&amp;&apos; loaded twice."/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TWICE_UUID">
+   <ITEM CMPNAME="TWICE_UUID" EDITORDER="14 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Class &apos;&amp;CONNCLASS&amp;&apos; and &apos;&amp;OTHERCLASS&amp;&apos; have the same UUID : &apos;&amp;CONNUUID&amp;&apos;."/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TYPE_NOT_SUPPORTED">
+   <ITEM CMPNAME="TYPE_NOT_SUPPORTED" EDITORDER="12 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="UNSUPORTED_VERSION">
+   <ITEM CMPNAME="UNSUPORTED_VERSION" EDITORDER="11 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="Version &apos;&amp;CONN_VER&amp;&apos; is not (or no longer) suported by this connector."/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="XML_ERROR">
+   <ITEM CMPNAME="XML_ERROR" EDITORDER="23 ">
     <TEXTS>
      <ITEM LANGU="E" SHORT_TXT="XML Error on component (&amp;TYPE&amp;) &amp;NAME&amp; =&gt; User abort"/>
     </TEXTS>
