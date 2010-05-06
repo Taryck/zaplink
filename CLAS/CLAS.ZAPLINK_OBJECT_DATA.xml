@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="054551B75F1426FB7A42B221E6960C7C" CODE_SIGNATURE="76900F126D9DF49538C200F413B0F99D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="26AC0CC00D147BF50A3930D139BD3272" CODE_SIGNATURE="9E9F46B2707B1F1E11959595A8CE7393" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -54,30 +54,30 @@ AS</DOCUMENTATION>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DOCUMENTATION" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_DOCS"/>
-   <ITEM CMPNAME="DOC_IDS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="9 " ATTDECLTYP="2" TYPTYPE="4" TYPESRC="BEGIN OF doc_ids,
-      begin of class,
-*table TDCLT
-*DOKCLASS DOKTITEL
-*CA       Class attribute
-*CE       Class event
-*CL       Class
-*CO       Class method
-*CT       Class type
-        header    TYPE td_doc_id VALUE &apos;CL&apos;,
-        attribute TYPE td_doc_id VALUE &apos;CA&apos;,
-        method    TYPE td_doc_id VALUE &apos;CO&apos;,
-        event     TYPE td_doc_id VALUE &apos;CE&apos;,
-        type      TYPE td_doc_id VALUE &apos;CT&apos;,
-      end of class,
-      begin of interface,
-        header    TYPE td_doc_id VALUE &apos;IF&apos;,
-        attribute TYPE td_doc_id VALUE &apos;IA&apos;,
-        method    TYPE td_doc_id VALUE &apos;IO&apos;,
-        event     TYPE td_doc_id VALUE &apos;IE&apos;,
-        type      TYPE td_doc_id VALUE &apos;IT&apos;,   &quot; does not exists yet
-      end of interface,
-    END OF doc_ids
-"/>
+   <ITEM CMPNAME="DOC_IDS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="9 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF doc_ids,
+      begin of class,
+*table TDCLT
+*DOKCLASS DOKTITEL
+*CA       Class attribute
+*CE       Class event
+*CL       Class
+*CO       Class method
+*CT       Class type
+        header    TYPE td_doc_id VALUE &apos;CL&apos;,
+        attribute TYPE td_doc_id VALUE &apos;CA&apos;,
+        method    TYPE td_doc_id VALUE &apos;CO&apos;,
+        event     TYPE td_doc_id VALUE &apos;CE&apos;,
+        type      TYPE td_doc_id VALUE &apos;CT&apos;,
+      end of class,
+      begin of interface,
+        header    TYPE td_doc_id VALUE &apos;IF&apos;,
+        attribute TYPE td_doc_id VALUE &apos;IA&apos;,
+        method    TYPE td_doc_id VALUE &apos;IO&apos;,
+        event     TYPE td_doc_id VALUE &apos;IE&apos;,
+        type      TYPE td_doc_id VALUE &apos;IT&apos;,   &quot; does not exists yet
+      end of interface,
+    END OF doc_ids
+`</ITEM>
    <ITEM CMPNAME="EVENTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_EVENTS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Events"/>
@@ -103,11 +103,11 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Method separator"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="OBJECT_TYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="2" TYPTYPE="4" TYPESRC="BEGIN OF Object_types,                                  &quot;#EC NOTEXT
-      class        TYPE td_comptype VALUE &apos;CLAS&apos;,
-      interface    TYPE td_comptype VALUE &apos;INTF&apos;,
-    END OF Object_types
-"/>
+   <ITEM CMPNAME="OBJECT_TYPES" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF Object_types,                                  &quot;#EC NOTEXT
+      class        TYPE td_comptype VALUE &apos;CLAS&apos;,
+      interface    TYPE td_comptype VALUE &apos;INTF&apos;,
+    END OF Object_types
+`</ITEM>
    <ITEM CMPNAME="OBJ_LANGU" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SYLANGU">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Language Key of Current Text Environment"/>
@@ -138,11 +138,11 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="R_DOC_IDS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " ATTDECLTYP="1" TYPTYPE="4" TYPESRC="begin of R_DOC_IDS,
-      class       type TR_DOCID,
-      interface   type TR_DOCID,
-    end of R_DOC_IDS
-"/>
+   <ITEM CMPNAME="R_DOC_IDS" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="8 " ATTDECLTYP="1" TYPTYPE="4">begin of R_DOC_IDS,
+      class       type TR_DOCID,
+      interface   type TR_DOCID,
+    end of R_DOC_IDS
+`</ITEM>
    <ITEM CMPNAME="TYPEGROUPS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_TYPEGROUPS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s type pool used"/>
@@ -752,7 +752,8 @@ AS</DOCUMENTATION>
     WHERE clsname = obj_name.
     CLEAR _at.
     _at-hdr = &lt;at&gt;.
-
+    _at-_ = _at-typesrc. CLEAR _at-typesrc.                 &quot; Issue 68
+    REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;cr_lf IN _at-_ WITH cl_abap_char_utilities=&gt;newline. &quot; Issue 68
     _at-texts = fd_comp_desc( descriptions = fm_data-component_desc
                                         id = id
                              documentation = fm_data-documentation
@@ -818,8 +819,8 @@ AS</DOCUMENTATION>
           WHERE clsname = obj_name.
     CLEAR _ty.
     _ty-hdr = &lt;ty&gt;.
-    _ty-_ = _ty-typesrc. CLEAR _ty-typesrc.
-    REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;cr_lf IN _ty-_ WITH cl_abap_char_utilities=&gt;newline.
+    _ty-_ = _ty-typesrc. CLEAR _ty-typesrc.                 &quot; Issue 68
+    REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;cr_lf IN _ty-_ WITH cl_abap_char_utilities=&gt;newline. &quot; Issue 68
 
     _ty-texts = fd_comp_desc( descriptions = fm_data-component_desc
                                         id = id
@@ -834,15 +835,7 @@ AS</DOCUMENTATION>
 *ALIASES  TYPE  SEOO_atLIASES_R
   LOOP AT fm_data-aliases ASSIGNING &lt;al&gt;
           WHERE clsname = obj_name.
-    CLEAR _al.
-    _al-hdr = &lt;al&gt;.
-
-*    _al-texts = fd_comp_desc( descriptions = fm_data-component_desc   &quot; no documentation or text for alias yet
-*                                        id = space
-*                             documentation = fm_data-documentation
-*                                 component = &lt;al&gt;-cmpname ).
-
-    CLEAR: _al-clsname. &quot; VERSION
+    CLEAR _al.    _al-hdr = &lt;al&gt;.   CLEAR: _al-clsname. &quot; VERSION
     INSERT _al INTO TABLE aliases.
   ENDLOOP.
 
@@ -1146,11 +1139,6 @@ DATA: _t   LIKE LINE OF texts.
 
 ********  maindata-textpool = zaplink_program=&gt;get_textpool( fm_data-includes-classpool ).
 
-* Should be useless
-*  maindata-sources-public-_ = zaplink_program=&gt;get_source( fm_data-includes-pubsec ).
-*  maindata-sources-protected-_ = zaplink_program=&gt;get_source( fm_data-includes-prosec ).
-*  maindata-sources-private-_ = zaplink_program=&gt;get_source( fm_data-includes-prisec ).
-
 * to handle version 1.0
   APPEND LINES OF documentation TO fm_data-documentation.
 
@@ -1199,6 +1187,8 @@ DATA: _t   LIKE LINE OF texts.
   LOOP AT attributs ASSIGNING &lt;at&gt;.
     CLEAR _at.
     _at = &lt;at&gt;-hdr.
+    _at-typesrc = &lt;at&gt;-_.                                   &quot; Issue 68
+    REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;newline IN _at-typesrc WITH cl_abap_char_utilities=&gt;cr_lf.
 
     CALL METHOD td_comp_desc
       EXPORTING
@@ -1310,8 +1300,7 @@ DATA: _t   LIKE LINE OF texts.
   LOOP AT types ASSIGNING &lt;ty&gt;.
     CLEAR _ty.
     _ty = &lt;ty&gt;-hdr.
-    _ty-typesrc = &lt;ty&gt;-_.
-*    REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;cr_lf IN _ty-_ WITH cl_abap_char_utilities=&gt;newline.
+    _ty-typesrc = &lt;ty&gt;-_.                                   &quot; Issue 68
     REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;newline IN _ty-typesrc WITH cl_abap_char_utilities=&gt;cr_lf.
 
     CALL METHOD me-&gt;td_comp_desc
@@ -1478,6 +1467,7 @@ DATA: _t   LIKE LINE OF texts.
     INCLUDE TYPE seoo_attribute_r AS hdr.
     TYPES:
         texts   TYPE tt_seocompotx_l,
+        _       TYPE td_abapsource,
       END OF ts_attr_data
 `
     <TEXTS>
