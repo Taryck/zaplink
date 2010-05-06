@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E972240BFFEAE9486B62FBB95C7E39BC" CODE_SIGNATURE="25CABC05FE7ABDB819BBB23E3536719D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DATATYPES" TYPE="INTF" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8D622C99B81737520EA1A23B1DA2FFF7" CODE_SIGNATURE="25CABC05FE7ABDB819BBB23E3536719D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DATATYPES" TYPE="INTF" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" RELEASE="1" UNICODE="X">
@@ -18,11 +18,12 @@
      <ITEM LANGU="E" DESCRIPT="Name of the node in XML that belongs to component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="233 " SRCCOLUMN1="4 " SRCROW2="236 " SRCCOLUMN2="16 " TYPESRC_LENG="138 " TYPESRC="BEGIN OF exists,
-      exists     TYPE td_exists VALUE abap_true,
-      not_exists TYPE td_exists VALUE abap_false,
-    END OF exists
-">
+   <ITEM CMPNAME="EXISTS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF exists,
+      exists     TYPE td_exists VALUE abap_true,
+      not_exists TYPE td_exists VALUE abap_false,
+    END OF exists
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Do exists"/>
     </TEXTS>
@@ -47,14 +48,15 @@
      <ITEM LANGU="E" DESCRIPT="Line separator Code =&gt; String"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TEXTPOOL_KINDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4" SRCROW1="238 " SRCCOLUMN1="4 " SRCROW2="244 " SRCCOLUMN2="24 " TYPESRC_LENG="490 " TYPESRC="BEGIN OF textpool_kinds,
-      prog_title  TYPE td_txtp_kind VALUE &apos;R&apos;, &quot; R - Program title
-      list_title  TYPE td_txtp_kind VALUE &apos;T&apos;, &quot; T - List Title: Titlebar
-      list_header TYPE td_txtp_kind VALUE &apos;H&apos;, &quot; H 001 to 004 List header: Column headings
-      text_symbol TYPE td_txtp_kind VALUE &apos;I&apos;, &quot; I Text symbol identifier Text symbol text
-      parameters  TYPE td_txtp_kind VALUE &apos;S&apos;, &quot; S Name of a parameter or selection criterion Selection text
-    END OF textpool_kinds
-">
+   <ITEM CMPNAME="TEXTPOOL_KINDS" VERSION="1" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF textpool_kinds,
+      prog_title  TYPE td_txtp_kind VALUE &apos;R&apos;, &quot; R - Program title
+      list_title  TYPE td_txtp_kind VALUE &apos;T&apos;, &quot; T - List Title: Titlebar
+      list_header TYPE td_txtp_kind VALUE &apos;H&apos;, &quot; H 001 to 004 List header: Column headings
+      text_symbol TYPE td_txtp_kind VALUE &apos;I&apos;, &quot; I Text symbol identifier Text symbol text
+      parameters  TYPE td_txtp_kind VALUE &apos;S&apos;, &quot; S Name of a parameter or selection criterion Selection text
+    END OF textpool_kinds
+`
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Text pool possible kinds"/>
     </TEXTS>
