@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="6AB578C9B8671BC7C411CC68C1AA1681" CODE_SIGNATURE="96BFAA0E4D4966F38703CD72C7229715" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="16A9527A859BBFC4E8AF082956F9A1E6" CODE_SIGNATURE="0D61DDE607BE48FEA61BEA289FCEA2E7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -637,9 +637,125 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" VERSION="1" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE"/>
     </PARAMETERS>
     <SOURCE>`
-  READ REPORT PROGRAM INTO result STATE &apos;I&apos;.
+*  DATA d_o_type TYPE  seu_objtyp.
+*  DATA d_o_name TYPE  seu_objkey.
+*  DATA d_object     TYPE e071-object.
+  DATA d_obj_name   TYPE e071-obj_name.
+  DATA d_is_work_i  TYPE abap_bool.
+  DATA d_is_inactiv TYPE abap_bool.
+*  DATA d_prog       TYPE progdir-name.
+
+*  d_is_inactiv = &apos;_&apos;.
+*  CALL FUNCTION &apos;RS_PROGNAME_SPLIT&apos;
+*    EXPORTING
+*      progname_with_namespace           = program
+**   IMPORTING
+**     NAMESPACE                         =
+**     PROGNAME_WITHOUT_NAMESPACE        =
+**     FUGR_IS_NAME                      =
+**     FUGR_IS_RESERVED_NAME             =
+**     FUGR_IS_FUNCTIONPOOL_NAME         =
+**     FUGR_IS_INCLUDE_NAME              =
+**     FUGR_IS_FUNCTIONMODULE_NAME       =
+**     FUGR_IS_HIDDEN_NAME               =
+**     FUGR_GROUP                        =
+**     FUGR_INCLUDE_NUMBER               =
+**     FUGR_SUFFIX                       =
+**     FUGR_IS_RESERVED_EXIT_NAME        =
+**     SLDB_IS_RESERVED_NAME             =
+**     SLDB_LOGDB_NAME                   =
+**     MST_IS_RESERVED_NAME              =
+**     TYPE_IS_RESERVED_NAME             =
+**     TYPE_NAME                         =
+**     MENU_IS_RESERVED_NAME             =
+**     MENU_NAME                         =
+**     CLASS_IS_RESERVED_NAME            =
+**     CLASS_IS_NAME                     =
+**     CLASS_NAME                        =
+**     CLASS_IS_METHOD_NAME              =
+**     CLASS_METHOD_NAME                 =
+**     CNTX_IS_RESERVED_NAME             =
+*    EXCEPTIONS
+*      delimiter_error                   = 1
+*      OTHERS                            = 2.
+*  IF sy-subrc &lt;&gt; 0.
+** MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+**         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+*  ENDIF.
+*
+*  CALL METHOD cl_wb_source_req_dispatcher=&gt;get_object_from_sourcename
+*    EXPORTING
+*      p_source_name       = program
+*    IMPORTING
+*      p_object_type       = d_o_type
+*      p_object_name       = d_o_name
+*    EXCEPTIONS
+*      no_objecttype_found = 1
+*      OTHERS              = 2.
+*  IF sy-subrc = 0.
+*CALL METHOD cl_wb_cleditor=&gt;convert_type_and_name
+*  EXPORTING
+*    object_type   =
+*    mtdkey        =
+*    section_limu  =
+*  IMPORTING
+*    limu          =
+*    incname       =
+*    cpname        =
+*    objtype       =
+*    extension     =
+*  EXCEPTIONS
+*    not_converted = 1
+*    others        = 2
+*        .
+*IF sy-subrc &lt;&gt; 0.
+** MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+**            WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+*ENDIF.
+*
+*    CALL FUNCTION &apos;RS_OBJECT_IN_WORKING_AREA&apos;
+*      EXPORTING
+*        object                        = d_object
+*        obj_name                      = d_obj_name
+**     GLOBAL_CHECK                  = &apos; &apos;
+**     MODE                          = &apos;S&apos;
+*      IMPORTING
+**     OBJECT_IS_WORK_ITEM           =
+*        object_inactive_version       = d_is_inactiv.
+*  ENDIF.
+
+* Issue 73 : Detecting when inactive serion exists
+  d_obj_name = program.
+  CALL FUNCTION &apos;RS_OBJECT_IN_WORKING_AREA&apos;
+    EXPORTING
+      object                        = &apos;REPS&apos;
+      obj_name                      = d_obj_name
+*     GLOBAL_CHECK                  = &apos; &apos;
+*     MODE                          = &apos;S&apos;
+    IMPORTING
+      object_is_work_item           = d_is_work_i     &quot; My inactive object
+      object_inactive_version       = d_is_inactiv.
+
+* Backup solution not very efficient
+*  IF d_is_inactiv = &apos;_&apos;.
+*    SELECT SINGLE program INTO d_prog
+*      FROM progdir
+*      WHERE name = program
+*       AND state = &apos;I&apos;.
+*    IF sy-subrc = 0.
+*      d_is_inactiv = abap_true.
+*    ELSE.
+*      CLEAR d_is_inactiv.
+*    ENDIF.
+*  ENDIF.
+
+  IF NOT d_is_work_i IS INITIAL OR NOT d_is_inactiv IS INITIAL.
+    READ REPORT program INTO result STATE &apos;I&apos;.
+  ELSE.
+    sy-subrc = 4.
+  ENDIF.
   IF sy-subrc &lt;&gt; 0.
-    READ REPORT PROGRAM INTO result STATE &apos;A&apos;.
+    READ REPORT program INTO result STATE &apos;A&apos;.
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_PROG_SOURCE" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
