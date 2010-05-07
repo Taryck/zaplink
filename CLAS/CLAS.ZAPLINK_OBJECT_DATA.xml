@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3153EBC7BD6ED7C33ED01C29EF203E57" CODE_SIGNATURE="251F67B6D1AAF301AF308F86532B4AD1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
- <DEPENDENCIES>
-  <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT"/>
- </DEPENDENCIES>
+<ZL_OBJECT CHECKSUM="0AE8BAA2CD276223A967079127C9F86F" CODE_SIGNATURE="E1AAB7666EF5B2118AADCDE343A6FCB6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -157,11 +154,6 @@ AS</DOCUMENTATION>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
-  <DEFERRED>
-   <CLASSES>
-    <ITEM TYPEGROUP="ZAPLINK_OBJECT" VERSION="1" TPUTYPE="1" IMPLICIT="X"/>
-   </CLASSES>
-  </DEFERRED>
   <FRIENDS>
    <ITEM REFCLSNAME="ZAPLINK_EASYXML" VERSION="1" STATE="1"/>
    <ITEM REFCLSNAME="ZAPLINK_OBJECT" VERSION="1" STATE="1"/>
@@ -577,9 +569,9 @@ DATA: _t   LIKE LINE OF texts.
   DATA s_key  TYPE ts_doc_key.
   DATA s_txt  LIKE LINE OF texts.
   FIELD-SYMBOLS:
-    &lt;d&gt;    LIKE LINE OF documentation,
-    &lt;dt&gt;   LIKE LINE OF &lt;d&gt;-texts,
+*    &lt;d&gt;    LIKE LINE OF documentation,
     &lt;doc&gt;  LIKE LINE OF documentation,
+    &lt;dt&gt;   LIKE LINE OF &lt;doc&gt;-texts,
     &lt;desc&gt; LIKE LINE OF descriptions.
 
 * Issue 33 : Documentation connected to text
@@ -696,7 +688,7 @@ AS</DOCUMENTATION>
   DATA _di  LIKE LINE OF deferred-interfaces.
   DATA id   TYPE doku_id.
   FIELD-SYMBOLS:
-    &lt;m_&gt;  LIKE LINE OF fm_data-includes-methods,
+*    &lt;m_&gt;  LIKE LINE OF fm_data-includes-methods,
     &lt;at&gt;  LIKE LINE OF fm_data-attributes,
     &lt;al&gt;  LIKE LINE OF fm_data-aliases,
     &lt;me&gt;  LIKE LINE OF fm_data-methods,
