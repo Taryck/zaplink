@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="30C8B2CAAFD6706CB254B369BEF4BFC3" CODE_SIGNATURE="9EA1B34B2FB4C793EFF63DFCE699B39B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="BA11CFF5F854539368DC56FE2B025613" CODE_SIGNATURE="16259C4A67AC34E76385393E4AB4281B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -61,14 +61,14 @@ AS,,Introducing : Screen &amp; Menu data</DOCUMENTATION>
 *&quot;* definitions, interfaces or data types) you need for method
 *&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE
 
-TYPE-POOLS: seoo, seos, seot.
-INCLUDE lseokd01.</TYPES>
+*TYPE-POOLS: seoo, seos, seot.
+*INCLUDE lseokd01.</TYPES>
    <IMPLEMENTATIONS>`
 *&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
 *&quot;* use this source file for the implementation part of
 *&quot;* LOCAL HELPER CLASSES
 
-INCLUDE lseokp01.</IMPLEMENTATIONS>
+*INCLUDE lseokp01.</IMPLEMENTATIONS>
    <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS
@@ -439,14 +439,15 @@ INCLUDE zaplink_macros.</MACROS>
 * Issue 71 : Code signature different due to slight change in sections
       check_clas_sections( _d ).
 * Issue 71 : Code signature different due to implicite type-pool declaration within public, protected or private section
-* Clean-up unused implicite type pool usages (MS 20060921)
-      DATA type_pool_usage_cleaner TYPE REF TO lcl_type_pool_usage_cleaner.
-      TRY.
-          type_pool_usage_cleaner = lcl_type_pool_usage_cleaner=&gt;create( classkey ).
-          type_pool_usage_cleaner-&gt;clean_up( ).
-        CATCH lcx_internal_error.                       &quot;#EC NO_HANDLER
-*     No handler needed here =&gt; default behavior
-      ENDTRY.
+* From SEO_CLIF_SAVE_ALL
+** Clean-up unused implicite type pool usages (MS 20060921)
+*      DATA type_pool_usage_cleaner TYPE REF TO lcl_type_pool_usage_cleaner.
+*      TRY.
+*          type_pool_usage_cleaner = lcl_type_pool_usage_cleaner=&gt;create( classkey ).
+*          type_pool_usage_cleaner-&gt;clean_up( ).
+*        CATCH lcx_internal_error.                       &quot;#EC NO_HANDLER
+**     No handler needed here =&gt; default behavior
+*      ENDTRY.
 
 *      DELETE _d-typeusages WHERE version &lt;&gt; _d-class-version.   &quot; Remove type usage of the wrong version
 * Type-pools declaration might be present within method&apos;s declaration section (auto added by SAP when needed).
@@ -1015,52 +1016,60 @@ INCLUDE zaplink_macros.</MACROS>
   FIELD-SYMBOLS &lt;source_line&gt; TYPE seo_section_source_line.
 
   incname = cl_oo_classname_service=&gt;get_classpool_name( class_name-clsname ).
-  READ REPORT incname INTO cpool STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT incname INTO cpool STATE &apos;A&apos;.
-  ENDIF.
+  cpool = get_prog_rawsource( incname ).                                          &quot; Issue 73
+*  READ REPORT incname INTO cpool STATE &apos;I&apos;.
+*  IF sy-subrc &lt;&gt; 0.
+*    READ REPORT incname INTO cpool STATE &apos;A&apos;.
+*  ENDIF.
 
   pubsec_incname = cl_oo_classname_service=&gt;get_pubsec_name( class_name-clsname ).
-  READ REPORT pubsec_incname INTO pubsec STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT pubsec_incname INTO pubsec STATE &apos;A&apos;.
-  ENDIF.
+  pubsec = get_prog_rawsource( pubsec_incname ).                                  &quot; Issue 73
+*  READ REPORT pubsec_incname INTO pubsec STATE &apos;I&apos;.
+*  IF sy-subrc &lt;&gt; 0.
+*    READ REPORT pubsec_incname INTO pubsec STATE &apos;A&apos;.
+*  ENDIF.
 
   prosec_incname = cl_oo_classname_service=&gt;get_prosec_name( class_name-clsname ).
-  READ REPORT prosec_incname INTO prosec STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT prosec_incname INTO prosec STATE &apos;A&apos;.
-  ENDIF.
+  prosec = get_prog_rawsource( prosec_incname ).                                  &quot; Issue 73
+*  READ REPORT prosec_incname INTO prosec STATE &apos;I&apos;.
+*  IF sy-subrc &lt;&gt; 0.
+*    READ REPORT prosec_incname INTO prosec STATE &apos;A&apos;.
+*  ENDIF.
 
   prisec_incname = cl_oo_classname_service=&gt;get_prisec_name( class_name-clsname ).
-  READ REPORT prisec_incname INTO prisec STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT prisec_incname INTO prisec STATE &apos;A&apos;.
-  ENDIF.
+  prisec = get_prog_rawsource( prisec_incname ).                                  &quot; Issue 73
+*  READ REPORT prisec_incname INTO prisec STATE &apos;I&apos;.
+*  IF sy-subrc &lt;&gt; 0.
+*    READ REPORT prisec_incname INTO prisec STATE &apos;A&apos;.
+*  ENDIF.
 
   cl_incname = cl_oo_classname_service=&gt;get_cl_name( class_name-clsname ).
-  READ REPORT cl_incname INTO cl STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT cl_incname INTO cl STATE &apos;A&apos;.
-  ENDIF.
+  cl = get_prog_rawsource( cl_incname ).                                          &quot; Issue 73
+*  READ REPORT cl_incname INTO cl STATE &apos;I&apos;.
+*  IF sy-subrc &lt;&gt; 0.
+*    READ REPORT cl_incname INTO cl STATE &apos;A&apos;.
+*  ENDIF.
 
   ccdef_incname = cl_oo_classname_service=&gt;get_ccdef_name( class_name-clsname ).
-  READ REPORT ccdef_incname INTO ccdef STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT ccdef_incname INTO ccdef STATE &apos;A&apos;.
-  ENDIF.
+  ccdef = get_prog_rawsource( ccdef_incname ).                                    &quot; Issue 73
+*  READ REPORT ccdef_incname INTO ccdef STATE &apos;I&apos;.
+*  IF sy-subrc &lt;&gt; 0.
+*    READ REPORT ccdef_incname INTO ccdef STATE &apos;A&apos;.
+*  ENDIF.
 
   ccimp_incname = cl_oo_classname_service=&gt;get_ccimp_name( class_name-clsname ).
-  READ REPORT ccimp_incname INTO ccimp STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT ccimp_incname INTO ccimp STATE &apos;A&apos;.
-  ENDIF.
+  ccimp = get_prog_rawsource( ccimp_incname ).                                    &quot; Issue 73
+*  READ REPORT ccimp_incname INTO ccimp STATE &apos;I&apos;.
+*  IF sy-subrc &lt;&gt; 0.
+*    READ REPORT ccimp_incname INTO ccimp STATE &apos;A&apos;.
+*  ENDIF.
 
   ccmac_incname = cl_oo_classname_service=&gt;get_ccmac_name( class_name-clsname ).
-  READ REPORT ccmac_incname INTO ccmac STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT ccmac_incname INTO ccmac STATE &apos;A&apos;.
-  ENDIF.
+  ccmac = get_prog_rawsource( ccmac_incname ).                                    &quot; Issue 73
+*  READ REPORT ccmac_incname INTO ccmac STATE &apos;I&apos;.
+*  IF sy-subrc &lt;&gt; 0.
+*    READ REPORT ccmac_incname INTO ccmac STATE &apos;A&apos;.
+*  ENDIF.
 
   meth_incs = cl_oo_classname_service=&gt;get_all_method_includes( class_name-clsname ).
 
@@ -1085,18 +1094,13 @@ INCLUDE zaplink_macros.</MACROS>
       APPEND LINES OF ccmac TO result.
     ELSEIF &lt;source_line&gt; CS &apos;include methods&apos;.
       LOOP AT meth_incs INTO meth_inc.
-        READ REPORT meth_inc-incname INTO source_tmp STATE &apos;I&apos;.
-        IF sy-subrc &lt;&gt; 0.
-          READ REPORT meth_inc-incname INTO source_tmp STATE &apos;A&apos;.
-        ENDIF.
-        IF sy-subrc = 0.
-** Issue 68 : Method (and endmethod) declaration is not case sensible, but when using pretty printer method and endmethod could change from default (method MY_METHOD.) =&gt; UPCASE
-*          READ TABLE source_tmp ASSIGNING &lt;line&gt; INDEX 1.
-*          TRANSLATE &lt;line&gt; TO UPPER CASE.
-*          d_size = LINES( source_tmp ).
-*          READ TABLE source_tmp ASSIGNING &lt;line&gt; INDEX d_size.
-*          TRANSLATE &lt;line&gt; TO UPPER CASE.
-** End of change in Copy of CL_OO_SOURCE-&gt;CONSTRUCTOR
+        source_tmp = get_prog_rawsource( meth_inc-incname ).                     &quot; Issue 73
+*        READ REPORT meth_inc-incname INTO source_tmp STATE &apos;I&apos;.
+*        IF sy-subrc &lt;&gt; 0.
+*          READ REPORT meth_inc-incname INTO source_tmp STATE &apos;A&apos;.
+*        ENDIF.
+*        IF sy-subrc = 0.
+        IF NOT source_tmp IS INITIAL.
           APPEND LINES OF source_tmp TO result.
         ENDIF.
       ENDLOOP.
