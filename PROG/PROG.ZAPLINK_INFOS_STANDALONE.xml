@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B7F8AA7D98E289208AF45E6810D5C368" CODE_SIGNATURE="983FA77DEDD5C8472B93D7BD30F8C37F" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS_STANDALONE" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="DD721F199F2690FD75E70173690D8A93" CODE_SIGNATURE="4F0765461BDF6BC79503E30F0C3B5263" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS_STANDALONE" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="1" RSTAT="T" RMAND="200" RLOAD="E" UCCHECK="X"/>
@@ -759,13 +759,13 @@ public section.
       value(FM_DATA) type TS_FM_DATA .
   methods ANONYMIZE .
   methods UNANONYMIZE .
-PROTECTED SECTION.
-  ALIASES td_doc_id
-    FOR zaplink_datatypes~td_doc_id .
-  ALIASES tr_docid
-    FOR zaplink_datatypes~tr_docid .
-  CLASS-DATA r_doc_ids TYPE tr_docid .
-  CONSTANTS:
+protected section.
+  aliases TD_DOC_ID
+    for ZAPLINK_DATATYPES~TD_DOC_ID .
+  aliases TR_DOCID
+    for ZAPLINK_DATATYPES~TR_DOCID .
+  class-data R_DOC_IDS type TR_DOCID .
+  constants:
     BEGIN OF doc_ids,
       header TYPE td_doc_id VALUE &apos;DO&apos;,
     END OF doc_ids .
@@ -808,72 +808,72 @@ public section.
       value(FM_DATA) type TS_FM_DATA .
   methods ANONYMIZE .
   methods UNANONYMIZE .
-PROTECTED SECTION.
-  ALIASES td_doc_id
-    FOR zaplink_datatypes~td_doc_id .
-  ALIASES tr_docid
-    FOR zaplink_datatypes~tr_docid .
-  CLASS-DATA r_doc_ids TYPE tr_docid .
-  CONSTANTS:
+protected section.
+  aliases TD_DOC_ID
+    for ZAPLINK_DATATYPES~TD_DOC_ID .
+  aliases TR_DOCID
+    for ZAPLINK_DATATYPES~TR_DOCID .
+  class-data R_DOC_IDS type TR_DOCID .
+  constants:
     BEGIN OF doc_ids,
       header TYPE td_doc_id VALUE &apos;DE&apos;,
     END OF doc_ids .
 private section.
 endclass. &quot;ZAPLINK_DTEL_DATA definition
-CLASS zaplink_enqu_data DEFINITION
-  INHERITING FROM zaplink_raw_data
-  CREATE PUBLIC
+class ZAPLINK_ENQU_DATA definition
+  inheriting from ZAPLINK_RAW_DATA
+  create public
   FRIENDS ZAPLINK_DICTIONARY
-                 zaplink_easyxml .
-  PUBLIC SECTION.
-    INTERFACES zaplink_datatypes .
-    ALIASES tt_docs
-      FOR zaplink_datatypes~tt_docs .
-    ALIASES tt_texts
-      FOR zaplink_datatypes~tt_texts .
-    TYPES:
-      tt_dd26e TYPE STANDARD TABLE OF dd26e WITH DEFAULT KEY .
-    TYPES:
-      tt_dd27p TYPE STANDARD TABLE OF dd27p WITH DEFAULT KEY .
-    TYPES:
-      tt_dd25t TYPE SORTED TABLE OF dd25t WITH UNIQUE KEY ddlanguage .
-    TYPES:
-      BEGIN OF ts_fm_data,
+                 ZAPLINK_EASYXML .
+public section.
+  interfaces ZAPLINK_DATATYPES .
+  aliases TT_DOCS
+    for ZAPLINK_DATATYPES~TT_DOCS .
+  aliases TT_TEXTS
+    for ZAPLINK_DATATYPES~TT_TEXTS .
+  types:
+    tt_dd26e TYPE STANDARD TABLE OF dd26e WITH DEFAULT KEY .
+  types:
+    tt_dd27p TYPE STANDARD TABLE OF dd27p WITH DEFAULT KEY .
+  types:
+    tt_dd25t TYPE SORTED TABLE OF dd25t WITH UNIQUE KEY ddlanguage .
+  types:
+    BEGIN OF ts_fm_data,
           header        TYPE dd25v,
           texts         TYPE tt_dd25t,
           docs          TYPE tt_docs,
           tables        TYPE tt_dd26e,
           fields        TYPE tt_dd27p,
         END OF ts_fm_data .
-    TYPES:
-      tt_fields TYPE SORTED TABLE OF dd53d WITH UNIQUE KEY viewfield .
-    TYPES:
-      tt_tables TYPE SORTED TABLE OF dd26e WITH UNIQUE KEY tabpos.
-    TYPES:
-      BEGIN OF ts_maindata.
+  types:
+    tt_fields TYPE SORTED TABLE OF dd53d WITH UNIQUE KEY viewfield .
+  types:
+    tt_tables TYPE SORTED TABLE OF dd26e WITH UNIQUE KEY tabpos .
+  types:
+    BEGIN OF ts_maindata.
     INCLUDE TYPE dd25v AS hdr.
     TYPES:
       END OF ts_maindata .
-    DATA a0_maindata TYPE ts_maindata .
-    DATA texts TYPE tt_texts .
-    DATA fields TYPE tt_fields .
-    DATA tables TYPE tt_tables .
-    CLASS-METHODS class_constructor .
-    METHODS from_data
-      IMPORTING
-        !fm_data TYPE ts_fm_data .
-    METHODS to_data
-      RETURNING
-        value(fm_data) TYPE ts_fm_data .
-    METHODS anonymize .
-    METHODS unanonymize .
-PROTECTED SECTION.
-  ALIASES td_doc_id
-    FOR zaplink_datatypes~td_doc_id .
-  ALIASES tr_docid
-    FOR zaplink_datatypes~tr_docid .
-  CLASS-DATA r_doc_ids TYPE tr_docid .
-  CONSTANTS:
+  data A0_MAINDATA type TS_MAINDATA .
+  data TEXTS type TT_TEXTS .
+  data FIELDS type TT_FIELDS .
+  data TABLES type TT_TABLES .
+  class-methods CLASS_CONSTRUCTOR .
+  methods FROM_DATA
+    importing
+      !FM_DATA type TS_FM_DATA .
+  methods TO_DATA
+    returning
+      value(FM_DATA) type TS_FM_DATA .
+  methods ANONYMIZE .
+  methods UNANONYMIZE .
+protected section.
+  aliases TD_DOC_ID
+    for ZAPLINK_DATATYPES~TD_DOC_ID .
+  aliases TR_DOCID
+    for ZAPLINK_DATATYPES~TR_DOCID .
+  class-data R_DOC_IDS type TR_DOCID .
+  constants:
     BEGIN OF doc_ids,
       header TYPE td_doc_id VALUE &apos;TT&apos;,
     END OF doc_ids .
@@ -928,7 +928,7 @@ protected section.
     BEGIN OF ts_doc_param,
       func  TYPE rs38l_fnam,
       param TYPE rs38l_par_,
-    END OF ts_doc_param.
+    END OF ts_doc_param .
   types T_RAW type RSWSOURCET .
   types TO_MENUPAINTER type ref to ZAPLINK_MENUPAINTER_DATA .
   types:
@@ -1090,137 +1090,137 @@ INTERFACE ZAPLINK_KERNEL_TYPES.
   types TO_RAW_BASE type ref to ZAPLINK_RAW_BASE .
   constants BALLOG_OBJECT type BALOBJ_D value &apos;ZAPLINK&apos;. &quot;#EC NOTEXT
 endinterface.
-CLASS zaplink_menupainter_data DEFINITION
-  CREATE PUBLIC
+class ZAPLINK_MENUPAINTER_DATA definition
+  create public
   FRIENDS ZAPLINK_EASYXML .
-  PUBLIC SECTION.
-    INTERFACES zaplink_datatypes .
-    ALIASES tt_texts
-      FOR zaplink_datatypes~tt_texts .
-    TYPES:
-      BEGIN OF ts_mp_text,
+public section.
+  interfaces ZAPLINK_DATATYPES .
+  aliases TT_TEXTS
+    for ZAPLINK_DATATYPES~TT_TEXTS .
+  types:
+    BEGIN OF ts_mp_text,
           langu TYPE rsmptexts-sprsl,
           text  TYPE rsmptexts-text,
         END OF ts_mp_text .
-    TYPES:
-      tt_mp_texts TYPE SORTED TABLE OF ts_mp_text WITH UNIQUE KEY langu .
-    TYPES:
-      BEGIN OF ts_mp_ftext,
+  types:
+    tt_mp_texts TYPE SORTED TABLE OF ts_mp_text WITH UNIQUE KEY langu .
+  types:
+    BEGIN OF ts_mp_ftext,
           langu TYPE rsmptexts-sprsl,
           text  TYPE rsmptexts-text,
           icon  TYPE rsmptexts-text,
           info  TYPE rsmptexts-text,
         END OF ts_mp_ftext .
-    TYPES:
-      tt_mp_ftexts TYPE SORTED TABLE OF ts_mp_ftext WITH UNIQUE KEY langu .
-    TYPES:
-      tt_funcs TYPE SORTED TABLE OF gui_func WITH UNIQUE KEY table_line .
-    TYPES:
-      BEGIN OF ts_status.
+  types:
+    tt_mp_ftexts TYPE SORTED TABLE OF ts_mp_ftext WITH UNIQUE KEY langu .
+  types:
+    tt_funcs TYPE SORTED TABLE OF gui_func WITH UNIQUE KEY table_line .
+  types:
+    BEGIN OF ts_status.
     INCLUDE TYPE rsmpe_sta AS hdr.
     TYPES:
         texts TYPE tt_mp_texts,
         functions TYPE tt_funcs,
       END OF ts_status .
-    TYPES:
-      tt_status TYPE SORTED TABLE OF ts_status WITH UNIQUE KEY code .
-    TYPES:
-      BEGIN OF ts_function.
+  types:
+    tt_status TYPE SORTED TABLE OF ts_status WITH UNIQUE KEY code .
+  types:
+    BEGIN OF ts_function.
     INCLUDE TYPE rsmpe_fun AS hdr.
     TYPES:
         texts         TYPE tt_mp_ftexts,
       END OF ts_function .
-    TYPES:
-      tt_functions TYPE SORTED TABLE OF ts_function WITH UNIQUE KEY code textno.
-    TYPES:
-      tt_menu_details TYPE SORTED TABLE OF rsmpe_men WITH UNIQUE KEY no.
-    TYPES:
-      BEGIN OF ts_menu.
+  types:
+    tt_functions TYPE SORTED TABLE OF ts_function WITH UNIQUE KEY code textno .
+  types:
+    tt_menu_details TYPE SORTED TABLE OF rsmpe_men WITH UNIQUE KEY no .
+  types:
+    BEGIN OF ts_menu.
     INCLUDE TYPE rsmpe_mnl AS hdr.
     TYPES:
         texts        TYPE tt_mp_texts,
         composition  TYPE tt_menu_details,
       END OF ts_menu .
-    TYPES:
-      tt_menus TYPE SORTED TABLE OF ts_menu WITH UNIQUE KEY code.
-    TYPES:
-      tt_bar_details TYPE SORTED TABLE OF rsmpe_act WITH UNIQUE KEY no.
-    TYPES:
-      BEGIN OF ts_bar.
+  types:
+    tt_menus TYPE SORTED TABLE OF ts_menu WITH UNIQUE KEY code .
+  types:
+    tt_bar_details TYPE SORTED TABLE OF rsmpe_act WITH UNIQUE KEY no .
+  types:
+    BEGIN OF ts_bar.
     INCLUDE TYPE rsmpe_atr AS hdr.
     TYPES:
         texts        TYPE tt_mp_texts,
         composition  TYPE tt_bar_details,
       END OF ts_bar .
-    TYPES:
-      tt_bars TYPE SORTED TABLE OF ts_bar WITH UNIQUE KEY obj_code.
-    TYPES:
-      tt_button_details TYPE SORTED TABLE OF rsmpe_but WITH UNIQUE KEY no.
-    TYPES:
-      BEGIN OF ts_button.
+  types:
+    tt_bars TYPE SORTED TABLE OF ts_bar WITH UNIQUE KEY obj_code .
+  types:
+    tt_button_details TYPE SORTED TABLE OF rsmpe_but WITH UNIQUE KEY no .
+  types:
+    BEGIN OF ts_button.
     INCLUDE TYPE rsmpe_atr AS hdr.
     TYPES:
         texts        TYPE tt_mp_texts,
         composition  TYPE tt_button_details,
       END OF ts_button .
-    TYPES:
-      tt_buttons TYPE SORTED TABLE OF ts_button WITH UNIQUE KEY sub_code.
-    TYPES:
-      tt_keyssettings TYPE SORTED TABLE OF rsmpe_pfk WITH UNIQUE KEY pfno.
-    TYPES:
-      BEGIN OF ts_keyboard.
+  types:
+    tt_buttons TYPE SORTED TABLE OF ts_button WITH UNIQUE KEY sub_code .
+  types:
+    tt_keyssettings TYPE SORTED TABLE OF rsmpe_pfk WITH UNIQUE KEY pfno .
+  types:
+    BEGIN OF ts_keyboard.
     INCLUDE TYPE rsmpe_atr AS hdr.
     TYPES:
         texts        TYPE tt_mp_texts,
         keys         TYPE tt_keyssettings,
         pushbuttons  TYPE tt_buttons,
       END OF ts_keyboard .
-    TYPES:
-      tt_keyboards TYPE SORTED TABLE OF ts_keyboard WITH UNIQUE KEY obj_code .
-    TYPES:
-      BEGIN OF ts_attribute.
+  types:
+    tt_keyboards TYPE SORTED TABLE OF ts_keyboard WITH UNIQUE KEY obj_code .
+  types:
+    BEGIN OF ts_attribute.
     INCLUDE TYPE rsmpe_atr AS hdr.
     TYPES:
         texts TYPE tt_mp_texts,
       END OF ts_attribute .
-    TYPES:
-      tt_attributes TYPE SORTED TABLE OF ts_attribute WITH UNIQUE KEY obj_type obj_code sub_code .
-    TYPES:
-      BEGIN OF ts_title.
+  types:
+    tt_attributes TYPE SORTED TABLE OF ts_attribute WITH UNIQUE KEY obj_type obj_code sub_code .
+  types:
+    BEGIN OF ts_title.
     INCLUDE TYPE rsmpe_tit AS hdr.
     TYPES:
         texts TYPE tt_mp_texts,
       END OF ts_title .
-    TYPES:
-      tt_titles TYPE SORTED TABLE OF ts_title WITH UNIQUE KEY code .
-    TYPES:
-      tt_ffuncs TYPE SORTED TABLE OF rsmpe_buts WITH UNIQUE KEY obj_code sub_code .
-    TYPES:
-      tt_stat TYPE STANDARD TABLE OF rsmpe_stat WITH DEFAULT KEY .
-    TYPES:
-      tt_funt TYPE STANDARD TABLE OF rsmpe_funt WITH DEFAULT KEY .
-    TYPES:
-      tt_men TYPE STANDARD TABLE OF rsmpe_men WITH DEFAULT KEY .
-    TYPES:
-      tt_mnlt TYPE STANDARD TABLE OF rsmpe_mnlt WITH DEFAULT KEY .
-    TYPES:
-      tt_act TYPE STANDARD TABLE OF rsmpe_act WITH DEFAULT KEY .
-    TYPES:
-      tt_but TYPE STANDARD TABLE OF rsmpe_but WITH DEFAULT KEY .
-    TYPES:
-      tt_pfk TYPE STANDARD TABLE OF rsmpe_pfk WITH DEFAULT KEY .
-    TYPES:
-      tt_staf TYPE STANDARD TABLE OF rsmpe_staf WITH DEFAULT KEY .
-    TYPES:
-      tt_atrt TYPE STANDARD TABLE OF rsmpe_atrt WITH DEFAULT KEY .
-    TYPES:
-      tt_titt TYPE STANDARD TABLE OF rsmpe_titt WITH DEFAULT KEY .
-    TYPES:
-      tt_buts TYPE STANDARD TABLE OF rsmpe_buts WITH DEFAULT KEY .
-    TYPES:
-      tt_stexts TYPE SORTED TABLE OF rsmptexts WITH UNIQUE KEY obj_type obj_code sub_code texttype sprsl .
-    TYPES:
-      BEGIN OF ts_fm_data,
+  types:
+    tt_titles TYPE SORTED TABLE OF ts_title WITH UNIQUE KEY code .
+  types:
+    tt_ffuncs TYPE SORTED TABLE OF rsmpe_buts WITH UNIQUE KEY obj_code sub_code .
+  types:
+    tt_stat TYPE STANDARD TABLE OF rsmpe_stat WITH DEFAULT KEY .
+  types:
+    tt_funt TYPE STANDARD TABLE OF rsmpe_funt WITH DEFAULT KEY .
+  types:
+    tt_men TYPE STANDARD TABLE OF rsmpe_men WITH DEFAULT KEY .
+  types:
+    tt_mnlt TYPE STANDARD TABLE OF rsmpe_mnlt WITH DEFAULT KEY .
+  types:
+    tt_act TYPE STANDARD TABLE OF rsmpe_act WITH DEFAULT KEY .
+  types:
+    tt_but TYPE STANDARD TABLE OF rsmpe_but WITH DEFAULT KEY .
+  types:
+    tt_pfk TYPE STANDARD TABLE OF rsmpe_pfk WITH DEFAULT KEY .
+  types:
+    tt_staf TYPE STANDARD TABLE OF rsmpe_staf WITH DEFAULT KEY .
+  types:
+    tt_atrt TYPE STANDARD TABLE OF rsmpe_atrt WITH DEFAULT KEY .
+  types:
+    tt_titt TYPE STANDARD TABLE OF rsmpe_titt WITH DEFAULT KEY .
+  types:
+    tt_buts TYPE STANDARD TABLE OF rsmpe_buts WITH DEFAULT KEY .
+  types:
+    tt_stexts TYPE SORTED TABLE OF rsmptexts WITH UNIQUE KEY obj_type obj_code sub_code texttype sprsl .
+  types:
+    BEGIN OF ts_fm_data,
           header        TYPE rsmpe_adm,
           status        TYPE tt_stat,
           functions     TYPE tt_funt,
@@ -1235,15 +1235,15 @@ CLASS zaplink_menupainter_data DEFINITION
           ffuncs        TYPE tt_buts,
           texts         TYPE tt_stexts,
         END OF ts_fm_data .
-    CLASS-METHODS class_constructor .
-    METHODS from_data
-      IMPORTING
-        !fm_data TYPE ts_fm_data .
-    METHODS to_data
-      RETURNING
-        value(fm_data) TYPE ts_fm_data .
-    METHODS anonymize .
-    METHODS unanonymize .
+  class-methods CLASS_CONSTRUCTOR .
+  methods FROM_DATA
+    importing
+      !FM_DATA type TS_FM_DATA .
+  methods TO_DATA
+    returning
+      value(FM_DATA) type TS_FM_DATA .
+  methods ANONYMIZE .
+  methods UNANONYMIZE .
 protected section.
   aliases TD_DOC_ID
     for ZAPLINK_DATATYPES~TD_DOC_ID .
@@ -1368,24 +1368,23 @@ public section.
 protected section.
 private section.
 endclass. &quot;ZAPLINK_MSAG_DATA definition
-CLASS zaplink_opt_base DEFINITION
-  CREATE PUBLIC .
-  PUBLIC SECTION.
-    INTERFACES zaplink_datatypes .
-    ALIASES ballog_object
-      FOR zaplink_datatypes~ballog_object .
-    ALIASES td_devclass
-      FOR zaplink_datatypes~td_devclass .
-    ALIASES td_exists
-      FOR zaplink_datatypes~td_exists .
-    ALIASES td_substitutionkind
-      FOR zaplink_datatypes~td_substitutionkind .
-    ALIASES td_transport_request
-      FOR zaplink_datatypes~td_transport_request .
-    ALIASES ts_directory
-      FOR zaplink_datatypes~ts_directory .
-*    CLASS zaplink_opt_directory DEFINITION LOAD .
-    TYPES to_component TYPE REF TO  zaplink_raw_base.
+class ZAPLINK_OPT_BASE definition
+  create public .
+public section.
+  interfaces ZAPLINK_DATATYPES .
+  aliases BALLOG_OBJECT
+    for ZAPLINK_DATATYPES~BALLOG_OBJECT .
+  aliases TD_DEVCLASS
+    for ZAPLINK_DATATYPES~TD_DEVCLASS .
+  aliases TD_EXISTS
+    for ZAPLINK_DATATYPES~TD_EXISTS .
+  aliases TD_SUBSTITUTIONKIND
+    for ZAPLINK_DATATYPES~TD_SUBSTITUTIONKIND .
+  aliases TD_TRANSPORT_REQUEST
+    for ZAPLINK_DATATYPES~TD_TRANSPORT_REQUEST .
+  aliases TS_DIRECTORY
+    for ZAPLINK_DATATYPES~TS_DIRECTORY .
+  types TO_COMPONENT type ref to ZAPLINK_RAW_BASE .
 protected section.
 private section.
 endclass. &quot;ZAPLINK_OPT_BASE definition
@@ -1536,13 +1535,13 @@ public section.
       value(FM_DATA) type TS_FM_DATA .
   methods ANONYMIZE .
   methods UNANONYMIZE .
-PROTECTED SECTION.
-  ALIASES td_doc_id
-    FOR zaplink_datatypes~td_doc_id .
-  ALIASES tr_docid
-    FOR zaplink_datatypes~tr_docid .
-  CLASS-DATA r_doc_ids TYPE tr_docid .
-  CONSTANTS:
+protected section.
+  aliases TD_DOC_ID
+    for ZAPLINK_DATATYPES~TD_DOC_ID .
+  aliases TR_DOCID
+    for ZAPLINK_DATATYPES~TR_DOCID .
+  class-data R_DOC_IDS type TR_DOCID .
+  constants:
     BEGIN OF doc_ids,
       header TYPE td_doc_id VALUE &apos;TT&apos;,
     END OF doc_ids .
@@ -1641,13 +1640,13 @@ public section.
       value(FM_DATA) type TS_FM_DATA .
   methods ANONYMIZE .
   methods UNANONYMIZE .
-PROTECTED SECTION.
-  ALIASES td_doc_id
-    FOR zaplink_datatypes~td_doc_id .
-  ALIASES tr_docid
-    FOR zaplink_datatypes~tr_docid .
-  CLASS-DATA r_doc_ids TYPE tr_docid .
-  CONSTANTS:
+protected section.
+  aliases TD_DOC_ID
+    for ZAPLINK_DATATYPES~TD_DOC_ID .
+  aliases TR_DOCID
+    for ZAPLINK_DATATYPES~TR_DOCID .
+  class-data R_DOC_IDS type TR_DOCID .
+  constants:
     BEGIN OF doc_ids,
       header TYPE td_doc_id VALUE &apos;TB&apos;,
     END OF doc_ids .
@@ -1675,7 +1674,8 @@ public section.
       keys          TYPE tt_dd42v,
       docs          type tt_docs,
     END OF ts_fm_data .
-  types tt_keys type SORTED TABLE OF dd42v with UNIQUE key KEYFDPOS.
+  types:
+    tt_keys type SORTED TABLE OF dd42v with UNIQUE key KEYFDPOS .
   types:
     BEGIN OF ts_maindata.
     INCLUDE TYPE dd40v AS hdr.
@@ -1683,7 +1683,7 @@ public section.
       END OF ts_maindata .
   data A0_MAINDATA type TS_MAINDATA .
   data TEXTS type TT_TEXTS .
-  data keys type TT_keys .
+  data KEYS type TT_KEYS .
   class-methods CLASS_CONSTRUCTOR .
   methods FROM_DATA
     importing
@@ -1693,13 +1693,13 @@ public section.
       value(FM_DATA) type TS_FM_DATA .
   methods ANONYMIZE .
   methods UNANONYMIZE .
-PROTECTED SECTION.
-  ALIASES td_doc_id
-    FOR zaplink_datatypes~td_doc_id .
-  ALIASES tr_docid
-    FOR zaplink_datatypes~tr_docid .
-  CLASS-DATA r_doc_ids TYPE tr_docid .
-  CONSTANTS:
+protected section.
+  aliases TD_DOC_ID
+    for ZAPLINK_DATATYPES~TD_DOC_ID .
+  aliases TR_DOCID
+    for ZAPLINK_DATATYPES~TR_DOCID .
+  class-data R_DOC_IDS type TR_DOCID .
+  constants:
     BEGIN OF doc_ids,
       header TYPE td_doc_id VALUE &apos;TT&apos;,
     END OF doc_ids .
@@ -1796,13 +1796,13 @@ public section.
       value(FM_DATA) type TS_FM_DATA .
   methods ANONYMIZE .
   methods UNANONYMIZE .
-PROTECTED SECTION.
-  ALIASES td_doc_id
-    FOR zaplink_datatypes~td_doc_id .
-  ALIASES tr_docid
-    FOR zaplink_datatypes~tr_docid .
-  CLASS-DATA r_doc_ids TYPE tr_docid .
-  CONSTANTS:
+protected section.
+  aliases TD_DOC_ID
+    for ZAPLINK_DATATYPES~TD_DOC_ID .
+  aliases TR_DOCID
+    for ZAPLINK_DATATYPES~TR_DOCID .
+  class-data R_DOC_IDS type TR_DOCID .
+  constants:
     BEGIN OF doc_ids,
       header TYPE td_doc_id VALUE &apos;VW&apos;,
     END OF doc_ids .
@@ -3049,9 +3049,6 @@ protected section.
   class-data _MSG_COLL type TO_MSG_COLL .
   class-data _CLASSES type TT_CLASSES .
   constants LOCAL_DEVCLASS type TD_DEVCLASS value &apos;$LOCAL$&apos;. &quot;#EC NOTEXT
-  class-methods GET_CONNECTORLIST
-    returning
-      value(RESULT) type TO_LIST .
   class-methods _SEARCH_CONNECTOR
     importing
       !TYPE type TD_COMPTYPE
@@ -3059,6 +3056,9 @@ protected section.
       value(RESULT) type TS_CONN_DEF
     raising
       ZAPLINK_CX_CONNECTOR .
+  class-methods GET_CONNECTORLIST
+    returning
+      value(RESULT) type TO_LIST .
   class-methods _ADD_CONNECTOR
     importing
       !CLASS type TD_CONNCLASS
@@ -3501,6 +3501,7 @@ endclass. &quot;ZAPLINK_EASYXML definition
 class ZAPLINK_LIST definition
   create public .
 public section.
+  type-pools ABAP .
   type-pools SLIS .
   interfaces ZAPLINK_DATATYPES .
   aliases TD_ORDERKIND
@@ -4221,8 +4222,7 @@ public section.
   types TO_LOG type ref to ZAPLINK_MESSAGE_COLLECTOR .
   types TO_ROOT_EXCEPTION type ref to ZAPLINK_CX .
   types TO_TR type ref to ZAPLINK_OPT_TRANSPORT_REQUEST .
-*  class ZAPLINK_OPT_BASE definition load .
-  types TO_COMPONENT type ref to ZAPLINK_raw_BASE.
+  types TO_COMPONENT type ref to ZAPLINK_RAW_BASE .
   constants BALLOG_SUBOBJECT type BALSUBOBJ value &apos;DIRECTORY&apos;. &quot;#EC NOTEXT
   constants:
     BEGIN OF substitutionkinds,
@@ -5374,48 +5374,48 @@ protected section.
   data DEF_NAME type EXIT_DEF .
 private section.
 endclass. &quot;ZAPLINK_BADI_DATA definition
-CLASS zaplink_clas_data DEFINITION
-  INHERITING FROM zaplink_object_data
-  FINAL
-  CREATE PUBLIC
+class ZAPLINK_CLAS_DATA definition
+  inheriting from ZAPLINK_OBJECT_DATA
+  final
+  create public
   FRIENDS ZAPLINK_EASYXML
-                 zaplink_object .
-  PUBLIC SECTION.
-    TYPE-POOLS seof .
-    TYPE-POOLS seok .
-    TYPE-POOLS seoo .
-    TYPE-POOLS seor .
-    TYPE-POOLS seos .
-    TYPE-POOLS seot .
-    ALIASES tt_texts
-      FOR zaplink_datatypes~tt_texts .
-    TYPES to_msg_col TYPE REF TO zaplink_message_collector .
-    TYPES:
-      BEGIN OF ts_exception_text,
+                 ZAPLINK_OBJECT .
+public section.
+  type-pools SEOF .
+  type-pools SEOK .
+  type-pools SEOO .
+  type-pools SEOR .
+  type-pools SEOS .
+  type-pools SEOT .
+  aliases TT_TEXTS
+    for ZAPLINK_DATATYPES~TT_TEXTS .
+  types TO_MSG_COL type ref to ZAPLINK_MESSAGE_COLLECTOR .
+  types:
+    BEGIN OF ts_exception_text,
         cmpname   TYPE seoo_attribute_r-cmpname,      &quot; Issue 62 : Reorg Exception text
         editorder TYPE seoo_attribute_r-editorder,    &quot; Issue 71 : Keep SOTR Attribut order
         texts     TYPE tt_texts,
       END OF ts_exception_text .
-    TYPES:
-      tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname .
-    TYPES:
-      BEGIN OF ts_locals,
+  types:
+    tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname .
+  types:
+    BEGIN OF ts_locals,
           types           TYPE ts_sourceasstruc,
           implementations TYPE ts_sourceasstruc,
           macros          TYPE ts_sourceasstruc,
         END OF ts_locals .
-    TYPES:
-      BEGIN OF ts_redefinition.
+  types:
+    BEGIN OF ts_redefinition.
     INCLUDE TYPE seoredef AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
     TYPES:
         source  TYPE ts_sourceasstruc,
       END OF ts_redefinition .
-    TYPES:
-      tt_redefinitions TYPE SORTED TABLE OF ts_redefinition WITH UNIQUE KEY mtdname .
-    TYPES:
-      tt_friends    TYPE SORTED TABLE OF seofriends WITH UNIQUE KEY refclsname friendtype .
-    TYPES:
-      BEGIN OF ts_class_data.
+  types:
+    tt_redefinitions TYPE SORTED TABLE OF ts_redefinition WITH UNIQUE KEY mtdname .
+  types:
+    tt_friends    TYPE SORTED TABLE OF seofriends WITH UNIQUE KEY refclsname friendtype .
+  types:
+    BEGIN OF ts_class_data.
     INCLUDE TYPE vseoclass AS hdr.
     TYPES:
         inheritance TYPE vseoextend,
@@ -5423,29 +5423,29 @@ CLASS zaplink_clas_data DEFINITION
         textpool    TYPE tt_txtp_textpools,
         sources     TYPE ts_sources,
       END OF ts_class_data .
-    DATA a0_maindata TYPE ts_class_data .
-    DATA friends TYPE tt_friends .
-    DATA redefinitions TYPE tt_redefinitions .
-    DATA local TYPE ts_locals .
-    DATA exceptions_texts TYPE tt_exceptions_texts .
-    DATA textspool TYPE tt_txtp_textpools .
-    DATA dynpros TYPE tt_dynpros .
-    EVENTS my_event2 .
-    CLASS-METHODS update_concept
-      IMPORTING
-        !msg_col TYPE to_msg_col
-      CHANGING
-        !fm_data TYPE t_fm_data
-      RAISING
-        zaplink_cx_connector .
-    METHODS anonymize
-      REDEFINITION .
-    METHODS complete_data
-      REDEFINITION .
-    METHODS from_data
-      REDEFINITION .
-    METHODS to_data
-      REDEFINITION .
+  data A0_MAINDATA type TS_CLASS_DATA .
+  data FRIENDS type TT_FRIENDS .
+  data REDEFINITIONS type TT_REDEFINITIONS .
+  data LOCAL type TS_LOCALS .
+  data EXCEPTIONS_TEXTS type TT_EXCEPTIONS_TEXTS .
+  data TEXTSPOOL type TT_TXTP_TEXTPOOLS .
+  data DYNPROS type TT_DYNPROS .
+  events MY_EVENT2 .
+  class-methods UPDATE_CONCEPT
+    importing
+      !MSG_COL type TO_MSG_COL
+    changing
+      !FM_DATA type T_FM_DATA
+    raising
+      ZAPLINK_CX_CONNECTOR .
+  methods ANONYMIZE
+    redefinition .
+  methods COMPLETE_DATA
+    redefinition .
+  methods FROM_DATA
+    redefinition .
+  methods TO_DATA
+    redefinition .
 protected section.
   data MENUPAINTER type TO_MENUPAINTER .
 private section.
@@ -6085,7 +6085,6 @@ public section.
       value(RESULT) type TD_SOURCECODE
     exceptions
       NOT_A_CLASS .
-*  class ZAPLINK_OBJECT_DATA definition load .
   class-methods GET_INCLUDES
     importing
       !CLSNAME type SEOCLSNAME
@@ -6110,7 +6109,6 @@ public section.
   methods ZAPLINK_CONNECTOR~WRITE_TO_SAP
     redefinition .
 protected section.
-*  class ZAPLINK_OBJECT_DATA definition load .
   types T_FM_DATA type ZAPLINK_OBJECT_DATA=&gt;T_FM_DATA .
   types TO_CLASS type ref to ZAPLINK_CLAS_DATA .
   types TO_INTERFACE type ref to ZAPLINK_INTF_DATA .
@@ -6122,6 +6120,44 @@ protected section.
     exporting
       !NEW_SOURCECODE type TT_ABAPRAWSOURCE
       !NEW_TYPEPOOLS type SEOT_TYPEPUSAGES_R .
+  methods IMPORT_TO_SAP_CLASS
+    importing
+      !O_DATA type TO_CLASS
+    returning
+      value(COMPONENTS) type TO_LIST
+    raising
+      ZAPLINK_CX_CONNECTOR .
+  methods EXPORT_FROM_SAP_CLASS
+    importing
+      !COMPONENT type TO_COMPONENT
+    returning
+      value(OBJECT) type TO_CLASS
+    raising
+      ZAPLINK_CX_CONNECTOR .
+  methods EXPORT_FROM_SAP_INTERFACE
+    importing
+      !COMPONENT type TO_COMPONENT
+    returning
+      value(OBJECT) type TO_INTERFACE
+    raising
+      ZAPLINK_CX_CONNECTOR .
+  methods IMPORT_TO_SAP_INTERFACE
+    importing
+      !O_DATA type TO_INTERFACE
+    returning
+      value(COMPONENTS) type TO_LIST
+    raising
+      ZAPLINK_CX_CONNECTOR .
+  methods CHECK_CLAS_SECTIONS
+    importing
+      !CLASS type T_FM_DATA
+    raising
+      ZAPLINK_CX_CONNECTOR .
+  methods CHECK_INTF_SECTION
+    importing
+      !INTERFACE type T_FM_DATA
+    raising
+      ZAPLINK_CX_CONNECTOR .
 private section.
   types:
     BEGIN OF ts_bapi_data,
@@ -6156,34 +6192,6 @@ private section.
   constants _UUID type TD_CONNUUID value &apos;39AC0A4B07A5A05AE1000000AC120173&apos;. &quot;#EC NOTEXT
   constants _VER type TD_CONNVER value &apos;1.01&apos;. &quot;#EC NOTEXT
   constants BALLOG_SUBOBJECT type BALSUBOBJ value &apos;CNX_OBJECT&apos;. &quot;#EC NOTEXT
-  methods IMPORT_TO_SAP_CLASS
-    importing
-      !O_DATA type TO_CLASS
-    returning
-      value(COMPONENTS) type TO_LIST
-    raising
-      ZAPLINK_CX_CONNECTOR .
-  methods EXPORT_FROM_SAP_CLASS
-    importing
-      !COMPONENT type TO_COMPONENT
-    returning
-      value(OBJECT) type TO_CLASS
-    raising
-      ZAPLINK_CX_CONNECTOR .
-  methods EXPORT_FROM_SAP_INTERFACE
-    importing
-      !COMPONENT type TO_COMPONENT
-    returning
-      value(OBJECT) type TO_INTERFACE
-    raising
-      ZAPLINK_CX_CONNECTOR .
-  methods IMPORT_TO_SAP_INTERFACE
-    importing
-      !O_DATA type TO_INTERFACE
-    returning
-      value(COMPONENTS) type TO_LIST
-    raising
-      ZAPLINK_CX_CONNECTOR .
   class-methods GET_CLASS_GLOBALSOURCE_
     importing
       !CLASS_NAME type SEOCLSKEY
@@ -6477,20 +6485,20 @@ public section.
     redefinition .
 protected section.
   types TO_DATA type ref to ZAPLINK_TRAN_DATA .
-PRIVATE SECTION.
-  CONSTANTS st_transaction TYPE td_comptype VALUE &apos;TRAN&apos;.   &quot;#EC NOTEXT
-  CLASS-DATA r_doc_id TYPE tr_docid .
-  CONSTANTS _uuid TYPE td_connuuid VALUE &apos;A816684B5215E22AE1000000AC120173&apos;. &quot;#EC NOTEXT
-  CONSTANTS _ver TYPE td_connver VALUE &apos;1.0&apos;.               &quot;#EC NOTEXT
-  CONSTANTS c_msg_id TYPE td_doc_id VALUE &apos;NA&apos;.             &quot;#EC NOTEXT
-  CONSTANTS:
+private section.
+  constants ST_TRANSACTION type TD_COMPTYPE value &apos;TRAN&apos;. &quot;#EC NOTEXT
+  class-data R_DOC_ID type TR_DOCID .
+  constants _UUID type TD_CONNUUID value &apos;A816684B5215E22AE1000000AC120173&apos;. &quot;#EC NOTEXT
+  constants _VER type TD_CONNVER value &apos;1.0&apos;. &quot;#EC NOTEXT
+  constants C_MSG_ID type TD_DOC_ID value &apos;NA&apos;. &quot;#EC NOTEXT
+  constants:
     BEGIN OF t_component,
       program TYPE td_comptype VALUE &apos;PROG&apos;,
       object TYPE td_comptype VALUE &apos;CLAS&apos;,
       transaction TYPE td_comptype VALUE st_transaction,
       functionpool TYPE td_comptype VALUE &apos;FUGR&apos;,
     END OF t_component .
-  CONSTANTS:
+  constants:
     BEGIN OF transaction_types,   &quot; FROM LSEUKTOP(93)
       transaction  TYPE x VALUE &apos;00&apos;,               &quot; Transaktion         T
       menu         TYPE x VALUE &apos;01&apos;,               &quot; Bereichsmenü        M
@@ -6500,7 +6508,7 @@ PRIVATE SECTION.
       object       TYPE x VALUE &apos;08&apos;,               &quot; Transactional object
       check        TYPE x VALUE &apos;04&apos;,               &quot; With autjority check
       enqueue      TYPE x VALUE &apos;20&apos;,                       &quot; With SM01
-    END OF transaction_types.
+    END OF transaction_types .
 endclass. &quot;ZAPLINK_TRANSACTION definition
 class ZAPLINK_TRAN_DATA definition
   inheriting from ZAPLINK_RAW_DATA
@@ -14088,7 +14096,6 @@ METHOD from_data.
   DATA _di  LIKE LINE OF deferred-interfaces.
   DATA id   TYPE doku_id.
   FIELD-SYMBOLS:
-    &lt;m_&gt;  LIKE LINE OF fm_data-includes-methods,
     &lt;at&gt;  LIKE LINE OF fm_data-attributes,
     &lt;al&gt;  LIKE LINE OF fm_data-aliases,
     &lt;me&gt;  LIKE LINE OF fm_data-methods,
@@ -14507,43 +14514,47 @@ METHOD complete_data.
   ENDLOOP.
 ENDMETHOD.
 METHOD anonymize.
+  DATA s_al  LIKE LINE OF aliases.
   DATA s_at LIKE LINE OF attributs.
-  FIELD-SYMBOLS:
-    &lt;ev&gt;    LIKE LINE OF events.
-  DATA s_in LIKE LINE OF interfaces.
+  FIELD-SYMBOLS &lt;ev&gt;    LIKE LINE OF events.
+  FIELD-SYMBOLS &lt;in&gt;    LIKE LINE OF interfaces.
+  DATA s_co  LIKE LINE OF &lt;in&gt;-components.
   DATA s_ty  LIKE LINE OF types.
-  FIELD-SYMBOLS:
-    &lt;me&gt;    LIKE LINE OF methods.
+  DATA s_tg  LIKE LINE OF typegroups.
+  FIELD-SYMBOLS &lt;me&gt;    LIKE LINE OF methods.
   DATA s_pa  LIKE LINE OF &lt;me&gt;-parameters.
   DATA s_ex  LIKE LINE OF &lt;me&gt;-exceptions.
-  MODIFY attributs FROM s_at TRANSPORTING author createdon changedby changedon r3release
+  DATA s_dc  LIKE LINE OF deferred-classes.
+  DATA s_di  LIKE LINE OF deferred-interfaces.
+  MODIFY aliases FROM s_al TRANSPORTING version             &quot; Issue 75
+         WHERE NOT cmpname IS INITIAL OR cmpname IS INITIAL.
+  MODIFY attributs FROM s_at TRANSPORTING author createdon changedby changedon r3release version &quot; Issue 75
          WHERE NOT cmpname IS INITIAL OR cmpname IS INITIAL.
   LOOP AT events ASSIGNING &lt;ev&gt;.
-    CLEAR:
-      &lt;ev&gt;-author,
-      &lt;ev&gt;-createdon,
-      &lt;ev&gt;-changedby,
-      &lt;ev&gt;-changedon,
-      &lt;ev&gt;-r3release.
-    MODIFY &lt;ev&gt;-parameters FROM s_pa TRANSPORTING author createdon changedby changedon
+    CLEAR: &lt;ev&gt;-author, &lt;ev&gt;-createdon, &lt;ev&gt;-changedby, &lt;ev&gt;-changedon, &lt;ev&gt;-r3release, &lt;ev&gt;-version. &quot; Issue 75
+    MODIFY &lt;ev&gt;-parameters FROM s_pa TRANSPORTING author createdon changedby changedon  version &quot; Issue 75
            WHERE NOT cmpname IS INITIAL OR cmpname IS INITIAL.
   ENDLOOP.
-  MODIFY interfaces FROM s_in TRANSPORTING author createdon changedby changedon
-         WHERE NOT refclsname IS INITIAL.
+  LOOP AT interfaces ASSIGNING &lt;in&gt;.
+    CLEAR: &lt;in&gt;-author, &lt;in&gt;-createdon, &lt;in&gt;-changedby, &lt;in&gt;-changedon, &lt;in&gt;-version. &quot; Issue 75
+    MODIFY &lt;in&gt;-components FROM s_co TRANSPORTING version   &quot; Issue 75
+           WHERE NOT clsname IS INITIAL OR clsname IS INITIAL.
+  ENDLOOP.
   LOOP AT methods ASSIGNING &lt;me&gt;.
-    CLEAR:
-      &lt;me&gt;-author,
-      &lt;me&gt;-createdon,
-      &lt;me&gt;-changedby,
-      &lt;me&gt;-changedon,
-      &lt;me&gt;-r3release.
-    MODIFY &lt;me&gt;-parameters FROM s_pa TRANSPORTING author createdon changedby changedon
+    CLEAR: &lt;me&gt;-author, &lt;me&gt;-createdon, &lt;me&gt;-changedby, &lt;me&gt;-changedon, &lt;me&gt;-r3release, &lt;me&gt;-version. &quot; Issue 75
+    MODIFY &lt;me&gt;-parameters FROM s_pa TRANSPORTING author createdon changedby changedon version &quot; Issue 75
            WHERE NOT sconame IS INITIAL OR sconame IS INITIAL. &quot; Issue 22
-    MODIFY &lt;me&gt;-exceptions FROM s_ex TRANSPORTING author createdon changedby changedon
+    MODIFY &lt;me&gt;-exceptions FROM s_ex TRANSPORTING author createdon changedby changedon version &quot; Issue 75
            WHERE NOT sconame IS INITIAL OR sconame IS INITIAL. &quot; Issue 22
   ENDLOOP.
-  MODIFY types FROM s_ty TRANSPORTING author createdon changedby changedon r3release
+  MODIFY typegroups FROM s_tg TRANSPORTING version          &quot; Issue 75
+         WHERE NOT clsname IS INITIAL OR clsname IS INITIAL.
+  MODIFY types FROM s_ty TRANSPORTING author createdon changedby changedon r3release version &quot; Issue 75
          WHERE NOT cmpname IS INITIAL OR cmpname IS INITIAL.
+  MODIFY deferred-classes FROM s_dc TRANSPORTING version    &quot; Issue 75
+         WHERE NOT clsname IS INITIAL OR clsname IS INITIAL.
+  MODIFY deferred-interfaces FROM s_di TRANSPORTING version &quot; Issue 75
+         WHERE NOT clsname IS INITIAL OR clsname IS INITIAL.
 ENDMETHOD.
 METHOD UNANONYMIZE.
 ENDMETHOD.
@@ -14593,9 +14604,8 @@ METHOD fd_text.
   DATA s_key  TYPE ts_doc_key.
   DATA s_txt  LIKE LINE OF texts.
   FIELD-SYMBOLS:
-    &lt;d&gt;    LIKE LINE OF documentation,
-    &lt;dt&gt;   LIKE LINE OF &lt;d&gt;-texts,
     &lt;doc&gt;  LIKE LINE OF documentation,
+    &lt;dt&gt;   LIKE LINE OF &lt;doc&gt;-texts,
     &lt;desc&gt; LIKE LINE OF descriptions.
   LOOP AT descriptions ASSIGNING &lt;desc&gt;
        WHERE clsname = classname.
@@ -14962,12 +14972,27 @@ METHOD conv_abap_source2raw.
     ENDIF.
   ENDIF.
 ENDMETHOD.
-method GET_PROG_RAWSOURCE.
-  READ REPORT PROGRAM INTO result STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT PROGRAM INTO result STATE &apos;A&apos;.
+METHOD get_prog_rawsource.
+  DATA d_obj_name   TYPE e071-obj_name.
+  DATA d_is_work_i  TYPE abap_bool.
+  DATA d_is_inactiv TYPE abap_bool.
+  d_obj_name = program.
+  CALL FUNCTION &apos;RS_OBJECT_IN_WORKING_AREA&apos;
+    EXPORTING
+      object                        = &apos;REPS&apos;
+      obj_name                      = d_obj_name
+    IMPORTING
+      object_is_work_item           = d_is_work_i     &quot; My inactive object
+      object_inactive_version       = d_is_inactiv.
+  IF NOT d_is_work_i IS INITIAL OR NOT d_is_inactiv IS INITIAL.
+    READ REPORT program INTO result STATE &apos;I&apos;.
+  ELSE.
+    sy-subrc = 4.
   ENDIF.
-endmethod.
+  IF sy-subrc &lt;&gt; 0.
+    READ REPORT program INTO result STATE &apos;A&apos;.
+  ENDIF.
+ENDMETHOD.
 method GET_PROG_SOURCE.
   DATA code TYPE tt_abaprawsource.
   code = get_prog_rawsource( program ).
@@ -18458,6 +18483,8 @@ METHOD from_data.
   DATA _mk  TYPE seocpdkey.
   DATA _source TYPE zaplink_program=&gt;ts_source.
   FIELD-SYMBOLS:
+    &lt;dc&gt;  LIKE LINE OF deferred-classes,
+    &lt;di&gt;  LIKE LINE OF deferred-interfaces,
     &lt;m_&gt;  LIKE LINE OF fm_data-includes-methods,
     &lt;im&gt;  LIKE LINE OF fm_data-implementings,
     &lt;ei&gt;  LIKE LINE OF fm_data-explore_implementings,
@@ -18502,7 +18529,7 @@ METHOD from_data.
            AND locked = abap_true
            AND type = &apos;SOTR_CONC&apos;
            AND NOT attvalue IS INITIAL.
-      CLEAR _cx_text.   MOVE-CORRESPONDING &lt;at&gt; to _cx_text. &quot; Issue 71.
+      CLEAR _cx_text.   MOVE-CORRESPONDING &lt;at&gt; TO _cx_text. &quot; Issue 71.
       READ TABLE fm_data-exceptions_texts ASSIGNING &lt;cx&gt;
            WITH TABLE KEY cmpname = _cx_text-cmpname.
       IF sy-subrc &lt;&gt; 0.
@@ -18520,7 +18547,7 @@ METHOD from_data.
         ENDIF.
         INSERT _text INTO TABLE _cx_text-texts.
       ENDLOOP.
-      IF &lt;at&gt;-cmpname = a0_maindata-clsname. clear _cx_text-cmpname. ENDIF.  &quot; do not repeat self exception text : Issue 64
+      IF &lt;at&gt;-cmpname = a0_maindata-clsname. CLEAR _cx_text-cmpname. ENDIF.  &quot; do not repeat self exception text : Issue 64
       INSERT _cx_text INTO TABLE exceptions_texts.
       DELETE _fm_data-attributes.                 &quot; exception text no logner an attribute
     ENDLOOP.
@@ -18603,6 +18630,14 @@ METHOD from_data.
     INSERT _re INTO TABLE redefinitions.
   ENDLOOP.
   IF NOT redefinitions IS INITIAL.    CLEAR _dep.   _dep-type = object_types-class.   _dep-name = a0_maindata-inheritance-refclsname. INSERT _dep INTO TABLE _dependencies.   ENDIF.
+  LOOP AT deferred-classes ASSIGNING &lt;dc&gt;.
+    CLEAR _dep.   _dep-type = object_types-class.   _dep-name = &lt;dc&gt;-typegroup.
+    INSERT _dep INTO TABLE _dependencies.
+  ENDLOOP.
+  LOOP AT deferred-interfaces ASSIGNING &lt;di&gt;.
+    CLEAR _dep.   _dep-type = object_types-interface.   _dep-name = &lt;di&gt;-typegroup.
+    INSERT _dep INTO TABLE _dependencies.
+  ENDLOOP.
   clear_tags( ).
 ENDMETHOD.
 METHOD to_data.
@@ -19024,22 +19059,14 @@ METHOD update_concept.
 ENDMETHOD.
 METHOD anonymize.
   DATA s_fr LIKE LINE OF friends.
-  DATA s_et LIKE LINE OF exceptions_texts.
+  DATA s_re LIKE LINE OF redefinitions.
   super-&gt;anonymize( ).
-  CLEAR:
-    a0_maindata-author,
-    a0_maindata-createdon,
-    a0_maindata-changedby,
-    a0_maindata-changedon,
-    a0_maindata-chgdanyby,
-    a0_maindata-chgdanyon,
-    a0_maindata-r3release,
-    a0_maindata-inheritance-author,
-    a0_maindata-inheritance-createdon,
-    a0_maindata-inheritance-changedby,
-    a0_maindata-inheritance-changedon.
-  MODIFY friends FROM s_fr TRANSPORTING author createdon changedby changedon
-         WHERE NOT refclsname IS INITIAL OR refclsname IS INITIAL.                &quot; Issue 68
+  CLEAR: a0_maindata-author, a0_maindata-createdon, a0_maindata-changedby, a0_maindata-changedon, a0_maindata-chgdanyby, a0_maindata-chgdanyon, a0_maindata-r3release,
+    a0_maindata-inheritance-author, a0_maindata-inheritance-createdon, a0_maindata-inheritance-changedby, a0_maindata-inheritance-changedon, a0_maindata-inheritance-version. &quot; Issue 75
+  MODIFY friends FROM s_fr TRANSPORTING author createdon changedby changedon version &quot; Issue 75
+         WHERE NOT refclsname IS INITIAL OR refclsname IS INITIAL. &quot; Issue 68
+  MODIFY redefinitions FROM s_re TRANSPORTING version       &quot; Issue 75
+         WHERE NOT refclsname IS INITIAL OR refclsname IS INITIAL.
 ENDMETHOD.
 endclass. &quot;ZAPLINK_CLAS_DATA implementation
 class ZAPLINK_COMPONENT_4INST implementation.
@@ -21346,6 +21373,7 @@ METHOD export_from_sap_class.
       load_clas( EXPORTING classkey = classkey
                         CHANGING _d = _d ).
       _d-includes = get_includes( _d-class-clsname ).
+      check_clas_sections( _d ).
       DATA code      TYPE tt_abaprawsource.
       DATA new_code  TYPE tt_abaprawsource.
       DATA t_typegrp TYPE seot_typepusages_r.
@@ -21645,6 +21673,8 @@ METHOD export_from_sap_interface.
         application_log-&gt;add_symsg( ).
         RAISE EXCEPTION o_mycx.
       ENDIF.
+      _d-includes = get_includes( _d-interface-clsname ).
+      check_intf_section( _d ).
       docu_key-name = component-&gt;get_name( ).
       docu_key-other = &apos;*&apos;.
       obj_mask = docu_key.
@@ -22196,45 +22226,21 @@ METHOD get_class_globalsource_.
   DATA source_tmp TYPE seop_source_string.
   FIELD-SYMBOLS &lt;source_line&gt; TYPE seo_section_source_line.
   incname = cl_oo_classname_service=&gt;get_classpool_name( class_name-clsname ).
-  READ REPORT incname INTO cpool STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT incname INTO cpool STATE &apos;A&apos;.
-  ENDIF.
+  cpool = get_prog_rawsource( incname ).                                          &quot; Issue 73
   pubsec_incname = cl_oo_classname_service=&gt;get_pubsec_name( class_name-clsname ).
-  READ REPORT pubsec_incname INTO pubsec STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT pubsec_incname INTO pubsec STATE &apos;A&apos;.
-  ENDIF.
+  pubsec = get_prog_rawsource( pubsec_incname ).                                  &quot; Issue 73
   prosec_incname = cl_oo_classname_service=&gt;get_prosec_name( class_name-clsname ).
-  READ REPORT prosec_incname INTO prosec STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT prosec_incname INTO prosec STATE &apos;A&apos;.
-  ENDIF.
+  prosec = get_prog_rawsource( prosec_incname ).                                  &quot; Issue 73
   prisec_incname = cl_oo_classname_service=&gt;get_prisec_name( class_name-clsname ).
-  READ REPORT prisec_incname INTO prisec STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT prisec_incname INTO prisec STATE &apos;A&apos;.
-  ENDIF.
+  prisec = get_prog_rawsource( prisec_incname ).                                  &quot; Issue 73
   cl_incname = cl_oo_classname_service=&gt;get_cl_name( class_name-clsname ).
-  READ REPORT cl_incname INTO cl STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT cl_incname INTO cl STATE &apos;A&apos;.
-  ENDIF.
+  cl = get_prog_rawsource( cl_incname ).                                          &quot; Issue 73
   ccdef_incname = cl_oo_classname_service=&gt;get_ccdef_name( class_name-clsname ).
-  READ REPORT ccdef_incname INTO ccdef STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT ccdef_incname INTO ccdef STATE &apos;A&apos;.
-  ENDIF.
+  ccdef = get_prog_rawsource( ccdef_incname ).                                    &quot; Issue 73
   ccimp_incname = cl_oo_classname_service=&gt;get_ccimp_name( class_name-clsname ).
-  READ REPORT ccimp_incname INTO ccimp STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT ccimp_incname INTO ccimp STATE &apos;A&apos;.
-  ENDIF.
+  ccimp = get_prog_rawsource( ccimp_incname ).                                    &quot; Issue 73
   ccmac_incname = cl_oo_classname_service=&gt;get_ccmac_name( class_name-clsname ).
-  READ REPORT ccmac_incname INTO ccmac STATE &apos;I&apos;.
-  IF sy-subrc &lt;&gt; 0.
-    READ REPORT ccmac_incname INTO ccmac STATE &apos;A&apos;.
-  ENDIF.
+  ccmac = get_prog_rawsource( ccmac_incname ).                                    &quot; Issue 73
   meth_incs = cl_oo_classname_service=&gt;get_all_method_includes( class_name-clsname ).
   SORT meth_incs BY cpdkey.         &quot; Issue 68 : Force alphabetic order
   LOOP AT cpool ASSIGNING &lt;source_line&gt;.
@@ -22254,11 +22260,8 @@ METHOD get_class_globalsource_.
       APPEND LINES OF ccmac TO result.
     ELSEIF &lt;source_line&gt; CS &apos;include methods&apos;.
       LOOP AT meth_incs INTO meth_inc.
-        READ REPORT meth_inc-incname INTO source_tmp STATE &apos;I&apos;.
-        IF sy-subrc &lt;&gt; 0.
-          READ REPORT meth_inc-incname INTO source_tmp STATE &apos;A&apos;.
-        ENDIF.
-        IF sy-subrc = 0.
+        source_tmp = get_prog_rawsource( meth_inc-incname ).                     &quot; Issue 73
+        IF NOT source_tmp IS INITIAL.
           APPEND LINES OF source_tmp TO result.
         ENDIF.
       ENDLOOP.
@@ -22351,25 +22354,203 @@ METHOD load_clas.
     RAISE EXCEPTION o_mycx.
   ENDIF.
 ENDMETHOD.
-method GET_INCLUDES.
-  includes-classpool = cl_oo_classname_service=&gt;get_classpool_name( clsname ).
-  includes-pubsec    = cl_oo_classname_service=&gt;get_pubsec_name( clsname ).
-  includes-prosec    = cl_oo_classname_service=&gt;get_prosec_name( clsname ).
-  includes-prisec    = cl_oo_classname_service=&gt;get_prisec_name( clsname ).
-  includes-cl        = cl_oo_classname_service=&gt;get_cl_name( clsname ).
-  includes-ccdef     = cl_oo_classname_service=&gt;get_ccdef_name( clsname ).
-  includes-ccimp     = cl_oo_classname_service=&gt;get_ccimp_name( clsname ).
-  includes-ccmac     = cl_oo_classname_service=&gt;get_ccmac_name( clsname ).
-  CALL METHOD cl_oo_classname_service=&gt;get_all_method_includes
+METHOD get_includes.
+  data d_CIFKEY  TYPE SEOCLSKEY.
+  DATA d_clstype TYPE seoclstype.
+  d_cifkey-clsname = clsname.
+  CALL FUNCTION &apos;SEO_CLIF_GET&apos;
     EXPORTING
-      clsname            = clsname
-    receiving
-      RESULT             = includes-methods
+      cifkey             = d_cifkey
+    IMPORTING
+      clstype            = d_clstype
     EXCEPTIONS
-      class_not_existing = 0
-      others             = 0.   &quot; Ignore exception : Class may not exits
-          .
-endmethod.
+      not_existing       = 1
+      deleted            = 2
+      model_only         = 3
+      OTHERS             = 4.
+  IF sy-subrc = 0.
+    IF d_clstype EQ 0.
+      includes-classpool = cl_oo_classname_service=&gt;get_classpool_name( clsname ).
+      includes-pubsec    = cl_oo_classname_service=&gt;get_pubsec_name( clsname ).
+      includes-prosec    = cl_oo_classname_service=&gt;get_prosec_name( clsname ).
+      includes-prisec    = cl_oo_classname_service=&gt;get_prisec_name( clsname ).
+      includes-cl        = cl_oo_classname_service=&gt;get_cl_name( clsname ).
+      includes-ccdef     = cl_oo_classname_service=&gt;get_ccdef_name( clsname ).
+      includes-ccimp     = cl_oo_classname_service=&gt;get_ccimp_name( clsname ).
+      includes-ccmac     = cl_oo_classname_service=&gt;get_ccmac_name( clsname ).
+      CALL METHOD cl_oo_classname_service=&gt;get_all_method_includes
+        EXPORTING
+          clsname            = clsname
+        RECEIVING
+          result             = includes-methods
+        EXCEPTIONS
+          class_not_existing = 0
+          OTHERS             = 0.   &quot; Ignore exception : Class may not exits
+    ELSEIF d_clstype EQ 1.
+      includes-interfacepool = cl_oo_classname_service=&gt;get_interfacepool_name( clsname ).
+      includes-intfsec       = cl_oo_classname_service=&gt;get_intfsec_name( clsname ).
+    ENDIF.
+  ENDIF.
+ENDMETHOD.
+METHOD check_clas_sections.
+  DATA pubsec_source TYPE seo_section_source.
+  DATA prosec_source TYPE seo_section_source.
+  DATA prisec_source TYPE seo_section_source.
+  DATA code          TYPE tt_abaprawsource.
+  DATA classkey      TYPE seoclskey.
+  classkey-clsname = class-class-clsname.
+  CALL FUNCTION &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+    EXPORTING
+      clskey                               = classkey
+      public                               = seox_true
+      protected                            = seox_true
+      private                              = seox_true
+      return_generated_sections_only       = seox_true
+    IMPORTING
+      pubsec_source                        = pubsec_source
+      prosec_source                        = prosec_source
+      prisec_source                        = prisec_source
+    EXCEPTIONS
+      not_existing                         = 1
+      model_only                           = 2
+      public_sec_not_generated             = 3
+      protected_sec_not_generated          = 4
+      private_sec_not_generated            = 5
+      public_sec_not_initialised           = 6
+      protected_sec_not_initialised        = 7
+      private_sec_not_initialised          = 8
+      _internal_class_not_existing         = 9
+      OTHERS                               = 10.
+  IF sy-subrc &lt;&gt; 0.
+    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+                                                subrc = sy-subrc
+                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+    application_log-&gt;add_symsg( ).
+    RAISE EXCEPTION o_mycx.
+  ENDIF.
+  code = get_prog_rawsource( class-includes-pubsec ).
+  IF pubsec_source = code.
+    CLEAR pubsec_source.
+  ELSE.
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE w003 WITH text-pub classkey. ENDIF.
+    SET EXTENDED CHECK ON.
+    CALL METHOD application_log-&gt;add_warning
+      EXPORTING
+        id_msgno     = &apos;003&apos;
+          id_msgv1     = &apos;Public section&apos;(pub)
+        id_msgv2     = classkey.
+  ENDIF.
+  code = get_prog_rawsource( class-includes-prosec ).
+  IF prosec_source = code.
+    CLEAR prosec_source.
+  ELSE.
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE w003 WITH text-pro classkey. ENDIF.
+    SET EXTENDED CHECK ON.
+    CALL METHOD application_log-&gt;add_warning
+      EXPORTING
+        id_msgno     = &apos;003&apos;
+        id_msgv1     = &apos;Protected section&apos;(pro)
+        id_msgv2     = classkey.
+  ENDIF.
+  code = get_prog_rawsource( class-includes-prisec ).
+  IF prisec_source = code.
+    CLEAR prisec_source.
+  ELSE.
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE w003 WITH text-pri classkey. ENDIF.
+    SET EXTENDED CHECK ON.
+    CALL METHOD application_log-&gt;add_warning
+      EXPORTING
+        id_msgno     = &apos;003&apos;
+        id_msgv1     = &apos;Private section&apos;(pri)
+        id_msgv2     = classkey.
+  ENDIF.
+  IF NOT pubsec_source IS INITIAL OR NOT prosec_source IS INITIAL OR NOT prisec_source IS INITIAL.
+    CALL FUNCTION &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+      EXPORTING
+        clskey                               = classkey
+        public                               = seox_true
+        protected                            = seox_true
+        private                              = seox_true
+      EXCEPTIONS
+        not_existing                         = 1
+        model_only                           = 2
+        public_sec_not_generated             = 3
+        protected_sec_not_generated          = 4
+        private_sec_not_generated            = 5
+        public_sec_not_initialised           = 6
+        protected_sec_not_initialised        = 7
+        private_sec_not_initialised          = 8
+        _internal_class_not_existing         = 9
+        OTHERS                               = 10.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+                                                  subrc = sy-subrc
+                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+      application_log-&gt;add_symsg( ).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
+  ENDIF.
+ENDMETHOD.
+METHOD check_intf_section.
+  DATA pubsec_source TYPE seo_section_source.
+  DATA code          TYPE tt_abaprawsource.
+  DATA intkey        TYPE seoclskey.
+  intkey-clsname = interface-interface-clsname.
+  CALL FUNCTION &apos;SEO_INTERFACE_GENERATE_SECTION&apos;
+    EXPORTING
+      intkey                               = intkey
+      return_generated_sections_only       = seox_true
+    IMPORTING
+      interface_source                     = pubsec_source
+    EXCEPTIONS
+      not_existing                         = 1
+      model_only                           = 2
+      interf_section_not_generated         = 3
+      interf_section_not_initialised       = 4
+      OTHERS                               = 5.
+  IF sy-subrc &lt;&gt; 0.
+    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_GENERATE_SECTION&apos;
+                                                subrc = sy-subrc
+                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+    application_log-&gt;add_symsg( ).
+    RAISE EXCEPTION o_mycx.
+  ENDIF.
+  code = get_prog_rawsource( interface-includes-intfsec ).
+  IF pubsec_source = code.
+    CLEAR pubsec_source.
+  ELSE.
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE w003 WITH text-pub intkey. ENDIF.
+    SET EXTENDED CHECK ON.
+    CALL METHOD application_log-&gt;add_warning
+      EXPORTING
+        id_msgno     = &apos;003&apos;
+        id_msgv1     = &apos;Public section&apos;(pub)
+        id_msgv2     = intkey.
+  ENDIF.
+  IF NOT pubsec_source IS INITIAL.
+    CALL FUNCTION &apos;SEO_INTERFACE_GENERATE_SECTION&apos;
+      EXPORTING
+        intkey                               = intkey
+        return_generated_sections_only       = seox_false
+      EXCEPTIONS
+        not_existing                         = 1
+        model_only                           = 2
+        interf_section_not_generated         = 3
+        interf_section_not_initialised       = 4
+        OTHERS                               = 5.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_GENERATE_SECTION&apos;
+                                                  subrc = sy-subrc
+                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+      application_log-&gt;add_symsg( ).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
+  ENDIF.
+ENDMETHOD.
 endclass. &quot;ZAPLINK_OBJECT implementation
 class ZAPLINK_PACKAGE implementation.
 METHOD add_elements_list.
