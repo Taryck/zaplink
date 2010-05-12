@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="320B32A39F90587CB4E46B6874ADC922" CODE_SIGNATURE="EBC5873EFE7A5F5A00F077B9BD535814" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="707AA824108840A3CD795E3684A43D18" CODE_SIGNATURE="8A7F7F03D775EC742746FAFAA33597E9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -8,12 +8,13 @@
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
+   <ITEM CMPNAME="SEL_ACTIONS" EXPOSURE="2" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="ACTIONS"/>
    <ITEM CMPNAME="TD_CHECKSUM" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_CHECKSUM"/>
    <ITEM CMPNAME="TD_COMPNAME" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPNAME"/>
    <ITEM CMPNAME="TD_COMPTYPE" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPTYPE"/>
    <ITEM CMPNAME="TD_LIGHT" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_LIGHT"/>
    <ITEM CMPNAME="TD_ORDERKIND" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_ORDERKIND"/>
-   <ITEM CMPNAME="TD_SEL_ACTION" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_SEL_ACTION"/>
+   <ITEM CMPNAME="TD_SEL_ACTION" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_ACTION"/>
    <ITEM CMPNAME="TD_TYPE_AS_TEXT" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TYPE_AS_TEXT"/>
    <ITEM CMPNAME="TS_COMPKEY" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPKEY"/>
    <ITEM CMPNAME="TT_COMPKEYS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_COMPKEYS"/>
@@ -29,7 +30,7 @@
       item      TYPE slis_tabname VALUE &apos;ITM&apos;,
     END OF alv_h_tables
 `</ITEM>
-   <ITEM CMPNAME="DISPLAY_PROGRESS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="ABAP_BOOL">
+   <ITEM CMPNAME="DISPLAY_PROGRESS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="ABAP_BOOL">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Display SAPGUI progress indication while iterating"/>
     </TEXTS>
@@ -50,14 +51,17 @@
       red      TYPE td_light VALUE icon_red_light,
       yellow   TYPE td_light VALUE icon_yellow_light,
       green    TYPE td_light VALUE icon_green_light,
+      export   TYPE td_light VALUE icon_arrow_left,
+      import   TYPE td_light VALUE icon_arrow_right,
+      uninst   TYPE td_light VALUE icon_delete,
     END OF lights
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Lights icons"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="ORDER_KIND" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="ABAP_BOOL"/>
-   <ITEM CMPNAME="ORDER_KINDS" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4">begin of ORDER_KINDS,
+   <ITEM CMPNAME="ORDER_KIND" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="ABAP_BOOL"/>
+   <ITEM CMPNAME="ORDER_KINDS" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4">begin of ORDER_KINDS,
       no_order  type td_orderkind value space,
       install   type td_orderkind value &apos;B&apos;,  &quot; Bottom up
       uninstall type td_orderkind value &apos;T&apos;,  &quot; Top down
@@ -76,17 +80,6 @@
    <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="8 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for List"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="SEL_ACTIONS" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
-    BEGIN OF sel_actions,
-      export    TYPE td_sel_action VALUE &apos;E&apos;,
-      import    TYPE td_sel_action VALUE &apos;I&apos;,
-      uninstall TYPE td_sel_action VALUE &apos;U&apos;,
-    END OF sel_actions
-`
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Selction actions"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="T_CURSORS" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_CURSORS"/>
@@ -473,10 +466,21 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     </EXCEPTIONS>
     <SOURCE>`
   DATA _key TYPE ts_compkey.
+  DATA d_action TYPE td_sel_action.
 
   _key = o_comp-&gt;_get_key( ).
   result-type = _key-type.
   result-name = _key-name.
+
+  d_action = o_comp-&gt;get_action( ).
+  CASE d_action.
+    WHEN sel_actions-import.
+      result-action = lights-import.
+    WHEN sel_actions-export.
+      result-action = lights-export.
+    WHEN sel_actions-uninstall.
+      result-action = lights-uninst.
+  ENDCASE.
 
   result-typ_txt = zaplink_connectors=&gt;type2text( result-type ).
 
@@ -1191,14 +1195,14 @@ FIELD-SYMBOLS:
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
-TRY.
+  TRY.
       CASE sel_action.
         WHEN sel_actions-export.
           select_export( ).
         WHEN sel_actions-import.
           select_import( ).
         WHEN sel_actions-uninstall.
-          select_export( ).
+          select_uninstall( ).
         WHEN OTHERS.
           RAISE EXCEPTION TYPE zaplink_cx_list
                      EXPORTING textid = zaplink_cx_list=&gt;invalid_action
@@ -1216,33 +1220,52 @@ TRY.
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
-  FIELD-SYMBOLS:
-    &lt;i&gt; LIKE LINE OF _index.
+  FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
     CLEAR &lt;i&gt;-selected.
     IF     &lt;i&gt;-o_comp-&gt;_exists = zaplink_connector=&gt;exists
        AND &lt;i&gt;-o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-exists.
       &lt;i&gt;-selected = abap_true.
+      &lt;i&gt;-o_comp-&gt;set_action( sel_actions-export ).
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SELECT_IMPORT" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Select components from list able to be exported"/>
+     <ITEM LANGU="E" DESCRIPT="Select components from list able to be imported"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
-FIELD-SYMBOLS:
-    &lt;i&gt; LIKE LINE OF _index.
+  FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
     CLEAR &lt;i&gt;-selected.
     IF     &lt;i&gt;-o_comp-&gt;_exists = zaplink_connector=&gt;exists-not_exists
        AND &lt;i&gt;-o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-exists.
       &lt;i&gt;-selected = abap_true.
+      &lt;i&gt;-o_comp-&gt;set_action( sel_actions-export ).
+    ENDIF.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="SELECT_UNINSTALL" EXPOSURE="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Select components from list able to be uninstalled"/>
+    </TEXTS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
+    </EXCEPTIONS>
+    <SOURCE>`
+  FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
+
+  LOOP AT _index ASSIGNING &lt;i&gt;.
+    CLEAR &lt;i&gt;-selected.
+    IF     &lt;i&gt;-o_comp-&gt;_exists = zaplink_connector=&gt;exists
+       AND &lt;i&gt;-o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-exists.
+      &lt;i&gt;-selected = abap_true.
+      &lt;i&gt;-o_comp-&gt;set_action( sel_actions-uninstall ).
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
@@ -1381,40 +1404,45 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM ID="I" KEY="NF1">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Type" LENGTH="4 "/>
+     <ITEM LANGU="E" ENTRY="Act." LENGTH="4 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="NF2">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Type description" LENGTH="20 "/>
+     <ITEM LANGU="E" ENTRY="Type" LENGTH="4 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="NF3">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Component name" LENGTH="20 "/>
+     <ITEM LANGU="E" ENTRY="Type description" LENGTH="20 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="NF4">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="CNX" LENGTH="4 "/>
+     <ITEM LANGU="E" ENTRY="Component name" LENGTH="20 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="NF5">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Status" LENGTH="6 "/>
+     <ITEM LANGU="E" ENTRY="CNX" LENGTH="4 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="NF6">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Message" LENGTH="20 "/>
+     <ITEM LANGU="E" ENTRY="Status" LENGTH="6 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="NF7">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Package" LENGTH="20 "/>
+     <ITEM LANGU="E" ENTRY="Message" LENGTH="20 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="NF8">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="Package" LENGTH="20 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="NF9">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="SysID" LENGTH="5 "/>
     </TEXTS>
@@ -1469,6 +1497,7 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="TS_ALV" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="4">
     BEGIN OF ts_alv,
+      action     TYPE td_light, &quot;type pools ICON
       type       TYPE td_comptype,
       typ_txt    TYPE td_type_as_text,
       name       TYPE td_compname,
