@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="707AA824108840A3CD795E3684A43D18" CODE_SIGNATURE="8A7F7F03D775EC742746FAFAA33597E9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="72284CFEA4CAA8535EA2C615F72D6D60" CODE_SIGNATURE="FB2E2562FB28B42C7540CCBE9E5D4920" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -47,13 +47,14 @@
    </ITEM>
    <ITEM CMPNAME="LIGHTS" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF lights,
-      no       TYPE td_light VALUE icon_light_out,
-      red      TYPE td_light VALUE icon_red_light,
-      yellow   TYPE td_light VALUE icon_yellow_light,
-      green    TYPE td_light VALUE icon_green_light,
-      export   TYPE td_light VALUE icon_arrow_left,
-      import   TYPE td_light VALUE icon_arrow_right,
-      uninst   TYPE td_light VALUE icon_delete,
+      no        TYPE td_light VALUE icon_light_out,
+      red       TYPE td_light VALUE icon_red_light,
+      yellow    TYPE td_light VALUE icon_yellow_light,
+      green     TYPE td_light VALUE icon_green_light,
+      export    TYPE td_light VALUE icon_arrow_left,
+      import    TYPE td_light VALUE icon_arrow_right,
+      uninst    TYPE td_light VALUE icon_delete,
+      rep_error TYPE td_light VALUE icon_message_error_small,   &quot; ICON_STATUS_CRITICAL ICON_ALERT ICON_MESSAGE_CRITICAL_SMALL
     END OF lights
 `
     <TEXTS>
@@ -146,6 +147,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA _idx  LIKE LINE OF _index.
   DATA _comp LIKE LINE OF _allcomp.
 
+  CHECK comp IS BOUND.
   _idx = search_index( comp ).
   IF _idx-o_comp IS BOUND.
 * Component &apos;&amp;name&amp;&apos; (&amp;type&amp;) already in the collection
@@ -411,7 +413,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="CLONE" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Clone (copy) component to list"/>
+     <ITEM LANGU="E" DESCRIPT="Clone (copy) component&apos;s list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ME">
@@ -480,6 +482,8 @@ DATA t_allcomp   TYPE	tt_allcomplist.
       result-action = lights-export.
     WHEN sel_actions-uninstall.
       result-action = lights-uninst.
+    WHEN sel_actions-unreplicable.
+      result-action = lights-rep_error.
   ENDCASE.
 
   result-typ_txt = zaplink_connectors=&gt;type2text( result-type ).
@@ -488,38 +492,44 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     result-connector = lights-red.
     result-status = lights-no.
 * There is no ZAPLink connector installed for object type &apos;&amp;1&apos;
-    MESSAGE e000(zaplink_gui) WITH result-type INTO result-msg.
+    MESSAGE e001 WITH result-type INTO result-msg.
   ELSE.
     result-connector = lights-green.
     result-checksum = o_comp-&gt;get_checksum( ).
     result-code_signature = o_comp-&gt;get_code_signature( ).
+    result-devclass = o_comp-&gt;get_devclass( ).
+    result-srcsystem = o_comp-&gt;get_src_sys( ).
 
-    IF o_comp-&gt;_exists = zaplink_connector=&gt;exists.
-      SELECT SINGLE devclass srcsystem
-        INTO (result-devclass, result-srcsystem)
-        FROM tadir
-        WHERE    pgmid = &apos;R3TR&apos;
-          AND   object = result-type
-          AND obj_name = result-name.
-      CASE selected.
-        WHEN abap_true.
-          result-status = lights-green.
-        WHEN abap_false.
+    result-status = lights-green.
+
+    CASE d_action.
+      WHEN sel_actions-import.
+        IF o_comp-&gt;_exists = zaplink_connector=&gt;exists AND selected = abap_true.
           result-status = lights-yellow.
           CLEAR result-select.
 * Object &apos;&amp;2&apos; (&amp;1) already exists. Select it to overwrite
-          MESSAGE e001(zaplink_gui) WITH result-type result-name INTO result-msg.
-      ENDCASE.
-    ELSE.   &quot; Not Exists
-      CASE selected.
-        WHEN abap_false.
+          MESSAGE e002 WITH result-type result-name INTO result-msg.
+        ENDIF.
+      WHEN sel_actions-export.
+        IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists AND selected = abap_true.
+          CLEAR result-select.
           result-status = lights-red.
 * Object &apos;&amp;2&apos; (&amp;1) does not exists.
-          MESSAGE e003(zaplink_gui) WITH result-type result-name INTO result-msg.
-        WHEN abap_true.
-          result-status = lights-green.
-      ENDCASE.
-    ENDIF.
+          MESSAGE e003 WITH result-type result-name INTO result-msg.
+        ENDIF.
+      WHEN sel_actions-uninstall.
+        IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists AND selected = abap_true.
+          CLEAR result-select.
+          result-status = lights-red.
+* Object &apos;&amp;2&apos; (&amp;1) does not exists.
+          MESSAGE e003 WITH result-type result-name INTO result-msg.
+        ENDIF.
+      WHEN sel_actions-unreplicable.
+          result-status = lights-red.
+* Changes made on both (file&amp;SAP) for Object &apos;&amp;2&apos; (&amp;1) =&gt; Manual ajustment
+          MESSAGE e004 WITH result-type result-name INTO result-msg.
+      WHEN OTHERS.
+    ENDCASE.
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_TO_ALV" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
@@ -751,10 +761,10 @@ DATA t_allcomp   TYPE	tt_allcomplist.
     component = result-&gt;_get_key( ).
     IF sy-batch = abap_true.
 * Processing object : &amp;2 (&amp;1)
-      MESSAGE i000(zaplink_list) WITH component-type component-name.
+      MESSAGE i000 WITH component-type component-name.
     ELSE.
 * Processing object : &amp;2 (&amp;1)
-      MESSAGE i000(zaplink_list) WITH component-type component-name INTO msg.
+      MESSAGE i000 WITH component-type component-name INTO msg.
       IF _iterator_count &gt; 0.
         _pos = 100 * _iterator_tabix / _iterator_count.
       ELSE.
@@ -765,75 +775,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
           percentage = _pos
           text       = msg.
     ENDIF.
-  ENDIF.
-
-*  TRY.
-*      READ TABLE _index TRANSPORTING NO FIELDS
-*           WITH KEY o_comp = _iterator_prev.
-*      IF sy-subrc = 0.
-*        _iterator_tabix = sy-tabix + 1.  &quot; in case insert occurs during 2 get_next.
-*      ELSEIF _iterator_prev IS BOUND.
-*        _key = _iterator_prev-&gt;_get_key( ).
-*        READ TABLE _index TRANSPORTING NO FIELDS
-*             WITH TABLE KEY key = _key.
-*        IF sy-subrc = 0.
-*          _iterator_tabix = sy-tabix + 1.  &quot; in case delete &amp; insert occurs during 2 get_next.
-*        ELSE.
-*          _iterator_tabix = sy-tabix.  &quot; in case delete occurs during 2 get_next.
-*        ENDIF.
-*      ENDIF.
-*      CASE _iterator_type.
-*        WHEN iterator_types-selected.
-*          LOOP AT _index ASSIGNING &lt;i&gt; FROM _iterator_tabix
-*                  WHERE selected = abap_true.
-*            _iterator_tabix = sy-tabix + 1.
-*            EXIT.
-*          ENDLOOP.
-*        WHEN iterator_types-all.
-*          LOOP AT _index ASSIGNING &lt;i&gt; FROM _iterator_tabix.
-*            _iterator_tabix = sy-tabix + 1.
-*            EXIT.
-*          ENDLOOP.
-*        WHEN OTHERS.
-** GET_NEXT has been called without initialize a iterator.
-*          RAISE EXCEPTION TYPE zaplink_cx_list
-*                     EXPORTING textid = zaplink_cx_list=&gt;iterator_not_initialize.
-*      ENDCASE.
-*      IF sy-subrc &lt;&gt; 0.
-*        _iterator_end = abap_true.
-*        EXIT.
-*      ENDIF.
-*      IF NOT &lt;i&gt;-o_comp IS BOUND.
-*        CLEAR _iterator_prev.
-*        result = get_next( ).
-*        EXIT.
-*      ENDIF.
-*
-*      result = _iterator_prev = &lt;i&gt;-o_comp.
-*
-** Display progression
-*      IF display_progress = abap_true.
-*        component = result-&gt;_get_key( ).
-*        IF sy-batch = abap_true.
-** Processing object : &amp;2 (&amp;1)
-*          MESSAGE i000(zaplink_list) WITH component-type component-name.
-*        ELSE.
-** Processing object : &amp;2 (&amp;1)
-*          MESSAGE i000(zaplink_list) WITH component-type component-name INTO msg.
-*          IF _idx_count &gt; 0.
-*            _pos = 100 * _iterator_tabix / _idx_count.
-*          ELSE.
-*            _pos = _iterator_tabix.
-*          ENDIF.
-*          CALL FUNCTION &apos;SAPGUI_PROGRESS_INDICATOR&apos;
-*            EXPORTING
-*              percentage = _pos
-*              text       = msg.
-*        ENDIF.
-*      ENDIF.
-*    CATCH zaplink_cx_list INTO _cx.
-*      RAISE EXCEPTION _cx.
-*  ENDTRY.</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="HAS_ANY" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
@@ -1082,6 +1024,17 @@ FIELD-SYMBOLS:
     ENDTRY.
   ENDLOOP.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="REVERSE_SELECTION" EXPOSURE="2" STATE="1" EDITORDER="26 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Reverse the selection"/>
+    </TEXTS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
+    </EXCEPTIONS>
+    <SOURCE>`
+  FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
+  LOOP AT _index ASSIGNING &lt;i&gt;. IF &lt;i&gt;-selected is INITIAL.   &lt;i&gt;-selected = abap_true.   else.   clear &lt;i&gt;-selected.   endif.  ENDLOOP.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="SEARCH" EXPOSURE="2" STATE="1" EDITORDER="21 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Search component into list"/>
@@ -1168,6 +1121,37 @@ FIELD-SYMBOLS:
       RAISE EXCEPTION o_exception.
   ENDTRY.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="SELECTION_AS_LIST" EXPOSURE="2" STATE="1" EDITORDER="27 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Create new list with only selected components"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ME">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA o_comp TYPE to_component.
+  FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
+
+  TRY.
+      CREATE OBJECT result.
+
+      LOOP AT _index ASSIGNING &lt;i&gt; WHERE selected = abap_true.
+
+        o_comp = &lt;i&gt;-o_comp-&gt;clone( ).
+        result-&gt;add( o_comp ).
+*        If &lt;i&gt;-selected = abap_true.    result-&gt;select( o_comp ).    endif.
+      ENDLOOP.
+    CATCH zaplink_cx.
+      CLEAR result.
+  ENDTRY.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="SELECT_ALL" EXPOSURE="2" STATE="1" EDITORDER="23 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Select all components from list"/>
@@ -1179,6 +1163,24 @@ FIELD-SYMBOLS:
   DATA s_idx LIKE LINE OF _index.
 
   s_idx-selected = abap_true.   MODIFY _index FROM s_idx TRANSPORTING selected WHERE selected &lt;&gt; s_idx-selected.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="SELECT_BY_ACTION" EXPOSURE="2" STATE="1" EDITORDER="28 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Select components from list depending on actions"/>
+    </TEXTS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
+    </EXCEPTIONS>
+    <SOURCE>`
+  FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
+
+  LOOP AT _index ASSIGNING &lt;i&gt;.
+    CLEAR &lt;i&gt;-selected.
+    IF &lt;i&gt;-o_comp-&gt;get_action( ) = sel_actions-export
+    or &lt;i&gt;-o_comp-&gt;get_action( ) = sel_actions-import.
+      &lt;i&gt;-selected = abap_true.
+    ENDIF.
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SELECT_DEFAULT" EXPOSURE="2" STATE="1" EDITORDER="24 " MTDNEWEXC="X">
     <TEXTS>
@@ -1246,7 +1248,7 @@ FIELD-SYMBOLS:
     IF     &lt;i&gt;-o_comp-&gt;_exists = zaplink_connector=&gt;exists-not_exists
        AND &lt;i&gt;-o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-exists.
       &lt;i&gt;-selected = abap_true.
-      &lt;i&gt;-o_comp-&gt;set_action( sel_actions-export ).
+      &lt;i&gt;-o_comp-&gt;set_action( sel_actions-import ).
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>

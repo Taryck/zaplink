@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="850AB06309838C60F9683F7731AD3E8A" CODE_SIGNATURE="FAE0C97BF2BB4FBF0DA505A72973E17F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C5B9CC1D71FF5D2591FAB6B960E450B9" CODE_SIGNATURE="231BA10E67CC6879E10DFB5D3A6FCA6F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -33,6 +33,7 @@ AS</DOCUMENTATION>
    <ITEM CMPNAME="TD_CONNUUID" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_CONNUUID"/>
    <ITEM CMPNAME="TD_DEVCLASS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_DEVCLASS"/>
    <ITEM CMPNAME="TD_OBJ_TYPE" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_OBJ_TYPE"/>
+   <ITEM CMPNAME="TD_SRCSYSTEM" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_SRCSYSTEM"/>
    <ITEM CMPNAME="TD_WITH_SUBCOMP" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_WITH_SUBCOMP"/>
    <ITEM CMPNAME="TS_COMPKEY" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPKEY"/>
    <ITEM CMPNAME="TS_COMPONENT" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPONENT"/>
@@ -128,6 +129,16 @@ AS</DOCUMENTATION>
    <ITEM CMPNAME="_MSG_COLL" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TO_MSG_COLL">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Message Collector"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="16 " TYPTYPE="3" TYPE="OBJECT">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Additional information as object"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="_SRCSYSTEM" EXPOSURE="1" STATE="1" EDITORDER="17 " TYPTYPE="1" TYPE="TD_SRCSYSTEM">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Source System"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_SUBCOMPONENTS" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="TO_LIST">
@@ -292,6 +303,20 @@ DATA _cx TYPE REF TO zaplink_cx_component.
     <SOURCE>`
   result = _data.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="GET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="31 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Additional Object : Getter"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="3" TYPE="OBJECT">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  result = _object.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="GET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="21 ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Checksum : Getter"/>
@@ -360,7 +385,7 @@ DATA _cx TYPE REF TO zaplink_cx_component.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-result = _devclass.</SOURCE>
+  result = _devclass.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
@@ -381,7 +406,7 @@ result = _devclass.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-result = _EXCEPTION.</SOURCE>
+  result = _exception.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_KEY" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
@@ -402,7 +427,7 @@ result = _EXCEPTION.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-IF type IS INITIAL OR name IS INITIAL.
+  IF type IS INITIAL OR name IS INITIAL.
     RAISE EXCEPTION TYPE zaplink_cx_component
                EXPORTING textid = zaplink_cx_component=&gt;system_error.
   ENDIF.
@@ -428,7 +453,7 @@ IF type IS INITIAL OR name IS INITIAL.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-result = _msg_coll.</SOURCE>
+  result = _msg_coll.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_NAME" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
@@ -449,7 +474,28 @@ result = _msg_coll.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-result = name.</SOURCE>
+  result = name.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_SRC_SYS" EXPOSURE="2" STATE="1" EDITORDER="33 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Source System : Getter"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SRCSYSTEM">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Source System"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  result = _srcsystem.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_SUBCOMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
@@ -470,7 +516,7 @@ result = name.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-result = _subcomponents.</SOURCE>
+  result = _subcomponents.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_TYPE" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
@@ -491,7 +537,7 @@ result = _subcomponents.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-result = type.</SOURCE>
+  result = type.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
@@ -540,7 +586,7 @@ result = type.</SOURCE>
       CATCH zaplink_cx_connector INTO o_cx_cnx.
         mac_cascade_raise o_mycx o_cx_cnx.
     ENDTRY.
-    SELECT SINGLE devclass INTO _devclass
+    SELECT SINGLE devclass srcsystem INTO (_devclass, _srcsystem)
       FROM tadir
       WHERE pgmid = &apos;R3TR&apos;
        AND object = type
@@ -593,6 +639,20 @@ result = type.</SOURCE>
     </PARAMETERS>
     <SOURCE>`
   _data = data.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="SET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="32 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Additional Object : Setter"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  _object = data.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="22 ">
     <TEXTS>
@@ -705,7 +765,7 @@ result = type.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA cx TYPE REF TO cx_root.
+  DATA cx TYPE REF TO cx_root.
   DATA _cx TYPE REF TO zaplink_cx_component.
   DATA _desc TYPE REF TO cl_abap_typedescr.
 
@@ -746,7 +806,7 @@ DATA cx TYPE REF TO cx_root.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA cx TYPE REF TO cx_root.
+  DATA cx TYPE REF TO cx_root.
   DATA _cx TYPE REF TO zaplink_cx_component.
   DATA _desc TYPE REF TO cl_abap_typedescr.
 
@@ -792,6 +852,20 @@ DATA cx TYPE REF TO cx_root.
   on_change_clear( ).
   on_change_update( ).</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="SET_SRC_SYS" EXPOSURE="2" STATE="1" EDITORDER="34 ">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Source System: Setter"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SRCSYSTEM">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Source System"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  _srcsystem = data.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="SET_SUBCOMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="20 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Sub-Components list : Setter"/>
@@ -811,7 +885,7 @@ DATA cx TYPE REF TO cx_root.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA cx TYPE REF TO cx_root.
+  DATA cx TYPE REF TO cx_root.
   DATA _cx TYPE REF TO zaplink_cx_component.
   DATA _desc TYPE REF TO cl_abap_typedescr.
 
@@ -852,12 +926,17 @@ DATA cx TYPE REF TO cx_root.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA o_conn TYPE to_connector.
+  DATA o_conn   TYPE to_connector.
+  DATA o_cx_cnx TYPE REF TO zaplink_cx_connector.
 
   CHECK data &lt;&gt; type.
 
   TRY.
-      o_conn = zaplink_connectors=&gt;create_connector( type = data ).
+      TRY.
+          o_conn = zaplink_connectors=&gt;create_connector( type = data ).
+        CATCH zaplink_cx_connector INTO o_cx_cnx.
+          IF o_cx_cnx-&gt;textid &lt;&gt; zaplink_cx_connector=&gt;invalid_type.    RAISE EXCEPTION o_cx_cnx.   ENDIF.
+      ENDTRY.
 
       type = data.    CLEAR _connector.
       on_change_clear( ).
