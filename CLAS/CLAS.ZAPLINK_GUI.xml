@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8D4C96BACB2DD4B81A18849E0F24852D" CODE_SIGNATURE="3B456254B4616C9D004C2981D6DDCEDE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="19434751EAD5EACA9D391BD4ED31E31E" CODE_SIGNATURE="ECEE3713B7037D67B2E8540FB8EF2A7E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_GUI">
@@ -139,50 +139,47 @@ INCLUDE zaplink_macros.</MACROS>
   ENDIF.
 
   TRY.
-      CALL METHOD _load
-        EXPORTING
-          file      = file
-        IMPORTING
-          container = o_cont.
+    CALL METHOD _load
+      EXPORTING
+        file      = file
+      IMPORTING
+        container = o_cont.
 
-      CREATE OBJECT obj.
-      obj-&gt;set_type( objtype ).
-      _objname = name.
-      obj-&gt;set_name( _objname ).
-      obj-&gt;set_with_subcomp( with_subcomp ).
+    CREATE OBJECT obj.
+    obj-&gt;set_type( objtype ).
+    _objname = name.
+    obj-&gt;set_name( _objname ).
+    obj-&gt;set_with_subcomp( with_subcomp ).
 
-      IF obj-&gt;connector_exists( ) = zaplink_component=&gt;connexists-not_exists. &quot; OR NOT obj-&gt;connector( ) IS BOUND.
-        RAISE EXCEPTION TYPE zaplink_cx_gui EXPORTING
-              textid = zaplink_cx_gui=&gt;connector_not_exists
-                type = objtype.
-      ENDIF.
+    IF obj-&gt;connector_exists( ) = zaplink_component=&gt;connexists-not_exists. &quot; OR NOT obj-&gt;connector( ) IS BOUND.
+      RAISE EXCEPTION TYPE zaplink_cx_gui EXPORTING
+            textid = zaplink_cx_gui=&gt;connector_not_exists
+              type = objtype.
+    ENDIF.
 
-      CREATE OBJECT obj_list.
-      obj_list-&gt;add( obj ).
-      obj_list-&gt;select( obj ).
+    CREATE OBJECT obj_list.
+    obj_list-&gt;add( obj ).
+    obj_list-&gt;select( obj ).
 
-      IF o_options IS BOUND.
-        o_cont-&gt;set_options( o_options ).
-      ENDIF.
+    IF o_options IS BOUND.
+      o_cont-&gt;set_options( o_options ).
+    ENDIF.
 
-      o_cont-&gt;add_components( obj_list ).
+    o_cont-&gt;add_components( obj_list ).
 
-      CALL METHOD _save
-        EXPORTING
-          file      = file
-        IMPORTING
-          container = o_cont.
+    CALL METHOD _save
+      EXPORTING
+        file      = file
+      IMPORTING
+        container = o_cont.
 
-      IF o_cont-&gt;log-&gt;has_messages_of_msgt( id_msgty = &apos;E&apos; ) = abap_true.
-        o_mycx ?= zaplink_cx=&gt;create_from_application_log( cx_name = &apos;ZAPLINK_CX_GUI&apos;
-                                                 message_collector = o_cont-&gt;log ).
-        RAISE EXCEPTION o_mycx.
-      ENDIF.
-
-    CATCH zaplink_cx_gui INTO o_mycx.
+    IF o_cont-&gt;log-&gt;has_messages_of_msgt( id_msgty = &apos;E&apos; ) = abap_true.
+      o_mycx ?= zaplink_cx=&gt;create_from_application_log( cx_name = &apos;ZAPLINK_CX_GUI&apos;
+                                               message_collector = o_cont-&gt;log ).
       RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    ENDIF.
+
+    mac_def_catch zaplink_cx_gui.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CHANGE_SELECTION" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -312,14 +309,12 @@ INCLUDE zaplink_macros.</MACROS>
 *      ENDIF.
 *      o_file-&gt;save_dialog( def_fn ).
 
-      s_info-name = name.
-      container = zaplink_container=&gt;create_new( o_file = file
-                                                   data = s_info ).
-      container-&gt;save_to_file( ).
-    CATCH zaplink_cx_gui INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    s_info-name = name.
+    container = zaplink_container=&gt;create_new( o_file = file
+                                                 data = s_info ).
+    container-&gt;save_to_file( ).
+
+    mac_def_catch zaplink_cx_gui.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CREATE_FILE" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -392,31 +387,28 @@ INCLUDE zaplink_macros.</MACROS>
   DATA o_cont     TYPE to_container.
 
   TRY.
-      CALL METHOD _get_objlist
-        EXPORTING
-          file      = file
-        IMPORTING
+    CALL METHOD _get_objlist
+      EXPORTING
+        file      = file
+      IMPORTING
 *          list      = o_list
-          container = o_cont.
+        container = o_cont.
 
-      IF o_options IS BOUND.
-        o_cont-&gt;set_options( o_options ).
-      ENDIF.
+    IF o_options IS BOUND.
+      o_cont-&gt;set_options( o_options ).
+    ENDIF.
 
-      _update_subobj( o_list = objlist
-                       f_sub = with_subcomp ).
-      o_cont-&gt;add_components( objlist ).
+    _update_subobj( o_list = objlist
+                     f_sub = with_subcomp ).
+    o_cont-&gt;add_components( objlist ).
 
-      CALL METHOD _save
-        EXPORTING
-          file      = file
-        IMPORTING
-          container = o_cont.
+    CALL METHOD _save
+      EXPORTING
+        file      = file
+      IMPORTING
+        container = o_cont.
 
-    CATCH zaplink_cx_gui INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_gui.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_OBJLIST" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -599,30 +591,27 @@ INCLUDE zaplink_macros.</MACROS>
   DATA o_cont TYPE to_container.
 
   TRY.
-      CALL METHOD _get_objlist
-        EXPORTING
-          file      = file
-        IMPORTING
-          list      = o_list
-          container = o_cont
-          cont_name = name.
+    CALL METHOD _get_objlist
+      EXPORTING
+        file      = file
+      IMPORTING
+        list      = o_list
+        container = o_cont
+        cont_name = name.
 
-      IF list IS BOUND.
-        o_list-&gt;keep_commun_list( list ).
-      ENDIF.
+    IF list IS BOUND.
+      o_list-&gt;keep_commun_list( list ).
+    ENDIF.
 
-      _update_subobj( o_list = o_list
-                       f_sub = with_subcomp ).
-      o_list-&gt;select_default( zaplink_list=&gt;sel_actions-uninstall ).
-      o_list-&gt;change_selection( ).
+    _update_subobj( o_list = o_list
+                     f_sub = with_subcomp ).
+    o_list-&gt;select_default( zaplink_list=&gt;sel_actions-uninstall ).
+    o_list-&gt;change_selection( ).
 
-      o_cont-&gt;uninstall_from_sap( o_list ).
+    o_cont-&gt;uninstall_from_sap( o_list ).
 
-      list = o_list.
-    CATCH zaplink_cx_gui INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    list = o_list.
+    mac_def_catch zaplink_cx_gui.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_GET_OBJLIST" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -661,19 +650,17 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
 
   TRY.
-      CALL METHOD _load
-        EXPORTING
-          file      = file
-        IMPORTING
-          container = container
-          cont_name = cont_name.
+    CALL METHOD _load
+      EXPORTING
+        file      = file
+      IMPORTING
+        container = container
+        cont_name = cont_name.
 
-      CHECK container IS BOUND.
-      list = container-&gt;get_content( ).
-    CATCH zaplink_cx_gui INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    CHECK container IS BOUND.
+    list = container-&gt;get_content( ).
+
+    mac_def_catch zaplink_cx_gui.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_LOAD" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -787,19 +774,17 @@ INCLUDE zaplink_macros.</MACROS>
   TRY.
 *      CREATE OBJECT o_file.
 *      o_file-&gt;set_filetype( zaplink_file=&gt;c_ft_local ).
-      _fn = file-&gt;get_filename( ).
-      IF _fn IS INITIAL.
-        CALL METHOD file-&gt;save_dialog
-          EXPORTING
-            filename = _fn.
-      ENDIF.
-      file-&gt;set_filename( _fn ).
+    _fn = file-&gt;get_filename( ).
+    IF _fn IS INITIAL.
+      CALL METHOD file-&gt;save_dialog
+        EXPORTING
+          filename = _fn.
+    ENDIF.
+    file-&gt;set_filename( _fn ).
 
-      container-&gt;save_to_file( file ).
-    CATCH zaplink_cx_gui INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    container-&gt;save_to_file( file ).
+
+    mac_def_catch zaplink_cx_gui.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_UPDATE_SUBOBJ" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">

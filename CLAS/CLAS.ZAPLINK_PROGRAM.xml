@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C970FA1A2CEE232A3D3106BF46E5CA90" CODE_SIGNATURE="8685011D23C652567DD9243ED1B3F06C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C822D7622AF94D31C22F4308A6221F71" CODE_SIGNATURE="B7001B30A1D571209E064D326FF4339C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROG_DATA"/>
@@ -143,8 +143,15 @@ INCLUDE zaplink_macros.</MACROS>
       RAISE EXCEPTION o_mycx.
   ENDTRY.
 
-  o_prog ?= object-&gt;raw.
-  o_prog-&gt;anonymize( ).</SOURCE>
+  CHECK object IS BOUND.
+
+  CASE object-&gt;type.
+    WHEN st_program.
+      o_prog ?= object-&gt;raw.
+      o_prog-&gt;anonymize( ).
+    WHEN OTHERS.
+      mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+  ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
     <SOURCE>`
@@ -165,19 +172,16 @@ INCLUDE zaplink_macros.</MACROS>
   DATA d_prog TYPE td_progname.
 
   TRY.
-      d_type = component-&gt;get_type( ).
-      CASE d_type.
-        WHEN st_program.
-          d_prog = component-&gt;get_name( ).
-          result = get_program_signature( d_prog ).
-        WHEN OTHERS.
-          mac_raise_type_not_supported &apos;ZAPLINK_PROGRAM&apos; d_type.
-      ENDCASE.
+    d_type = component-&gt;get_type( ).
+    CASE d_type.
+      WHEN st_program.
+        d_prog = component-&gt;get_name( ).
+        result = get_program_signature( d_prog ).
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
+    ENDCASE.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
@@ -191,12 +195,7 @@ INCLUDE zaplink_macros.</MACROS>
       object-&gt;raw = o_prog.
     WHEN OTHERS.
       CLEAR object.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-        EXPORTING
-          textid = zaplink_cx_connector=&gt;type_not_supported
-          type   = type
-          connclass = &apos;ZAPLINK_PROGRAM&apos;.
+      mac_raise_type_not_supported me-&gt;class_name type.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
@@ -205,17 +204,17 @@ INCLUDE zaplink_macros.</MACROS>
   DATA type  TYPE td_comptype.
 
   TRY.
-      type = component-&gt;get_type( ).
-      CASE type.
-        WHEN st_program.
-          program = component-&gt;get_name( ).
-          CALL FUNCTION &apos;RS_DELETE_PROGRAM&apos;
-            EXPORTING
+    type = component-&gt;get_type( ).
+    CASE type.
+      WHEN st_program.
+        program = component-&gt;get_name( ).
+        CALL FUNCTION &apos;RS_DELETE_PROGRAM&apos;
+          EXPORTING
 *          CORRNUMBER                       =
-              program                          = program
+            program                          = program
 *          SUPPRESS_CHECKS                  = &apos; &apos;
 *          SUPPRESS_COMMIT                  = &apos; &apos;
-              suppress_popup                   = &apos;X&apos;
+            suppress_popup                   = &apos;X&apos;
 *          MASS_DELETE_CALL                 = &apos; &apos;
 *          WITH_CUA                         = &apos;X&apos;
 *          WITH_DOCUMENTATION               = &apos;X&apos;
@@ -229,34 +228,25 @@ INCLUDE zaplink_macros.</MACROS>
 *        IMPORTING
 *          CORRNUMBER                       =
 *          PROGRAM                          =
-            EXCEPTIONS
-              enqueue_lock                     = 1
-              object_not_found                 = 2
-              permission_failure               = 3
-              reject_deletion                  = 4
-              OTHERS                           = 5.
-          IF sy-subrc &lt;&gt; 0.
-            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RS_DELETE_PROGRAM&apos;
-                                                        subrc = sy-subrc
-                                                    classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
-                                                    textid = zaplink_cx=&gt;system_error ).
-            RAISE EXCEPTION o_mycx.
-          ENDIF.
-        WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = type
-              connclass = &apos;ZAPLINK_PROGRAM&apos;.
-      ENDCASE.
+          EXCEPTIONS
+            enqueue_lock                     = 1
+            object_not_found                 = 2
+            permission_failure               = 3
+            reject_deletion                  = 4
+            OTHERS                           = 5.
+        IF sy-subrc &lt;&gt; 0.
+          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RS_DELETE_PROGRAM&apos;
+                                                      subrc = sy-subrc
+                                                  classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
+                                                  textid = zaplink_cx=&gt;system_error ).
+          RAISE EXCEPTION o_mycx.
+        ENDIF.
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name type.
+    ENDCASE.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.
-
   result = abap_true.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
@@ -267,29 +257,21 @@ INCLUDE zaplink_macros.</MACROS>
   exists = me-&gt;exists-not_exists.
 
   TRY.
-      type = component-&gt;get_type( ).
-      CASE type.
-        WHEN st_program.
-          _name = component-&gt;get_name( ).
-          SELECT SINGLE name INTO _name
-            FROM trdir
-            WHERE name = _name.
-          IF sy-subrc = 0.
-            exists = me-&gt;exists-exists.
-          ENDIF.
-        WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = type
-              connclass = &apos;ZAPLINK_MESSAGE&apos;.
-      ENDCASE.
+    type = component-&gt;get_type( ).
+    CASE type.
+      WHEN st_program.
+        _name = component-&gt;get_name( ).
+        SELECT SINGLE name INTO _name
+          FROM trdir
+          WHERE name = _name.
+        IF sy-subrc = 0.
+          exists = me-&gt;exists-exists.
+        ENDIF.
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name type.
+    ENDCASE.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
@@ -372,7 +354,7 @@ INCLUDE zaplink_macros.</MACROS>
         object-&gt;raw = o_data.
       WHEN OTHERS.
         CLEAR object.
-        mac_raise_type_not_supported &apos;ZAPLINK_PROGRAM&apos; type.
+        mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
@@ -456,12 +438,7 @@ INCLUDE zaplink_macros.</MACROS>
           CREATE OBJECT components.
           components-&gt;add( _comp ).
         WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = object-&gt;type
-              connclass = &apos;ZAPLINK_PROGRAM&apos;.
+          mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
 
     CATCH zaplink_cx_connector INTO o_mycx.

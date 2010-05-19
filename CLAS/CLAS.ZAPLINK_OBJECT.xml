@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A1E504E5EA1B6BDEEB29E520EA72BF3F" CODE_SIGNATURE="2516DA3FEECE85BB74B6D3F9F5649278" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E7CFB0F8A50B96B0C9C7403C61B4BE9D" CODE_SIGNATURE="21DDBBF10F9C03D8607F4EB550E0FC66" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -402,37 +402,33 @@ INCLUDE zaplink_macros.</MACROS>
   DATA _d         TYPE t_fm_data.
 
   TRY.
-      CHECK component-&gt;get_type( ) = zaplink_object_data=&gt;object_types-class.
+    CHECK component-&gt;get_type( ) = zaplink_object_data=&gt;object_types-class.
 
-      classkey-clsname = component-&gt;get_name( ).
-      CALL FUNCTION &apos;SEO_BUFFER_REFRESH&apos;.
-      CALL FUNCTION &apos;SEO_CLASS_GET&apos;
-        EXPORTING
-          clskey       = classkey
-        IMPORTING
-          class        = _d-class
-        EXCEPTIONS
-          not_existing = 1
-          deleted      = 2
-          is_interface = 3
-          model_only   = 4
-          OTHERS       = 5.
-      IF sy-subrc &lt;&gt; 0.
-        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GET&apos;
-                                                    subrc = sy-subrc
-                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-        application_log-&gt;add_symsg( ).
-        RAISE EXCEPTION o_mycx.
-      ENDIF.
+    classkey-clsname = component-&gt;get_name( ).
+    CALL FUNCTION &apos;SEO_BUFFER_REFRESH&apos;.
+    CALL FUNCTION &apos;SEO_CLASS_GET&apos;
+      EXPORTING
+        clskey       = classkey
+      IMPORTING
+        class        = _d-class
+      EXCEPTIONS
+        not_existing = 1
+        deleted      = 2
+        is_interface = 3
+        model_only   = 4
+        OTHERS       = 5.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;SEO_CLASS_GET&apos; sy-subrc.
+    ENDIF.
 
-      load_clas( EXPORTING classkey = classkey
-                        CHANGING _d = _d ).
+    load_clas( EXPORTING classkey = classkey
+                      CHANGING _d = _d ).
 
 * Includes
-      _d-includes = get_includes( _d-class-clsname ).
+    _d-includes = get_includes( _d-class-clsname ).
 
 * Issue 71 : Code signature different due to slight change in sections
-      check_clas_sections( _d ).
+    check_clas_sections( _d ).
 * Issue 71 : Code signature different due to implicite type-pool declaration within public, protected or private section
 * From SEO_CLIF_SAVE_ALL
 ** Clean-up unused implicite type pool usages (MS 20060921)
@@ -447,244 +443,244 @@ INCLUDE zaplink_macros.</MACROS>
 *      DELETE _d-typeusages WHERE version &lt;&gt; _d-class-version.   &quot; Remove type usage of the wrong version
 * Type-pools declaration might be present within method&apos;s declaration section (auto added by SAP when needed).
 * Have to detect it, add type pool to type pool list and delete type pool declaration
-      DATA code      TYPE tt_abaprawsource.
-      DATA new_code  TYPE tt_abaprawsource.
-      DATA t_typegrp TYPE seot_typepusages_r.
-      DATA s_tgroup  LIKE LINE OF t_typegrp.
-      DATA d_flag    TYPE abap_bool.
-      DATA s_grp_key TYPE seotpukey.
+    DATA code      TYPE tt_abaprawsource.
+    DATA new_code  TYPE tt_abaprawsource.
+    DATA t_typegrp TYPE seot_typepusages_r.
+    DATA s_tgroup  LIKE LINE OF t_typegrp.
+    DATA d_flag    TYPE abap_bool.
+    DATA s_grp_key TYPE seotpukey.
 
-      code = get_prog_rawsource( _d-includes-pubsec ).
-      search_type_pool( EXPORTING sourcecode = code
-                                         typepools = _d-typeusages
-                                            public = abap_true
-                          IMPORTING new_sourcecode = new_code
-                                     new_typepools = t_typegrp ).
-      IF NOT new_code IS INITIAL.
-        set_prog_rawsource( program = _d-includes-pubsec
-                                raw = new_code ).
-        d_flag = abap_true.
-      ENDIF.
-      IF NOT t_typegrp IS INITIAL.
-        SORT t_typegrp BY typegroup.  DELETE ADJACENT DUPLICATES FROM t_typegrp COMPARING typegroup.
-        LOOP AT t_typegrp INTO s_tgroup.
-          s_tgroup-clsname = _d-class-clsname.
-          s_tgroup-version = _d-class-version.
-          READ TABLE _d-typeusages TRANSPORTING NO FIELDS WITH KEY typegroup = s_tgroup-typegroup.
-          IF sy-subrc = 0.
-            MOVE-CORRESPONDING s_tgroup TO s_grp_key.
-            CALL FUNCTION &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
-              EXPORTING
-                tplkey        = s_grp_key
-                save          = seox_false
-              EXCEPTIONS
-                not_existing  = 1
-                is_clsdeferrd = 2
-                is_intdeferrd = 3
-                not_deleted   = 4
-                db_error      = 5
-                OTHERS        = 6.
-            IF sy-subrc &lt;&gt; 0.
-              o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
-                                                          subrc = sy-subrc
-                                                      classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-              application_log-&gt;add_symsg( ).
-              RAISE EXCEPTION o_mycx.
-            ENDIF.
-          ENDIF.
-          CALL FUNCTION &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
+    code = get_prog_rawsource( _d-includes-pubsec ).
+    search_type_pool( EXPORTING sourcecode = code
+                                       typepools = _d-typeusages
+                                          public = abap_true
+                        IMPORTING new_sourcecode = new_code
+                                   new_typepools = t_typegrp ).
+    IF NOT new_code IS INITIAL.
+      set_prog_rawsource( program = _d-includes-pubsec
+                              raw = new_code ).
+      d_flag = abap_true.
+    ENDIF.
+    IF NOT t_typegrp IS INITIAL.
+      SORT t_typegrp BY typegroup.  DELETE ADJACENT DUPLICATES FROM t_typegrp COMPARING typegroup.
+      LOOP AT t_typegrp INTO s_tgroup.
+        s_tgroup-clsname = _d-class-clsname.
+        s_tgroup-version = _d-class-version.
+        READ TABLE _d-typeusages TRANSPORTING NO FIELDS WITH KEY typegroup = s_tgroup-typegroup.
+        IF sy-subrc = 0.
+          MOVE-CORRESPONDING s_tgroup TO s_grp_key.
+          CALL FUNCTION &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
             EXPORTING
-              save                    = seox_false
-*              NOT_AFFECT_PUBLIC       = SEOX_FALSE
-            CHANGING
-              typepusage              = s_tgroup
+              tplkey        = s_grp_key
+              save          = seox_false
             EXCEPTIONS
-              existing                = 1
-              is_clsdeferrd           = 2
-              is_intdeferrd           = 3
-              not_created             = 4
-              db_error                = 5
-              OTHERS                  = 6.
+              not_existing  = 1
+              is_clsdeferrd = 2
+              is_intdeferrd = 3
+              not_deleted   = 4
+              db_error      = 5
+              OTHERS        = 6.
           IF sy-subrc &lt;&gt; 0.
-            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
+            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
                                                         subrc = sy-subrc
                                                     classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
             application_log-&gt;add_symsg( ).
             RAISE EXCEPTION o_mycx.
           ENDIF.
-          INSERT s_tgroup INTO TABLE _d-typeusages.
-          SET EXTENDED CHECK OFF.
-          IF 1 = 2. MESSAGE w002 WITH s_tgroup-typegroup _d-class-clsname text-pub. ENDIF.
-          SET EXTENDED CHECK ON.
-          CALL METHOD application_log-&gt;add_warning
-            EXPORTING
-*              id_msgid     =
-              id_msgno     = &apos;002&apos;
-              id_msgv1     = s_tgroup-typegroup
-              id_msgv2     = _d-class-clsname
-              id_msgv3     = &apos;Public section&apos;(pub)
-*              id_msgv4     =
-*              id_detlevel  =
-*              id_probclass =
-              .
-          d_flag = abap_true.
-        ENDLOOP.
-      ENDIF.
-
-      code = get_prog_rawsource( _d-includes-prosec ).
-      search_type_pool( EXPORTING sourcecode = code
-                                   typepools = _d-typeusages
-                    IMPORTING new_sourcecode = new_code
-                               new_typepools = t_typegrp ).
-      IF NOT new_code IS INITIAL.
-        set_prog_rawsource( program = _d-includes-prosec
-                                raw = new_code ).
-        d_flag = abap_true.
-      ENDIF.
-      IF NOT t_typegrp IS INITIAL.
-        SORT t_typegrp BY typegroup.  DELETE ADJACENT DUPLICATES FROM t_typegrp COMPARING typegroup.
-        LOOP AT t_typegrp INTO s_tgroup.
-          s_tgroup-clsname = _d-class-clsname.
-          s_tgroup-version = _d-class-version.
-          READ TABLE _d-typeusages TRANSPORTING NO FIELDS WITH KEY typegroup = s_tgroup-typegroup.
-          IF sy-subrc = 0.
-            MOVE-CORRESPONDING s_tgroup TO s_grp_key.
-            CALL FUNCTION &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
-              EXPORTING
-                tplkey        = s_grp_key
-                save          = seox_false
-              EXCEPTIONS
-                not_existing  = 1
-                is_clsdeferrd = 2
-                is_intdeferrd = 3
-                not_deleted   = 4
-                db_error      = 5
-                OTHERS        = 6.
-            IF sy-subrc &lt;&gt; 0.
-              o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
-                                                          subrc = sy-subrc
-                                                      classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-              application_log-&gt;add_symsg( ).
-              RAISE EXCEPTION o_mycx.
-            ENDIF.
-          ENDIF.
-          CALL FUNCTION &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
-            EXPORTING
-              save                    = seox_false
-*              NOT_AFFECT_PUBLIC       = SEOX_FALSE
-            CHANGING
-              typepusage              = s_tgroup
-            EXCEPTIONS
-              existing                = 1
-              is_clsdeferrd           = 2
-              is_intdeferrd           = 3
-              not_created             = 4
-              db_error                = 5
-              OTHERS                  = 6.
-          IF sy-subrc &lt;&gt; 0.
-            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
-                                                        subrc = sy-subrc
-                                                    classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-            application_log-&gt;add_symsg( ).
-            RAISE EXCEPTION o_mycx.
-          ENDIF.
-          INSERT s_tgroup INTO TABLE _d-typeusages.
-          SET EXTENDED CHECK OFF.
-          IF 1 = 2. MESSAGE w002 WITH s_tgroup-typegroup _d-class-clsname text-pro. ENDIF.
-          SET EXTENDED CHECK ON.
-          CALL METHOD application_log-&gt;add_warning
-            EXPORTING
-*              id_msgid     =
-              id_msgno     = &apos;002&apos;
-              id_msgv1     = s_tgroup-typegroup
-              id_msgv2     = _d-class-clsname
-              id_msgv3     = &apos;Protected section&apos;(pro)
-*              id_msgv4     =
-*              id_detlevel  =
-*              id_probclass =
-              .
-          d_flag = abap_true.
-        ENDLOOP.
-      ENDIF.
-      code = get_prog_rawsource( _d-includes-prisec ).
-      search_type_pool( EXPORTING sourcecode = code
-                                   typepools = _d-typeusages
-                    IMPORTING new_sourcecode = new_code
-                               new_typepools = t_typegrp ).
-      IF NOT new_code IS INITIAL.
-        set_prog_rawsource( program = _d-includes-prisec
-                                raw = new_code ).
-        d_flag = abap_true.
-      ENDIF.
-      IF NOT t_typegrp IS INITIAL.
-        SORT t_typegrp BY typegroup.  DELETE ADJACENT DUPLICATES FROM t_typegrp COMPARING typegroup.
-        LOOP AT t_typegrp INTO s_tgroup.
-          s_tgroup-clsname = _d-class-clsname.
-          s_tgroup-version = _d-class-version.
-          READ TABLE _d-typeusages TRANSPORTING NO FIELDS WITH KEY typegroup = s_tgroup-typegroup.
-          IF sy-subrc = 0.
-            MOVE-CORRESPONDING s_tgroup TO s_grp_key.
-            CALL FUNCTION &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
-              EXPORTING
-                tplkey        = s_grp_key
-                save          = seox_false
-              EXCEPTIONS
-                not_existing  = 1
-                is_clsdeferrd = 2
-                is_intdeferrd = 3
-                not_deleted   = 4
-                db_error      = 5
-                OTHERS        = 6.
-            IF sy-subrc &lt;&gt; 0.
-              o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
-                                                          subrc = sy-subrc
-                                                      classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-              application_log-&gt;add_symsg( ).
-              RAISE EXCEPTION o_mycx.
-            ENDIF.
-          ENDIF.
-          CALL FUNCTION &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
-            EXPORTING
-              save                    = seox_false
-*              NOT_AFFECT_PUBLIC       = SEOX_FALSE
-            CHANGING
-              typepusage              = s_tgroup
-            EXCEPTIONS
-              existing                = 1
-              is_clsdeferrd           = 2
-              is_intdeferrd           = 3
-              not_created             = 4
-              db_error                = 5
-              OTHERS                  = 6.
-          IF sy-subrc &lt;&gt; 0.
-            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
-                                                        subrc = sy-subrc
-                                                    classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-            application_log-&gt;add_symsg( ).
-            RAISE EXCEPTION o_mycx.
-          ENDIF.
-          INSERT s_tgroup INTO TABLE _d-typeusages.
-          SET EXTENDED CHECK OFF.
-          IF 1 = 2. MESSAGE w002 WITH s_tgroup-typegroup _d-class-clsname text-pri. ENDIF.
-          SET EXTENDED CHECK ON.
-          CALL METHOD application_log-&gt;add_warning
-            EXPORTING
-*              id_msgid     =
-              id_msgno     = &apos;002&apos;
-              id_msgv1     = s_tgroup-typegroup
-              id_msgv2     = _d-class-clsname
-              id_msgv3     = &apos;Private section&apos;(pri)
-*              id_msgv4     =
-*              id_detlevel  =
-*              id_probclass =
-              .
-          d_flag = abap_true.
-        ENDLOOP.
-      ENDIF.
-      IF NOT d_flag IS INITIAL.
-        CALL FUNCTION &apos;SEO_CLIF_SAVE_ALL&apos;
+        ENDIF.
+        CALL FUNCTION &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
           EXPORTING
-            cifkey                              = classkey
+            save                    = seox_false
+*              NOT_AFFECT_PUBLIC       = SEOX_FALSE
+          CHANGING
+            typepusage              = s_tgroup
+          EXCEPTIONS
+            existing                = 1
+            is_clsdeferrd           = 2
+            is_intdeferrd           = 3
+            not_created             = 4
+            db_error                = 5
+            OTHERS                  = 6.
+        IF sy-subrc &lt;&gt; 0.
+          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
+                                                      subrc = sy-subrc
+                                                  classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+          application_log-&gt;add_symsg( ).
+          RAISE EXCEPTION o_mycx.
+        ENDIF.
+        INSERT s_tgroup INTO TABLE _d-typeusages.
+        SET EXTENDED CHECK OFF.
+        IF 1 = 2. MESSAGE w002 WITH s_tgroup-typegroup _d-class-clsname text-pub. ENDIF.
+        SET EXTENDED CHECK ON.
+        CALL METHOD application_log-&gt;add_warning
+          EXPORTING
+*              id_msgid     =
+            id_msgno     = &apos;002&apos;
+            id_msgv1     = s_tgroup-typegroup
+            id_msgv2     = _d-class-clsname
+            id_msgv3     = &apos;Public section&apos;(pub)
+*              id_msgv4     =
+*              id_detlevel  =
+*              id_probclass =
+            .
+        d_flag = abap_true.
+      ENDLOOP.
+    ENDIF.
+
+    code = get_prog_rawsource( _d-includes-prosec ).
+    search_type_pool( EXPORTING sourcecode = code
+                                 typepools = _d-typeusages
+                  IMPORTING new_sourcecode = new_code
+                             new_typepools = t_typegrp ).
+    IF NOT new_code IS INITIAL.
+      set_prog_rawsource( program = _d-includes-prosec
+                              raw = new_code ).
+      d_flag = abap_true.
+    ENDIF.
+    IF NOT t_typegrp IS INITIAL.
+      SORT t_typegrp BY typegroup.  DELETE ADJACENT DUPLICATES FROM t_typegrp COMPARING typegroup.
+      LOOP AT t_typegrp INTO s_tgroup.
+        s_tgroup-clsname = _d-class-clsname.
+        s_tgroup-version = _d-class-version.
+        READ TABLE _d-typeusages TRANSPORTING NO FIELDS WITH KEY typegroup = s_tgroup-typegroup.
+        IF sy-subrc = 0.
+          MOVE-CORRESPONDING s_tgroup TO s_grp_key.
+          CALL FUNCTION &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
+            EXPORTING
+              tplkey        = s_grp_key
+              save          = seox_false
+            EXCEPTIONS
+              not_existing  = 1
+              is_clsdeferrd = 2
+              is_intdeferrd = 3
+              not_deleted   = 4
+              db_error      = 5
+              OTHERS        = 6.
+          IF sy-subrc &lt;&gt; 0.
+            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
+                                                        subrc = sy-subrc
+                                                    classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+            application_log-&gt;add_symsg( ).
+            RAISE EXCEPTION o_mycx.
+          ENDIF.
+        ENDIF.
+        CALL FUNCTION &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
+          EXPORTING
+            save                    = seox_false
+*              NOT_AFFECT_PUBLIC       = SEOX_FALSE
+          CHANGING
+            typepusage              = s_tgroup
+          EXCEPTIONS
+            existing                = 1
+            is_clsdeferrd           = 2
+            is_intdeferrd           = 3
+            not_created             = 4
+            db_error                = 5
+            OTHERS                  = 6.
+        IF sy-subrc &lt;&gt; 0.
+          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
+                                                      subrc = sy-subrc
+                                                  classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+          application_log-&gt;add_symsg( ).
+          RAISE EXCEPTION o_mycx.
+        ENDIF.
+        INSERT s_tgroup INTO TABLE _d-typeusages.
+        SET EXTENDED CHECK OFF.
+        IF 1 = 2. MESSAGE w002 WITH s_tgroup-typegroup _d-class-clsname text-pro. ENDIF.
+        SET EXTENDED CHECK ON.
+        CALL METHOD application_log-&gt;add_warning
+          EXPORTING
+*              id_msgid     =
+            id_msgno     = &apos;002&apos;
+            id_msgv1     = s_tgroup-typegroup
+            id_msgv2     = _d-class-clsname
+            id_msgv3     = &apos;Protected section&apos;(pro)
+*              id_msgv4     =
+*              id_detlevel  =
+*              id_probclass =
+            .
+        d_flag = abap_true.
+      ENDLOOP.
+    ENDIF.
+    code = get_prog_rawsource( _d-includes-prisec ).
+    search_type_pool( EXPORTING sourcecode = code
+                                 typepools = _d-typeusages
+                  IMPORTING new_sourcecode = new_code
+                             new_typepools = t_typegrp ).
+    IF NOT new_code IS INITIAL.
+      set_prog_rawsource( program = _d-includes-prisec
+                              raw = new_code ).
+      d_flag = abap_true.
+    ENDIF.
+    IF NOT t_typegrp IS INITIAL.
+      SORT t_typegrp BY typegroup.  DELETE ADJACENT DUPLICATES FROM t_typegrp COMPARING typegroup.
+      LOOP AT t_typegrp INTO s_tgroup.
+        s_tgroup-clsname = _d-class-clsname.
+        s_tgroup-version = _d-class-version.
+        READ TABLE _d-typeusages TRANSPORTING NO FIELDS WITH KEY typegroup = s_tgroup-typegroup.
+        IF sy-subrc = 0.
+          MOVE-CORRESPONDING s_tgroup TO s_grp_key.
+          CALL FUNCTION &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
+            EXPORTING
+              tplkey        = s_grp_key
+              save          = seox_false
+            EXCEPTIONS
+              not_existing  = 1
+              is_clsdeferrd = 2
+              is_intdeferrd = 3
+              not_deleted   = 4
+              db_error      = 5
+              OTHERS        = 6.
+          IF sy-subrc &lt;&gt; 0.
+            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
+                                                        subrc = sy-subrc
+                                                    classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+            application_log-&gt;add_symsg( ).
+            RAISE EXCEPTION o_mycx.
+          ENDIF.
+        ENDIF.
+        CALL FUNCTION &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
+          EXPORTING
+            save                    = seox_false
+*              NOT_AFFECT_PUBLIC       = SEOX_FALSE
+          CHANGING
+            typepusage              = s_tgroup
+          EXCEPTIONS
+            existing                = 1
+            is_clsdeferrd           = 2
+            is_intdeferrd           = 3
+            not_created             = 4
+            db_error                = 5
+            OTHERS                  = 6.
+        IF sy-subrc &lt;&gt; 0.
+          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
+                                                      subrc = sy-subrc
+                                                  classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+          application_log-&gt;add_symsg( ).
+          RAISE EXCEPTION o_mycx.
+        ENDIF.
+        INSERT s_tgroup INTO TABLE _d-typeusages.
+        SET EXTENDED CHECK OFF.
+        IF 1 = 2. MESSAGE w002 WITH s_tgroup-typegroup _d-class-clsname text-pri. ENDIF.
+        SET EXTENDED CHECK ON.
+        CALL METHOD application_log-&gt;add_warning
+          EXPORTING
+*              id_msgid     =
+            id_msgno     = &apos;002&apos;
+            id_msgv1     = s_tgroup-typegroup
+            id_msgv2     = _d-class-clsname
+            id_msgv3     = &apos;Private section&apos;(pri)
+*              id_msgv4     =
+*              id_detlevel  =
+*              id_probclass =
+            .
+        d_flag = abap_true.
+      ENDLOOP.
+    ENDIF.
+    IF NOT d_flag IS INITIAL.
+      CALL FUNCTION &apos;SEO_CLIF_SAVE_ALL&apos;
+        EXPORTING
+          cifkey                              = classkey
 *           NO_SECTIONS                         = SEOX_FALSE
 *           SECTIONS_ONLY                       = SEOX_FALSE
 *           SUPPRESS_CORR                       = SEOX_FALSE
@@ -710,45 +706,42 @@ INCLUDE zaplink_macros.</MACROS>
 *           CORRNR                              =
 *           DEVCLASS                            =
 *           GENFLAG                             =
-          EXCEPTIONS
-            not_existing                        = 1
-            nothing_to_do                       = 2
-            access_error                        = 3
-            db_error                            = 4
-            error_in_code_generation            = 5
-            OTHERS                              = 6.
-        IF sy-subrc &lt;&gt; 0.
-          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLIF_SAVE_ALL&apos;
-                                                      subrc = sy-subrc
-                                                  classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-          application_log-&gt;add_symsg( ).
-          RAISE EXCEPTION o_mycx.
-        ENDIF.
-        load_clas( EXPORTING classkey = classkey
-                          CHANGING _d = _d ).
+        EXCEPTIONS
+          not_existing                        = 1
+          nothing_to_do                       = 2
+          access_error                        = 3
+          db_error                            = 4
+          error_in_code_generation            = 5
+          OTHERS                              = 6.
+      IF sy-subrc &lt;&gt; 0.
+        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLIF_SAVE_ALL&apos;
+                                                    subrc = sy-subrc
+                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+        application_log-&gt;add_symsg( ).
+        RAISE EXCEPTION o_mycx.
       ENDIF.
+      load_clas( EXPORTING classkey = classkey
+                        CHANGING _d = _d ).
+    ENDIF.
 * End of Issue 71
 
 * Documentations
-      docu_key-name = component-&gt;get_name( ).
-      docu_key-other = &apos;*&apos;.
-      obj_mask = docu_key.
+    docu_key-name = component-&gt;get_name( ).
+    docu_key-other = &apos;*&apos;.
+    obj_mask = docu_key.
 
-      _d-documentation = zaplink_documentation=&gt;get( ids = zaplink_object_data=&gt;r_doc_ids-class
-                                                  object = obj_mask ).
+    _d-documentation = zaplink_documentation=&gt;get( ids = zaplink_object_data=&gt;r_doc_ids-class
+                                                object = obj_mask ).
 
-      CREATE OBJECT object.
-      object-&gt;complete_data( CHANGING fm_data = _d ).
-      _d-dynpros = get_dynpros( _d-includes-classpool ).    &quot; Issue 8
-      _d-menupainter = get_menus( _d-includes-classpool ).  &quot; Issue 9
-      _d-textspool = get_prog_textpool( _d-includes-classpool ). &quot; Issue 1
-      object-&gt;from_data( _d ).
-      object-&gt;_code_signature = get_class_signature( classkey ).
+    CREATE OBJECT object.
+    object-&gt;complete_data( CHANGING fm_data = _d ).
+    _d-dynpros = get_dynpros( _d-includes-classpool ).      &quot; Issue 8
+    _d-menupainter = get_menus( _d-includes-classpool ).    &quot; Issue 9
+    _d-textspool = get_prog_textpool( _d-includes-classpool ). &quot; Issue 1
+    object-&gt;from_data( _d ).
+    object-&gt;_code_signature = get_class_signature( classkey ).
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
@@ -782,72 +775,69 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
 
-      CHECK component-&gt;get_type( ) = zaplink_object_data=&gt;object_types-interface.
+    CHECK component-&gt;get_type( ) = zaplink_object_data=&gt;object_types-interface.
 
-      classkey-clsname = component-&gt;get_name( ).
-      CALL FUNCTION &apos;SEO_INTERFACE_TYPEINFO_GET&apos;
-        EXPORTING
-          intkey                        = classkey
+    classkey-clsname = component-&gt;get_name( ).
+    CALL FUNCTION &apos;SEO_INTERFACE_TYPEINFO_GET&apos;
+      EXPORTING
+        intkey                        = classkey
 *     VERSION                       = SEOC_VERSION_INACTIVE
 *     STATE                         = &apos;1&apos;
-          with_master_language          = seox_true
-          with_enhancements             = seox_true
+        with_master_language          = seox_true
+        with_enhancements             = seox_true
 *     READ_ACTIVE_ENHA              = SEOX_FALSE
-        IMPORTING
-          interface                     = _d-interface
-          attributes                    = _d-attributes
-          methods                       = _d-methods
-          events                        = _d-events
-          PARAMETERS                    = _d-parameters
-          exceps                        = _d-exceps
-          comprisings                   = _d-comprisings
-          typepusages                   = _d-typeusages
-          clsdeferrds                   = _d-clsdeferrds
-          intdeferrds                   = _d-intdeferrds
-          explore_comprisings           = _d-explore_comprisings
-          aliases                       = _d-aliases
-          types                         = _d-types
-          enhancement_methods           = _d-enhancement_methods
-          enhancement_attributes        = _d-enhancement_attributes
-          enhancement_events            = _d-enhancement_events
-          enhancement_comprisings       = _d-enhancement_comprisings
-        EXCEPTIONS
-          not_existing                  = 1
-          is_class                      = 2
-          model_only                    = 3
-          OTHERS                        = 4.
-      IF sy-subrc &lt;&gt; 0.
-        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_TYPEINFO_GET&apos;
-                                                    subrc = sy-subrc
-                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-        application_log-&gt;add_symsg( ).
-        RAISE EXCEPTION o_mycx.
-      ENDIF.
+      IMPORTING
+        interface                     = _d-interface
+        attributes                    = _d-attributes
+        methods                       = _d-methods
+        events                        = _d-events
+        PARAMETERS                    = _d-parameters
+        exceps                        = _d-exceps
+        comprisings                   = _d-comprisings
+        typepusages                   = _d-typeusages
+        clsdeferrds                   = _d-clsdeferrds
+        intdeferrds                   = _d-intdeferrds
+        explore_comprisings           = _d-explore_comprisings
+        aliases                       = _d-aliases
+        types                         = _d-types
+        enhancement_methods           = _d-enhancement_methods
+        enhancement_attributes        = _d-enhancement_attributes
+        enhancement_events            = _d-enhancement_events
+        enhancement_comprisings       = _d-enhancement_comprisings
+      EXCEPTIONS
+        not_existing                  = 1
+        is_class                      = 2
+        model_only                    = 3
+        OTHERS                        = 4.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_TYPEINFO_GET&apos;
+                                                  subrc = sy-subrc
+                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+      application_log-&gt;add_symsg( ).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
 
 * Includes
-      _d-includes = get_includes( _d-interface-clsname ).
+    _d-includes = get_includes( _d-interface-clsname ).
 
 * Issue 71 : Code signature different due to slight change in sections
-      check_intf_section( _d ).
+    check_intf_section( _d ).
 
 * Documentations
-      docu_key-name = component-&gt;get_name( ).
-      docu_key-other = &apos;*&apos;.
-      obj_mask = docu_key.
+    docu_key-name = component-&gt;get_name( ).
+    docu_key-other = &apos;*&apos;.
+    obj_mask = docu_key.
 
-      _d-documentation = zaplink_documentation=&gt;get( ids = zaplink_object_data=&gt;r_doc_ids-interface
-                                                  object = obj_mask ).
+    _d-documentation = zaplink_documentation=&gt;get( ids = zaplink_object_data=&gt;r_doc_ids-interface
+                                                object = obj_mask ).
 
-      CREATE OBJECT object.
-      object-&gt;complete_data( CHANGING fm_data = _d ).
-      object-&gt;from_data( _d ).
-      object-&gt;_code_signature = get_interface_signature( classkey ).
+    CREATE OBJECT object.
+    object-&gt;complete_data( CHANGING fm_data = _d ).
+    object-&gt;from_data( _d ).
+    object-&gt;_code_signature = get_interface_signature( classkey ).
 
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_CLASS_GLOBALSOURCE" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
@@ -1336,94 +1326,91 @@ AS</DOCUMENTATION>
 
   TRY.
 
-      _d = o_data-&gt;to_data( ).
+    _d = o_data-&gt;to_data( ).
 
 * Exceptions texts
-      IF NOT _d-exceptions_texts IS INITIAL.
-        zaplink_clas_data=&gt;update_concept( EXPORTING msg_col = application_log
-                                           CHANGING  fm_data = _d ).
-      ENDIF.
+    IF NOT _d-exceptions_texts IS INITIAL.
+      zaplink_clas_data=&gt;update_concept( EXPORTING msg_col = application_log
+                                         CHANGING  fm_data = _d ).
+    ENDIF.
 
-      CALL FUNCTION &apos;SEO_CLASS_CREATE_COMPLETE&apos;
-       EXPORTING
+    CALL FUNCTION &apos;SEO_CLASS_CREATE_COMPLETE&apos;
+     EXPORTING
 *     corrnr                             = e_corrnr
 *     devclass                           = &apos;$TMP&apos;                &quot;devclass
 *     version                            = e_version
 *     genflag                            = e_genflag
 *     authority_check                    = e_authority_check
-         overwrite                          = &apos;X&apos;                   &quot;overwrite
+       overwrite                          = &apos;X&apos;                   &quot;overwrite
 *   SUPPRESS_METHOD_GENERATION         = e_suppress_meth_gen
 *   SUPPRESS_REFACTORING_SUPPORT       = e_suppress_refac_gen
-         method_sources                     = _d-method_sources    &quot; Methods source
-         locals_def                         = _d-locals_def        &quot; LOCAL_TYPES
-         locals_imp                         = _d-locals_imp        &quot; LOCAL_IMP
-         locals_mac                         = _d-locals_mac        &quot; MACROS
+       method_sources                     = _d-method_sources    &quot; Methods source
+       locals_def                         = _d-locals_def        &quot; LOCAL_TYPES
+       locals_imp                         = _d-locals_imp        &quot; LOCAL_IMP
+       locals_mac                         = _d-locals_mac        &quot; MACROS
 *   SUPPRESS_INDEX_UPDATE              = e_suppress_ind_update
-       IMPORTING
-         korrnr                             = i_korrnr
-       TABLES
-         class_descriptions                 = _d-class_desc
-         component_descriptions             = _d-component_desc
-         subcomponent_descriptions          = _d-subcomponent_desc
-       CHANGING
-         class                              = _d-class
-         inheritance                        = _d-inheritance
-         redefinitions                      = _d-redefinitions
-         implementings                      = _d-implementings
-         impl_details                       = _d-impl_details
-         attributes                         = _d-attributes
-         methods                            = _d-methods
-         events                             = _d-events
-         types                              = _d-types
+     IMPORTING
+       korrnr                             = i_korrnr
+     TABLES
+       class_descriptions                 = _d-class_desc
+       component_descriptions             = _d-component_desc
+       subcomponent_descriptions          = _d-subcomponent_desc
+     CHANGING
+       class                              = _d-class
+       inheritance                        = _d-inheritance
+       redefinitions                      = _d-redefinitions
+       implementings                      = _d-implementings
+       impl_details                       = _d-impl_details
+       attributes                         = _d-attributes
+       methods                            = _d-methods
+       events                             = _d-events
+       types                              = _d-types
 *   TYPE_SOURCE                        = ch_type_source &quot;???
-         PARAMETERS                         = _d-parameters
-         exceps                             = _d-exceps
-         aliases                            = _d-aliases
-         typepusages                        = _d-typeusages
-         clsdeferrds                        = _d-clsdeferrds
-         intdeferrds                        = _d-intdeferrds
-         friendships                        = _d-friendships
-       EXCEPTIONS
-         existing                           = 1
-         is_interface                       = 2
-         db_error                           = 3
-         component_error                    = 4
-         no_access                          = 5
-         other                              = 6
-         OTHERS                             = 7.
-      CASE sy-subrc.
-        WHEN 0.
+       PARAMETERS                         = _d-parameters
+       exceps                             = _d-exceps
+       aliases                            = _d-aliases
+       typepusages                        = _d-typeusages
+       clsdeferrds                        = _d-clsdeferrds
+       intdeferrds                        = _d-intdeferrds
+       friendships                        = _d-friendships
+     EXCEPTIONS
+       existing                           = 1
+       is_interface                       = 2
+       db_error                           = 3
+       component_error                    = 4
+       no_access                          = 5
+       other                              = 6
+       OTHERS                             = 7.
+    CASE sy-subrc.
+      WHEN 0.
 ** i guess if we made it this far, we will assume success
 ** successful install
-        WHEN OTHERS.
-          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_CREATE_COMPLETE&apos;
-                                                      subrc = sy-subrc
-                                                  classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-          application_log-&gt;add_symsg( ).
-          RAISE EXCEPTION o_mycx.
-      ENDCASE.
+      WHEN OTHERS.
+        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_CREATE_COMPLETE&apos;
+                                                    subrc = sy-subrc
+                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+        application_log-&gt;add_symsg( ).
+        RAISE EXCEPTION o_mycx.
+    ENDCASE.
 
-      _d-includes = get_includes( _d-class-clsname ).
-      set_dynpros( program = _d-includes-classpool          &quot; Issue 8
-                   dynpros = _d-dynpros ).
-      set_menus( program = _d-includes-classpool            &quot; Issue 9
-                   menus = _d-menupainter ).
-      set_prog_textpool( program = _d-includes-classpool    &quot; Issue 1
-                        textpool = _d-textspool ).
+    _d-includes = get_includes( _d-class-clsname ).
+    set_dynpros( program = _d-includes-classpool            &quot; Issue 8
+                 dynpros = _d-dynpros ).
+    set_menus( program = _d-includes-classpool              &quot; Issue 9
+                 menus = _d-menupainter ).
+    set_prog_textpool( program = _d-includes-classpool      &quot; Issue 1
+                      textpool = _d-textspool ).
 
-      zaplink_documentation=&gt;set( _d-documentation ).
+    zaplink_documentation=&gt;set( _d-documentation ).
 
-      CREATE OBJECT _component.
-      _component-&gt;set_type( zaplink_object_data=&gt;object_types-class ).
-      _name = _d-class-clsname.
-      _component-&gt;set_name( _name ).
-      CREATE OBJECT components.
-      components-&gt;add( _component ).
+    CREATE OBJECT _component.
+    _component-&gt;set_type( zaplink_object_data=&gt;object_types-class ).
+    _name = _d-class-clsname.
+    _component-&gt;set_name( _name ).
+    CREATE OBJECT components.
+    components-&gt;add( _component ).
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
@@ -1457,108 +1444,105 @@ AS</DOCUMENTATION>
 
   TRY.
 
-      _d = o_data-&gt;to_data( ).
+    _d = o_data-&gt;to_data( ).
 
-      CALL FUNCTION &apos;SEO_INTERFACE_CREATE_COMPLETE&apos;
-        EXPORTING
+    CALL FUNCTION &apos;SEO_INTERFACE_CREATE_COMPLETE&apos;
+      EXPORTING
 *     CORRNR                             =
 *     devclass                           = &apos;$TMP&apos;
 *     VERSION                            = SEOC_VERSION_INACTIVE
 *     GENFLAG                            = &apos; &apos;
 *     AUTHORITY_CHECK                    = SEOX_TRUE
-          overwrite                          = seox_true
+        overwrite                          = seox_true
 *     SUPPRESS_REFACTORING_SUPPORT       = SEOX_TRUE
-        IMPORTING
-          korrnr                             = i_korrnr
-        TABLES
-          class_descriptions                 = _d-class_desc
-          component_descriptions             = _d-component_desc
-          subcomponent_descriptions          = _d-subcomponent_desc
-        CHANGING
-          interface                          = _d-interface
-          comprisings                        = _d-comprisings
-          attributes                         = _d-attributes
-          methods                            = _d-methods
-          events                             = _d-events
-          PARAMETERS                         = _d-parameters
-          exceps                             = _d-exceps
-          aliases                            = _d-aliases
-          typepusages                        = _d-typeusages
-          clsdeferrds                        = _d-clsdeferrds
-          intdeferrds                        = _d-intdeferrds
-          types                              = _d-types
-        EXCEPTIONS
-          existing                           = 1
-          is_class                           = 2
-          db_error                           = 3
-          component_error                    = 4
-          no_access                          = 5
-          other                              = 6
-          OTHERS                             = 7.
-      CASE sy-subrc.
-        WHEN &apos;0&apos;.
+      IMPORTING
+        korrnr                             = i_korrnr
+      TABLES
+        class_descriptions                 = _d-class_desc
+        component_descriptions             = _d-component_desc
+        subcomponent_descriptions          = _d-subcomponent_desc
+      CHANGING
+        interface                          = _d-interface
+        comprisings                        = _d-comprisings
+        attributes                         = _d-attributes
+        methods                            = _d-methods
+        events                             = _d-events
+        PARAMETERS                         = _d-parameters
+        exceps                             = _d-exceps
+        aliases                            = _d-aliases
+        typepusages                        = _d-typeusages
+        clsdeferrds                        = _d-clsdeferrds
+        intdeferrds                        = _d-intdeferrds
+        types                              = _d-types
+      EXCEPTIONS
+        existing                           = 1
+        is_class                           = 2
+        db_error                           = 3
+        component_error                    = 4
+        no_access                          = 5
+        other                              = 6
+        OTHERS                             = 7.
+    CASE sy-subrc.
+      WHEN &apos;0&apos;.
 ** i guess if we made it this far, we will assume success
 ** successful install
-        WHEN OTHERS.
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING textid = zaplink_cx_connector=&gt;system_error.
-      ENDCASE.
+      WHEN OTHERS.
+        RAISE EXCEPTION TYPE zaplink_cx_connector
+          EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+    ENDCASE.
 
 * Patch SAP do not create type alias.
-      DATA  intkey TYPE seoclskey.
-      DATA  type   TYPE vseotype.
-      FIELD-SYMBOLS &lt;alias&gt; LIKE LINE OF _d-aliases.
+    DATA  intkey TYPE seoclskey.
+    DATA  type   TYPE vseotype.
+    FIELD-SYMBOLS &lt;alias&gt; LIKE LINE OF _d-aliases.
 
-      LOOP AT _d-aliases ASSIGNING &lt;alias&gt;
-              WHERE cmptype = seoo_cmptype_type.
-        MOVE-CORRESPONDING &lt;alias&gt; TO type.
-        type-alias = seox_true.
-        type-state = seoc_state_implemented.
-        CALL FUNCTION &apos;SEO_TYPE_CREATE_F_DATA&apos;
-          EXPORTING
-            save   = seox_false
-          CHANGING
-            type   = type
-          EXCEPTIONS
-            OTHERS = 1.
-        IF sy-subrc &lt;&gt; 0.
-          CALL METHOD application_log-&gt;add_symsg
-            EXPORTING
-              id_msgty = &apos;W&apos;.
-        ENDIF.
-      ENDLOOP.
-      MOVE-CORRESPONDING _d-interface TO intkey.
-      CALL FUNCTION &apos;SEO_CLIF_SAVE_ALL&apos;
+    LOOP AT _d-aliases ASSIGNING &lt;alias&gt;
+            WHERE cmptype = seoo_cmptype_type.
+      MOVE-CORRESPONDING &lt;alias&gt; TO type.
+      type-alias = seox_true.
+      type-state = seoc_state_implemented.
+      CALL FUNCTION &apos;SEO_TYPE_CREATE_F_DATA&apos;
         EXPORTING
-          cifkey                        = intkey
-          suppress_refactoring_entries  = seox_true
-          suppress_modification_support = seox_true
-*    CHANGING
-*      corrnr                        = corrnr
-*      devclass                      = devclass
-*      genflag                       = genflag
+          save   = seox_false
+        CHANGING
+          type   = type
         EXCEPTIONS
-          db_error                      = 1
-          OTHERS                        = 2.
+          OTHERS = 1.
       IF sy-subrc &lt;&gt; 0.
         CALL METHOD application_log-&gt;add_symsg
           EXPORTING
             id_msgty = &apos;W&apos;.
       ENDIF.
+    ENDLOOP.
+    MOVE-CORRESPONDING _d-interface TO intkey.
+    CALL FUNCTION &apos;SEO_CLIF_SAVE_ALL&apos;
+      EXPORTING
+        cifkey                        = intkey
+        suppress_refactoring_entries  = seox_true
+        suppress_modification_support = seox_true
+*    CHANGING
+*      corrnr                        = corrnr
+*      devclass                      = devclass
+*      genflag                       = genflag
+      EXCEPTIONS
+        db_error                      = 1
+        OTHERS                        = 2.
+    IF sy-subrc &lt;&gt; 0.
+      CALL METHOD application_log-&gt;add_symsg
+        EXPORTING
+          id_msgty = &apos;W&apos;.
+    ENDIF.
 
-      zaplink_documentation=&gt;set( o_data-&gt;documentation ).
+    zaplink_documentation=&gt;set( o_data-&gt;documentation ).
 
-      CREATE OBJECT _component.
-      _component-&gt;set_type( zaplink_object_data=&gt;object_types-interface ).
-      _name = _d-interface-clsname.
-      _component-&gt;set_name( _name ).
-      CREATE OBJECT components.
-      components-&gt;add( _component ).
+    CREATE OBJECT _component.
+    _component-&gt;set_type( zaplink_object_data=&gt;object_types-interface ).
+    _name = _d-interface-clsname.
+    _component-&gt;set_name( _name ).
+    CREATE OBJECT components.
+    components-&gt;add( _component ).
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_CLAS" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
@@ -1696,6 +1680,8 @@ AS</DOCUMENTATION>
       RAISE EXCEPTION o_mycx.
   ENDTRY.
 
+  CHECK object IS BOUND.
+
   CASE object-&gt;type.
     WHEN zaplink_object_data=&gt;object_types-class.
       _o_class ?= object-&gt;raw.
@@ -1704,6 +1690,7 @@ AS</DOCUMENTATION>
       _o_interface ?= object-&gt;raw.
       _o_interface-&gt;anonymize( ).
     WHEN OTHERS.
+      mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
@@ -1742,7 +1729,7 @@ AS</DOCUMENTATION>
         clskey-clsname = component-&gt;get_name( ).
         result = get_interface_signature( clskey ).
       WHEN OTHERS.
-        mac_raise_type_not_supported &apos;ZAPLINK_OBJECT&apos; d_type.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
@@ -1764,7 +1751,7 @@ AS</DOCUMENTATION>
 *      create object object type TO_CLASS.
     WHEN OTHERS.
       CLEAR object.
-      mac_raise_type_not_supported &apos;ZAPLINK_OBJECT&apos; type.
+      mac_raise_type_not_supported me-&gt;class_name type.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
@@ -1837,7 +1824,7 @@ AS</DOCUMENTATION>
           ENDCASE.
         ENDIF.
       WHEN OTHERS.
-        mac_raise_type_not_supported &apos;ZAPLINK_OBJECT&apos; d_type.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
 
     mac_def_catch zaplink_cx_connector.
@@ -1891,7 +1878,7 @@ AS</DOCUMENTATION>
           exists = &apos;X&apos;.
         ENDIF.
       WHEN OTHERS.
-        mac_raise_type_not_supported &apos;ZAPLINK_OBJECT&apos; d_type.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
 
     mac_def_catch zaplink_cx_connector.
@@ -1942,7 +1929,7 @@ AS</DOCUMENTATION>
         object-&gt;raw = o_intf.
       WHEN OTHERS.
         CLEAR object.
-        mac_raise_type_not_supported &apos;ZAPLINK_OBJECT&apos; d_type.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
@@ -1980,7 +1967,7 @@ AS</DOCUMENTATION>
             RAISE EXCEPTION o_mycx.
         ENDTRY.
       WHEN OTHERS.
-        mac_raise_type_not_supported &apos;ZAPLINK_OBJECT&apos; object-&gt;type.
+        mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
 
     mac_def_catch zaplink_cx_connector.

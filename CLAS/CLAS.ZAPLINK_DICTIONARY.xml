@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AA9F1908B8711468BFDD6AC0B05E5E43" CODE_SIGNATURE="B3C36B31FE55711D03824C6CE89B2007" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="1323361B1DE10E5259F385A6F5A575E9" CODE_SIGNATURE="B98036D05E5663CC09012F85817C3ABA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -33,52 +33,52 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
-   <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;CNX_DICTIONARY&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
+   <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;CNX_DICTIONARY&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="DD_EU_TYPE" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4">
+   <ITEM CMPNAME="DD_EU_TYPE" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF dd_eu_type,          &quot; Domain DDEUTYPE
-      table_type        TYPE ddeutype VALUE &apos;A&apos;,     &quot; A  Table Type
-      domain            TYPE ddeutype VALUE &apos;D&apos;,     &quot; D  Domain
-      data_element      TYPE ddeutype VALUE &apos;E&apos;,     &quot; E  Data Element
-      table_field       TYPE ddeutype VALUE &apos;F&apos;,     &quot; F  Table Field
-      type_group        TYPE ddeutype VALUE &apos;G&apos;,     &quot; G  Type Group
-      search_help       TYPE ddeutype VALUE &apos;H&apos;,     &quot; H  Search Help
-      mactchcode_id     TYPE ddeutype VALUE &apos;I&apos;,     &quot; I  Matchcode ID
-      lock_object       TYPE ddeutype VALUE &apos;L&apos;,     &quot; L  Lock Object
-      matchcode_obj     TYPE ddeutype VALUE &apos;M&apos;,     &quot; M  Matchcode Object
-      table_index       TYPE ddeutype VALUE &apos;N&apos;,     &quot; N  Table Index
-      ext_index         TYPE ddeutype VALUE &apos;N&apos;,     &quot; O  Extention Index MF INTERN_TRANSL_EUTYPE
-      internal_struct   TYPE ddeutype VALUE &apos;S&apos;,     &quot; S  Internal Structure
-      transp_table      TYPE ddeutype VALUE &apos;T&apos;,     &quot; T  Transparent Table
-      structure         TYPE ddeutype VALUE &apos;U&apos;,     &quot; U  Table/Structure
-      view              TYPE ddeutype VALUE &apos;V&apos;,     &quot; V  View
-      table_pool        TYPE ddeutype VALUE &apos;X&apos;,     &quot; X  Table Pool
-      table_cluster     TYPE ddeutype VALUE &apos;Y&apos;,     &quot; Y  Table Cluster
-      t_cluster_pool    TYPE ddeutype VALUE &apos;Z&apos;,     &quot; Z  Table cluster/pool
+      table_type        TYPE ddeutype VALUE &apos;A&apos;,     &quot;#EC NOTEXT : A  Table Type
+      domain            TYPE ddeutype VALUE &apos;D&apos;,     &quot;#EC NOTEXT : D  Domain
+      data_element      TYPE ddeutype VALUE &apos;E&apos;,     &quot;#EC NOTEXT : E  Data Element
+      table_field       TYPE ddeutype VALUE &apos;F&apos;,     &quot;#EC NOTEXT : F  Table Field
+      type_group        TYPE ddeutype VALUE &apos;G&apos;,     &quot;#EC NOTEXT : G  Type Group
+      search_help       TYPE ddeutype VALUE &apos;H&apos;,     &quot;#EC NOTEXT : H  Search Help
+      mactchcode_id     TYPE ddeutype VALUE &apos;I&apos;,     &quot;#EC NOTEXT : I  Matchcode ID
+      lock_object       TYPE ddeutype VALUE &apos;L&apos;,     &quot;#EC NOTEXT : L  Lock Object
+      matchcode_obj     TYPE ddeutype VALUE &apos;M&apos;,     &quot;#EC NOTEXT : M  Matchcode Object
+      table_index       TYPE ddeutype VALUE &apos;N&apos;,     &quot;#EC NOTEXT : N  Table Index
+      ext_index         TYPE ddeutype VALUE &apos;N&apos;,     &quot;#EC NOTEXT : O  Extention Index MF INTERN_TRANSL_EUTYPE
+      internal_struct   TYPE ddeutype VALUE &apos;S&apos;,     &quot;#EC NOTEXT : S  Internal Structure
+      transp_table      TYPE ddeutype VALUE &apos;T&apos;,     &quot;#EC NOTEXT : T  Transparent Table
+      structure         TYPE ddeutype VALUE &apos;U&apos;,     &quot;#EC NOTEXT : U  Table/Structure
+      view              TYPE ddeutype VALUE &apos;V&apos;,     &quot;#EC NOTEXT : V  View
+      table_pool        TYPE ddeutype VALUE &apos;X&apos;,     &quot;#EC NOTEXT : X  Table Pool
+      table_cluster     TYPE ddeutype VALUE &apos;Y&apos;,     &quot;#EC NOTEXT : Y  Table Cluster
+      t_cluster_pool    TYPE ddeutype VALUE &apos;Z&apos;,     &quot;#EC NOTEXT : Z  Table cluster/pool
     END OF dd_eu_type
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="DD object type in EU management system (domain : DDEUTYPE)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="SUPPORTEDTYPES" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4">
-    BEGIN OF supportedtypes,                                  &quot;#EC NOTEXT
-      type_group        TYPE td_comptype VALUE &apos;TYPE&apos;,
-      domain            TYPE td_comptype VALUE &apos;DOMA&apos;,
-      data_element      TYPE td_comptype VALUE &apos;DTEL&apos;,
-      table_type        TYPE td_comptype VALUE &apos;TTYP&apos;,
-      search_help       TYPE td_comptype VALUE &apos;SHLP&apos;,
-      mactchcode_id     TYPE td_comptype VALUE &apos;MCID&apos;,
-      lock_object       TYPE td_comptype VALUE &apos;ENQU&apos;,
-      matchcode_obj     TYPE td_comptype VALUE &apos;MCOB&apos;,
-      table_index       TYPE td_comptype VALUE &apos;INDX&apos;,     &quot; N  Table Index
-      ext_index         TYPE td_comptype VALUE &apos;XINX&apos;,     &quot; O  Extention Index MF INTERN_TRANSL_EUTYPE
-      table             TYPE td_comptype VALUE &apos;TABL&apos;,
-      view              TYPE td_comptype VALUE &apos;VIEW&apos;,
-      t_cluster_pool    TYPE td_comptype VALUE &apos;SQLT&apos;,
+   <ITEM CMPNAME="SUPPORTEDTYPES" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
+    BEGIN OF supportedtypes,
+      type_group        TYPE td_comptype VALUE &apos;TYPE&apos;,    &quot;#EC NOTEXT
+      domain            TYPE td_comptype VALUE &apos;DOMA&apos;,    &quot;#EC NOTEXT
+      data_element      TYPE td_comptype VALUE &apos;DTEL&apos;,    &quot;#EC NOTEXT
+      table_type        TYPE td_comptype VALUE &apos;TTYP&apos;,    &quot;#EC NOTEXT
+      search_help       TYPE td_comptype VALUE &apos;SHLP&apos;,    &quot;#EC NOTEXT
+      mactchcode_id     TYPE td_comptype VALUE &apos;MCID&apos;,    &quot;#EC NOTEXT
+      lock_object       TYPE td_comptype VALUE &apos;ENQU&apos;,    &quot;#EC NOTEXT
+      matchcode_obj     TYPE td_comptype VALUE &apos;MCOB&apos;,    &quot;#EC NOTEXT
+      table_index       TYPE td_comptype VALUE &apos;INDX&apos;,    &quot;#EC NOTEXT : N  Table Index
+      ext_index         TYPE td_comptype VALUE &apos;XINX&apos;,    &quot;#EC NOTEXT : O  Extention Index MF INTERN_TRANSL_EUTYPE
+      table             TYPE td_comptype VALUE &apos;TABL&apos;,    &quot;#EC NOTEXT
+      view              TYPE td_comptype VALUE &apos;VIEW&apos;,    &quot;#EC NOTEXT
+      t_cluster_pool    TYPE td_comptype VALUE &apos;SQLT&apos;,    &quot;#EC NOTEXT
     END OF supportedtypes
 `
     <TEXTS>
@@ -149,7 +149,7 @@ END-OF-DEFINITION.</MACROS>
   uuid = _uuid.
   version = _ver.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXPORT_DATA_ELEMENT" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
+   <ITEM CMPNAME="EXPORT_DATA_ELEMENT" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export Data Element from SAP System"/>
     </TEXTS>
@@ -219,7 +219,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXPORT_DOMAIN" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
+   <ITEM CMPNAME="EXPORT_DOMAIN" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export Domain from SAP System"/>
     </TEXTS>
@@ -301,7 +301,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXPORT_LOCK_OBJECT" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
+   <ITEM CMPNAME="EXPORT_LOCK_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export Lock Object from SAP System"/>
     </TEXTS>
@@ -374,7 +374,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXPORT_SEARCH_HELP" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
+   <ITEM CMPNAME="EXPORT_SEARCH_HELP" EXPOSURE="1" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export Search Help from SAP System"/>
     </TEXTS>
@@ -447,7 +447,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXPORT_TABLE" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
+   <ITEM CMPNAME="EXPORT_TABLE" EXPOSURE="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export table from SAP System"/>
     </TEXTS>
@@ -535,7 +535,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXPORT_TABLE_TYPE" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
+   <ITEM CMPNAME="EXPORT_TABLE_TYPE" EXPOSURE="1" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export table type from SAP System"/>
     </TEXTS>
@@ -606,7 +606,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXPORT_TYPE_GROUP" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
+   <ITEM CMPNAME="EXPORT_TYPE_GROUP" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export Type Group from SAP System"/>
     </TEXTS>
@@ -667,7 +667,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXPORT_VIEW" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
+   <ITEM CMPNAME="EXPORT_VIEW" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Export view from SAP System"/>
     </TEXTS>
@@ -778,7 +778,7 @@ END-OF-DEFINITION.</MACROS>
   s_src = zaplink_tools=&gt;table_2_string( t_src ).
   result = zaplink_tools=&gt;calculate_md5_hash( s_src ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPE_GROUP" STATE="1" EDITORDER="1 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TYPE_GROUP" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get Type Group from SAP System"/>
     </TEXTS>
@@ -842,7 +842,7 @@ END-OF-DEFINITION.</MACROS>
   ENDIF.
   result = &lt;o_s&gt;.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_DATA_ELEMENT" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_DATA_ELEMENT" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import Data Element to SAP System"/>
     </TEXTS>
@@ -914,7 +914,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_DOMAIN" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_DOMAIN" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import Domain to SAP System"/>
     </TEXTS>
@@ -991,7 +991,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_LOCK_OBJECT" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_LOCK_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import Lock Object to SAP System"/>
     </TEXTS>
@@ -1066,7 +1066,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_SEARCH_HELP" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_SEARCH_HELP" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import Search Help to SAP System"/>
     </TEXTS>
@@ -1142,7 +1142,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_TABLE" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_TABLE" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import table to SAP System"/>
     </TEXTS>
@@ -1249,7 +1249,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_TABLE_TYPE" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_TABLE_TYPE" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import table type to SAP System"/>
     </TEXTS>
@@ -1323,7 +1323,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_TYPE_GROUP" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_TYPE_GROUP" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import Type Group to SAP System"/>
     </TEXTS>
@@ -1449,7 +1449,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_VIEW" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_VIEW" EXPOSURE="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import view to SAP System"/>
     </TEXTS>
@@ -1533,7 +1533,7 @@ END-OF-DEFINITION.</MACROS>
     <SOURCE>`
   mac_obj_data.
 
-  DEFINE mac_do_obj.
+  DEFINE lmac_do_obj.
     &amp;1 ?= object-&gt;raw.
     &amp;1-&gt;anonymize( ).
   END-OF-DEFINITION.
@@ -1542,35 +1542,14 @@ END-OF-DEFINITION.</MACROS>
     WHEN supportedtypes-type_group.
       o_typegroup ?= object-&gt;raw.
 *      o_typegroup-&gt;anonymize( ).
-    WHEN supportedtypes-domain.         mac_do_obj o_domain.
-    WHEN supportedtypes-data_element.   mac_do_obj o_data_e.
-    WHEN supportedtypes-view.           mac_do_obj o_view.
+    WHEN supportedtypes-domain.         lmac_do_obj o_domain.
+    WHEN supportedtypes-data_element.   lmac_do_obj o_data_e.
+    WHEN supportedtypes-view.           lmac_do_obj o_view.
     WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-        EXPORTING
-          textid = zaplink_cx_connector=&gt;type_not_supported
-          type   = object-&gt;type
-          connclass = &apos;ZAPLINK_DICTIONARY&apos;.
+      mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
   ENDCASE.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
-    <SOURCE>`
-*  DATA o_type TYPE to_data.
-*  DATA s_msg LIKE LINE OF o_type-&gt;messages.
-*
-*  TRY.
-*      super-&gt;zaplink_cnx_ext_cleaner~unanonymize( object ).
-*    CATCH zaplink_cx_connector INTO o_mycx.
-*      RAISE EXCEPTION o_mycx.
-*  ENDTRY.
-*
-*  o_type ?= object-&gt;raw.
-*  if o_type-&gt;A0_MAINDATA-RESPUSER is INITIAL. o_type-&gt;A0_MAINDATA-RESPUSER = sy-uname. endif.
-*  s_msg-name = o_type-&gt;A0_MAINDATA-RESPUSER.
-*  MODIFY o_type-&gt;messages FROM s_msg TRANSPORTING name
-*         WHERE name IS INITIAL.</SOURCE>
-   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE"/>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
     <SOURCE>`
   DATA d_type   TYPE td_comptype.
@@ -1585,7 +1564,7 @@ END-OF-DEFINITION.</MACROS>
       WHEN supportedtypes-domain OR supportedtypes-data_element OR supportedtypes-table_type OR supportedtypes-search_help OR supportedtypes-mactchcode_id OR
            supportedtypes-lock_object OR supportedtypes-matchcode_obj OR supportedtypes-table_index OR supportedtypes-ext_index OR supportedtypes-table  OR supportedtypes-view.
       WHEN OTHERS.
-        mac_raise_type_not_supported &apos;ZAPLINK_DICTIONARY&apos; d_type.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
@@ -1594,29 +1573,24 @@ END-OF-DEFINITION.</MACROS>
     <SOURCE>`
   mac_obj_data.
 
-  DEFINE mac_obj_create.
+  DEFINE lmac_obj_create.
     create object &amp;1.
     object-&gt;raw = &amp;1.
   END-OF-DEFINITION.
 
   CREATE OBJECT object.
   CASE type.
-    WHEN supportedtypes-type_group.     mac_obj_create o_typegroup.
-    WHEN supportedtypes-domain.         mac_obj_create o_domain.
-    WHEN supportedtypes-data_element.   mac_obj_create o_data_e.
-    WHEN supportedtypes-view.           mac_obj_create o_view.
-    WHEN supportedtypes-table.          mac_obj_create o_table.
-    WHEN supportedtypes-table_type.     mac_obj_create o_tab_type.
-    WHEN supportedtypes-search_help.    mac_obj_create o_s_help.
-    WHEN supportedtypes-lock_object.    mac_obj_create o_lock_obj.
+    WHEN supportedtypes-type_group.     lmac_obj_create o_typegroup.
+    WHEN supportedtypes-domain.         lmac_obj_create o_domain.
+    WHEN supportedtypes-data_element.   lmac_obj_create o_data_e.
+    WHEN supportedtypes-view.           lmac_obj_create o_view.
+    WHEN supportedtypes-table.          lmac_obj_create o_table.
+    WHEN supportedtypes-table_type.     lmac_obj_create o_tab_type.
+    WHEN supportedtypes-search_help.    lmac_obj_create o_s_help.
+    WHEN supportedtypes-lock_object.    lmac_obj_create o_lock_obj.
     WHEN OTHERS.
       CLEAR object.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-        EXPORTING
-          textid = zaplink_cx_connector=&gt;type_not_supported
-          type   = type
-          connclass = &apos;ZAPLINK_DICTIONARY&apos;.
+      mac_raise_type_not_supported me-&gt;class_name type.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
@@ -1627,160 +1601,144 @@ END-OF-DEFINITION.</MACROS>
 
   TRY.
 
-      type = component-&gt;get_type( ).
-      CASE type.
-        WHEN supportedtypes-type_group.
-          d_type = dd_eu_type-type_group.
-        WHEN supportedtypes-domain.
-          d_type = dd_eu_type-domain.
-        WHEN supportedtypes-data_element.
-          d_type = dd_eu_type-data_element.
-        WHEN supportedtypes-table_type.
-          d_type = dd_eu_type-table_type.
-        WHEN supportedtypes-search_help.
-          d_type = dd_eu_type-search_help.
-        WHEN supportedtypes-mactchcode_id.
-          d_type = dd_eu_type-mactchcode_id.
-        WHEN supportedtypes-lock_object.
-          d_type = dd_eu_type-lock_object.
-        WHEN supportedtypes-matchcode_obj.
-          d_type = dd_eu_type-matchcode_obj.
-        WHEN supportedtypes-table_index.
-          d_type = dd_eu_type-table_index.
-        WHEN supportedtypes-ext_index.
-          d_type = dd_eu_type-ext_index.
+    type = component-&gt;get_type( ).
+    CASE type.
+      WHEN supportedtypes-type_group.
+        d_type = dd_eu_type-type_group.
+      WHEN supportedtypes-domain.
+        d_type = dd_eu_type-domain.
+      WHEN supportedtypes-data_element.
+        d_type = dd_eu_type-data_element.
+      WHEN supportedtypes-table_type.
+        d_type = dd_eu_type-table_type.
+      WHEN supportedtypes-search_help.
+        d_type = dd_eu_type-search_help.
+      WHEN supportedtypes-mactchcode_id.
+        d_type = dd_eu_type-mactchcode_id.
+      WHEN supportedtypes-lock_object.
+        d_type = dd_eu_type-lock_object.
+      WHEN supportedtypes-matchcode_obj.
+        d_type = dd_eu_type-matchcode_obj.
+      WHEN supportedtypes-table_index.
+        d_type = dd_eu_type-table_index.
+      WHEN supportedtypes-ext_index.
+        d_type = dd_eu_type-ext_index.
 *        WHEN supportedtypes-table.
 *          d_type = dd_eu_type-table.
-        WHEN supportedtypes-view.
-          d_type = dd_eu_type-view.
+      WHEN supportedtypes-view.
+        d_type = dd_eu_type-view.
 *        WHEN supportedtypes-t_cluster_pool.
 *          d_type = dd_eu_type-t_cluster_pool.
-        WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = type
-              connclass = &apos;ZAPLINK_DICTIONARY&apos;.
-      ENDCASE.
-      d_name = component-&gt;get_name( ).
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name type.
+    ENDCASE.
+    d_name = component-&gt;get_name( ).
 
-      IF NOT d_type IS INITIAL.
-        CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
-          EXPORTING
+    IF NOT d_type IS INITIAL.
+      CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+        EXPORTING
 *           NO_ASK                     = &apos; &apos;
-            objname                    = d_name
-            objtype                    = d_type
+          objname                    = d_name
+          objtype                    = d_type
 *         CHANGING
 *           CORRNUM                    = &apos; &apos;
-          EXCEPTIONS
-            not_executed               = 1
-            object_not_found           = 2
-            object_not_specified       = 3
-            permission_failure         = 4
-            dialog_needed              = 5
-            OTHERS                     = 6.
-        IF sy-subrc &lt;&gt; 0. &quot; SAP NameSpace
-          CASE sy-subrc.
-            WHEN 2.
-              RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;not_found.
-            WHEN OTHERS.
-              mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
-          ENDCASE.
-        ENDIF.
-
+        EXCEPTIONS
+          not_executed               = 1
+          object_not_found           = 2
+          object_not_specified       = 3
+          permission_failure         = 4
+          dialog_needed              = 5
+          OTHERS                     = 6.
+      IF sy-subrc &lt;&gt; 0. &quot; SAP NameSpace
+        CASE sy-subrc.
+          WHEN 2.
+            RAISE EXCEPTION TYPE zaplink_cx_connector
+              EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+          WHEN OTHERS.
+            mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+        ENDCASE.
       ENDIF.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    ENDIF.
+
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.
   result = abap_true.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>`
-  DATA d_name TYPE rsedd0-ddobjname.
-  DATA d_type TYPE rsedd0-ddobjtype.
+  DATA d_name      TYPE rsedd0-ddobjname.
+  DATA d_type      TYPE rsedd0-ddobjtype.
   DATA type        TYPE td_comptype.
 
   exists = me-&gt;exists-not_exists.
 
   TRY.
-      type = component-&gt;get_type( ).
-      CASE type.
-        WHEN supportedtypes-type_group.
-          d_type = dd_eu_type-type_group.
-        WHEN supportedtypes-domain.
-          d_type = dd_eu_type-domain.
-        WHEN supportedtypes-data_element.
-          d_type = dd_eu_type-data_element.
-        WHEN supportedtypes-table_type.
-          d_type = dd_eu_type-table_type.
-        WHEN supportedtypes-search_help.
-          d_type = dd_eu_type-search_help.
-        WHEN supportedtypes-mactchcode_id.
-          d_type = dd_eu_type-mactchcode_id.
-        WHEN supportedtypes-lock_object.
-          d_type = dd_eu_type-lock_object.
-        WHEN supportedtypes-matchcode_obj.
-          d_type = dd_eu_type-matchcode_obj.
-        WHEN supportedtypes-table_index.
-          d_type = dd_eu_type-table_index.
-        WHEN supportedtypes-ext_index.
-          d_type = dd_eu_type-ext_index.
-        WHEN supportedtypes-table.
-          d_type = dd_eu_type-transp_table.
-        WHEN supportedtypes-view.
-          d_type = dd_eu_type-view.
+    type = component-&gt;get_type( ).
+    CASE type.
+      WHEN supportedtypes-type_group.
+        d_type = dd_eu_type-type_group.
+      WHEN supportedtypes-domain.
+        d_type = dd_eu_type-domain.
+      WHEN supportedtypes-data_element.
+        d_type = dd_eu_type-data_element.
+      WHEN supportedtypes-table_type.
+        d_type = dd_eu_type-table_type.
+      WHEN supportedtypes-search_help.
+        d_type = dd_eu_type-search_help.
+      WHEN supportedtypes-mactchcode_id.
+        d_type = dd_eu_type-mactchcode_id.
+      WHEN supportedtypes-lock_object.
+        d_type = dd_eu_type-lock_object.
+      WHEN supportedtypes-matchcode_obj.
+        d_type = dd_eu_type-matchcode_obj.
+      WHEN supportedtypes-table_index.
+        d_type = dd_eu_type-table_index.
+      WHEN supportedtypes-ext_index.
+        d_type = dd_eu_type-ext_index.
+      WHEN supportedtypes-table OR supportedtypes-t_cluster_pool.
+        d_type = dd_eu_type-transp_table.
+      WHEN supportedtypes-view.
+        d_type = dd_eu_type-view.
 *        WHEN supportedtypes-t_cluster_pool.
 *          d_type = dd_eu_type-t_cluster_pool.
-        WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = type
-              connclass = &apos;ZAPLINK_MESSAGE&apos;.
-      ENDCASE.
-      d_name = component-&gt;get_name( ).
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name type.
+    ENDCASE.
+    d_name = component-&gt;get_name( ).
 
-      IF NOT d_type IS INITIAL AND NOT d_name IS INITIAL.
-        CALL FUNCTION &apos;INTERN_DD_CHECK_EXIST&apos;
-          EXPORTING
-            objname                     = d_name
-            objtype                     = d_type
-            err_message                 = abap_false
+    IF NOT d_type IS INITIAL AND NOT d_name IS INITIAL.
+      CALL FUNCTION &apos;INTERN_DD_CHECK_EXIST&apos;
+        EXPORTING
+          objname                     = d_name
+          objtype                     = d_type
+          err_message                 = abap_false
 *           OBJSTATE                    = &apos;M&apos;
-            exists                      = abap_true
+          exists                      = abap_true
 *           SECNAME                     = &apos; &apos;
 *         IMPORTING
 *           MASTERLANGU                 =
 *           OTHER_CLASS                 =
 *           PROXY_TYPE                  =
-          EXCEPTIONS
-            object_not_found            = 1
-            other_object_class          = 2
-            invalid_parameter           = 3
-            object_already_exists       = 4
-            OTHERS                      = 5.
-        IF sy-subrc = 0. &quot; SAP NameSpace
-          exists = me-&gt;exists-exists.
-        ELSE.
-          CASE sy-subrc.
-            WHEN 1  or 2.
-            WHEN OTHERS.
-              mac_add_mf_and_raise &apos;INTERN_DD_CHECK_EXIST&apos; sy-subrc.
-          ENDCASE.
-        ENDIF.
-
+        EXCEPTIONS
+          object_not_found            = 1
+          other_object_class          = 2
+          invalid_parameter           = 3
+          object_already_exists       = 4
+          OTHERS                      = 5.
+      IF sy-subrc = 0. &quot; SAP NameSpace
+        exists = me-&gt;exists-exists.
+      ELSE.
+        CASE sy-subrc.
+          WHEN 1  OR 2.
+          WHEN OTHERS.
+            mac_add_mf_and_raise &apos;INTERN_DD_CHECK_EXIST&apos; sy-subrc.
+        ENDCASE.
       ENDIF.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    ENDIF.
+
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
@@ -1866,7 +1824,7 @@ END-OF-DEFINITION.</MACROS>
         object-&gt;raw = o_lock_obj.
       WHEN OTHERS.
         CLEAR object.
-        mac_raise_type_not_supported &apos;ZAPLINK_DICTIONARY&apos; d_type.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
@@ -1877,16 +1835,16 @@ END-OF-DEFINITION.</MACROS>
   mac_obj_data.
   DATA o_comp       TYPE to_component.
 
-  DEFINE mac_catch_local_cx.
+  DEFINE lmac_catch_local_cx.
     catch zaplink_cx_connector into o_mycx.
       if not o_mycx-&gt;messages is bound.
         o_mycx-&gt;messages = application_log.
         o_mycx-&gt;update( ).
       endif.
       raise exception o_mycx.
-  END-OF-DEFINITION.
+    END-OF-DEFINITION.
 
-  TRY.
+    TRY.
 
       CASE object-&gt;type.
         WHEN supportedtypes-type_group.
@@ -1894,64 +1852,59 @@ END-OF-DEFINITION.</MACROS>
           o_typegroup-&gt;a0_maindata-name = object-&gt;name.
           TRY.
             components = import_type_group( o_typegroup ).
-            mac_catch_local_cx.
+            lmac_catch_local_cx.
           ENDTRY.
         WHEN supportedtypes-domain.
           o_domain ?= object-&gt;raw.
           o_domain-&gt;a0_maindata-domname = object-&gt;name.
           TRY.
             components = import_domain( o_domain ).
-            mac_catch_local_cx.
+            lmac_catch_local_cx.
           ENDTRY.
         WHEN supportedtypes-data_element.
           o_data_e ?= object-&gt;raw.
           o_data_e-&gt;a0_maindata-rollname = object-&gt;name.
           TRY.
             components = import_data_element( o_data_e ).
-            mac_catch_local_cx.
+            lmac_catch_local_cx.
           ENDTRY.
         WHEN supportedtypes-view.
           o_view ?= object-&gt;raw.
           o_view-&gt;a0_maindata-viewname = object-&gt;name.
           TRY.
             components = import_view( o_view ).
-            mac_catch_local_cx.
+            lmac_catch_local_cx.
           ENDTRY.
         WHEN supportedtypes-table.
           o_table ?= object-&gt;raw.
           o_table-&gt;a0_maindata-tabname = object-&gt;name.
           TRY.
             components = import_table( o_table ).
-            mac_catch_local_cx.
+            lmac_catch_local_cx.
           ENDTRY.
         WHEN supportedtypes-table_type.
           o_tab_type ?= object-&gt;raw.
           o_tab_type-&gt;a0_maindata-typename = object-&gt;name.
           TRY.
             components = import_table_type( o_tab_type ).
-            mac_catch_local_cx.
+            lmac_catch_local_cx.
           ENDTRY.
         WHEN supportedtypes-search_help.
           o_s_help ?= object-&gt;raw.
           o_s_help-&gt;a0_maindata-shlpname = object-&gt;name.
           TRY.
             components = import_search_help( o_s_help ).
-            mac_catch_local_cx.
+            lmac_catch_local_cx.
           ENDTRY.
         WHEN supportedtypes-lock_object.
           o_lock_obj ?= object-&gt;raw.
           o_lock_obj-&gt;a0_maindata-viewname = object-&gt;name.
           TRY.
             components = import_lock_object( o_lock_obj ).
-            mac_catch_local_cx.
+            lmac_catch_local_cx.
           ENDTRY.
         WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = object-&gt;type
-              connclass = &apos;ZAPLINK_DICTIONARY&apos;.
+          mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
 
       CREATE OBJECT o_comp.
@@ -1960,11 +1913,10 @@ END-OF-DEFINITION.</MACROS>
       IF NOT components IS BOUND. CREATE OBJECT components. ENDIF.
       components-&gt;add( o_comp ).
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
-  ENDTRY.</SOURCE>
+      mac_def_catch zaplink_cx_connector.
+    ENDTRY.
+
+  ENDMETHOD.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>

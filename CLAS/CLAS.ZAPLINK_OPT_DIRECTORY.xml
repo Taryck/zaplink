@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="956B7AD2CCC296841CC6B3755F2801BD" CODE_SIGNATURE="B05CE6D93C9527500D1C958853F0570B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="1AF5AF952358AA5EBFC492D0EB6A976D" CODE_SIGNATURE="9E345BE78156C619D1E25B29B4B0E51F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -224,46 +224,46 @@ result = _substitution.</SOURCE>
 
   TRY.
 
-      IF me-&gt;_devclass IS BOUND.
-        TRY.
-            result-devclass = me-&gt;_devclass-&gt;substitute( component ).
-          CATCH zaplink_cx_options INTO o_mycx.
-            RAISE EXCEPTION o_mycx.
-        ENDTRY.
-      ENDIF.
+    IF me-&gt;_devclass IS BOUND.
+      TRY.
+          result-devclass = me-&gt;_devclass-&gt;substitute( component ).
+        CATCH zaplink_cx_options INTO o_mycx.
+          RAISE EXCEPTION o_mycx.
+      ENDTRY.
+    ENDIF.
 
-      IF me-&gt;_tr IS BOUND.
-        TRY.
-            result-trkorr = _tr-&gt;substitute( component ).
-          CATCH zaplink_cx_options INTO o_mycx.
-            RAISE EXCEPTION o_mycx.
-        ENDTRY.
-      ENDIF.
+    IF me-&gt;_tr IS BOUND.
+      TRY.
+          result-trkorr = _tr-&gt;substitute( component ).
+        CATCH zaplink_cx_options INTO o_mycx.
+          RAISE EXCEPTION o_mycx.
+      ENDTRY.
+    ENDIF.
 
-      _type = component-&gt;get_type( ).
-      _name = component-&gt;get_name( ).
-      CALL FUNCTION &apos;TRINT_TADIR_QUERY&apos;
-        EXPORTING
-          iv_pgmid           = &apos;R3TR&apos;
-          iv_object          = _type
-          iv_obj_name        = _name
-        IMPORTING
+    _type = component-&gt;get_type( ).
+    _name = component-&gt;get_name( ).
+    CALL FUNCTION &apos;TRINT_TADIR_QUERY&apos;
+      EXPORTING
+        iv_pgmid           = &apos;R3TR&apos;
+        iv_object          = _type
+        iv_obj_name        = _name
+      IMPORTING
 *      EV_OBJECT          =
 *      EV_SRCSYSTEM       =
-          ev_devclass        = _act_devc
+        ev_devclass        = _act_devc
 *      EV_AUTHOR          =
 *      EV_GENFLAG         =
-          ev_exist           = _exists.
-      IF _exists IS INITIAL.
-        CALL FUNCTION &apos;TRINT_TADIR_INSERT&apos;
-          EXPORTING
+        ev_exist           = _exists.
+    IF _exists IS INITIAL.
+      CALL FUNCTION &apos;TRINT_TADIR_INSERT&apos;
+        EXPORTING
 *        AUTHOR                     = SY-UNAME
 *        MASTERLANG                 = &apos; &apos;
-            devclass                   = result-devclass
+          devclass                   = result-devclass
 *        GENFLAG                    = &apos; &apos;
-            object                     = _type
-            obj_name                   = _name
-            pgmid                      = &apos;R3TR&apos;
+          object                     = _type
+          obj_name                   = _name
+          pgmid                      = &apos;R3TR&apos;
 *        SRCSYSTEM                  = SY-SYSID
 *        EDTFLAG                    = &apos; &apos;
 *        SRCDEP                     =
@@ -274,31 +274,31 @@ result = _substitution.</SOURCE>
 *        DELFLAG                    = &apos; &apos;
 *      IMPORTING
 *        ES_TADIR                   =
-          EXCEPTIONS
-            object_exists_global       = 1
-            object_exists_local        = 2
-            OTHERS                     = 3.
-        IF sy-subrc &lt;&gt; 0.
-          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
-                                                    funcname = &apos;TRINT_TADIR_INSERT&apos;
-                                                       subrc = sy-subrc ).
-          o_log-&gt;add_symsg( ).
-          o_log-&gt;add_exception( o_mycx ).
-          CLEAR o_mycx.
-        ENDIF.
-      ELSEIF _act_devc &lt;&gt; result-devclass.
-        CALL FUNCTION &apos;TRINT_TADIR_MODIFY&apos;
-          EXPORTING
+        EXCEPTIONS
+          object_exists_global       = 1
+          object_exists_local        = 2
+          OTHERS                     = 3.
+      IF sy-subrc &lt;&gt; 0.
+        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
+                                                  funcname = &apos;TRINT_TADIR_INSERT&apos;
+                                                     subrc = sy-subrc ).
+        o_log-&gt;add_symsg( ).
+        o_log-&gt;add_exception( o_mycx ).
+        CLEAR o_mycx.
+      ENDIF.
+    ELSEIF _act_devc &lt;&gt; result-devclass.
+      CALL FUNCTION &apos;TRINT_TADIR_MODIFY&apos;
+        EXPORTING
 *        AUTHOR                     = &apos;~&apos;
 *        CPROJECT                   = &apos;~&apos;
-            devclass                   = result-devclass
+          devclass                   = result-devclass
 *        EDTFLAG                    = &apos;~&apos;
 *        EXISTS                     = &apos;~&apos;
 *        GENFLAG                    = &apos;~&apos;
 *        MASTERLANG                 = &apos;~&apos;
-            object                     = _type
-            obj_name                   = _name
-            pgmid                      = &apos;R3TR&apos;
+          object                     = _type
+          obj_name                   = _name
+          pgmid                      = &apos;R3TR&apos;
 *        SRCDEP                     = &apos;~&apos;
 *        SRCSYSTEM                  = &apos;~&apos;
 *        VERSID                     = &apos;~&apos;
@@ -310,29 +310,29 @@ result = _substitution.</SOURCE>
 *        TRANSL_TECH_TEXT           = &apos;~&apos;
 *      IMPORTING
 *        ES_TADIR                   =
-          EXCEPTIONS
-            object_exists_global       = 1
-            object_exists_local        = 2
-            object_has_no_tadir        = 3
-            OTHERS                     = 4.
-        IF sy-subrc &lt;&gt; 0.
-          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
-                                                    funcname = &apos;TRINT_TADIR_MODIFY&apos;
-                                                       subrc = sy-subrc ).
-          o_log-&gt;add_symsg( ).
-          o_log-&gt;add_exception( o_mycx ).
-          CLEAR o_mycx.
-        ENDIF.
+        EXCEPTIONS
+          object_exists_global       = 1
+          object_exists_local        = 2
+          object_has_no_tadir        = 3
+          OTHERS                     = 4.
+      IF sy-subrc &lt;&gt; 0.
+        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
+                                                  funcname = &apos;TRINT_TADIR_MODIFY&apos;
+                                                     subrc = sy-subrc ).
+        o_log-&gt;add_symsg( ).
+        o_log-&gt;add_exception( o_mycx ).
+        CLEAR o_mycx.
       ENDIF.
+    ENDIF.
 
-      CALL FUNCTION &apos;RS_CORR_INSERT&apos;
-        EXPORTING
-          object                         = _name
-          object_class                   = _type
-          mode                           = &apos;I&apos;        &quot; Insert
-          global_lock                    = abap_true        &quot; R3TR
-          devclass                       = result-devclass
-          korrnum                        = result-trkorr
+    CALL FUNCTION &apos;RS_CORR_INSERT&apos;
+      EXPORTING
+        object                         = _name
+        object_class                   = _type
+        mode                           = &apos;I&apos;        &quot; Insert
+        global_lock                    = abap_true          &quot; R3TR
+        devclass                       = result-devclass
+        korrnum                        = result-trkorr
 *      USE_KORRNUM_IMMEDIATEDLY       = &apos; &apos;
 *      AUTHOR                         = &apos; &apos;
 *      MASTER_LANGUAGE                = &apos; &apos;
@@ -343,32 +343,29 @@ result = _substitution.</SOURCE>
 *      SUPPRESS_DIALOG                = &apos; &apos;
 *      MOD_LANGU                      = &apos; &apos;
 *      ACTIVATION_CALL                = &apos; &apos;
-        IMPORTING
+      IMPORTING
 *      DEVCLASS                       =
-          korrnum                        = result-trkorr
+        korrnum                        = result-trkorr
 *      ORDERNUM                       =
 *      NEW_CORR_ENTRY                 =
 *      AUTHOR                         =
 *      TRANSPORT_KEY                  =
 *      NEW_EXTEND                     =
-        EXCEPTIONS
-          cancelled                      = 1
-          permission_failure             = 2
-          unknown_objectclass            = 3
-          OTHERS                         = 4.
-      IF sy-subrc &lt;&gt; 0.
-        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
-                                                  funcname = &apos;RS_CORR_INSERT&apos;
-                                                     subrc = sy-subrc ).
-        o_log-&gt;add_symsg( ).
-        o_log-&gt;add_exception( o_mycx ).
-        CLEAR o_mycx.
-      ENDIF.
+      EXCEPTIONS
+        cancelled                      = 1
+        permission_failure             = 2
+        unknown_objectclass            = 3
+        OTHERS                         = 4.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
+                                                funcname = &apos;RS_CORR_INSERT&apos;
+                                                   subrc = sy-subrc ).
+      o_log-&gt;add_symsg( ).
+      o_log-&gt;add_exception( o_mycx ).
+      CLEAR o_mycx.
+    ENDIF.
 
-    CATCH zaplink_cx_options INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_options.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_SUBSTITUTIONKIND_OFF" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">

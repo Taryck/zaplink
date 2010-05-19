@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="723A352C4ADB5481F0A22551AF445C60" CODE_SIGNATURE="AA1C6F99BD1BC337105982858B0E6E48" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DEVCLASS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9B635B40A7BC5F448C002273FA02E66C" CODE_SIGNATURE="C0EA06C2A06D6A6B52BE65C6F95932F4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DEVCLASS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -301,46 +301,43 @@ CHECK data &lt;&gt; _devclass.
 
   TRY.
 
-      IF component-&gt;get_type( ) = &apos;DEVC&apos;.
-        result = component-&gt;get_name( ).
-      ELSE.
-        CASE _substitution.
-          WHEN substitutionkinds-no_overwrite.
-            result = get_existing( component ).
-            IF NOT result IS INITIAL.
-              EXIT.
-            ENDIF.
-            IF do_exists( comp_devc ) = abap_true.
-              result = comp_devc.
-              EXIT.
-            ENDIF.
-            result = me-&gt;_devclass.
-          WHEN substitutionkinds-keep_existing.
-            result = get_existing( component ).
-            IF result IS INITIAL.
-              result = local_devclass.
-            ENDIF.
-          WHEN substitutionkinds-use_container.
-            IF do_exists( comp_devc ) = abap_true.
-              result = comp_devc.
-            ELSE.
-              result = local_devclass.
-            ENDIF.
-          WHEN substitutionkinds-local.
+    IF component-&gt;get_type( ) = &apos;DEVC&apos;.
+      result = component-&gt;get_name( ).
+    ELSE.
+      CASE _substitution.
+        WHEN substitutionkinds-no_overwrite.
+          result = get_existing( component ).
+          IF NOT result IS INITIAL.
+            EXIT.
+          ENDIF.
+          IF do_exists( comp_devc ) = abap_true.
+            result = comp_devc.
+            EXIT.
+          ENDIF.
+          result = me-&gt;_devclass.
+        WHEN substitutionkinds-keep_existing.
+          result = get_existing( component ).
+          IF result IS INITIAL.
             result = local_devclass.
-          WHEN substitutionkinds-fixed.
-            result = me-&gt;_devclass.
-          WHEN OTHERS.
-            RAISE EXCEPTION TYPE zaplink_cx_opt_devclass
-                  EXPORTING textid = zaplink_cx_opt_devclass=&gt;invalid_substitutionkind
-                         substkind = _substitution.
-        ENDCASE.
-      ENDIF.
+          ENDIF.
+        WHEN substitutionkinds-use_container.
+          IF do_exists( comp_devc ) = abap_true.
+            result = comp_devc.
+          ELSE.
+            result = local_devclass.
+          ENDIF.
+        WHEN substitutionkinds-local.
+          result = local_devclass.
+        WHEN substitutionkinds-fixed.
+          result = me-&gt;_devclass.
+        WHEN OTHERS.
+          RAISE EXCEPTION TYPE zaplink_cx_opt_devclass
+                EXPORTING textid = zaplink_cx_opt_devclass=&gt;invalid_substitutionkind
+                       substkind = _substitution.
+      ENDCASE.
+    ENDIF.
 
-    CATCH zaplink_cx_opt_devclass INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_opt_devclass.
   ENDTRY.</SOURCE>
    </ITEM>
   </METHODS>

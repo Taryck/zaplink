@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D9E17B4B9B958E65D00416B74C17920D" CODE_SIGNATURE="976567510DA47DB263AF5DF27F6B1D68" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9F1DA86D62AF5CD0A11CC0E367398930" CODE_SIGNATURE="070EE44645FF28C1E75EE200F264FFC8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -575,80 +575,77 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
 
-      CREATE OBJECT o_data.
-      CALL METHOD interface-&gt;get_all_attributes
-        IMPORTING
-          e_package_interface_data = o_data-&gt;a0_maindata
-        EXCEPTIONS
-          object_invalid           = 1
-          OTHERS                   = 2.
-      IF sy-subrc &lt;&gt; 0.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
-          EXPORTING
-            textid  = zaplink_cx_connector=&gt;system_error
-            cx_name = &apos;error in interface-&gt;get_all_attributes&apos;.
-      ENDIF.
+    CREATE OBJECT o_data.
+    CALL METHOD interface-&gt;get_all_attributes
+      IMPORTING
+        e_package_interface_data = o_data-&gt;a0_maindata
+      EXCEPTIONS
+        object_invalid           = 1
+        OTHERS                   = 2.
+    IF sy-subrc &lt;&gt; 0.
+      RAISE EXCEPTION TYPE zaplink_cx_connector
+        EXPORTING
+          textid  = zaplink_cx_connector=&gt;system_error
+          cx_name = &apos;error in interface-&gt;get_all_attributes&apos;.
+    ENDIF.
 
-      CREATE OBJECT _component.
-      _component-&gt;set_type( st_interface ).
-      _component-&gt;set_name( o_data-&gt;a0_maindata-intf_name ).
-      subcomponents-&gt;add( _component ).
+    CREATE OBJECT _component.
+    _component-&gt;set_type( st_interface ).
+    _component-&gt;set_name( o_data-&gt;a0_maindata-intf_name ).
+    subcomponents-&gt;add( _component ).
 
 * Elements
-      CALL METHOD interface-&gt;get_elements
+    CALL METHOD interface-&gt;get_elements
+      EXPORTING
+        i_with_deleted_elements = &apos;X&apos;
+      IMPORTING
+        e_elements              = elements
+      EXCEPTIONS
+        object_invalid          = 1
+        intern_err              = 2
+        OTHERS                  = 3.
+    IF sy-subrc &lt;&gt; 0.
+      RAISE EXCEPTION TYPE zaplink_cx_connector
         EXPORTING
-          i_with_deleted_elements = &apos;X&apos;
-        IMPORTING
-          e_elements              = elements
-        EXCEPTIONS
-          object_invalid          = 1
-          intern_err              = 2
-          OTHERS                  = 3.
-      IF sy-subrc &lt;&gt; 0.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
-          EXPORTING
-            textid  = zaplink_cx_connector=&gt;system_error
-            cx_name = &apos;interface-&gt;get_elements&apos;.
-      ELSEIF NOT elements IS INITIAL.
-        LOOP AT elements ASSIGNING &lt;e&gt;.
-          CALL METHOD &lt;e&gt;-&gt;get_all_attributes
-            IMPORTING
-              e_element_data = elem
-            EXCEPTIONS
-              object_invalid = 1
-              OTHERS         = 2.
-          IF sy-subrc &lt;&gt; 0.
-            RAISE EXCEPTION TYPE zaplink_cx_connector
-              EXPORTING
-                textid  = zaplink_cx_connector=&gt;system_error
-                cx_name = &apos;error in interface-&gt;get_all_attributes&apos;.
-          ENDIF.
-          APPEND elem TO o_data-&gt;elements.
-        ENDLOOP.
-      ENDIF.
-
-* ACLS
-      IF NOT o_data-&gt;a0_maindata-acl_flag IS INITIAL.
-        CALL METHOD interface-&gt;get_access_control_list
+          textid  = zaplink_cx_connector=&gt;system_error
+          cx_name = &apos;interface-&gt;get_elements&apos;.
+    ELSEIF NOT elements IS INITIAL.
+      LOOP AT elements ASSIGNING &lt;e&gt;.
+        CALL METHOD &lt;e&gt;-&gt;get_all_attributes
           IMPORTING
-            e_user_list    = o_data-&gt;acls
+            e_element_data = elem
           EXCEPTIONS
             object_invalid = 1
-            no_acl         = 0
-            intern_err     = 3
-            OTHERS         = 4.
+            OTHERS         = 2.
         IF sy-subrc &lt;&gt; 0.
           RAISE EXCEPTION TYPE zaplink_cx_connector
             EXPORTING
               textid  = zaplink_cx_connector=&gt;system_error
-              cx_name = &apos;interface-&gt;get_access_control_list&apos;.
+              cx_name = &apos;error in interface-&gt;get_all_attributes&apos;.
         ENDIF.
-      ENDIF.
+        APPEND elem TO o_data-&gt;elements.
+      ENDLOOP.
+    ENDIF.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+* ACLS
+    IF NOT o_data-&gt;a0_maindata-acl_flag IS INITIAL.
+      CALL METHOD interface-&gt;get_access_control_list
+        IMPORTING
+          e_user_list    = o_data-&gt;acls
+        EXCEPTIONS
+          object_invalid = 1
+          no_acl         = 0
+          intern_err     = 3
+          OTHERS         = 4.
+      IF sy-subrc &lt;&gt; 0.
+        RAISE EXCEPTION TYPE zaplink_cx_connector
+          EXPORTING
+            textid  = zaplink_cx_connector=&gt;system_error
+            cx_name = &apos;interface-&gt;get_access_control_list&apos;.
+      ENDIF.
+    ENDIF.
+
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_INTERFACE_RAW" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
@@ -847,15 +844,10 @@ INCLUDE zaplink_macros.</MACROS>
 
       ENDIF.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.
 
-  IF o_mycx IS BOUND.
-    RAISE EXCEPTION o_mycx.
-  ENDIF.</SOURCE>
+  IF o_mycx IS BOUND.   RAISE EXCEPTION o_mycx.   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_PACKAGE_RAW" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
@@ -956,50 +948,46 @@ INCLUDE zaplink_macros.</MACROS>
 *  CALL FUNCTION &apos;RS_CORR_INSERT&apos;
 
   TRY.
-      CALL METHOD update_interface
+    CALL METHOD update_interface
+      EXPORTING
+        data      = interface-&gt;a0_maindata
+      CHANGING
+        interface = interface-&gt;if.
+
+    IF NOT interface-&gt;if IS BOUND.
+      RAISE EXCEPTION TYPE zaplink_cx_connector
         EXPORTING
-          data      = interface-&gt;a0_maindata
-        CHANGING
-          interface = interface-&gt;if.
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
+          textid  = zaplink_cx_connector=&gt;system_error
+          cx_name = &apos;Failed to create package interface&apos;.
+    ENDIF.
 
-  IF NOT interface-&gt;if IS BOUND.
-    RAISE EXCEPTION TYPE zaplink_cx_connector
+    CALL METHOD interface-&gt;if-&gt;save
       EXPORTING
-        textid  = zaplink_cx_connector=&gt;system_error
-        cx_name = &apos;Failed to create package interface&apos;.
-  ENDIF.
+        i_transport_request   = transport_request
+      IMPORTING
+        e_transport_request   = transport_request
+      EXCEPTIONS
+        object_invalid        = 1
+        object_not_changeable = 2
+        cancelled_in_corr     = 3
+        permission_failure    = 4
+        unexpected_error      = 5
+        intern_err            = 6
+        OTHERS                = 7.
+    IF sy-subrc &lt;&gt; 0.
+      RAISE EXCEPTION TYPE zaplink_cx_connector
+        EXPORTING
+          textid  = zaplink_cx_connector=&gt;system_error
+          cx_name = &apos;Package interface save failed !&apos;.
+    ELSE.
+      CREATE OBJECT _component.
+      _component-&gt;set_type( st_interface ).
+      _component-&gt;set_name( name ).
+      components-&gt;add( _component ).
+    ENDIF.
 
-  CALL METHOD interface-&gt;if-&gt;save
-    EXPORTING
-      i_transport_request   = transport_request
-    IMPORTING
-      e_transport_request   = transport_request
-    EXCEPTIONS
-      object_invalid        = 1
-      object_not_changeable = 2
-      cancelled_in_corr     = 3
-      permission_failure    = 4
-      unexpected_error      = 5
-      intern_err            = 6
-      OTHERS                = 7.
-  IF sy-subrc &lt;&gt; 0.
-    RAISE EXCEPTION TYPE zaplink_cx_connector
-      EXPORTING
-        textid  = zaplink_cx_connector=&gt;system_error
-        cx_name = &apos;Package interface save failed !&apos;.
-  ELSE.
-    TRY.
-        CREATE OBJECT _component.
-        _component-&gt;set_type( st_interface ).
-        _component-&gt;set_name( name ).
-        components-&gt;add( _component ).
-      CATCH zaplink_cx INTO o_cx.
-        mac_cascade_raise o_mycx o_cx.
-    ENDTRY.
-  ENDIF.</SOURCE>
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CREATE_PACKAGE" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
@@ -1052,84 +1040,72 @@ INCLUDE zaplink_macros.</MACROS>
 *  CALL FUNCTION &apos;RS_CORR_INSERT&apos;
 
   TRY.
-      CALL METHOD update_package
-        EXPORTING
-          data    = package-&gt;a0_maindata
-        CHANGING
-          package = package-&gt;if.
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
-
-  IF NOT package-&gt;if IS BOUND.
-    RAISE EXCEPTION TYPE zaplink_cx_connector
+    CALL METHOD update_package
       EXPORTING
-        textid  = zaplink_cx_connector=&gt;system_error
-        cx_name = &apos;Failed to create package&apos;.
-  ENDIF.
+        data    = package-&gt;a0_maindata
+      CHANGING
+        package = package-&gt;if.
 
-  CALL METHOD package-&gt;if-&gt;save
-    EXPORTING
-      i_transport_request   = transport_request
-    IMPORTING
-      e_transport_request   = transport_request
-    EXCEPTIONS
-      object_invalid        = 1
-      object_not_changeable = 2
-      cancelled_in_corr     = 3
-      permission_failure    = 4
-      unexpected_error      = 5
-      intern_err            = 6
-      OTHERS                = 7.
-  IF sy-subrc &lt;&gt; 0.
-    SET EXTENDED CHECK OFF.
-    IF 1 = 2. MESSAGE e009 WITH space. ENDIF.
-    SET EXTENDED CHECK ON.
+    IF NOT package-&gt;if IS BOUND.
+      RAISE EXCEPTION TYPE zaplink_cx_connector
+        EXPORTING
+          textid  = zaplink_cx_connector=&gt;system_error
+          cx_name = &apos;Failed to create package&apos;.
+    ENDIF.
+
+    CALL METHOD package-&gt;if-&gt;save
+      EXPORTING
+        i_transport_request   = transport_request
+      IMPORTING
+        e_transport_request   = transport_request
+      EXCEPTIONS
+        object_invalid        = 1
+        object_not_changeable = 2
+        cancelled_in_corr     = 3
+        permission_failure    = 4
+        unexpected_error      = 5
+        intern_err            = 6
+        OTHERS                = 7.
+    IF sy-subrc &lt;&gt; 0.
+      SET EXTENDED CHECK OFF.
+      IF 1 = 2. MESSAGE e009 WITH space. ENDIF.
+      SET EXTENDED CHECK ON.
 * Can&apos;t save package &amp;1
-    application_log-&gt;add_error( id_msgno = 009
-                                id_msgv1 = name ).
-    application_log-&gt;add_symsg( ).
+      application_log-&gt;add_error( id_msgno = 009
+                                  id_msgv1 = name ).
+      application_log-&gt;add_symsg( ).
 *    RAISE EXCEPTION TYPE zaplink_cx_connector
 *      EXPORTING
 *        textid = zaplink_cx_connector=&gt;error_message
 *        msg = &apos;Dev Class creation failed !&apos;.
-  ELSE.
-    TRY.
-        CREATE OBJECT _component.
-        _component-&gt;set_type( st_package ).
-        _component-&gt;set_name( name ).
-        components-&gt;add( _component ).
-      CATCH zaplink_cx INTO o_cx.
-        mac_cascade_raise o_mycx o_cx.
-    ENDTRY.
-  ENDIF.
+    ELSE.
+      CREATE OBJECT _component.
+      _component-&gt;set_type( st_package ).
+      _component-&gt;set_name( name ).
+      components-&gt;add( _component ).
+    ENDIF.
 
-  LOOP AT package-&gt;interfaces ASSIGNING &lt;i&gt;.
-    TRY.
-        o_intf ?= &lt;i&gt;-zl_object-&gt;raw.
-        CALL METHOD create_interface
-          EXPORTING
-            interface  = o_intf
-            overwrite  = overwrite
-            components = components.
-      CATCH zaplink_cx_connector INTO o_mycx.
-        RAISE EXCEPTION o_mycx.
-    ENDTRY.
-  ENDLOOP.
+    LOOP AT package-&gt;interfaces ASSIGNING &lt;i&gt;.
+      o_intf ?= &lt;i&gt;-zl_object-&gt;raw.
+      CALL METHOD create_interface
+        EXPORTING
+          interface  = o_intf
+          overwrite  = overwrite
+          components = components.
+    ENDLOOP.
 
-  LOOP AT package-&gt;packages ASSIGNING &lt;p&gt;.
-    TRY.
-        o_package ?= &lt;p&gt;-zl_object-&gt;raw.
-        o_package-&gt;a0_maindata-devclass = &lt;p&gt;-zl_object-&gt;name.    o_package-&gt;a0_maindata-parentcl = package-&gt;a0_maindata-devclass. &quot; Issue 48
-        CALL METHOD create_package
-          EXPORTING
-            package    = o_package
-            overwrite  = overwrite
-            components = components.
-      CATCH zaplink_cx_connector INTO o_mycx.
-        RAISE EXCEPTION o_mycx.
-    ENDTRY.
-  ENDLOOP.</SOURCE>
+    LOOP AT package-&gt;packages ASSIGNING &lt;p&gt;.
+      o_package ?= &lt;p&gt;-zl_object-&gt;raw.
+      o_package-&gt;a0_maindata-devclass = &lt;p&gt;-zl_object-&gt;name.    o_package-&gt;a0_maindata-parentcl = package-&gt;a0_maindata-devclass. &quot; Issue 48
+      CALL METHOD create_package
+        EXPORTING
+          package    = o_package
+          overwrite  = overwrite
+          components = components.
+    ENDLOOP.
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ELEMENTS2ALV" STATE="1" EDITORDER="14 " MTDDECLTYP="1">
     <TEXTS>
@@ -1199,23 +1175,20 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
 
-      CHECK component-&gt;get_type( ) = st_interface.
+    CHECK component-&gt;get_type( ) = st_interface.
 
-      name = component-&gt;get_name( ).
-      CREATE OBJECT o_list.
-      component-&gt;set_subcomponents( o_list ).
+    name = component-&gt;get_name( ).
+    CREATE OBJECT o_list.
+    component-&gt;set_subcomponents( o_list ).
 
-      sap_obj = load_intf( name ).
+    sap_obj = load_intf( name ).
 
-      object = conv_interface( interface = sap_obj
-                           subcomponents = o_list ).
+    object = conv_interface( interface = sap_obj
+                         subcomponents = o_list ).
 
-      o_list-&gt;remove( component ).
+    o_list-&gt;remove( component ).
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_PACKAGE" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
@@ -1253,26 +1226,23 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
 
-      CHECK component-&gt;get_type( ) = st_package.
-      f_subcomp = component-&gt;get_with_subcomp( ).
+    CHECK component-&gt;get_type( ) = st_package.
+    f_subcomp = component-&gt;get_with_subcomp( ).
 
-      devclass = component-&gt;get_name( ).
+    devclass = component-&gt;get_name( ).
 
-      CREATE OBJECT o_list.
-      component-&gt;set_subcomponents( o_list ).
+    CREATE OBJECT o_list.
+    component-&gt;set_subcomponents( o_list ).
 
-      sap_obj = load_devc( devclass ).
+    sap_obj = load_devc( devclass ).
 
-      object = conv_package( package = sap_obj
-                        with_subcomp = f_subcomp
-                       subcomponents = o_list ).
+    object = conv_package( package = sap_obj
+                      with_subcomp = f_subcomp
+                     subcomponents = o_list ).
 
-      o_list-&gt;remove( component ).
+    o_list-&gt;remove( component ).
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_INTERFACE" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
@@ -1305,20 +1275,17 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
 
-      CREATE OBJECT components.
+    CREATE OBJECT components.
 * Create bulk package
-      create_interface( overwrite = &apos;X&apos;
-                        interface = o_data
-                       components = components ).
+    create_interface( overwrite = &apos;X&apos;
+                      interface = o_data
+                     components = components ).
 
-      set_interface_attrib( interface = o_data ).
+    set_interface_attrib( interface = o_data ).
 
-      application_log-&gt;raise_on_error( ).
+    application_log-&gt;raise_on_error( ).
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_PACKAGE" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
@@ -1350,20 +1317,17 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
 
   TRY.
-      CREATE OBJECT components.
+    CREATE OBJECT components.
 * Create bulk package
-      create_package( overwrite = &apos;X&apos;
-                        package = o_data
-                     components = components ).
+    create_package( overwrite = &apos;X&apos;
+                      package = o_data
+                   components = components ).
 
-      set_package_attrib( package = o_data ).
+    set_package_attrib( package = o_data ).
 
-      application_log-&gt;raise_on_error( ).
+    application_log-&gt;raise_on_error( ).
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_DEVC" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
@@ -2466,6 +2430,8 @@ DATA _data      TYPE scompidtln.
       RAISE EXCEPTION o_mycx.
   ENDTRY.
 
+  check object is bound.
+
   CASE object-&gt;type.
     WHEN st_package.
       o_package ?= object-&gt;raw.
@@ -2474,6 +2440,7 @@ DATA _data      TYPE scompidtln.
       o_interface ?= object-&gt;raw.
       anonymize_interface( o_interface ).
     WHEN OTHERS.
+      mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
@@ -2514,12 +2481,7 @@ DATA _data      TYPE scompidtln.
 *      create object object type TO_CLASS.
     WHEN OTHERS.
       CLEAR object.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-        EXPORTING
-          textid = ZAPLINK_CX_CONNECTOR=&gt;TYPE_NOT_SUPPORTED
-          type   = type
-          connclass = &apos;ZAPLINK_PACKAGE&apos;.
+      mac_raise_type_not_supported me-&gt;class_name type.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
@@ -2558,7 +2520,7 @@ DATA _data      TYPE scompidtln.
             RAISE EXCEPTION o_mycx.
         ENDTRY.
       WHEN OTHERS.
-        mac_raise_type_not_supported &apos;ZAPLINK_PACKAGE&apos; d_type.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
 
     mac_def_catch zaplink_cx_connector.
@@ -2613,18 +2575,10 @@ DATA _data      TYPE scompidtln.
             exists = &apos;X&apos;.
           ENDIF.
         WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = type
-              connclass = &apos;ZAPLINK_PACKAGE&apos;.
+          mac_raise_type_not_supported me-&gt;class_name type.
       ENDCASE.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
@@ -2673,7 +2627,7 @@ DATA _data      TYPE scompidtln.
         object-&gt;raw = o_interface.
       WHEN OTHERS.
         CLEAR object.
-        mac_raise_type_not_supported &apos;ZAPLINK_PACKAGE&apos; type.
+        mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
@@ -2684,39 +2638,38 @@ DATA _data      TYPE scompidtln.
   DATA _o_class       TYPE to_package.
   DATA _o_interface   TYPE to_interface.
 
-  CASE object-&gt;type.
-    WHEN st_package.
-      _o_class ?= object-&gt;raw.
-      _o_class-&gt;a0_maindata-devclass = object-&gt;name.
-      TRY.
-          components = import_to_sap_package( _o_class ).
-        CATCH zaplink_cx_connector INTO o_mycx.
-          IF NOT o_mycx-&gt;messages IS BOUND.
-            o_mycx-&gt;messages = application_log.
-            o_mycx-&gt;update( ).
-          ENDIF.
-          RAISE EXCEPTION o_mycx.
-      ENDTRY.
-    WHEN st_interface.
-      _o_interface ?= object-&gt;raw.
-      _o_interface-&gt;a0_maindata-intf_name = object-&gt;name.
-      TRY.
-          components = import_to_sap_interface( _o_interface ).
-        CATCH zaplink_cx_connector INTO o_mycx.
-          IF NOT o_mycx-&gt;messages IS BOUND.
-            o_mycx-&gt;messages = application_log.
-            o_mycx-&gt;update( ).
-          ENDIF.
-          RAISE EXCEPTION o_mycx.
-      ENDTRY.
-    WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-        EXPORTING
-          textid = zaplink_cx_connector=&gt;type_not_supported
-          type   = object-&gt;type
-          connclass = &apos;ZAPLINK_MESSAGE&apos;.
-  ENDCASE.</SOURCE>
+  TRY.
+    CASE object-&gt;type.
+      WHEN st_package.
+        _o_class ?= object-&gt;raw.
+        _o_class-&gt;a0_maindata-devclass = object-&gt;name.
+        TRY.
+            components = import_to_sap_package( _o_class ).
+          CATCH zaplink_cx_connector INTO o_mycx.
+            IF NOT o_mycx-&gt;messages IS BOUND.
+              o_mycx-&gt;messages = application_log.
+              o_mycx-&gt;update( ).
+            ENDIF.
+            RAISE EXCEPTION o_mycx.
+        ENDTRY.
+      WHEN st_interface.
+        _o_interface ?= object-&gt;raw.
+        _o_interface-&gt;a0_maindata-intf_name = object-&gt;name.
+        TRY.
+            components = import_to_sap_interface( _o_interface ).
+          CATCH zaplink_cx_connector INTO o_mycx.
+            IF NOT o_mycx-&gt;messages IS BOUND.
+              o_mycx-&gt;messages = application_log.
+              o_mycx-&gt;update( ).
+            ENDIF.
+            RAISE EXCEPTION o_mycx.
+        ENDTRY.
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+    ENDCASE.
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TEXTSPOOL>

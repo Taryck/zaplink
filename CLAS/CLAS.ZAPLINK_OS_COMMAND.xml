@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="87B2FAE8DB5E0254DA86278C47B3AB0B" CODE_SIGNATURE="4A5D4F59588065E27F6991EB5A235DAA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OS_COMMAND" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6AEE847D773012541F5A14A648459F61" CODE_SIGNATURE="784CF15BF32ABCFCEF316FB477793EF5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OS_COMMAND" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -76,6 +76,38 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
 INCLUDE zaplink_macros.</MACROS>
   </LOCAL>
   <METHODS>
+   <ITEM CMPNAME="CALC_SIGNATURE" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Calculate code Signature"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " TYPTYPE="1" TYPE="SXPGCOLIST">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Short description of a logical command"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_CHECKSUM">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Source Code Signature (Checksum)"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA d_string TYPE string.
+
+  CLEAR: data-name, data-opsystem, data-addpar, data-sapcommand, data-permission, data-traceon.
+
+  d_string = data.
+  CONDENSE d_string.
+  result = zaplink_tools=&gt;calculate_md5_hash( d_string ).</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
@@ -89,7 +121,7 @@ INCLUDE zaplink_macros.</MACROS>
   _id-sign = &apos;I&apos;. _id-option = &apos;EQ&apos;.
   _id-low = C_MSG_ID. APPEND _id TO r_doc_id.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="COMP_TO_KEY" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
+   <ITEM CMPNAME="COMP_TO_KEY" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Component name to OS Command key"/>
     </TEXTS>
@@ -122,7 +154,7 @@ DATA type LIKE LINE OF supported_types.
   uuid = _uuid.
   version = _ver.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="KEY_TO_COMP" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
+   <ITEM CMPNAME="KEY_TO_COMP" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="OS Command key to Component name"/>
     </TEXTS>
@@ -143,6 +175,45 @@ CONCATENATE data-name field_separator data-opsystem INTO result.</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
+    <SOURCE>`
+  DATA d_name TYPE td_compname.
+  DATA d_type TYPE td_comptype.
+  DATA s_name TYPE ts_os_cmd_key.
+  data s_data type SXPGCOLIST.
+
+  TRY.
+    d_type = component-&gt;get_type( ).
+    CASE d_type.
+      WHEN st_os_cmd.
+        d_name = component-&gt;get_name( ).
+        s_name = comp_to_key( d_name ).
+
+* Main data
+        CALL FUNCTION &apos;SXPG_COMMAND_GET&apos;
+          EXPORTING
+            commandname             = s_name-name
+            operatingsystem         = s_name-opsystem
+*         TARGETSYSTEM            = &apos;*&apos;
+          IMPORTING
+            command                 = s_data
+          EXCEPTIONS
+            command_not_found       = 1
+            OTHERS                  = 2.
+        IF sy-subrc &lt;&gt; 0.
+          RAISE EXCEPTION TYPE zaplink_cx_connector
+             EXPORTING
+               textid = zaplink_cx_connector=&gt;not_found
+               name   = d_name
+               type   = st_os_cmd.
+        ENDIF.
+        result = calc_signature( s_data ).
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
+    ENDCASE.
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
+   </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
     <SOURCE>`
   DATA o_data TYPE to_data.
@@ -154,7 +225,7 @@ CONCATENATE data-name field_separator data-opsystem INTO result.</SOURCE>
       object-&gt;raw ?= o_data.
     WHEN OTHERS.
       CLEAR object.
-      mac_raise_type_not_supported &apos;ZAPLINK_OS_COMMAND&apos; type.
+      mac_raise_type_not_supported me-&gt;class_name type.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
@@ -307,7 +378,7 @@ CONCATENATE data-name field_separator data-opsystem INTO result.</SOURCE>
           ENDCASE.
         ENDIF.
       WHEN OTHERS.
-        mac_raise_type_not_supported &apos;ZAPLINK_OS_COMMAND&apos; d_type.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
@@ -340,7 +411,7 @@ CONCATENATE data-name field_separator data-opsystem INTO result.</SOURCE>
           exists = me-&gt;exists-exists.
         ENDIF.
       WHEN OTHERS.
-        mac_raise_type_not_supported &apos;ZAPLINK_OS_COMMAND&apos; d_type.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
 
     mac_def_catch zaplink_cx_connector.
@@ -391,9 +462,10 @@ result = abap_false.
         CLEAR: o_data-&gt;a0_maindata-name,
                o_data-&gt;a0_maindata-opsystem.
         object-&gt;raw ?= o_data.
+        object-&gt;code_signature = calc_signature( o_data-&gt;a0_maindata ).
       WHEN OTHERS.
         CLEAR object.
-        mac_raise_type_not_supported &apos;ZAPLINK_OS_COMMAND&apos; d_type.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
@@ -407,10 +479,11 @@ result = abap_false.
   DATA o_data  TYPE to_data.
   DATA o_comp  TYPE to_component.
 
-  d_type = object-&gt;type.
-  CASE d_type.
-    WHEN st_os_cmd.
-      o_data ?= object-&gt;raw.
+  TRY.
+    d_type = object-&gt;type.
+    CASE d_type.
+      WHEN st_os_cmd.
+        o_data ?= object-&gt;raw.
 *      CALL FUNCTION &apos;RS_CORR_INSERT&apos;
 *           EXPORTING
 *                author              = sy-uname
@@ -448,61 +521,64 @@ result = abap_false.
 *      ENDIF.
 
 * Main data
-      d_name = object-&gt;get_name( ).
-      s_name = comp_to_key( d_name ).
-      o_data-&gt;a0_maindata-name = s_name-name.
-      o_data-&gt;a0_maindata-opsystem = s_name-opsystem.
-      CALL FUNCTION &apos;SXPG_COMMAND_INSERT&apos;
-        EXPORTING
-          command                      = o_data-&gt;a0_maindata
+        d_name = object-&gt;get_name( ).
+        s_name = comp_to_key( d_name ).
+        o_data-&gt;a0_maindata-name = s_name-name.
+        o_data-&gt;a0_maindata-opsystem = s_name-opsystem.
+        CALL FUNCTION &apos;SXPG_COMMAND_INSERT&apos;
+          EXPORTING
+            command                      = o_data-&gt;a0_maindata
 *         PUBLIC                       =
 *         DIALOG                       =
-        EXCEPTIONS
-          command_already_exists       = 1
-          no_permission                = 2
-          parameters_wrong             = 3
-          foreign_lock                 = 4
-          system_failure               = 5
-          OTHERS                       = 6.
-      IF sy-subrc &lt;&gt; 0.
-        IF sy-subrc &lt;&gt; 1.
-          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname  = &apos;SXPG_COMMAND_INSERT&apos;
-                                                   subrc     = sy-subrc
-                                                   classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
-*                                                   textid    = SYSTEM_ERROR
-                                                 ).
-          RAISE EXCEPTION o_mycx.
-        ENDIF.
-        CALL FUNCTION &apos;SXPG_COMMAND_MODIFY&apos;
-          EXPORTING
-            command                = o_data-&gt;a0_maindata
-*           DIALOG                 =
           EXCEPTIONS
-            no_permission          = 1
-            parameters_wrong       = 2
-            system_failure         = 3
-            foreign_lock           = 4
-            OTHERS                 = 5.
+            command_already_exists       = 1
+            no_permission                = 2
+            parameters_wrong             = 3
+            foreign_lock                 = 4
+            system_failure               = 5
+            OTHERS                       = 6.
         IF sy-subrc &lt;&gt; 0.
-          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname  = &apos;SXPG_COMMAND_MODIFY&apos;
-                                                   subrc     = sy-subrc
-                                                   classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
+          IF sy-subrc &lt;&gt; 1.
+            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname  = &apos;SXPG_COMMAND_INSERT&apos;
+                                                     subrc     = sy-subrc
+                                                     classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
 *                                                   textid    = SYSTEM_ERROR
-                                                 ).
-          RAISE EXCEPTION o_mycx.
+                                                   ).
+            RAISE EXCEPTION o_mycx.
+          ENDIF.
+          CALL FUNCTION &apos;SXPG_COMMAND_MODIFY&apos;
+            EXPORTING
+              command                = o_data-&gt;a0_maindata
+*           DIALOG                 =
+            EXCEPTIONS
+              no_permission          = 1
+              parameters_wrong       = 2
+              system_failure         = 3
+              foreign_lock           = 4
+              OTHERS                 = 5.
+          IF sy-subrc &lt;&gt; 0.
+            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname  = &apos;SXPG_COMMAND_MODIFY&apos;
+                                                     subrc     = sy-subrc
+                                                     classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
+*                                                   textid    = SYSTEM_ERROR
+                                                   ).
+            RAISE EXCEPTION o_mycx.
+          ENDIF.
         ENDIF.
-      ENDIF.
 
-      CREATE OBJECT o_comp.
-      o_comp-&gt;set_type( st_os_cmd ).
-      MOVE-CORRESPONDING o_data-&gt;a0_maindata TO s_name.
-      d_name = key_to_comp( s_name ).
-      o_comp-&gt;set_name( d_name ).
-      CREATE OBJECT components.
-      components-&gt;add( o_comp ).
-    WHEN OTHERS.
-      mac_raise_type_not_supported &apos;ZAPLINK_OS_COMMAND&apos; d_type.
-  ENDCASE.</SOURCE>
+        CREATE OBJECT o_comp.
+        o_comp-&gt;set_type( st_os_cmd ).
+        MOVE-CORRESPONDING o_data-&gt;a0_maindata TO s_name.
+        d_name = key_to_comp( s_name ).
+        o_comp-&gt;set_name( d_name ).
+        CREATE OBJECT components.
+        components-&gt;add( o_comp ).
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
+    ENDCASE.
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>

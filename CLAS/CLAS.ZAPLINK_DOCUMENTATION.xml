@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="DC1C7C301A55FDD76A9AE00A5C0CD1A6" CODE_SIGNATURE="2146484EAEC49BC5FC0DA22AFF903D36" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="1E8A64789DF9BAFF28DEE341C7D1115F" CODE_SIGNATURE="EA8C6EF446E797343550CF0BFE77E76D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -538,12 +538,7 @@ SPLIT string AT LINE_SEPARATOR
       object-&gt;raw = o_doc.
     WHEN OTHERS.
       CLEAR object.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-        EXPORTING
-          textid = zaplink_cx_connector=&gt;type_not_supported
-          type   = type
-          connclass = &apos;ZAPLINK_PROGRAM&apos;.
+      mac_raise_type_not_supported me-&gt;class_name type.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
@@ -557,104 +552,96 @@ SPLIT string AT LINE_SEPARATOR
   DATA s_head   TYPE thead.
 
   TRY.
-      type = component-&gt;get_type( ).
-      CASE type.
-        WHEN supportedtypes-general OR supportedtypes-indep.
-          CASE type.
-            WHEN supportedtypes-general. s_mask-id = &apos;TX&apos;.    s_mask-object = component-&gt;get_name( ).     &quot; Issue 60
-            WHEN supportedtypes-indep.   s_mask = component-&gt;get_name( ).
-          ENDCASE.
+    type = component-&gt;get_type( ).
+    CASE type.
+      WHEN supportedtypes-general OR supportedtypes-indep.
+        CASE type.
+          WHEN supportedtypes-general. s_mask-id = &apos;TX&apos;.    s_mask-object = component-&gt;get_name( ). &quot; Issue 60
+          WHEN supportedtypes-indep.   s_mask = component-&gt;get_name( ).
+        ENDCASE.
 * FROM MSDCUI01 : MODULE d0100_get_docuobject (583)
-          CALL FUNCTION &apos;EXT_MODIFY_ORIGINAL_CHECK&apos;
-            EXPORTING
-              p_id                = s_mask-id
-              p_object            = s_mask-object
-            IMPORTING
-              p_original_modified = d_ori_modified
-            EXCEPTIONS
-              OTHERS              = 1.
-          IF d_ori_modified = abap_true.&quot;Modi. vorh.
-            d_doc_type = &apos;M&apos;.
-          ELSEIF s_mask-id = &apos;FU&apos; OR s_mask-id = &apos;FX&apos;.
-            d_doc_type = &apos;T&apos;.
-          ELSE.
-            d_doc_type = &apos;E&apos;.
-          ENDIF.
+        CALL FUNCTION &apos;EXT_MODIFY_ORIGINAL_CHECK&apos;
+          EXPORTING
+            p_id                = s_mask-id
+            p_object            = s_mask-object
+          IMPORTING
+            p_original_modified = d_ori_modified
+          EXCEPTIONS
+            OTHERS              = 1.
+        IF d_ori_modified = abap_true.&quot;Modi. vorh.
+          d_doc_type = &apos;M&apos;.
+        ELSEIF s_mask-id = &apos;FU&apos; OR s_mask-id = &apos;FX&apos;.
+          d_doc_type = &apos;T&apos;.
+        ELSE.
+          d_doc_type = &apos;E&apos;.
+        ENDIF.
 
-          SELECT SINGLE * INTO s_dokil
-            FROM dokil
-            WHERE id = s_mask-id
-              AND object = s_mask-object
-              AND typ = d_doc_type
-              AND masterlang = abap_true.
-          IF sy-subrc &lt;&gt; 0.
-            SELECT SINGLE * INTO s_dokil
-              FROM dokil
-              WHERE id = s_mask-id
-                AND object = s_mask-object
-                AND typ = d_doc_type.
-          ENDIF.
-
-          s_head-tdid     = s_mask-id.
-          s_head-tdname   = s_mask-object.
-          s_head-tdspras  = s_dokil-langu.
-
-          CALL FUNCTION &apos;ENQUEUE_ESDOC&apos;
-            EXPORTING
-*             MODE_DOKHL           = &apos;E&apos;
-              id     = s_dokil-id
-              object = s_dokil-object
-              langu  = s_dokil-langu
-              typ    = s_dokil-typ
-*             _SCOPE               = &apos;2&apos;
-*             _WAIT                = &apos; &apos;
-            EXCEPTIONS
-              foreign_lock         = 1
-              system_failure       = 2
-              OTHERS               = 3.
-          IF sy-subrc &lt;&gt; 0.
-            mac_add_mf_and_raise &apos;ENQUEUE_ESDOC&apos; sy-subrc.
-          ENDIF.
-
-          CALL FUNCTION &apos;DOCU_DELETE&apos;
-            EXPORTING
-*             ACTCLASS              = &apos; &apos;
-*             DELETE_RAW_ONLY       = &apos; &apos;
-              head                  = s_head
-              typ                   = d_doc_type
-              version               = s_dokil-version.
-          IF sy-subrc &lt;&gt; 0.
-            mac_add_mf_and_raise &apos;DOCU_DELETE&apos; sy-subrc.
-          ENDIF.
-          CALL FUNCTION &apos;DEQUEUE_ESDOC&apos;
-           EXPORTING
-*             MODE_DOKHL         = &apos;E&apos;
-*             _SCOPE             = &apos;3&apos;
-              id     = s_dokil-id
-              object = s_dokil-object
-              langu  = s_dokil-langu
-              typ    = s_dokil-typ.
-
+        SELECT SINGLE * INTO s_dokil
+          FROM dokil
+          WHERE id = s_mask-id
+            AND object = s_mask-object
+            AND typ = d_doc_type
+            AND masterlang = abap_true.
+        IF sy-subrc &lt;&gt; 0.
           SELECT SINGLE * INTO s_dokil
             FROM dokil
             WHERE id = s_mask-id
               AND object = s_mask-object
               AND typ = d_doc_type.
-          IF sy-subrc &lt;&gt; 0.   result = abap_true.   ENDIF.
+        ENDIF.
 
-        WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = type
-              connclass = &apos;ZAPLINK_PROGRAM&apos;.
-      ENDCASE.
+        s_head-tdid     = s_mask-id.
+        s_head-tdname   = s_mask-object.
+        s_head-tdspras  = s_dokil-langu.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+        CALL FUNCTION &apos;ENQUEUE_ESDOC&apos;
+          EXPORTING
+*             MODE_DOKHL           = &apos;E&apos;
+            id     = s_dokil-id
+            object = s_dokil-object
+            langu  = s_dokil-langu
+            typ    = s_dokil-typ
+*             _SCOPE               = &apos;2&apos;
+*             _WAIT                = &apos; &apos;
+          EXCEPTIONS
+            foreign_lock         = 1
+            system_failure       = 2
+            OTHERS               = 3.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_mf_and_raise &apos;ENQUEUE_ESDOC&apos; sy-subrc.
+        ENDIF.
+
+        CALL FUNCTION &apos;DOCU_DELETE&apos;
+          EXPORTING
+*             ACTCLASS              = &apos; &apos;
+*             DELETE_RAW_ONLY       = &apos; &apos;
+            head                  = s_head
+            typ                   = d_doc_type
+            version               = s_dokil-version.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_mf_and_raise &apos;DOCU_DELETE&apos; sy-subrc.
+        ENDIF.
+        CALL FUNCTION &apos;DEQUEUE_ESDOC&apos;
+         EXPORTING
+*             MODE_DOKHL         = &apos;E&apos;
+*             _SCOPE             = &apos;3&apos;
+            id     = s_dokil-id
+            object = s_dokil-object
+            langu  = s_dokil-langu
+            typ    = s_dokil-typ.
+
+        SELECT SINGLE * INTO s_dokil
+          FROM dokil
+          WHERE id = s_mask-id
+            AND object = s_mask-object
+            AND typ = d_doc_type.
+        IF sy-subrc &lt;&gt; 0.   result = abap_true.   ENDIF.
+
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name type.
+    ENDCASE.
+
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
@@ -666,16 +653,16 @@ SPLIT string AT LINE_SEPARATOR
   exists = me-&gt;exists-not_exists.
 
   TRY.
-      type = component-&gt;get_type( ).
-      CASE type.
-        WHEN supportedtypes-general OR supportedtypes-indep..
-          d_name = component-&gt;get_name( ).
-          s_mask = name_2_mask( type = type    name = d_name ).
-          SELECT SINGLE id INTO s_mask-id
-            FROM dokil
-            WHERE     id = s_mask-id
-              AND object = s_mask-object.
-          IF sy-subrc = 0.    exists = me-&gt;exists-exists.   ENDIF.
+    type = component-&gt;get_type( ).
+    CASE type.
+      WHEN supportedtypes-general OR supportedtypes-indep..
+        d_name = component-&gt;get_name( ).
+        s_mask = name_2_mask( type = type    name = d_name ).
+        SELECT SINGLE id INTO s_mask-id
+          FROM dokil
+          WHERE     id = s_mask-id
+            AND object = s_mask-object.
+        IF sy-subrc = 0.    exists = me-&gt;exists-exists.   ENDIF.
 *          CALL FUNCTION &apos;DOCU_INIT&apos;
 *            EXPORTING
 *              id            = s_mask-id
@@ -686,19 +673,11 @@ SPLIT string AT LINE_SEPARATOR
 **             FOUND         =
 *              XDOKIL        = s_dokil.
 *          IF not s_dokil is INITIAL.    exists = me-&gt;exists-exists.   ENDIF.
-        WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = type
-              connclass = &apos;ZAPLINK_MESSAGE&apos;.
-      ENDCASE.
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name type.
+    ENDCASE.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
@@ -731,7 +710,7 @@ SPLIT string AT LINE_SEPARATOR
         object-&gt;raw = o_data.
       WHEN OTHERS.
         CLEAR object.
-        mac_raise_type_not_supported &apos;ZAPLINK_DOCUMENTATION&apos; type.
+        mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
@@ -761,12 +740,7 @@ SPLIT string AT LINE_SEPARATOR
           CREATE OBJECT components.
           components-&gt;add( o_comp ).
         WHEN OTHERS.
-* Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;type_not_supported
-              type   = object-&gt;type
-              connclass = &apos;ZAPLINK_PROGRAM&apos;.
+          mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
 
     CATCH zaplink_cx_connector INTO o_mycx.

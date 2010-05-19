@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="72284CFEA4CAA8535EA2C615F72D6D60" CODE_SIGNATURE="FB2E2562FB28B42C7540CCBE9E5D4920" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="BD985889C852AE6387EFC075C5F02353" CODE_SIGNATURE="E66ED027D1745174634A1A30D8594C9C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -561,43 +561,40 @@ DATA t_allcomp   TYPE	tt_allcomplist.
 
   TRY.
 
-      LOOP AT _index ASSIGNING &lt;i&gt;.
-        _line = comp_to_alv( o_comp = &lt;i&gt;-o_comp
-                           selected = &lt;i&gt;-selected ).
-        CALL FUNCTION &apos;GUID_CREATE&apos;
-          IMPORTING
-            ev_guid_16 = _line-id.
+    LOOP AT _index ASSIGNING &lt;i&gt;.
+      _line = comp_to_alv( o_comp = &lt;i&gt;-o_comp
+                         selected = &lt;i&gt;-selected ).
+      CALL FUNCTION &apos;GUID_CREATE&apos;
+        IMPORTING
+          ev_guid_16 = _line-id.
 
-        _line-select = &lt;i&gt;-selected.
-        IF NOT w_item IS INITIAL.
-          o_list = &lt;i&gt;-o_comp-&gt;get_subcomponents( ).
-          IF o_list IS BOUND.
-            _line-expand = abap_true.
-          ENDIF.
+      _line-select = &lt;i&gt;-selected.
+      IF NOT w_item IS INITIAL.
+        o_list = &lt;i&gt;-o_comp-&gt;get_subcomponents( ).
+        IF o_list IS BOUND.
+          _line-expand = abap_true.
         ENDIF.
+      ENDIF.
 
-        APPEND _line TO result-headers.
+      APPEND _line TO result-headers.
 
-        IF NOT w_item IS INITIAL.
-          CHECK o_list IS BOUND.
-          o_list-&gt;display_progress = abap_false.
-          o_list-&gt;init_iter( ).
+      IF NOT w_item IS INITIAL.
+        CHECK o_list IS BOUND.
+        o_list-&gt;display_progress = abap_false.
+        o_list-&gt;init_iter( ).
+        o_comp = o_list-&gt;get_next( ).
+        WHILE o_comp IS BOUND.
+          s_item = comp_to_alv( o_comp = o_comp
+                              selected = &lt;i&gt;-selected ).
           o_comp = o_list-&gt;get_next( ).
-          WHILE o_comp IS BOUND.
-            s_item = comp_to_alv( o_comp = o_comp
-                                selected = &lt;i&gt;-selected ).
-            o_comp = o_list-&gt;get_next( ).
-            s_item-id = _line-id.
-            s_item-select = _line-expand.
-            APPEND s_item TO result-items.
-          ENDWHILE.
-        ENDIF.
-      ENDLOOP.
+          s_item-id = _line-id.
+          s_item-select = _line-expand.
+          APPEND s_item TO result-items.
+        ENDWHILE.
+      ENDIF.
+    ENDLOOP.
 
-    CATCH zaplink_cx_list INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    mac_def_catch zaplink_cx_list.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="DISPLAY" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
