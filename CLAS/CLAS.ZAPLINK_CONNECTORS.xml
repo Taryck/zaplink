@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8A753C76CD96A51E5B4A8E4803387633" CODE_SIGNATURE="2FBDE09512879A56E93E31AF1EDA26F8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="43D4C7B584D8A0A9274BFFC89096E2F3" CODE_SIGNATURE="57A1452592CDBF1C526F87CC3A6FE561" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -377,10 +377,13 @@ INCLUDE zaplink_macros.</MACROS>
   LOOP AT _classes ASSIGNING &lt;c&gt;
        WHERE NOT types IS INITIAL
          AND NOT uuid IS INITIAL.
-    CREATE OBJECT o_comp.
-    o_comp-&gt;set_type( &apos;CLAS&apos; ).
-    o_comp-&gt;set_name( &lt;c&gt;-classname ).
-    result-&gt;add( o_comp ).
+*    TRY.
+        CREATE OBJECT o_comp.
+        o_comp-&gt;set_type( &apos;CLAS&apos; ).
+        o_comp-&gt;set_name( &lt;c&gt;-classname ).
+        result-&gt;add( o_comp ).
+*      CATCH zaplink_cx.
+*    ENDTRY.
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_TYPEORDER" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
@@ -549,14 +552,17 @@ INCLUDE zaplink_macros.</MACROS>
         is_class     = 2
         OTHERS       = 3.
     IF sy-subrc &lt;&gt; 0.
-      mac_raise_symsg &apos;ZAPLINK_CX_CONNECTOR&apos; zaplink_cx_connector=&gt;system_error.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;cl_oo_if_relations&apos;
+                                                       method = &apos;constructor&apos;
+                                                        subrc = sy-subrc
+                                                 cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+      RAISE EXCEPTION o_mycx.
     ENDIF.
     IF _connectors IS BOUND.
       LOOP AT _connectors-&gt;implementing_classes ASSIGNING &lt;im_cl&gt;
               WHERE exposure &lt;&gt; &apos;0&apos;   &quot; Private
                 AND version = &apos;1&apos;     &quot; Active
-                AND state &lt;&gt; &apos;0&apos;      &quot; Only modeled
-                .
+                AND state &lt;&gt; &apos;0&apos;.     &quot; Only modeled
 
         TRY.
 
@@ -573,8 +579,7 @@ INCLUDE zaplink_macros.</MACROS>
 
       LOOP AT _connectors-&gt;subclasses ASSIGNING &lt;s_cl&gt;
               WHERE state &lt;&gt; &apos;0&apos;      &quot; Only modeled
-                AND version = &apos;1&apos;     &quot; Active
-                .
+                AND version = &apos;1&apos;.    &quot; Active
 
         TRY.
 
