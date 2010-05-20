@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F9CF725CD16630DF779E8CB6B5C38A15" CODE_SIGNATURE="AD029520D8330D714C12AF669968D9CC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="297EB431CD0E250BE0AC97587CF6E8FF" CODE_SIGNATURE="63F47A963A5C9133107E669E47A725ED" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -1453,7 +1453,7 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ALIAS_DATA" EXPOSURE="2" STATE="1" EDITORDER="27 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_ALIAS_DATA" EXPOSURE="2" STATE="1" EDITORDER="30 " TYPTYPE="4">
     BEGIN OF ts_alias_data.
     INCLUDE TYPE seoo_alias_r AS hdr.
     TYPES:
@@ -1464,7 +1464,7 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Alias definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ATTR_DATA" EXPOSURE="2" STATE="1" EDITORDER="29 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_ATTR_DATA" EXPOSURE="2" STATE="1" EDITORDER="32 " TYPTYPE="4">
     BEGIN OF ts_attr_data.
     INCLUDE TYPE seoo_attribute_r AS hdr.
     TYPES:
@@ -1485,8 +1485,8 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Component (Types, alias, method, attribute) definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CX_TEXT" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="4">BEGIN OF ts_cx_text,
-        cmpname   TYPE seoo_attribute_r-cmpname.
+   <ITEM CMPNAME="TS_CX_TEXT" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4">BEGIN OF ts_cx_text,
+          cmpname   TYPE seoo_attribute_r-cmpname.
     INCLUDE TYPE sotr_head AS hdr.
     TYPES:
         lhdr      TYPE sotr_headu,
@@ -1495,16 +1495,16 @@ DATA: _t   LIKE LINE OF texts.
       END OF ts_cx_text
 `</ITEM>
    <ITEM CMPNAME="TS_DEFERRED" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_deferred,                   &quot; used to handle
-              classes TYPE seot_clsdeferrds_w,      &quot; class * definition load
-              interfaces TYPE seot_intdeferrds_r,   &quot; interface * load
-            END OF ts_deferred
+                classes TYPE seot_clsdeferrds_w,      &quot; class * definition load
+                interfaces TYPE seot_intdeferrds_r,   &quot; interface * load
+              END OF ts_deferred
 `</ITEM>
    <ITEM CMPNAME="TS_DOC_KEY" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_doc_key,                                    &quot; equiv DOKU_OBJ = CHAR 60
       name       TYPE seoclsname,                           &quot; CHAR 30
       other(30)  TYPE c,
     END OF ts_doc_key
 `</ITEM>
-   <ITEM CMPNAME="TS_EVENT_DATA" EXPOSURE="2" STATE="1" EDITORDER="23 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_EVENT_DATA" EXPOSURE="2" STATE="1" EDITORDER="26 " TYPTYPE="4">
     BEGIN OF ts_event_data.
     INCLUDE TYPE seoo_event_r AS hdr.
     TYPES:
@@ -1519,7 +1519,7 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Event definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_EXCEP_DATA" EXPOSURE="2" STATE="1" EDITORDER="21 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_EXCEP_DATA" EXPOSURE="2" STATE="1" EDITORDER="24 " TYPTYPE="4">
     BEGIN OF ts_excep_data.
     INCLUDE TYPE seos_exception_r AS hdr.
     TYPES:
@@ -1530,34 +1530,39 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Exception definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_INCLUDES" EXPOSURE="2" STATE="1" EDITORDER="13 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_INCLUDE" EXPOSURE="2" STATE="1" EDITORDER="15 " TYPTYPE="4">BEGIN OF ts_include,                                  &quot; Issue 82
+        name       TYPE program,
+        raw_source TYPE tt_abaprawsource,
+      END OF ts_include
+`</ITEM>
+   <ITEM CMPNAME="TS_INCLUDES" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="4">
     BEGIN OF ts_includes,
-                    classpool     TYPE program,
-                    pubsec        TYPE program,
-                    prisec        TYPE program,
-                    prosec        TYPE program,
-                    cl            TYPE program,
-                    ccimp         TYPE program,
-                    ccdef         TYPE program,
-                    ccmac         TYPE program,
-                    interfacepool TYPE program,
-                    intfsec       TYPE program,
-                    localtestclass TYPE program,        &quot; Issue 82
-                    methods       TYPE seop_methods_w_include,
-                  END OF ts_includes
+        classpool      TYPE ts_include,
+        pubsec         TYPE ts_include,
+        prisec         TYPE ts_include,
+        prosec         TYPE ts_include,
+        cl             TYPE ts_include,
+        ccimp          TYPE ts_include,
+        ccdef          TYPE ts_include,
+        ccmac          TYPE ts_include,
+        interfacepool  TYPE ts_include,
+        intfsec        TYPE ts_include,
+        localtestclass TYPE ts_include,          &quot; Issue 82
+        methods        TYPE tt_meth_incs,
+      END OF ts_includes
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="List of Class&apos;s include with ABAP Code"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_INTERFACE" EXPOSURE="2" STATE="1" EDITORDER="37 " TYPTYPE="4">BEGIN OF ts_interface.
+   <ITEM CMPNAME="TS_INTERFACE" EXPOSURE="2" STATE="1" EDITORDER="40 " TYPTYPE="4">BEGIN OF ts_interface.
     INCLUDE TYPE seor_implementing_r AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
     TYPES:
         components TYPE tt_comp_impl,   &quot; Interface public attribute default value &amp; Method implementation
 *      attributes_redefinition TYPE tt_itf_default_values,   &quot; Interface public attribute default value
       END OF ts_interface
 `</ITEM>
-   <ITEM CMPNAME="TS_METH_DATA" EXPOSURE="2" STATE="1" EDITORDER="25 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_METH_DATA" EXPOSURE="2" STATE="1" EDITORDER="28 " TYPTYPE="4">
     BEGIN OF ts_meth_data.
     INCLUDE TYPE seoo_method_r AS hdr.
     TYPES:
@@ -1572,7 +1577,13 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Method definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_PARAM_DATA" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_METH_INC" EXPOSURE="2" STATE="1" EDITORDER="13 " TYPTYPE="4">BEGIN OF ts_Meth_inc.                                  &quot; Issue 82
+        INCLUDE TYPE seop_method_w_include as hdr.
+    types:
+        raw_source TYPE tt_abaprawsource,
+      END OF ts_Meth_inc
+`</ITEM>
+   <ITEM CMPNAME="TS_PARAM_DATA" EXPOSURE="2" STATE="1" EDITORDER="22 " TYPTYPE="4">
     BEGIN OF ts_param_data.
     INCLUDE TYPE seos_parameter_r AS hdr.
     TYPES:
@@ -1583,7 +1594,7 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Parameter definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_REDEF_DATA" EXPOSURE="2" STATE="1" EDITORDER="35 " TYPTYPE="4">BEGIN OF ts_redef_data.
+   <ITEM CMPNAME="TS_REDEF_DATA" EXPOSURE="2" STATE="1" EDITORDER="38 " TYPTYPE="4">BEGIN OF ts_redef_data.
     INCLUDE TYPE seoredef AS hdr.
     TYPES:
         source        TYPE ts_sourceasstruc,
@@ -1606,22 +1617,22 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Short description component (Langu key) + Documentation"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCES" EXPOSURE="2" STATE="1" EDITORDER="39 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_SOURCES" EXPOSURE="2" STATE="1" EDITORDER="42 " TYPTYPE="4">
     BEGIN OF ts_sources,
-                  classpool   TYPE  ts_sourceasstruc,
-                  local_types TYPE  ts_sourceasstruc,
-                  local_imp   TYPE  ts_sourceasstruc,
-                  macros      TYPE  ts_sourceasstruc,
-                  public      TYPE  ts_sourceasstruc,
-                  private     TYPE  ts_sourceasstruc,
-                  protected   TYPE  ts_sourceasstruc,
-                END OF ts_sources
+                    classpool   TYPE  ts_sourceasstruc,
+                    local_types TYPE  ts_sourceasstruc,
+                    local_imp   TYPE  ts_sourceasstruc,
+                    macros      TYPE  ts_sourceasstruc,
+                    public      TYPE  ts_sourceasstruc,
+                    private     TYPE  ts_sourceasstruc,
+                    protected   TYPE  ts_sourceasstruc,
+                  END OF ts_sources
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class ABAP Source codes as structure"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_TGRP_DATA" EXPOSURE="2" STATE="1" EDITORDER="33 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_TGRP_DATA" EXPOSURE="2" STATE="1" EDITORDER="36 " TYPTYPE="4">
     BEGIN OF ts_tgrp_data.
     INCLUDE TYPE seot_typepusage_r AS hdr.
     TYPES:
@@ -1633,7 +1644,7 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Type pool used data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_TYPE_DATA" EXPOSURE="2" STATE="1" EDITORDER="31 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_TYPE_DATA" EXPOSURE="2" STATE="1" EDITORDER="34 " TYPTYPE="4">
     BEGIN OF ts_type_data.
     INCLUDE TYPE seoo_type_r AS hdr.
     TYPES:
@@ -1645,14 +1656,14 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Type definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_ALIAS" EXPOSURE="2" STATE="1" EDITORDER="28 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_ALIAS" EXPOSURE="2" STATE="1" EDITORDER="31 " TYPTYPE="4">
     tt_alias TYPE SORTED TABLE OF ts_alias_data WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Aliases"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_ATTRIBUTS" EXPOSURE="2" STATE="1" EDITORDER="30 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_ATTRIBUTS" EXPOSURE="2" STATE="1" EDITORDER="33 " TYPTYPE="4">
     tt_attributs TYPE SORTED TABLE OF ts_attr_data WITH UNIQUE KEY cmpname
 `
     <TEXTS>
@@ -1666,39 +1677,41 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Component&apos;s list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_COMP_IMPL" EXPOSURE="2" STATE="1" EDITORDER="36 " TYPTYPE="4">tt_comp_impl TYPE SORTED TABLE OF ts_redef_data WITH UNIQUE KEY mtdname
+   <ITEM CMPNAME="TT_COMP_IMPL" EXPOSURE="2" STATE="1" EDITORDER="39 " TYPTYPE="4">tt_comp_impl TYPE SORTED TABLE OF ts_redef_data WITH UNIQUE KEY mtdname
 `</ITEM>
-   <ITEM CMPNAME="TT_CX_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4">tt_cx_texts TYPE SORTED TABLE OF ts_cx_text WITH UNIQUE KEY cmpname
+   <ITEM CMPNAME="TT_CX_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="20 " TYPTYPE="4">tt_cx_texts TYPE SORTED TABLE OF ts_cx_text WITH UNIQUE KEY cmpname
 `</ITEM>
-   <ITEM CMPNAME="TT_EVENTS" EXPOSURE="2" STATE="1" EDITORDER="24 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_EVENTS" EXPOSURE="2" STATE="1" EDITORDER="27 " TYPTYPE="4">
     tt_events TYPE SORTED TABLE OF ts_event_data WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s Events"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_EXCEPTIONS" EXPOSURE="2" STATE="1" EDITORDER="22 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_EXCEPTIONS" EXPOSURE="2" STATE="1" EDITORDER="25 " TYPTYPE="4">
     tt_exceptions TYPE SORTED TABLE OF ts_excep_data WITH UNIQUE KEY sconame
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Method&apos;s &amp; Event Exceptions"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_INTERFACES" EXPOSURE="2" STATE="1" EDITORDER="38 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_INTERFACES" EXPOSURE="2" STATE="1" EDITORDER="41 " TYPTYPE="4">
     tt_interfaces TYPE SORTED TABLE OF ts_interface WITH UNIQUE KEY refclsname
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class interface use"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_METHODS" EXPOSURE="2" STATE="1" EDITORDER="26 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_METHODS" EXPOSURE="2" STATE="1" EDITORDER="29 " TYPTYPE="4">
     tt_methods TYPE SORTED TABLE OF ts_meth_data WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s methods"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_PARAMETERS" EXPOSURE="2" STATE="1" EDITORDER="20 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_METH_INCS" EXPOSURE="2" STATE="1" EDITORDER="14 " TYPTYPE="4">tt_meth_incs type STANDARD TABLE OF ts_meth_inc with DEFAULT KEY
+`</ITEM>
+   <ITEM CMPNAME="TT_PARAMETERS" EXPOSURE="2" STATE="1" EDITORDER="23 " TYPTYPE="4">
     tt_parameters TYPE SORTED TABLE OF ts_param_data WITH UNIQUE KEY sconame
 `
     <TEXTS>
@@ -1761,73 +1774,73 @@ DATA: _t   LIKE LINE OF texts.
      <ITEM LANGU="E" DESCRIPT="Short description Sub component (With unique Key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SOTR_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="14 " TYPTYPE="4">tt_sotr_texts TYPE SORTED TABLE OF sotr_text WITH UNIQUE KEY langu object
+   <ITEM CMPNAME="TT_SOTR_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4">tt_sotr_texts TYPE SORTED TABLE OF sotr_text WITH UNIQUE KEY langu object
 `</ITEM>
-   <ITEM CMPNAME="TT_SOTR_TEXTUS" EXPOSURE="2" STATE="1" EDITORDER="15 " TYPTYPE="4">tt_sotr_textus TYPE STANDARD TABLE OF sotr_textu WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_SOTR_TEXTUS" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="4">tt_sotr_textus TYPE STANDARD TABLE OF sotr_textu WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_TYPEGROUPS" EXPOSURE="2" STATE="1" EDITORDER="34 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_TYPEGROUPS" EXPOSURE="2" STATE="1" EDITORDER="37 " TYPTYPE="4">
     tt_typegroups TYPE SORTED TABLE OF ts_tgrp_data WITH UNIQUE KEY typegroup
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s type pool used"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TYPES" EXPOSURE="2" STATE="1" EDITORDER="32 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_TYPES" EXPOSURE="2" STATE="1" EDITORDER="35 " TYPTYPE="4">
     tt_types TYPE SORTED TABLE OF ts_type_data WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class&apos;s types"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="T_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="4">
+   <ITEM CMPNAME="T_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="21 " TYPTYPE="4">
     BEGIN OF t_fm_data,
 *      name TYPE seoclsname,
 *      version TYPE seoversion,
-        class TYPE  vseoclass,
-        interface TYPE  vseointerf,
-        attributes  TYPE  seoo_attributes_r,
-        methods TYPE  seoo_methods_r,
-        events  TYPE  seoo_events_r,
-        types TYPE  seoo_types_r,
-        parameters  TYPE  seos_parameters_r,
-        exceps  TYPE  seos_exceptions_r,
-        implementings TYPE  seor_implementings_r,
-        inheritance TYPE  vseoextend,
-        redefinitions TYPE  seor_redefinitions_r,
-        impl_details  TYPE  seor_redefinitions_r,
-        friendships TYPE  seof_friendships_r,
-        typeusages TYPE  seot_typepusages_r,
-        clsdeferrds TYPE  seot_clsdeferrds_r,
-        intdeferrds TYPE  seot_intdeferrds_r,
-        comprisings TYPE  seor_comprisings_r,
-        explore_inheritance TYPE  seok_cls_typeinfos,
-        explore_implementings TYPE  seok_int_typeinfos,
-        explore_comprisings TYPE  seok_int_typeinfos,
-        aliases TYPE  seoo_aliases_r,
-        enhancement_methods TYPE  enhmeth_tabheader,
-        enhancement_attributes  TYPE  enhclasstabattrib,
-        enhancement_events  TYPE  enhclasstabevent,
-        enhancement_implementings TYPE  enhclasstabimplementing,
-        enhancement_comprisings TYPE  enhclasstabintfcompri,
-        class_desc  TYPE tt_seoclasstx,
-        component_desc  TYPE  tt_seocompotx,
-        subcomponent_desc TYPE  tt_seosubcotx,
-        includes TYPE ts_includes,
+          class TYPE  vseoclass,
+          interface TYPE  vseointerf,
+          attributes  TYPE  seoo_attributes_r,
+          methods TYPE  seoo_methods_r,
+          events  TYPE  seoo_events_r,
+          types TYPE  seoo_types_r,
+          parameters  TYPE  seos_parameters_r,
+          exceps  TYPE  seos_exceptions_r,
+          implementings TYPE  seor_implementings_r,
+          inheritance TYPE  vseoextend,
+          redefinitions TYPE  seor_redefinitions_r,
+          impl_details  TYPE  seor_redefinitions_r,
+          friendships TYPE  seof_friendships_r,
+          typeusages TYPE  seot_typepusages_r,
+          clsdeferrds TYPE  seot_clsdeferrds_r,
+          intdeferrds TYPE  seot_intdeferrds_r,
+          comprisings TYPE  seor_comprisings_r,
+          explore_inheritance TYPE  seok_cls_typeinfos,
+          explore_implementings TYPE  seok_int_typeinfos,
+          explore_comprisings TYPE  seok_int_typeinfos,
+          aliases TYPE  seoo_aliases_r,
+          enhancement_methods TYPE  enhmeth_tabheader,
+          enhancement_attributes  TYPE  enhclasstabattrib,
+          enhancement_events  TYPE  enhclasstabevent,
+          enhancement_implementings TYPE  enhclasstabimplementing,
+          enhancement_comprisings TYPE  enhclasstabintfcompri,
+          class_desc  TYPE tt_seoclasstx,
+          component_desc  TYPE  tt_seocompotx,
+          subcomponent_desc TYPE  tt_seosubcotx,
+          includes TYPE ts_includes,
 * FOR SEO_CLASS_CREATE_COMPLETE only
-        method_sources TYPE seo_method_source_table,
-        textspool   TYPE tt_txtp_textpools,
-        locals_def  TYPE  rswsourcet,
-        locals_imp  TYPE  rswsourcet,
-        locals_mac  TYPE  rswsourcet,
+          method_sources TYPE seo_method_source_table,
+          textspool   TYPE tt_txtp_textpools,
+          locals_def  TYPE  rswsourcet,
+          locals_imp  TYPE  rswsourcet,
+          locals_mac  TYPE  rswsourcet,
 * FOR Exception class
-        exceptions_texts TYPE tt_cx_texts,
+          exceptions_texts TYPE tt_cx_texts,
 * FOR Class dynpros
-        dynpros     TYPE tt_dynpros,
+          dynpros     TYPE tt_dynpros,
 * FOR Class MENU PAINTER
-        menupainter TYPE to_menupainter,
+          menupainter TYPE to_menupainter,
 * FOR documentation
-        documentation TYPE tt_docs,
-      END OF t_fm_data
+          documentation TYPE tt_docs,
+        END OF t_fm_data
 `
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Function Module Data"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5E22C1BED346A06B342B770A2A4F5FF2" CODE_SIGNATURE="9ACDFCE3B5982CA884B75DE2FEEFE5D0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2953218C4F2EC80E85A11B81788B99ED" CODE_SIGNATURE="96E0CACE2C0B1F76FD9E79392F395123" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -93,7 +93,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA pubsec_source TYPE seo_section_source.
   DATA prosec_source TYPE seo_section_source.
   DATA prisec_source TYPE seo_section_source.
-  DATA code          TYPE tt_abaprawsource.
+*  DATA code          TYPE tt_abaprawsource.
   DATA classkey      TYPE seoclskey.
 
   classkey-clsname = class-class-clsname.
@@ -132,8 +132,8 @@ INCLUDE zaplink_macros.</MACROS>
     RAISE EXCEPTION o_mycx.
   ENDIF.
 
-  code = get_prog_rawsource( class-includes-pubsec ).
-  IF pubsec_source = code.
+*  code = get_prog_rawsource( class-includes-pubsec-name ).
+  IF pubsec_source = class-includes-pubsec-raw_source.
     CLEAR pubsec_source.
   ELSE.
     SET EXTENDED CHECK OFF.
@@ -150,8 +150,8 @@ INCLUDE zaplink_macros.</MACROS>
 *            id_detlevel  =
 *            id_probclass =
   ENDIF.
-  code = get_prog_rawsource( class-includes-prosec ).
-  IF prosec_source = code.
+*  code = get_prog_rawsource( class-includes-prosec ).
+  IF prosec_source = class-includes-prosec-raw_source.
     CLEAR prosec_source.
   ELSE.
     SET EXTENDED CHECK OFF.
@@ -168,8 +168,8 @@ INCLUDE zaplink_macros.</MACROS>
 *        id_detlevel  =
 *        id_probclass =
   ENDIF.
-  code = get_prog_rawsource( class-includes-prisec ).
-  IF prisec_source = code.
+*  code = get_prog_rawsource( class-includes-prisec ).
+  IF prisec_source = class-includes-prisec-raw_source.
     CLEAR prisec_source.
   ELSE.
     SET EXTENDED CHECK OFF.
@@ -285,7 +285,7 @@ INCLUDE zaplink_macros.</MACROS>
     </EXCEPTIONS>
     <SOURCE>`
   DATA pubsec_source TYPE seo_section_source.
-  DATA code          TYPE tt_abaprawsource.
+*  DATA code          TYPE tt_abaprawsource.
   DATA intkey        TYPE seoclskey.
 
   intkey-clsname = interface-interface-clsname.
@@ -312,8 +312,8 @@ INCLUDE zaplink_macros.</MACROS>
     RAISE EXCEPTION o_mycx.
   ENDIF.
 
-  code = get_prog_rawsource( interface-includes-intfsec ).
-  IF pubsec_source = code.
+*  code = get_prog_rawsource( interface-includes-intfsec ).
+  IF pubsec_source = interface-includes-intfsec-raw_source.
     CLEAR pubsec_source.
   ELSE.
     SET EXTENDED CHECK OFF.
@@ -443,21 +443,21 @@ INCLUDE zaplink_macros.</MACROS>
 *      DELETE _d-typeusages WHERE version &lt;&gt; _d-class-version.   &quot; Remove type usage of the wrong version
 * Type-pools declaration might be present within method&apos;s declaration section (auto added by SAP when needed).
 * Have to detect it, add type pool to type pool list and delete type pool declaration
-    DATA code      TYPE tt_abaprawsource.
+*    DATA code      TYPE tt_abaprawsource.
     DATA new_code  TYPE tt_abaprawsource.
     DATA t_typegrp TYPE seot_typepusages_r.
     DATA s_tgroup  LIKE LINE OF t_typegrp.
     DATA d_flag    TYPE abap_bool.
     DATA s_grp_key TYPE seotpukey.
 
-    code = get_prog_rawsource( _d-includes-pubsec ).
-    search_type_pool( EXPORTING sourcecode = code
+*    code = get_prog_rawsource( _d-includes-pubsec ).
+    search_type_pool( EXPORTING sourcecode = _d-includes-pubsec-raw_source
                                        typepools = _d-typeusages
                                           public = abap_true
                         IMPORTING new_sourcecode = new_code
                                    new_typepools = t_typegrp ).
     IF NOT new_code IS INITIAL.
-      set_prog_rawsource( program = _d-includes-pubsec
+      set_prog_rawsource( program = _d-includes-pubsec-name
                               raw = new_code ).
       d_flag = abap_true.
     ENDIF.
@@ -527,13 +527,13 @@ INCLUDE zaplink_macros.</MACROS>
       ENDLOOP.
     ENDIF.
 
-    code = get_prog_rawsource( _d-includes-prosec ).
-    search_type_pool( EXPORTING sourcecode = code
+*    code = get_prog_rawsource( _d-includes-prosec ).
+    search_type_pool( EXPORTING sourcecode = _d-includes-prosec-raw_source
                                  typepools = _d-typeusages
                   IMPORTING new_sourcecode = new_code
                              new_typepools = t_typegrp ).
     IF NOT new_code IS INITIAL.
-      set_prog_rawsource( program = _d-includes-prosec
+      set_prog_rawsource( program = _d-includes-prosec-name
                               raw = new_code ).
       d_flag = abap_true.
     ENDIF.
@@ -602,13 +602,13 @@ INCLUDE zaplink_macros.</MACROS>
         d_flag = abap_true.
       ENDLOOP.
     ENDIF.
-    code = get_prog_rawsource( _d-includes-prisec ).
-    search_type_pool( EXPORTING sourcecode = code
+*    code = get_prog_rawsource( _d-includes-prisec ).
+    search_type_pool( EXPORTING sourcecode = _d-includes-prisec-raw_source
                                  typepools = _d-typeusages
                   IMPORTING new_sourcecode = new_code
                              new_typepools = t_typegrp ).
     IF NOT new_code IS INITIAL.
-      set_prog_rawsource( program = _d-includes-prisec
+      set_prog_rawsource( program = _d-includes-prisec-name
                               raw = new_code ).
       d_flag = abap_true.
     ENDIF.
@@ -735,9 +735,9 @@ INCLUDE zaplink_macros.</MACROS>
 
     CREATE OBJECT object.
     object-&gt;complete_data( CHANGING fm_data = _d ).
-    _d-dynpros = get_dynpros( _d-includes-classpool ).      &quot; Issue 8
-    _d-menupainter = get_menus( _d-includes-classpool ).    &quot; Issue 9
-    _d-textspool = get_prog_textpool( _d-includes-classpool ). &quot; Issue 1
+    _d-dynpros = get_dynpros( _d-includes-classpool-name ).      &quot; Issue 8
+    _d-menupainter = get_menus( _d-includes-classpool-name ).    &quot; Issue 9
+    _d-textspool = get_prog_textpool( _d-includes-classpool-name ). &quot; Issue 1
     object-&gt;from_data( _d ).
     object-&gt;_code_signature = get_class_signature( classkey ).
 
@@ -942,10 +942,10 @@ INCLUDE zaplink_macros.</MACROS>
       REPLACE ALL OCCURRENCES OF &lt;a&gt;-attvalue IN TABLE result WITH space.   &quot; Issue 71, remove SOTR GUID values when calculating code signature
     ENDLOOP.
   ENDIF.
-*  Issue 71 : dot at the end.
-  LOOP AT result ASSIGNING &lt;t&gt;.
-    REPLACE FIRST OCCURRENCE OF REGEX &apos;\.$&apos; IN &lt;t&gt; WITH &apos; .&apos;.   &quot; change &apos;.&apos; to &apos; .&apos;
-  ENDLOOP.
+*  Issue 71 : dot at the end. =&gt; Corrected with Pretty Printer.
+*  LOOP AT result ASSIGNING &lt;t&gt;.
+*    REPLACE FIRST OCCURRENCE OF REGEX &apos;\.$&apos; IN &lt;t&gt; WITH &apos; .&apos;.   &quot; change &apos;.&apos; to &apos; .&apos;
+*  ENDLOOP.
   zaplink_tools=&gt;condense_abap_source( CHANGING table = result ).
   t_upcode = result.
   zaplink_tools=&gt;conv_table_2upcase( CHANGING table = t_upcode ).
@@ -976,118 +976,125 @@ INCLUDE zaplink_macros.</MACROS>
 *  DATA d_size TYPE i.
 *  FIELD-SYMBOLS &lt;line&gt; TYPE string.
 * Copy of CL_OO_SOURCE-&gt;CONSTRUCTOR
-  DATA cpool TYPE seo_section_source.
-  DATA pubsec TYPE seo_section_source.
-  DATA prisec TYPE seo_section_source.
-  DATA prosec TYPE seo_section_source.
-  DATA cl TYPE seo_section_source.
-  DATA ccdef TYPE seop_source_string.
-  DATA ccimp TYPE seop_source_string.
-  DATA ccmac TYPE seop_source_string.
+*  DATA cpool TYPE seo_section_source.
+*  DATA pubsec TYPE seo_section_source.
+*  DATA prisec TYPE seo_section_source.
+*  DATA prosec TYPE seo_section_source.
+*  DATA cl TYPE seo_section_source.
+*  DATA ccdef TYPE seop_source_string.
+*  DATA ccimp TYPE seop_source_string.
+*  DATA ccmac TYPE seop_source_string.
 
-  DATA incname TYPE program.
-  DATA pubsec_incname TYPE program.
-  DATA prisec_incname TYPE program.
-  DATA prosec_incname TYPE program.
-  DATA cl_incname TYPE program.
-  DATA ccdef_incname TYPE program.
-  DATA ccimp_incname TYPE program.
-  DATA ccmac_incname TYPE program.
+  DATA includes TYPE zaplink_object_data=&gt;ts_includes.      &quot; Issue 82
+*  DATA incname TYPE program.
+*  DATA pubsec_incname TYPE program.
+*  DATA prisec_incname TYPE program.
+*  DATA prosec_incname TYPE program.
+*  DATA cl_incname TYPE program.
+*  DATA cl_test_incname TYPE program.
+*  DATA ccdef_incname TYPE program.
+*  DATA ccimp_incname TYPE program.
+*  DATA ccmac_incname TYPE program.
 
-  DATA meth_inc TYPE seop_method_w_include.
-  DATA meth_incs TYPE seop_methods_w_include.
+*  DATA meth_inc TYPE seop_method_w_include.
+*  DATA meth_incs TYPE seop_methods_w_include.
   DATA source_tmp TYPE seop_source_string.
 
-  FIELD-SYMBOLS &lt;source_line&gt; TYPE seo_section_source_line.
+  FIELD-SYMBOLS:
+    &lt;m&gt; LIKE LINE OF includes-methods,
+    &lt;source_line&gt; LIKE LINE OF includes-classpool-raw_source.
 
-  incname = cl_oo_classname_service=&gt;get_classpool_name( class_name-clsname ).
-  cpool = get_prog_rawsource( incname ).                                          &quot; Issue 73
+  includes = get_includes( class_name-clsname ).            &quot; Issue 82
+*  incname = cl_oo_classname_service=&gt;get_classpool_name( class_name-clsname ).   &quot; Issue 82
+*  cpool = get_prog_rawsource( includes-incname ).                                          &quot; Issue 73
 *  READ REPORT incname INTO cpool STATE &apos;I&apos;.
 *  IF sy-subrc &lt;&gt; 0.
 *    READ REPORT incname INTO cpool STATE &apos;A&apos;.
 *  ENDIF.
 
-  pubsec_incname = cl_oo_classname_service=&gt;get_pubsec_name( class_name-clsname ).
-  pubsec = get_prog_rawsource( pubsec_incname ).                                  &quot; Issue 73
+* pubsec_incname = cl_oo_classname_service=&gt;get_pubsec_name( class_name-clsname ).&quot; Issue 82
+*  pubsec = get_prog_rawsource( pubsec_incname ).                                  &quot; Issue 73
 *  READ REPORT pubsec_incname INTO pubsec STATE &apos;I&apos;.
 *  IF sy-subrc &lt;&gt; 0.
 *    READ REPORT pubsec_incname INTO pubsec STATE &apos;A&apos;.
 *  ENDIF.
 
-  prosec_incname = cl_oo_classname_service=&gt;get_prosec_name( class_name-clsname ).
-  prosec = get_prog_rawsource( prosec_incname ).                                  &quot; Issue 73
+* prosec_incname = cl_oo_classname_service=&gt;get_prosec_name( class_name-clsname ).&quot; Issue 82
+*  prosec = get_prog_rawsource( prosec_incname ).                                  &quot; Issue 73
 *  READ REPORT prosec_incname INTO prosec STATE &apos;I&apos;.
 *  IF sy-subrc &lt;&gt; 0.
 *    READ REPORT prosec_incname INTO prosec STATE &apos;A&apos;.
 *  ENDIF.
 
-  prisec_incname = cl_oo_classname_service=&gt;get_prisec_name( class_name-clsname ).
-  prisec = get_prog_rawsource( prisec_incname ).                                  &quot; Issue 73
+* prisec_incname = cl_oo_classname_service=&gt;get_prisec_name( class_name-clsname ).&quot; Issue 82
+*  prisec = get_prog_rawsource( prisec_incname ).                                  &quot; Issue 73
 *  READ REPORT prisec_incname INTO prisec STATE &apos;I&apos;.
 *  IF sy-subrc &lt;&gt; 0.
 *    READ REPORT prisec_incname INTO prisec STATE &apos;A&apos;.
 *  ENDIF.
 
-  cl_incname = cl_oo_classname_service=&gt;get_cl_name( class_name-clsname ).
-  cl = get_prog_rawsource( cl_incname ).                                          &quot; Issue 73
+*  cl_incname = cl_oo_classname_service=&gt;get_cl_name( class_name-clsname ).       &quot; Issue 82
+*  cl = get_prog_rawsource( cl_incname ).                                          &quot; Issue 73
 *  READ REPORT cl_incname INTO cl STATE &apos;I&apos;.
 *  IF sy-subrc &lt;&gt; 0.
 *    READ REPORT cl_incname INTO cl STATE &apos;A&apos;.
 *  ENDIF.
 
-  ccdef_incname = cl_oo_classname_service=&gt;get_ccdef_name( class_name-clsname ).
-  ccdef = get_prog_rawsource( ccdef_incname ).                                    &quot; Issue 73
+*  ccdef_incname = cl_oo_classname_service=&gt;get_ccdef_name( class_name-clsname ). &quot; Issue 82
+*  ccdef = get_prog_rawsource( ccdef_incname ).                                    &quot; Issue 73
 *  READ REPORT ccdef_incname INTO ccdef STATE &apos;I&apos;.
 *  IF sy-subrc &lt;&gt; 0.
 *    READ REPORT ccdef_incname INTO ccdef STATE &apos;A&apos;.
 *  ENDIF.
 
-  ccimp_incname = cl_oo_classname_service=&gt;get_ccimp_name( class_name-clsname ).
-  ccimp = get_prog_rawsource( ccimp_incname ).                                    &quot; Issue 73
+*  ccimp_incname = cl_oo_classname_service=&gt;get_ccimp_name( class_name-clsname ). &quot; Issue 82
+*  ccimp = get_prog_rawsource( ccimp_incname ).                                    &quot; Issue 73
 *  READ REPORT ccimp_incname INTO ccimp STATE &apos;I&apos;.
 *  IF sy-subrc &lt;&gt; 0.
 *    READ REPORT ccimp_incname INTO ccimp STATE &apos;A&apos;.
 *  ENDIF.
 
-  ccmac_incname = cl_oo_classname_service=&gt;get_ccmac_name( class_name-clsname ).
-  ccmac = get_prog_rawsource( ccmac_incname ).                                    &quot; Issue 73
+*  ccmac_incname = cl_oo_classname_service=&gt;get_ccmac_name( class_name-clsname ). &quot; Issue 82
+*  ccmac = get_prog_rawsource( ccmac_incname ).                                    &quot; Issue 73
 *  READ REPORT ccmac_incname INTO ccmac STATE &apos;I&apos;.
 *  IF sy-subrc &lt;&gt; 0.
 *    READ REPORT ccmac_incname INTO ccmac STATE &apos;A&apos;.
 *  ENDIF.
 
-  meth_incs = cl_oo_classname_service=&gt;get_all_method_includes( class_name-clsname ).
+*  meth_incs = cl_oo_classname_service=&gt;get_all_method_includes( class_name-clsname ). &quot; Issue 82
 
 * Issue 68 : Methods are in historical order on the development system and in alphabetic order on a fresh install system
-  SORT meth_incs BY cpdkey.         &quot; Issue 68 : Force alphabetic order
+  SORT includes-methods BY cpdkey.         &quot; Issue 68 : Force alphabetic order
 * End of change in Copy of CL_OO_SOURCE-&gt;CONSTRUCTOR
 
-  LOOP AT cpool ASSIGNING &lt;source_line&gt;.
-    IF &lt;source_line&gt; CS pubsec_incname.
-      APPEND LINES OF pubsec TO result.
-    ELSEIF &lt;source_line&gt; CS prosec_incname.
-      APPEND LINES OF prosec TO result.
-    ELSEIF &lt;source_line&gt; CS prisec_incname.
-      APPEND LINES OF prisec TO result.
-    ELSEIF &lt;source_line&gt; CS cl_incname.
-      APPEND LINES OF cl TO result.
-    ELSEIF &lt;source_line&gt; CS ccdef_incname.
-      APPEND LINES OF ccdef TO result.
-    ELSEIF &lt;source_line&gt; CS ccimp_incname.
-      APPEND LINES OF ccimp TO result.
-    ELSEIF &lt;source_line&gt; CS ccmac_incname.
-      APPEND LINES OF ccmac TO result.
+  LOOP AT includes-classpool-raw_source ASSIGNING &lt;source_line&gt;.
+    IF &lt;source_line&gt; CS includes-pubsec-name.
+      APPEND LINES OF includes-pubsec-raw_source TO result.
+    ELSEIF &lt;source_line&gt; CS includes-prosec-name.
+      APPEND LINES OF includes-prosec-raw_source TO result.
+    ELSEIF &lt;source_line&gt; CS includes-prisec-name.
+      APPEND LINES OF includes-prisec-raw_source TO result.
+    ELSEIF &lt;source_line&gt; CS includes-cl-name.
+      APPEND LINES OF includes-cl-raw_source TO result.
+    ELSEIF &lt;source_line&gt; CS includes-ccdef-name.
+      APPEND LINES OF includes-ccdef-raw_source TO result.
+    ELSEIF &lt;source_line&gt; CS includes-ccimp-name.
+      APPEND LINES OF includes-ccimp-raw_source TO result.
+    ELSEIF &lt;source_line&gt; CS includes-ccmac-name.
+      APPEND LINES OF includes-ccmac-raw_source TO result.
+    ELSEIF &lt;source_line&gt; CS includes-localtestclass-name.   &quot; Ignore this include
     ELSEIF &lt;source_line&gt; CS &apos;include methods&apos;.
-      LOOP AT meth_incs INTO meth_inc.
-        source_tmp = get_prog_rawsource( meth_inc-incname ).                     &quot; Issue 73
-*        READ REPORT meth_inc-incname INTO source_tmp STATE &apos;I&apos;.
-*        IF sy-subrc &lt;&gt; 0.
-*          READ REPORT meth_inc-incname INTO source_tmp STATE &apos;A&apos;.
+      LOOP AT includes-methods ASSIGNING &lt;m&gt;
+        WHERE NOT raw_source IS INITIAL.
+*        source_tmp = get_prog_rawsource( meth_inc-incname ).                     &quot; Issue 73
+**        READ REPORT meth_inc-incname INTO source_tmp STATE &apos;I&apos;.
+**        IF sy-subrc &lt;&gt; 0.
+**          READ REPORT meth_inc-incname INTO source_tmp STATE &apos;A&apos;.
+**        ENDIF.
+**        IF sy-subrc = 0.
+*        IF NOT source_tmp IS INITIAL.
+        APPEND LINES OF &lt;m&gt;-raw_source TO result.
 *        ENDIF.
-*        IF sy-subrc = 0.
-        IF NOT source_tmp IS INITIAL.
-          APPEND LINES OF source_tmp TO result.
-        ENDIF.
       ENDLOOP.
     ELSE.
       APPEND &lt;source_line&gt; TO result.
@@ -1159,8 +1166,16 @@ AS</DOCUMENTATION>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  data d_CIFKEY  TYPE SEOCLSKEY.
+  DATA d_cifkey  TYPE seoclskey.
   DATA d_clstype TYPE seoclstype.
+  DATA t_methods TYPE seop_methods_w_include.
+  DATA s_method  LIKE LINE OF includes-methods.
+  FIELD-SYMBOLS &lt;m&gt; LIKE LINE OF t_methods.
+
+  DEFINE lmac_get_load.
+    includes-&amp;1-name = cl_oo_classname_service=&gt;&amp;2( clsname ).
+    if not includes-&amp;1-name is initial.   includes-&amp;1-raw_source = get_prog_rawsource( includes-&amp;1-name ).    endif.
+  END-OF-DEFINITION.
 
   d_cifkey-clsname = clsname.
   CALL FUNCTION &apos;SEO_CLIF_GET&apos;
@@ -1179,26 +1194,31 @@ AS</DOCUMENTATION>
       OTHERS             = 4.
   IF sy-subrc = 0.
     IF d_clstype EQ 0.
-      includes-classpool = cl_oo_classname_service=&gt;get_classpool_name( clsname ).
-      includes-pubsec    = cl_oo_classname_service=&gt;get_pubsec_name( clsname ).
-      includes-prosec    = cl_oo_classname_service=&gt;get_prosec_name( clsname ).
-      includes-prisec    = cl_oo_classname_service=&gt;get_prisec_name( clsname ).
-      includes-cl        = cl_oo_classname_service=&gt;get_cl_name( clsname ).
-      includes-ccdef     = cl_oo_classname_service=&gt;get_ccdef_name( clsname ).
-      includes-ccimp     = cl_oo_classname_service=&gt;get_ccimp_name( clsname ).
-      includes-ccmac     = cl_oo_classname_service=&gt;get_ccmac_name( clsname ).
-      includes-localtestclass = cl_oo_classname_service=&gt;get_local_testclasses_include( clsname ). &quot; Issue 82
+      lmac_get_load classpool get_classpool_name.
+      lmac_get_load pubsec get_pubsec_name.
+      lmac_get_load prosec get_prosec_name.
+      lmac_get_load prisec get_prisec_name.
+      lmac_get_load cl get_cl_name.
+      lmac_get_load ccdef get_ccdef_name.
+      lmac_get_load ccimp get_ccimp_name.
+      lmac_get_load ccmac get_ccmac_name.
+      lmac_get_load localtestclass get_local_testclasses_include. &quot; Issue 82
       CALL METHOD cl_oo_classname_service=&gt;get_all_method_includes
         EXPORTING
           clsname            = clsname
         RECEIVING
-          result             = includes-methods
+          result             = t_methods
         EXCEPTIONS
           class_not_existing = 0
           OTHERS             = 0.   &quot; Ignore exception : Class may not exits
+      LOOP AT t_methods ASSIGNING &lt;m&gt;.
+        CLEAR s_method.   s_method-hdr = &lt;m&gt;.
+        s_method-raw_source = get_prog_rawsource( &lt;m&gt;-incname ).
+        APPEND s_method TO includes-methods.
+      ENDLOOP.
     ELSEIF d_clstype EQ 1.
-      includes-interfacepool = cl_oo_classname_service=&gt;get_interfacepool_name( clsname ).
-      includes-intfsec       = cl_oo_classname_service=&gt;get_intfsec_name( clsname ).
+      lmac_get_load interfacepool get_interfacepool_name.
+      lmac_get_load intfsec get_intfsec_name.
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
@@ -1395,11 +1415,11 @@ AS</DOCUMENTATION>
     ENDCASE.
 
     _d-includes = get_includes( _d-class-clsname ).
-    set_dynpros( program = _d-includes-classpool            &quot; Issue 8
+    set_dynpros( program = _d-includes-classpool-name            &quot; Issue 8
                  dynpros = _d-dynpros ).
-    set_menus( program = _d-includes-classpool              &quot; Issue 9
+    set_menus( program = _d-includes-classpool-name              &quot; Issue 9
                  menus = _d-menupainter ).
-    set_prog_textpool( program = _d-includes-classpool      &quot; Issue 1
+    set_prog_textpool( program = _d-includes-classpool-name      &quot; Issue 1
                       textpool = _d-textspool ).
 
     zaplink_documentation=&gt;set( _d-documentation ).

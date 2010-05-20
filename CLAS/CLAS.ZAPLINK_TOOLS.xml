@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E22EE3DF35607501E325BBB3DD179A6E" CODE_SIGNATURE="4E726B1E89C7B312DE74BF77BF36BB39" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="7FDB4E5D5C0DAE638A6CD6CE431F7DC5" CODE_SIGNATURE="2760B593ADD8F7141D8A8A818456F479" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" WITH_UNIT_TESTS="X">
    <TEXTS>
     <ITEM LANGU="E" DESCRIPT="ZAPLink tools">
      <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
@@ -116,6 +116,46 @@ AS</DOCUMENTATION>
    <MACROS>`
 *&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</MACROS>
+   <LOCAL_TEST_CLASS>`
+CLASS abap_unit_testclass DEFINITION FOR TESTING &quot;#AU Risk_Level Harmless
+      &quot;#AU Duration Short
+  .
+
+  PUBLIC SECTION.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+    DATA:
+      m_ref TYPE REF TO zaplink_tools.                      &quot;#EC NOTEXT
+
+    METHODS: setup.
+    METHODS: teardown.
+    METHODS: calculate_md5_hash FOR TESTING.
+ENDCLASS.       &quot;Abap_Unit_Testclass
+* ======================================================================
+CLASS abap_unit_testclass IMPLEMENTATION.
+  METHOD setup.
+    CREATE OBJECT m_ref.
+  ENDMETHOD.       &quot;Setup
+* ----------------------------------------------------------------------
+  METHOD teardown.
+  ENDMETHOD.       &quot;Teardown
+* ----------------------------------------------------------------------
+  METHOD calculate_md5_hash.
+    DATA string TYPE string.
+    DATA result TYPE zaplink_datatypes=&gt;td_checksum.
+
+    CONCATENATE &apos;... FOR TESTING [RISK LEVEL {CRITICAL|DANGEROUS|HARMLESS}]&apos;
+                &apos;                [DURATION   {SHORT|MEDIUM|LONG}]  ... . &apos; INTO string SEPARATED BY cl_abap_char_utilities=&gt;cr_lf.
+    result = zaplink_tools=&gt;calculate_md5_hash( string ).
+
+    cl_aunit_assert=&gt;assert_equals(
+      act   = result
+      exp   = &apos;4993052479518AEA317C383B8764919A&apos;
+      msg   = text-t01
+*     level =
+    ).
+  ENDMETHOD.       &quot;Calculate_Md5_Hash
+ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   </LOCAL>
   <METHODS>
    <ITEM CMPNAME="CALCULATE_MD5_HASH" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">

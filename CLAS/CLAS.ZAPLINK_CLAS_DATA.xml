@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="10E373D35A714FC2416A0C8FD8B6CDEB" CODE_SIGNATURE="EDCD116A6DFD8C66399B90812BAAFB9F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0A54919513B11696012EB16BD3B31A1A" CODE_SIGNATURE="94C259378C474C6C9A3436B972C91BA4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -128,7 +128,64 @@ AS</DOCUMENTATION>
 INCLUDE zaplink_macros.</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="GET_SOURCE" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CONV_SOURCE" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Clean ABAP Source code"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ABAPSOURCE"/>
+     <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ABAP Program Name"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+*  DATA code TYPE zaplink_object=&gt;tt_abaprawsource.
+  DATA linecount TYPE i.
+  DATA d_line LIKE LINE OF source.                            &quot; Issue 68
+  FIELD-SYMBOLS: &lt;l&gt; LIKE LINE OF source.
+
+*  code = zaplink_object=&gt;get_prog_rawsource( program ).
+
+  IF NOT source IS INITIAL.
+    linecount = LINES( source ).
+    IF linecount &gt; 1.
+*      READ TABLE source ASSIGNING &lt;l&gt; INDEX linecount.      &quot; Issue 68
+*      TRANSLATE &lt;l&gt; TO UPPER CASE.                        &quot;#EC SYNTCHAR
+*      IF &lt;l&gt; CP &apos;ENDMETHOD.*&apos;.
+      READ TABLE source INTO d_line INDEX linecount.
+      TRANSLATE d_line TO UPPER CASE.                     &quot;#EC SYNTCHAR
+      IF d_line CP &apos;ENDMETHOD.*&apos;.
+        DELETE source INDEX linecount.
+      ENDIF.
+    ENDIF.
+*    READ TABLE source ASSIGNING &lt;l&gt; INDEX 1.               &quot; Issue 68
+*    TRANSLATE &lt;l&gt; TO UPPER CASE.                            &quot;#EC *
+*    IF &lt;l&gt; CP &apos;METHOD *&apos;.                                 &quot;#EC SYNTCHAR
+    READ TABLE source INTO d_line INDEX 1.
+    TRANSLATE d_line TO UPPER CASE.                         &quot;#EC *
+    IF d_line CP &apos;METHOD *&apos;.                              &quot;#EC SYNTCHAR
+      DELETE source INDEX 1.
+    ENDIF.
+
+* Issue 68 Start : Blank line at the end of source source can&apos;t be imported =&gt; Remove it
+    IF NOT source IS INITIAL.
+      linecount = LINES( source ).
+      READ TABLE source ASSIGNING &lt;l&gt; INDEX linecount.
+      WHILE &lt;l&gt; IS INITIAL.
+        DELETE source INDEX linecount.
+        linecount = LINES( source ).
+        READ TABLE source ASSIGNING &lt;l&gt; INDEX linecount.
+        IF NOT &lt;l&gt; IS ASSIGNED.   EXIT.   ENDIF.
+      ENDWHILE.
+    ENDIF.
+* Issue 68 END
+  ENDIF.
+
+  result = zaplink_object=&gt;conv_abap_raw2source( source ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_SOURCE_OFF" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Clean ABAP Source code"/>
     </TEXTS>
@@ -738,10 +795,10 @@ AS</DOCUMENTATION>
   textspool = _fm_data-textspool.
 
 *LOCAL definitions
-  local-types-_ = get_source( fm_data-includes-ccdef ).
-  local-implementations-_ = get_source( fm_data-includes-ccimp ).
-  local-macros-_ = get_source( fm_data-includes-ccmac ).
-  local-local_test_class-_ = get_source( fm_data-includes-localtestclass ).     &quot; Issue 82
+  local-types-_ = conv_source( fm_data-includes-ccdef-raw_source ).
+  local-implementations-_ = conv_source( fm_data-includes-ccimp-raw_source ).
+  local-macros-_ = conv_source( fm_data-includes-ccmac-raw_source ).
+  local-local_test_class-_ = conv_source( fm_data-includes-localtestclass-raw_source ).     &quot; Issue 82
 
 *IMPLEMENTINGS  TYPE  SEOR_IMPLEMENTINGS_R
   LOOP AT fm_data-implementings ASSIGNING &lt;im&gt;
@@ -770,7 +827,7 @@ AS</DOCUMENTATION>
         READ TABLE _fm_data-includes-methods ASSIGNING &lt;m_&gt;
              WITH KEY cpdkey = _mk.
         IF sy-subrc = 0.
-          _ia-source-_ = get_source( &lt;m_&gt;-incname ).
+          _ia-source-_ = conv_source( &lt;m_&gt;-raw_source ).
           IF NOT _ia-source-_ IS INITIAL.
             CLEAR &lt;m_&gt;. &quot; do it once : DELETE _fm_data-includes-methods. dump
           ENDIF.
@@ -799,7 +856,7 @@ AS</DOCUMENTATION>
 *Methodes Source
 * ISSUE 4
 *  LOOP AT _fm_data-includes-methods ASSIGNING &lt;m_&gt;.
-*    _source = get_source( &lt;m_&gt;-incname ).
+*    _source = conv_source( &lt;m_&gt;-incname ).
 *    CHECK NOT _source IS INITIAL.
 *    _mk = &lt;m_&gt;-cpdkey.
 *    CHECK _mk-clsname = a0_maindata-clsname.
@@ -819,7 +876,7 @@ AS</DOCUMENTATION>
     READ TABLE _fm_data-includes-methods ASSIGNING &lt;m_&gt;
          WITH KEY cpdkey = _mk.
     CHECK sy-subrc = 0.
-    _source = get_source( &lt;m_&gt;-incname ).
+    _source = conv_source( &lt;m_&gt;-raw_source ).
     CHECK NOT _source IS INITIAL.
     &lt;me&gt;-source-_ = _source.
   ENDLOOP.
@@ -845,7 +902,7 @@ AS</DOCUMENTATION>
     READ TABLE fm_data-includes-methods ASSIGNING &lt;m_&gt;
          WITH KEY cpdkey = _mk.
     IF sy-subrc = 0.
-      _re-source-_ = get_source( &lt;m_&gt;-incname ).
+      _re-source-_ = conv_source( &lt;m_&gt;-raw_source ).
     ENDIF.
 
     CLEAR _re-clsname.
