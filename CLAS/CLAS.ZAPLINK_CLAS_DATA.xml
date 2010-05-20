@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0A54919513B11696012EB16BD3B31A1A" CODE_SIGNATURE="94C259378C474C6C9A3436B972C91BA4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="325B86F8FA394584CFE3EB00090C0A9C" CODE_SIGNATURE="20ECB04520CFC1386869B9DBDC30C3F6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -143,7 +143,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
 *  DATA code TYPE zaplink_object=&gt;tt_abaprawsource.
   DATA linecount TYPE i.
-  DATA d_line LIKE LINE OF source.                            &quot; Issue 68
+  DATA d_line LIKE LINE OF source.                          &quot; Issue 68
   FIELD-SYMBOLS: &lt;l&gt; LIKE LINE OF source.
 
 *  code = zaplink_object=&gt;get_prog_rawsource( program ).
@@ -155,8 +155,9 @@ INCLUDE zaplink_macros.</MACROS>
 *      TRANSLATE &lt;l&gt; TO UPPER CASE.                        &quot;#EC SYNTCHAR
 *      IF &lt;l&gt; CP &apos;ENDMETHOD.*&apos;.
       READ TABLE source INTO d_line INDEX linecount.
-      TRANSLATE d_line TO UPPER CASE.                     &quot;#EC SYNTCHAR
-      IF d_line CP &apos;ENDMETHOD.*&apos;.
+*      TRANSLATE d_line TO UPPER CASE.                     &quot;#EC SYNTCHAR
+      CONDENSE d_line.    &quot; &apos;   ENDMETHOD.&apos; will also be removed
+      IF d_line CP &apos;ENDMETHOD+.*&apos; OR d_line CP &apos;ENDMETHOD.*&apos;.
         DELETE source INDEX linecount.
       ENDIF.
     ENDIF.
@@ -164,7 +165,8 @@ INCLUDE zaplink_macros.</MACROS>
 *    TRANSLATE &lt;l&gt; TO UPPER CASE.                            &quot;#EC *
 *    IF &lt;l&gt; CP &apos;METHOD *&apos;.                                 &quot;#EC SYNTCHAR
     READ TABLE source INTO d_line INDEX 1.
-    TRANSLATE d_line TO UPPER CASE.                         &quot;#EC *
+*    TRANSLATE d_line TO UPPER CASE.                         &quot;#EC *
+    CONDENSE d_line.
     IF d_line CP &apos;METHOD *&apos;.                              &quot;#EC SYNTCHAR
       DELETE source INDEX 1.
     ENDIF.
