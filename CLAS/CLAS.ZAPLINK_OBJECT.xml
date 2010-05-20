@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2953218C4F2EC80E85A11B81788B99ED" CODE_SIGNATURE="96E0CACE2C0B1F76FD9E79392F395123" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="079F256783D518FEEAA7080185638DA8" CODE_SIGNATURE="EB38845B75A883923A57D38058B062E4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -840,9 +840,9 @@ INCLUDE zaplink_macros.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CLASS_GLOBALSOURCE" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_CLASSSOURCE_4SIGNATURE" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Provide Global source of a class"/>
+     <ITEM LANGU="E" DESCRIPT="Provide Global source of a class read for signature"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CLASS_NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSKEY">
@@ -888,7 +888,7 @@ INCLUDE zaplink_macros.</MACROS>
   IF sy-subrc &lt;&gt; 0.
     RAISE not_a_class.
   ENDIF.
-  result = get_class_globalsource_( class_name ).
+  result = get_class_globalsource( class_name ).
   zaplink_tools=&gt;pretty_printer( CHANGING table = result ).
   IF d_class-category = &apos;40&apos;.  &quot; 40	Exception Class
 * Issue 71 : Exception class SOTR GUID
@@ -956,7 +956,7 @@ INCLUDE zaplink_macros.</MACROS>
   CHECK sy-subrc = 0.
   SUBTRACT 1 FROM sy-tabix.   CHECK sy-tabix &gt;= 1.    DELETE result TO sy-tabix.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CLASS_GLOBALSOURCE_" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_CLASS_GLOBALSOURCE" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Provide Global source of a class copy of CL_OO_SOURCE"/>
     </TEXTS>
@@ -1005,6 +1005,7 @@ INCLUDE zaplink_macros.</MACROS>
     &lt;source_line&gt; LIKE LINE OF includes-classpool-raw_source.
 
   includes = get_includes( class_name-clsname ).            &quot; Issue 82
+  Check not includes-classpool-name is INITIAL. &quot; check it&apos;s a class
 *  incname = cl_oo_classname_service=&gt;get_classpool_name( class_name-clsname ).   &quot; Issue 82
 *  cpool = get_prog_rawsource( includes-incname ).                                          &quot; Issue 73
 *  READ REPORT incname INTO cpool STATE &apos;I&apos;.
@@ -1144,7 +1145,7 @@ AS</DOCUMENTATION>
   DATA t_code    TYPE td_sourcecode.
   DATA d_src     TYPE string.
 
-  t_code = get_class_globalsource( class_name ).
+  t_code = get_classsource_4signature( class_name ).
   d_src = zaplink_tools=&gt;table_2_string( t_code ).
   d_src = zaplink_tools=&gt;clean_abap_string( d_src ).
   result = zaplink_tools=&gt;calculate_md5_hash( d_src ).</SOURCE>
