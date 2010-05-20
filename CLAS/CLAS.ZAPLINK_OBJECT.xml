@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E7CFB0F8A50B96B0C9C7403C61B4BE9D" CODE_SIGNATURE="21DDBBF10F9C03D8607F4EB550E0FC66" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5E22C1BED346A06B342B770A2A4F5FF2" CODE_SIGNATURE="9ACDFCE3B5982CA884B75DE2FEEFE5D0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1187,6 +1187,7 @@ AS</DOCUMENTATION>
       includes-ccdef     = cl_oo_classname_service=&gt;get_ccdef_name( clsname ).
       includes-ccimp     = cl_oo_classname_service=&gt;get_ccimp_name( clsname ).
       includes-ccmac     = cl_oo_classname_service=&gt;get_ccmac_name( clsname ).
+      includes-localtestclass = cl_oo_classname_service=&gt;get_local_testclasses_include( clsname ). &quot; Issue 82
       CALL METHOD cl_oo_classname_service=&gt;get_all_method_includes
         EXPORTING
           clsname            = clsname

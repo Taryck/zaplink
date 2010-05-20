@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="887B0C5D9C2BEC4816B42176F23624D8" CODE_SIGNATURE="1671A15FB93178807033C4B31939893D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="10E373D35A714FC2416A0C8FD8B6CDEB" CODE_SIGNATURE="EDCD116A6DFD8C66399B90812BAAFB9F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -741,6 +741,7 @@ AS</DOCUMENTATION>
   local-types-_ = get_source( fm_data-includes-ccdef ).
   local-implementations-_ = get_source( fm_data-includes-ccimp ).
   local-macros-_ = get_source( fm_data-includes-ccmac ).
+  local-local_test_class-_ = get_source( fm_data-includes-localtestclass ).     &quot; Issue 82
 
 *IMPLEMENTINGS  TYPE  SEOR_IMPLEMENTINGS_R
   LOOP AT fm_data-implementings ASSIGNING &lt;im&gt;
@@ -1104,6 +1105,7 @@ AS</DOCUMENTATION>
           types           TYPE ts_sourceasstruc,
           implementations TYPE ts_sourceasstruc,
           macros          TYPE ts_sourceasstruc,
+          local_test_class TYPE ts_sourceasstruc,  &quot; Issue 82
         END OF ts_locals
 `
     <TEXTS>
