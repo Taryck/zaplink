@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="6381DF7831FF26E1FD5556D0A2881649" CODE_SIGNATURE="FD5AD146AD32EF1DB5AB338DA04ED556" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2D8948FAF88B3F614B078A9F7C70FB4C" CODE_SIGNATURE="E15B5A1AEE041FBBED76CD5DF1E0FA46" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
  </DEPENDENCIES>
@@ -24,6 +24,7 @@ AS</DOCUMENTATION>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
+   <ITEM CMPNAME="TD_COMPNAME" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPNAME"/>
    <ITEM CMPNAME="TD_DOC_ID" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_DOC_ID"/>
    <ITEM CMPNAME="TR_DOCID" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_DOCID"/>
    <ITEM CMPNAME="TT_DOCS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_DOCS"/>
@@ -118,57 +119,109 @@ AS</DOCUMENTATION>
   DATA s_text  LIKE LINE OF texts.
   DATA s_field LIKE LINE OF fields.
   DATA d_str   TYPE string.
+  DATA s_key   TYPE ts_idx_key.
   FIELD-SYMBOLS:
     &lt;f&gt; LIKE LINE OF fm_data-fields,
-*    &lt;d&gt; LIKE LINE OF fm_data-docs,
-*    &lt;dt&gt; LIKE LINE OF &lt;d&gt;-texts,
+    &lt;d&gt; LIKE LINE OF fm_data-docs,
+    &lt;dt&gt; LIKE LINE OF &lt;d&gt;-texts,
     &lt;t&gt; LIKE LINE OF fm_data-texts.
 
-*  a0_maindata-hdr = fm_data-header.
-*  a0_maindata-technical_settings = fm_data-tech.
-*  CLEAR: a0_maindata-technical_settings-tabname,
-*         a0_maindata-technical_settings-as4local,
-*         a0_maindata-technical_settings-as4vers.
-*
-** Texts
-*  LOOP AT fm_data-texts ASSIGNING &lt;t&gt;.
-*    CLEAR s_text.
-*    s_text-langu = &lt;t&gt;-ddlanguage.
-*    s_text-short_txt = &lt;t&gt;-ddtext.
-*    READ TABLE fm_data-docs ASSIGNING &lt;d&gt;
-*         WITH KEY id = doc_ids-header
-*              object = a0_maindata-tabname.
-*    IF sy-subrc = 0.
-*      READ TABLE &lt;d&gt;-texts ASSIGNING &lt;dt&gt;
-*          WITH KEY tdspras = s_text-langu.
-*      IF sy-subrc = 0.
-*        s_text-long_txt = &lt;dt&gt;.
-*        CLEAR s_text-long_txt-tdspras.
-*      ENDIF.
-*    ENDIF.
-*    INSERT s_text INTO TABLE texts.
-*  ENDLOOP.
-*
-** Texts
-*    LOOP AT fm_data-fields_texts ASSIGNING &lt;ft&gt;
-*            WHERE tabname = &lt;f&gt;-tabname
-*            AND fieldname = &lt;f&gt;-fieldname.
-*      CLEAR s_f_txt.
-*      s_f_txt-langu = &lt;ft&gt;-ddlanguage.
-*      s_f_txt-short_txt = &lt;ft&gt;-ddtext.
-*      INSERT s_f_txt INTO TABLE s_field-texts.
-*    ENDLOOP.
-*
-** fields
-*    LOOP AT fm_data-idx_fields ASSIGNING &lt;if&gt;
-*            WHERE sqltab = &lt;i&gt;-sqltab
-*           AND indexname = &lt;i&gt;-indexname.
-*      CLEAR s_idx_f.    s_idx_f = &lt;if&gt;.       CLEAR: s_idx_f-sqltab, s_idx_f-indexname.
-*      INSERT s_idx_f INTO TABLE s_index-fields.
-*    ENDLOOP.
-*
-*    INSERT s_index INTO TABLE indexes.
-*  ENDLOOP.</SOURCE>
+  a0_maindata = fm_data-header.
+  s_key-table = a0_maindata-sqltab.   s_key-index = a0_maindata-indexname.
+  CLEAR: a0_maindata-sqltab, a0_maindata-indexname.
+
+* Texts
+  LOOP AT fm_data-texts ASSIGNING &lt;t&gt;.
+    CLEAR s_text.
+    s_text-langu = &lt;t&gt;-ddlanguage.
+    s_text-short_txt = &lt;t&gt;-ddtext.
+    READ TABLE fm_data-docs ASSIGNING &lt;d&gt;
+         WITH KEY id = doc_ids-header
+              object = s_key.
+    IF sy-subrc = 0.
+      READ TABLE &lt;d&gt;-texts ASSIGNING &lt;dt&gt;
+          WITH KEY tdspras = s_text-langu.
+      IF sy-subrc = 0.
+        s_text-long_txt = &lt;dt&gt;.
+        CLEAR s_text-long_txt-tdspras.
+      ENDIF.
+    ENDIF.
+    INSERT s_text INTO TABLE texts.
+  ENDLOOP.
+
+* fields
+  LOOP AT fm_data-fields ASSIGNING &lt;f&gt;
+          WHERE sqltab = s_key-table
+         AND indexname = s_key-index.
+    CLEAR s_field.    s_field = &lt;f&gt;.       CLEAR: s_field-sqltab, s_field-indexname.
+    INSERT s_field INTO TABLE fields.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="KEY_2_NAME" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert Key to Name (E071 Entrie)"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_IDX_KEY">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Index Key structure"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPNAME"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA d_obj_name TYPE  e071-obj_name.
+
+  CALL FUNCTION &apos;DD_DD_TO_E071&apos;
+    EXPORTING
+      type                = zaplink_dictionary=&gt;supportedtypes-ext_index
+      name                = data-table
+      id                  = data-index
+    IMPORTING
+*     PGMID               =
+*     OBJECT              =
+      obj_name            = d_obj_name
+    EXCEPTIONS
+      illegal_input       = 1
+      OTHERS              = 2.
+  IF sy-subrc &lt;&gt; 0.
+* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+  ELSE.
+    result = d_obj_name.
+  ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="NAME_2_KEY" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert Name (E071 Entrie) to Key"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_IDX_KEY">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Index Key structure"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  data d_OBJ_NAME type  E071-OBJ_NAME.
+
+  d_obj_name = data.
+  CALL FUNCTION &apos;DD_E071_TO_DD&apos;
+    EXPORTING
+      object              = ZAPLINK_DICTIONARY=&gt;supportedtypes-ext_index
+      obj_name            = d_obj_name
+    IMPORTING
+*      TYPE                =
+      NAME                = result-table
+      ID                  = result-index
+    EXCEPTIONS
+      ILLEGAL_INPUT       = 1
+      OTHERS              = 2.
+  IF sy-subrc &lt;&gt; 0.
+* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
@@ -184,51 +237,51 @@ AS</DOCUMENTATION>
     <SOURCE>`
   DATA s_text  LIKE LINE OF fm_data-texts.
   DATA s_field LIKE LINE OF fm_data-fields.
+  data s_doc   like LINE OF fm_data-docs.
+  DATA s_key   TYPE ts_idx_key.
   FIELD-SYMBOLS:
     &lt;f&gt;  LIKE LINE OF fields,
-*    &lt;d&gt;  LIKE LINE OF fm_data-docs,
+    &lt;d&gt;  LIKE LINE OF fm_data-docs,
     &lt;t&gt;  LIKE LINE OF texts.
+  data s_dtxt like LINE OF &lt;d&gt;-texts.
 
-*  fm_data-header = a0_maindata-hdr.
-*  fm_data-tech = a0_maindata-technical_settings.
-*  fm_data-tech-tabname = fm_data-header-tabname.
-*  fm_data-tech-as4local = &apos;A&apos;.
-*  fm_data-tech-as4vers = &apos;0000&apos;.
-*
-** Texts
-*  LOOP AT texts ASSIGNING &lt;t&gt;.
-*    CLEAR s_text.
-*    s_text-tabname = fm_data-header-tabname.
-*    s_text-ddlanguage = &lt;t&gt;-langu.
-*    s_text-as4local = &apos;A&apos;. &quot; Active
-*    s_text-as4vers = &apos;0000&apos;. &quot; Active
-*    s_text-ddtext = &lt;t&gt;-short_txt.
-*    INSERT s_text INTO TABLE fm_data-texts.
-*    IF NOT &lt;t&gt;-long_txt IS INITIAL.
-*      IF fm_data-docs IS INITIAL.
-*        s_doc-application = &apos;DOKU&apos;.
-*        s_doc-id = doc_ids-header.
-*        s_doc-object = fm_data-header-tabname.
-*        s_doc-langu = &lt;t&gt;-langu.
-*        s_doc-masterlang = abap_true.
-*        s_doc-typ = &apos;E&apos;.
-*        s_doc-dokform = &apos;S_DOCU_SHOW&apos;.
-*        s_doc-dokstyle = &apos;S_DOCUS1&apos;.
-*        INSERT s_doc INTO TABLE fm_data-docs.
-*      ENDIF.
-*      READ TABLE fm_data-docs ASSIGNING &lt;d&gt; INDEX 1.
-*      s_dtxt = &lt;t&gt;-long_txt.
-*      s_dtxt-tdspras = &lt;t&gt;-langu.
-*      INSERT s_dtxt INTO TABLE &lt;d&gt;-texts.
-*    ENDIF.
-*  ENDLOOP.
-*
-** fields
-*  LOOP AT fields ASSIGNING &lt;f&gt;.
-*    CLEAR s_field.      s_field = &lt;f&gt;-hdr.      s_field-tabname = a0_maindata-tabname.
-*
-*    INSERT s_field INTO TABLE fm_data-fields.
-*  ENDLOOP.</SOURCE>
+  fm_data-header = a0_maindata.
+  s_key-table = a0_maindata-sqltab.   s_key-index = a0_maindata-indexname.
+
+* Texts
+  LOOP AT texts ASSIGNING &lt;t&gt;.
+    CLEAR s_text.
+    s_text-sqltab = fm_data-header-sqltab.
+    s_text-indexname = fm_data-header-indexname.
+    s_text-ddlanguage = &lt;t&gt;-langu.
+    s_text-as4local = &apos;A&apos;. &quot; Active
+    s_text-as4vers = &apos;0000&apos;. &quot; Active
+    s_text-ddtext = &lt;t&gt;-short_txt.
+    INSERT s_text INTO TABLE fm_data-texts.
+    IF NOT &lt;t&gt;-long_txt IS INITIAL.
+      IF fm_data-docs IS INITIAL.
+        s_doc-application = &apos;DOKU&apos;.
+        s_doc-id = doc_ids-header.
+        s_doc-object = s_key.
+        s_doc-langu = &lt;t&gt;-langu.
+        s_doc-masterlang = abap_true.
+        s_doc-typ = &apos;E&apos;.
+        s_doc-dokform = &apos;S_DOCU_SHOW&apos;.
+        s_doc-dokstyle = &apos;S_DOCUS1&apos;.
+        INSERT s_doc INTO TABLE fm_data-docs.
+      ENDIF.
+      READ TABLE fm_data-docs ASSIGNING &lt;d&gt; INDEX 1.
+      s_dtxt = &lt;t&gt;-long_txt.
+      s_dtxt-tdspras = &lt;t&gt;-langu.
+      INSERT s_dtxt INTO TABLE &lt;d&gt;-texts.
+    ENDIF.
+  ENDLOOP.
+
+* fields
+  LOOP AT fields ASSIGNING &lt;f&gt;.
+    CLEAR s_field.      s_field = &lt;f&gt;.      s_field-sqltab = s_key-table.   s_field-indexname = s_key-index.
+    INSERT s_field INTO TABLE fm_data-fields.
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>
@@ -243,6 +296,7 @@ AS</DOCUMENTATION>
                 header        TYPE dd12v,
                 texts         TYPE tt_dd12t,
                 fields        TYPE tt_dd17v,
+                docs          TYPE tt_docs,
               END OF ts_fm_data
 `
     <TEXTS>

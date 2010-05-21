@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FEFC04BEF5652F4318518AD11183041E" CODE_SIGNATURE="BFE06278695E905EB29146646A923286" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="419A547E58CD3618DE071F8C9E425BAE" CODE_SIGNATURE="1398C5875D4835B5DFE0D1C7E69A2C27" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
+  <ITEM TYPE="CLAS" NAME="ZAPLINK_XINX_DATA"/>
  </DEPENDENCIES>
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
@@ -99,8 +100,12 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
   <DEFERRED>
    <CLASSES>
     <ITEM TYPEGROUP="ZAPLINK_DOCUMENTATION" TPUTYPE="1" IMPLICIT="X"/>
+    <ITEM TYPEGROUP="ZAPLINK_XINX_DATA" TPUTYPE="1" IMPLICIT="X"/>
    </CLASSES>
   </DEFERRED>
+  <FRIENDS>
+   <ITEM REFCLSNAME="ZAPLINK_XINX_DATA" STATE="1"/>
+  </FRIENDS>
   <LOCAL>
    <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
@@ -181,8 +186,6 @@ END-OF-DEFINITION.</MACROS>
   DATA s_fm_data  TYPE zaplink_dtel_data=&gt;ts_fm_data.
   DATA d_mask     TYPE doku_obj.
   DATA t_texts    TYPE STANDARD TABLE OF dd04t WITH DEFAULT KEY.
-  FIELD-SYMBOLS:
-    &lt;o_s&gt; TYPE REF TO cl_wb_source.
 
   TRY.
     d_name = component-&gt;get_name( ).
@@ -252,9 +255,6 @@ END-OF-DEFINITION.</MACROS>
   DATA d_mask     TYPE doku_obj.
   DATA t_texts    TYPE STANDARD TABLE OF dd01t WITH DEFAULT KEY.
   DATA t_vtexts   TYPE STANDARD TABLE OF dd07t WITH DEFAULT KEY.
-  FIELD-SYMBOLS:
-*    &lt;o_e&gt; TYPE REF TO cl_wb_editor,
-    &lt;o_s&gt; TYPE REF TO cl_wb_source.
 
   TRY.
     d_name = component-&gt;get_name( ).
@@ -334,12 +334,10 @@ END-OF-DEFINITION.</MACROS>
   DATA s_fm_data  TYPE zaplink_xinx_data=&gt;ts_fm_data.
   DATA d_mask     TYPE doku_obj.
   DATA t_texts    TYPE STANDARD TABLE OF dd12t WITH DEFAULT KEY.
-  FIELD-SYMBOLS:
-    &lt;o_s&gt; TYPE REF TO cl_wb_source.
 
   TRY.
     d_name = component-&gt;get_name( ).
-    s_index = index_name2key( d_name ).
+    s_index = zaplink_xinx_data=&gt;name_2_key( d_name ).
     CALL FUNCTION &apos;DDIF_INDX_GET&apos;
       EXPORTING
         name                = s_index-table
@@ -368,9 +366,9 @@ END-OF-DEFINITION.</MACROS>
     DELETE ADJACENT DUPLICATES FROM t_texts COMPARING ddlanguage.
     s_fm_data-texts = t_texts.
 
-    d_mask = d_name.
-*    s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_xinx_data=&gt;r_doc_ids
-*                                              object = d_mask ).
+    d_mask = s_index.
+    s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_xinx_data=&gt;r_doc_ids
+                                              object = d_mask ).
 
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).
@@ -408,8 +406,6 @@ END-OF-DEFINITION.</MACROS>
   DATA s_fm_data  TYPE zaplink_enqu_data=&gt;ts_fm_data.
   DATA d_mask     TYPE doku_obj.
   DATA t_texts    TYPE STANDARD TABLE OF dd25t WITH DEFAULT KEY.
-  FIELD-SYMBOLS:
-    &lt;o_s&gt; TYPE REF TO cl_wb_source.
 
   TRY.
     d_name = component-&gt;get_name( ).
@@ -481,8 +477,6 @@ END-OF-DEFINITION.</MACROS>
   DATA s_fm_data  TYPE zaplink_shlp_data=&gt;ts_fm_data.
   DATA d_mask     TYPE doku_obj.
   DATA t_texts    TYPE STANDARD TABLE OF dd30t WITH DEFAULT KEY.
-  FIELD-SYMBOLS:
-    &lt;o_s&gt; TYPE REF TO cl_wb_source.
 
   TRY.
     d_name = component-&gt;get_name( ).
@@ -555,8 +549,6 @@ END-OF-DEFINITION.</MACROS>
   DATA d_mask     TYPE doku_obj.
   DATA t_texts    TYPE STANDARD TABLE OF dd02t WITH DEFAULT KEY.
   DATA t_ftexts   TYPE STANDARD TABLE OF dd03t WITH DEFAULT KEY.
-  FIELD-SYMBOLS:
-    &lt;o_s&gt; TYPE REF TO cl_wb_source.
 
   TRY.
     d_name = component-&gt;get_name( ).
@@ -642,8 +634,6 @@ END-OF-DEFINITION.</MACROS>
   DATA s_fm_data  TYPE zaplink_ttyp_data=&gt;ts_fm_data.
   DATA d_mask     TYPE doku_obj.
   DATA t_texts    TYPE STANDARD TABLE OF dd40t WITH DEFAULT KEY.
-  FIELD-SYMBOLS:
-    &lt;o_s&gt; TYPE REF TO cl_wb_source.
 
   TRY.
     d_name = component-&gt;get_name( ).
@@ -774,8 +764,6 @@ END-OF-DEFINITION.</MACROS>
   DATA s_fm_data  TYPE zaplink_view_data=&gt;ts_fm_data.
   DATA d_mask     TYPE doku_obj.
   DATA t_texts    TYPE STANDARD TABLE OF dd25t WITH DEFAULT KEY.
-  FIELD-SYMBOLS:
-    &lt;o_s&gt; TYPE REF TO cl_wb_source.
 
   TRY.
     d_name = component-&gt;get_name( ).
@@ -1062,6 +1050,97 @@ END-OF-DEFINITION.</MACROS>
 
     DELETE FROM dd07t WHERE domname = s_fm_data-header-domname.
     MODIFY dd07t FROM TABLE s_fm_data-values_texts.
+
+    zaplink_documentation=&gt;set( s_fm_data-docs ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="IMPORT_INDEX" EXPOSURE="1" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Import table Index to SAP System"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component key"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INDEX">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Index (SE11) Datas"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA s_index        TYPE ts_idx_key.
+  DATA d_subrc        TYPE sy-subrc.
+  DATA s_fm_data      TYPE zaplink_xinx_data=&gt;ts_fm_data.
+  DATA object_name   TYPE  ddsym10tab-name.
+
+  TRY.
+    s_fm_data = o_data-&gt;to_data( ).
+    s_index-table = s_fm_data-header-sqltab.   s_index-index = s_fm_data-header-indexname.
+    object_name = zaplink_xinx_data=&gt;key_2_name( s_index ).
+*    CALL FUNCTION &apos;DD_OBJ_DEL&apos;
+*      EXPORTING
+*        object_name             = object_name
+*        object_type             = dd_eu_type-ext_index
+*        del_state               = &apos;M&apos;
+**       PRID                    = 0
+*     EXCEPTIONS
+*       wrong_del_state         = 1
+*       wrong_object_type       = 2
+*       OTHERS                  = 3.
+*    IF sy-subrc &lt;&gt; 0.
+*      mac_add_mf_and_raise &apos;DD_OBJ_DEL&apos; sy-subrc.
+*    ENDIF.
+
+* Provide message :-(
+    CALL FUNCTION &apos;RS_DD_INDX_DELETE&apos;
+      EXPORTING
+        objname              = s_index-table
+        indexname            = s_index-index
+        extension            = s_fm_data-header-isextind
+      EXCEPTIONS
+        object_not_found     = 0
+        object_not_specified = 2
+        permission_failure   = 3
+        action_cancelled     = 4
+        OTHERS               = 5.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_DD_INDX_DELETE&apos; sy-subrc.
+    ENDIF.
+
+    CALL FUNCTION &apos;DDIF_INDX_PUT&apos;
+      EXPORTING
+        name              = s_index-table
+        id                = s_index-index
+        dd12v_wa          = s_fm_data-header
+      TABLES
+        dd17v_tab         = s_fm_data-fields
+      EXCEPTIONS
+        indx_not_found    = 1
+        name_inconsistent = 2
+        indx_inconsistent = 3
+        put_failure       = 4
+        put_refused       = 5
+        OTHERS            = 6.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;DDIF_INDX_PUT&apos; sy-subrc.
+    ENDIF.
+
+    DELETE FROM dd12t
+           WHERE sqltab = s_index-table
+          AND indexname = s_index-table.
+    MODIFY dd12t FROM TABLE s_fm_data-texts.
 
     zaplink_documentation=&gt;set( s_fm_data-docs ).
 
@@ -1604,36 +1683,6 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INDEX_KEY2NAME" EXPOSURE="1" STATE="1" EDITORDER="20 " MTDDECLTYP="1">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert key to name"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_IDX_KEY">
-      <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Index Key structure"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPNAME"/>
-    </PARAMETERS>
-    <SOURCE>`
-  result = data.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="INDEX_NAME2KEY" EXPOSURE="1" STATE="1" EDITORDER="19 " MTDDECLTYP="1">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert name to key"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
-     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_IDX_KEY">
-      <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Index Key structure"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <SOURCE>`
-  result = data.</SOURCE>
-   </ITEM>
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
@@ -1692,6 +1741,7 @@ END-OF-DEFINITION.</MACROS>
     WHEN supportedtypes-data_element.   lmac_obj_create o_data_e.
     WHEN supportedtypes-view.           lmac_obj_create o_view.
     WHEN supportedtypes-table.          lmac_obj_create o_table.
+    WHEN supportedtypes-ext_index.      lmac_obj_create o_index.        &quot; Issue 55
     WHEN supportedtypes-table_type.     lmac_obj_create o_tab_type.
     WHEN supportedtypes-search_help.    lmac_obj_create o_s_help.
     WHEN supportedtypes-lock_object.    lmac_obj_create o_lock_obj.
@@ -1702,13 +1752,16 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
     <SOURCE>`
-  DATA d_name TYPE rsedd0-ddobjname.
-  DATA d_type TYPE rsedd0-ddobjtype.
-  DATA type  TYPE td_comptype.
+  DATA d_name    TYPE td_compname.
+  DATA d_objname TYPE rsedd0-ddobjname.
+  DATA d_type    TYPE rsedd0-ddobjtype.
+  DATA type      TYPE td_comptype.
+  DATA s_index   TYPE ts_idx_key.
 
   TRY.
 
     type = component-&gt;get_type( ).
+    d_name = component-&gt;get_name( ).
     CASE type.
       WHEN supportedtypes-type_group.
         d_type = dd_eu_type-type_group.
@@ -1728,10 +1781,32 @@ END-OF-DEFINITION.</MACROS>
         d_type = dd_eu_type-matchcode_obj.
       WHEN supportedtypes-table_index.
         d_type = dd_eu_type-table_index.
-      WHEN supportedtypes-ext_index.
+      WHEN supportedtypes-ext_index.                        &quot; Issue 55
         d_type = dd_eu_type-ext_index.
-*        WHEN supportedtypes-table.
-*          d_type = dd_eu_type-table.
+        s_index = zaplink_xinx_data=&gt;name_2_key( d_name ).
+        CALL FUNCTION &apos;RS_DD_INDX_DELETE&apos;
+          EXPORTING
+            objname              = s_index-table
+            indexname            = s_index-index
+            extension            = &apos;X&apos;
+          EXCEPTIONS
+            object_not_found     = 1
+            object_not_specified = 2
+            permission_failure   = 3
+            action_cancelled     = 4
+            OTHERS               = 5.
+        IF sy-subrc &lt;&gt; 0.
+          CASE sy-subrc.
+            WHEN 1.
+              RAISE EXCEPTION TYPE zaplink_cx_connector
+                EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+            WHEN OTHERS.
+              mac_add_mf_and_raise &apos;RS_DD_INDX_DELETE&apos; sy-subrc.
+          ENDCASE.
+        ENDIF.
+        EXIT.
+      WHEN supportedtypes-table.
+        d_type = dd_eu_type-transp_table.
       WHEN supportedtypes-view.
         d_type = dd_eu_type-view.
 *        WHEN supportedtypes-t_cluster_pool.
@@ -1739,13 +1814,13 @@ END-OF-DEFINITION.</MACROS>
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
-    d_name = component-&gt;get_name( ).
 
     IF NOT d_type IS INITIAL.
+      d_objname = d_name.
       CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
         EXPORTING
-*           NO_ASK                     = &apos; &apos;
-          objname                    = d_name
+          no_ask                     = &apos;X&apos;
+          objname                    = d_objname
           objtype                    = d_type
 *         CHANGING
 *           CORRNUM                    = &apos; &apos;
@@ -1765,7 +1840,6 @@ END-OF-DEFINITION.</MACROS>
             mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
         ENDCASE.
       ENDIF.
-
     ENDIF.
 
     mac_def_catch zaplink_cx_connector.
@@ -1774,14 +1848,18 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>`
-  DATA d_name      TYPE rsedd0-ddobjname.
+  DATA d_name      TYPE td_compname.
+  DATA d_ddname    TYPE rsedd0-ddobjname.
   DATA d_type      TYPE rsedd0-ddobjtype.
   DATA type        TYPE td_comptype.
+  DATA s_idxkey    TYPE ts_idx_key.
+  DATA d_secname   TYPE rsedd0-indexid.
 
   exists = me-&gt;exists-not_exists.
 
   TRY.
     type = component-&gt;get_type( ).
+    d_name = component-&gt;get_name( ).
     CASE type.
       WHEN supportedtypes-type_group.
         d_type = dd_eu_type-type_group.
@@ -1803,6 +1881,9 @@ END-OF-DEFINITION.</MACROS>
         d_type = dd_eu_type-table_index.
       WHEN supportedtypes-ext_index.
         d_type = dd_eu_type-ext_index.
+        s_idxkey = zaplink_xinx_data=&gt;name_2_key( d_name ).
+        d_secname = s_idxkey-index.
+        d_name = s_idxkey-table.
       WHEN supportedtypes-table OR supportedtypes-t_cluster_pool.
         d_type = dd_eu_type-transp_table.
       WHEN supportedtypes-view.
@@ -1812,17 +1893,17 @@ END-OF-DEFINITION.</MACROS>
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
-    d_name = component-&gt;get_name( ).
+    d_ddname = d_name.
 
     IF NOT d_type IS INITIAL AND NOT d_name IS INITIAL.
       CALL FUNCTION &apos;INTERN_DD_CHECK_EXIST&apos;
         EXPORTING
-          objname                     = d_name
+          objname                     = d_ddname
           objtype                     = d_type
           err_message                 = abap_false
 *           OBJSTATE                    = &apos;M&apos;
           exists                      = abap_true
-*           SECNAME                     = &apos; &apos;
+          secname                     = d_secname
 *         IMPORTING
 *           MASTERLANGU                 =
 *           OTHER_CLASS                 =
@@ -1948,6 +2029,7 @@ END-OF-DEFINITION.</MACROS>
     <SOURCE>`
   mac_obj_data.
   DATA o_comp       TYPE to_component.
+  DATA s_index      TYPE ts_idx_key.
 
   DEFINE lmac_catch_local_cx.
     catch zaplink_cx_connector into o_mycx.
@@ -1994,6 +2076,15 @@ END-OF-DEFINITION.</MACROS>
         o_table-&gt;a0_maindata-tabname = object-&gt;name.
         TRY.
           components = import_table( o_table ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN supportedtypes-ext_index.                        &quot; Issue 55
+        o_index ?= object-&gt;raw.
+        s_index = zaplink_xinx_data=&gt;name_2_key( object-&gt;name ).
+        o_index-&gt;a0_maindata-sqltab = s_index-table.
+        o_index-&gt;a0_maindata-indexname = s_index-index.
+        TRY.
+          components = import_index( o_index ).
           lmac_catch_local_cx.
         ENDTRY.
       WHEN supportedtypes-table_type.
