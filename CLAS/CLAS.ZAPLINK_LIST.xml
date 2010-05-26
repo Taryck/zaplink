@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F4823C3E8D466BB3D519C4B82DA17CD6" CODE_SIGNATURE="523F7DD01B718EAF0FA0340C4201A5B6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F766EF8FB6EC3C256D06F81D4D591873" CODE_SIGNATURE="A2EE8A7BF24407D7DCB66ACEA121B64D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -281,6 +281,8 @@ DATA t_allcomp   TYPE	tt_allcomplist.
   DATA line      LIKE LINE OF list.
   DATA text_name TYPE string.
   DATA i_len     TYPE i.
+  DATA d_hex     TYPE x.                                    &quot; Issue 76
+  DATA d_char(2) TYPE c.
   CONSTANTS fn_sel TYPE string VALUE &apos;SELECT&apos;.
   FIELD-SYMBOLS:
     &lt;t&gt; TYPE ANY,
@@ -338,8 +340,14 @@ DATA t_allcomp   TYPE	tt_allcomplist.
   st_desc ?= t_desc.
 
   LOOP AT st_desc-&gt;components ASSIGNING &lt;c&gt;.
-    text_name = i_pos = sy-tabix.
-    CONDENSE text_name NO-GAPS.
+* Issue 76 : Start
+*    text_name = i_pos = sy-tabix.
+*    CONDENSE text_name NO-GAPS.
+    i_pos = sy-tabix.
+    d_hex = i_pos.
+    WRITE d_hex TO d_char.
+    text_name = d_char+1.
+* Issue 76 : end
     CONCATENATE &apos;TEXT-NF&apos; text_name INTO text_name.
     ASSIGN (text_name) TO &lt;t&gt;.
     IF sy-subrc = 0.
@@ -382,8 +390,8 @@ DATA t_allcomp   TYPE	tt_allcomplist.
 *  alv_conf-layout-lights_fieldname  = &apos;STATUS&apos;.
 
   DELETE alv_conf-simple-fields WHERE fieldname = alv_conf-simple-layout-box_fieldname
-                                   or fieldname = &apos;ID&apos;
-                                   or fieldname = &apos;EXPAND&apos;.
+                                   OR fieldname = &apos;ID&apos;
+                                   OR fieldname = &apos;EXPAND&apos;.
 
 *  alv_conf-hierar-layout-zebra = &apos;X&apos;.
   alv_conf-hierar-layout-expand_fieldname = &apos;EXPAND&apos;.
@@ -1444,6 +1452,16 @@ FIELD-SYMBOLS:
    <ITEM ID="I" KEY="NF9">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="SysID" LENGTH="5 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="NFA">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="Checksum" LENGTH="32 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="NFB">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="Code&apos;s Signature" LENGTH="32 "/>
     </TEXTS>
    </ITEM>
   </TEXTSPOOL>
