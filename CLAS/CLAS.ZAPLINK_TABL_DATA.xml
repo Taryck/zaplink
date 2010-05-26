@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7ECA0F1AE67B6ABA8E484DA1B0B7B9F7" CODE_SIGNATURE="8306DF84098D121672AA237CF260B46C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="02C9E57AEB24D6E7B7153F5E6D2F5897" CODE_SIGNATURE="4F317326B3FE1F2D56C81441BC8934CD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
  </DEPENDENCIES>
@@ -264,10 +264,12 @@ AS</DOCUMENTATION>
     &lt;t&gt;  LIKE LINE OF texts.
 
   fm_data-header = a0_maindata-hdr.
-  fm_data-tech = a0_maindata-technical_settings.
-  fm_data-tech-tabname = fm_data-header-tabname.
-  fm_data-tech-as4local = &apos;A&apos;.
-  fm_data-tech-as4vers = &apos;0000&apos;.
+  IF NOT a0_maindata-technical_settings IS INITIAL.   &quot; Issue 84
+    fm_data-tech = a0_maindata-technical_settings.
+    fm_data-tech-tabname = fm_data-header-tabname.
+    fm_data-tech-as4local = &apos;A&apos;.
+    fm_data-tech-as4vers = &apos;0000&apos;.
+  ENDIF.
 
 * Texts
   LOOP AT texts ASSIGNING &lt;t&gt;.

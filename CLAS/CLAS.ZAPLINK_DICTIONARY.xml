@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="419A547E58CD3618DE071F8C9E425BAE" CODE_SIGNATURE="1398C5875D4835B5DFE0D1C7E69A2C27" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F8F39FEF5E208AB56B47E6C0D158E787" CODE_SIGNATURE="F01D8D7FD0EB8D5439B6BB1A657CE898" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -1331,23 +1331,24 @@ END-OF-DEFINITION.</MACROS>
   TRY.
     s_fm_data = o_data-&gt;to_data( ).
     d_name = s_fm_data-header-tabname.
-    CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
-      EXPORTING
-        no_ask                     = abap_true
-        objname                    = d_name
-        objtype                    = dd_eu_type-transp_table
-*     CHANGING
-*       CORRNUM                    = &apos; &apos;
-      EXCEPTIONS
-        not_executed               = 1
-        object_not_found           = 0
-        object_not_specified       = 3
-        permission_failure         = 4
-        dialog_needed              = 5
-        OTHERS                     = 6.
-    IF sy-subrc &lt;&gt; 0.
-      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
-    ENDIF.
+* Issue 85
+*    CALL FUNCTION &apos;RS_DD_DELETE_OBJ&apos;
+*      EXPORTING
+*        no_ask                     = abap_true
+*        objname                    = d_name
+*        objtype                    = dd_eu_type-transp_table
+**     CHANGING
+**       CORRNUM                    = &apos; &apos;
+*      EXCEPTIONS
+*        not_executed               = 1
+*        object_not_found           = 0
+*        object_not_specified       = 3
+*        permission_failure         = 4
+*        dialog_needed              = 5
+*        OTHERS                     = 6.
+*    IF sy-subrc &lt;&gt; 0.
+*      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
+*    ENDIF.
 
     CALL FUNCTION &apos;DDIF_TABL_PUT&apos;
       EXPORTING
