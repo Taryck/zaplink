@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C30E5FEFE7C3BCE2309FEB9144CB9745" CODE_SIGNATURE="863DC6B9BC2E1E3DF4858DE61829700E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SXCI_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C054C756EF5E2DD397016C81D6187DA7" CODE_SIGNATURE="192FCD6139E3FCA347FBDA413BB3CBC6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SXCI_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_BADI_DATA"/>
+  <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTORS"/>
  </DEPENDENCIES>
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
@@ -40,6 +41,11 @@ AS</DOCUMENTATION>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
+  <DEFERRED>
+   <CLASSES>
+    <ITEM TYPEGROUP="ZAPLINK_CONNECTORS" TPUTYPE="1" IMPLICIT="X"/>
+   </CLASSES>
+  </DEFERRED>
   <FRIENDS>
    <ITEM REFCLSNAME="ZAPLINK_BADI" STATE="1"/>
    <ITEM REFCLSNAME="ZAPLINK_EASYXML" STATE="1"/>
@@ -58,9 +64,30 @@ AS</DOCUMENTATION>
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
   <REDEFINITIONS>
+   <ITEM REFCLSNAME="ZAPLINK_BADI_DATA" MTDNAME="ANONYMIZE">
+    <SOURCE>`
+* Issue 81
+  DATA o_conn    TYPE to_connector.
+  DATA o_cleaner TYPE REF TO zaplink_cnx_ext_cleaner.
+  TRY.
+      super-&gt;anonymize( ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.
+  CLEAR: a0_maindata-uname, a0_maindata-udate, a0_maindata-utime,a0_maindata-aname, a0_maindata-adate, a0_maindata-atime.
+  IF implementation IS BOUND.
+    o_conn = zaplink_connectors=&gt;create_connector( type = implementation-&gt;type
+                                               connuuid = implementation-&gt;connector ).
+    TRY.
+        o_cleaner ?= o_conn.
+        o_cleaner-&gt;anonymize( implementation ).
+      CATCH cx_root.
+    ENDTRY.
+  ENDIF.</SOURCE>
+   </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_BADI_DATA" MTDNAME="FROM_DATA">
     <SOURCE>`
-def_name = fm_data-implementation-exit_name.
+  def_name = fm_data-implementation-exit_name.
 
   CALL METHOD super-&gt;from_data
     EXPORTING

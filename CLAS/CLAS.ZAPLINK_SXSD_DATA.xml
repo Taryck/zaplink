@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="1524D7F4D6EDA5D4BE2033CE53074CDC" CODE_SIGNATURE="EFFC5355F19833BB752C9CEAEAC05849" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SXSD_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9837CFC870F471CEAD0D9095978BF55C" CODE_SIGNATURE="70ED2A731B84A676EDE436429188DFB9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SXSD_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_BADI_DATA"/>
  </DEPENDENCIES>
@@ -75,6 +75,27 @@ AS</DOCUMENTATION>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
+   <ITEM REFCLSNAME="ZAPLINK_BADI_DATA" MTDNAME="ANONYMIZE">
+    <SOURCE>`
+* Issue 81
+  DATA o_conn    TYPE to_connector.
+  DATA o_cleaner TYPE REF TO zaplink_cnx_ext_cleaner.
+  TRY.
+      super-&gt;anonymize( ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.
+  CLEAR: a0_maindata-uname, a0_maindata-udate, a0_maindata-utime.
+  IF interface IS BOUND.
+    o_conn = zaplink_connectors=&gt;create_connector( type = interface-&gt;type
+                                               connuuid = interface-&gt;connector ).
+    TRY.
+        o_cleaner ?= o_conn.
+        o_cleaner-&gt;anonymize( interface ).
+      CATCH cx_root.
+    ENDTRY.
+  ENDIF.</SOURCE>
+   </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_BADI_DATA" MTDNAME="FROM_DATA">
     <SOURCE>`
   DATA _fc    LIKE LINE OF functions_codes.
