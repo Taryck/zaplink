@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F8F39FEF5E208AB56B47E6C0D158E787" CODE_SIGNATURE="F01D8D7FD0EB8D5439B6BB1A657CE898" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E4230B18C36CF44A2E55A20688A53AC5" CODE_SIGNATURE="4E2F2BADA9D30A59590CD339094BA071" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -1695,13 +1695,22 @@ END-OF-DEFINITION.</MACROS>
     &amp;1-&gt;anonymize( ).
   END-OF-DEFINITION.
 
+  TRY.      &quot; Issue 86
+      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.
+
   CASE object-&gt;type.
-    WHEN supportedtypes-type_group.
-      o_typegroup ?= object-&gt;raw.
-*      o_typegroup-&gt;anonymize( ).
+    WHEN supportedtypes-type_group.     lmac_do_obj o_typegroup.
     WHEN supportedtypes-domain.         lmac_do_obj o_domain.
     WHEN supportedtypes-data_element.   lmac_do_obj o_data_e.
     WHEN supportedtypes-view.           lmac_do_obj o_view.
+    WHEN supportedtypes-table.          lmac_do_obj o_table.        &quot; Issue 86
+    WHEN supportedtypes-ext_index.      lmac_do_obj o_index.        &quot; Issue 55
+    WHEN supportedtypes-table_type.     lmac_do_obj o_tab_type.     &quot; Issue 86
+    WHEN supportedtypes-search_help.    lmac_do_obj o_s_help.       &quot; Issue 86
+    WHEN supportedtypes-lock_object.    lmac_do_obj o_lock_obj.     &quot; Issue 86
     WHEN OTHERS.
       mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
   ENDCASE.</SOURCE>
