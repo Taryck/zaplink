@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A53169374794FD7853B22995E9D71A3C" CODE_SIGNATURE="803E6740F294DBC5C81DCE28CBFE88C4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="309CE91571CB4D6661E086F43BC28DF5" CODE_SIGNATURE="BA3A9961ED6D8F8DB5F5A6804DE1BB0D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
  </DEPENDENCIES>
@@ -45,7 +45,12 @@ AS</DOCUMENTATION>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="FIELDS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_FIELDS"/>
-   <ITEM CMPNAME="INDEXES" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_INDEXES"/>
+   <ITEM CMPNAME="INDEXES" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_INDEXES">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Indexes"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="INDEXES_OLD" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_INDEXES_OLD"/>
    <ITEM CMPNAME="R_DOC_IDS" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Documentation IDS"/>
@@ -94,9 +99,9 @@ AS</DOCUMENTATION>
   LOOP AT texts ASSIGNING &lt;t&gt;.
     CLEAR: &lt;t&gt;-long_txt-tdfuser, &lt;t&gt;-long_txt-tdfdate, &lt;t&gt;-long_txt-tdftime.
   ENDLOOP.
-  LOOP AT indexes ASSIGNING &lt;i&gt;.
-    CLEAR: &lt;i&gt;-as4user, &lt;i&gt;-as4date, &lt;i&gt;-AS4time.
-  ENDLOOP.</SOURCE>
+*  LOOP AT indexes ASSIGNING &lt;i&gt;.
+*    CLEAR: &lt;i&gt;-as4user, &lt;i&gt;-as4date, &lt;i&gt;-AS4time.
+*  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
@@ -107,6 +112,35 @@ AS</DOCUMENTATION>
 
   _id-sign = &apos;I&apos;. _id-option = &apos;EQ&apos;.
   _id-low = doc_ids-header. APPEND _id TO r_doc_ids.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CONV_INDEX" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert data to data for index"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_FM_DATA">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Function Module data for indexes"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA s_index LIKE LINE OF result.
+  FIELD-SYMBOLS:
+    &lt;i&gt; LIKE LINE OF fm_data-indexes.
+
+  LOOP AT fm_data-indexes ASSIGNING &lt;i&gt;.
+    CLEAR s_index.    s_index-header = &lt;i&gt;.
+    s_index-fields = fm_data-idx_fields.    DELETE s_index-fields WHERE indexname &lt;&gt; &lt;i&gt;-indexname.
+    s_index-texts = fm_data-idx_texts.    DELETE s_index-texts WHERE indexname &lt;&gt; &lt;i&gt;-indexname.
+    s_index-docs = fm_data-docs.
+    APPEND s_index TO result.
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="FROM_DATA" EXPOSURE="2" STATE="1" EDITORDER="2 ">
     <TEXTS>
@@ -126,8 +160,9 @@ AS</DOCUMENTATION>
   DATA s_fk_f  LIKE LINE OF s_field-forein_key-fields.
   DATA s_f_txt LIKE LINE OF s_field-texts.
   DATA s_index LIKE LINE OF indexes.
-  DATA s_idx_f LIKE LINE OF s_index-fields.
+*  DATA s_idx_f LIKE LINE OF s_index-fields.
   DATA d_str   TYPE string.
+  DATA t_index TYPE tt_fm_data.
   FIELD-SYMBOLS:
     &lt;f&gt; LIKE LINE OF fm_data-fields,
     &lt;ft&gt; LIKE LINE OF fm_data-fields_texts,
@@ -135,6 +170,7 @@ AS</DOCUMENTATION>
     &lt;sf&gt; LIKE LINE OF fm_data-sh_fields,
     &lt;k&gt; LIKE LINE OF fm_data-forein_keys,
     &lt;ff&gt; LIKE LINE OF fm_data-fk_fields,
+    &lt;id&gt; LIKE LINE OF t_index,
     &lt;i&gt; LIKE LINE OF fm_data-indexes,
     &lt;if&gt; LIKE LINE OF fm_data-idx_fields,
     &lt;d&gt; LIKE LINE OF fm_data-docs,
@@ -217,22 +253,29 @@ AS</DOCUMENTATION>
   ENDLOOP.
 
 * indexes
-  LOOP AT fm_data-indexes ASSIGNING &lt;i&gt;
-          WHERE sqltab = a0_maindata-tabname.
-    CLEAR s_index.      s_index-hdr = &lt;i&gt;.      CLEAR: s_index-sqltab.
-    CONCATENATE &lt;i&gt;-sqltab &apos;~&apos; &lt;i&gt;-indexname INTO d_str.
-    IF d_str = s_index-dbindex. CLEAR s_index-dbindex. ENDIF.     &quot; clear default naming convention
-
-* fields
-    LOOP AT fm_data-idx_fields ASSIGNING &lt;if&gt;
-            WHERE sqltab = &lt;i&gt;-sqltab
-           AND indexname = &lt;i&gt;-indexname.
-      CLEAR s_idx_f.    s_idx_f = &lt;if&gt;.       CLEAR: s_idx_f-sqltab, s_idx_f-indexname.
-      INSERT s_idx_f INTO TABLE s_index-fields.
-    ENDLOOP.
-
-    INSERT s_index INTO TABLE indexes.
-  ENDLOOP.</SOURCE>
+  t_index = conv_index( fm_data ).
+  SORT t_index BY header-indexname.
+  LOOP AT t_index ASSIGNING &lt;id&gt;.
+    CLEAR s_index.
+    CREATE OBJECT s_index-zl_object EXPORTING fm_data = &lt;id&gt;.
+    APPEND s_index TO indexes.
+  ENDLOOP.
+*  LOOP AT fm_data-indexes ASSIGNING &lt;i&gt;
+*          WHERE sqltab = a0_maindata-tabname.
+*    CLEAR s_index.      s_index-hdr = &lt;i&gt;.      CLEAR: s_index-sqltab.
+*    CONCATENATE &lt;i&gt;-sqltab &apos;~&apos; &lt;i&gt;-indexname INTO d_str.
+*    IF d_str = s_index-dbindex. CLEAR s_index-dbindex. ENDIF.     &quot; clear default naming convention
+*
+** fields
+*    LOOP AT fm_data-idx_fields ASSIGNING &lt;if&gt;
+*            WHERE sqltab = &lt;i&gt;-sqltab
+*           AND indexname = &lt;i&gt;-indexname.
+*      CLEAR s_idx_f.    s_idx_f = &lt;if&gt;.       CLEAR: s_idx_f-sqltab, s_idx_f-indexname.
+*      INSERT s_idx_f INTO TABLE s_index-fields.
+*    ENDLOOP.
+*
+*    INSERT s_index INTO TABLE indexes.
+*  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
@@ -259,7 +302,7 @@ AS</DOCUMENTATION>
   DATA s_fk_f  LIKE LINE OF fm_data-fk_fields.
   FIELD-SYMBOLS:
     &lt;i&gt;  LIKE LINE OF indexes,
-    &lt;if&gt; LIKE LINE OF &lt;i&gt;-fields,
+*    &lt;if&gt; LIKE LINE OF &lt;i&gt;-fields,
     &lt;f&gt;  LIKE LINE OF fields,
     &lt;ft&gt; LIKE LINE OF &lt;f&gt;-texts,
     &lt;sf&gt; LIKE LINE OF &lt;f&gt;-search_help-fields,
@@ -304,17 +347,17 @@ AS</DOCUMENTATION>
   ENDLOOP.
 
 * indexes
-  LOOP AT indexes ASSIGNING &lt;i&gt;.
-    CLEAR s_index.      s_index = &lt;i&gt;-hdr.      s_index-sqltab = a0_maindata-tabname.
-    IF s_index-dbindex IS INITIAL. CONCATENATE s_index-sqltab &apos;~&apos; s_index-indexname INTO s_index-dbindex. ENDIF.     &quot; retrieve default naming convention
-    INSERT s_index INTO TABLE fm_data-indexes.
-
-* fields
-    LOOP AT &lt;i&gt;-fields ASSIGNING &lt;if&gt;.
-      CLEAR s_idx_f.    s_idx_f = &lt;if&gt;.       s_idx_f-sqltab = s_index-sqltab. s_idx_f-indexname = s_index-indexname.
-      INSERT s_idx_f INTO TABLE fm_data-idx_fields.
-    ENDLOOP.
-  ENDLOOP.
+*  LOOP AT indexes ASSIGNING &lt;i&gt;.
+*    CLEAR s_index.      s_index = &lt;i&gt;-hdr.      s_index-sqltab = a0_maindata-tabname.
+*    IF s_index-dbindex IS INITIAL. CONCATENATE s_index-sqltab &apos;~&apos; s_index-indexname INTO s_index-dbindex. ENDIF.     &quot; retrieve default naming convention
+*    INSERT s_index INTO TABLE fm_data-indexes.
+*
+** fields
+*    LOOP AT &lt;i&gt;-fields ASSIGNING &lt;if&gt;.
+*      CLEAR s_idx_f.    s_idx_f = &lt;if&gt;.       s_idx_f-sqltab = s_index-sqltab. s_idx_f-indexname = s_index-indexname.
+*      INSERT s_idx_f INTO TABLE fm_data-idx_fields.
+*    ENDLOOP.
+*  ENDLOOP.
 
 * fields
   LOOP AT fields ASSIGNING &lt;f&gt;.
@@ -378,6 +421,7 @@ AS</DOCUMENTATION>
               forein_keys   TYPE tt_dd08v,      &quot; Header
               fk_fields     TYPE tt_dd05m,
               indexes       TYPE tt_dd12v,
+              idx_texts     TYPE tt_dd12t,
               idx_fields    TYPE tt_dd17v,
               search_helps  TYPE tt_dd35v,
               sh_fields     TYPE tt_dd36m,
@@ -393,13 +437,17 @@ AS</DOCUMENTATION>
         fields TYPE SORTED TABLE OF dd05m WITH UNIQUE KEY primpos,
       END OF ts_forein_key
 `</ITEM>
-   <ITEM CMPNAME="TS_INDEX" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="4">BEGIN OF ts_index.
+   <ITEM CMPNAME="TS_INDEX" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="4">BEGIN OF ts_index,
+      zl_object type ref to ZAPLINK_XINX_RAW,
+      END OF ts_index
+`</ITEM>
+   <ITEM CMPNAME="TS_INDEX_OLD" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="4">BEGIN OF ts_index_old.
     INCLUDE TYPE dd12v AS hdr.
     TYPES:
         fields TYPE SORTED TABLE OF dd17v WITH UNIQUE KEY position,
-      END OF ts_index
+      END OF ts_index_old
 `</ITEM>
-   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="20 " TYPTYPE="4">
     BEGIN OF ts_maindata.
     INCLUDE TYPE dd02v AS hdr.
 *    INCLUDE TYPE dd09v AS tech.
@@ -437,27 +485,33 @@ AS</DOCUMENTATION>
         fields TYPE SORTED TABLE OF dd36m WITH UNIQUE KEY shlpfield,
       END OF ts_search_help
 `</ITEM>
-   <ITEM CMPNAME="TT_DD02T" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">tt_dd02t TYPE SORTED TABLE OF dd02t WITH UNIQUE KEY ddlanguage
+   <ITEM CMPNAME="TT_DD02T" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4">tt_dd02t TYPE SORTED TABLE OF dd02t WITH UNIQUE KEY ddlanguage
 `</ITEM>
    <ITEM CMPNAME="TT_DD03P" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">tt_dd03p TYPE STANDARD TABLE OF dd03p WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_DD03T" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4">tt_dd03t TYPE SORTED TABLE OF dd03t WITH UNIQUE KEY fieldname ddlanguage
+   <ITEM CMPNAME="TT_DD03T" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="4">tt_dd03t TYPE SORTED TABLE OF dd03t WITH UNIQUE KEY fieldname ddlanguage
 `</ITEM>
    <ITEM CMPNAME="TT_DD05M" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_dd05m TYPE STANDARD TABLE OF dd05m WITH DEFAULT KEY
 `</ITEM>
    <ITEM CMPNAME="TT_DD08V" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">tt_dd08v TYPE STANDARD TABLE OF dd08v WITH DEFAULT KEY
 `</ITEM>
+   <ITEM CMPNAME="TT_DD12T" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_dd12t TYPE STANDARD TABLE OF dd12t WITH DEFAULT KEY
+`</ITEM>
    <ITEM CMPNAME="TT_DD12V" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">tt_dd12v TYPE STANDARD TABLE OF dd12v WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_DD17V" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_dd17v TYPE STANDARD TABLE OF dd17v WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_DD17V" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">tt_dd17v TYPE STANDARD TABLE OF dd17v WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_DD35V" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">tt_dd35v TYPE STANDARD TABLE OF dd35v WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_DD35V" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">tt_dd35v TYPE STANDARD TABLE OF dd35v WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_DD36M" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">tt_dd36m TYPE STANDARD TABLE OF dd36m WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_DD36M" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">tt_dd36m TYPE STANDARD TABLE OF dd36m WITH DEFAULT KEY
 `</ITEM>
    <ITEM CMPNAME="TT_FIELDS" EXPOSURE="2" STATE="1" EDITORDER="15 " TYPTYPE="4">tt_fields TYPE SORTED TABLE OF ts_field WITH UNIQUE KEY position
 `</ITEM>
-   <ITEM CMPNAME="TT_INDEXES" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4">tt_indexes TYPE SORTED TABLE OF ts_index WITH UNIQUE KEY indexname
+   <ITEM CMPNAME="TT_FM_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">tt_fm_data TYPE STANDARD TABLE OF zaplink_xinx_data=&gt;ts_fm_data WITH DEFAULT KEY
+`</ITEM>
+   <ITEM CMPNAME="TT_INDEXES" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4">tt_indexes TYPE STANDARD TABLE OF ts_index WITH DEFAULT KEY
+`</ITEM>
+   <ITEM CMPNAME="TT_INDEXES_OLD" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4">tt_indexes_old TYPE SORTED TABLE OF ts_index_old WITH UNIQUE KEY indexname
 `</ITEM>
   </TYPES>
  </RAW>

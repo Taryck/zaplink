@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ZL_OBJECT CHECKSUM="770F891F6B11F82E152F498A68D3DE89" CODE_SIGNATURE="E8FA6347BFC11D648A972AE72612575C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_RAW" TYPE="CLAS" VERSION="1.01">
+ <DEPENDENCIES>
+  <ITEM TYPE="CLAS" NAME="ZAPLINK_XINX_DATA"/>
+ </DEPENDENCIES>
+ <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
+ <RAW>
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+   <INHERITANCE REFCLSNAME="ZAPLINK_RAW" STATE="1"/>
+   <TEXTS>
+    <ITEM LANGU="E" DESCRIPT="RAW object for Package">
+     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+ASIs part of connector : ZAPLINK_PACKAGE
+U1&amp;RELATIONS&amp;
+AS
+U1&amp;EXAMPLE&amp;
+AS
+U1&amp;HINTS&amp;
+AS
+U1&amp;FURTHER_SOURCES_OF_INF&amp;
+AS</DOCUMENTATION>
+    </ITEM>
+   </TEXTS>
+  </A0_MAINDATA>
+  <DEFERRED>
+   <CLASSES>
+    <ITEM TYPEGROUP="ZAPLINK_XINX_DATA" TPUTYPE="1" IMPLICIT="X"/>
+   </CLASSES>
+  </DEFERRED>
+  <FRIENDS>
+   <ITEM REFCLSNAME="ZAPLINK_EASYXML" STATE="1"/>
+  </FRIENDS>
+  <LOCAL>
+   <TYPES>`
+*&quot;* use this source file for any type declarations (class
+*&quot;* definitions, interfaces or data types) you need for method
+*&quot;* implementation or private method&apos;s signature</TYPES>
+   <IMPLEMENTATIONS>`
+*&quot;* local class implementation for public class
+*&quot;* use this source file for the implementation part of
+*&quot;* local helper classes</IMPLEMENTATIONS>
+   <MACROS>`
+*&quot;* use this source file for any macro definitions you need
+*&quot;* in the implementation part of the class</MACROS>
+  </LOCAL>
+  <METHODS>
+   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FM_DATA" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ZAPLINK_XINX_DATA=&gt;TS_FM_DATA">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Function Module data"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA s_index TYPE zaplink_xinx_data=&gt;ts_idx_key.
+  DATA o_comp  TYPE to_component.
+  DATA o_raw   TYPE REF TO zaplink_xinx_data.
+  DATA s_key   TYPE ts_compkey.
+
+  s_index-table = fm_data-header-sqltab.
+  s_index-index = fm_data-header-indexname.
+  s_key-name = zaplink_xinx_data=&gt;key_2_name( s_index ).
+  IF fm_data-header-isextind IS INITIAL.
+    s_key-type = zaplink_dictionary=&gt;supportedtypes-table_index.
+  ELSE.
+    s_key-type = zaplink_dictionary=&gt;supportedtypes-ext_index.
+  ENDIF.
+  CREATE OBJECT o_comp.
+  o_comp-&gt;set_type( s_key-type ).   o_comp-&gt;set_name( s_key-name ).
+  CALL METHOD super-&gt;constructor
+    EXPORTING
+      o_comp = o_comp.
+  CREATE OBJECT o_raw.
+  raw ?= o_raw.
+  o_raw-&gt;from_data( fm_data ).</SOURCE>
+   </ITEM>
+  </METHODS>
+ </RAW>
+</ZL_OBJECT>
