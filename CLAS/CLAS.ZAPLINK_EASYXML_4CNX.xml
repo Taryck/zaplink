@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="81A22BAD5B563A61288701ABF506B1DA" CODE_SIGNATURE="7B1F14420357310E132EB3C9962DE057" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML_4CNX" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="45C68D3795A6645D14001CB69131D5B8" CODE_SIGNATURE="A24805F93ECAF20970D982E184C28065" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML_4CNX" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_EASYXML"/>
  </DEPENDENCIES>
@@ -48,7 +48,9 @@ AS</DOCUMENTATION>
   DATA o_cx_cnx   TYPE REF TO zaplink_cx_connector.
 
   CHECK object IS BOUND OR typedesc IS BOUND.
+
   IF NOT object IS BOUND.
+
     data_type = typedesc-&gt;get_relative_name( ).
     TRY.
         CREATE OBJECT object TYPE (data_type).
@@ -58,24 +60,27 @@ AS</DOCUMENTATION>
             exception = _cx.
         EXIT.
     ENDTRY.
-  ENDIF.
 
-  TRY.
-      o_raw_base ?= object.
-    CATCH cx_root.
-  ENDTRY.
+  ELSE.
 
-  IF o_raw_base IS BOUND.   &quot; object inherited from o_raw_base
     TRY.
-        CLEAR o_raw_base.   o_raw_base = zaplink_connectors=&gt;node_2_raw( xml_node ).
-        o_conn = zaplink_connectors=&gt;create_connector( connuuid = o_raw_base-&gt;connector ).
-        object = o_conn-&gt;create_new_raw( type = o_raw_base-&gt;type ).
-      CATCH zaplink_cx_connector INTO o_cx_cnx.
-        CALL METHOD application_log-&gt;add_exception
-          EXPORTING
-            exception = _cx.
-        EXIT.
+        o_raw_base ?= object.
+      CATCH cx_root.
     ENDTRY.
+
+    IF o_raw_base IS BOUND. &quot; object inherited from o_raw_base
+      TRY.                  &quot; =&gt; Create real data type
+          CLEAR o_raw_base.   o_raw_base = zaplink_connectors=&gt;node_2_raw( xml_node ).
+          o_conn = zaplink_connectors=&gt;create_connector( connuuid = o_raw_base-&gt;connector ).
+          object = o_conn-&gt;create_new_raw( type = o_raw_base-&gt;type ).
+        CATCH zaplink_cx_connector INTO o_cx_cnx.
+          CALL METHOD application_log-&gt;add_exception
+            EXPORTING
+              exception = o_cx_cnx.
+          EXIT.
+      ENDTRY.
+    ENDIF.
+
   ENDIF.
 
   CALL METHOD super-&gt;read_object

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7FDB4E5D5C0DAE638A6CD6CE431F7DC5" CODE_SIGNATURE="2760B593ADD8F7141D8A8A818456F479" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="4A46A217153967A35BA7E7BD07A54822" CODE_SIGNATURE="2760B593ADD8F7141D8A8A818456F479" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" WITH_UNIT_TESTS="X">
@@ -117,6 +117,11 @@ AS</DOCUMENTATION>
 *&quot;* use this source file for any macro definitions you need
 *&quot;* in the implementation part of the class</MACROS>
    <LOCAL_TEST_CLASS>`
+*----------------------------------------------------------------------*
+*       CLASS abap_unit_testclass DEFINITION
+*----------------------------------------------------------------------*
+*
+*----------------------------------------------------------------------*
 CLASS abap_unit_testclass DEFINITION FOR TESTING &quot;#AU Risk_Level Harmless
       &quot;#AU Duration Short
   .
@@ -143,6 +148,7 @@ CLASS abap_unit_testclass IMPLEMENTATION.
   METHOD calculate_md5_hash.
     DATA string TYPE string.
     DATA result TYPE zaplink_datatypes=&gt;td_checksum.
+*    DATA o_file TYPE REF TO zaplink_file.
 
     CONCATENATE &apos;... FOR TESTING [RISK LEVEL {CRITICAL|DANGEROUS|HARMLESS}]&apos;
                 &apos;                [DURATION   {SHORT|MEDIUM|LONG}]  ... . &apos; INTO string SEPARATED BY cl_abap_char_utilities=&gt;cr_lf.
@@ -152,8 +158,23 @@ CLASS abap_unit_testclass IMPLEMENTATION.
       act   = result
       exp   = &apos;4993052479518AEA317C383B8764919A&apos;
       msg   = text-t01
-*     level =
+*      level = cl_aunit_assert=&gt;tolerable
     ).
+
+*    CREATE OBJECT o_file.
+*    o_file-&gt;set_filetype( zaplink_file=&gt;filetypes-local ).
+*    o_file-&gt;load_dialog( ).
+*    o_file-&gt;load( ).
+*    string = o_file-&gt;get_filecontent( ).
+*    result = zaplink_tools=&gt;calculate_md5_hash( string ).
+*
+*    cl_aunit_assert=&gt;assert_equals(
+*      act   = result
+*      exp   = &apos;4993052479518AEA317C383B8764919A&apos;
+*      msg   = text-t01
+*      level = cl_aunit_assert=&gt;tolerable
+*    ).
+
   ENDMETHOD.       &quot;Calculate_Md5_Hash
 ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   </LOCAL>

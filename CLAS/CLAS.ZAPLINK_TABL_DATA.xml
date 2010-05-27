@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="309CE91571CB4D6661E086F43BC28DF5" CODE_SIGNATURE="BA3A9961ED6D8F8DB5F5A6804DE1BB0D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="053A0B8579348C1C18E36B28797E51AA" CODE_SIGNATURE="FF8C22A19F4877F0E0AFF7ED2886060E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
  </DEPENDENCIES>
@@ -91,17 +91,13 @@ AS</DOCUMENTATION>
     </TEXTS>
     <SOURCE>`
   FIELD-SYMBOLS:
-    &lt;i&gt; like line of indexes,
+    &lt;i&gt; LIKE LINE OF indexes,
     &lt;t&gt; LIKE LINE OF texts.
 
   CLEAR: a0_maindata-as4user, a0_maindata-as4date, a0_maindata-as4time,
          a0_maindata-technical_settings-as4user, a0_maindata-technical_settings-as4date, a0_maindata-technical_settings-as4time.
-  LOOP AT texts ASSIGNING &lt;t&gt;.
-    CLEAR: &lt;t&gt;-long_txt-tdfuser, &lt;t&gt;-long_txt-tdfdate, &lt;t&gt;-long_txt-tdftime.
-  ENDLOOP.
-*  LOOP AT indexes ASSIGNING &lt;i&gt;.
-*    CLEAR: &lt;i&gt;-as4user, &lt;i&gt;-as4date, &lt;i&gt;-AS4time.
-*  ENDLOOP.</SOURCE>
+  LOOP AT texts ASSIGNING &lt;t&gt;.    CLEAR: &lt;t&gt;-long_txt-tdfuser, &lt;t&gt;-long_txt-tdfdate, &lt;t&gt;-long_txt-tdftime.    ENDLOOP.
+  LOOP AT indexes ASSIGNING &lt;i&gt;.    &lt;i&gt;-zl_object-&gt;anonymize( ).    ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
@@ -140,6 +136,34 @@ AS</DOCUMENTATION>
     s_index-texts = fm_data-idx_texts.    DELETE s_index-texts WHERE indexname &lt;&gt; &lt;i&gt;-indexname.
     s_index-docs = fm_data-docs.
     APPEND s_index TO result.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CONV_INDEXES" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert Index data to data"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="INDEXES" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_FM_DATA">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Function Module data for indexes"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA s_index LIKE LINE OF fm_data-indexes.
+  FIELD-SYMBOLS:
+    &lt;i&gt; LIKE LINE OF indexes.
+
+  LOOP AT indexes ASSIGNING &lt;i&gt;.
+    CLEAR s_index.    s_index = &lt;i&gt;-header.       APPEND s_index TO fm_data-indexes.
+    APPEND LINES OF &lt;i&gt;-fields TO fm_data-idx_fields.
+    APPEND LINES OF &lt;i&gt;-texts  TO fm_data-idx_texts.
+    APPEND LINES OF &lt;i&gt;-docs   TO fm_data-docs.
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="FROM_DATA" EXPOSURE="2" STATE="1" EDITORDER="2 ">
@@ -292,7 +316,6 @@ AS</DOCUMENTATION>
   DATA s_text  LIKE LINE OF fm_data-texts.
   DATA s_doc   LIKE LINE OF fm_data-docs.
   DATA s_dtxt  LIKE LINE OF s_doc-texts.
-  DATA s_index LIKE LINE OF fm_data-indexes.
   DATA s_idx_f LIKE LINE OF fm_data-idx_fields.
   DATA s_field LIKE LINE OF fm_data-fields.
   DATA s_f_txt LIKE LINE OF fm_data-fields_texts.
@@ -300,6 +323,8 @@ AS</DOCUMENTATION>
   DATA s_sh_f  LIKE LINE OF fm_data-sh_fields.
   DATA s_fk    LIKE LINE OF fm_data-forein_keys.
   DATA s_fk_f  LIKE LINE OF fm_data-fk_fields.
+  DATA t_index TYPE tt_fm_data.
+  DATA s_index LIKE LINE OF t_index.
   FIELD-SYMBOLS:
     &lt;i&gt;  LIKE LINE OF indexes,
 *    &lt;if&gt; LIKE LINE OF &lt;i&gt;-fields,
@@ -311,7 +336,7 @@ AS</DOCUMENTATION>
     &lt;t&gt;  LIKE LINE OF texts.
 
   fm_data-header = a0_maindata-hdr.
-  IF NOT a0_maindata-technical_settings IS INITIAL.   &quot; Issue 84
+  IF NOT a0_maindata-technical_settings IS INITIAL.         &quot; Issue 84
     fm_data-tech = a0_maindata-technical_settings.
     fm_data-tech-tabname = fm_data-header-tabname.
     fm_data-tech-as4local = &apos;A&apos;.
@@ -347,6 +372,12 @@ AS</DOCUMENTATION>
   ENDLOOP.
 
 * indexes
+  LOOP AT indexes ASSIGNING &lt;i&gt;.
+    s_index = &lt;i&gt;-zl_object-&gt;to_data( ).
+    APPEND s_index TO t_index.
+  ENDLOOP.
+  conv_indexes( EXPORTING indexes = t_index
+                 CHANGING fm_data = fm_data ).
 *  LOOP AT indexes ASSIGNING &lt;i&gt;.
 *    CLEAR s_index.      s_index = &lt;i&gt;-hdr.      s_index-sqltab = a0_maindata-tabname.
 *    IF s_index-dbindex IS INITIAL. CONCATENATE s_index-sqltab &apos;~&apos; s_index-indexname INTO s_index-dbindex. ENDIF.     &quot; retrieve default naming convention

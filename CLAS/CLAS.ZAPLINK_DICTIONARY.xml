@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F1B4512A021FD45F22497AFDABAC4F58" CODE_SIGNATURE="687BF0D1EC494AC560649FD487ED68A5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D75203C326316D63344F5B69BC4BE5B5" CODE_SIGNATURE="48651897C202EE294076019AF568351D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -152,7 +152,8 @@ END-OF-DEFINITION.</MACROS>
   type-type = supportedtypes-table_type.    INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-search_help.   INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-lock_object.   INSERT type INTO TABLE supported_types.
-  type-type = supportedtypes-ext_index.     INSERT type INTO TABLE supported_types.    &quot; Issue 55
+  type-type = supportedtypes-ext_index.     INSERT type INTO TABLE supported_types. &quot; Issue 55
+  type-type = supportedtypes-table_index.   INSERT type INTO TABLE supported_types.
 
   uuid = _uuid.
   version = _ver.</SOURCE>
@@ -1752,7 +1753,7 @@ END-OF-DEFINITION.</MACROS>
     WHEN supportedtypes-data_element.   lmac_obj_create o_data_e.
     WHEN supportedtypes-view.           lmac_obj_create o_view.
     WHEN supportedtypes-table.          lmac_obj_create o_table.
-    WHEN supportedtypes-ext_index.      lmac_obj_create o_index.        &quot; Issue 55
+    WHEN supportedtypes-ext_index or supportedtypes-table_index.      lmac_obj_create o_index.        &quot; Issue 55
     WHEN supportedtypes-table_type.     lmac_obj_create o_tab_type.
     WHEN supportedtypes-search_help.    lmac_obj_create o_s_help.
     WHEN supportedtypes-lock_object.    lmac_obj_create o_lock_obj.
@@ -1792,8 +1793,8 @@ END-OF-DEFINITION.</MACROS>
         d_type = dd_eu_type-matchcode_obj.
       WHEN supportedtypes-table_index.
         d_type = dd_eu_type-table_index.
-      WHEN supportedtypes-ext_index.                        &quot; Issue 55
-        d_type = dd_eu_type-ext_index.
+      WHEN supportedtypes-ext_index or supportedtypes-table_index.                        &quot; Issue 55
+        IF type = supportedtypes-table_index.   d_type = dd_eu_type-table_index.    else.   d_type = dd_eu_type-ext_index.    endif.
         s_index = zaplink_xinx_data=&gt;name_2_key( d_name ).
         CALL FUNCTION &apos;RS_DD_INDX_DELETE&apos;
           EXPORTING
@@ -1892,6 +1893,11 @@ END-OF-DEFINITION.</MACROS>
         d_type = dd_eu_type-table_index.
       WHEN supportedtypes-ext_index.
         d_type = dd_eu_type-ext_index.
+        s_idxkey = zaplink_xinx_data=&gt;name_2_key( d_name ).
+        d_secname = s_idxkey-index.
+        d_name = s_idxkey-table.
+      WHEN supportedtypes-table_index.
+        d_type = dd_eu_type-table_index.
         s_idxkey = zaplink_xinx_data=&gt;name_2_key( d_name ).
         d_secname = s_idxkey-index.
         d_name = s_idxkey-table.
@@ -2000,7 +2006,7 @@ END-OF-DEFINITION.</MACROS>
           ENDTRY.
           CLEAR o_table-&gt;a0_maindata-tabname.
           object-&gt;raw = o_table.
-        WHEN supportedtypes-ext_index.                      &quot; Issue 55
+        WHEN supportedtypes-ext_index or supportedtypes-table_index.                      &quot; Issue 55
           TRY.
             o_index = export_index( component ).
             mac_catch_local_cx.
@@ -2089,7 +2095,7 @@ END-OF-DEFINITION.</MACROS>
           components = import_table( o_table ).
           lmac_catch_local_cx.
         ENDTRY.
-      WHEN supportedtypes-ext_index.                        &quot; Issue 55
+      WHEN supportedtypes-ext_index or supportedtypes-table_index.                        &quot; Issue 55
         o_index ?= object-&gt;raw.
         s_index = zaplink_xinx_data=&gt;name_2_key( object-&gt;name ).
         o_index-&gt;a0_maindata-sqltab = s_index-table.
