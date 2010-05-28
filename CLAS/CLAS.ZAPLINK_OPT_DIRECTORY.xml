@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D614B6A445520235F34797A9BCC675C5" CODE_SIGNATURE="091462EEBDD8D58BE376F9163B035E88" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F0139C5B059CE0DC3012EC40FD1DC94F" CODE_SIGNATURE="5F792F6D6CE975DB26C3BFF508604BCF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -13,6 +13,11 @@
    <ITEM CMPNAME="TS_DIRECTORY" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_DIRECTORY"/>
   </ALIASES>
   <ATTRIBUTS>
+   <ITEM CMPNAME="APPLICATION_LOG" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTRDONLY="X" TYPTYPE="1" TYPE="TO_LOG">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Zap Link Transport Request options"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;DIRECTORY&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
@@ -21,11 +26,6 @@
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="O_LOG" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTRDONLY="X" TYPTYPE="1" TYPE="TO_LOG">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link Transport Request options"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TO_EXCEPTION">
@@ -87,8 +87,8 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   CREATE OBJECT _devclass.
   CREATE OBJECT _tr.
-  CREATE OBJECT o_log.
-  CALL METHOD o_log-&gt;init
+  CREATE OBJECT application_log.
+  CALL METHOD application_log-&gt;init
     EXPORTING
       id_object      = ballog_object
       id_subobject   = ballog_subobject
@@ -216,6 +216,7 @@ result = _substitution.</SOURCE>
     <SOURCE>`
   DATA _name        TYPE tadir-obj_name.
   DATA _type        TYPE tadir-object.
+  DATA _pgmid       TYPE tadir-pgmid.
   DATA _act_devc    TYPE tadir-devclass.
   DATA _exists      TYPE saus_dpara-tadirexist.
 
@@ -242,9 +243,10 @@ result = _substitution.</SOURCE>
 
     _type = component-&gt;get_type( ).
     _name = component-&gt;get_name( ).
+    _pgmid = component-&gt;get_typekind( ).    &quot; Issue 87
     CALL FUNCTION &apos;TRINT_TADIR_QUERY&apos;
       EXPORTING
-        iv_pgmid           = &apos;R3TR&apos;
+        iv_pgmid           = _pgmid
         iv_object          = _type
         iv_obj_name        = _name
       IMPORTING
@@ -263,7 +265,7 @@ result = _substitution.</SOURCE>
 *        GENFLAG                    = &apos; &apos;
           object                     = _type
           obj_name                   = _name
-          pgmid                      = &apos;R3TR&apos;
+          pgmid                      = _pgmid
 *        SRCSYSTEM                  = SY-SYSID
 *        EDTFLAG                    = &apos; &apos;
 *        SRCDEP                     =
@@ -279,12 +281,7 @@ result = _substitution.</SOURCE>
           object_exists_local        = 2
           OTHERS                     = 3.
       IF sy-subrc &lt;&gt; 0.
-        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
-                                                  funcname = &apos;TRINT_TADIR_INSERT&apos;
-                                                     subrc = sy-subrc ).
-        o_log-&gt;add_symsg( ).
-        o_log-&gt;add_exception( o_mycx ).
-        CLEAR o_mycx.
+        mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_INSERT&apos; sy-subrc.
       ENDIF.
     ELSEIF _act_devc &lt;&gt; result-devclass.
       CALL FUNCTION &apos;TRINT_TADIR_MODIFY&apos;
@@ -298,7 +295,7 @@ result = _substitution.</SOURCE>
 *        MASTERLANG                 = &apos;~&apos;
           object                     = _type
           obj_name                   = _name
-          pgmid                      = &apos;R3TR&apos;
+          pgmid                      = _pgmid
 *        SRCDEP                     = &apos;~&apos;
 *        SRCSYSTEM                  = &apos;~&apos;
 *        VERSID                     = &apos;~&apos;
@@ -316,12 +313,7 @@ result = _substitution.</SOURCE>
           object_has_no_tadir        = 3
           OTHERS                     = 4.
       IF sy-subrc &lt;&gt; 0.
-        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
-                                                  funcname = &apos;TRINT_TADIR_MODIFY&apos;
-                                                     subrc = sy-subrc ).
-        o_log-&gt;add_symsg( ).
-        o_log-&gt;add_exception( o_mycx ).
-        CLEAR o_mycx.
+        mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_MODIFY&apos; sy-subrc.
       ENDIF.
     ENDIF.
 
@@ -357,12 +349,7 @@ result = _substitution.</SOURCE>
         unknown_objectclass            = 3
         OTHERS                         = 4.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( classname = &apos;ZAPLINK_CX_OPT_DEVCLASS&apos;
-                                                funcname = &apos;RS_CORR_INSERT&apos;
-                                                   subrc = sy-subrc ).
-      o_log-&gt;add_symsg( ).
-      o_log-&gt;add_exception( o_mycx ).
-      CLEAR o_mycx.
+      mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;RS_CORR_INSERT&apos; sy-subrc.
     ENDIF.
 
     mac_def_catch zaplink_cx_options.
