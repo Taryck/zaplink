@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="12918DFD5A21FB15A77E37324506E898" CODE_SIGNATURE="18ABCCF4E0D509B85680FA3B706E386A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="AA35F5E005A8181D9D2939D4A6E3AFE5" CODE_SIGNATURE="4C7FE53B4DAAFEE9B6E85585A70BAC4B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DEPENDENCIES_ANALYSER"/>
  </DEPENDENCIES>
@@ -227,23 +227,43 @@
 
   LOOP AT it_comptab ASSIGNING &lt;c&gt;.
     CLEAR s_comp.   s_comp-hdr = &lt;c&gt;.
-    CALL FUNCTION &apos;OCS_GET_COMPONENT_STATE&apos;
-      EXPORTING
-        iv_component  = &lt;c&gt;-component
-      IMPORTING
-        ev_comp_rel             = s_comp-release
-        ev_comp_type            = s_comp-comp_type
-        ev_comp_level           = s_comp-level
-        ev_comp_spp_level       = s_comp-spp_level
-        ev_last_patch           = s_comp-high_package
-        ev_last_spp             = s_comp-high_spp
-        ev_comp_active          = s_comp-active
-        ev_comp_patchable       = s_comp-patchable
-        ev_is_subcomp           = s_comp-state
+    IF sy-saprl &lt; &apos;701&apos;.                                    &quot; Issue 90
+      CALL FUNCTION &apos;OCS_GET_COMPONENT_STATE&apos;
+        EXPORTING
+          iv_component  = &lt;c&gt;-component
+        IMPORTING
+          ev_comp_rel             = s_comp-release
+          ev_comp_type            = s_comp-comp_type
+          ev_comp_level           = s_comp-level
+          ev_comp_spp_level       = s_comp-spp_level
+          ev_last_patch           = s_comp-high_package
+          ev_last_spp             = s_comp-high_spp
+          ev_comp_active          = s_comp-active
+          ev_comp_patchable       = s_comp-patchable
+          ev_is_subcomp           = s_comp-state
 *       ES_MASTERCOMP           =
-      EXCEPTIONS
-        unknown_component       = 0
-        OTHERS                  = 0.
+        EXCEPTIONS
+          unknown_component       = 0
+          OTHERS                  = 0.
+    ELSE.
+      CALL FUNCTION &apos;OCS_GET_COMPONENT_STATE&apos;
+        EXPORTING
+          iv_component  = &lt;c&gt;-component
+        IMPORTING
+          ev_comp_rel             = s_comp-release
+          ev_comp_type            = s_comp-comp_type
+          ev_comp_level           = s_comp-level
+*        ev_comp_spp_level       = s_comp-spp_level     &quot; Issue 90
+          ev_last_patch           = s_comp-high_package
+*        ev_last_spp             = s_comp-high_spp      &quot; Issue 90
+          ev_comp_active          = s_comp-active
+          ev_comp_patchable       = s_comp-patchable
+          ev_is_subcomp           = s_comp-state
+*       ES_MASTERCOMP           =
+        EXCEPTIONS
+          unknown_component       = 0
+          OTHERS                  = 0.
+    ENDIF.
     IF sy-subrc &lt;&gt; 0.
       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
