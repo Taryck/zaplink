@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="079F256783D518FEEAA7080185638DA8" CODE_SIGNATURE="EB38845B75A883923A57D38058B062E4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3DD3D151043BB92F26B352240CCAB3EE" CODE_SIGNATURE="0E5942CAA6378B2CF9D34A51EAD27118" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -71,7 +71,7 @@ AS,,Introducing : Screen &amp; Menu data</DOCUMENTATION>
 INCLUDE zaplink_macros.</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="CHECK_CLAS_SECTIONS" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CHECK_CLAS_SECTIONS" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Regenerate Class sections if needed"/>
     </TEXTS>
@@ -265,7 +265,7 @@ INCLUDE zaplink_macros.</MACROS>
 *    ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CHECK_INTF_SECTION" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CHECK_INTF_SECTION" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Regenerate Interface section if needed"/>
     </TEXTS>
@@ -355,7 +355,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDTYPE="2">
+   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDTYPE="2">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
@@ -956,7 +956,7 @@ INCLUDE zaplink_macros.</MACROS>
   CHECK sy-subrc = 0.
   SUBTRACT 1 FROM sy-tabix.   CHECK sy-tabix &gt;= 1.    DELETE result TO sy-tabix.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CLASS_GLOBALSOURCE" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_CLASS_GLOBALSOURCE" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Provide Global source of a class copy of CL_OO_SOURCE"/>
     </TEXTS>
@@ -1102,7 +1102,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF .
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CLASS_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_CLASS_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get Source code Signature of class">
       <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
@@ -1223,7 +1223,7 @@ AS</DOCUMENTATION>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_INTERFACE_GLOBALSOURCE" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_INTERFACE_GLOBALSOURCE" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Provide Global source of a interface"/>
     </TEXTS>
@@ -1345,6 +1345,7 @@ AS</DOCUMENTATION>
   DATA i_korrnr         TYPE trkorr.              &quot;#EC NEEDED for debug
   DATA _component       TYPE to_component.
   DATA _name            TYPE td_compname.
+  DATA d_key            TYPE seoclskey.
 
   TRY.
 
@@ -1416,11 +1417,40 @@ AS</DOCUMENTATION>
     ENDCASE.
 
     _d-includes = get_includes( _d-class-clsname ).
-    set_dynpros( program = _d-includes-classpool-name            &quot; Issue 8
+
+    IF NOT _d-class-with_unit_tests IS INITIAL.             &quot; Issue 82
+      d_key-clsname = _d-class-clsname.
+      CALL FUNCTION &apos;SEO_CLASS_GENERATE_LOCALS&apos;
+        EXPORTING
+          clskey                       = d_key
+*         FORCE                        = SEOX_FALSE
+*         CORRNR                       =
+*         IMPLEMENTATION               =
+*         LOCALS_DEF                   =
+*         LOCALS_IMP                   =
+*         LOCALS_MAC                   =
+          locals_testclasses           = _d-locals_tst
+*         SUPPRESS_CORR                = SEOX_FALSE
+       EXCEPTIONS
+         not_existing                 = 1
+         model_only                   = 2
+         locals_not_generated         = 3
+         locals_not_initialised       = 4
+         OTHERS                       = 5.
+      IF sy-subrc &lt;&gt; 0.
+        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_LOCALS&apos;
+                                                    subrc = sy-subrc
+                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+        application_log-&gt;add_symsg( ).
+        RAISE EXCEPTION o_mycx.
+      ENDIF.
+    ENDIF.                                          &quot; End of Issue 82
+
+    set_dynpros( program = _d-includes-classpool-name       &quot; Issue 8
                  dynpros = _d-dynpros ).
-    set_menus( program = _d-includes-classpool-name              &quot; Issue 9
+    set_menus( program = _d-includes-classpool-name         &quot; Issue 9
                  menus = _d-menupainter ).
-    set_prog_textpool( program = _d-includes-classpool-name      &quot; Issue 1
+    set_prog_textpool( program = _d-includes-classpool-name &quot; Issue 1
                       textpool = _d-textspool ).
 
     zaplink_documentation=&gt;set( _d-documentation ).
@@ -1435,7 +1465,7 @@ AS</DOCUMENTATION>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IMPORT_TO_SAP_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IMPORT_TO_SAP_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import Interface into SAP system"/>
     </TEXTS>
@@ -1567,7 +1597,7 @@ AS</DOCUMENTATION>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="LOAD_CLAS" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
+   <ITEM CMPNAME="LOAD_CLAS" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Load Class from SAP System"/>
     </TEXTS>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="325B86F8FA394584CFE3EB00090C0A9C" CODE_SIGNATURE="20ECB04520CFC1386869B9DBDC30C3F6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3E752103859D4C32FD4412F63949C279" CODE_SIGNATURE="6895815FE9A09D265AE44A5EC0420D7B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -974,6 +974,7 @@ AS</DOCUMENTATION>
   fm_data-locals_def = zaplink_object=&gt;conv_abap_source2raw( local-types-_ ).
   fm_data-locals_imp = zaplink_object=&gt;conv_abap_source2raw( local-implementations-_ ).
   fm_data-locals_mac = zaplink_object=&gt;conv_abap_source2raw( local-macros-_ ).
+  fm_data-locals_tst = zaplink_object=&gt;conv_abap_source2raw( local-local_test_class-_ ).      &quot; Issue 82
 
 *CLASS_DESC  TYPE tt_SEOCLASSTX,
 * Issue 33 : Documentation connected to text
