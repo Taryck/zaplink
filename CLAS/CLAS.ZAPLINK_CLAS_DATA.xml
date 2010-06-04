@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3E752103859D4C32FD4412F63949C279" CODE_SIGNATURE="6895815FE9A09D265AE44A5EC0420D7B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2F03EE0768D3E3F8F6FB7B62184DA040" CODE_SIGNATURE="B66BAF6485CC397B569CA01BE0FCE253" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -56,6 +56,8 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      </ITEM>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="C_KIND" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TD_TRANSPORT_KIND"/>
+   <ITEM CMPNAME="C_TYPE" STATE="1" EDITORDER="4 " ATTDECLTYP="1" ATTVALUE="OBJECT_TYPES-CLASS" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
    <ITEM CMPNAME="DYNPROS" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_DYNPROS">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Class Dynpro"/>
@@ -128,6 +130,13 @@ AS</DOCUMENTATION>
 INCLUDE zaplink_macros.</MACROS>
   </LOCAL>
   <METHODS>
+   <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+    </TEXTS>
+    <SOURCE>`
+  c_kind = zaplink_connectors=&gt;get_typekind( c_type ).</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="CONV_SOURCE" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Clean ABAP Source code"/>
@@ -263,7 +272,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   concatenate &apos;&apos;&apos;&apos; data &apos;&apos;&apos;&apos; into result.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UPDATE_CONCEPT" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="UPDATE_CONCEPT" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Update Concepts"/>
     </TEXTS>
@@ -718,7 +727,7 @@ AS</DOCUMENTATION>
   obj_name = a0_maindata-clsname.
   obj_version = a0_maindata-version.
   obj_langu = a0_maindata-langu.
-  obj_type = object_types-class.
+  obj_type = c_type.
   CLEAR a0_maindata-uuid.                                   &quot; Issue 59
 
 *CLASS_DESC  TYPE tt_SEOCLASSTX,
@@ -912,10 +921,10 @@ AS</DOCUMENTATION>
   ENDLOOP.
 
 * Issue 47 : Introducing dependencies
-  IF NOT redefinitions IS INITIAL.    CLEAR _dep.   _dep-type = object_types-class.   _dep-name = a0_maindata-inheritance-refclsname. INSERT _dep INTO TABLE _dependencies.   ENDIF.
+  IF NOT redefinitions IS INITIAL.    CLEAR _dep.   _dep-type = c_type.   _dep-name = a0_maindata-inheritance-refclsname. INSERT _dep INTO TABLE _dependencies.   ENDIF.
 * Issue 74 : Adding Deffered elements to dependencies
   LOOP AT deferred-classes ASSIGNING &lt;dc&gt;.
-    CLEAR _dep.   _dep-type = object_types-class.   _dep-name = &lt;dc&gt;-typegroup.
+    CLEAR _dep.   _dep-type = c_type.   _dep-name = &lt;dc&gt;-typegroup.
     INSERT _dep INTO TABLE _dependencies.
   ENDLOOP.
   LOOP AT deferred-interfaces ASSIGNING &lt;di&gt;.
@@ -950,7 +959,7 @@ AS</DOCUMENTATION>
   obj_name = a0_maindata-clsname.
   obj_version = a0_maindata-version.
   obj_langu = a0_maindata-langu.
-  obj_type = object_types-class.
+  obj_type = c_type.
 
 * Warning recieving (will reset FM_DATA)
   CALL METHOD super-&gt;to_data
@@ -974,7 +983,7 @@ AS</DOCUMENTATION>
   fm_data-locals_def = zaplink_object=&gt;conv_abap_source2raw( local-types-_ ).
   fm_data-locals_imp = zaplink_object=&gt;conv_abap_source2raw( local-implementations-_ ).
   fm_data-locals_mac = zaplink_object=&gt;conv_abap_source2raw( local-macros-_ ).
-  fm_data-locals_tst = zaplink_object=&gt;conv_abap_source2raw( local-local_test_class-_ ).      &quot; Issue 82
+  fm_data-locals_tst = zaplink_object=&gt;conv_abap_source2raw( local-local_test_class-_ ). &quot; Issue 82
 
 *CLASS_DESC  TYPE tt_SEOCLASSTX,
 * Issue 33 : Documentation connected to text
@@ -1059,11 +1068,20 @@ AS</DOCUMENTATION>
     _at-attvalue = sotr2value( _cx-concept ).
 
     _cx-cmpname = _at-cmpname.
-    SELECT SINGLE devclass INTO _cx-paket
-      FROM tadir
-      WHERE pgmid = &apos;R3TR&apos;
-        AND object = object_types-class
-        AND obj_name = a0_maindata-clsname.
+
+    CALL FUNCTION &apos;TRINT_TADIR_QUERY&apos;
+      EXPORTING
+        iv_pgmid           = c_kind
+        iv_object          = c_type
+        iv_obj_name        = a0_maindata-clsname
+      IMPORTING
+*     EV_OBJECT          =
+*     EV_SRCSYSTEM       =
+*     EV_AUTHOR          =
+*     EV_GENFLAG         =
+*     EV_EXIST           =
+        ev_devclass        = _cx-paket.
+
     _cx-trala_type = 1.
     _cx-crea_lan = a0_maindata-langu.
     _cx-objid_vec = &apos;08000000000000000000&apos;.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="CDE4F81DE7F9B5C31D1B51A9F7881B44" CODE_SIGNATURE="491671DA001DB1642FA207CB1D4B8170" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="AE17253E3F636E309293417E4C887C9D" CODE_SIGNATURE="D73F0E19512F61A4E64B06417CFB7E29" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUGR_DATA"/>
@@ -32,17 +32,17 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="C_MAINPROG_PREFIX" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;SAPL&apos;" TYPTYPE="1" TYPE="TRDIR-NAME">
+   <ITEM CMPNAME="C_MAINPROG_PREFIX" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;SAPL&apos;" TYPTYPE="1" TYPE="TRDIR-NAME">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Function group Main program prefix"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="ST_FUNCTION_GROUP" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;FUGR&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
-    <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport category : ABAP Object"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="SUPPORTEDTYPES" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
+   <ITEM CMPNAME="SUPPORTEDKINDS" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="4">BEGIN OF supportedkinds,
+      group             TYPE td_transport_kind,
+      function          TYPE td_transport_kind,
+    END OF supportedkinds
+`</ITEM>
+   <ITEM CMPNAME="SUPPORTEDTYPES" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF supportedtypes,
       group             TYPE td_comptype VALUE &apos;FUGR&apos;,      &quot;#EC NOTEXT
       function          TYPE td_comptype VALUE &apos;FUNC&apos;,      &quot;#EC NOTEXT
@@ -52,12 +52,12 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Connector supported types"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;F1838F4B202C2806E1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
+   <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;F1838F4B202C2806E1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="UUID for connector Program"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_VER" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
+   <ITEM CMPNAME="_VER" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Connector Version"/>
     </TEXTS>
@@ -126,7 +126,15 @@ INCLUDE zaplink_macros.</MACROS>
   d_src = zaplink_tools=&gt;clean_abap_string( d_src ).
   result = zaplink_tools=&gt;calculate_md5_hash( d_src ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
+   <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+    </TEXTS>
+    <SOURCE>`
+  supportedkinds-group =  zaplink_connectors=&gt;get_typekind( supportedtypes-group ).
+  supportedkinds-function =  zaplink_connectors=&gt;get_typekind( supportedtypes-function ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
@@ -140,6 +148,134 @@ INCLUDE zaplink_macros.</MACROS>
 
   uuid = _uuid.
   version = _ver.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="DEL_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Delete function from SAP System is required"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FUNC" CMPTYPE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_FMD_FUNC"/>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA d_pname     TYPE tfdir-pname.
+  DATA d_group     TYPE rs38l-area.
+  DATA d_msg       TYPE string.
+  DATA t_params    TYPE STANDARD TABLE OF spar WITH DEFAULT KEY.
+  DATA s_param     LIKE LINE OF t_params.
+  DATA d_answer    TYPE c.
+
+  TRY.
+
+* FROM  FUNCTION &apos;RPY_FUNCTIONMODULE_READ&apos;
+    SELECT SINGLE pname INTO d_pname FROM tfdir WHERE funcname = func-header-name.
+    IF sy-subrc &lt;&gt; 0.   EXIT.   ENDIF.
+
+    CALL FUNCTION &apos;FUNCTION_INCLUDE_SPLIT&apos;
+      EXPORTING
+        program                            = d_pname
+*          SUPPRESS_SELECT                    = &apos;X&apos;
+*          COMPLETE_AREA                      = &apos; &apos;
+      IMPORTING
+*          NAMESPACE                          =
+*          FUNCTION_NOT_EXISTS                =
+        group                              = d_group
+*          FUNCNAME                           =
+*          INCLUDE_NUMBER                     =
+*          NO_FUNCTION_INCLUDE                =
+*          NO_FUNCTION_MODULE                 =
+*               SUFFIX                             =
+*               RESERVED_NAME                      =
+*               TOO_MANY_DELIMITERS                =
+*               RESERVED_FOR_EXITS                 =
+*               HIDDEN_NAME                        =
+*              CHANGING
+*                INCLUDE                            = d_pname
+      EXCEPTIONS
+        include_not_exists                 = 1
+        group_not_exists                   = 2
+        no_selections                      = 3
+        no_function_include                = 4
+        no_function_pool                   = 5
+        delimiter_wrong_position           = 6
+        no_customer_function_group         = 7
+        no_customer_function_include       = 8
+        reserved_name_customer             = 9
+        namespace_too_long                 = 10
+        area_length_error                  = 11
+        OTHERS                             = 12.
+    IF sy-subrc &lt;&gt; 0.   EXIT.   ENDIF.
+
+    IF d_group &lt;&gt; func-header-str_area.    &quot; No problem on overwrite
+      IF sy-batch = abap_true.   &quot;only delete in forground
+        EXIT.
+      ENDIF.
+
+* The function &amp;1 already exist (&amp;2), do you confirm deletion ?
+      MESSAGE i000 WITH d_pname d_group INTO d_msg.
+      REFRESH t_params.
+      s_param-param = &apos;FUNCTION&apos;.   s_param-value = func-header-name.         APPEND s_param TO t_params.
+      s_param-param = &apos;GROUP&apos;.      s_param-value = d_group.                  APPEND s_param TO t_params.
+      s_param-param = &apos;CURRENT_G&apos;.  s_param-value = func-header-str_area.     APPEND s_param TO t_params.
+      CALL FUNCTION &apos;POPUP_TO_CONFIRM&apos;
+        EXPORTING
+          titlebar              = &apos;Confirm module function deletion&apos;(d00)
+          diagnose_object       = &apos;ZAPLINK_FUNCTION_GROUP-CONF&apos;
+          text_question         = d_msg
+          text_button_1         = &apos;Yes&apos;(yes)
+          icon_button_1         = &apos;ICON_DELETE&apos;
+          text_button_2         = &apos;No&apos;(no_)
+          icon_button_2         = &apos;ICON_SKIP&apos;
+          default_button        = &apos;3&apos;
+          display_cancel_button = &apos;X&apos;
+          userdefined_f1_help   = &apos;ZAPLINK_FUNCTION_GROUP-CONFH&apos;
+          start_column          = 10
+          start_row             = 4
+          popup_type            = &apos;ICON_MESSAGE_WARNING&apos;
+          iv_quickinfo_button_1 = &apos;Function is deleted. Function group will be created with this function.&apos;(hye)
+          iv_quickinfo_button_2 = &apos;Function is not deleted and process to next existing function. Function group will be created without this function.&apos;(hno)
+        IMPORTING
+          answer                = d_answer
+        TABLES
+          parameter             = t_params
+        EXCEPTIONS
+          text_not_found        = 1
+          OTHERS                = 2.
+      IF sy-subrc &lt;&gt; 0.
+        mac_add_mf_and_raise &apos;POPUP_TO_CONFIRM&apos; sy-subrc.
+      ELSEIF d_answer = &apos;N&apos; OR d_answer = &apos;2&apos;.
+        EXIT.
+      ELSEIF d_answer = &apos;A&apos;.    &quot; abend
+        ROLLBACK WORK.
+        mac_add_mf_and_raise &apos;RS_FUNCTION_DELETE&apos; 1.
+      ENDIF.
+    ENDIF.
+
+    CALL FUNCTION &apos;RS_FUNCTION_DELETE&apos;
+      EXPORTING
+        funcname                 = func-header-name
+        suppress_popups          = abap_true
+*               SUPPRESS_CHECKS          = &apos; &apos;
+*               SUPPRESS_DELE_ENHA       = &apos; &apos;
+*               TRREQUEST                =
+      EXCEPTIONS
+        cancelled                = 1
+        function_released        = 2
+        OTHERS                   = 3.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_FUNCTION_DELETE&apos; sy-subrc.
+    ENDIF.
+    DELETE FROM tftit WHERE funcname = func-header-name.
+    DELETE FROM funct WHERE funcname = func-header-name.
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_ALL_INCLUDES" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
@@ -237,7 +373,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_FUNCTION_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_FUNCTION_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get Source code Signature of a function"/>
     </TEXTS>
@@ -262,7 +398,7 @@ INCLUDE zaplink_macros.</MACROS>
   s_fm_func = read_function( name ).
   result = CALC_FUNCTION_SIGNATURE( s_fm_func ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_GROUP_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_GROUP_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get Source code Signature of a function group"/>
     </TEXTS>
@@ -373,7 +509,7 @@ INCLUDE zaplink_macros.</MACROS>
   STATICS prev_func_data  TYPE  ts_fmd_func.
   DATA o_data     TYPE to_group.
   DATA s_fmd_fugr TYPE ts_fmd_fugr.
-  DATA d_name     TYPE RS38L-NAME.
+  DATA d_name     TYPE rs38l-name.
   DATA type       TYPE td_comptype.
   DATA d_mainprog TYPE td_progname.
   DATA d_soft_comp TYPE tdevc-dlvunit.
@@ -402,7 +538,7 @@ INCLUDE zaplink_macros.</MACROS>
         remote_call              = result-header-remote
         update_task              = result-header-utask
 *               SHORT_TEXT               =
-*               FUNCTION_POOL            =
+        function_pool            = result-header-str_area
       TABLES
         import_parameter         = result-import_p
         changing_parameter       = result-changing_p
@@ -421,7 +557,74 @@ INCLUDE zaplink_macros.</MACROS>
 *         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
     ENDIF.
     result-source = t_src.
+    SELECT * INTO TABLE result-texts FROM tftit WHERE funcname = result-header-name.
+    SELECT * INTO TABLE result-param_texts FROM funct WHERE funcname = result-header-name.
+
     prev_func_data = result.    prev_func_name = name.
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="WRITE_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Write function to SAP System"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FUNC" CMPTYPE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_FMD_FUNC"/>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA t_doc       TYPE STANDARD TABLE OF rsfdo WITH DEFAULT KEY.
+  DATA t_src       TYPE STANDARD TABLE OF rssource WITH DEFAULT KEY.
+
+  TRY.
+    CALL FUNCTION &apos;RPY_FUNCTIONMODULE_INSERT&apos;
+      EXPORTING
+        funcname                      = func-header-name
+        function_pool                 = func-header-str_area
+        interface_global              = func-header-global
+        remote_call                   = func-header-remote
+        short_text                    = space
+        suppress_corr_check           = abap_false
+        update_task                   = func-header-utask
+*        CORRNUM                       = &apos; &apos;
+*        NAMESPACE                     = &apos; &apos;
+*        NEW_SOURCE                    =
+*      IMPORTING
+*        FUNCTION_INCLUDE              =
+      TABLES
+        import_parameter              = func-import_p
+        export_parameter              = func-export_p
+        tables_parameter              = func-tables
+        changing_parameter            = func-changing_p
+        exception_list                = func-exceptions
+        parameter_docu                = t_doc
+        SOURCE                        = t_src
+      EXCEPTIONS
+        double_task                   = 1
+        error_message                 = 2
+        function_already_exists       = 3
+        invalid_function_pool         = 4
+        invalid_name                  = 5
+        too_many_functions            = 6
+        no_modify_permission          = 7
+        no_show_permission            = 8
+        enqueue_system_failure        = 9
+        canceled_in_corr              = 10
+        OTHERS                        = 11.
+    IF sy-subrc &lt;&gt; 0.
+      ROLLBACK WORK.
+      mac_add_mf_and_raise &apos;RPY_FUNCTIONMODULE_INSERT&apos; sy-subrc.
+    ENDIF.
+    MODIFY tftit FROM TABLE func-texts.
+    MODIFY funct FROM TABLE func-param_texts.
+
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -662,18 +865,18 @@ INCLUDE zaplink_macros.</MACROS>
                                                   object = d_doc  ).
 
         SELECT * INTO TABLE s_fmd_fugr-texts FROM tlibt WHERE area = s_fmd_fugr-header-area.
-        SELECT * INTO TABLE s_fmd_fugr-function_texts FROM tftit FOR ALL ENTRIES IN t_functions WHERE funcname = t_functions-funcname.
-        SELECT * INTO TABLE s_fmd_fugr-param_texts FROM funct FOR ALL ENTRIES IN t_functions WHERE funcname = t_functions-funcname.
+*        SELECT * INTO TABLE s_fmd_fugr-function_texts FROM tftit FOR ALL ENTRIES IN t_functions WHERE funcname = t_functions-funcname.
+*        SELECT * INTO TABLE s_fmd_fugr-param_texts FROM funct FOR ALL ENTRIES IN t_functions WHERE funcname = t_functions-funcname.
         LOOP AT t_functions ASSIGNING &lt;f&gt;.
-          s_fmd_func = read_function( &lt;f&gt;-funcname ).
+          s_fmd_func = read_function( &lt;f&gt;-funcname ).   clear s_fmd_func-header-str_area.
           s_fmd_func-code_signature = calc_function_signature( s_fmd_func ).
           INSERT s_fmd_func INTO TABLE s_fmd_fugr-functions.
         ENDLOOP.
 
         SELECT SINGLE dlvunit INTO d_soft_comp
           FROM v_tralan
-          WHERE pgmid = &apos;R3TR&apos;
-            AND object = &apos;FUGR&apos;
+          WHERE pgmid = supportedkinds-group
+            AND object = supportedtypes-group
             AND obj_name = s_fmd_fugr-header-area.
 
         s_fmd_fugr-includes = get_all_includes( s_fmd_fugr-header-area ).
@@ -734,12 +937,31 @@ INCLUDE zaplink_macros.</MACROS>
     &lt;f&gt;  LIKE LINE OF s_fmd_fugr-functions.
 
   TRY.
-
+      CREATE OBJECT components.
       CASE object-&gt;type.
         WHEN supportedtypes-function.
           o_function ?= object-&gt;raw.
           o_function-&gt;a0_maindata-name = object-&gt;name.
           s_fmd_func = o_function-&gt;to_data( ).
+
+          del_function( s_fmd_func ).
+          write_function( s_fmd_func ).
+          CALL FUNCTION &apos;RS_FUNCTION_POOL_CONTENTS&apos;
+            EXPORTING
+              function_pool           = s_fmd_func-header-str_area
+            TABLES
+              functab                 = t_functions
+            EXCEPTIONS
+              function_pool_not_found = 1
+              OTHERS                  = 2.
+          IF sy-subrc &lt;&gt; 0.
+            ROLLBACK WORK.
+            mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_CONTENTS&apos; sy-subrc.
+          ENDIF.
+          READ TABLE t_functions ASSIGNING &lt;fi&gt; WITH KEY funcname = s_fmd_func-header-name.
+          IF sy-subrc &lt;&gt; 0. mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_CONTENTS&apos; 2. ENDIF.
+          set_prog_rawsource( program = &lt;fi&gt;-include
+                                  raw = s_fmd_func-source ).
 
         WHEN supportedtypes-group.
           o_group ?= object-&gt;raw.
@@ -773,102 +995,9 @@ INCLUDE zaplink_macros.</MACROS>
           IF sy-subrc &lt;&gt; 0.
             mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_DELETE&apos; sy-subrc.
           ENDIF.
-          IF sy-batch = abap_false.   &quot;only delete in forground
+          IF sy-batch = abap_false.   &quot;only delete in foreground
             LOOP AT s_fmd_fugr-functions ASSIGNING &lt;f&gt;.
-* FROM  FUNCTION &apos;RPY_FUNCTIONMODULE_READ&apos;
-              SELECT SINGLE pname INTO d_pname FROM tfdir WHERE funcname = &lt;f&gt;-header-name.
-              IF sy-subrc &lt;&gt; 0.   CONTINUE.   ENDIF.
-
-              CALL FUNCTION &apos;FUNCTION_INCLUDE_SPLIT&apos;
-                EXPORTING
-                  program                            = d_pname
-*               SUPPRESS_SELECT                    = &apos;X&apos;
-*               COMPLETE_AREA                      = &apos; &apos;
-                IMPORTING
-*               NAMESPACE                          =
-*               FUNCTION_NOT_EXISTS                =
-                  group                              = d_group
-*               FUNCNAME                           =
-*               INCLUDE_NUMBER                     =
-*               NO_FUNCTION_INCLUDE                =
-*               NO_FUNCTION_MODULE                 =
-*               SUFFIX                             =
-*               RESERVED_NAME                      =
-*               TOO_MANY_DELIMITERS                =
-*               RESERVED_FOR_EXITS                 =
-*               HIDDEN_NAME                        =
-*              CHANGING
-*                INCLUDE                            = d_pname
-                EXCEPTIONS
-                  include_not_exists                 = 1
-                  group_not_exists                   = 2
-                  no_selections                      = 3
-                  no_function_include                = 4
-                  no_function_pool                   = 5
-                  delimiter_wrong_position           = 6
-                  no_customer_function_group         = 7
-                  no_customer_function_include       = 8
-                  reserved_name_customer             = 9
-                  namespace_too_long                 = 10
-                  area_length_error                  = 11
-                  OTHERS                             = 12.
-              IF sy-subrc &lt;&gt; 0.
-                CONTINUE.
-              ENDIF.
-
-* The function &amp;1 already exist (&amp;2), do you confirm deletion ?
-              MESSAGE i000 WITH d_pname d_group INTO d_msg.
-              REFRESH t_params.
-              s_param-param = &apos;FUNCTION&apos;.   s_param-value = &lt;f&gt;-header-name.          APPEND s_param TO t_params.
-              s_param-param = &apos;GROUP&apos;.      s_param-value = d_group.                  APPEND s_param TO t_params.
-              s_param-param = &apos;CURRENT_G&apos;.  s_param-value = s_fmd_fugr-header-area.    APPEND s_param TO t_params.
-              CALL FUNCTION &apos;POPUP_TO_CONFIRM&apos;
-                EXPORTING
-                  titlebar              = &apos;Confirm module function deletion&apos;(d00)
-                  diagnose_object       = &apos;ZAPLINK_FUNCTION_GROUP-CONF&apos;
-                  text_question         = d_msg
-                  text_button_1         = &apos;Yes&apos;(yes)
-                  icon_button_1         = &apos;ICON_DELETE&apos;
-                  text_button_2         = &apos;No&apos;(no_)
-                  icon_button_2         = &apos;ICON_SKIP&apos;
-                  default_button        = &apos;3&apos;
-                  display_cancel_button = &apos;X&apos;
-                  userdefined_f1_help   = &apos;ZAPLINK_FUNCTION_GROUP-CONFH&apos;
-                  start_column          = 10
-                  start_row             = 4
-                  popup_type            = &apos;ICON_MESSAGE_WARNING&apos;
-                  iv_quickinfo_button_1 = &apos;Function is deleted. Function group will be created with this function.&apos;(hye)
-                  iv_quickinfo_button_2 = &apos;Function is not deleted and process to next existing function. Function group will be created without this function.&apos;(hno)
-                IMPORTING
-                  answer                = d_answer
-                TABLES
-                  parameter             = t_params
-                EXCEPTIONS
-                  text_not_found        = 1
-                  OTHERS                = 2.
-              IF sy-subrc &lt;&gt; 0.
-                mac_add_mf_and_raise &apos;POPUP_TO_CONFIRM&apos; sy-subrc.
-              ELSEIF d_answer = &apos;N&apos; OR d_answer = &apos;2&apos;.
-                CONTINUE.
-              ELSEIF d_answer = &apos;A&apos;.    &quot; abend
-                ROLLBACK WORK.
-                mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_INSERT&apos; 1.
-              ENDIF.
-
-              CALL FUNCTION &apos;RS_FUNCTION_DELETE&apos;
-                EXPORTING
-                  funcname                 = &lt;f&gt;-header-name
-                  suppress_popups          = abap_true
-*               SUPPRESS_CHECKS          = &apos; &apos;
-*               SUPPRESS_DELE_ENHA       = &apos; &apos;
-*               TRREQUEST                =
-                EXCEPTIONS
-                  cancelled                = 1
-                  function_released        = 2
-                  OTHERS                   = 3.
-              IF sy-subrc &lt;&gt; 0.
-                mac_add_mf_and_raise &apos;RS_FUNCTION_DELETE&apos; sy-subrc.
-              ENDIF.
+              del_function( &lt;f&gt; ).
             ENDLOOP.
           ENDIF.
 
@@ -905,46 +1034,7 @@ INCLUDE zaplink_macros.</MACROS>
           ENDIF.
 
           LOOP AT s_fmd_fugr-functions ASSIGNING &lt;f&gt;.
-            DELETE FROM tftit WHERE funcname = &lt;f&gt;-header-name.
-            DELETE FROM funct WHERE funcname = &lt;f&gt;-header-name.
-            CALL FUNCTION &apos;RPY_FUNCTIONMODULE_INSERT&apos;
-              EXPORTING
-                funcname                      = &lt;f&gt;-header-name
-                function_pool                 = s_fmd_fugr-header-area
-                interface_global              = &lt;f&gt;-header-global
-                remote_call                   = &lt;f&gt;-header-remote
-                short_text                    = space
-                suppress_corr_check           = abap_false
-                update_task                   = &lt;f&gt;-header-utask
-*               CORRNUM                       = &apos; &apos;
-*               NAMESPACE                     = &apos; &apos;
-*               NEW_SOURCE                    =
-*             IMPORTING
-*               FUNCTION_INCLUDE              =
-              TABLES
-                import_parameter              = &lt;f&gt;-import_p
-                export_parameter              = &lt;f&gt;-export_p
-                tables_parameter              = &lt;f&gt;-tables
-                changing_parameter            = &lt;f&gt;-changing_p
-                exception_list                = &lt;f&gt;-exceptions
-                parameter_docu                = t_doc
-                SOURCE                        = t_src
-              EXCEPTIONS
-                double_task                   = 1
-                error_message                 = 2
-                function_already_exists       = 3
-                invalid_function_pool         = 4
-                invalid_name                  = 5
-                too_many_functions            = 6
-                no_modify_permission          = 7
-                no_show_permission            = 8
-                enqueue_system_failure        = 9
-                canceled_in_corr              = 10
-                OTHERS                        = 11.
-            IF sy-subrc &lt;&gt; 0.
-              ROLLBACK WORK.
-              mac_add_mf_and_raise &apos;RPY_FUNCTIONMODULE_INSERT&apos; sy-subrc.
-            ENDIF.
+            write_function( &lt;f&gt; ).
           ENDLOOP.
 
           CALL FUNCTION &apos;RS_FUNCTION_POOL_CONTENTS&apos;
@@ -992,17 +1082,11 @@ INCLUDE zaplink_macros.</MACROS>
 ** Documentation
 *          zaplink_documentation=&gt;set( t_docs = o_group-&gt;documentation ).
 
-*      COMMIT WORK AND WAIT. &quot; why ?
-
-          CREATE OBJECT _comp.
-          _comp-&gt;set_type( supportedtypes-group ).
-          _name = o_group-&gt;a0_maindata-area.
-          _comp-&gt;set_name( _name ).
-          CREATE OBJECT components.
-          components-&gt;add( _comp ).
         WHEN OTHERS.
           mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
+      _comp = object-&gt;get_component( abap_true ).
+      components-&gt;add( _comp ).
 
     CATCH zaplink_cx_connector INTO o_mycx.
       ROLLBACK WORK.

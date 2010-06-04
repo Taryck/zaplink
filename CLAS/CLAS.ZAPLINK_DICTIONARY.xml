@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D75203C326316D63344F5B69BC4BE5B5" CODE_SIGNATURE="48651897C202EE294076019AF568351D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9C2302BDE8B16BED54A81F6A9DA0DBF5" CODE_SIGNATURE="170E95136CD4CB416295BDC84CE1A49A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -39,6 +39,7 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="C_TYPEGROUP" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE"/>
    <ITEM CMPNAME="DD_EU_TYPE" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF dd_eu_type,          &quot; Domain DDEUTYPE
       table_type        TYPE ddeutype VALUE &apos;A&apos;,     &quot;#EC NOTEXT : A  Table Type
@@ -135,7 +136,14 @@ DEFINE mac_obj_data.
 END-OF-DEFINITION.</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
+   <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+    </TEXTS>
+    <SOURCE>`
+  c_typegroup-type = &apos;TYPE&apos;.    c_typegroup-kind = zaplink_connectors=&gt;get_typekind( c_typegroup-type ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
     </TEXTS>
@@ -722,8 +730,8 @@ END-OF-DEFINITION.</MACROS>
     object-&gt;a0_maindata-uccheck = o_src-&gt;l_progdir_entry-uccheck.
     SELECT SINGLE masterlang FROM tadir
                              INTO object-&gt;a0_maindata-lang
-         WHERE  pgmid       = &apos;R3TR&apos;
-         AND    object      = &apos;TYPE&apos;
+         WHERE  pgmid       = c_typegroup-kind
+         AND    object      = c_typegroup-type
          AND    obj_name    = object-&gt;a0_maindata-name.
 * Kurzbeschreibung lesen
     SELECT SINGLE ddtext FROM ddtypet INTO object-&gt;a0_maindata-text
@@ -809,7 +817,7 @@ END-OF-DEFINITION.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPEGROUP_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TYPEGROUP_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get Source code Signature of Type Group"/>
     </TEXTS>
@@ -894,8 +902,8 @@ END-OF-DEFINITION.</MACROS>
 ** Mastersprache in TADIR lesen
 *  SELECT SINGLE masterlang FROM tadir
 *                           INTO rsdxx-malangu
-*       WHERE  pgmid       = &apos;R3TR&apos;
-*       AND    object      = &apos;TYPE&apos;
+*       WHERE  pgmid       = c_typegroup-kind
+*       AND    object      = c_typegroup-type
 *       AND    obj_name    = df-ddxx-typegroup.
 ** Kurzbeschreibung lesen
 *  SELECT SINGLE ddtext FROM ddtypet INTO df-ddxx-ddtext
@@ -1889,8 +1897,6 @@ END-OF-DEFINITION.</MACROS>
         d_type = dd_eu_type-lock_object.
       WHEN supportedtypes-matchcode_obj.
         d_type = dd_eu_type-matchcode_obj.
-      WHEN supportedtypes-table_index.
-        d_type = dd_eu_type-table_index.
       WHEN supportedtypes-ext_index.
         d_type = dd_eu_type-ext_index.
         s_idxkey = zaplink_xinx_data=&gt;name_2_key( d_name ).

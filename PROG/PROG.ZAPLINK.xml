@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A7A09B7CDA7D4CBC615DBACB67FBC1F5" CODE_SIGNATURE="2B6654522AD9DE7643DC1A0381357813" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="A3B42A79545939D547C945993CF90210" CODE_SIGNATURE="98514F18FC72DFB08100267D3CEABF6F" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="1" APPL="S" RSTAT="S" RMAND="321" RLOAD="E" FIXPT="X" UCCHECK="X"/>
@@ -28,27 +28,17 @@ INCLUDE zaplink_scr.
 START-OF-SELECTION.
   PERFORM create_file.
 *   create empty Container
-  IF a_create = &apos;X&apos;.
-    PERFORM create.
-  ELSEIF a_auto = &apos;X&apos;.
-    PERFORM auto.
-  ELSEIF a_add = &apos;X&apos;.
-*   add object to Container
-    PERFORM add.
-  ELSEIF a_import = &apos;X&apos;.
-*   import Container
-    PERFORM import.
-*   display objects in a Container
-  ELSEIF a_dsp = &apos;X&apos;.
-    PERFORM display.
-*   Un install a Container
-  ELSEIF a_uninst = &apos;X&apos;.
-    PERFORM uninstall.
-*  ELSEIF a_add_p = &apos;X&apos;.
-*    PERFORM add_package.
-  ELSEIF a_add_tr = &apos;X&apos;.
-    PERFORM add_tr.
-  ENDIF.
+  CASE abap_true.
+    WHEN a_create.    PERFORM create.
+    WHEN a_auto.      PERFORM auto.
+    WHEN a_synch.     PERFORM refresh.
+    WHEN a_add.       PERFORM add.          &quot; add object to Container
+    WHEN a_import.    PERFORM import.       &quot; import Container
+    WHEN a_dsp.       PERFORM display.      &quot; display objects in a Container
+    WHEN a_uninst.    PERFORM uninstall.    &quot; Uninstall a Container
+    when a_add_p.     PERFORM add_comp.
+    WHEN a_add_tr.    PERFORM add_tr.
+  ENDCASE.
 
 END-OF-SELECTION.
 *\--------------------------------------------------------------------/
@@ -107,6 +97,11 @@ AS</LONG_TXT>
    <ITEM ID="I" KEY="003">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="Transport Request required" LENGTH="26 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="ACT">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="Activation" LENGTH="35 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="BAC">
@@ -206,12 +201,13 @@ AS</LONG_TXT>
    <ITEM ID="S" KEY="A_ADD">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="36 "/>
-     <ITEM LANGU="E" ENTRY="        Add a components to container" LENGTH="37 "/>
+     <ITEM LANGU="E" ENTRY="        Add components to container" LENGTH="37 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_ADD_P">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="35 "/>
+     <ITEM LANGU="E" ENTRY="        Add a component to container" LENGTH="36 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_ADD_TR">
@@ -243,6 +239,11 @@ AS</LONG_TXT>
      <ITEM LANGU="E" ENTRY="        Import container&apos;s to SAP" LENGTH="33 "/>
     </TEXTS>
    </ITEM>
+   <ITEM ID="S" KEY="A_SYNCH">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        Synchronize container with SAP" LENGTH="38 "/>
+    </TEXTS>
+   </ITEM>
    <ITEM ID="S" KEY="A_UNINST">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="36 "/>
@@ -252,11 +253,13 @@ AS</LONG_TXT>
    <ITEM ID="S" KEY="CO_NAME">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="19 "/>
+     <ITEM LANGU="E" ENTRY="        Object Name" LENGTH="19 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="CO_TYPE">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="D       ." LENGTH="17 "/>
+     <ITEM LANGU="E" ENTRY="D       ." LENGTH="9 "/>
      <ITEM LANGU="F" ENTRY="D       ." LENGTH="19 "/>
     </TEXTS>
    </ITEM>
@@ -328,7 +331,11 @@ AS</LONG_TXT>
    <ITEM ID="S" KEY="PACKAGE">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="D       ." LENGTH="20 "/>
-     <ITEM LANGU="E" ENTRY="        Package Name" LENGTH="20 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="S" KEY="P_ACTIV">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="        Active components after import" LENGTH="38 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="P_EXT">

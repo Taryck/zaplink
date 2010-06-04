@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="891CF33181B922CAC02173E579A2F84C" CODE_SIGNATURE="472F3B49FA027619D1EA9CB7ACAF400C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A7FCF2B86C73C7C3991F5FA705EDB599" CODE_SIGNATURE="E79687CFE6728B0E657703E56201AE9C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -22,6 +22,7 @@ AS</DOCUMENTATION>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
+   <ITEM CMPNAME="EXISTS" EXPOSURE="2" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="EXISTS"/>
    <ITEM CMPNAME="TD_ACTION" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_ACTION"/>
    <ITEM CMPNAME="TD_CHECKSUM" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_CHECKSUM"/>
    <ITEM CMPNAME="TD_COMPADD_DATA" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPADD_DATA"/>
@@ -127,6 +128,7 @@ AS</DOCUMENTATION>
      <ITEM LANGU="E" DESCRIPT="Component exists in SAP"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="_KIND" EXPOSURE="1" STATE="1" EDITORDER="18 " TYPTYPE="1" TYPE="TD_TRANSPORT_KIND"/>
    <ITEM CMPNAME="_MSG_COLL" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TO_MSG_COLL">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Message Collector"/>
@@ -251,7 +253,7 @@ result = _connector-exists.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA _cx TYPE REF TO zaplink_cx_component.
+  DATA _cx TYPE REF TO zaplink_cx_component.
   TRY.
       CREATE OBJECT result.
       result-&gt;_set_key( key ).
@@ -259,7 +261,7 @@ DATA _cx TYPE REF TO zaplink_cx_component.
       RAISE EXCEPTION _cx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXISTS" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
+   <ITEM CMPNAME="DO_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Component Exists : Getter"/>
     </TEXTS>
@@ -559,8 +561,7 @@ DATA _cx TYPE REF TO zaplink_cx_component.
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  CHECK NOT type IS INITIAL.
-  result = zaplink_connectors=&gt;get_typekind( type ).</SOURCE>
+  result = _kind.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
@@ -609,12 +610,16 @@ DATA _cx TYPE REF TO zaplink_cx_component.
       CATCH zaplink_cx_connector INTO o_cx_cnx.
         mac_cascade_raise o_mycx o_cx_cnx.
     ENDTRY.
+    _connector-uuid = _connector-o_conn-&gt;uuid.
+
+    CHECK NOT type IS INITIAL.
+    _kind = zaplink_connectors=&gt;get_typekind( type ).
+
     SELECT SINGLE devclass srcsystem INTO (_devclass, _srcsystem)
       FROM tadir
-      WHERE pgmid = &apos;R3TR&apos;
+      WHERE pgmid = _kind
        AND object = type
        AND obj_name = name.
-    _connector-uuid = _connector-o_conn-&gt;uuid.
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="REFRESH" EXPOSURE="2" STATE="1" EDITORDER="26 " MTDNEWEXC="X">

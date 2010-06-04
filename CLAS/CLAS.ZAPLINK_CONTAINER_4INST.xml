@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="71C946F58259D0410C4B4739EE998E49" CODE_SIGNATURE="CB5FEAACEA6A98533E46EB2D78FFA774" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="831991DAF97F69CEE7F3A9A841909E15" CODE_SIGNATURE="39C6ECC7B1E64E68E71C0A1F811EE23F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -448,7 +448,7 @@ check data &lt;&gt; _options.
                 ENDWHILE.
               ENDIF.
 
-              _components = o_connector-&gt;import_to_sap( _xml_comp ).
+              _components = o_connector-&gt;import_to_sap( _xml_comp ).    If _components is not bound.   create OBJECT _components.   endif.
               o_comp-&gt;set_subcomponents( _components ).
               o_comp-&gt;set_msg_coll( o_connector-&gt;application_log ).
               IF _components-&gt;search( o_comp ) IS BOUND.    _components-&gt;remove( o_comp ).    ENDIF.

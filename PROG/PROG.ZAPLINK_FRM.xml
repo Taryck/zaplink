@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A91105628A1F4F2C79FA4BF2F2739CB0" CODE_SIGNATURE="AA5DECAA194323713460702AEAFDB605" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="B725AFD3D8953B75FC0AC2D79B0A4EA9" CODE_SIGNATURE="210212A529AD001C8D9621CA0957C75E" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" RMAND="220" RLOAD="E" UCCHECK="X"/>
@@ -64,7 +64,7 @@
             PERFORM writemessage USING &apos;I&apos; msg.
           ELSE.
             t_comp-&gt;refresh( ).                             &quot; Issue 31
-            IF t_comp-&gt;exists( ) = zaplink_gui=&gt;exists-not_exists.
+            IF t_comp-&gt;do_exists( ) = zaplink_gui=&gt;exists-not_exists.
               CONCATENATE &apos;Uninstall&apos;(u01) &apos;:&apos; _type &apos;-&apos; _name &apos;SUCCEED&apos;(suc)
                   INTO msg SEPARATED BY space.
               PERFORM writemessage USING &apos;S&apos; msg.
@@ -100,6 +100,7 @@
     DATA t_comp TYPE t_comp.
     DATA _type  TYPE t_obj_type.
     DATA _name  TYPE t_obj_name.
+    DATA _act   TYPE zaplink_component=&gt;td_action.
     DATA o_cx   TYPE REF TO zaplink_cx.
     DATA _cx    TYPE t_exception.
     DATA _msg_col TYPE t_msg_col.
@@ -126,6 +127,7 @@
         WHILE t_comp IS BOUND.
           _type = t_comp-&gt;get_type( ).
           _name = t_comp-&gt;get_name( ).
+          _act  = t_comp-&gt;get_action( ).
 
           IF t_comp-&gt;connector_exists( ) = zaplink_gui=&gt;exists-not_exists.
             CONCATENATE offset _type &apos;-&apos; _name &apos;no connector&apos;(nco)
@@ -160,9 +162,19 @@
                 ENDIF.
               ENDIF.
             ELSE.
-              CONCATENATE offset _type &apos;-&apos; _name &apos;SUCCEED&apos;(suc)
-                  INTO msg SEPARATED BY space.
-              PERFORM writemessage USING &apos;S&apos; msg.
+              IF _act = zaplink_list=&gt;sel_actions-activated.
+                CONCATENATE offset _type &apos;-&apos; _name &apos;SUCCEED &amp; Activated&apos;(sac)
+                    INTO msg SEPARATED BY space.
+                PERFORM writemessage USING &apos;S&apos; msg.
+              ELSEIF _act = zaplink_list=&gt;sel_actions-not_active.
+                CONCATENATE offset _type &apos;-&apos; _name &apos;SUCCEED but NOT activated&apos;(sin)
+                    INTO msg SEPARATED BY space.
+                PERFORM writemessage USING &apos;W&apos; msg.
+              ELSE.
+                CONCATENATE offset _type &apos;-&apos; _name &apos;SUCCEED&apos;(suc)
+                    INTO msg SEPARATED BY space.
+                PERFORM writemessage USING &apos;S&apos; msg.
+              ENDIF.
               _msg_col = t_comp-&gt;get_msg_coll( ).
               IF _msg_col IS BOUND.
                 IF _msg_col-&gt;has_messages_of_msgt( &apos;W&apos; ) = abap_true .
@@ -170,7 +182,6 @@
                 ENDIF.
               ENDIF.
             ENDIF.
-
           ENDIF.
 
           _subc = t_comp-&gt;get_subcomponents( ).
@@ -216,10 +227,8 @@
                                                    packages = s_pack[]
                                                         ext = p_ext
                                                      author = s_author[] ).
-        IF _keys  IS INITIAL.
-          MESSAGE s208(00) WITH &apos;package required&apos;.
-          EXIT.
-        ENDIF.
+* No component was selected with this parameters
+        IF _keys  IS INITIAL.   MESSAGE s001(zaplink_gui) WITH &apos;package required&apos;.   EXIT.   ENDIF.
 
         d_name = c_name.
         mac_replace d_name: uname, sysid, datum, uzeit.
@@ -251,6 +260,24 @@
 *&amp;---------------------------------------------------------------------*
 *&amp;      Form  add
 *&amp;---------------------------------------------------------------------*
+  FORM refresh .
+
+    TRY.
+        objlist = zaplink_gui=&gt;refresh( file = o_file
+                                with_subcomp = f_sub ).
+      CATCH zaplink_cx INTO o_exception.
+        o_exception-&gt;write( ).
+        EXIT.
+    ENDTRY.
+
+    PERFORM dsp_result_display USING space objlist space.
+
+  ENDFORM.                    &quot; add
+*&amp;---------------------------------------------------------------------*
+*&amp;      Form  add
+*&amp;---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
   FORM add .
     DATA _keys TYPE zaplink_gui=&gt;tt_compkeys.
 
@@ -261,14 +288,12 @@
                                                    packages = s_pack[]
                                                         ext = p_ext
                                                      author = s_author[] ).
-        IF _keys  IS INITIAL.
-          MESSAGE s208(00) WITH &apos;package required&apos;.
-          EXIT.
-        ENDIF.
+* No component was selected with this parameters
+        IF _keys  IS INITIAL.   MESSAGE s001(zaplink_gui) WITH &apos;package required&apos;.   EXIT.   ENDIF.
         CREATE OBJECT objlist.
         objlist-&gt;add_keys( _keys ).
-        objlist-&gt;select_default( zaplink_list=&gt;sel_actions-export ).
-        objlist-&gt;change_selection( ).
+        zaplink_gui=&gt;change_selection( action = zaplink_list=&gt;sel_actions-export
+                                         list = objlist ).
 
         CALL METHOD zaplink_gui=&gt;export
           EXPORTING
@@ -324,6 +349,7 @@
           EXPORTING
             file         = o_file
             with_subcomp = f_sub
+            activate     = p_activ
           IMPORTING
             name         = d_name
 *        CHANGING
@@ -368,26 +394,26 @@
 *&amp;---------------------------------------------------------------------*
 *&amp;      Form  add_package
 *&amp;---------------------------------------------------------------------*
-  FORM add_package .
-    DATA:
-      r_package TYPE zaplink_gui=&gt;tr_packages,
-      _wa LIKE LINE OF r_package.
-    DATA _keys TYPE zaplink_gui=&gt;tt_compkeys.
+  FORM add_comp .
+    DATA o_comp    TYPE zaplink_gui=&gt;to_component.
+*    DATA _keys     TYPE zaplink_gui=&gt;tt_compkeys.
+*    DATA _key      LIKE LINE OF _keys.
 
-    IF package  IS INITIAL.
-      MESSAGE s208(00) WITH &apos;package required&apos;.
-      EXIT.
-    ENDIF.
-
-    _wa-sign = &apos;I&apos;. _wa-option = &apos;EQ&apos;.
-    _wa-low = package. APPEND _wa TO r_package.
+    CHECK NOT co_type IS INITIAL AND NOT co_name IS INITIAL.
 
     TRY.
-        _keys = zaplink_gui=&gt;get_keys_from_package( r_package ).
-        CREATE OBJECT objlist.
-        objlist-&gt;add_keys( _keys ).
-        objlist-&gt;select_default( zaplink_list=&gt;sel_actions-export ).
-        objlist-&gt;change_selection( ).
+        CREATE OBJECT: o_comp, objlist.
+        o_comp-&gt;set_type( co_type ).    o_comp-&gt;set_name( co_name ).
+        IF o_comp-&gt;connector_exists( ) &lt;&gt; zaplink_gui=&gt;exists-exists.
+          MESSAGE w208(00) WITH &apos;No Connector exists&apos;(ncn).
+          EXIT.
+        ENDIF.
+        IF o_comp-&gt;do_exists( ) &lt;&gt; zaplink_gui=&gt;exists-exists.
+          MESSAGE w208(00) WITH &apos;Component do not exists&apos;(nco).
+          EXIT.
+        ENDIF.
+        objlist-&gt;add( o_comp ).
+        objlist-&gt;select_all( ).
 
         CALL METHOD zaplink_gui=&gt;export
           EXPORTING
@@ -462,7 +488,7 @@
 
       CATCH zaplink_cx INTO o_exception.
         o_exception-&gt;write( ).
-        leave program.
+        LEAVE PROGRAM.
     ENDTRY.
 
   ENDFORM.                    &quot; CREATE_FILE</SOURCE>

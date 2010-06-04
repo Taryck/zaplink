@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AA35F5E005A8181D9D2939D4A6E3AFE5" CODE_SIGNATURE="4C7FE53B4DAAFEE9B6E85585A70BAC4B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2638F42C81B4E71EFF3329BCF9AB8D25" CODE_SIGNATURE="500565706C7A22D5F4F4883D4882E2C8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DEPENDENCIES_ANALYSER"/>
  </DEPENDENCIES>
@@ -15,9 +15,11 @@
    <ITEM CMPNAME="TD_CONNUUID" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_CONNUUID"/>
    <ITEM CMPNAME="TD_CONNVER" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_CONNVER"/>
    <ITEM CMPNAME="TD_FRAMEWORKVER" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_FRAMEWORKVER"/>
+   <ITEM CMPNAME="TD_TRANSPORT_KIND" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TRANSPORT_KIND"/>
    <ITEM CMPNAME="TR_PACKAGES" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_PACKAGES"/>
    <ITEM CMPNAME="TS_COMPKEY" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPKEY"/>
    <ITEM CMPNAME="TS_COMPONENT" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPONENT"/>
+   <ITEM CMPNAME="TS_COMPTYPE" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPTYPE"/>
    <ITEM CMPNAME="TT_COMPKEYS" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_COMPKEYS"/>
    <ITEM CMPNAME="TT_TYPES" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TYPES"/>
   </ALIASES>
@@ -27,6 +29,11 @@
      <ITEM LANGU="E" DESCRIPT="Connectors packages"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="C_CLASS" STATE="1" EDITORDER="6 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE"/>
+   <ITEM CMPNAME="C_INTERFACE" STATE="1" EDITORDER="7 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE"/>
+   <ITEM CMPNAME="C_MSG_CLASS" STATE="1" EDITORDER="9 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE"/>
+   <ITEM CMPNAME="C_PROGRAM" STATE="1" EDITORDER="8 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE"/>
+   <ITEM CMPNAME="C_TYPEGROUP" STATE="1" EDITORDER="10 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE"/>
    <ITEM CMPNAME="O_CX" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
@@ -73,7 +80,13 @@
   s_pack-low = &apos;$TMP&apos;.      append s_pack to cnx_packages.
   s_pack-low = &apos;ZAPLINK-CONNECTORS&apos;.      append s_pack to cnx_packages.
   s_pack-low = &apos;ZAPLINK-CONNECTORS-MAIN&apos;.      append s_pack to cnx_packages.
-  s_pack-low = &apos;ZAPLINK-CONNECTORS-OTHERS&apos;.      append s_pack to cnx_packages.</SOURCE>
+  s_pack-low = &apos;ZAPLINK-CONNECTORS-OTHERS&apos;.      append s_pack to cnx_packages.
+
+  c_class-type = &apos;CLAS&apos;.    c_class-kind = zaplink_connectors=&gt;get_typekind( c_class-type ).
+  c_interface-type = &apos;INTF&apos;.    c_interface-kind = zaplink_connectors=&gt;get_typekind( c_interface-type ).
+  c_program-type = &apos;PROG&apos;.    c_program-kind = zaplink_connectors=&gt;get_typekind( c_program-type ).
+  c_typegroup-type = &apos;TYPE&apos;.    c_typegroup-kind = zaplink_connectors=&gt;get_typekind( c_typegroup-type ).
+  c_msg_class-type = &apos;MSAG&apos;.    c_msg_class-kind = zaplink_connectors=&gt;get_typekind( c_msg_class-type ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2">
     <TEXTS>
@@ -299,6 +312,8 @@
   DATA t_global_c   TYPE tt_zl_comps.
   DATA t_commun_c   TYPE tt_zl_comps.
   DATA d_cnx        LIKE LINE OF t_global_c.
+  DATA d_kind       TYPE td_transport_kind.
+  DATA _regex TYPE string.
   FIELD-SYMBOLS:
 *    &lt;m&gt; LIKE LINE OF o_generator-&gt;messages,
 *    &lt;i&gt; LIKE LINE OF o_generator-&gt;includes,
@@ -324,13 +339,14 @@
     o_comp = o_c_n.     o_c_n = o_list-&gt;get_next( ).
     CLEAR: s_cnx, _comp.
     _comp = o_comp-&gt;get_key( ).
+    d_kind = o_comp-&gt;get_typekind( ).
     CREATE OBJECT o_cnx TYPE (_comp-name).
     s_cnx-hdr = _comp.    s_cnx-uuid = o_cnx-&gt;uuid.     s_cnx-version = o_cnx-&gt;version.   s_cnx-supported_types = o_cnx-&gt;supported_types.
     cnx_name-clsname = _comp-name.  s_cnx-signature = zaplink_object=&gt;get_class_signature( cnx_name ).
 
     SELECT SINGLE devclass INTO s_cnx-devclass
       FROM tadir
-      WHERE    pgmid = &apos;R3TR&apos;
+      WHERE    pgmid = d_kind
         AND   object = _comp-type
         AND obj_name = _comp-name.
 
@@ -361,20 +377,20 @@
 
 * Force RAW data type
     TRY.
+*        _regex = &apos;\\CLASS=&apos;.
+      CONCATENATE &apos;\\&apos; c_class-type &apos;=&apos; into _regex.
       LOOP AT o_cnx-&gt;supported_types ASSIGNING &lt;st&gt;.
         o_raw = o_cnx-&gt;create_new_raw( &lt;st&gt;-type ).
         CHECK o_raw-&gt;raw IS BOUND.
 *        o_ref ?= cl_abap_typedescr=&gt;describe_by_object_ref( o_raw-&gt;raw ).
 *        CHECK o_ref IS BOUND.
-        CLEAR s_subcomp.    s_subcomp-name = cl_abap_classdescr=&gt;get_class_name( o_raw-&gt;raw ).    s_subcomp-type = &apos;CLAS&apos;.
-*        DATA _regex TYPE string.
-*        _regex = &apos;\\CLASS=&apos;.
-*        REPLACE FIRST OCCURRENCE OF REGEX _regex IN s_subcomp-name WITH ``.
-        REPLACE FIRST OCCURRENCE OF REGEX &apos;\\CLASS=&apos; IN s_subcomp-name WITH ``.
+        CLEAR s_subcomp.    s_subcomp-name = cl_abap_classdescr=&gt;get_class_name( o_raw-&gt;raw ).    s_subcomp-type = c_class-type.
+        REPLACE FIRST OCCURRENCE OF REGEX _regex IN s_subcomp-name WITH ``.
+*        REPLACE FIRST OCCURRENCE OF REGEX &apos;\\CLASS=&apos; IN s_subcomp-name WITH ``.
 
         SELECT SINGLE devclass INTO s_subcomp-devclass
           FROM v_tralan
-          WHERE pgmid = &apos;R3TR&apos;
+          WHERE pgmid = c_class-kind
             AND object = s_subcomp-type
             AND obj_name = s_subcomp-name.
         s_subcomp-raw_data_type = abap_true.
@@ -387,7 +403,7 @@
 
     IF NOT s_cnx IS INITIAL.  INSERT s_cnx INTO TABLE zaplink-connectors.   ENDIF.
     CLEAR d_cnx. d_cnx-name = _comp-name.
-    IF NOT d_cnx IS INITIAL.  d_cnx-type = &apos;CLAS&apos;.  INSERT d_cnx INTO TABLE t_global_c.   ENDIF.
+    IF NOT d_cnx IS INITIAL.  d_cnx-type = c_class-type.  INSERT d_cnx INTO TABLE t_global_c.   ENDIF.
   ENDWHILE.
 
 * Remove missed commun components &amp; update component data
@@ -439,9 +455,10 @@
     CHECK o_cnx IS BOUND.
     CHECK o_cnx-&gt;do_exists( o_comp ) = abap_true.
 
+    d_kind = o_comp-&gt;get_typekind( ).
     SELECT SINGLE devclass INTO s_comp-devclass
       FROM tadir
-      WHERE    pgmid = &apos;R3TR&apos;
+      WHERE    pgmid = d_kind
         AND   object = &lt;c&gt;-type
         AND obj_name = &lt;c&gt;-name.
 

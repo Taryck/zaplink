@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5772CE0024D0549BCE554FC954D5869F" CODE_SIGNATURE="01DAC820750B8768BB1D5D3B59522A24" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="10D5037167714EAB60A5275E5183E62D" CODE_SIGNATURE="409ABF6CCF3224D0C515416DD8D7D762" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_GUI">
@@ -192,7 +192,7 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANGU="E" DESCRIPT="Action : Export or Import"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
+     <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Component List to allow user to change selected"/>
       </TEXTS>
@@ -445,22 +445,57 @@ INCLUDE zaplink_macros.</MACROS>
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="GET_VALUES" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Search Help for object of a type"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
+     <ITEM SCONAME="VALUE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA o_conn TYPE to_connector.
+
+  CHECK NOT type IS INITIAL.
+  TRY.
+      o_conn = zaplink_connectors=&gt;create_connector( type = type ).
+    CATCH zaplink_cx INTO o_cx.
+      IF o_cx-&gt;textid = zaplink_cx_connector=&gt;invalid_type.
+* There is no ZAPLink connector installed for object type &apos;&amp;1&apos;
+        MESSAGE w000(zaplink_gui) WITH type.
+        EXIT.
+      ELSE.
+        RAISE EXCEPTION o_cx.
+      ENDIF.
+  ENDTRY.
+
+  TRY.
+      CALL METHOD o_conn-&gt;get_values
+        EXPORTING
+          type = type
+        CHANGING
+          name = value.
+    CATCH zaplink_cx_connector INTO o_cx.
+      RAISE EXCEPTION o_cx.
+  ENDTRY.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="IMPORT" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Import container"/>
     </TEXTS>
     <PARAMETERS>
+     <ITEM SCONAME="ACTIVATE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE"/>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="File"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
+     <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="5 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Component List to import"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONTNAME">
+     <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONTNAME">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="For info : Container&apos;s name"/>
       </TEXTS>
@@ -479,8 +514,14 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA o_cont TYPE to_container.
-  DATA _cx    TYPE REF TO zaplink_cx.
+  DATA o_cont    TYPE to_container.
+  DATA _cx       TYPE REF TO zaplink_cx.
+  DATA o_activ   TYPE to_activate.
+  DATA o_list    TYPE to_list.
+  DATA t_keys    TYPE tt_compkeys.
+  DATA t_keys_ko TYPE tt_compkeys.
+  DATA o_comp    TYPE to_component.
+  DATA s_key     LIKE LINE OF t_keys_ko.
 
   TRY.
       CALL METHOD _get_objlist
@@ -543,6 +584,27 @@ INCLUDE zaplink_macros.</MACROS>
 *      list       =
 *      .
 
+      IF activate = abap_true.
+        o_list = list-&gt;selection_as_list( ).
+        t_keys = o_list-&gt;get_keys( ).
+        CREATE OBJECT o_activ
+          EXPORTING
+            obj_list = t_keys.
+        t_keys_ko = o_activ-&gt;activate( ).
+        SORT t_keys_ko BY type name.
+        list-&gt;init_sel_iter( ).
+        list-&gt;display_progress = abap_false.
+        o_comp = list-&gt;get_next( ).
+        WHILE o_comp IS BOUND.
+          s_key-type = o_comp-&gt;get_type( ).   s_key-name = o_comp-&gt;get_name( ).
+          READ TABLE t_keys_ko TRANSPORTING NO FIELDS
+               WITH KEY type = s_key-type
+                        name = s_key-name.
+          IF sy-subrc = 0.    o_comp-&gt;set_action( zaplink_list=&gt;sel_actions-not_active ).   ELSE.   o_comp-&gt;set_action( zaplink_list=&gt;sel_actions-activated ).   ENDIF.
+          o_comp = list-&gt;get_next( ).
+        ENDWHILE.
+      ENDIF.
+
     CATCH zaplink_cx INTO _cx.
       CREATE OBJECT o_mycx
         EXPORTING
@@ -551,6 +613,64 @@ INCLUDE zaplink_macros.</MACROS>
       o_mycx-&gt;update( ).
       RAISE EXCEPTION o_mycx.
 
+  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="REFRESH" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Export object list to container"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="File name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="OBJLIST" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Component List to export"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="With sub component"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA o_cont     TYPE to_container.
+
+  TRY.
+    CALL METHOD _get_objlist
+      EXPORTING
+        file      = file
+      IMPORTING
+        list      = objlist
+        container = o_cont.
+
+    IF o_options IS BOUND.
+      o_cont-&gt;set_options( o_options ).
+    ENDIF.
+
+    _update_subobj( o_list = objlist
+                     f_sub = with_subcomp ).
+    objlist-&gt;select_default( zaplink_list=&gt;sel_actions-export ).
+    objlist-&gt;change_selection( ).
+    o_cont-&gt;add_components( objlist ).
+
+    CALL METHOD _save
+      EXPORTING
+        file      = file
+      IMPORTING
+        container = o_cont.
+
+    mac_def_catch zaplink_cx_gui.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UNINSTALL" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -787,7 +907,7 @@ INCLUDE zaplink_macros.</MACROS>
     mac_def_catch zaplink_cx_gui.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_UPDATE_SUBOBJ" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+   <ITEM CMPNAME="_UPDATE_SUBOBJ" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Update sub object in list"/>
     </TEXTS>
@@ -821,6 +941,16 @@ INCLUDE zaplink_macros.</MACROS>
    <ITEM TYPEGROUP="SLIS" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
+   <ITEM CMPNAME="TO_ACTIVATE" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_ACTIVATE">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAPLink : Activate components"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CONNECTOR">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="ZAP Link Connector interface"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX_GUI">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9170BC75E793F92C8312A4D32622EC7C" CODE_SIGNATURE="4F272FB76089ABC938AB482F40ED1C05" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DEVCLASS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C0FAFA4A54128C3A5DAA853E20F257C5" CODE_SIGNATURE="6B1915073C4E71C8A617BE2F0E69B96F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DEVCLASS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -156,19 +156,21 @@ result = _devclass.</SOURCE>
   DATA _name        TYPE tadir-obj_name.
   DATA _type        TYPE tadir-object.
   DATA _exists      TYPE saus_dpara-tadirexist.
+  DATA _kind        TYPE tadir-pgmid.
 
   CHECK component IS BOUND.
 
   TRY.
       _type = component-&gt;get_type( ).
       _name = component-&gt;get_name( ).
+      _kind = component-&gt;get_typekind( ).
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
 
   CALL FUNCTION &apos;TRINT_TADIR_QUERY&apos;
     EXPORTING
-      iv_pgmid           = &apos;R3TR&apos;
+      iv_pgmid           = _kind
       iv_object          = _type
       iv_obj_name        = _name
     IMPORTING

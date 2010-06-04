@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F0139C5B059CE0DC3012EC40FD1DC94F" CODE_SIGNATURE="5F792F6D6CE975DB26C3BFF508604BCF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B3848A54C025DB2F07D17DE079521D42" CODE_SIGNATURE="AE8F261364F03AC52ADB24DF77ACCD40" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -219,11 +219,18 @@ result = _substitution.</SOURCE>
   DATA _pgmid       TYPE tadir-pgmid.
   DATA _act_devc    TYPE tadir-devclass.
   DATA _exists      TYPE saus_dpara-tadirexist.
+  DATA f_global     TYPE abap_bool.                         &quot; Issue 87
 
   CHECK component IS BOUND.
   result = component-&gt;directory.
 
   TRY.
+
+    _type = component-&gt;get_type( ).
+    _name = component-&gt;get_name( ).
+    _pgmid = component-&gt;get_typekind( ).                    &quot; Issue 87
+
+    IF _pgmid = &apos;R3TR&apos;.   f_global = abap_true.   ELSEIF _pgmid = &apos;LIMU&apos;.   f_global = abap_false.    ELSE.   EXIT.   ENDIF.    &quot; Form DETERMINE_LOCK_KEY(LSEUQF01) 125
 
     IF me-&gt;_devclass IS BOUND.
       TRY.
@@ -241,31 +248,29 @@ result = _substitution.</SOURCE>
       ENDTRY.
     ENDIF.
 
-    _type = component-&gt;get_type( ).
-    _name = component-&gt;get_name( ).
-    _pgmid = component-&gt;get_typekind( ).    &quot; Issue 87
-    CALL FUNCTION &apos;TRINT_TADIR_QUERY&apos;
-      EXPORTING
-        iv_pgmid           = _pgmid
-        iv_object          = _type
-        iv_obj_name        = _name
-      IMPORTING
+    IF _pgmid = &apos;R3TR&apos;.     &quot; Do TADIR entry : Issue 87
+      CALL FUNCTION &apos;TRINT_TADIR_QUERY&apos;
+        EXPORTING
+          iv_pgmid           = _pgmid
+          iv_object          = _type
+          iv_obj_name        = _name
+        IMPORTING
 *      EV_OBJECT          =
 *      EV_SRCSYSTEM       =
-        ev_devclass        = _act_devc
+          ev_devclass        = _act_devc
 *      EV_AUTHOR          =
 *      EV_GENFLAG         =
-        ev_exist           = _exists.
-    IF _exists IS INITIAL.
-      CALL FUNCTION &apos;TRINT_TADIR_INSERT&apos;
-        EXPORTING
+          ev_exist           = _exists.
+      IF _exists IS INITIAL.
+        CALL FUNCTION &apos;TRINT_TADIR_INSERT&apos;
+          EXPORTING
 *        AUTHOR                     = SY-UNAME
 *        MASTERLANG                 = &apos; &apos;
-          devclass                   = result-devclass
+            devclass                   = result-devclass
 *        GENFLAG                    = &apos; &apos;
-          object                     = _type
-          obj_name                   = _name
-          pgmid                      = _pgmid
+            object                     = _type
+            obj_name                   = _name
+            pgmid                      = _pgmid
 *        SRCSYSTEM                  = SY-SYSID
 *        EDTFLAG                    = &apos; &apos;
 *        SRCDEP                     =
@@ -276,26 +281,26 @@ result = _substitution.</SOURCE>
 *        DELFLAG                    = &apos; &apos;
 *      IMPORTING
 *        ES_TADIR                   =
-        EXCEPTIONS
-          object_exists_global       = 1
-          object_exists_local        = 2
-          OTHERS                     = 3.
-      IF sy-subrc &lt;&gt; 0.
-        mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_INSERT&apos; sy-subrc.
-      ENDIF.
-    ELSEIF _act_devc &lt;&gt; result-devclass.
-      CALL FUNCTION &apos;TRINT_TADIR_MODIFY&apos;
-        EXPORTING
+          EXCEPTIONS
+            object_exists_global       = 1
+            object_exists_local        = 2
+            OTHERS                     = 3.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_INSERT&apos; sy-subrc.
+        ENDIF.
+      ELSEIF _act_devc &lt;&gt; result-devclass.
+        CALL FUNCTION &apos;TRINT_TADIR_MODIFY&apos;
+          EXPORTING
 *        AUTHOR                     = &apos;~&apos;
 *        CPROJECT                   = &apos;~&apos;
-          devclass                   = result-devclass
+            devclass                   = result-devclass
 *        EDTFLAG                    = &apos;~&apos;
 *        EXISTS                     = &apos;~&apos;
 *        GENFLAG                    = &apos;~&apos;
 *        MASTERLANG                 = &apos;~&apos;
-          object                     = _type
-          obj_name                   = _name
-          pgmid                      = _pgmid
+            object                     = _type
+            obj_name                   = _name
+            pgmid                      = _pgmid
 *        SRCDEP                     = &apos;~&apos;
 *        SRCSYSTEM                  = &apos;~&apos;
 *        VERSID                     = &apos;~&apos;
@@ -307,13 +312,14 @@ result = _substitution.</SOURCE>
 *        TRANSL_TECH_TEXT           = &apos;~&apos;
 *      IMPORTING
 *        ES_TADIR                   =
-        EXCEPTIONS
-          object_exists_global       = 1
-          object_exists_local        = 2
-          object_has_no_tadir        = 3
-          OTHERS                     = 4.
-      IF sy-subrc &lt;&gt; 0.
-        mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_MODIFY&apos; sy-subrc.
+          EXCEPTIONS
+            object_exists_global       = 1
+            object_exists_local        = 2
+            object_has_no_tadir        = 3
+            OTHERS                     = 4.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_MODIFY&apos; sy-subrc.
+        ENDIF.
       ENDIF.
     ENDIF.
 
@@ -322,7 +328,7 @@ result = _substitution.</SOURCE>
         object                         = _name
         object_class                   = _type
         mode                           = &apos;I&apos;        &quot; Insert
-        global_lock                    = abap_true          &quot; R3TR
+        global_lock                    = f_global   &quot; R3TR or LIMU
         devclass                       = result-devclass
         korrnum                        = result-trkorr
 *      USE_KORRNUM_IMMEDIATEDLY       = &apos; &apos;
@@ -332,7 +338,7 @@ result = _substitution.</SOURCE>
 *      PROGRAM                        = &apos; &apos;
 *      OBJECT_CLASS_SUPPORTS_MA       = &apos; &apos;
 *      EXTEND                         = &apos; &apos;
-*      SUPPRESS_DIALOG                = &apos; &apos;
+        suppress_dialog                = abap_true
 *      MOD_LANGU                      = &apos; &apos;
 *      ACTIVATION_CALL                = &apos; &apos;
       IMPORTING

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F766EF8FB6EC3C256D06F81D4D591873" CODE_SIGNATURE="A2EE8A7BF24407D7DCB66ACEA121B64D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6D9DDF40BCDBEED484271CB44CE96884" CODE_SIGNATURE="B0509DA03F62D945788B45D36E2C9B99" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -54,6 +54,8 @@
       export    TYPE td_light VALUE icon_arrow_left,
       import    TYPE td_light VALUE icon_arrow_right,
       uninst    TYPE td_light VALUE icon_delete,
+      active    TYPE td_light VALUE icon_activate,
+      inactive  TYPE td_light VALUE icon_deactivate,
       rep_error TYPE td_light VALUE icon_message_error_small,   &quot; ICON_STATUS_CRITICAL ICON_ALERT ICON_MESSAGE_CRITICAL_SMALL
     END OF lights
 `
@@ -490,6 +492,10 @@ DATA t_allcomp   TYPE	tt_allcomplist.
       result-action = lights-export.
     WHEN sel_actions-uninstall.
       result-action = lights-uninst.
+    WHEN sel_actions-activated.
+      result-action = lights-active.
+    WHEN sel_actions-not_active.
+      result-action = lights-inactive.
     WHEN sel_actions-unreplicable.
       result-action = lights-rep_error.
   ENDCASE.
@@ -533,9 +539,9 @@ DATA t_allcomp   TYPE	tt_allcomplist.
           MESSAGE e003 WITH result-type result-name INTO result-msg.
         ENDIF.
       WHEN sel_actions-unreplicable.
-          result-status = lights-red.
+        result-status = lights-red.
 * Changes made on both (file&amp;SAP) for Object &apos;&amp;2&apos; (&amp;1) =&gt; Manual ajustment
-          MESSAGE e004 WITH result-type result-name INTO result-msg.
+        MESSAGE e004 WITH result-type result-name INTO result-msg.
       WHEN OTHERS.
     ENDCASE.
   ENDIF.</SOURCE>

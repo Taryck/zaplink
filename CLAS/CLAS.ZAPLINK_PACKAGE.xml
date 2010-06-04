@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="1C124F0C7A6B22C79E4601622BA2C07A" CODE_SIGNATURE="D7A79737C3FECB43FD13ED2069396422" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="44AA3F13B0C47DFD7961A412B832B88A" CODE_SIGNATURE="283F329A747100FB1386D7BD08E9865A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -327,7 +327,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
 
   CLEAR:
-    object-&gt;a0_maindata-author,         &quot; Issue 88 : Person responsible : Must be clear because user might not exists
+*    object-&gt;a0_maindata-author,         &quot; Issue 88 : Person responsible : Must be clear because user might not exists
     object-&gt;a0_maindata-created_by,
     object-&gt;a0_maindata-created_on,
     object-&gt;a0_maindata-changed_by,
@@ -364,7 +364,7 @@ INCLUDE zaplink_macros.</MACROS>
     object-&gt;a0_maindata-created_by,
     object-&gt;a0_maindata-created_on,
     object-&gt;a0_maindata-changed_by,
-    object-&gt;a0_maindata-as4user,    &quot; Issue 88 : Person responsible : Must be clear because user might not exists
+*    object-&gt;a0_maindata-as4user,    &quot; Issue 88 : Person responsible : Must be clear because user might not exists
     object-&gt;a0_maindata-changed_on.
 
   LOOP AT object-&gt;interfaces INTO o_raw_i.
@@ -414,10 +414,10 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="ALV_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_ELE"/>
     </PARAMETERS>
     <SOURCE>`
-  DATA :
-    object TYPE tadir-object,
-    obj_name TYPE tadir-obj_name,
-    korrnum TYPE tadir-korrnum.
+  DATA object   TYPE tadir-object.
+  DATA obj_name TYPE tadir-obj_name.
+  DATA korrnum  TYPE tadir-korrnum.
+  DATA d_kind   TYPE tadir-pgmid.
   FIELD-SYMBOLS:
     &lt;e&gt; LIKE LINE OF alv_data.
 
@@ -426,13 +426,14 @@ INCLUDE zaplink_macros.</MACROS>
           WHERE NOT select IS INITIAL.
     object = &lt;e&gt;-elem_type.
     obj_name = &lt;e&gt;-elem_key.
+    d_kind = zaplink_connectors=&gt;get_typekind( object ).
     CALL FUNCTION &apos;TRINT_TADIR_INTERFACE&apos;
       EXPORTING
 *       WI_DELETE_TADIR_ENTRY                = &apos; &apos;
 *       WI_REMOVE_REPAIR_FLAG                = &apos; &apos;
 *       WI_SET_REPAIR_FLAG                   = &apos; &apos;
         wi_test_modus                        = &apos; &apos;
-        wi_tadir_pgmid                       = &apos;R3TR&apos;
+        wi_tadir_pgmid                       = d_kind
         wi_tadir_object                      = object
         wi_tadir_obj_name                    = obj_name
         wi_tadir_korrnum                     = korrnum
@@ -1123,16 +1124,17 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  DATA _wa LIKE LINE OF alv_data.
-  FIELD-SYMBOLS:
-    &lt;e&gt; LIKE LINE OF elements.
+  DATA _wa     LIKE LINE OF alv_data.
+  DATA d_kind  TYPE td_transport_kind.
+  FIELD-SYMBOLS: &lt;e&gt; LIKE LINE OF elements.
 
   LOOP AT elements ASSIGNING &lt;e&gt;.
     MOVE-CORRESPONDING &lt;e&gt; TO _wa.
+    d_kind = zaplink_connectors=&gt;get_typekind( _wa-elem_type ).
     SELECT SINGLE devclass
       INTO _wa-td_pack
       FROM tadir
-      WHERE pgmid = &apos;R3TR&apos;
+      WHERE pgmid = d_kind
         AND object = _wa-elem_type
         AND obj_name = _wa-elem_key.
     IF sy-subrc &lt;&gt; 0.

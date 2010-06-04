@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4A46A217153967A35BA7E7BD07A54822" CODE_SIGNATURE="2760B593ADD8F7141D8A8A818456F479" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F54454B93A84A14DF7445162A587CA81" CODE_SIGNATURE="0CAD62019A0042372FD4166471794C70" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" WITH_UNIT_TESTS="X">
@@ -179,7 +179,7 @@ CLASS abap_unit_testclass IMPLEMENTATION.
 ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="CALCULATE_MD5_HASH" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CALCULATE_MD5_HASH" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Calculate MD5 HASH for a string"/>
     </TEXTS>
@@ -215,7 +215,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
       OTHERS               = 3.
   IF sy-subrc = 0.    result = _md5.    ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CLEAN_ABAP_STRING" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CLEAN_ABAP_STRING" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Clean ABAP String of not important characters."/>
     </TEXTS>
@@ -237,7 +237,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;cr_lf IN result WITH ``.
   REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;form_feed IN result WITH ``.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONDENSE_ABAP_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CONDENSE_ABAP_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Condense source code"/>
     </TEXTS>
@@ -257,7 +257,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
     IF &lt;l&gt;(1) = &apos;&quot;&apos;.   DELETE table. CONTINUE. ENDIF.  &quot; commented line like :     &quot; comment
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_ABAP_LINE" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CONV_ABAP_LINE" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert ABAP Line : Revome tabulations"/>
     </TEXTS>
@@ -296,7 +296,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
 * HINT TRINT_OLE_SORT_COMPRESS
 * HINT TR_SORT_OBJECT_AND_KEY_LIST
   DATA _objlist LIKE LINE OF result.
-  data w_tadir TYPE tadir.
+  DATA w_tadir TYPE tadir.
   FIELD-SYMBOLS &lt;limu&gt; LIKE LINE OF e071.
 
   LOOP AT e071 ASSIGNING &lt;limu&gt;.
@@ -343,7 +343,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   SORT result BY type name.
   DELETE ADJACENT DUPLICATES FROM result COMPARING type name.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_TABLE_2UPCASE" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CONV_TABLE_2UPCASE" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert source code to upercase"/>
     </TEXTS>
@@ -358,7 +358,50 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   FIELD-SYMBOLS &lt;l&gt; type any.
   LOOP AT table ASSIGNING &lt;l&gt;.    TRANSLATE &lt;l&gt; TO UPPER CASE.  ENDLOOP.    &quot;#EC SYNTCHAR</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CLAS_NAME" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDDECLTYP="1">
+   <ITEM CMPNAME="EXTEND_PACKAGES" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Extend Package to sub_packages"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="PACKAGES" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TR_PACKAGES"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TR_PACKAGES"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA r_exclu TYPE tr_packages.
+  DATA t_level TYPE tr_packages.
+  DATA s_pack LIKE LINE OF result.
+
+  CHECK NOT packages IS INITIAL.
+  r_exclu = packages.   DELETE r_exclu WHERE sign &lt;&gt; &apos;E&apos;. &quot; Keep only Devcclass to remove
+
+* Package selection
+  SELECT devclass AS low
+      FROM tdevc
+      INTO CORRESPONDING FIELDS OF TABLE result
+      WHERE devclass IN packages.
+
+* Package extention
+  t_level = result.
+  WHILE NOT t_level[] IS INITIAL.
+    SORT t_level.
+    DELETE ADJACENT DUPLICATES FROM t_level.
+
+    SELECT devclass AS low
+        FROM tdevc
+        INTO CORRESPONDING FIELDS OF TABLE t_level
+           FOR ALL ENTRIES IN t_level
+        WHERE parentcl = t_level-low.
+
+    APPEND LINES OF t_level TO result.
+  ENDWHILE.
+
+  IF NOT r_exclu IS INITIAL.    DELETE result WHERE NOT low IN r_exclu.    ENDIF.
+
+  SORT result.    DELETE ADJACENT DUPLICATES FROM result COMPARING low.
+
+  s_pack-sign = &apos;I&apos;.  s_pack-option = &apos;EQ&apos;.   MODIFY result FROM s_pack TRANSPORTING sign option WHERE NOT low IS INITIAL.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_CLAS_NAME" EXPOSURE="2" STATE="1" EDITORDER="13 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get object clas name"/>
     </TEXTS>
@@ -409,7 +452,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
     <SOURCE>`
   result = get_keys_from_tadir( packages = packages   ext = ext ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_KEYS_FROM_TADIR" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_KEYS_FROM_TADIR" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get object list from TADIR : Package, type, author,..."/>
     </TEXTS>
@@ -543,7 +586,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
     result = conv_limu_2_r3tr( objlist ).
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INVERSE_TABLE_ORDER" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
+   <ITEM CMPNAME="INVERSE_TABLE_ORDER" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Inverse standard table order"/>
     </TEXTS>
@@ -566,7 +609,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   ENDLOOP.
   SUBTRACT 1 FROM x.    CHECK x &gt; 0.   DELETE my_table FROM 1 TO x.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="PRETTY_PRINTER" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
+   <ITEM CMPNAME="PRETTY_PRINTER" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Apply Pretty Printer to Source code"/>
     </TEXTS>
@@ -950,7 +993,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
 **     ENH_INSTANCE                   =
 **     SUBCONTAINER_TAB               =</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TABLE_2_STRING" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+   <ITEM CMPNAME="TABLE_2_STRING" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Convert standard table to string"/>
     </TEXTS>
@@ -974,6 +1017,61 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
     CONCATENATE result cl_abap_char_utilities=&gt;newline s INTO result.
   ENDLOOP.
   SHIFT result LEFT BY 1 PLACES.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="UNZIP_STRING" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="unGZIP String"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="XSTRING"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
+    </PARAMETERS>
+    <SOURCE>`
+  TRY.
+      CALL METHOD cl_abap_gzip=&gt;decompress_text
+        EXPORTING
+          gzip_in      = data
+*          gzip_in_len  = -1
+          conversion   = &apos;DEFAULT&apos;
+        IMPORTING
+*          text_out_len =
+          text_out     = result.
+    CATCH cx_parameter_invalid_range.
+      result = data.
+    CATCH cx_sy_buffer_overflow.
+      result = data.
+    CATCH cx_sy_conversion_codepage.
+      result = data.
+    CATCH cx_sy_compression_error.
+      result = data.
+  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="ZIP_STRING" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="GZIP String"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="XSTRING"/>
+    </PARAMETERS>
+    <SOURCE>`
+  TRY.
+      CALL METHOD cl_abap_gzip=&gt;compress_text
+        EXPORTING
+          text_in        = data
+*      text_in_len    = -1
+          compress_level = 9
+          conversion     = &apos;DEFAULT&apos;
+        IMPORTING
+*      gzip_out_len   =
+          gzip_out       = result.
+    CATCH cx_parameter_invalid_range.
+      result = data.
+    CATCH cx_sy_buffer_overflow.
+      result = data.
+    CATCH cx_sy_conversion_codepage.
+      result = data.
+  ENDTRY.</SOURCE>
    </ITEM>
   </METHODS>
   <TYPEGROUPS>

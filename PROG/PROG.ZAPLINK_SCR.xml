@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2CA25B6490A57B1FF0BADB9D164EFC91" CODE_SIGNATURE="42861759CC53DF71BE52112287D0F23F" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="32BB86D10217BF1F8DA4ADAA7505835A" CODE_SIGNATURE="F839EAEFA29B4DE2B0FF68E5F8E92D79" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
@@ -20,9 +20,10 @@ SELECTION-SCREEN ULINE.
 PARAMETER a_uninst TYPE c RADIOBUTTON GROUP r3.  &quot;uninstall
 SELECTION-SCREEN ULINE.
 PARAMETER a_auto TYPE c RADIOBUTTON GROUP r3.
+PARAMETER a_synch TYPE c RADIOBUTTON GROUP r3.
 SELECTION-SCREEN ULINE.
 PARAMETER a_add TYPE c RADIOBUTTON GROUP r3.
-*PARAMETER a_add_p TYPE c RADIOBUTTON GROUP r3.
+PARAMETER a_add_p TYPE c RADIOBUTTON GROUP r3.
 PARAMETER a_add_tr TYPE c RADIOBUTTON GROUP r3.
 SELECTION-SCREEN END OF BLOCK mode.
 
@@ -37,8 +38,8 @@ SELECTION-SCREEN END OF BLOCK fil.
 *Options
 SELECTION-SCREEN BEGIN OF BLOCK opt WITH FRAME TITLE text-bop.
 PARAMETER c_name  TYPE zaplink_gui=&gt;td_contname MODIF ID cre.
-*PARAMETER co_type TYPE ko100-object MODIF ID add.
-*PARAMETER co_name TYPE zaplink_gui=&gt;td_compname MODIF ID add.
+PARAMETER co_type TYPE ko100-object MODIF ID aco.
+PARAMETER co_name TYPE zaplink_gui=&gt;td_compname MODIF ID aco.
 SELECT-OPTIONS:
   s_srcs FOR tadir-srcsystem MODIF ID add DEFAULT sy-sysid,
   s_type FOR tadir-object MODIF ID add,
@@ -48,7 +49,7 @@ PARAMETERS:
   p_ext TYPE abap_bool AS CHECKBOX MODIF ID add DEFAULT abap_true.
 SELECT-OPTIONS:
   s_author FOR tadir-author  MODIF ID add DEFAULT sy-uname.
-PARAMETER package      TYPE tadir-devclass MODIF ID adp.
+*PARAMETER package      TYPE tadir-devclass MODIF ID adp.
 SELECT-OPTIONS p_tr FOR e071-trkorr NO INTERVALS NO-EXTENSION MODIF ID atr.
 
 SELECTION-SCREEN:
@@ -56,6 +57,7 @@ SELECTION-SCREEN:
     TAB (35) text-oth USER-COMMAND sub DEFAULT SCREEN 130,
     TAB (35) text-dev USER-COMMAND devc DEFAULT SCREEN 110,
     TAB (35) text-tro USER-COMMAND tr DEFAULT SCREEN 120,
+    TAB (35) text-act USER-COMMAND act DEFAULT SCREEN 140,
   END OF BLOCK t_block.
 
 SELECTION-SCREEN END OF BLOCK opt.
@@ -89,22 +91,78 @@ PARAMETERS f_sub TYPE c RADIOBUTTON GROUP rs MODIF ID sub DEFAULT &apos;X&apos;.
 PARAMETERS f_nosub TYPE c RADIOBUTTON GROUP rs MODIF ID sub.
 SELECTION-SCREEN END OF SCREEN 130.
 
+SELECTION-SCREEN BEGIN OF SCREEN 140 AS SUBSCREEN.
+PARAMETERS p_activ AS CHECKBOX TYPE abap_bool MODIF ID 140.
+SELECTION-SCREEN END OF SCREEN 140.
+
 *\--------------------------------------------------------------------/
-DATA s_scr_name_create TYPE RANGE OF screen-name.
+
+DATA s_scr_name_create  TYPE RANGE OF screen-name.
 DATA s_scr_name_display TYPE RANGE OF screen-name.
-DATA s_scr_name_import TYPE RANGE OF screen-name.
-DATA s_scr_name_auto TYPE RANGE OF screen-name.
-DATA s_scr_name_add TYPE RANGE OF screen-name.
-DATA s_scr_name_add_tr TYPE RANGE OF screen-name.
-DATA s_scr_name_add_p TYPE RANGE OF screen-name.
-DATA s_scr_name_uninst TYPE RANGE OF screen-name.
-DATA s_scr_name_tabs TYPE RANGE OF screen-name.
+DATA s_scr_name_import  TYPE RANGE OF screen-name.
+DATA s_scr_name_auto    TYPE RANGE OF screen-name.
+DATA s_scr_name_synch   TYPE RANGE OF screen-name.
+DATA s_scr_name_add     TYPE RANGE OF screen-name.
+DATA s_scr_name_add_tr  TYPE RANGE OF screen-name.
+DATA s_scr_name_add_comp TYPE RANGE OF screen-name.
+DATA s_scr_name_uninst  TYPE RANGE OF screen-name.
+DATA s_scr_name_tabs    TYPE RANGE OF screen-name.
 DATA s_scr_name_activetabs TYPE RANGE OF screen-name.
-DATA s_scr_name_frame TYPE RANGE OF screen-name.
-DATA s_scr_name_all TYPE RANGE OF screen-name.
-DATA d_file_type TYPE string.
+DATA s_scr_name_frame   TYPE RANGE OF screen-name.
+DATA s_scr_name_all     TYPE RANGE OF screen-name.
+DATA d_file_type        TYPE string.
+
 */----------------------selection screen events-----------------------\
 INITIALIZATION.
+  PERFORM on_initialization.
+
+AT SELECTION-SCREEN.
+
+AT SELECTION-SCREEN OUTPUT.
+  PERFORM on_scr_output.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR co_type.
+  zaplink_connectors=&gt;get_values( CHANGING type = co_type ).
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR co_name.
+  PERFORM on_name_request USING co_type
+                       CHANGING co_name.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR s_type-low.
+  zaplink_connectors=&gt;get_values( CHANGING type = s_type-low ).
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR s_type-high.
+  zaplink_connectors=&gt;get_values( CHANGING type = s_type-high ).
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR s_name-low.
+  PERFORM on_name_request USING s_type-low
+                       CHANGING s_name-low.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR s_name-high.
+  DATA d_type TYPE t_obj_type.
+  IF s_type-high IS INITIAL.    d_type = s_type-low.    ELSE.   d_type = s_type-high.   ENDIF.
+  PERFORM on_name_request USING d_type
+                       CHANGING s_name-low.
+
+AT SELECTION-SCREEN ON HELP-REQUEST FOR p_file.
+  PERFORM show_help_markups.
+
+AT SELECTION-SCREEN ON HELP-REQUEST FOR c_name.
+  PERFORM show_help_markups.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
+  PERFORM on_file_request.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_tr-low.
+  PERFORM on_tr_request.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_tr-high.
+  PERFORM on_tr_request.
+
+*&amp;---------------------------------------------------------------------*
+*&amp;      Form  ON_INITIALIZATION
+*&amp;---------------------------------------------------------------------*
+FORM on_initialization .
   DATA clskey TYPE seoclskey.
   DATA not_active TYPE seox_boolean.
   DATA t_fields TYPE  dyfatc_tab.
@@ -166,19 +224,20 @@ INITIALIZATION.
         APPEND _scr TO s_scr_name_add.
         APPEND _scr TO s_scr_name_auto.
         APPEND _scr TO s_scr_name_all.
-      WHEN &apos;110&apos; OR &apos;120&apos;.
+      WHEN &apos;110&apos; OR &apos;120&apos; OR &apos;140&apos;.
         APPEND _scr TO s_scr_name_import.
         APPEND _scr TO s_scr_name_all.
       WHEN &apos;130&apos;.
         APPEND _scr TO s_scr_name_add.
+        APPEND _scr TO s_scr_name_synch.
         APPEND _scr TO s_scr_name_auto.
-        APPEND _scr TO s_scr_name_add_p.
+        APPEND _scr TO s_scr_name_add_comp.
         APPEND _scr TO s_scr_name_add_tr.
         APPEND _scr TO s_scr_name_uninst.
         APPEND _scr TO s_scr_name_import.
         APPEND _scr TO s_scr_name_all.
-      WHEN &apos;ADP&apos;.
-        APPEND _scr TO s_scr_name_add_p.
+      WHEN &apos;ACO&apos;.
+        APPEND _scr TO s_scr_name_add_comp.
         APPEND _scr TO s_scr_name_all.
       WHEN &apos;ATR&apos;.
         APPEND _scr TO s_scr_name_add_tr.
@@ -187,8 +246,9 @@ INITIALIZATION.
         IF &lt;f&gt;-name = &apos;P_ZIP&apos; AND d_file_type IS INITIAL. CONTINUE. ENDIF.
         APPEND _scr TO s_scr_name_create.
         APPEND _scr TO s_scr_name_add.
+        APPEND _scr TO s_scr_name_synch.
         APPEND _scr TO s_scr_name_auto.
-        APPEND _scr TO s_scr_name_add_p.
+        APPEND _scr TO s_scr_name_add_comp.
         APPEND _scr TO s_scr_name_add_tr.
         APPEND _scr TO s_scr_name_display.
         APPEND _scr TO s_scr_name_uninst.
@@ -197,7 +257,7 @@ INITIALIZATION.
     ENDCASE.
     _scr-high = &lt;f&gt;-push_fcode.
     CASE &lt;f&gt;-push_fcode.      &quot;USER-COMMAND
-      WHEN &apos;DEVC&apos; OR &apos;TR&apos;.
+      WHEN &apos;DEVC&apos; OR &apos;TR&apos; OR &apos;ACT&apos;.
         APPEND _scr TO s_scr_name_tabs.
         APPEND _scr TO s_scr_name_import.
         APPEND _scr TO s_scr_name_all.
@@ -205,7 +265,8 @@ INITIALIZATION.
         APPEND _scr TO s_scr_name_tabs.
         APPEND _scr TO s_scr_name_add.
         APPEND _scr TO s_scr_name_auto.
-        APPEND _scr TO s_scr_name_add_p.
+        APPEND _scr TO s_scr_name_synch.
+        APPEND _scr TO s_scr_name_add_comp.
         APPEND _scr TO s_scr_name_add_tr.
         APPEND _scr TO s_scr_name_uninst.
         APPEND _scr TO s_scr_name_import.
@@ -215,10 +276,11 @@ INITIALIZATION.
       APPEND _scr TO s_scr_name_frame.
     ENDIF.
   ENDLOOP.
-
-AT SELECTION-SCREEN.
-
-AT SELECTION-SCREEN OUTPUT.
+ENDFORM.                    &quot; ON_INITIALIZATION
+*&amp;---------------------------------------------------------------------*
+*&amp;      Form  ON_SCR_OUTPUT
+*&amp;---------------------------------------------------------------------*
+FORM on_scr_output .
 * Options : DEVC &amp; TR
   DATA _tab LIKE LINE OF s_scr_name_activetabs.
   DATA _active TYPE i.
@@ -230,23 +292,18 @@ AT SELECTION-SCREEN OUTPUT.
         CHECK screen-name IN s_scr_name_all.
 
         _active = 0.
-        IF a_create = &apos;X&apos; AND screen-name IN s_scr_name_create.
-          _active = 1.
-        ELSEIF a_import = &apos;X&apos; AND screen-name IN s_scr_name_import.
-          _active = 1.
-        ELSEIF a_add = &apos;X&apos; AND screen-name IN s_scr_name_add.
-          _active = 1.
-        ELSEIF a_auto = &apos;X&apos; AND screen-name IN s_scr_name_auto.
-          _active = 1.
-*        ELSEIF a_add_p = &apos;X&apos; AND screen-name IN s_scr_name_add_p.
-*          _active = 1.
-        ELSEIF a_add_tr = &apos;X&apos; AND screen-name IN s_scr_name_add_tr.
-          _active = 1.
-        ELSEIF a_dsp = &apos;X&apos; AND screen-name IN s_scr_name_display.
-          _active = 1.
-        ELSEIF a_uninst = &apos;X&apos; AND screen-name IN s_scr_name_uninst.
-          _active = 1.
-        ENDIF.
+        CASE abap_true.
+          WHEN a_create.    IF screen-name IN s_scr_name_create.    _active = 1.    ENDIF.
+          WHEN a_auto.      IF screen-name IN s_scr_name_auto.      _active = 1.    ENDIF.
+          WHEN a_synch.     IF screen-name IN s_scr_name_synch.     _active = 1.    ENDIF.
+          WHEN a_add.       IF screen-name IN s_scr_name_add.       _active = 1.    ENDIF.
+          WHEN a_import.    IF screen-name IN s_scr_name_import.    _active = 1.    ENDIF.
+          WHEN a_dsp.       IF screen-name IN s_scr_name_display.   _active = 1.    ENDIF.
+          WHEN a_uninst.    IF screen-name IN s_scr_name_uninst.    _active = 1.    ENDIF.
+          when a_add_p.     IF screen-name IN s_scr_name_add_comp.     _active = 1.    ENDIF.
+          WHEN a_add_tr.    IF screen-name IN s_scr_name_add_tr.    _active = 1.    ENDIF.
+        ENDCASE.
+
         screen-active = _active. MODIFY SCREEN.
       ENDLOOP.
 
@@ -276,9 +333,11 @@ AT SELECTION-SCREEN OUTPUT.
             t_block-dynnr = &apos;0120&apos;.
           WHEN &apos;SUB&apos;.
             t_block-dynnr = &apos;0130&apos;.
+          WHEN &apos;ACT&apos;.
+            t_block-dynnr = &apos;0140&apos;.
         ENDCASE.
       ENDIF.
-    WHEN &apos;0110&apos; OR &apos;0120&apos;.
+    WHEN &apos;0110&apos; OR &apos;0120&apos; OR &apos;0140&apos;.
       IF a_import = &apos;X&apos;. _active = 1. ELSE. _active = 0. ENDIF.
       LOOP AT SCREEN. screen-active = _active. MODIFY SCREEN. ENDLOOP.
     WHEN &apos;0130&apos;.
@@ -286,25 +345,18 @@ AT SELECTION-SCREEN OUTPUT.
       IF a_create = &apos;X&apos; OR a_dsp = &apos;X&apos;. _active = 0. ENDIF.
       LOOP AT SCREEN. screen-active = _active. MODIFY SCREEN. ENDLOOP.
   ENDCASE.
-
-*** value request for input fields
-*AT SELECTION-SCREEN ON VALUE-REQUEST FOR co_type.
-*  zaplink_connectors=&gt;get_values( CHANGING type = co_type ).
-
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR s_type-low.
-  zaplink_connectors=&gt;get_values( CHANGING type = s_type-low ).
-
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR s_type-high.
-  zaplink_connectors=&gt;get_values( CHANGING type = s_type-high ).
-
-AT SELECTION-SCREEN ON HELP-REQUEST FOR p_file.
+ENDFORM.                    &quot; ON_SCR_OUTPUT
+*&amp;---------------------------------------------------------------------*
+*&amp;      Form  SHOW_HELP_MARKUPS
+*&amp;---------------------------------------------------------------------*
+FORM show_help_markups .
   DATA t_links TYPE STANDARD TABLE OF tline WITH DEFAULT KEY.
   CALL FUNCTION &apos;HELP_OBJECT_SHOW&apos;
     EXPORTING
       dokclass                            = &apos;TX&apos;
 *     DOKLANGU                            = SY-LANGU
       dokname                             = &apos;ZAPLINK-P_FILE&apos;
-      DOKTITLE                            = &apos;Filename documentation&apos;(hfi)
+      doktitle                            = &apos;Filename documentation&apos;(hfi)
       called_by_program                   = sy-repid
       called_by_dynp                      = sy-dynnr
 *     CALLED_FOR_TAB                      = &apos; &apos;
@@ -328,8 +380,11 @@ AT SELECTION-SCREEN ON HELP-REQUEST FOR p_file.
     MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
             WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
   ENDIF.
-
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
+ENDFORM.                    &quot; SHOW_HELP_MARKUPS
+*&amp;---------------------------------------------------------------------*
+*&amp;      Form  ON_FILE_REQUEST
+*&amp;---------------------------------------------------------------------*
+FORM on_file_request .
   DATA l_file TYPE zaplink_gui=&gt;td_filename.
 
   IF f_local IS NOT INITIAL.
@@ -352,8 +407,11 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_file.
       p_file = l_file.
     ENDIF.
   ENDIF.
-
-AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_tr-low.
+ENDFORM.                    &quot; ON_FILE_REQUEST
+*&amp;---------------------------------------------------------------------*
+*&amp;      Form  ON_TR_REQUEST
+*&amp;---------------------------------------------------------------------*
+FORM on_tr_request .
   DATA:
     d_org_type   TYPE trwbo_calling_organizer,
     d_request TYPE trwbo_request_header,
@@ -369,8 +427,18 @@ AT SELECTION-SCREEN ON VALUE-REQUEST FOR p_tr-low.
       es_selected_task    = d_task.
 
   p_tr-low = d_request-trkorr.
-
-*\--------------------------------------------------------------------/</SOURCE>
+ENDFORM.                    &quot; ON_TR_REQUEST
+*&amp;---------------------------------------------------------------------*
+*&amp;      Form  ON_NAME_REQUEST
+*&amp;---------------------------------------------------------------------*
+FORM on_name_request  USING p_type TYPE t_obj_type
+                   CHANGING p_name.
+  DATA d_name TYPE t_obj_name.
+  d_name = p_name.
+  zaplink_gui=&gt;get_values( EXPORTING type = p_type
+                           CHANGING value = d_name ).
+  p_name = d_name.
+ENDFORM.                    &quot; ON_NAME_REQUEST</SOURCE>
   <TEXTSPOOL>
    <ITEM ID="R">
     <TEXTS>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="CFFC82DDD592A02AE8C68CE72A53EC59" CODE_SIGNATURE="6CCC2609410FE93F3E96F5AF39818CD3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="696AD460C1630DF638D35ECC382698AE" CODE_SIGNATURE="90AFE17439350E1ACC223A91BA1E2D17" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -20,6 +20,7 @@ AS</DOCUMENTATION>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
+   <ITEM CMPNAME="COMP_NODENAME" EXPOSURE="1" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="COMP_NODENAME"/>
    <ITEM CMPNAME="TD_COMPEXISTS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPEXISTS"/>
    <ITEM CMPNAME="TD_COMPNAME" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPNAME"/>
    <ITEM CMPNAME="TD_COMPTEXT" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPTEXT"/>
@@ -33,12 +34,19 @@ AS</DOCUMENTATION>
    <ITEM CMPNAME="TD_TRANSPORT_KIND" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TRANSPORT_KIND"/>
    <ITEM CMPNAME="TD_TYPEORDER" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TYPEORDER"/>
    <ITEM CMPNAME="TD_TYPE_AS_TEXT" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TYPE_AS_TEXT"/>
+   <ITEM CMPNAME="TO_XML" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TO_XML"/>
+   <ITEM CMPNAME="TS_COMPTYPE" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPTYPE"/>
    <ITEM CMPNAME="TS_CONN_CLASS" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_CONN_CLASS"/>
    <ITEM CMPNAME="TS_CONN_DEF" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_CONN_DEF"/>
    <ITEM CMPNAME="TT_TYPELIST" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TYPELIST"/>
    <ITEM CMPNAME="TT_TYPES" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TYPES"/>
   </ALIASES>
   <ATTRIBUTS>
+   <ITEM CMPNAME="C_CLASS" STATE="1" EDITORDER="6 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Component type def"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="EXISTS" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF exists,
           exists     TYPE td_connexists VALUE ZAPLINK_DATATYPES~EXISTS-exists,
@@ -188,9 +196,11 @@ INCLUDE zaplink_macros.</MACROS>
 
   saptypes = t_saptypes.
 
+  c_class-type = &apos;CLAS&apos;.    c_class-kind = zaplink_connectors=&gt;get_typekind( c_class-type ).
+
   s_saptypes-order = 50.  MODIFY saptypes FROM s_saptypes TRANSPORTING order WHERE object = &apos;DEVC&apos;.
   s_saptypes-order = 100. MODIFY saptypes FROM s_saptypes TRANSPORTING order WHERE object = &apos;INTF&apos;.
-  s_saptypes-order = 150. MODIFY saptypes FROM s_saptypes TRANSPORTING order WHERE object = &apos;CLAS&apos;.
+  s_saptypes-order = 150. MODIFY saptypes FROM s_saptypes TRANSPORTING order WHERE object = c_class-type.
 
   TRY.
       reset_connectors( ).
@@ -380,7 +390,7 @@ INCLUDE zaplink_macros.</MACROS>
          AND NOT uuid IS INITIAL.
 *    TRY.
         CREATE OBJECT o_comp.
-        o_comp-&gt;set_type( &apos;CLAS&apos; ).
+        o_comp-&gt;set_type( c_class-type ).
         o_comp-&gt;set_name( &lt;c&gt;-classname ).
         result-&gt;add( o_comp ).
 *      CATCH zaplink_cx.
@@ -522,11 +532,79 @@ INCLUDE zaplink_macros.</MACROS>
         CHANGING
           any    = result.
     CATCH zaplink_cx INTO _cx.
-      create OBJECT o_mycx EXPORTING
-             textid = zaplink_cx=&gt;SYSTEM_ERROR
-            prev_cx = _cx.
+      CREATE OBJECT o_mycx
+        EXPORTING
+          textid  = zaplink_cx=&gt;system_error
+          prev_cx = _cx.
       o_mycx-&gt;update( ).
       RAISE EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="RAW_2_STRING" EXPOSURE="2" STATE="1" EDITORDER="17 " MTDDECLTYP="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert RAW to String"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_RAW_BASE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Base RAW component without data"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA o_xml  TYPE to_xml.
+
+  CHECK data IS BOUND.
+  TRY.
+      o_xml = raw_2_xml( data ).
+      result = xml_2_string( o_xml ).
+    CATCH zaplink_cx INTO o_cx.
+      CREATE OBJECT o_mycx
+        EXPORTING
+          textid  = zaplink_cx=&gt;system_error
+          prev_cx = o_cx.
+      o_mycx-&gt;update( ).
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="RAW_2_XML" EXPOSURE="2" STATE="1" EDITORDER="20 " MTDDECLTYP="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert RAW to String"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_RAW_BASE"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_XML"/>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA ez_xml    TYPE REF TO zaplink_easyxml.
+
+  CHECK data IS BOUND.
+
+  CREATE OBJECT ez_xml.
+  TRY.
+      result = ez_xml-&gt;any2xml( any       = data
+                                type      = comp_nodename ).
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="RESET_CONNECTORS" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1" MTDNEWEXC="X">
@@ -614,6 +692,37 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="STRING_2_XML" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert string to XML Document"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_XML"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA o_streamfactory  TYPE REF TO if_ixml_stream_factory.
+  DATA o_stream         TYPE REF TO if_ixml_istream.
+  DATA o_parser         TYPE REF TO if_ixml_parser.
+  DATA _tempstring      TYPE string.
+  DATA _rc              TYPE sysubrc.
+  DATA o_doc            TYPE to_xml.
+
+  CHECK NOT data IS INITIAL.
+
+  TRY.
+      o_streamfactory = xmlengine-&gt;create_stream_factory( ).
+      o_doc = xmlengine-&gt;create_document( ).
+      o_stream = o_streamfactory-&gt;create_istream_string( data ).
+      o_parser = xmlengine-&gt;create_parser(  stream_factory = o_streamfactory
+                                            istream        = o_stream
+                                            document       = o_doc ).
+      o_parser-&gt;parse( ).
+    CATCH cx_root.
+  ENDTRY.
+
+  IF o_doc IS BOUND.  result = o_doc.   ENDIF.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="TYPE2TEXT" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANGU="E" DESCRIPT="Get object Type as text"/>
@@ -631,6 +740,53 @@ INCLUDE zaplink_macros.</MACROS>
   IF sy-subrc = 0.
     result = &lt;t&gt;-text.
   ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="XML_2_STRING" EXPOSURE="2" STATE="1" EDITORDER="18 " MTDDECLTYP="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Convert XML document to String"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Base RAW component without data"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="XML" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_XML">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA o_xmlengine    TYPE REF TO if_ixml.
+  DATA _streamfactory TYPE REF TO if_ixml_stream_factory.
+  DATA _outputstream TYPE REF TO if_ixml_ostream.
+  DATA _renderer TYPE REF TO if_ixml_renderer.
+  DATA _tempstring TYPE string.
+  DATA _printxmldoc TYPE REF TO cl_xml_document.
+  DATA _rc      TYPE sysubrc.
+
+  CHECK xml IS BOUND.
+  o_xmlengine = cl_ixml=&gt;create( ).
+  _streamfactory = o_xmlengine-&gt;create_stream_factory( ).
+  _outputstream = _streamfactory-&gt;create_ostream_cstring( _tempstring ).
+  _renderer = xmlengine-&gt;create_renderer( document = xml
+                                           ostream = _outputstream ).
+  _renderer-&gt;set_normalizing( ).
+  _rc = _renderer-&gt;render( ).
+  CREATE OBJECT _printxmldoc.
+  _rc = _printxmldoc-&gt;parse_string( _tempstring ).
+
+  WHILE _tempstring(1) &lt;&gt; &apos;&lt;&apos;.    SHIFT _tempstring LEFT BY 1 PLACES.   ENDWHILE.
+
+  result = _tempstring.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_ADD_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="14 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -731,8 +887,8 @@ INCLUDE zaplink_macros.</MACROS>
     ELSE.
       SELECT SINGLE devclass INTO the_class-devclass
         FROM tadir
-        WHERE pgmid = &apos;R3TR&apos;
-          AND object = &apos;CLAS&apos;
+        WHERE pgmid = c_class-kind
+          AND object = c_class-type
           AND obj_name = the_class-classname.
     ENDIF.
     the_class-types = connector-&gt;supported_types.
