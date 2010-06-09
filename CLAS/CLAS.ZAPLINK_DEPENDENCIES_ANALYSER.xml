@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5C2093BD5C997357E3EA1269B2A32152" CODE_SIGNATURE="B1AC9374A71F24CC7A2F25C746003BAC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5556EDE680A81717C7170BD3FB599712" CODE_SIGNATURE="08EE008E4AC6A2762774E97A41369C07" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -226,7 +226,7 @@ AS</DOCUMENTATION>
      <ITEM SCONAME="FAILED" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
-DATA _name TYPE string.
+  DATA _name TYPE string.
   FIELD-SYMBOLS:
     &lt;a&gt; LIKE LINE OF attributs.
 
@@ -394,7 +394,7 @@ DATA _name TYPE string.
     END OF ts_dep.
   DATA t_tmp     TYPE STANDARD TABLE OF ts_dep WITH DEFAULT KEY.
   DATA s_dep     LIKE LINE OF t_tmp.
-  DATA t_deps    TYPE SORTED TABLE OF ts_dep WITH UNIQUE KEY ori_name TYPE full_def.
+  DATA t_deps    TYPE SORTED TABLE OF ts_dep WITH NON-UNIQUE KEY ori_name.
   DATA s_order   LIKE LINE OF new_order.
   FIELD-SYMBOLS:
     &lt;r&gt; LIKE LINE OF requirements,
@@ -404,16 +404,20 @@ DATA _name TYPE string.
     CLEAR s_dep.    MOVE-CORRESPONDING &lt;r&gt; TO s_dep.    s_dep-count = 1.
     COLLECT s_dep INTO t_tmp.
   ENDLOOP.
+  DELETE t_tmp WHERE type &lt;&gt; objtype-exception_class AND full_def &lt;&gt; abap_true. &quot; Issue 91
   t_deps = t_tmp.
 * intf/class with only defered dependences any dependances
   LOOP AT remain_classes ASSIGNING &lt;c&gt;.
-    LOOP AT t_deps INTO s_dep
-         WHERE ori_name = &lt;c&gt;-name
-           AND (   type = objtype-exception_class   &quot; Exception are full required
-            OR full_def = abap_true ).
-      EXIT.
-    ENDLOOP.
-    IF sy-subrc &lt;&gt; 0.   clear s_order.    s_order-name = &lt;c&gt;-name.    s_order-type = &lt;c&gt;-type.    APPEND s_order TO new_order.    DELETE requirements WHERE name = &lt;c&gt;-name.    result = abap_true.   DELETE remain_classes.    ENDIF.
+*    LOOP AT t_deps INTO s_dep                       &quot; Issue 91 : Optimization
+*         WHERE ori_name = &lt;c&gt;-name
+*           AND (   type = objtype-exception_class   &quot; Exception are full required
+*            OR full_def = abap_true ).
+*      EXIT.
+*    ENDLOOP.
+    READ TABLE t_deps TRANSPORTING NO FIELDS WITH TABLE KEY ori_name = &lt;c&gt;-name.
+    IF sy-subrc &lt;&gt; 0.
+      CLEAR s_order.    s_order-name = &lt;c&gt;-name.    s_order-type = &lt;c&gt;-type.    APPEND s_order TO new_order.    DELETE requirements WHERE name = &lt;c&gt;-name.    result = abap_true.   DELETE remain_classes.
+    ENDIF.
   ENDLOOP.
   add_without_requirements( ).</SOURCE>
    </ITEM>
@@ -444,9 +448,8 @@ DATA _name TYPE string.
 
   READ TABLE deferred_declaration TRANSPORTING NO FIELDS
        WITH TABLE KEY name = name.
-  IF sy-subrc = 0.
-    EXIT.
-  ENDIF.
+  IF sy-subrc = 0.    EXIT.   ENDIF.
+* DEFINE M_124563245. CLASS &amp;1 DEFINITION DEFERRED. END-OF-DEFINITION.
   CASE type.
     WHEN objtype-class OR objtype-exception_class.
       CONCATENATE &apos;CLASS&apos; name &apos;DEFINITION DEFERRED.&apos; INTO _line SEPARATED BY space.
@@ -819,8 +822,7 @@ DATA _name TYPE string.
     </PARAMETERS>
     <SOURCE>`
   DATA _code TYPE string.
-  FIELD-SYMBOLS:
-    &lt;f&gt; LIKE LINE OF code.
+  FIELD-SYMBOLS &lt;f&gt; LIKE LINE OF code.
   LOOP AT code ASSIGNING &lt;f&gt;.   CONCATENATE _code &lt;f&gt; line_separator INTO _code.    ENDLOOP.
   add_method_source( _code ).</SOURCE>
    </ITEM>
@@ -834,6 +836,11 @@ DATA _name TYPE string.
        <ITEM LANGU="E" DESCRIPT="ABAP source code"/>
       </TEXTS>
      </ITEM>
+     <ITEM SCONAME="FULL" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE">
+      <TEXTS>
+       <ITEM LANGU="E" DESCRIPT="Full component is requiered"/>
+      </TEXTS>
+     </ITEM>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
        <ITEM LANGU="E" DESCRIPT="Source of the code"/>
@@ -843,12 +850,11 @@ DATA _name TYPE string.
     <SOURCE>`
   DATA t_objs      TYPE td_sourcecode.
   DATA _key        TYPE td_name.
-  FIELD-SYMBOLS:
-    &lt;o&gt; LIKE LINE OF t_objs.
+  FIELD-SYMBOLS &lt;o&gt; LIKE LINE OF t_objs.
 
   t_objs = analyse_method_source( code ).
   LOOP AT t_objs ASSIGNING &lt;o&gt;.
-    _key = &lt;o&gt;.   add_object_to_list( name = _key   source = source ).
+    _key = &lt;o&gt;.   add_object_to_list( name = _key   full = full   source = source ).
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ADD_TYPES" EXPOSURE="1" STATE="1" EDITORDER="10 ">
@@ -862,12 +868,12 @@ DATA _name TYPE string.
      <ITEM SCONAME="FAILED" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
-DATA _name TYPE string.
+  DATA _name TYPE string.
   FIELD-SYMBOLS:
     &lt;t&gt; LIKE LINE OF types.
 
   LOOP AT types ASSIGNING &lt;t&gt;.
-    CONCATENATE &apos;Type=&gt;&apos; &lt;t&gt;-cmpname INTO _name.    &quot;#EC NOTEXT
+    CONCATENATE &apos;Type=&gt;&apos; &lt;t&gt;-cmpname INTO _name.            &quot;#EC NOTEXT
     stack( _name ).
     CALL METHOD process_type( type = &lt;t&gt;-typtype
                               name = &lt;t&gt;-type
@@ -1303,7 +1309,7 @@ DATA _name TYPE string.
      <ITEM SCONAME="FAILED" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA o_source    TYPE REF TO cl_oo_source.
+*  DATA o_source    TYPE REF TO cl_oo_source.
   DATA _clskey     TYPE seoclskey.
   DATA _pos        TYPE sy-tabix.
   DATA t_code      TYPE td_sourcecode.
@@ -1315,18 +1321,20 @@ DATA _name TYPE string.
 
   _clskey = name.
 
-  CREATE OBJECT o_source
-    EXPORTING
-      clskey             = _clskey
-    EXCEPTIONS
-      class_not_existing = 1
-      OTHERS             = 2.
-  IF sy-subrc &lt;&gt; 0.
+  t_code = zaplink_object=&gt;get_class_globalsource( _clskey ).
+*  CREATE OBJECT o_source
+*    EXPORTING
+*      clskey             = _clskey
+*    EXCEPTIONS
+*      class_not_existing = 1
+*      OTHERS             = 2.
+*  IF sy-subrc &lt;&gt; 0.
+  IF t_code IS INITIAL.
     RAISE failed.
   ENDIF.
-  t_code = convert_source( o_source-&gt;source ).
+*  t_code = convert_source( o_source-&gt;source ).
   t_upcode = convert_source_upcase( t_code ).
-  CLEAR o_source.
+*  CLEAR o_source.
 
 *Remove text before CLASS Zxxx DEFINITION
   CONCATENATE &apos;CLASS&apos; _clskey &apos;DEFINITION&apos; INTO _line SEPARATED BY space.
@@ -1372,7 +1380,7 @@ DATA _name TYPE string.
     _pos = sy-tabix.
     APPEND LINES OF t_lines TO _pos TO codes-def.
     DELETE t_lines TO _pos.
-    DELETE t_upcode to _pos.
+    DELETE t_upcode TO _pos.
     codes-macro = t_lines.
   ELSE.
 * normal case for interfaces
@@ -1384,7 +1392,7 @@ DATA _name TYPE string.
   LOOP AT t_upcode ASSIGNING &lt;l&gt;
      WHERE table_line CP &apos;*GLOBAL FRIENDS*&apos;.
     REPLACE FIRST OCCURRENCE OF &apos;GLOBAL FRIENDS&apos; IN &lt;l&gt; WITH &apos;FRIENDS&apos;.
-    modify codes-def from &lt;l&gt; index sy-tabix.
+    MODIFY codes-def FROM &lt;l&gt; INDEX sy-tabix.
   ENDLOOP.
 
   remove_def_load( CHANGING codes = codes ).
@@ -1411,21 +1419,24 @@ DATA _name TYPE string.
      <ITEM SCONAME="FAILED" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA _key    TYPE seoclsname.
-  DATA _prog   TYPE program.
+  DATA _clskey     TYPE seoclskey.
+*  DATA _key    TYPE seoclsname.
+*  DATA _prog   TYPE program.
   DATA _line   LIKE LINE OF codes-def.
   DATA _pos        TYPE sy-tabix.
   DATA t_upcode    TYPE td_sourcecode.
 
-  _key = name.
-  _prog = cl_oo_classname_service=&gt;get_intfsec_name( _key ).
-
-  READ REPORT _prog INTO codes-def.
-  codes-def = convert_source( codes-def ).
+  _clskey = name.
+  codes-def = zaplink_object=&gt;get_interface_globalsource( _clskey ).
+*  _key = name.
+*  _prog = cl_oo_classname_service=&gt;get_intfsec_name( _key ).
+*
+*  READ REPORT _prog INTO codes-def.
+*  codes-def = convert_source( codes-def ).
   t_upcode = convert_source_upcase( codes-def ).
 
 *Remove text public after : interface xxxx
-  CONCATENATE &apos;INTERFACE&apos; _key INTO _line SEPARATED BY space.
+  CONCATENATE &apos;INTERFACE&apos; _clskey INTO _line SEPARATED BY space.
   READ TABLE t_upcode TRANSPORTING NO FIELDS
        FROM _line.
   IF sy-subrc &lt;&gt; 0.
@@ -1742,7 +1753,7 @@ DATA _name TYPE string.
     WHEN typetype-ref.
       _key = name.
     WHEN typetype-code.
-      add_source_to_list( code = _up_src   source = ctx-context ).
+      add_source_to_list( code = _up_src   full = abap_true   source = ctx-context ).
       CLEAR _key.   EXIT.
   ENDCASE.
   CHECK NOT _key IS INITIAL.
