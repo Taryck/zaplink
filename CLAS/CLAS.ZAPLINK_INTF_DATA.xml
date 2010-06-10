@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2C3B5565CAF444427780F3969F2048C7" CODE_SIGNATURE="4A5700D84BEBC577C53286D0CD9751B3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="15E36DD343D3A2BDFFD0315E79DC1D39" CODE_SIGNATURE="79A643FE75F113D0EB578C270EE2EC35" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -8,8 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_OBJECT_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Data for ABAP Object Interface">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Data for ABAP Object Interface">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_OBJECT.
 ASDefine XML structure of an ABAP Object Interface
 U1&amp;RELATIONS&amp;
@@ -19,15 +18,19 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_MAIN_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Maindata of Class">
-      <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;MEANING&amp;
+     <ITEM LANG="E" TEXT="Maindata of Class">U1&amp;MEANING&amp;
 ASStore Interface main data. &quot;A0_&quot; prefix has been use to keep this
   segment on the top of the list.
 U1History
@@ -50,8 +53,7 @@ ASUsing &quot;_&quot; as prefix let this attributes at the end in the alphabetic
 U1&amp;HINTS&amp;
 ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
   &quot;/&quot;.
-*</DOCUMENTATION>
-     </ITEM>
+*</ITEM>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -162,10 +164,8 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
 
   fm_data-interface = a0_maindata-hdr.
   READ TABLE a0_maindata-texts INTO _t
-       WITH TABLE KEY langu = a0_maindata-langu.
-  IF sy-subrc = 0.
-    fm_data-interface-descript = _t-descript.
-  ENDIF.
+       WITH TABLE KEY lang = a0_maindata-langu.
+  IF sy-subrc = 0.    fm_data-interface-descript = _t-_.    ENDIF.
 
 *CLASS_DESC  TYPE tt_SEOCLASSTX,
 * Issue 33 : Documentation connected to text
@@ -202,12 +202,12 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
     BEGIN OF ts_main_data.
     INCLUDE TYPE vseointerf AS hdr.
     TYPES:
-        texts       TYPE tt_seoclasstx_s,
+        texts       TYPE tt_ltexts,   &quot; tt_seoclasstx_s,
         textpool    TYPE tt_txtp_textpools,
       END OF ts_main_data
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Interface main Data"/>
+     <ITEM LANG="E" TEXT="Interface main Data"/>
     </TEXTS>
    </ITEM>
   </TYPES>

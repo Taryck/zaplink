@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2F03EE0768D3E3F8F6FB7B62184DA040" CODE_SIGNATURE="B66BAF6485CC397B569CA01BE0FCE253" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="82440CC4C6C528AE0C07BD89E10AE58B" CODE_SIGNATURE="7F1F793FA80ACFC1DF89D1347CF65132" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -8,8 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_OBJECT_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Data for Class">
-     <DOCUMENTATION TDFRELES="700" TDLRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Data for Class">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_OBJECT.
 ASDefine XML structure of an ABAP Object Class
 U1&amp;RELATIONS&amp;
@@ -19,8 +18,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -29,8 +33,7 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_CLASS_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Maindata of Class">
-      <DOCUMENTATION TDFRELES="700" TDLRELES="700" TDLINESIZE="072">U1&amp;MEANING&amp;
+     <ITEM LANG="E" TEXT="Maindata of Class">U1&amp;MEANING&amp;
 ASStore Class main data. &quot;A0_&quot; prefix has been use to keep this segment on
   the top of the list.
 U1History
@@ -52,61 +55,58 @@ ASUsing &quot;_&quot; as prefix let this attributes at the end in the alphabetic
   order. So not working
 U1&amp;HINTS&amp;
 ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
-  &quot;/&quot;.</DOCUMENTATION>
-     </ITEM>
+  &quot;/&quot;.</ITEM>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_KIND" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TD_TRANSPORT_KIND"/>
    <ITEM CMPNAME="C_TYPE" STATE="1" EDITORDER="4 " ATTDECLTYP="1" ATTVALUE="OBJECT_TYPES-CLASS" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
    <ITEM CMPNAME="DYNPROS" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_DYNPROS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class Dynpro"/>
+     <ITEM LANG="E" TEXT="Class Dynpro"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="EXCEPTIONS_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_EXCEPTIONS_TEXTS"/>
    <ITEM CMPNAME="FRIENDS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_FRIENDS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class Friends list"/>
+     <ITEM LANG="E" TEXT="Class Friends list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="LOCAL" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TS_LOCALS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Local data : Type, Implementaiton &amp; Macros"/>
+     <ITEM LANG="E" TEXT="Local data : Type, Implementaiton &amp; Macros"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MENUPAINTER" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TO_MENUPAINTER"/>
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="REDEFINITIONS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_REDEFINITIONS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class&apos;s Methods redefinitions"/>
+     <ITEM LANG="E" TEXT="Class&apos;s Methods redefinitions"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TEXTSPOOL" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TT_TXTP_TEXTPOOLS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Textpool table"/>
+     <ITEM LANG="E" TEXT="Textpool table"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
   <EVENTS>
    <ITEM CMPNAME="MY_EVENT2" EXPOSURE="2" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="bidon">
-      <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;MEANING&amp;
+     <ITEM LANG="E" TEXT="bidon">U1&amp;MEANING&amp;
 ASTest event to test documentation extraction
 U1&amp;PARAMETERS&amp;
 AS
 U1&amp;HINTS&amp;
-AS</DOCUMENTATION>
-     </ITEM>
+AS</ITEM>
     </TEXTS>
    </ITEM>
   </EVENTS>
@@ -132,20 +132,20 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   c_kind = zaplink_connectors=&gt;get_typekind( c_type ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_SOURCE" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Clean ABAP Source code"/>
+     <ITEM LANG="E" TEXT="Clean ABAP Source code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ABAPSOURCE"/>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Program Name"/>
+       <ITEM LANG="E" TEXT="ABAP Program Name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -198,12 +198,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_SOURCE_OFF" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Clean ABAP Source code"/>
+     <ITEM LANG="E" TEXT="Clean ABAP Source code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="PROGRAM" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="PROGRAMM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Program Name"/>
+       <ITEM LANG="E" TEXT="ABAP Program Name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ABAPSOURCE"/>
@@ -255,17 +255,17 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="SOTR2VALUE" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert SOTR_CONC to Attrvalue"/>
+     <ITEM LANG="E" TEXT="Convert SOTR_CONC to Attrvalue"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Initial value"/>
+       <ITEM LANG="E" TEXT="Initial value"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="SEOVALUE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
+       <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -274,20 +274,20 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="UPDATE_CONCEPT" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Update Concepts"/>
+     <ITEM LANG="E" TEXT="Update Concepts"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="T_FM_DATA"/>
      <ITEM SCONAME="MSG_COL" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_MSG_COL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Collector"/>
+       <ITEM LANG="E" TEXT="Message Collector"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -545,8 +545,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="VALUE2SOTR" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert Attrvalue to SOTR_CONC">
-      <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+     <ITEM LANG="E" TEXT="Convert Attrvalue to SOTR_CONC">U1&amp;FUNCTIONALITY&amp;
 ASUsed for exception class to convert exception attribute value into SOTR
   concept.
 U1&amp;PRECONDITION&amp;
@@ -558,18 +557,17 @@ AS
 U1&amp;EXCEPTIONS&amp;
 AS
 U1&amp;HINTS&amp;
-AS</DOCUMENTATION>
-     </ITEM>
+AS</ITEM>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOVALUE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Initial value"/>
+       <ITEM LANG="E" TEXT="Initial value"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="SOTR_CONC">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
+       <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -968,10 +966,8 @@ AS</DOCUMENTATION>
 
   fm_data-class = a0_maindata-hdr.
   READ TABLE a0_maindata-texts INTO _t
-       WITH TABLE KEY langu = a0_maindata-langu.
-  IF sy-subrc = 0.
-    fm_data-class-descript = _t-descript.
-  ENDIF.
+       WITH TABLE KEY lang = a0_maindata-langu.
+  IF sy-subrc = 0.    fm_data-class-descript = _t-text.   ENDIF.
 
 * Dynpro : Issue 8
   fm_data-dynpros = dynpros.
@@ -1131,12 +1127,10 @@ AS</DOCUMENTATION>
   <TYPES>
    <ITEM CMPNAME="TO_MSG_COL" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector">
-      <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;MEANING&amp;
+     <ITEM LANG="E" TEXT="Message Collector">U1&amp;MEANING&amp;
 ASMessage collector
 U1&amp;HINTS&amp;
-AS</DOCUMENTATION>
-     </ITEM>
+AS</ITEM>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_CLASS_DATA" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">
@@ -1157,13 +1151,13 @@ AS</DOCUMENTATION>
 *        typegroups  TYPE tt_typegroups,
 *        interfaces  TYPE tt_interfaces,
 *        friends     TYPE tt_friends,
-        texts       TYPE tt_seoclasstx_s,
+        texts       TYPE tt_ltexts,   &quot; tt_seoclasstx_s,
         textpool    TYPE tt_txtp_textpools,
         sources     TYPE ts_sources,
       END OF ts_class_data
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Maindata of Class"/>
+     <ITEM LANG="E" TEXT="Maindata of Class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_EXCEPTION_TEXT" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_exception_text,
@@ -1187,16 +1181,14 @@ AS</DOCUMENTATION>
         END OF ts_locals
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Local data : Type, Implementaiton &amp; Macros">
-      <DOCUMENTATION TDFRELES="700" TDLRELES="700" TDLINESIZE="072">U1&amp;MEANING&amp;
+     <ITEM LANG="E" TEXT="Local data : Type, Implementaiton &amp; Macros">U1&amp;MEANING&amp;
 ASDescribe a structure that store :
 AS,,- Local types definitions
 AS,,- Local macros
 AS,,- Local class implementation (class in a class)
 ASAll these data are pure ABAP Source cope
 U1&amp;HINTS&amp;
-AS</DOCUMENTATION>
-     </ITEM>
+AS</ITEM>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_REDEFINITION" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
@@ -1207,7 +1199,7 @@ AS</DOCUMENTATION>
       END OF ts_redefinition
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Method&apos;s redefinition data"/>
+     <ITEM LANG="E" TEXT="Method&apos;s redefinition data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname
@@ -1216,14 +1208,14 @@ AS</DOCUMENTATION>
     tt_friends    TYPE SORTED TABLE OF seofriends WITH UNIQUE KEY refclsname friendtype
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class Friends list"/>
+     <ITEM LANG="E" TEXT="Class Friends list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_REDEFINITIONS" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
     tt_redefinitions TYPE SORTED TABLE OF ts_redefinition WITH UNIQUE KEY mtdname
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class&apos;s Methods redefinitions"/>
+     <ITEM LANG="E" TEXT="Class&apos;s Methods redefinitions"/>
     </TEXTS>
    </ITEM>
   </TYPES>
