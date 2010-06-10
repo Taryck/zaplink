@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C67CC36858D5A4A78054455748CBA435" CODE_SIGNATURE="19A572237C524F92DF2A233E104776C4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE_ZIP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3A7856926C18B66A5FB7C1E44E3A85FE" CODE_SIGNATURE="19A572237C524F92DF2A233E104776C4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE_ZIP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FILE"/>
  </DEPENDENCIES>
@@ -8,8 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_FILE">
    <INHERITANCE REFCLSNAME="ZAPLINK_FILE" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Zap Link Extended File Manager">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Zap Link Extended File Manager">U1&amp;FUNCTIONALITY&amp;
 ASExtend file management for ZIP files
 U1&amp;RELATIONS&amp;
 AS
@@ -18,8 +17,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
@@ -30,17 +34,17 @@ AS</DOCUMENTATION>
 `</ITEM>
    <ITEM CMPNAME="FILENAME_IN_ZIP" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;container.xml&apos;" TYPTYPE="1" TYPE="TD_FILENAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Filename in ZIP file"/>
+     <ITEM LANG="E" TEXT="Filename in ZIP file"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ZIP_FILE_EXTENSION" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;.zip&apos;" TYPTYPE="1" TYPE="TD_FILENAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZIP file extention"/>
+     <ITEM LANG="E" TEXT="ZIP file extention"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_FILEKIND" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTVALUE="FILEKINDS-ZIPPED" TYPTYPE="1" TYPE="TD_FILEKIND">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="File Kind : Normal, Compressed"/>
+     <ITEM LANG="E" TEXT="File Kind : Normal, Compressed"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -60,19 +64,19 @@ AS</DOCUMENTATION>
   <METHODS>
    <ITEM CMPNAME="GET_FILEKIND" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="FileKind : Getter"/>
+     <ITEM LANG="E" TEXT="FileKind : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_FILEKIND">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File Kind : Normal, Compressed"/>
+       <ITEM LANG="E" TEXT="File Kind : Normal, Compressed"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -81,19 +85,19 @@ result = _filekind.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_FILEKIND" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="FileKind : Setter"/>
+     <ITEM LANG="E" TEXT="FileKind : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILEKIND">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File Kind : Normal, Compressed"/>
+       <ITEM LANG="E" TEXT="File Kind : Normal, Compressed"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -532,7 +536,7 @@ IF     data &lt;&gt; filekinds-normal
   <TYPES>
    <ITEM CMPNAME="TD_FILEKIND" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="CHAR1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="File Kind : Normal, Compressed"/>
+     <ITEM LANG="E" TEXT="File Kind : Normal, Compressed"/>
     </TEXTS>
    </ITEM>
   </TYPES>

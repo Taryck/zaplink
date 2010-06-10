@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D11A870C37EDE57609165AE5774F4C9A" CODE_SIGNATURE="3580A3E1746137BE1D249126DE7080F5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="532E7ABCF71F7E282E4EDFB2833F7F90" CODE_SIGNATURE="3580A3E1746137BE1D249126DE7080F5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="INTF" NAME="ZAPLINK_CONNECTOR"/>
  </DEPENDENCIES>
@@ -8,8 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Commun BADI Datas">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Commun BADI Datas">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_BADI
 U1&amp;RELATIONS&amp;
 AS
@@ -18,8 +17,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -66,37 +70,37 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="CONTROLS_COMPOSITES" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_CONTROLS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Control Composites, Language Independent"/>
+     <ITEM LANG="E" TEXT="Control Composites, Language Independent"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DEF_NAME" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="EXIT_DEF">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Business Add-In Definition"/>
+     <ITEM LANG="E" TEXT="Business Add-In Definition"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DOCUMENTATION" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_DOCS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Documentation"/>
+     <ITEM LANG="E" TEXT="Documentation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="FUNCTIONS_CODES" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TT_FUNCTIONS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Functions Codes"/>
+     <ITEM LANG="E" TEXT="Functions Codes"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" EXPOSURE="1" STATE="1" EDITORDER="7 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUBSCREENS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_SCREENS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component subscreens"/>
+     <ITEM LANG="E" TEXT="Component subscreens"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TABLES" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_TABLES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Tables (sxs_tables)"/>
+     <ITEM LANG="E" TEXT="Tables (sxs_tables)"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -128,24 +132,24 @@ AS</DOCUMENTATION>
   <METHODS>
    <ITEM CMPNAME="ANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
+     <ITEM LANG="E" TEXT="Anonymized component data"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
    </ITEM>
    <ITEM CMPNAME="FROM_DATA" EXPOSURE="2" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes"/>
+     <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="T_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules Class Data"/>
+       <ITEM LANG="E" TEXT="Function Modules Class Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -222,12 +226,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert object attributes to FM Data"/>
+     <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="T_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules Class Data"/>
+       <ITEM LANG="E" TEXT="Function Modules Class Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -284,7 +288,7 @@ DATA _in  LIKE LINE OF fm_data-intas.
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
+     <ITEM LANG="E" TEXT="UnAnonymized component data"/>
     </TEXTS>
    </ITEM>
   </METHODS>
@@ -295,40 +299,40 @@ DATA _in  LIKE LINE OF fm_data-intas.
    <ITEM CMPNAME="TO_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="ZAPLINK_CONNECTORS=&gt;TO_CONNECTOR"/>
    <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_RAW" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_RAW">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="RAW component with data"/>
+     <ITEM LANG="E" TEXT="RAW component with data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_CONTROLS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">
     tt_controls TYPE SORTED TABLE OF seex_coco_struct WITH UNIQUE KEY coco_outer node_id
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Control Composites, Language Independent"/>
+     <ITEM LANG="E" TEXT="Control Composites, Language Independent"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_FUNCTIONS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">
     tt_functions TYPE SORTED TABLE OF seex_fcode_struct WITH UNIQUE KEY gui_prog gui_code
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Functions Codes"/>
+     <ITEM LANG="E" TEXT="Functions Codes"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_SCREENS" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">
     tt_screens TYPE SORTED TABLE OF seex_screen_struct WITH UNIQUE KEY scr_a_prog scr_a_num scr_a_sscr
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component subscreens"/>
+     <ITEM LANG="E" TEXT="Component subscreens"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_TABLES" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
     tt_tables TYPE SORTED TABLE OF seex_table_struct WITH UNIQUE KEY tabname
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Tables (sxs_tables)"/>
+     <ITEM LANG="E" TEXT="Tables (sxs_tables)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="T_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
@@ -354,7 +358,7 @@ DATA _in  LIKE LINE OF fm_data-intas.
         END OF t_fm_data
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Function Module Datas (deep_structure)"/>
+     <ITEM LANG="E" TEXT="Function Module Datas (deep_structure)"/>
     </TEXTS>
    </ITEM>
   </TYPES>

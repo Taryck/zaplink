@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="053A0B8579348C1C18E36B28797E51AA" CODE_SIGNATURE="FF8C22A19F4877F0E0AFF7ED2886060E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C256D5DF5496D38291B76CA1D79A48F5" CODE_SIGNATURE="FF8C22A19F4877F0E0AFF7ED2886060E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
  </DEPENDENCIES>
@@ -8,8 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Table (SE11) Datas">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Table (SE11) Datas">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_DICTIONARY
 ASDefine XML structure of a Table or Structure
 U1&amp;RELATIONS&amp;
@@ -19,8 +18,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -32,7 +36,7 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_MAINDATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Line Type for Table with Package Data"/>
+     <ITEM LANG="E" TEXT="Line Type for Table with Package Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DOC_IDS" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
@@ -41,19 +45,19 @@ AS</DOCUMENTATION>
     END OF doc_ids
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Documentation IDS"/>
+     <ITEM LANG="E" TEXT="Documentation IDS"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="FIELDS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_FIELDS"/>
    <ITEM CMPNAME="INDEXES" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_INDEXES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Indexes"/>
+     <ITEM LANG="E" TEXT="Indexes"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="INDEXES_OLD" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_INDEXES_OLD"/>
    <ITEM CMPNAME="R_DOC_IDS" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Documentation IDS"/>
+     <ITEM LANG="E" TEXT="Documentation IDS"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TEXTS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_TEXTS"/>
@@ -87,7 +91,7 @@ AS</DOCUMENTATION>
   <METHODS>
    <ITEM CMPNAME="ANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
+     <ITEM LANG="E" TEXT="Anonymized component data"/>
     </TEXTS>
     <SOURCE>`
   FIELD-SYMBOLS:
@@ -101,7 +105,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA _id LIKE LINE OF r_doc_ids.
@@ -111,17 +115,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="CONV_INDEX" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert data to data for index"/>
+     <ITEM LANG="E" TEXT="Convert data to data for index"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
+       <ITEM LANG="E" TEXT="Function Module Data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Module data for indexes"/>
+       <ITEM LANG="E" TEXT="Function Module data for indexes"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -140,17 +144,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="CONV_INDEXES" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert Index data to data"/>
+     <ITEM LANG="E" TEXT="Convert Index data to data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
+       <ITEM LANG="E" TEXT="Function Module Data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="INDEXES" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Module data for indexes"/>
+       <ITEM LANG="E" TEXT="Function Module data for indexes"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -168,12 +172,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="FROM_DATA" EXPOSURE="2" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes"/>
+     <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules object Data"/>
+       <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -303,12 +307,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert object attributes to FM Data"/>
+     <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules object Data"/>
+       <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -427,7 +431,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
+     <ITEM LANG="E" TEXT="UnAnonymized component data"/>
     </TEXTS>
    </ITEM>
   </METHODS>
@@ -459,7 +463,7 @@ AS</DOCUMENTATION>
             END OF ts_fm_data
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
+     <ITEM LANG="E" TEXT="Function Module Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_FOREIN_KEY" EXPOSURE="2" STATE="1" EDITORDER="13 " TYPTYPE="4">BEGIN OF ts_forein_key.
@@ -507,7 +511,7 @@ AS</DOCUMENTATION>
       END OF ts_maindata
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="General Data"/>
+     <ITEM LANG="E" TEXT="General Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_SEARCH_HELP" EXPOSURE="2" STATE="1" EDITORDER="12 " TYPTYPE="4">BEGIN OF ts_search_help.

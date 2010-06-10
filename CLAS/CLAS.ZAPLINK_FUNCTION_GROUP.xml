@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AE17253E3F636E309293417E4C887C9D" CODE_SIGNATURE="D73F0E19512F61A4E64B06417CFB7E29" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="44A899235D9AD749E34E370DD88601AD" CODE_SIGNATURE="D73F0E19512F61A4E64B06417CFB7E29" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUGR_DATA"/>
@@ -10,8 +10,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_FUGR">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Data for Class">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Data for Class">U1&amp;FUNCTIONALITY&amp;
 ASIs a connector for :
 AS- FUGR : Function Group
 U1&amp;RELATIONS&amp;
@@ -22,19 +21,24 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
-    </ITEM>
+AShttps://code.google.com/p/zaplink/wiki/Connector
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;CNX_FUNCTION_GROUP&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_MAINPROG_PREFIX" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;SAPL&apos;" TYPTYPE="1" TYPE="TRDIR-NAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Function group Main program prefix"/>
+     <ITEM LANG="E" TEXT="Function group Main program prefix"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUPPORTEDKINDS" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="4">BEGIN OF supportedkinds,
@@ -49,17 +53,17 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
     END OF supportedtypes
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector supported types"/>
+     <ITEM LANG="E" TEXT="Connector supported types"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;F1838F4B202C2806E1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UUID for connector Program"/>
+     <ITEM LANG="E" TEXT="UUID for connector Program"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_VER" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Version"/>
+     <ITEM LANG="E" TEXT="Connector Version"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -92,17 +96,17 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CALC_FUNCTION_SIGNATURE" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Source code Signature of a function"/>
+     <ITEM LANG="E" TEXT="Get Source code Signature of a function"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FUNCTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FMD_FUNC">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Group Name"/>
+       <ITEM LANG="E" TEXT="Function Group Name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_DATATYPES~TD_CHECKSUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="MD5 Hash"/>
+       <ITEM LANG="E" TEXT="MD5 Hash"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -128,7 +132,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   supportedkinds-group =  zaplink_connectors=&gt;get_typekind( supportedtypes-group ).
@@ -136,7 +140,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA type LIKE LINE OF supported_types.
@@ -151,7 +155,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="DEL_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Delete function from SAP System is required"/>
+     <ITEM LANG="E" TEXT="Delete function from SAP System is required"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FUNC" CMPTYPE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_FMD_FUNC"/>
@@ -159,7 +163,7 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -279,18 +283,18 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_ALL_INCLUDES" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="In subtitution to MF &apos;RS_GET_ALL_INCLUDES&apos;"/>
+     <ITEM LANG="E" TEXT="In subtitution to MF &apos;RS_GET_ALL_INCLUDES&apos;"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FUNCTIONGROUP_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function group, to which the function module belongs"/>
+       <ITEM LANG="E" TEXT="Function group, to which the function module belongs"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULTS" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_INCLUDES"/>
      <ITEM SCONAME="WITH_CODE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Not only form include but all include with ABAP Code"/>
+       <ITEM LANG="E" TEXT="Not only form include but all include with ABAP Code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -375,17 +379,17 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_FUNCTION_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Source code Signature of a function"/>
+     <ITEM LANG="E" TEXT="Get Source code Signature of a function"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FUNCTION_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Group Name"/>
+       <ITEM LANG="E" TEXT="Function Group Name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_DATATYPES~TD_CHECKSUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="MD5 Hash"/>
+       <ITEM LANG="E" TEXT="MD5 Hash"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -400,17 +404,17 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_GROUP_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Source code Signature of a function group"/>
+     <ITEM LANG="E" TEXT="Get Source code Signature of a function group"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="GROUP_NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FUNCTIONGROUP_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Group Name"/>
+       <ITEM LANG="E" TEXT="Function Group Name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_DATATYPES~TD_CHECKSUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="MD5 Hash"/>
+       <ITEM LANG="E" TEXT="MD5 Hash"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -458,17 +462,17 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_MAINPROGRAM" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get main program from Area"/>
+     <ITEM LANG="E" TEXT="Get main program from Area"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="RS38L-AREA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function group, to which the function module belongs"/>
+       <ITEM LANG="E" TEXT="Function group, to which the function module belongs"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TRDIR-NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Program Name"/>
+       <ITEM LANG="E" TEXT="ABAP Program Name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -487,12 +491,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="READ_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Read function from SAP System"/>
+     <ITEM LANG="E" TEXT="Read function from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FUNCTION_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Name of Function Module"/>
+       <ITEM LANG="E" TEXT="Name of Function Module"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FMD_FUNC"/>
@@ -500,7 +504,7 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -567,7 +571,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="WRITE_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Write function to SAP System"/>
+     <ITEM LANG="E" TEXT="Write function to SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FUNC" CMPTYPE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_FMD_FUNC"/>
@@ -575,7 +579,7 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1130,23 +1134,23 @@ INCLUDE zaplink_macros.</MACROS>
   <TYPES>
    <ITEM CMPNAME="TD_FUNCTIONGROUP_NAME" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TLIBG-AREA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Function group, to which the function module belongs"/>
+     <ITEM LANG="E" TEXT="Function group, to which the function module belongs"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TD_FUNCTION_NAME" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="RS38L-NAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Name of Function Module"/>
+     <ITEM LANG="E" TEXT="Name of Function Module"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TD_INCLUDENAME" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="ZAPLINK_FUGR_DATA=&gt;TD_INCLUDENAME"/>
    <ITEM CMPNAME="TO_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_FUNC_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Commun Data for Class &amp; Interface"/>
+     <ITEM LANG="E" TEXT="Commun Data for Class &amp; Interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_GROUP" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_FUGR_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Data for Function group"/>
+     <ITEM LANG="E" TEXT="Data for Function group"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_FMD_FUGR" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="ZAPLINK_FUGR_DATA=&gt;TS_FM_DATA"/>
@@ -1158,12 +1162,12 @@ INCLUDE zaplink_macros.</MACROS>
     END OF ts_prog_attr
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Program Attributs"/>
+     <ITEM LANG="E" TEXT="Program Attributs"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ABAP Source code"/>
+     <ITEM LANG="E" TEXT="ABAP Source code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_TEXT" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">begin of ts_text,
@@ -1181,19 +1185,19 @@ INCLUDE zaplink_macros.</MACROS>
     TT_RS38L_INCL type STANDARD TABLE OF rs38l_incl with DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="standard table of rs38l_incl"/>
+     <ITEM LANG="E" TEXT="standard table of rs38l_incl"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_TEXTPOOLS" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">
     TT_TEXTPOOLs type SORTED TABLE OF ts_textpool WITH UNIQUE key ID KEY
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Table of textppool"/>
+     <ITEM LANG="E" TEXT="Table of textppool"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_texts type SORTED TABLE OF ts_text WITH UNIQUE KEY langu</ITEM>
    <ITEM CMPNAME="T_RAW" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="RSWSOURCET">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ABAP Source"/>
+     <ITEM LANG="E" TEXT="ABAP Source"/>
     </TEXTS>
    </ITEM>
   </TYPES>

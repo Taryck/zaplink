@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="44AA3F13B0C47DFD7961A412B832B88A" CODE_SIGNATURE="283F329A747100FB1386D7BD08E9865A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F303C8388656C1E4B99802E6A1BB56D5" CODE_SIGNATURE="E35D6FCF93DD16F436A75B4E41AEBB46" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -8,8 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_PACKAGE">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPLink Package &amp; Interface package connector">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAPLink Package &amp; Interface package connector">U1&amp;FUNCTIONALITY&amp;
 ASConnector for :
 AS,,- DEVC : Package (Development class)
 AS,,- PINF : Package interface
@@ -20,10 +19,14 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
-    </ITEM>
-    <ITEM LANGU="F" DESCRIPT="ZAPLink : Connecteur pour Classe &amp; Interface">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+AShttps://code.google.com/p/zaplink/wiki/Connector
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
+    <ITEM LANG="F" TEXT="ZAPLink : Connecteur pour Classe &amp; Interface">U1&amp;FUNCTIONALITY&amp;
 ASConnector for :
 AS,,- DEVC : Package (Development class)
 AS,,- PINF : Package interface
@@ -34,57 +37,56 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
-    </ITEM>
+AShttps://code.google.com/p/zaplink/wiki/Connector</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" STATE="1" EDITORDER="8 " ATTDECLTYP="2" ATTVALUE="&apos;CNX_PACKAGE&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
-     <ITEM LANGU="F" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
+     <ITEM LANG="F" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CAT_ELE" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="SLIS_T_FIELDCAT_ALV">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Field Catalog"/>
-     <ITEM LANGU="F" DESCRIPT="Field Catalog"/>
+     <ITEM LANG="E" TEXT="Field Catalog"/>
+     <ITEM LANG="F" TEXT="Field Catalog"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CAT_LAYOUT" STATE="1" EDITORDER="4 " ATTDECLTYP="1" TYPTYPE="1" TYPE="SLIS_LAYOUT_ALV">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ALV Layout"/>
-     <ITEM LANGU="F" DESCRIPT="ALV Layout"/>
+     <ITEM LANG="E" TEXT="ALV Layout"/>
+     <ITEM LANG="F" TEXT="ALV Layout"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ST_INTERFACE" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;PINF&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport category : Object Interface"/>
-     <ITEM LANGU="F" DESCRIPT="Transport category : Object Interface"/>
+     <ITEM LANG="E" TEXT="Transport category : Object Interface"/>
+     <ITEM LANG="F" TEXT="Transport category : Object Interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ST_PACKAGE" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;DEVC&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport category : ABAP Object"/>
-     <ITEM LANGU="F" DESCRIPT="Transport category : ABAP Object"/>
+     <ITEM LANG="E" TEXT="Transport category : ABAP Object"/>
+     <ITEM LANG="F" TEXT="Transport category : ABAP Object"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TRANSPORT_REQUEST" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="E070-TRKORR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Request/Task for packages and interfaces"/>
-     <ITEM LANGU="F" DESCRIPT="Request/Task for packages and interfaces"/>
+     <ITEM LANG="E" TEXT="Request/Task for packages and interfaces"/>
+     <ITEM LANG="F" TEXT="Request/Task for packages and interfaces"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="6 " ATTDECLTYP="2" ATTVALUE="&apos;29AD0A4B07A5A05AE1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UUID for connector Package"/>
-     <ITEM LANGU="F" DESCRIPT="UUID for connector Package"/>
+     <ITEM LANG="E" TEXT="UUID for connector Package"/>
+     <ITEM LANG="F" TEXT="UUID for connector Package"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_VER" STATE="1" EDITORDER="7 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Version"/>
-     <ITEM LANGU="F" DESCRIPT="Connector Version"/>
+     <ITEM LANG="E" TEXT="Connector Version"/>
+     <ITEM LANG="F" TEXT="Connector Version"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -106,34 +108,34 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="ADD_ELEMENTS_LIST" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create new elements in interface"/>
-     <ITEM LANGU="F" DESCRIPT="Create new elements in interface"/>
+     <ITEM LANG="E" TEXT="Create new elements in interface"/>
+     <ITEM LANG="F" TEXT="Create new elements in interface"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ADD_REMAIN" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="FLAG" PARVALUE="&apos;X&apos;" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Add remaining elements that can&apos;t be added to recycle"/>
-       <ITEM LANGU="F" DESCRIPT="Add remaining elements that can&apos;t be added to recycle"/>
+       <ITEM LANG="E" TEXT="Add remaining elements that can&apos;t be added to recycle"/>
+       <ITEM LANG="F" TEXT="Add remaining elements that can&apos;t be added to recycle"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ASK_USER" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="FLAG" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ask_user when error ?"/>
-       <ITEM LANGU="F" DESCRIPT="ask_user when error ?"/>
+       <ITEM LANG="E" TEXT="ask_user when error ?"/>
+       <ITEM LANG="F" TEXT="ask_user when error ?"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="INTERFACE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Package Interfaces"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Package Interfaces"/>
+       <ITEM LANG="E" TEXT="Interface for Package Interfaces"/>
+       <ITEM LANG="F" TEXT="Interface for Package Interfaces"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -305,22 +307,22 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="ANONYMIZE_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Interface : Anonymized component data"/>
-     <ITEM LANGU="F" DESCRIPT="Interface : Anonymized component data"/>
+     <ITEM LANG="E" TEXT="Interface : Anonymized component data"/>
+     <ITEM LANG="F" TEXT="Interface : Anonymized component data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface Object"/>
-       <ITEM LANGU="F" DESCRIPT="Interface Object"/>
+       <ITEM LANG="E" TEXT="Interface Object"/>
+       <ITEM LANG="F" TEXT="Interface Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -335,22 +337,22 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="ANONYMIZE_PACKAGE" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Package : Anonymized component data"/>
-     <ITEM LANGU="F" DESCRIPT="Package : Anonymized component data"/>
+     <ITEM LANG="E" TEXT="Package : Anonymized component data"/>
+     <ITEM LANG="F" TEXT="Package : Anonymized component data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Package Object"/>
-       <ITEM LANGU="F" DESCRIPT="Package Object"/>
+       <ITEM LANG="E" TEXT="Package Object"/>
+       <ITEM LANG="F" TEXT="Package Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -379,14 +381,14 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="BUILD_ERROR_MSG" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert elements list to ALV table"/>
-     <ITEM LANGU="F" DESCRIPT="Convert elements list to ALV table"/>
+     <ITEM LANG="E" TEXT="Convert elements list to ALV table"/>
+     <ITEM LANG="F" TEXT="Convert elements list to ALV table"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ELEMENTS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SCOMELDATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table Type for Package Interface Element Data"/>
-       <ITEM LANGU="F" DESCRIPT="Table Type for Package Interface Element Data"/>
+       <ITEM LANG="E" TEXT="Table Type for Package Interface Element Data"/>
+       <ITEM LANG="F" TEXT="Table Type for Package Interface Element Data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ERRORMSG" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
@@ -407,8 +409,8 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CHANGE_TADIR" STATE="1" EDITORDER="5 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Change TADIR entries"/>
-     <ITEM LANGU="F" DESCRIPT="Change TADIR entries"/>
+     <ITEM LANG="E" TEXT="Change TADIR entries"/>
+     <ITEM LANG="F" TEXT="Change TADIR entries"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ALV_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_ELE"/>
@@ -494,8 +496,8 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
-     <ITEM LANGU="F" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="F" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
 * ALV Catalog
@@ -525,8 +527,8 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
-     <ITEM LANGU="F" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
+     <ITEM LANG="F" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA type LIKE LINE OF supported_types.
@@ -542,20 +544,20 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONV_INTERFACE" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get interfaces info"/>
-     <ITEM LANGU="F" DESCRIPT="Get interfaces info"/>
+     <ITEM LANG="E" TEXT="Get interfaces info"/>
+     <ITEM LANG="F" TEXT="Get interfaces info"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="INTERFACE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_PACKAGE_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Packages"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Packages"/>
+       <ITEM LANG="E" TEXT="Interface for Packages"/>
+       <ITEM LANG="F" TEXT="Interface for Packages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Package Interface data"/>
-       <ITEM LANGU="F" DESCRIPT="Package Interface data"/>
+       <ITEM LANG="E" TEXT="Package Interface data"/>
+       <ITEM LANG="F" TEXT="Package Interface data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SUBCOMPONENTS" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
@@ -563,8 +565,8 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -652,20 +654,20 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONV_INTERFACE_RAW" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get interfaces info as RAW"/>
-     <ITEM LANGU="F" DESCRIPT="Get interfaces info as RAW"/>
+     <ITEM LANG="E" TEXT="Get interfaces info as RAW"/>
+     <ITEM LANG="F" TEXT="Get interfaces info as RAW"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="INTERFACE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_PACKAGE_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Packages"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Packages"/>
+       <ITEM LANG="E" TEXT="Interface for Packages"/>
+       <ITEM LANG="F" TEXT="Interface for Packages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_INTERFACE_RAW">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Package Interface data"/>
-       <ITEM LANGU="F" DESCRIPT="Package Interface data"/>
+       <ITEM LANG="E" TEXT="Package Interface data"/>
+       <ITEM LANG="F" TEXT="Package Interface data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SUBCOMPONENTS" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
@@ -673,8 +675,8 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -703,34 +705,34 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONV_PACKAGE" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get package info"/>
-     <ITEM LANGU="F" DESCRIPT="Get package info"/>
+     <ITEM LANG="E" TEXT="Get package info"/>
+     <ITEM LANG="F" TEXT="Get package info"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Package data"/>
-       <ITEM LANGU="F" DESCRIPT="Package data"/>
+       <ITEM LANG="E" TEXT="Package data"/>
+       <ITEM LANG="F" TEXT="Package data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="PACKAGE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Packages"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Packages"/>
+       <ITEM LANG="E" TEXT="Interface for Packages"/>
+       <ITEM LANG="F" TEXT="Interface for Packages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SUBCOMPONENTS" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
      <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="With Sub components"/>
+       <ITEM LANG="E" TEXT="With Sub components"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -853,20 +855,20 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONV_PACKAGE_RAW" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get package info as RAW"/>
-     <ITEM LANGU="F" DESCRIPT="Get package info as RAW"/>
+     <ITEM LANG="E" TEXT="Get package info as RAW"/>
+     <ITEM LANG="F" TEXT="Get package info as RAW"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_PACKAGE_RAW">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Package Interface data"/>
-       <ITEM LANGU="F" DESCRIPT="Package Interface data"/>
+       <ITEM LANG="E" TEXT="Package Interface data"/>
+       <ITEM LANG="F" TEXT="Package Interface data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="PACKAGE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Packages"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Packages"/>
+       <ITEM LANG="E" TEXT="Interface for Packages"/>
+       <ITEM LANG="F" TEXT="Interface for Packages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SUBCOMPONENTS" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
@@ -874,8 +876,8 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -906,29 +908,29 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CREATE_INTERFACE" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create new interface"/>
-     <ITEM LANGU="F" DESCRIPT="Create new interface"/>
+     <ITEM LANG="E" TEXT="Create new interface"/>
+     <ITEM LANG="F" TEXT="Create new interface"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
      <ITEM SCONAME="INTERFACE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="DEVC Datas"/>
-       <ITEM LANGU="F" DESCRIPT="DEVC Datas"/>
+       <ITEM LANG="E" TEXT="DEVC Datas"/>
+       <ITEM LANG="F" TEXT="DEVC Datas"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OVERWRITE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="FLAG">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="General Flag"/>
-       <ITEM LANGU="F" DESCRIPT="General Flag"/>
+       <ITEM LANG="E" TEXT="General Flag"/>
+       <ITEM LANG="F" TEXT="General Flag"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -993,29 +995,29 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CREATE_PACKAGE" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create new Package"/>
-     <ITEM LANGU="F" DESCRIPT="Create new Package"/>
+     <ITEM LANG="E" TEXT="Create new Package"/>
+     <ITEM LANG="F" TEXT="Create new Package"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
      <ITEM SCONAME="OVERWRITE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="FLAG">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="General Flag"/>
-       <ITEM LANGU="F" DESCRIPT="General Flag"/>
+       <ITEM LANG="E" TEXT="General Flag"/>
+       <ITEM LANG="F" TEXT="General Flag"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="PACKAGE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="DEVC Datas"/>
-       <ITEM LANGU="F" DESCRIPT="DEVC Datas"/>
+       <ITEM LANG="E" TEXT="DEVC Datas"/>
+       <ITEM LANG="F" TEXT="DEVC Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1111,15 +1113,15 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="ELEMENTS2ALV" STATE="1" EDITORDER="14 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert elements list to ALV table"/>
-     <ITEM LANGU="F" DESCRIPT="Convert elements list to ALV table"/>
+     <ITEM LANG="E" TEXT="Convert elements list to ALV table"/>
+     <ITEM LANG="F" TEXT="Convert elements list to ALV table"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ALV_DATA" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_ELE"/>
      <ITEM SCONAME="ELEMENTS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SCOMELDATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table Type for Package Interface Element Data"/>
-       <ITEM LANGU="F" DESCRIPT="Table Type for Package Interface Element Data"/>
+       <ITEM LANG="E" TEXT="Table Type for Package Interface Element Data"/>
+       <ITEM LANG="F" TEXT="Table Type for Package Interface Element Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1147,27 +1149,27 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_INTERFACE" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export Interface from SAP System"/>
-     <ITEM LANGU="F" DESCRIPT="Export Package Interface from SAP System"/>
+     <ITEM LANG="E" TEXT="Export Interface from SAP System"/>
+     <ITEM LANG="F" TEXT="Export Package Interface from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
-       <ITEM LANGU="F" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
+       <ITEM LANG="F" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class data"/>
-       <ITEM LANGU="F" DESCRIPT="Class data"/>
+       <ITEM LANG="E" TEXT="Class data"/>
+       <ITEM LANG="F" TEXT="Class data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1196,28 +1198,28 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_PACKAGE" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export Package from SAP System"/>
-     <ITEM LANGU="F" DESCRIPT="Export Package from SAP System"/>
+     <ITEM LANG="E" TEXT="Export Package from SAP System"/>
+     <ITEM LANG="F" TEXT="Export Package from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
-       <ITEM LANGU="F" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
+       <ITEM LANG="F" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Package data"/>
-       <ITEM LANGU="F" DESCRIPT="Package data"/>
+       <ITEM LANG="E" TEXT="Package data"/>
+       <ITEM LANG="F" TEXT="Package data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1250,27 +1252,27 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_INTERFACE" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import Interface into SAP system"/>
-     <ITEM LANGU="F" DESCRIPT="Import Package Interface into SAP system"/>
+     <ITEM LANG="E" TEXT="Import Interface into SAP system"/>
+     <ITEM LANG="F" TEXT="Import Package Interface into SAP system"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Components"/>
-       <ITEM LANGU="F" DESCRIPT="Components"/>
+       <ITEM LANG="E" TEXT="Components"/>
+       <ITEM LANG="F" TEXT="Components"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface data"/>
-       <ITEM LANGU="F" DESCRIPT="Interface data"/>
+       <ITEM LANG="E" TEXT="Interface data"/>
+       <ITEM LANG="F" TEXT="Interface data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1293,27 +1295,27 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_PACKAGE" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import Package into SAP system"/>
-     <ITEM LANGU="F" DESCRIPT="Import Package into SAP system"/>
+     <ITEM LANG="E" TEXT="Import Package into SAP system"/>
+     <ITEM LANG="F" TEXT="Import Package into SAP system"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Components"/>
-       <ITEM LANGU="F" DESCRIPT="Components"/>
+       <ITEM LANG="E" TEXT="Components"/>
+       <ITEM LANG="F" TEXT="Components"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Package data"/>
-       <ITEM LANGU="F" DESCRIPT="Package data"/>
+       <ITEM LANG="E" TEXT="Package data"/>
+       <ITEM LANG="F" TEXT="Package data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1335,28 +1337,28 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="LOAD_DEVC" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Load IF_Package"/>
-     <ITEM LANGU="F" DESCRIPT="Load IF_Package"/>
+     <ITEM LANG="E" TEXT="Load IF_Package"/>
+     <ITEM LANG="F" TEXT="Load IF_Package"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="KEY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Package"/>
-       <ITEM LANGU="F" DESCRIPT="Package"/>
+       <ITEM LANG="E" TEXT="Package"/>
+       <ITEM LANG="F" TEXT="Package"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJ" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Packages"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Packages"/>
+       <ITEM LANG="E" TEXT="Interface for Packages"/>
+       <ITEM LANG="F" TEXT="Interface for Packages"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1409,28 +1411,28 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="LOAD_INTF" STATE="1" EDITORDER="20 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Load IF_Package_Interface"/>
-     <ITEM LANGU="F" DESCRIPT="Load IF_Package_Interface"/>
+     <ITEM LANG="E" TEXT="Load IF_Package_Interface"/>
+     <ITEM LANG="F" TEXT="Load IF_Package_Interface"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="KEY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Package Interface"/>
-       <ITEM LANGU="F" DESCRIPT="Package Interface"/>
+       <ITEM LANG="E" TEXT="Package Interface"/>
+       <ITEM LANG="F" TEXT="Package Interface"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJ" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_PACKAGE_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Packages"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Packages"/>
+       <ITEM LANG="E" TEXT="Interface for Packages"/>
+       <ITEM LANG="F" TEXT="Interface for Packages"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1470,22 +1472,22 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="SET_INTERFACE_ATTRIB" STATE="1" EDITORDER="21 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Set interface attributs (ACLS, Elements,...)"/>
-     <ITEM LANGU="F" DESCRIPT="Set interface attributs (ACLS, Elements,...)"/>
+     <ITEM LANG="E" TEXT="Set interface attributs (ACLS, Elements,...)"/>
+     <ITEM LANG="F" TEXT="Set interface attributs (ACLS, Elements,...)"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="INTERFACE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="DEVC Datas"/>
-       <ITEM LANGU="F" DESCRIPT="DEVC Datas"/>
+       <ITEM LANG="E" TEXT="DEVC Datas"/>
+       <ITEM LANG="F" TEXT="DEVC Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1575,22 +1577,22 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="SET_PACKAGE_ATTRIB" STATE="1" EDITORDER="22 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Set Package attributs"/>
-     <ITEM LANGU="F" DESCRIPT="Set Package attributs"/>
+     <ITEM LANG="E" TEXT="Set Package attributs"/>
+     <ITEM LANG="F" TEXT="Set Package attributs"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="PACKAGE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="DEVC Datas"/>
-       <ITEM LANGU="F" DESCRIPT="DEVC Datas"/>
+       <ITEM LANG="E" TEXT="DEVC Datas"/>
+       <ITEM LANG="F" TEXT="DEVC Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1678,22 +1680,22 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="23 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Interface : unanonymized component data"/>
-     <ITEM LANGU="F" DESCRIPT="Interface : unanonymized component data"/>
+     <ITEM LANG="E" TEXT="Interface : unanonymized component data"/>
+     <ITEM LANG="F" TEXT="Interface : unanonymized component data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface Object"/>
-       <ITEM LANGU="F" DESCRIPT="Interface Object"/>
+       <ITEM LANG="E" TEXT="Interface Object"/>
+       <ITEM LANG="F" TEXT="Interface Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1706,22 +1708,22 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE_PACKAGE" EXPOSURE="1" STATE="1" EDITORDER="24 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Package : unanonymized component data"/>
-     <ITEM LANGU="F" DESCRIPT="Package : unanonymized component data"/>
+     <ITEM LANG="E" TEXT="Package : unanonymized component data"/>
+     <ITEM LANG="F" TEXT="Package : unanonymized component data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Package Object"/>
-       <ITEM LANGU="F" DESCRIPT="Package Object"/>
+       <ITEM LANG="E" TEXT="Package Object"/>
+       <ITEM LANG="F" TEXT="Package Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1747,28 +1749,28 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="UPDATE_INTERFACE" STATE="1" EDITORDER="25 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create new interface or update it"/>
-     <ITEM LANGU="F" DESCRIPT="Create new interface or update it"/>
+     <ITEM LANG="E" TEXT="Create new interface or update it"/>
+     <ITEM LANG="F" TEXT="Create new interface or update it"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SCOMPIDTLN">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Line Type for Table with Package Interface Data"/>
-       <ITEM LANGU="F" DESCRIPT="Line Type for Table with Package Interface Data"/>
+       <ITEM LANG="E" TEXT="Line Type for Table with Package Interface Data"/>
+       <ITEM LANG="F" TEXT="Line Type for Table with Package Interface Data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="INTERFACE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_PACKAGE_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Package Interfaces"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Package Interfaces"/>
+       <ITEM LANG="E" TEXT="Interface for Package Interfaces"/>
+       <ITEM LANG="F" TEXT="Interface for Package Interfaces"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1866,28 +1868,28 @@ DATA _data      TYPE scompidtln.
    </ITEM>
    <ITEM CMPNAME="UPDATE_PACKAGE" STATE="1" EDITORDER="26 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create new package or update it"/>
-     <ITEM LANGU="F" DESCRIPT="Create new package or update it"/>
+     <ITEM LANG="E" TEXT="Create new package or update it"/>
+     <ITEM LANG="F" TEXT="Create new package or update it"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SCOMPKDTLN">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Line Type for Table with Package Data"/>
-       <ITEM LANGU="F" DESCRIPT="Line Type for Table with Package Data"/>
+       <ITEM LANG="E" TEXT="Line Type for Table with Package Data"/>
+       <ITEM LANG="F" TEXT="Line Type for Table with Package Data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="PACKAGE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Packages"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Packages"/>
+       <ITEM LANG="E" TEXT="Interface for Packages"/>
+       <ITEM LANG="F" TEXT="Interface for Packages"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -2035,22 +2037,22 @@ DATA _data      TYPE scompidtln.
    </ITEM>
    <ITEM CMPNAME="_DELETE_DEVC" STATE="1" EDITORDER="27 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Delete package object"/>
-     <ITEM LANGU="F" DESCRIPT="Delete package object"/>
+     <ITEM LANG="E" TEXT="Delete package object"/>
+     <ITEM LANG="F" TEXT="Delete package object"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="PACKAGE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Packages"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Packages"/>
+       <ITEM LANG="E" TEXT="Interface for Packages"/>
+       <ITEM LANG="F" TEXT="Interface for Packages"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -2187,22 +2189,22 @@ DATA _data      TYPE scompidtln.
    </ITEM>
    <ITEM CMPNAME="_DELETE_ELEMENTS" STATE="1" EDITORDER="28 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Delete package&apos;s elements (component that use this DEVC)"/>
-     <ITEM LANGU="F" DESCRIPT="Delete package&apos;s elements (component that use this DEVC)"/>
+     <ITEM LANG="E" TEXT="Delete package&apos;s elements (component that use this DEVC)"/>
+     <ITEM LANG="F" TEXT="Delete package&apos;s elements (component that use this DEVC)"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="PACKAGE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_PACKAGE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Packages"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Packages"/>
+       <ITEM LANG="E" TEXT="Interface for Packages"/>
+       <ITEM LANG="F" TEXT="Interface for Packages"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -2334,22 +2336,22 @@ DATA _data      TYPE scompidtln.
    </ITEM>
    <ITEM CMPNAME="_DELETE_INTF" STATE="1" EDITORDER="29 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Delete Interface object"/>
-     <ITEM LANGU="F" DESCRIPT="Delete Interface object"/>
+     <ITEM LANG="E" TEXT="Delete Interface object"/>
+     <ITEM LANG="F" TEXT="Delete Interface object"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="INTERFACE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_PACKAGE_INTERFACE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Interface for Package Interfaces"/>
-       <ITEM LANGU="F" DESCRIPT="Interface for Package Interfaces"/>
+       <ITEM LANG="E" TEXT="Interface for Package Interfaces"/>
+       <ITEM LANG="F" TEXT="Interface for Package Interfaces"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANGU="F" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -2640,8 +2642,10 @@ DATA _data      TYPE scompidtln.
     <SOURCE>`
   DATA _o_class       TYPE to_package.
   DATA _o_interface   TYPE to_interface.
+  DATA o_comp         TYPE to_component.                    &quot; Issue 92
 
   TRY.
+    CREATE OBJECT components.                         &quot; Issue 92
     CASE object-&gt;type.
       WHEN st_package.
         _o_class ?= object-&gt;raw.
@@ -2671,6 +2675,8 @@ DATA _data      TYPE scompidtln.
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
 
+    o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
+    components-&gt;add( o_comp ).                              &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -2731,38 +2737,38 @@ DATA _data      TYPE scompidtln.
   <TYPES>
    <ITEM CMPNAME="TD_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SCOMIFNAM">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Package Interface"/>
-     <ITEM LANGU="F" DESCRIPT="Package Interface"/>
+     <ITEM LANG="E" TEXT="Package Interface"/>
+     <ITEM LANG="F" TEXT="Package Interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TD_PACKAGE" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="DEVCLASS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Package"/>
-     <ITEM LANGU="F" DESCRIPT="Package"/>
+     <ITEM LANG="E" TEXT="Package"/>
+     <ITEM LANG="F" TEXT="Package"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_PINF_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Interface data"/>
-     <ITEM LANGU="F" DESCRIPT="Package Interface data"/>
+     <ITEM LANG="E" TEXT="Interface data"/>
+     <ITEM LANG="F" TEXT="Package Interface data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_INTERFACE_RAW" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="ZAPLINK_PINF_RAW">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Interface data as RAW"/>
-     <ITEM LANGU="F" DESCRIPT="Interface data as RAW"/>
+     <ITEM LANG="E" TEXT="Interface data as RAW"/>
+     <ITEM LANG="F" TEXT="Interface data as RAW"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_PACKAGE" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_DEVC_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Package data"/>
-     <ITEM LANGU="F" DESCRIPT="Package data"/>
+     <ITEM LANG="E" TEXT="Package data"/>
+     <ITEM LANG="F" TEXT="Package data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_PACKAGE_RAW" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_DEVC_RAW">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Package data as RAW"/>
-     <ITEM LANGU="F" DESCRIPT="Package data as RAW"/>
+     <ITEM LANG="E" TEXT="Package data as RAW"/>
+     <ITEM LANG="F" TEXT="Package data as RAW"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_CLAS_ATTR" STATE="1" EDITORDER="4 " TYPTYPE="4">
@@ -2771,8 +2777,8 @@ DATA _data      TYPE scompidtln.
   TYPES:
     END OF ts_clas_attr
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Root attributs for CLAS"/>
-     <ITEM LANGU="F" DESCRIPT="Root attributs for CLAS"/>
+     <ITEM LANG="E" TEXT="Root attributs for CLAS"/>
+     <ITEM LANG="F" TEXT="Root attributs for CLAS"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_DOC_KEY" STATE="1" EDITORDER="3 " TYPTYPE="4">
@@ -2781,8 +2787,8 @@ DATA _data      TYPE scompidtln.
     other(30)  TYPE c,
   END OF ts_doc_key
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="DOCU key structure"/>
-     <ITEM LANGU="F" DESCRIPT="DOCU key structure"/>
+     <ITEM LANG="E" TEXT="DOCU key structure"/>
+     <ITEM LANG="F" TEXT="DOCU key structure"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_ELE" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_ele,

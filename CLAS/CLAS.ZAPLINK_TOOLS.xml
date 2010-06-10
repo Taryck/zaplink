@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F54454B93A84A14DF7445162A587CA81" CODE_SIGNATURE="0CAD62019A0042372FD4166471794C70" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0AE37732F3E78C4719EE88C4657F3943" CODE_SIGNATURE="0CAD62019A0042372FD4166471794C70" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" WITH_UNIT_TESTS="X">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPLink tools">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAPLink tools">U1&amp;FUNCTIONALITY&amp;
 ASThis object stores general tools used by ZAPLINK Framework that do not
   belongs to any ZAPLink concept such as :
 AS,,- Connector
@@ -25,8 +24,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -181,17 +185,17 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   <METHODS>
    <ITEM CMPNAME="CALCULATE_MD5_HASH" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Calculate MD5 HASH for a string"/>
+     <ITEM LANG="E" TEXT="Calculate MD5 HASH for a string"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_CHECKSUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Checksum"/>
+       <ITEM LANG="E" TEXT="Checksum"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="STRING" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="String Data"/>
+       <ITEM LANG="E" TEXT="String Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -217,17 +221,17 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="CLEAN_ABAP_STRING" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Clean ABAP String of not important characters."/>
+     <ITEM LANG="E" TEXT="Clean ABAP String of not important characters."/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source code as String"/>
+       <ITEM LANG="E" TEXT="ABAP Source code as String"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source code as String"/>
+       <ITEM LANG="E" TEXT="ABAP Source code as String"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -239,12 +243,12 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="CONDENSE_ABAP_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Condense source code"/>
+     <ITEM LANG="E" TEXT="Condense source code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="TABLE" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="STANDARD TABLE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table source code"/>
+       <ITEM LANG="E" TEXT="Table source code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -259,17 +263,17 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="CONV_ABAP_LINE" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert ABAP Line : Revome tabulations"/>
+     <ITEM LANG="E" TEXT="Convert ABAP Line : Revome tabulations"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TARGET" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -281,12 +285,12 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="CONV_LIMU_2_R3TR" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert LIMU entries to R3TR Entries"/>
+     <ITEM LANG="E" TEXT="Convert LIMU entries to R3TR Entries"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="E071" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_E071">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Transport Request entries"/>
+       <ITEM LANG="E" TEXT="Transport Request entries"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_COMPKEYS"/>
@@ -345,12 +349,12 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="CONV_TABLE_2UPCASE" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert source code to upercase"/>
+     <ITEM LANG="E" TEXT="Convert source code to upercase"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="TABLE" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="STANDARD TABLE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table source code"/>
+       <ITEM LANG="E" TEXT="Table source code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -360,7 +364,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="EXTEND_PACKAGES" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Extend Package to sub_packages"/>
+     <ITEM LANG="E" TEXT="Extend Package to sub_packages"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="PACKAGES" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TR_PACKAGES"/>
@@ -403,17 +407,17 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="GET_CLAS_NAME" EXPOSURE="2" STATE="1" EDITORDER="13 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get object clas name"/>
+     <ITEM LANG="E" TEXT="Get object clas name"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object"/>
+       <ITEM LANG="E" TEXT="Object"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_CLASSNAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class name"/>
+       <ITEM LANG="E" TEXT="Class name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -438,12 +442,12 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="GET_KEYS_FROM_PACKAGE" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get object list from Package"/>
+     <ITEM LANG="E" TEXT="Get object list from Package"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="EXT" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Extend to sub package"/>
+       <ITEM LANG="E" TEXT="Extend to sub package"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="PACKAGES" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TR_PACKAGES"/>
@@ -454,13 +458,13 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="GET_KEYS_FROM_TADIR" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get object list from TADIR : Package, type, author,..."/>
+     <ITEM LANG="E" TEXT="Get object list from TADIR : Package, type, author,..."/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="AUTHOR" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="TR_AUTHOR" PAROPTIONL="X"/>
      <ITEM SCONAME="EXT" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Extend to sub package"/>
+       <ITEM LANG="E" TEXT="Extend to sub package"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TR_COMPNAME" PAROPTIONL="X"/>
@@ -533,7 +537,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="GET_KEYS_FROM_TR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get object list from Transport request"/>
+     <ITEM LANG="E" TEXT="Get object list from Transport request"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_COMPKEYS"/>
@@ -588,12 +592,12 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="INVERSE_TABLE_ORDER" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Inverse standard table order"/>
+     <ITEM LANG="E" TEXT="Inverse standard table order"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="MY_TABLE" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="STANDARD TABLE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Any Standard Table"/>
+       <ITEM LANG="E" TEXT="Any Standard Table"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -611,17 +615,17 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="PRETTY_PRINTER" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Apply Pretty Printer to Source code"/>
+     <ITEM LANG="E" TEXT="Apply Pretty Printer to Source code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="INDENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Indent while Pretty Printer"/>
+       <ITEM LANG="E" TEXT="Indent while Pretty Printer"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TABLE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="STANDARD TABLE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table source code"/>
+       <ITEM LANG="E" TEXT="Table source code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -995,17 +999,17 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="TABLE_2_STRING" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert standard table to string"/>
+     <ITEM LANG="E" TEXT="Convert standard table to string"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="String"/>
+       <ITEM LANG="E" TEXT="String"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STANDARD TABLE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table of String or Equiv"/>
+       <ITEM LANG="E" TEXT="Table of String or Equiv"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1020,7 +1024,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="UNZIP_STRING" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="unGZIP String"/>
+     <ITEM LANG="E" TEXT="unGZIP String"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="XSTRING"/>
@@ -1048,7 +1052,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
    </ITEM>
    <ITEM CMPNAME="ZIP_STRING" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="GZIP String"/>
+     <ITEM LANG="E" TEXT="GZIP String"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING"/>
@@ -1084,7 +1088,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
     TT_E071 type STANDARD TABLE OF e071 with DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport Request entries"/>
+     <ITEM LANG="E" TEXT="Transport Request entries"/>
     </TEXTS>
    </ITEM>
   </TYPES>

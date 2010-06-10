@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="EABD7B3207B9A23DD6A351B7170E03D0" CODE_SIGNATURE="B9639E737B91932469AED4112E4F7607" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNC_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="1BD14D5CE9503A119DC4F38FE594B381" CODE_SIGNATURE="B9639E737B91932469AED4112E4F7607" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNC_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Commun Data for Class &amp; Interface">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Commun Data for Class &amp; Interface">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_FUNCTION_GROUP
 ASDefine XML structure of a Function group
 U1&amp;RELATIONS&amp;
@@ -16,8 +15,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -35,7 +39,7 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TS_MAINDATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Program main data"/>
+     <ITEM LANG="E" TEXT="Program main data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DOC_IDS" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF DOC_IDS,
@@ -50,7 +54,7 @@ AS</DOCUMENTATION>
     END OF markups
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Markups for replacements"/>
+     <ITEM LANG="E" TEXT="Markups for replacements"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="PARAMETERS" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_PARAMS"/>
@@ -69,12 +73,12 @@ AS</DOCUMENTATION>
     END OF R_DOC_IDS
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Documentation Object"/>
+     <ITEM LANG="E" TEXT="Documentation Object"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SOURCE" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TS_SOURCE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ABAP Source code"/>
+     <ITEM LANG="E" TEXT="ABAP Source code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUFFIXES" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
@@ -83,7 +87,7 @@ AS</DOCUMENTATION>
     END OF suffixes
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Special suffixes"/>
+     <ITEM LANG="E" TEXT="Special suffixes"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TEXTS" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_TEXTS"/>
@@ -113,12 +117,12 @@ AS</DOCUMENTATION>
   <METHODS>
    <ITEM CMPNAME="ANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
+     <ITEM LANG="E" TEXT="Anonymized component data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
 *&apos;FU&apos;
@@ -135,12 +139,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="FROM_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes"/>
+     <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules object Data"/>
+       <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -276,12 +280,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="1" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert object attributes to FM Data"/>
+     <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules object Data"/>
+       <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -389,7 +393,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
+     <ITEM LANG="E" TEXT="UnAnonymized component data"/>
     </TEXTS>
    </ITEM>
   </METHODS>
@@ -401,7 +405,7 @@ AS</DOCUMENTATION>
    <ITEM CMPNAME="TD_PARAMKIND" EXPOSURE="1" STATE="1" EDITORDER="22 " TYPTYPE="1" TYPE="KIND"/>
    <ITEM CMPNAME="TO_MENUPAINTER" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_MENUPAINTER_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Menu painter Data"/>
+     <ITEM LANG="E" TEXT="Menu painter Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_DOC_PARAM" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_doc_param,
@@ -432,7 +436,7 @@ AS</DOCUMENTATION>
               END OF ts_fm_data
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
+     <ITEM LANG="E" TEXT="Function Module Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="27 " TYPTYPE="4">BEGIN OF ts_function,
@@ -461,7 +465,7 @@ AS</DOCUMENTATION>
     END OF ts_maindata
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Function Module main data"/>
+     <ITEM LANG="E" TEXT="Function Module main data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_PARAM" EXPOSURE="1" STATE="1" EDITORDER="23 " TYPTYPE="4">BEGIN OF ts_param,
@@ -482,7 +486,7 @@ AS</DOCUMENTATION>
           END OF ts_source
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ABAP Source code"/>
+     <ITEM LANG="E" TEXT="ABAP Source code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_TEXTPOOL" EXPOSURE="1" STATE="1" EDITORDER="20 " TYPTYPE="4">
@@ -493,7 +497,7 @@ AS</DOCUMENTATION>
         END OF ts_textpool
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Textpool"/>
+     <ITEM LANG="E" TEXT="Textpool"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_EXCEPTIONS" EXPOSURE="1" STATE="1" EDITORDER="26 " TYPTYPE="4">tt_exceptions TYPE SORTED TABLE OF ts_excep WITH UNIQUE KEY exception
@@ -522,7 +526,7 @@ AS</DOCUMENTATION>
     tt_textpools TYPE SORTED TABLE OF ts_textpool WITH UNIQUE KEY id KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Textpool table"/>
+     <ITEM LANG="E" TEXT="Textpool table"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_TFTIT" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_tftit TYPE SORTED TABLE OF tftit WITH UNIQUE KEY funcname spras
@@ -531,7 +535,7 @@ AS</DOCUMENTATION>
 `</ITEM>
    <ITEM CMPNAME="T_RAW" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="RSWSOURCET">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ABAP Source table"/>
+     <ITEM LANG="E" TEXT="ABAP Source table"/>
     </TEXTS>
    </ITEM>
   </TYPES>

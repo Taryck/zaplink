@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="696AD460C1630DF638D35ECC382698AE" CODE_SIGNATURE="90AFE17439350E1ACC223A91BA1E2D17" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="CA7B72398216695F7DD326B2A71BC56B" CODE_SIGNATURE="90AFE17439350E1ACC223A91BA1E2D17" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPLink Connectors">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAPLink Connectors">U1&amp;FUNCTIONALITY&amp;
 ASThis class provides various functionalities for Connectors. Take a lot
   to each method for more details.
 U1&amp;RELATIONS&amp;
@@ -15,8 +14,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -44,7 +48,7 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="C_CLASS" STATE="1" EDITORDER="6 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component type def"/>
+     <ITEM LANG="E" TEXT="Component type def"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="EXISTS" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
@@ -54,65 +58,63 @@ AS</DOCUMENTATION>
         END OF exists
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Exists constants"/>
+     <ITEM LANG="E" TEXT="Connector Exists constants"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="LOCAL_DEVCLASS" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="2" ATTVALUE="&apos;$LOCAL$&apos;" TYPTYPE="1" TYPE="TD_DEVCLASS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Devclass for Local class"/>
+     <ITEM LANG="E" TEXT="Devclass for Local class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MAX_ORDER" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;999999&apos;" TYPTYPE="1" TYPE="TD_TYPEORDER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Max (and default) Rank for type"/>
+     <ITEM LANG="E" TEXT="Max (and default) Rank for type"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="5 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SAPTYPES" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_SAPTYPES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="List of SAP Types"/>
+     <ITEM LANG="E" TEXT="List of SAP Types"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUPPORTED_TYPES" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="1" ATTRDONLY="X" TYPTYPE="1" TYPE="TT_TYPES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="List of all supported types">
-      <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;MEANING&amp;
+     <ITEM LANG="E" TEXT="List of all supported types">U1&amp;MEANING&amp;
 ASList all component types that is supported by one or more connector.
   Each component of a type listed in this table could be exported using a
   connector installed in this SAP System.
 U1&amp;HINTS&amp;
-AS</DOCUMENTATION>
-     </ITEM>
+AS</ITEM>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TYPE_LIST" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_TYPELIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connectors for all components types"/>
+     <ITEM LANG="E" TEXT="Connectors for all components types"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="VALUE_TABLE" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_VALUES"/>
    <ITEM CMPNAME="XMLENGINE" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="3" TYPE="IF_IXML">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="XML Engine"/>
+     <ITEM LANG="E" TEXT="XML Engine"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_CLASSES" EXPOSURE="1" STATE="1" EDITORDER="4 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_CLASSES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Classe list"/>
+     <ITEM LANG="E" TEXT="Classe list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_MSG_COLL" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_MSG_COLL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector"/>
+     <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -137,19 +139,19 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="ADD_LOCAL_CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add Local connectors"/>
+     <ITEM LANG="E" TEXT="Add Local connectors"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="LOCAL_CLASS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONNCLASS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Type : ClassName"/>
+       <ITEM LANG="E" TEXT="Object Type : ClassName"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -167,7 +169,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA t_types    TYPE STANDARD TABLE OF ko100 WITH DEFAULT KEY.
@@ -213,12 +215,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CLEAR_CONNECTORS" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Remove all connectors"/>
+     <ITEM LANG="E" TEXT="Remove all connectors"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -227,13 +229,13 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CREATE_CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector : Getter"/>
+     <ITEM LANG="E" TEXT="Connector : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CONNUUID" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONNUUID" PAROPTIONL="X"/>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_CONNECTOR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAP Link Connector interface"/>
+       <ITEM LANG="E" TEXT="ZAP Link Connector interface"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE" PAROPTIONL="X"/>
@@ -241,7 +243,7 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -310,12 +312,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="DO_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Exists ?"/>
+     <ITEM LANG="E" TEXT="Connector Exists ?"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_CONNEXISTS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Connector exists (&apos;X&apos;) or not (&apos; &apos;)"/>
+       <ITEM LANG="E" TEXT="Connector exists (&apos;X&apos;) or not (&apos; &apos;)"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
@@ -323,7 +325,7 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -344,12 +346,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_CLASSNAME" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get connector&apos;s classname"/>
+     <ITEM LANG="E" TEXT="Get connector&apos;s classname"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="O_CONN" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_CONNECTOR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAP Link Connector interface"/>
+       <ITEM LANG="E" TEXT="ZAP Link Connector interface"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_CONNCLASS"/>
@@ -357,7 +359,7 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -370,12 +372,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_CONNECTORLIST" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Connector as List (object)"/>
+     <ITEM LANG="E" TEXT="Get Connector as List (object)"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Connector list"/>
+       <ITEM LANG="E" TEXT="Connector list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -399,7 +401,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_TYPEKIND" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Program ID of object type"/>
+     <ITEM LANG="E" TEXT="Get Program ID of object type"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
@@ -414,7 +416,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_TYPEORDER" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get order of object Type"/>
+     <ITEM LANG="E" TEXT="Get order of object Type"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
@@ -434,7 +436,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_VALUES" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Search Helps"/>
+     <ITEM LANG="E" TEXT="Connector Search Helps"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
@@ -442,7 +444,7 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -493,24 +495,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="NODE_2_RAW" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert XML node to RAW"/>
+     <ITEM LANG="E" TEXT="Convert XML node to RAW"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+       <ITEM LANG="E" TEXT="IF_IXML_NODE"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_RAW_BASE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Base RAW component without data"/>
+       <ITEM LANG="E" TEXT="Base RAW component without data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -542,24 +544,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="RAW_2_STRING" EXPOSURE="2" STATE="1" EDITORDER="17 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert RAW to String"/>
+     <ITEM LANG="E" TEXT="Convert RAW to String"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_RAW_BASE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+       <ITEM LANG="E" TEXT="IF_IXML_NODE"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Base RAW component without data"/>
+       <ITEM LANG="E" TEXT="Base RAW component without data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -581,7 +583,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="RAW_2_XML" EXPOSURE="2" STATE="1" EDITORDER="20 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert RAW to String"/>
+     <ITEM LANG="E" TEXT="Convert RAW to String"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_RAW_BASE"/>
@@ -590,7 +592,7 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -609,12 +611,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="RESET_CONNECTORS" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Reset all connectors to default (remove local)"/>
+     <ITEM LANG="E" TEXT="Reset all connectors to default (remove local)"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -694,7 +696,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="STRING_2_XML" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert string to XML Document"/>
+     <ITEM LANG="E" TEXT="Convert string to XML Document"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING"/>
@@ -725,7 +727,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="TYPE2TEXT" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get object Type as text"/>
+     <ITEM LANG="E" TEXT="Get object Type as text"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
@@ -743,24 +745,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="XML_2_STRING" EXPOSURE="2" STATE="1" EDITORDER="18 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert XML document to String"/>
+     <ITEM LANG="E" TEXT="Convert XML document to String"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Base RAW component without data"/>
+       <ITEM LANG="E" TEXT="Base RAW component without data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XML" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_XML">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+       <ITEM LANG="E" TEXT="IF_IXML_NODE"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -790,24 +792,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="_ADD_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="14 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add a connector to the list"/>
+     <ITEM LANG="E" TEXT="Add a connector to the list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CLASS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONNCLASS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Type : ClassName"/>
+       <ITEM LANG="E" TEXT="Object Type : ClassName"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="DEVCLASS" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_DEVCLASS" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Devlopment class"/>
+       <ITEM LANG="E" TEXT="Devlopment class"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -923,7 +925,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="_SEARCH_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="12 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Search for a connector in list"/>
+     <ITEM LANG="E" TEXT="Search for a connector in list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_CONN_DEF"/>
@@ -932,7 +934,7 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -953,12 +955,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="_UPDATE_DEF_CLASS" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Update default"/>
+     <ITEM LANG="E" TEXT="Update default"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1018,37 +1020,37 @@ INCLUDE zaplink_macros.</MACROS>
   <TYPES>
    <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="3" TYPE="ZAPLINK_COMPONENT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+     <ITEM LANG="E" TEXT="Zap Link Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CONNECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAP Link Connector interface"/>
+     <ITEM LANG="E" TEXT="ZAP Link Connector interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_LIST" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_LIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+     <ITEM LANG="E" TEXT="ZapLink Components list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector"/>
+     <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_RAW_BASE" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_RAW_BASE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Base RAW component without data"/>
+     <ITEM LANG="E" TEXT="Base RAW component without data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_CLASS" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4">BEGIN OF ts_class.
@@ -1070,7 +1072,7 @@ INCLUDE zaplink_macros.</MACROS>
         END OF ts_conndata
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Info"/>
+     <ITEM LANG="E" TEXT="Connector Info"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_SAPTYPES" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="4">BEGIN OF ts_saptypes.
@@ -1090,7 +1092,7 @@ INCLUDE zaplink_macros.</MACROS>
     tt_saptypes TYPE HASHED TABLE OF ts_saptypes WITH UNIQUE KEY object
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="List of SAP CTS Types"/>
+     <ITEM LANG="E" TEXT="List of SAP CTS Types"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_VALUES" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_values TYPE STANDARD TABLE OF ts_value WITH DEFAULT KEY

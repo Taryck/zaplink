@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7CA8D62A890854BDBEBDB6AB4CC0B548" CODE_SIGNATURE="FA8A455585EDD875CD57C61FE591575B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="1CBCBBC951FB5E1B8F010872469DCDD6" CODE_SIGNATURE="FA8A455585EDD875CD57C61FE591575B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZapLink Easy XML Tools">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZapLink Easy XML Tools">U1&amp;FUNCTIONALITY&amp;
 ASTransform any ABAP type into XML and read XML to store in a ABAP Type.
   Attributes (in structure, object,...) with special name &quot;_&quot; is stored in
   XML as a value. All other data is stored as attribute of an XML Node.
@@ -16,97 +15,100 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="APPLICATION_LOG" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTRDONLY="X" TYPTYPE="1" TYPE="TO_LOG">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector: Standard Implementation"/>
+     <ITEM LANG="E" TEXT="Message Collector: Standard Implementation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="BAL_LEVEL" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="BALLEVEL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Level of detail"/>
+     <ITEM LANG="E" TEXT="Application Log: Level of detail"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CHAR_TO_PROTECT" STATE="1" EDITORDER="14 " ATTDECLTYP="1" TYPTYPE="4">
     char_to_protect TYPE RANGE OF ABAP_CHAR1
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Charater list to be protected"/>
+     <ITEM LANG="E" TEXT="Charater list to be protected"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CONTEXT" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="TT_CONTEXT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="For debug porpuse"/>
+     <ITEM LANG="E" TEXT="For debug porpuse"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CRC" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Return Code as String"/>
+     <ITEM LANG="E" TEXT="Return Code as String"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="EN_LINE" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;ITEM&apos;" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Element Name for Table&apos;s line"/>
+     <ITEM LANG="E" TEXT="Element Name for Table&apos;s line"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ISSUE46_PREFIX" STATE="1" EDITORDER="11 " ATTDECLTYP="2" ATTVALUE="&apos;_&apos;" TYPTYPE="1" TYPE="ABAP_CHAR1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Prefix for attribut name"/>
+     <ITEM LANG="E" TEXT="Prefix for attribut name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ISSUE46_REGEX" STATE="1" EDITORDER="12 " ATTDECLTYP="1" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Regex to convert back fieldname"/>
+     <ITEM LANG="E" TEXT="Regex to convert back fieldname"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="IXML" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="IF_IXML">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="IF_IXML"/>
+     <ITEM LANG="E" TEXT="IF_IXML"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MSGID" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;ZAPLINK_EASYXML&apos;" TYPTYPE="1" TYPE="SYMSGID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Class"/>
+     <ITEM LANG="E" TEXT="Message Class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+     <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="PROTECTION_CHAR" STATE="1" EDITORDER="13 " ATTDECLTYP="2" ATTVALUE="&apos;`&apos;" TYPTYPE="1" TYPE="ABAP_CHAR1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Protection Character"/>
+     <ITEM LANG="E" TEXT="Protection Character"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="RC" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="I">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Return Code"/>
+     <ITEM LANG="E" TEXT="Return Code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SELF_FIELDNAME" STATE="1" EDITORDER="9 " ATTDECLTYP="2" ATTVALUE="&apos;_&apos;" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Special FieldName in structure">
-      <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;MEANING&amp;
+     <ITEM LANG="E" TEXT="Special FieldName in structure">U1&amp;MEANING&amp;
 ASField Name in structure to switch XML storage location from attribute to
   value
 U1&amp;HINTS&amp;
-AS</DOCUMENTATION>
-     </ITEM>
+AS</ITEM>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TN_NAME_OFF" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;ZSL_NAME&apos;" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="TAG Name for Name"/>
+     <ITEM LANG="E" TEXT="TAG Name for Name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TN_VERSION_OFF" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;ZSLPI_VER&apos;" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="TAG Name for Version"/>
+     <ITEM LANG="E" TEXT="TAG Name for Version"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -151,24 +153,24 @@ END-OF-DEFINITION.</MACROS>
   <METHODS>
    <ITEM CMPNAME="ADD_ANY" EXPOSURE="2" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transform any data to XML"/>
+     <ITEM LANG="E" TEXT="Transform any data to XML"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ANY" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
      <ITEM SCONAME="TYPEDESC" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XMLDOC" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_DOCUMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_DOCUMENT"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XML_NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -242,24 +244,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="ADD_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transform Object to XML"/>
+     <ITEM LANG="E" TEXT="Transform Object to XML"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT"/>
      <ITEM SCONAME="TYPEDESC" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XMLDOC" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_DOCUMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_DOCUMENT"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XML_NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -383,19 +385,19 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="ADD_STRUCTURE" EXPOSURE="1" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transform Structure to XML"/>
+     <ITEM LANG="E" TEXT="Transform Structure to XML"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
      <ITEM SCONAME="STRUCTURE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="DATA"/>
      <ITEM SCONAME="XMLDOC" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_DOCUMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_DOCUMENT"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XML_NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -502,19 +504,19 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="ADD_TABLE" EXPOSURE="1" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transform table to XML"/>
+     <ITEM LANG="E" TEXT="Transform table to XML"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
      <ITEM SCONAME="TABLE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY TABLE"/>
      <ITEM SCONAME="XMLDOC" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_DOCUMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_DOCUMENT"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XML_NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -545,34 +547,34 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="ANY2XML" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Any data =&gt; XML"/>
+     <ITEM LANG="E" TEXT="Any data =&gt; XML"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ANY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Data to convert"/>
+       <ITEM LANG="E" TEXT="Data to convert"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ATTRIBUTS" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Structure of attributs"/>
+       <ITEM LANG="E" TEXT="Structure of attributs"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Root node name = Object Type"/>
+       <ITEM LANG="E" TEXT="Root node name = Object Type"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XMLDOC" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="XML Document generated"/>
+       <ITEM LANG="E" TEXT="XML Document generated"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -643,7 +645,7 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
 *  DATA: obj TYPE balobj.
@@ -702,7 +704,7 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   ixml = cl_ixml=&gt;create( ).
@@ -710,14 +712,14 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="ELEM_2_STRING" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert Elementary type to string"/>
+     <ITEM LANG="E" TEXT="Convert Elementary type to string"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ANY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
      <ITEM SCONAME="STRING" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
      <ITEM SCONAME="TYPE_DESC" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -803,24 +805,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_ATTRIBUTS" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get XML root Attributes"/>
+     <ITEM LANG="E" TEXT="Get XML root Attributes"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ATTRIBUTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Structure of attributs"/>
+       <ITEM LANG="E" TEXT="Structure of attributs"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XMLDOC" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="XML document"/>
+       <ITEM LANG="E" TEXT="XML document"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -858,13 +860,13 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_NODE_TEXT" EXPOSURE="1" STATE="1" EDITORDER="14 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Read XML node for text"/>
+     <ITEM LANG="E" TEXT="Read XML node for text"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
      <ITEM SCONAME="XML_NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -882,17 +884,17 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_REF_TYPE" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="For Ref data (like object) type get target type"/>
+     <ITEM LANG="E" TEXT="For Ref data (like object) type get target type"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="REF_TYPE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TYPEDESC" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -908,7 +910,7 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IS_SIMPLE_TYPE_KIND" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Determine Kind from Type kind for simple kind"/>
+     <ITEM LANG="E" TEXT="Determine Kind from Type kind for simple kind"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
@@ -971,13 +973,13 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="NODE2STRING" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert node to String"/>
+     <ITEM LANG="E" TEXT="Convert node to String"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="STRING" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
      <ITEM SCONAME="XML_NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -998,12 +1000,12 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="NODE_IS_NOT_TYPE" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Do node is not a speficied type"/>
+     <ITEM LANG="E" TEXT="Do node is not a speficied type"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+       <ITEM LANG="E" TEXT="IF_IXML_NODE"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
@@ -1020,12 +1022,12 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="NODE_IS_TYPE" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Do node is the speficied type"/>
+     <ITEM LANG="E" TEXT="Do node is the speficied type"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+       <ITEM LANG="E" TEXT="IF_IXML_NODE"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
@@ -1042,13 +1044,13 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="PROTECT_STRING" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Protect String for XML value"/>
+     <ITEM LANG="E" TEXT="Protect String for XML value"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
      <ITEM SCONAME="STRING" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1065,18 +1067,18 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="READ_ANY" EXPOSURE="1" STATE="1" EDITORDER="6 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Read XML to Any data"/>
+     <ITEM LANG="E" TEXT="Read XML to Any data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ANY" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
      <ITEM SCONAME="TYPEDESC" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XML_NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1145,18 +1147,18 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="READ_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="7 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Read XML to Object"/>
+     <ITEM LANG="E" TEXT="Read XML to Object"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT"/>
      <ITEM SCONAME="TYPEDESC" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XML_NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1371,13 +1373,13 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="READ_STRUCTURE" EXPOSURE="1" STATE="1" EDITORDER="8 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Read XML to Structure"/>
+     <ITEM LANG="E" TEXT="Read XML to Structure"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="STRUCTURE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="DATA"/>
      <ITEM SCONAME="XML_NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1567,13 +1569,13 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="READ_TABLE" EXPOSURE="1" STATE="1" EDITORDER="9 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Read XML to Table"/>
+     <ITEM LANG="E" TEXT="Read XML to Table"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="TABLE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY TABLE"/>
      <ITEM SCONAME="XML_NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1639,7 +1641,7 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="RESET" EXPOSURE="2" STATE="1" EDITORDER="8 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Reste attributs"/>
+     <ITEM LANG="E" TEXT="Reste attributs"/>
     </TEXTS>
     <SOURCE>`
   DATA object	TYPE balobj_d.
@@ -1683,7 +1685,7 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="STACK" EXPOSURE="1" STATE="1" EDITORDER="10 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add context to context stack"/>
+     <ITEM LANG="E" TEXT="Add context to context stack"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ITEM" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING"/>
@@ -1695,12 +1697,12 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="STACK_DESCR" EXPOSURE="1" STATE="1" EDITORDER="11 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add context to context stack from description object"/>
+     <ITEM LANG="E" TEXT="Add context to context stack from description object"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DESC" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1713,14 +1715,14 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="STRING_2_ELEM" EXPOSURE="1" STATE="1" EDITORDER="12 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert Elementary type to string"/>
+     <ITEM LANG="E" TEXT="Convert Elementary type to string"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ANY" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
      <ITEM SCONAME="STRING" CMPTYPE="1" EDITORDER="2 " TYPTYPE="1" TYPE="STRING"/>
      <ITEM SCONAME="TYPE_DESC" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1796,13 +1798,13 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="UNPROTECT_STRING" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Unprotect String issued from XML value"/>
+     <ITEM LANG="E" TEXT="Unprotect String issued from XML value"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
      <ITEM SCONAME="STRING" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1824,7 +1826,7 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="UNSTACK" EXPOSURE="1" STATE="1" EDITORDER="13 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Remove stack entry"/>
+     <ITEM LANG="E" TEXT="Remove stack entry"/>
     </TEXTS>
     <SOURCE>`
   IF NOT context IS INITIAL.
@@ -1833,29 +1835,29 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="XML2ANY" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="XML =&gt; Any data"/>
+     <ITEM LANG="E" TEXT="XML =&gt; Any data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ANY" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Data to map from XML Doc"/>
+       <ITEM LANG="E" TEXT="Data to map from XML Doc"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ATTRIBUTS" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Structure of attributs"/>
+       <ITEM LANG="E" TEXT="Structure of attributs"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XMLDOC" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="XML document"/>
+       <ITEM LANG="E" TEXT="XML document"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1896,13 +1898,13 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="_XML2ANY" EXPOSURE="2" STATE="1" EDITORDER="10 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="XML =&gt; Any data"/>
+     <ITEM LANG="E" TEXT="XML =&gt; Any data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ANY" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
      <ITEM SCONAME="XML" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_DOCUMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_DOCUMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1932,17 +1934,17 @@ END-OF-DEFINITION.</MACROS>
   <TYPES>
    <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+     <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_LOG" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector"/>
+     <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+     <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_ELE" STATE="1" EDITORDER="1 " TYPTYPE="4">
@@ -1955,7 +1957,7 @@ END-OF-DEFINITION.</MACROS>
   END OF ts_ele
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Donnée pour"/>
+     <ITEM LANG="E" TEXT="Donnée pour"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_ITF_EL" STATE="1" EDITORDER="3 " TYPTYPE="4">BEGIN OF ts_itf_el,
@@ -1968,7 +1970,7 @@ END-OF-DEFINITION.</MACROS>
     tt_context TYPE STANDARD TABLE OF string WITH DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="For debug porpuse :Stack of calls"/>
+     <ITEM LANG="E" TEXT="For debug porpuse :Stack of calls"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_ELE" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_ele TYPE STANDARD TABLE OF ts_ele WITH NON-UNIQUE DEFAULT KEY
@@ -1977,7 +1979,7 @@ END-OF-DEFINITION.</MACROS>
     tt_itf_el TYPE STANDARD TABLE OF ts_itf_el WITH NON-UNIQUE DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Interfaces &amp; it&apos;s Elements"/>
+     <ITEM LANG="E" TEXT="Interfaces &amp; it&apos;s Elements"/>
     </TEXTS>
    </ITEM>
   </TYPES>

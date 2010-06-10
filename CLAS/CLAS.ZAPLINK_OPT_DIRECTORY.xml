@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B3848A54C025DB2F07D17DE079521D42" CODE_SIGNATURE="AE8F261364F03AC52ADB24DF77ACCD40" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="75DB6ADBD2367D0D6E063F4A96052349" CODE_SIGNATURE="AE8F261364F03AC52ADB24DF77ACCD40" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Zap Link Directory options"/>
+    <ITEM LANG="E" TEXT="Zap Link Directory options">U1&amp;FUNCTIONALITY&amp;
+ASOptions for directory : Developement classes, Transport Resquest, ...
+U1&amp;RELATIONS&amp;
+AS
+U1&amp;EXAMPLE&amp;
+AS
+U1&amp;HINTS&amp;
+AS
+U1&amp;FURTHER_SOURCES_OF_INF&amp;
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -15,22 +30,22 @@
   <ATTRIBUTS>
    <ITEM CMPNAME="APPLICATION_LOG" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTRDONLY="X" TYPTYPE="1" TYPE="TO_LOG">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link Transport Request options"/>
+     <ITEM LANG="E" TEXT="Zap Link Transport Request options"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;DIRECTORY&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Options"/>
+     <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUBSTITUTIONKINDS" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
@@ -42,22 +57,22 @@
       END OF substitutionkinds
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="All possible Devclass substitution Kinds"/>
+     <ITEM LANG="E" TEXT="All possible Devclass substitution Kinds"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_DEVCLASS" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TO_DEVCLASS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="DevClass"/>
+     <ITEM LANG="E" TEXT="DevClass"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_SUBSTITUTION" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TD_SUBSTITUTIONKIND">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Devclass substitution Kind"/>
+     <ITEM LANG="E" TEXT="Devclass substitution Kind"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_TR" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TO_TR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link DevClass options"/>
+     <ITEM LANG="E" TEXT="Zap Link DevClass options"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -82,7 +97,7 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   CREATE OBJECT _devclass.
@@ -105,19 +120,19 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="DevClass : Getter"/>
+     <ITEM LANG="E" TEXT="DevClass : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_DEVCLASS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link DevClass options"/>
+       <ITEM LANG="E" TEXT="Zap Link DevClass options"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Options"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -126,19 +141,19 @@ result = _devclass.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_SUBSTITUTIONKIND_OFF" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Substitution Kind : Getter"/>
+     <ITEM LANG="E" TEXT="Substitution Kind : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SUBSTITUTIONKIND">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Devclass substitution Kind"/>
+       <ITEM LANG="E" TEXT="Devclass substitution Kind"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Options"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -147,19 +162,19 @@ result = _substitution.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_TRANSPORT_REQUEST" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport Request : Getter"/>
+     <ITEM LANG="E" TEXT="Transport Request : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_TR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link DevClass options"/>
+       <ITEM LANG="E" TEXT="Zap Link DevClass options"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Options"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -168,19 +183,19 @@ result = _substitution.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="DevClass : Setter"/>
+     <ITEM LANG="E" TEXT="DevClass : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_DEVCLASS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="DevClass"/>
+       <ITEM LANG="E" TEXT="DevClass"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Options"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -196,12 +211,12 @@ result = _substitution.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_DIRECTORY" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Set directory : TADIR + TR"/>
+     <ITEM LANG="E" TEXT="Set directory : TADIR + TR"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component in progress"/>
+       <ITEM LANG="E" TEXT="Component in progress"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_DIRECTORY"/>
@@ -209,7 +224,7 @@ result = _substitution.</SOURCE>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Options"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -363,19 +378,19 @@ result = _substitution.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_SUBSTITUTIONKIND_OFF" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Substitution Kind : Setter"/>
+     <ITEM LANG="E" TEXT="Substitution Kind : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SUBSTITUTIONKIND">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Devclass substitution Kind"/>
+       <ITEM LANG="E" TEXT="Devclass substitution Kind"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Options"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -401,19 +416,19 @@ CHECK data &lt;&gt; _substitution.
    </ITEM>
    <ITEM CMPNAME="SET_TRANSPORT_REQUEST" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport Request : Setter"/>
+     <ITEM LANG="E" TEXT="Transport Request : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_TR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link DevClass options"/>
+       <ITEM LANG="E" TEXT="Zap Link DevClass options"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Options"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -431,32 +446,32 @@ CHECK data &lt;&gt; _substitution.
   <TYPES>
    <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="ZAPLINK_RAW_BASE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+     <ITEM LANG="E" TEXT="Zap Link Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_OPT_DEVCLASS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link DevClass options"/>
+     <ITEM LANG="E" TEXT="Zap Link DevClass options"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX_OPTIONS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Options"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Options"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_LOG" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector"/>
+     <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_TR" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_OPT_TRANSPORT_REQUEST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link Transport Request options"/>
+     <ITEM LANG="E" TEXT="Zap Link Transport Request options"/>
     </TEXTS>
    </ITEM>
   </TYPES>

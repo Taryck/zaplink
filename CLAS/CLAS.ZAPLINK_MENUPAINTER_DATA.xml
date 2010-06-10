@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="73407D4020D29683D9D85A36F7116507" CODE_SIGNATURE="6ACFF329E3CA9C1F69486DFFCEB16538" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C077B491B8354BA1E6F51E0967E16866" CODE_SIGNATURE="6ACFF329E3CA9C1F69486DFFCEB16538" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
  </DEPENDENCIES>
@@ -7,8 +7,7 @@
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Menu painter Data">
-     <DOCUMENTATION TDFRELES="700" TDLRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Menu painter Data">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_PROGRAM
 ASDefine XML structure of a Menu painter, that is used in Programs and
   Objects.
@@ -20,8 +19,13 @@ U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
 AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
-= 29fbfe/content.htm</DOCUMENTATION>
-    </ITEM>
+= 29fbfe/content.htm
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -32,17 +36,17 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
   <ATTRIBUTS>
    <ITEM CMPNAME="BAR" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="GUI_FUNC">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Bar Menu code"/>
+     <ITEM LANG="E" TEXT="Bar Menu code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DEFAULT_BAR" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="GUI_FUNC">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Default Bar Menu code"/>
+     <ITEM LANG="E" TEXT="Default Bar Menu code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DEFAULT_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="GUI_FUNC">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Default function Menu code"/>
+     <ITEM LANG="E" TEXT="Default function Menu code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DOC_IDS" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
@@ -51,28 +55,28 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
     END OF doc_ids
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Documentation IDS"/>
+     <ITEM LANG="E" TEXT="Documentation IDS"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="GUI_FUNC">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Function&apos;s Menu code"/>
+     <ITEM LANG="E" TEXT="Function&apos;s Menu code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="FUNCTIONS" EXPOSURE="1" STATE="1" EDITORDER="15 " TYPTYPE="1" TYPE="TT_FUNCTIONS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Functions"/>
+     <ITEM LANG="E" TEXT="Functions"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="KEY_SETTINGS" EXPOSURE="1" STATE="1" EDITORDER="14 " TYPTYPE="1" TYPE="TT_KEYBOARDS"/>
    <ITEM CMPNAME="MASTER_LANG" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="SPRSL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Master Language"/>
+     <ITEM LANG="E" TEXT="Master Language"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MENU" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="GUI_FUNC">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Menu code"/>
+     <ITEM LANG="E" TEXT="Menu code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MENU_BARS" EXPOSURE="1" STATE="1" EDITORDER="13 " TYPTYPE="1" TYPE="TT_BARS"/>
@@ -96,12 +100,12 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
     END OF obj_types
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Menu Painter: Standards maintenance: Object type"/>
+     <ITEM LANG="E" TEXT="Menu Painter: Standards maintenance: Object type"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="R_DOC_IDS" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Range : Documentation IDS"/>
+     <ITEM LANG="E" TEXT="Range : Documentation IDS"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="STATUS" EXPOSURE="1" STATE="1" EDITORDER="11 " TYPTYPE="1" TYPE="TT_STATUS"/>
@@ -114,12 +118,12 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
     END OF text_types
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Menu Painter: Text type"/>
+     <ITEM LANG="E" TEXT="Menu Painter: Text type"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TITLES" EXPOSURE="1" STATE="1" EDITORDER="16 " TYPTYPE="1" TYPE="TT_TITLES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Title bars"/>
+     <ITEM LANG="E" TEXT="Title bars"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -151,7 +155,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
   <METHODS>
    <ITEM CMPNAME="ANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
+     <ITEM LANG="E" TEXT="Anonymized component data"/>
     </TEXTS>
     <SOURCE>`
 *  FIELD-SYMBOLS:
@@ -164,7 +168,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA _id LIKE LINE OF r_doc_ids.
@@ -174,12 +178,12 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
    </ITEM>
    <ITEM CMPNAME="FROM_DATA" EXPOSURE="2" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes"/>
+     <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules object Data"/>
+       <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -382,18 +386,18 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
    </ITEM>
    <ITEM CMPNAME="GET_FUNC_TEXTS" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Function texts"/>
+     <ITEM LANG="E" TEXT="Get Function texts"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJ_CODE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="RSMPTEXTS-OBJ_CODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter: Function code"/>
+       <ITEM LANG="E" TEXT="Menu Painter: Function code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_MP_FTEXTS"/>
      <ITEM SCONAME="SUB_CODE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter. Function key code"/>
+       <ITEM LANG="E" TEXT="Menu Painter. Function key code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TEXTS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_STEXTS"/>
@@ -434,29 +438,29 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
    </ITEM>
    <ITEM CMPNAME="GET_TEXTS" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get texts for Object_type"/>
+     <ITEM LANG="E" TEXT="Get texts for Object_type"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJ_CODE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="RSMPTEXTS-OBJ_CODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter: Function code"/>
+       <ITEM LANG="E" TEXT="Menu Painter: Function code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJ_TYPE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="RSMPTEXTS-OBJ_TYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter: Standards maintenance: Object type"/>
+       <ITEM LANG="E" TEXT="Menu Painter: Standards maintenance: Object type"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="6 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_MP_TEXTS"/>
      <ITEM SCONAME="SUB_CODE" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter. Function key code"/>
+       <ITEM LANG="E" TEXT="Menu Painter. Function key code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TEXTS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_STEXTS"/>
      <ITEM SCONAME="TEXTTYPE" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="1" TYPE="RSMPTEXTS-TEXTTYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter: Text type"/>
+       <ITEM LANG="E" TEXT="Menu Painter: Text type"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -477,18 +481,18 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
    </ITEM>
    <ITEM CMPNAME="SET_FUNC_TEXTS" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Set Function texts"/>
+     <ITEM LANG="E" TEXT="Set Function texts"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJ_CODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="RSMPTEXTS-OBJ_CODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter: Function code"/>
+       <ITEM LANG="E" TEXT="Menu Painter: Function code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_STEXTS"/>
      <ITEM SCONAME="SUB_CODE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter. Function key code"/>
+       <ITEM LANG="E" TEXT="Menu Painter. Function key code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TEXTS" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_MP_FTEXTS"/>
@@ -511,29 +515,29 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
    </ITEM>
    <ITEM CMPNAME="SET_TEXTS" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Set texts from texts data"/>
+     <ITEM LANG="E" TEXT="Set texts from texts data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJ_CODE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="RSMPTEXTS-OBJ_CODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter: Function code"/>
+       <ITEM LANG="E" TEXT="Menu Painter: Function code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJ_TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="RSMPTEXTS-OBJ_TYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter: Standards maintenance: Object type"/>
+       <ITEM LANG="E" TEXT="Menu Painter: Standards maintenance: Object type"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="6 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_STEXTS"/>
      <ITEM SCONAME="SUB_CODE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter. Function key code"/>
+       <ITEM LANG="E" TEXT="Menu Painter. Function key code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TEXTS" CMPTYPE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_MP_TEXTS"/>
      <ITEM SCONAME="TEXTTYPE" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="RSMPTEXTS-TEXTTYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Menu Painter: Text type"/>
+       <ITEM LANG="E" TEXT="Menu Painter: Text type"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -554,12 +558,12 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert object attributes to FM Data"/>
+     <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules object Data"/>
+       <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -705,7 +709,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
+     <ITEM LANG="E" TEXT="UnAnonymized component data"/>
     </TEXTS>
    </ITEM>
   </METHODS>
@@ -748,7 +752,7 @@ AShttp://help.sap.com/saphelp_nw04/Helpdata/EN/9f/dba99935c111d1829f0000e8
         END OF ts_fm_data
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
+     <ITEM LANG="E" TEXT="Function Module Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_FUNCTION" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">BEGIN OF ts_function.

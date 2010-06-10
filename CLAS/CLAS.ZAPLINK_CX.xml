@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9ABBC0AD8DC8FB6CF0943A8784DEB182" CODE_SIGNATURE="2352A36DDCC83120E2A5261364D30AF0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D3EB21546478327E7B00FBFA65CF4114" CODE_SIGNATURE="2352A36DDCC83120E2A5261364D30AF0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S" MSG_ID="ZAPLINK_CX">
    <INHERITANCE REFCLSNAME="CX_STATIC_CHECK" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class">U1&amp;FUNCTIONALITY&amp;
 ASZAPLink framework root exception class. All Exception classes raised
   from the framework inherit from this class. Have a look to each method
   for more details.
@@ -17,50 +16,55 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="CX_NAME" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="STRING"/>
    <ITEM CMPNAME="EXT_ID" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="BALNREXT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: External ID"/>
+     <ITEM LANG="E" TEXT="Application Log: External ID"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MESSAGES" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="O_MSG_COLL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector: Standard Implementation"/>
+     <ITEM LANG="E" TEXT="Message Collector: Standard Implementation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="OBJECT" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="BALOBJ_D">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Object Name (Application Code)"/>
+     <ITEM LANG="E" TEXT="Application Log: Object Name (Application Code)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="12 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="11 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="PREV_CX" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Previous exception"/>
+     <ITEM LANG="E" TEXT="Previous exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_CX_LIST" EXPOSURE="2" STATE="1" EDITORDER="10 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_CX_LIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Exceptions list"/>
+     <ITEM LANG="E" TEXT="Exceptions list"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -107,7 +111,7 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA _exceptions TYPE REF TO CL_OO_CLASS_RELATIONS.
@@ -160,22 +164,22 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONV_PROGNAME" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert Program Name"/>
+     <ITEM LANG="E" TEXT="Convert Program Name"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CONTEXT" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEU_OBJKEY" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Context : Parent object"/>
+       <ITEM LANG="E" TEXT="Context : Parent object"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT_NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEU_OBJKEY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="WB Request: Key for Object in Development Environment"/>
+       <ITEM LANG="E" TEXT="WB Request: Key for Object in Development Environment"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_SOURCE_DEF">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Source definition (type &amp; name)"/>
+       <ITEM LANG="E" TEXT="Source definition (type &amp; name)"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -254,39 +258,39 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CREATE_FROM_APPLICATION_LOG" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create Exception from application log"/>
+     <ITEM LANG="E" TEXT="Create Exception from application log"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CX_NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Exception Class name"/>
+       <ITEM LANG="E" TEXT="Exception Class name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="MESSAGE_COLLECTOR" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="O_MSG_COLL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Collector: Standard Implementation"/>
+       <ITEM LANG="E" TEXT="Message Collector: Standard Implementation"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="PREV_CX" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="3" TYPE="ZAPLINK_CX" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink exception class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="5 " PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CX">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink exception class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="E_TXT_ID" PARVALUE="BAL_LOG">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
+       <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -301,8 +305,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CREATE_FROM_METHOD_CX" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create Exception from Method Exception (non class exception)">
-      <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+     <ITEM LANG="E" TEXT="Create Exception from Method Exception (non class exception)">U1&amp;FUNCTIONALITY&amp;
 ASGenerate an exception class based on the exception number of the method.
   The method is defined with :
 B1Method&apos;s name
@@ -325,50 +328,49 @@ AS
 U1&amp;EXCEPTIONS&amp;
 AS
 U1&amp;HINTS&amp;
-AS</DOCUMENTATION>
-     </ITEM>
+AS</ITEM>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CLASS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Name of Function Module"/>
+       <ITEM LANG="E" TEXT="Name of Function Module"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="CLASS_NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class name"/>
+       <ITEM LANG="E" TEXT="Class name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="CX_CLASSNAME" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Exception class name inherited from ZAPLINK_CX"/>
+       <ITEM LANG="E" TEXT="Exception class name inherited from ZAPLINK_CX"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="METHOD" CMPTYPE="1" EDITORDER="3 " TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Method name"/>
+       <ITEM LANG="E" TEXT="Method name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="7 " PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CX">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SUBRC" CMPTYPE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SY-SUBRC">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ASSUMING exception are in the exact order of the MF def."/>
+       <ITEM LANG="E" TEXT="ASSUMING exception are in the exact order of the MF def."/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC" PARVALUE="SYSTEM_ERROR" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
+       <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -407,8 +409,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="CREATE_FROM_MF_CX" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create Exception from Module Function Exception">
-      <DOCUMENTATION TDFRELES="700" TDLRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+     <ITEM LANG="E" TEXT="Create Exception from Module Function Exception">U1&amp;FUNCTIONALITY&amp;
 ASGenerate an exception class based on the exception number of the
   function module.
 ASThe exception name retrieves in the function module is store in
@@ -425,40 +426,39 @@ AS
 U1&amp;EXCEPTIONS&amp;
 AS
 U1&amp;HINTS&amp;
-AS</DOCUMENTATION>
-     </ITEM>
+AS</ITEM>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CLASSNAME" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Exception class name inherited from ZAPLINK_CX"/>
+       <ITEM LANG="E" TEXT="Exception class name inherited from ZAPLINK_CX"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FUNCNAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="RS38L-NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Name of Function Module"/>
+       <ITEM LANG="E" TEXT="Name of Function Module"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="5 " PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CX">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SUBRC" CMPTYPE="1" EDITORDER="2 " TYPTYPE="1" TYPE="SY-SUBRC">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ASSUMING exception are in the exact order of the MF def."/>
+       <ITEM LANG="E" TEXT="ASSUMING exception are in the exact order of the MF def."/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC" PARVALUE="SYSTEM_ERROR" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
+       <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -552,29 +552,29 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="CREATE_FROM_SYMSG" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create Exception from SY Msg message"/>
+     <ITEM LANG="E" TEXT="Create Exception from SY Msg message"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CLASSNAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Exception class name inherited from ZAPLINK_CX"/>
+       <ITEM LANG="E" TEXT="Exception class name inherited from ZAPLINK_CX"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CX">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC" PARVALUE="SYSTEM_ERROR" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
+       <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -588,7 +588,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="GET_SOURCE_POSITION_AS_STRING" EXPOSURE="2" STATE="1" EDITORDER="6 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Returns Position in Source Text as string"/>
+     <ITEM LANG="E" TEXT="Returns Position in Source Text as string"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="STR" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
@@ -598,17 +598,17 @@ str = source_position_as_string( me ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SOURCE_POSITION_AS_STRING" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Returns Position in Source Text as string"/>
+     <ITEM LANG="E" TEXT="Returns Position in Source Text as string"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="EXCEPTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CX_ROOT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Abstract Superclass for All Global Exceptions"/>
+       <ITEM LANG="E" TEXT="Abstract Superclass for All Global Exceptions"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="STR" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Position as String"/>
+       <ITEM LANG="E" TEXT="Position as String"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -632,7 +632,7 @@ DATA _pos TYPE ts_source_pos.
    </ITEM>
    <ITEM CMPNAME="UPDATE" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Màj parameters"/>
+     <ITEM LANG="E" TEXT="Màj parameters"/>
     </TEXTS>
     <SOURCE>`
 * BAl_log
@@ -655,7 +655,7 @@ DATA _pos TYPE ts_source_pos.
    </ITEM>
    <ITEM CMPNAME="WRITE" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Write exception as text"/>
+     <ITEM LANG="E" TEXT="Write exception as text"/>
     </TEXTS>
     <SOURCE>`
   DATA _exceptions TYPE STANDARD TABLE OF string.
@@ -704,29 +704,29 @@ DATA _pos TYPE ts_source_pos.
    </ITEM>
    <ITEM CMPNAME="_CREATE_CX" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create Exception from class name"/>
+     <ITEM LANG="E" TEXT="Create Exception from class name"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CX_NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Exception class name inherited from ZAPLINK_CX"/>
+       <ITEM LANG="E" TEXT="Exception class name inherited from ZAPLINK_CX"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CX">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
+       <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -765,22 +765,22 @@ DATA _pos TYPE ts_source_pos.
   <TYPES>
    <ITEM CMPNAME="E_TXT_ID" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SOTR_CONC">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Key for Logical Object in the OTR"/>
+     <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector: Standard Implementation"/>
+     <ITEM LANG="E" TEXT="Message Collector: Standard Implementation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="CX_ROOT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Abstract Superclass for All Global Exceptions"/>
+     <ITEM LANG="E" TEXT="Abstract Superclass for All Global Exceptions"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_CX" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_cx,
@@ -795,7 +795,7 @@ DATA _pos TYPE ts_source_pos.
       END OF ts_source_def
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Source definition (type &amp; name)"/>
+     <ITEM LANG="E" TEXT="Source definition (type &amp; name)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_SOURCE_POS" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
@@ -806,7 +806,7 @@ DATA _pos TYPE ts_source_pos.
       END OF ts_source_pos
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Source position"/>
+     <ITEM LANG="E" TEXT="Source position"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_CX_LIST" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_cx_list TYPE HASHED TABLE OF ts_cx WITH UNIQUE key class

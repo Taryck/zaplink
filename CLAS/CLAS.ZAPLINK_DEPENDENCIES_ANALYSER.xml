@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5556EDE680A81717C7170BD3FB599712" CODE_SIGNATURE="08EE008E4AC6A2762774E97A41369C07" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3CDD7374B016FEDDA9E76F0BFB8597C7" CODE_SIGNATURE="08EE008E4AC6A2762774E97A41369C07" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPLink : Stand Alone Generator (local class&amp;intf)">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAPLink : Stand Alone Generator (local class&amp;intf)">U1&amp;FUNCTIONALITY&amp;
 ASTools used to maps dependencies of :
 AS,,- Programs
 AS,,- Classes
@@ -21,8 +20,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -40,78 +44,78 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="ALL_COMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTRDONLY="X" TYPTYPE="1" TYPE="TT_COMPS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="All components required"/>
+     <ITEM LANG="E" TEXT="All components required"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CIRCULAR_CONTEXT" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_CONTEXT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface list"/>
+     <ITEM LANG="E" TEXT="Class/interface list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CIRCULAR_REF_ON" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TD_NAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface where circular ref"/>
+     <ITEM LANG="E" TEXT="Class/interface where circular ref"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CLASSES" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTRDONLY="X" TYPTYPE="1" TYPE="TT_SOURCES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Classes/interfaces codes"/>
+     <ITEM LANG="E" TEXT="Classes/interfaces codes"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CONTEXT" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_CONTEXT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface list"/>
+     <ITEM LANG="E" TEXT="Class/interface list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="CURRENT_COMP" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TD_NAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+     <ITEM LANG="E" TEXT="Class/interface name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_CLASS" STATE="1" EDITORDER="10 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component type def"/>
+     <ITEM LANG="E" TEXT="Component type def"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_INTERFACE" STATE="1" EDITORDER="11 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component type def"/>
+     <ITEM LANG="E" TEXT="Component type def"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_MSG_CLASS" STATE="1" EDITORDER="13 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component type def"/>
+     <ITEM LANG="E" TEXT="Component type def"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_PROGRAM" STATE="1" EDITORDER="12 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component type def"/>
+     <ITEM LANG="E" TEXT="Component type def"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_TYPEGROUP" STATE="1" EDITORDER="14 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component type def"/>
+     <ITEM LANG="E" TEXT="Component type def"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DEFERRED_DECLARATION" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TT_CLASSLIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Indexed list of class"/>
+     <ITEM LANG="E" TEXT="Indexed list of class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="EXCLUDED_CLASSES" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_CLASSLIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class excluded"/>
+     <ITEM LANG="E" TEXT="Class excluded"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="INCLUDES" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TD_SOURCECODE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Include list"/>
+     <ITEM LANG="E" TEXT="Include list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MESSAGES" EXPOSURE="2" STATE="1" EDITORDER="9 " ATTRDONLY="X" TYPTYPE="1" TYPE="TT_MESSAGE_IDS"/>
    <ITEM CMPNAME="NEW_ORDER" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="TT_ORDER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface Order"/>
+     <ITEM LANG="E" TEXT="Class/interface Order"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="OBJTYPE" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4">
@@ -122,48 +126,48 @@ AS</DOCUMENTATION>
           END OF objtype
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Object types"/>
+     <ITEM LANG="E" TEXT="Object types"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ORDER" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTRDONLY="X" TYPTYPE="1" TYPE="TT_ORDER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface Order"/>
+     <ITEM LANG="E" TEXT="Class/interface Order"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_OBJECT" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_OBJECT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPLink Class &amp; Interface connector"/>
+     <ITEM LANG="E" TEXT="ZAPLink Class &amp; Interface connector"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="PACKAGES" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TR_PACKAGES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Packages accepted"/>
+     <ITEM LANG="E" TEXT="Packages accepted"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="REMAIN_CLASSES" EXPOSURE="2" STATE="1" EDITORDER="11 " TYPTYPE="1" TYPE="TT_SOURCES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Classes/interfaces codes"/>
+     <ITEM LANG="E" TEXT="Classes/interfaces codes"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="REQUIRED_OBJECTS" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_REQ_OBJECTS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface requirement"/>
+     <ITEM LANG="E" TEXT="Class/interface requirement"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="REQUIREMENTS" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TT_REQ_OBJECTS"/>
    <ITEM CMPNAME="SOFTCOMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="6 " ATTDECLTYP="1" ATTRDONLY="X" TYPTYPE="1" TYPE="TR_DLVUNIT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Software component accepted"/>
+     <ITEM LANG="E" TEXT="Software component accepted"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="S_COMP" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="TS_COMP">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Temp component for Is_excluded_class"/>
+     <ITEM LANG="E" TEXT="Temp component for Is_excluded_class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TYPEGROUPS" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_TYPEGROUPS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Type Groups list"/>
+     <ITEM LANG="E" TEXT="Type Groups list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TYPETYPE" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4">
@@ -176,7 +180,7 @@ AS</DOCUMENTATION>
           END OF typetype
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Types of type definition"/>
+     <ITEM LANG="E" TEXT="Types of type definition"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -217,7 +221,7 @@ AS</DOCUMENTATION>
   <METHODS>
    <ITEM CMPNAME="ADD_ATTRIBUTS" EXPOSURE="1" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add Attributs"/>
+     <ITEM LANG="E" TEXT="Add Attributs"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ATTRIBUTS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;TT_ATTRIBUTS"/>
@@ -240,34 +244,34 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_CLASS_DEP" EXPOSURE="1" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add class dependenties"/>
+     <ITEM LANG="E" TEXT="Add class dependenties"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FULL" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Full definition required"/>
+       <ITEM LANG="E" TEXT="Full definition required"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="EXISTS" LANGU="E" EDITORDER="2 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object already in list"/>
+       <ITEM LANG="E" TEXT="Object already in list"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FAILED" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Failed to add"/>
+       <ITEM LANG="E" TEXT="Failed to add"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NOT_EXISTING" LANGU="E" EDITORDER="3 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object does not exists in SAP"/>
+       <ITEM LANG="E" TEXT="Object does not exists in SAP"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -375,12 +379,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_DEFERED_OK" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Generate ABAP Source Code"/>
+     <ITEM LANG="E" TEXT="Generate ABAP Source Code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="has changed"/>
+       <ITEM LANG="E" TEXT="has changed"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -423,22 +427,22 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_DEFERRED_CODE" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get deferred declaration code"/>
+     <ITEM LANG="E" TEXT="Get deferred declaration code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ABAPCODE" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CLASSTYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class type"/>
+       <ITEM LANG="E" TEXT="Class type"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -465,7 +469,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_INTERFACES" EXPOSURE="1" STATE="1" EDITORDER="5 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add interfaces"/>
+     <ITEM LANG="E" TEXT="Add interfaces"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="INTERFACES" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;TT_INTERFACES"/>
@@ -487,34 +491,34 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_INTERFACE_DEP" EXPOSURE="1" STATE="1" EDITORDER="6 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add Interface dependenties"/>
+     <ITEM LANG="E" TEXT="Add Interface dependenties"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FULL" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Full definition required"/>
+       <ITEM LANG="E" TEXT="Full definition required"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="EXISTS" LANGU="E" EDITORDER="2 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object already in list"/>
+       <ITEM LANG="E" TEXT="Object already in list"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FAILED" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Failed to add"/>
+       <ITEM LANG="E" TEXT="Failed to add"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NOT_EXISTING" LANGU="E" EDITORDER="3 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object does not exists in SAP"/>
+       <ITEM LANG="E" TEXT="Object does not exists in SAP"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -583,7 +587,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_METHODS" EXPOSURE="1" STATE="1" EDITORDER="7 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add méthods"/>
+     <ITEM LANG="E" TEXT="Add méthods"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="METHODS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;TT_METHODS"/>
@@ -624,12 +628,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_METHOD_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="8 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add object use in ABAP Code"/>
+     <ITEM LANG="E" TEXT="Add object use in ABAP Code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP source code"/>
+       <ITEM LANG="E" TEXT="ABAP source code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -659,29 +663,29 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add class/interface to the list"/>
+     <ITEM LANG="E" TEXT="Add class/interface to the list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="EXISTS" LANGU="E" EDITORDER="2 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object already in list"/>
+       <ITEM LANG="E" TEXT="Object already in list"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FAILED" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Failed to add"/>
+       <ITEM LANG="E" TEXT="Failed to add"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NOT_EXISTING" LANGU="E" EDITORDER="3 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object does not exists in SAP"/>
+       <ITEM LANG="E" TEXT="Object does not exists in SAP"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -760,22 +764,22 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_OBJECT_TO_LIST" EXPOSURE="1" STATE="1" EDITORDER="9 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add object to dependenties list"/>
+     <ITEM LANG="E" TEXT="Add object to dependenties list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FULL" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Full component is requiered"/>
+       <ITEM LANG="E" TEXT="Full component is requiered"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Where component is used"/>
+       <ITEM LANG="E" TEXT="Where component is used"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -811,12 +815,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Scan ABAP Code for object use"/>
+     <ITEM LANG="E" TEXT="Scan ABAP Code for object use"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP source code"/>
+       <ITEM LANG="E" TEXT="ABAP source code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -828,22 +832,22 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_SOURCE_TO_LIST" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add object use in ABAP Code"/>
+     <ITEM LANG="E" TEXT="Add object use in ABAP Code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP source code"/>
+       <ITEM LANG="E" TEXT="ABAP source code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FULL" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Full component is requiered"/>
+       <ITEM LANG="E" TEXT="Full component is requiered"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Source of the code"/>
+       <ITEM LANG="E" TEXT="Source of the code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -859,7 +863,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_TYPES" EXPOSURE="1" STATE="1" EDITORDER="10 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add types"/>
+     <ITEM LANG="E" TEXT="Add types"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="TYPES" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;TT_TYPES"/>
@@ -883,12 +887,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ADD_WITHOUT_REQUIREMENTS" EXPOSURE="2" STATE="1" EDITORDER="6 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Generate ABAP Source Code"/>
+     <ITEM LANG="E" TEXT="Generate ABAP Source Code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="has changed"/>
+       <ITEM LANG="E" TEXT="has changed"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -905,17 +909,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="ANALYSE_METHOD_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="11 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Scan ABAP Code for object use"/>
+     <ITEM LANG="E" TEXT="Scan ABAP Code for object use"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP source code"/>
+       <ITEM LANG="E" TEXT="ABAP source code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECTS_LIST" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -944,7 +948,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="APPEND_MESSAGE" EXPOSURE="1" STATE="1" EDITORDER="12 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add message"/>
+     <ITEM LANG="E" TEXT="Add message"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_MESSAGE"/>
@@ -956,7 +960,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="APPEND_TYPEGROUPS" EXPOSURE="1" STATE="1" EDITORDER="13 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add type groups"/>
+     <ITEM LANG="E" TEXT="Add type groups"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="TYPEGROUPS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;TT_TYPEGROUPS"/>
@@ -971,7 +975,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA _softcomp LIKE LINE OF softcomponents.
@@ -991,17 +995,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="CLEAN_CODE" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Clean ABAP Source Code"/>
+     <ITEM LANG="E" TEXT="Clean ABAP Source Code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1016,17 +1020,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="CONVERT_LINE" EXPOSURE="1" STATE="1" EDITORDER="14 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert code line : remove tabs"/>
+     <ITEM LANG="E" TEXT="Convert code line : remove tabs"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TARGET" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1035,17 +1039,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="CONVERT_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert source code : remove tabs"/>
+     <ITEM LANG="E" TEXT="Convert source code : remove tabs"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="SOURCECODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TARGETCODE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1061,17 +1065,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="CONVERT_SOURCE_UPCASE" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert source code to upcase"/>
+     <ITEM LANG="E" TEXT="Convert source code to upcase"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="SOURCECODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TARGETCODE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1085,19 +1089,19 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="DO_CLASS" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add class dependenties"/>
+     <ITEM LANG="E" TEXT="Add class dependenties"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="FAILED" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Failed to add"/>
+       <ITEM LANG="E" TEXT="Failed to add"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1116,12 +1120,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="DO_OBJECT_LIST" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add required object stored in the list"/>
+     <ITEM LANG="E" TEXT="Add required object stored in the list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1143,27 +1147,27 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="EXTRACT_STRINGS" EXPOSURE="1" STATE="1" EDITORDER="17 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Extract strings from source code"/>
+     <ITEM LANG="E" TEXT="Extract strings from source code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP source code"/>
+       <ITEM LANG="E" TEXT="ABAP source code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FORWARD" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="FLAG" PAROPTIONL="X" PARPREFERD="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="String is forward search term ?"/>
+       <ITEM LANG="E" TEXT="String is forward search term ?"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULTS" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Results"/>
+       <ITEM LANG="E" TEXT="Results"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SEARCH_TERM" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Search term"/>
+       <ITEM LANG="E" TEXT="Search term"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1291,17 +1295,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="GET_CLASS_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="18 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Class source codes"/>
+     <ITEM LANG="E" TEXT="Get Class source codes"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODES" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_SOURCE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface sources codes"/>
+       <ITEM LANG="E" TEXT="Class/interface sources codes"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1401,17 +1405,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="GET_INTERFACE_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="19 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get interface source codes"/>
+     <ITEM LANG="E" TEXT="Get interface source codes"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODES" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_SOURCE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface sources codes"/>
+       <ITEM LANG="E" TEXT="Class/interface sources codes"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1458,17 +1462,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="GET_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get class/interface source codes"/>
+     <ITEM LANG="E" TEXT="Get class/interface source codes"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODES" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_SOURCE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface sources codes"/>
+       <ITEM LANG="E" TEXT="Class/interface sources codes"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1513,7 +1517,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="HANDLE_CONTEXT" EXPOSURE="1" STATE="1" EDITORDER="20 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Handle circular context"/>
+     <ITEM LANG="E" TEXT="Handle circular context"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="FAILED" LANGU="E" EDITORDER="1 "/>
@@ -1600,17 +1604,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="INSERT_ORDER" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="insert order at the right position"/>
+     <ITEM LANG="E" TEXT="insert order at the right position"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CONTEXT" CMPTYPE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_CONTEXT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Context Stack"/>
+       <ITEM LANG="E" TEXT="Context Stack"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="S_ORDER" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_ORDER">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface, type and flag"/>
+       <ITEM LANG="E" TEXT="Class/interface, type and flag"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1659,12 +1663,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="INVERSE_ORDER" EXPOSURE="1" STATE="1" EDITORDER="27 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Inverse table order"/>
+     <ITEM LANG="E" TEXT="Inverse table order"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ORDER" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="STANDARD TABLE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface Order"/>
+       <ITEM LANG="E" TEXT="Class/interface Order"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1673,22 +1677,22 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="IS_EXCLUDED_CLASS" EXPOSURE="1" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Is excluded class"/>
+     <ITEM LANG="E" TEXT="Is excluded class"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class is excluded"/>
+       <ITEM LANG="E" TEXT="Class is excluded"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TADIR-OBJECT" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface"/>
+       <ITEM LANG="E" TEXT="Class/interface"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1713,22 +1717,22 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="PROCESS_TYPE" EXPOSURE="1" STATE="1" EDITORDER="21 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Process type."/>
+     <ITEM LANG="E" TEXT="Process type."/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="RS38L_TYP">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Associated Type of an Interface Parameter"/>
+       <ITEM LANG="E" TEXT="Associated Type of an Interface Parameter"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Type definition"/>
+       <ITEM LANG="E" TEXT="Type definition"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOTYPTYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Typing"/>
+       <ITEM LANG="E" TEXT="Typing"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1761,12 +1765,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="REMOVE_DEF_LOAD" EXPOSURE="1" STATE="1" EDITORDER="22 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Remove definition load"/>
+     <ITEM LANG="E" TEXT="Remove definition load"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODES" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TS_SOURCE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface sources codes"/>
+       <ITEM LANG="E" TEXT="Class/interface sources codes"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1816,7 +1820,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="RESOLVE" EXPOSURE="2" STATE="1" EDITORDER="7 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Generate ABAP Source Code"/>
+     <ITEM LANG="E" TEXT="Generate ABAP Source Code"/>
     </TEXTS>
     <SOURCE>`
   DATA s_order   LIKE LINE OF new_order.
@@ -1840,12 +1844,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="SEARCH_FOR_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="23 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Search include into source code"/>
+     <ITEM LANG="E" TEXT="Search include into source code"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CODES" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TS_SOURCE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Class/interface sources codes"/>
+       <ITEM LANG="E" TEXT="Class/interface sources codes"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1883,17 +1887,17 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="SOURCE_2_STRING" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert source code : remove tabs"/>
+     <ITEM LANG="E" TEXT="Convert source code : remove tabs"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ABAP Source Code as string"/>
+       <ITEM LANG="E" TEXT="ABAP Source Code as string"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1910,12 +1914,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="STACK" EXPOSURE="1" STATE="1" EDITORDER="24 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add context to context stack"/>
+     <ITEM LANG="E" TEXT="Add context to context stack"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CONTEXT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Name to stack"/>
+       <ITEM LANG="E" TEXT="Name to stack"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FULL" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X"/>
@@ -1927,7 +1931,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="UNSTACK" EXPOSURE="1" STATE="1" EDITORDER="25 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Remove stack entry"/>
+     <ITEM LANG="E" TEXT="Remove stack entry"/>
     </TEXTS>
     <SOURCE>`
   IF NOT context IS INITIAL. DELETE context INDEX 1. ENDIF.
@@ -1935,7 +1939,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="_CLEAN_UP" EXPOSURE="1" STATE="1" EDITORDER="26 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Clean up data"/>
+     <ITEM LANG="E" TEXT="Clean up data"/>
     </TEXTS>
     <SOURCE>`
   FIELD-SYMBOLS:
@@ -1967,47 +1971,47 @@ AS</DOCUMENTATION>
   <TYPES>
    <ITEM CMPNAME="TD_CLASSTYPE" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="CHAR01">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class type (SEOCLSTYPE)"/>
+     <ITEM LANG="E" TEXT="Class type (SEOCLSTYPE)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TD_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="20 " TYPTYPE="1" TYPE="SEOCLASSDF-MSG_ID"/>
    <ITEM CMPNAME="TD_NAME" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SEOCLSNAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+     <ITEM LANG="E" TEXT="Class/interface name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TD_SOURCECODE" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="SEOP_SOURCE_STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ABAP Source Code"/>
+     <ITEM LANG="E" TEXT="ABAP Source Code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_CLASS" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CLAS_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Data for Class"/>
+     <ITEM LANG="E" TEXT="Data for Class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_INTF_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Data for ABAP Object Interface"/>
+     <ITEM LANG="E" TEXT="Data for ABAP Object Interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_OBJECT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPLink Class &amp; Interface connector"/>
+     <ITEM LANG="E" TEXT="ZAPLink Class &amp; Interface connector"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TR_DLVUNIT" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">
     tr_dlvunit TYPE RANGE OF tdevc-dlvunit
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Software component accepted"/>
+     <ITEM LANG="E" TEXT="Software component accepted"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TR_PACKAGES" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">
     tr_packages TYPE RANGE OF tdevc-devclass
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Range of package"/>
+     <ITEM LANG="E" TEXT="Range of package"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_COMP" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="4">BEGIN OF ts_comp.
@@ -2030,7 +2034,7 @@ AS</DOCUMENTATION>
       END OF ts_list
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+     <ITEM LANG="E" TEXT="Class/interface name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="21 " TYPTYPE="4">BEGIN OF ts_message,
@@ -2046,7 +2050,7 @@ AS</DOCUMENTATION>
     END OF ts_order
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface, type and flag"/>
+     <ITEM LANG="E" TEXT="Class/interface, type and flag"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_REQ_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4">BEGIN OF ts_req_object,
@@ -2067,7 +2071,7 @@ AS</DOCUMENTATION>
       END OF ts_source
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface sources codes"/>
+     <ITEM LANG="E" TEXT="Class/interface sources codes"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_TYPEGROUP" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="4">
@@ -2076,14 +2080,14 @@ AS</DOCUMENTATION>
             END OF ts_typegroup
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="a Type Group"/>
+     <ITEM LANG="E" TEXT="a Type Group"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_CLASSLIST" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">
     tt_classlist TYPE SORTED TABLE OF ts_list WITH UNIQUE KEY name
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Indexed list of class"/>
+     <ITEM LANG="E" TEXT="Indexed list of class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_COMPS" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4">tt_comps type SORTED TABLE OF ts_comp with UNIQUE KEY type name
@@ -2092,14 +2096,14 @@ AS</DOCUMENTATION>
     tt_context TYPE STANDARD TABLE OF ts_context WITH DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Context Stack"/>
+     <ITEM LANG="E" TEXT="Context Stack"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_LIST" EXPOSURE="2" STATE="1" EDITORDER="12 " TYPTYPE="4">
     tt_list TYPE STANDARD TABLE OF ts_order WITH DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface list"/>
+     <ITEM LANG="E" TEXT="Class/interface list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_MESSAGE_IDS" EXPOSURE="2" STATE="1" EDITORDER="22 " TYPTYPE="4">tt_message_ids TYPE STANDARD TABLE OF ts_message WITH DEFAULT KEY
@@ -2108,7 +2112,7 @@ AS</DOCUMENTATION>
     tt_order TYPE STANDARD TABLE OF ts_order WITH NON-UNIQUE KEY name
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface Order"/>
+     <ITEM LANG="E" TEXT="Class/interface Order"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_REQ_OBJECTS" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="4">tt_req_objects TYPE STANDARD TABLE OF ts_req_object WITH NON-UNIQUE KEY name
@@ -2117,14 +2121,14 @@ AS</DOCUMENTATION>
     tt_sources TYPE SORTED TABLE OF ts_source WITH UNIQUE KEY name
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Classes/interfaces codes"/>
+     <ITEM LANG="E" TEXT="Classes/interfaces codes"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_TYPEGROUPS" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4">
     tt_typegroups TYPE STANDARD TABLE OF ts_typegroup WITH DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Table of type group"/>
+     <ITEM LANG="E" TEXT="Table of type group"/>
     </TEXTS>
    </ITEM>
   </TYPES>

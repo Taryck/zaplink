@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2638F42C81B4E71EFF3329BCF9AB8D25" CODE_SIGNATURE="500565706C7A22D5F4F4883D4882E2C8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="47CCD487EF32F57AB90A3E1A8BC82A31" CODE_SIGNATURE="500565706C7A22D5F4F4883D4882E2C8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DEPENDENCIES_ANALYSER"/>
  </DEPENDENCIES>
@@ -7,7 +7,22 @@
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPLink Informations"/>
+    <ITEM LANG="E" TEXT="ZAPLink Informations">U1&amp;FUNCTIONALITY&amp;
+ASProvide informations on SAP system and ZAPLINK framework.
+U1&amp;RELATIONS&amp;
+AS
+U1&amp;EXAMPLE&amp;
+AS
+U1&amp;HINTS&amp;
+AS
+U1&amp;FURTHER_SOURCES_OF_INF&amp;
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -26,7 +41,7 @@
   <ATTRIBUTS>
    <ITEM CMPNAME="CNX_PACKAGES" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_PACKAGES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connectors packages"/>
+     <ITEM LANG="E" TEXT="Connectors packages"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_CLASS" STATE="1" EDITORDER="6 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE"/>
@@ -36,12 +51,12 @@
    <ITEM CMPNAME="C_TYPEGROUP" STATE="1" EDITORDER="10 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE"/>
    <ITEM CMPNAME="O_CX" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+     <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+     <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SAP" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTRDONLY="X" TYPTYPE="1" TYPE="TS_SAP"/>
@@ -71,7 +86,7 @@
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   data s_pack like LINE OF cnx_packages.
@@ -90,7 +105,7 @@
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   me-&gt;get_sap_data( ).
@@ -98,7 +113,7 @@
    </ITEM>
    <ITEM CMPNAME="GET_SAP_DATA" EXPOSURE="1" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get SAP Data"/>
+     <ITEM LANG="E" TEXT="Get SAP Data"/>
     </TEXTS>
     <SOURCE>`
 * FROM FUNC : STATUS_ANZEIGEN
@@ -286,7 +301,7 @@
    </ITEM>
    <ITEM CMPNAME="GET_ZL_DATA" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get ZAPLink Data"/>
+     <ITEM LANG="E" TEXT="Get ZAPLink Data"/>
     </TEXTS>
     <SOURCE>`
   DATA t_comps      TYPE tt_compkeys.
@@ -475,37 +490,37 @@
   <TYPES>
    <ITEM CMPNAME="TD_CLASSNAME" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="ZAPLINK_DEPENDENCIES_ANALYSER=&gt;TD_NAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Class/interface name"/>
+     <ITEM LANG="E" TEXT="Class/interface name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TI_CODE_SIGNATURE" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CNX_EXT_CODE_SIGNATURE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPLink Connector Extension : Source Code Signature"/>
+     <ITEM LANG="E" TEXT="ZAPLink Connector Extension : Source Code Signature"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_COMPONENT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+     <ITEM LANG="E" TEXT="Zap Link Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CONNECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPLink Connector interface"/>
+     <ITEM LANG="E" TEXT="ZAPLink Connector interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_GENERATOR" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_DEPENDENCIES_ANALYSER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPLink : Stand Alone Generator (local class&amp;intf)"/>
+     <ITEM LANG="E" TEXT="ZAPLink : Stand Alone Generator (local class&amp;intf)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_LIST" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_LIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPLink Components list"/>
+     <ITEM LANG="E" TEXT="ZAPLink Components list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_RAW" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="ZAPLINK_RAW">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="RAW component with data"/>
+     <ITEM LANG="E" TEXT="RAW component with data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_COMP_DETAIL" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
@@ -522,7 +537,7 @@
        END OF ts_comp_detail
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Components detailed informations"/>
+     <ITEM LANG="E" TEXT="Components detailed informations"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_SAP" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4">BEGIN OF ts_sap,
@@ -546,7 +561,7 @@
                   END OF ts_status_info
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="General Status Informations"/>
+     <ITEM LANG="E" TEXT="General Status Informations"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_ZL" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="4">BEGIN OF ts_zl,
@@ -576,14 +591,14 @@
     tt_comps TYPE STANDARD TABLE OF ts_comp_detail WITH DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Components informations"/>
+     <ITEM LANG="E" TEXT="Components informations"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_HOT_PACK" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
     tt_hot_pack TYPE STANDARD TABLE OF pat03 WITH DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Hot Packages informations"/>
+     <ITEM LANG="E" TEXT="Hot Packages informations"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_ZL_CNX" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">tt_zl_cnx TYPE SORTED TABLE OF ts_zl_cnx WITH UNIQUE KEY uuid

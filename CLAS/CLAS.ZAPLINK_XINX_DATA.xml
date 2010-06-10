@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AD60E800513FD6142FE0186AB371C4DF" CODE_SIGNATURE="0F52F0B9D0B22D639F5486FCE5507E56" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F0B7EA906287E71CA0DD91848DD1E2DF" CODE_SIGNATURE="0F52F0B9D0B22D639F5486FCE5507E56" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
  </DEPENDENCIES>
@@ -8,8 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Index (SE11) Datas">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Index (SE11) Datas">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_DICTIONARY
 ASDefine XML structure of a Table or Structure
 U1&amp;RELATIONS&amp;
@@ -19,8 +18,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -33,7 +37,7 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_MAINDATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Line Type for Table with Package Data"/>
+     <ITEM LANG="E" TEXT="Line Type for Table with Package Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DOC_IDS" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4">
@@ -42,13 +46,13 @@ AS</DOCUMENTATION>
     END OF doc_ids
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Documentation IDS"/>
+     <ITEM LANG="E" TEXT="Documentation IDS"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="FIELDS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_FIELDS"/>
    <ITEM CMPNAME="R_DOC_IDS" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Documentation IDS"/>
+     <ITEM LANG="E" TEXT="Documentation IDS"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TEXTS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_TEXTS"/>
@@ -83,14 +87,14 @@ AS</DOCUMENTATION>
   <METHODS>
    <ITEM CMPNAME="ANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
+     <ITEM LANG="E" TEXT="Anonymized component data"/>
     </TEXTS>
     <SOURCE>`
   CLEAR: a0_maindata-as4user, a0_maindata-as4date, a0_maindata-as4time.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA _id LIKE LINE OF r_doc_ids.
@@ -100,12 +104,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="FROM_DATA" EXPOSURE="2" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes"/>
+     <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules object Data"/>
+       <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -153,12 +157,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="KEY_2_NAME" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert Key to Name (E071 Entrie)"/>
+     <ITEM LANG="E" TEXT="Convert Key to Name (E071 Entrie)"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_IDX_KEY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Index Key structure"/>
+       <ITEM LANG="E" TEXT="Index Key structure"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPNAME"/>
@@ -187,13 +191,13 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="NAME_2_KEY" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert Name (E071 Entrie) to Key"/>
+     <ITEM LANG="E" TEXT="Convert Name (E071 Entrie) to Key"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_IDX_KEY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Index Key structure"/>
+       <ITEM LANG="E" TEXT="Index Key structure"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -219,12 +223,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert object attributes to FM Data"/>
+     <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules object Data"/>
+       <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -279,7 +283,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UnAnonymized component data"/>
+     <ITEM LANG="E" TEXT="UnAnonymized component data"/>
     </TEXTS>
    </ITEM>
   </METHODS>
@@ -294,7 +298,7 @@ AS</DOCUMENTATION>
               END OF ts_fm_data
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Function Module Data"/>
+     <ITEM LANG="E" TEXT="Function Module Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_IDX_KEY" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">
@@ -304,12 +308,12 @@ AS</DOCUMENTATION>
       END OF ts_idx_key
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Index Key structure"/>
+     <ITEM LANG="E" TEXT="Index Key structure"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="DD12V">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="General Data"/>
+     <ITEM LANG="E" TEXT="General Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_DD12T" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_dd12t TYPE STANDARD TABLE OF dd12t WITH DEFAULT KEY

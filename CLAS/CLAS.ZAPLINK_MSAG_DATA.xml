@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="31881FEB9B80E6D95AFDDEB175D0ACB5" CODE_SIGNATURE="2A7EA3451EA4C438B6FBB1F0402B69E8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MSAG_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="343974142B998DB3A5BA8ED8591FB9E5" CODE_SIGNATURE="2A7EA3451EA4C438B6FBB1F0402B69E8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MSAG_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
  </DEPENDENCIES>
@@ -8,8 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Commun Data for Class &amp; Interface">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Commun Data for Class &amp; Interface">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_MESSAGE
 ASDefine XML structure of a message class
 U1&amp;RELATIONS&amp;
@@ -19,8 +18,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -29,17 +33,17 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_MAINDATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Program main data"/>
+     <ITEM LANG="E" TEXT="Program main data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MESSAGES" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_MSGTEXTS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ABAP Source code"/>
+     <ITEM LANG="E" TEXT="ABAP Source code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TEXTS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_TEXTS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Textpool table"/>
+     <ITEM LANG="E" TEXT="Textpool table"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -71,7 +75,7 @@ AS</DOCUMENTATION>
   <METHODS>
    <ITEM CMPNAME="ANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Anonymized component data"/>
+     <ITEM LANG="E" TEXT="Anonymized component data"/>
     </TEXTS>
     <SOURCE>`
   DATA s_msg LIKE LINE OF messages.
@@ -87,7 +91,7 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Unanonymized component data (set back default values)"/>
+     <ITEM LANG="E" TEXT="Unanonymized component data (set back default values)"/>
     </TEXTS>
     <SOURCE>`
   DATA s_msg LIKE LINE OF messages.
@@ -108,7 +112,7 @@ AS</DOCUMENTATION>
       END OF ts_maindata
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Program main data"/>
+     <ITEM LANG="E" TEXT="Program main data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_MSGTEXT" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">BEGIN OF ts_msgtext,
@@ -135,7 +139,7 @@ AS</DOCUMENTATION>
         END OF ts_text
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Textpool text"/>
+     <ITEM LANG="E" TEXT="Textpool text"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_MSGTEXTS" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_msgtexts TYPE SORTED TABLE OF ts_msgtext WITH UNIQUE KEY msgnr
@@ -144,7 +148,7 @@ AS</DOCUMENTATION>
     tt_texts TYPE SORTED TABLE OF ts_text WITH UNIQUE KEY langu
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Textpool text Table"/>
+     <ITEM LANG="E" TEXT="Textpool text Table"/>
     </TEXTS>
    </ITEM>
   </TYPES>

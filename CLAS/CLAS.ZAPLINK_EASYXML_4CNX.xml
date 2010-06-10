@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="45C68D3795A6645D14001CB69131D5B8" CODE_SIGNATURE="A24805F93ECAF20970D982E184C28065" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML_4CNX" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5924BE1927D5E2D857F41CB3A0EE41ED" CODE_SIGNATURE="A24805F93ECAF20970D982E184C28065" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML_4CNX" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_EASYXML"/>
  </DEPENDENCIES>
@@ -8,12 +8,11 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_EASYXML" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="EZXML for Connector">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="EZXML for Connector">U1&amp;FUNCTIONALITY&amp;
 ASIs a specialized version of ZAPLINK_EASYXML that detected RAW object on
   XML file. RAW object are first read (commun part) to determine which
-  connector has build this version and call the right connector RAW object
-  constructor.
+  connector have to build this version and call the right connector RAW
+  object constructor.
 U1&amp;RELATIONS&amp;
 AS
 U1&amp;EXAMPLE&amp;
@@ -21,8 +20,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <LOCAL>
@@ -94,12 +98,12 @@ AS</DOCUMENTATION>
   <TYPES>
    <ITEM CMPNAME="TO_CONNECTOR" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CONNECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAP Link Connector interface"/>
+     <ITEM LANG="E" TEXT="ZAP Link Connector interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_RAW_BASE" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_RAW_BASE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Base RAW component without data"/>
+     <ITEM LANG="E" TEXT="Base RAW component without data"/>
     </TEXTS>
    </ITEM>
   </TYPES>

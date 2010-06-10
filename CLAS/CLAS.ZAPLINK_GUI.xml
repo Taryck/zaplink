@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="10D5037167714EAB60A5275E5183E62D" CODE_SIGNATURE="409ABF6CCF3224D0C515416DD8D7D762" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E9CC0B7037D21566F3B74DCB509FE6A1" CODE_SIGNATURE="409ABF6CCF3224D0C515416DD8D7D762" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_GUI">
    <INHERITANCE REFCLSNAME="ZAPLINK_TOOLS" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZapLink GUI Actions">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZapLink GUI Actions">U1&amp;FUNCTIONALITY&amp;
 ASThis object stores GUI actions. The program ZAPLINK stores as less as
   possible logic. All GUI actions are in this object. The program ZAPLINK
   handle :
@@ -19,8 +18,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -38,12 +42,12 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="APPLICATION_LOG" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_MSG_COLL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log IDs"/>
+     <ITEM LANG="E" TEXT="Application Log IDs"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;GUI&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_LIGHT" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF c_light,
@@ -59,17 +63,17 @@ AS</DOCUMENTATION>
 `</ITEM>
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for GUI"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for GUI"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_OPTIONS" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_OPTIONS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Options"/>
+     <ITEM LANG="E" TEXT="Options"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -94,34 +98,34 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add object to container"/>
+     <ITEM LANG="E" TEXT="Add object to container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File"/>
+       <ITEM LANG="E" TEXT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object name"/>
+       <ITEM LANG="E" TEXT="Object name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJTYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Type"/>
+       <ITEM LANG="E" TEXT="Object Type"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="with sub components"/>
+       <ITEM LANG="E" TEXT="with sub components"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -184,24 +188,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CHANGE_SELECTION" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Let user change selection"/>
+     <ITEM LANG="E" TEXT="Let user change selection"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ACTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ACTION">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Action : Export or Import"/>
+       <ITEM LANG="E" TEXT="Action : Export or Import"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component List to allow user to change selected"/>
+       <ITEM LANG="E" TEXT="Component List to allow user to change selected"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -217,7 +221,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
 
@@ -242,12 +246,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONTAINERFILE_SELECT" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Open dialog to select container&apos;s file"/>
+     <ITEM LANG="E" TEXT="Open dialog to select container&apos;s file"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FILENAME" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Container&apos;s filename"/>
+       <ITEM LANG="E" TEXT="Container&apos;s filename"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -269,24 +273,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CREATE" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create empty container"/>
+     <ITEM LANG="E" TEXT="Create empty container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File"/>
+       <ITEM LANG="E" TEXT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONTNAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Container name"/>
+       <ITEM LANG="E" TEXT="Container name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -319,29 +323,29 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CREATE_FILE" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create File Manager"/>
+     <ITEM LANG="E" TEXT="Create File Manager"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FILENAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILENAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Filename"/>
+       <ITEM LANG="E" TEXT="Filename"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FILETYPE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILETYPE" PARVALUE="ZAPLINK_FILE=&gt;C_FT_LOCAL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Filetype : Local or Server"/>
+       <ITEM LANG="E" TEXT="Filetype : Local or Server"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_FILE" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File Manager"/>
+       <ITEM LANG="E" TEXT="File Manager"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -357,29 +361,29 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export object list to container"/>
+     <ITEM LANG="E" TEXT="Export object list to container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File name"/>
+       <ITEM LANG="E" TEXT="File name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJLIST" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component List to export"/>
+       <ITEM LANG="E" TEXT="Component List to export"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="With sub component"/>
+       <ITEM LANG="E" TEXT="With sub component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -413,24 +417,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_OBJLIST" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get container content"/>
+     <ITEM LANG="E" TEXT="Get container content"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File"/>
+       <ITEM LANG="E" TEXT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component List of container"/>
+       <ITEM LANG="E" TEXT="Component List of container"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -447,7 +451,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_VALUES" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Search Help for object of a type"/>
+     <ITEM LANG="E" TEXT="Search Help for object of a type"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
@@ -481,35 +485,35 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import container"/>
+     <ITEM LANG="E" TEXT="Import container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ACTIVATE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE"/>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File"/>
+       <ITEM LANG="E" TEXT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="5 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component List to import"/>
+       <ITEM LANG="E" TEXT="Component List to import"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONTNAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="For info : Container&apos;s name"/>
+       <ITEM LANG="E" TEXT="For info : Container&apos;s name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="with sub components"/>
+       <ITEM LANG="E" TEXT="with sub components"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -617,29 +621,29 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="REFRESH" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export object list to container"/>
+     <ITEM LANG="E" TEXT="Export object list to container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File name"/>
+       <ITEM LANG="E" TEXT="File name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJLIST" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component List to export"/>
+       <ITEM LANG="E" TEXT="Component List to export"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="With sub component"/>
+       <ITEM LANG="E" TEXT="With sub component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -675,34 +679,34 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="UNINSTALL" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Uninstall container content is system"/>
+     <ITEM LANG="E" TEXT="Uninstall container content is system"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File"/>
+       <ITEM LANG="E" TEXT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component List of container"/>
+       <ITEM LANG="E" TEXT="Component List of container"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONTNAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="For info : Container&apos;s name"/>
+       <ITEM LANG="E" TEXT="For info : Container&apos;s name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="with sub components"/>
+       <ITEM LANG="E" TEXT="with sub components"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -736,34 +740,34 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="_GET_OBJLIST" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get container content (protected)"/>
+     <ITEM LANG="E" TEXT="Get container content (protected)"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CONTAINER" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_CONTAINER">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPLink Container"/>
+       <ITEM LANG="E" TEXT="ZAPLink Container"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="CONT_NAME" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONTNAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Container&apos;s name"/>
+       <ITEM LANG="E" TEXT="Container&apos;s name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File"/>
+       <ITEM LANG="E" TEXT="File"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component List of container"/>
+       <ITEM LANG="E" TEXT="Component List of container"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -785,29 +789,29 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="_LOAD" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Load and create container"/>
+     <ITEM LANG="E" TEXT="Load and create container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CONTAINER" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_CONTAINER">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPLink : Container"/>
+       <ITEM LANG="E" TEXT="ZAPLink : Container"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="CONT_NAME" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONTNAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Container&apos;s name"/>
+       <ITEM LANG="E" TEXT="Container&apos;s name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File"/>
+       <ITEM LANG="E" TEXT="File"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -866,24 +870,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="_SAVE" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Save container"/>
+     <ITEM LANG="E" TEXT="Save container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="CONTAINER" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_CONTAINER">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPLink Container"/>
+       <ITEM LANG="E" TEXT="ZAPLink Container"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File"/>
+       <ITEM LANG="E" TEXT="File"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -909,17 +913,17 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="_UPDATE_SUBOBJ" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Update sub object in list"/>
+     <ITEM LANG="E" TEXT="Update sub object in list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="F_SUB" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Also sub objects"/>
+       <ITEM LANG="E" TEXT="Also sub objects"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_LIST" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component List to export"/>
+       <ITEM LANG="E" TEXT="Component List to export"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -943,22 +947,22 @@ INCLUDE zaplink_macros.</MACROS>
   <TYPES>
    <ITEM CMPNAME="TO_ACTIVATE" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_ACTIVATE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPLink : Activate components"/>
+     <ITEM LANG="E" TEXT="ZAPLink : Activate components"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CONNECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAP Link Connector interface"/>
+     <ITEM LANG="E" TEXT="ZAP Link Connector interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX_GUI">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for GUI"/>
+     <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_OBJECT_OFF" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
@@ -975,7 +979,7 @@ INCLUDE zaplink_macros.</MACROS>
          END OF ts_object_off
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ALV Line"/>
+     <ITEM LANG="E" TEXT="ALV Line"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_OBJ_LIST_OFF" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">tt_obj_list_off TYPE STANDARD TABLE OF ts_object_off with DEFAULT KEY
@@ -987,7 +991,7 @@ INCLUDE zaplink_macros.</MACROS>
     END OF t_alv
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ALV Data"/>
+     <ITEM LANG="E" TEXT="ALV Data"/>
     </TEXTS>
    </ITEM>
   </TYPES>

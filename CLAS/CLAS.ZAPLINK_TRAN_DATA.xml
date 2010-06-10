@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9730D486586033069F2F3681321CBC01" CODE_SIGNATURE="B946883E4B604C08F1E29F4561E8C1AE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRAN_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="78BDB9088E60D2BE3C42C6318F1E157E" CODE_SIGNATURE="B946883E4B604C08F1E29F4561E8C1AE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRAN_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
   <ITEM TYPE="INTF" NAME="ZAPLINK_CONNECTOR"/>
@@ -9,8 +9,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Commun Data for Class &amp; Interface">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Commun Data for Class &amp; Interface">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_TRANSACTION
 ASDefine XML structure of a Transaction
 U1&amp;RELATIONS&amp;
@@ -20,8 +19,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -31,33 +35,33 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TS_MAINDATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Program main data"/>
+     <ITEM LANG="E" TEXT="Program main data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="AUTHORIZATION" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TS_AUTHORITY"/>
    <ITEM CMPNAME="OBJECT" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TS_SUB_OBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Sub object : Object"/>
+     <ITEM LANG="E" TEXT="Sub object : Object"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="PARAMETERS" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_PARAMS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transaction params"/>
+     <ITEM LANG="E" TEXT="Transaction params"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="PROGRAM" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TS_SUB_OBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Sub object : Program"/>
+     <ITEM LANG="E" TEXT="Sub object : Program"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TEXTS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_TEXTS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Textpool table"/>
+     <ITEM LANG="E" TEXT="Textpool table"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TRANSACTION" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_SUB_OBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Sub object : Transaction"/>
+     <ITEM LANG="E" TEXT="Sub object : Transaction"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TRAN_KINDS" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">begin of tran_kinds,
@@ -86,7 +90,7 @@ AS</DOCUMENTATION>
 `</ITEM>
    <ITEM CMPNAME="ZL_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TO_RAW">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component of transaction : Program, object, pool"/>
+     <ITEM LANG="E" TEXT="Component of transaction : Program, object, pool"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -123,24 +127,24 @@ AS</DOCUMENTATION>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules Class Data"/>
+       <ITEM LANG="E" TEXT="Function Modules Class Data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="RGLIF-DOCUTYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Transaction Type"/>
+       <ITEM LANG="E" TEXT="Transaction Type"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
    </ITEM>
    <ITEM CMPNAME="FROM_DATA" EXPOSURE="2" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert FM Data to object attributes"/>
+     <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules Class Data"/>
+       <ITEM LANG="E" TEXT="Function Modules Class Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -222,12 +226,12 @@ AS</DOCUMENTATION>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert object attributes to FM Data"/>
+     <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Function Modules Class Data"/>
+       <ITEM LANG="E" TEXT="Function Modules Class Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -377,7 +381,7 @@ AS</DOCUMENTATION>
     END OF ts_maindata
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="main data"/>
+     <ITEM LANG="E" TEXT="main data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_SUB_OBJ" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">
@@ -386,7 +390,7 @@ AS</DOCUMENTATION>
     end of TS_SUB_OBJ
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Sub object structure"/>
+     <ITEM LANG="E" TEXT="Sub object structure"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_DOC_TECH" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">tt_doc_tech TYPE STANDARD TABLE OF tline WITH DEFAULT KEY
@@ -397,7 +401,7 @@ AS</DOCUMENTATION>
     tt_params TYPE STANDARD TABLE OF rsparam WITH DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transaction params"/>
+     <ITEM LANG="E" TEXT="Transaction params"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_TSTCT" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">tt_tstct TYPE SORTED TABLE OF tstct WITH UNIQUE KEY sprsl

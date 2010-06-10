@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BE33840AC209E171246A8108ADB01F5A" CODE_SIGNATURE="6965E733CACFB9E86C70C8E95CAC9DD7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6BCE2C5E2933F7A8DEE51471C4A692CE" CODE_SIGNATURE="6965E733CACFB9E86C70C8E95CAC9DD7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="INTF" NAME="ZAPLINK_DATATYPES"/>
  </DEPENDENCIES>
@@ -7,8 +7,7 @@
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPLink : Abstract class for component data">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAPLink : Abstract class for component data">U1&amp;FUNCTIONALITY&amp;
 ASThis abstract object define is the entry point of inheritance for each
   type dependent datas. Data for program (PROG) is completely different
   from data for type pool. All data displayed in XML inherit from this
@@ -33,19 +32,24 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="ZAPLINK_DATATYPES=&gt;TD_CHECKSUM">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Source Code Checksum if applies"/>
+     <ITEM LANG="E" TEXT="Source Code Checksum if applies"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_DEPENDENCIES" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="ZAPLINK_DATATYPES=&gt;TT_COMPKEYS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="List of components that are required to install this comp."/>
+     <ITEM LANG="E" TEXT="List of components that are required to install this comp."/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>

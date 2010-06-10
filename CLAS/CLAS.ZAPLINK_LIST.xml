@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="6D9DDF40BCDBEED484271CB44CE96884" CODE_SIGNATURE="B0509DA03F62D945788B45D36E2C9B99" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="FE8F31791C8FEB1C1E197DC7DFCB4D12" CODE_SIGNATURE="B0509DA03F62D945788B45D36E2C9B99" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+    <ITEM LANG="E" TEXT="ZapLink Components list">U1&amp;FUNCTIONALITY&amp;
+ASList of component with
+B1Type &amp; Name
+B1Connector if exists
+B1Action
+B1Kind (R3TR or LIMU)
+B1...
+U1&amp;RELATIONS&amp;
+AS
+U1&amp;EXAMPLE&amp;
+AS
+U1&amp;HINTS&amp;
+AS
+U1&amp;FURTHER_SOURCES_OF_INF&amp;
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -22,7 +42,7 @@
   <ATTRIBUTS>
    <ITEM CMPNAME="ALV_CONF" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_ALV_CONFS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ALV configuration"/>
+     <ITEM LANG="E" TEXT="ALV configuration"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ALV_H_TABLES" STATE="1" EDITORDER="6 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF alv_h_tables,
@@ -32,7 +52,7 @@
 `</ITEM>
    <ITEM CMPNAME="DISPLAY_PROGRESS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="ABAP_BOOL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Display SAPGUI progress indication while iterating"/>
+     <ITEM LANG="E" TEXT="Display SAPGUI progress indication while iterating"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ITERATOR_TYPES" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
@@ -42,7 +62,7 @@
     END OF iterator_types
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Types of Iterator"/>
+     <ITEM LANG="E" TEXT="Types of Iterator"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="LIGHTS" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
@@ -60,7 +80,7 @@
     END OF lights
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Lights icons"/>
+     <ITEM LANG="E" TEXT="Lights icons"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ORDER_KIND" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="ABAP_BOOL"/>
@@ -72,43 +92,43 @@
 `</ITEM>
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="9 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_EXCEPTION" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+     <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="8 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for List"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for List"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="T_CURSORS" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_CURSORS"/>
    <ITEM CMPNAME="_ALLCOMP" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_ALLCOMPLIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="All Component list index"/>
+     <ITEM LANG="E" TEXT="All Component list index"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_INDEX" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_COMPLIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component list index"/>
+     <ITEM LANG="E" TEXT="Component list index"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_ITERATOR_COUNT" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="SY-TABIX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Index of Internal Tables"/>
+     <ITEM LANG="E" TEXT="Index of Internal Tables"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_ITERATOR_TABIX" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SY-TABIX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Index of Internal Tables"/>
+     <ITEM LANG="E" TEXT="Index of Internal Tables"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_ITERATOR_TYPE" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TD_ITERATOR_TYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Iterator type : all, selected, ...."/>
+     <ITEM LANG="E" TEXT="Iterator type : all, selected, ...."/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -133,12 +153,12 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="ADD" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add component to list"/>
+     <ITEM LANG="E" TEXT="Add component to list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -166,12 +186,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="ADD_KEYS" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add&amp;Create components from a key list"/>
+     <ITEM LANG="E" TEXT="Add&amp;Create components from a key list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_COMPKEYS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Raw list of Components Keys"/>
+       <ITEM LANG="E" TEXT="Raw list of Components Keys"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -211,12 +231,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="ADD_LIST" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Merge new components from a list"/>
+     <ITEM LANG="E" TEXT="Merge new components from a list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+       <ITEM LANG="E" TEXT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -243,7 +263,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="CHANGE_SELECTION" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Change selection list"/>
+     <ITEM LANG="E" TEXT="Change selection list"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -270,7 +290,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA field_s   LIKE LINE OF alv_conf-simple-fields.
@@ -405,7 +425,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="CLEAR" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Clear component list"/>
+     <ITEM LANG="E" TEXT="Clear component list"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -423,12 +443,12 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="CLONE" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Clone (copy) component&apos;s list"/>
+     <ITEM LANG="E" TEXT="Clone (copy) component&apos;s list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+       <ITEM LANG="E" TEXT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -454,22 +474,22 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="COMP_TO_ALV" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert component to ALV data"/>
+     <ITEM LANG="E" TEXT="Convert component to ALV data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="O_COMP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component"/>
+       <ITEM LANG="E" TEXT="Component"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_ALV">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ALV informations"/>
+       <ITEM LANG="E" TEXT="ALV informations"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SELECTED" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Is selected"/>
+       <ITEM LANG="E" TEXT="Is selected"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -548,17 +568,17 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="CONV_TO_ALV" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create ALV table from collection"/>
+     <ITEM LANG="E" TEXT="Create ALV table from collection"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ALV">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ALV informations"/>
+       <ITEM LANG="E" TEXT="ALV informations"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="W_ITEM" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="With Items"/>
+       <ITEM LANG="E" TEXT="With Items"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -613,7 +633,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="DISPLAY" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Display list content"/>
+     <ITEM LANG="E" TEXT="Display list content"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -676,17 +696,17 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="GET_COUNT" EXPOSURE="2" STATE="1" EDITORDER="9 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get number of component in list"/>
+     <ITEM LANG="E" TEXT="Get number of component in list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="IS_SELECTED" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="count only selected component"/>
+       <ITEM LANG="E" TEXT="count only selected component"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="I">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Number of component"/>
+       <ITEM LANG="E" TEXT="Number of component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -699,12 +719,12 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="GET_KEYS" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Return components as a key list"/>
+     <ITEM LANG="E" TEXT="Return components as a key list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_COMPKEYS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Raw list of Components Keys"/>
+       <ITEM LANG="E" TEXT="Raw list of Components Keys"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -726,12 +746,12 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="GET_NEXT" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Iterator Get next"/>
+     <ITEM LANG="E" TEXT="Iterator Get next"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -790,12 +810,12 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="HAS_ANY" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Search components into all component list"/>
+     <ITEM LANG="E" TEXT="Search components into all component list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+       <ITEM LANG="E" TEXT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
@@ -824,7 +844,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="INIT_ITER" EXPOSURE="2" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Initialize Iterator on all component of the list"/>
+     <ITEM LANG="E" TEXT="Initialize Iterator on all component of the list"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -855,7 +875,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="INIT_SEL_ITER" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Initialize Iterator on selected component"/>
+     <ITEM LANG="E" TEXT="Initialize Iterator on selected component"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -887,7 +907,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="IS_EMPTY" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Is the list empty"/>
+     <ITEM LANG="E" TEXT="Is the list empty"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
@@ -900,12 +920,12 @@ DATA t_allcomp   TYPE	tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="IS_INCLUDED" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Search components into all component list"/>
+     <ITEM LANG="E" TEXT="Search components into all component list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+       <ITEM LANG="E" TEXT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
@@ -934,12 +954,12 @@ DATA t_allcomp TYPE tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="IS_SELECTED" EXPOSURE="2" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Is this component selected ?"/>
+     <ITEM LANG="E" TEXT="Is this component selected ?"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
@@ -959,12 +979,12 @@ DATA t_allcomp TYPE tt_allcomplist.
    </ITEM>
    <ITEM CMPNAME="KEEP_COMMUN_LIST" EXPOSURE="2" STATE="1" EDITORDER="18 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Keep only component in commun with an other list"/>
+     <ITEM LANG="E" TEXT="Keep only component in commun with an other list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+       <ITEM LANG="E" TEXT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -982,12 +1002,12 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="REMOVE" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Remove component from list"/>
+     <ITEM LANG="E" TEXT="Remove component from list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1008,19 +1028,19 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="REMOVE_LIST" EXPOSURE="2" STATE="1" EDITORDER="20 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Remove component to list"/>
+     <ITEM LANG="E" TEXT="Remove component to list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+       <ITEM LANG="E" TEXT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1037,7 +1057,7 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="REVERSE_SELECTION" EXPOSURE="2" STATE="1" EDITORDER="26 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Reverse the selection"/>
+     <ITEM LANG="E" TEXT="Reverse the selection"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -1048,17 +1068,17 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="SEARCH" EXPOSURE="2" STATE="1" EDITORDER="21 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Search component into list"/>
+     <ITEM LANG="E" TEXT="Search component into list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1083,17 +1103,17 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="SEARCH_INDEX" EXPOSURE="1" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Search component into list &amp; get index"/>
+     <ITEM LANG="E" TEXT="Search component into list &amp; get index"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_COMPLIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component list index"/>
+       <ITEM LANG="E" TEXT="Component list index"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1111,12 +1131,12 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="SELECT" EXPOSURE="2" STATE="1" EDITORDER="22 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Select the component"/>
+     <ITEM LANG="E" TEXT="Select the component"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1134,12 +1154,12 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="SELECTION_AS_LIST" EXPOSURE="2" STATE="1" EDITORDER="27 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create new list with only selected components"/>
+     <ITEM LANG="E" TEXT="Create new list with only selected components"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+       <ITEM LANG="E" TEXT="ZapLink Components list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1165,7 +1185,7 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="SELECT_ALL" EXPOSURE="2" STATE="1" EDITORDER="23 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Select all components from list"/>
+     <ITEM LANG="E" TEXT="Select all components from list"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -1177,7 +1197,7 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="SELECT_BY_ACTION" EXPOSURE="2" STATE="1" EDITORDER="28 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Select components from list depending on actions"/>
+     <ITEM LANG="E" TEXT="Select components from list depending on actions"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -1195,12 +1215,12 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="SELECT_DEFAULT" EXPOSURE="2" STATE="1" EDITORDER="24 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Select default components from list"/>
+     <ITEM LANG="E" TEXT="Select default components from list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="SEL_ACTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SEL_ACTION">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Selection Action : Export, Import, Uninstall"/>
+       <ITEM LANG="E" TEXT="Selection Action : Export, Import, Uninstall"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1227,7 +1247,7 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="SELECT_EXPORT" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Select components from list able to be exported"/>
+     <ITEM LANG="E" TEXT="Select components from list able to be exported"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -1246,7 +1266,7 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="SELECT_IMPORT" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Select components from list able to be imported"/>
+     <ITEM LANG="E" TEXT="Select components from list able to be imported"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -1265,7 +1285,7 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="SELECT_UNINSTALL" EXPOSURE="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Select components from list able to be uninstalled"/>
+     <ITEM LANG="E" TEXT="Select components from list able to be uninstalled"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
@@ -1284,12 +1304,12 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="UNSELECT" EXPOSURE="2" STATE="1" EDITORDER="25 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Unselect the component"/>
+     <ITEM LANG="E" TEXT="Unselect the component"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1307,12 +1327,12 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="UPDATE_FROM_ALV" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Update selection from ALV"/>
+     <ITEM LANG="E" TEXT="Update selection from ALV"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ALV">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ALV data"/>
+       <ITEM LANG="E" TEXT="ALV data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1341,7 +1361,7 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="_ADD_SUBCOMP" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add sub components"/>
+     <ITEM LANG="E" TEXT="Add sub components"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT"/>
@@ -1349,7 +1369,7 @@ FIELD-SYMBOLS:
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1373,12 +1393,12 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="_SELECT" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Select the component ?"/>
+     <ITEM LANG="E" TEXT="Select the component ?"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="VALUE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL"/>
@@ -1484,27 +1504,27 @@ FIELD-SYMBOLS:
    <ITEM CMPNAME="TD_ALVID" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="GUID_16"/>
    <ITEM CMPNAME="TD_ITERATOR_TYPE" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="CHAR1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Iterator type : all, selected, ...."/>
+     <ITEM LANG="E" TEXT="Iterator type : all, selected, ...."/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_COMPONENT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+     <ITEM LANG="E" TEXT="Zap Link Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_EXCEPTION" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX_LIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+     <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ME" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_LIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+     <ITEM LANG="E" TEXT="ZapLink Components list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_ALLCOMPLIST" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4">
@@ -1515,7 +1535,7 @@ FIELD-SYMBOLS:
   END OF ts_allcomplist
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="All Component list index line"/>
+     <ITEM LANG="E" TEXT="All Component list index line"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_ALV" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="4">
@@ -1538,7 +1558,7 @@ FIELD-SYMBOLS:
   END OF ts_alv
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ALV line"/>
+     <ITEM LANG="E" TEXT="ALV line"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_ALV_CONF" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="4">
@@ -1548,7 +1568,7 @@ FIELD-SYMBOLS:
       END OF ts_alv_conf
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ALV configuration"/>
+     <ITEM LANG="E" TEXT="ALV configuration"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_ALV_CONFS" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="4">BEGIN OF ts_alv_confs,
@@ -1564,7 +1584,7 @@ FIELD-SYMBOLS:
   END OF ts_complist
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component list index"/>
+     <ITEM LANG="E" TEXT="Component list index"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_CURSOR" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_cursor,
@@ -1577,21 +1597,21 @@ FIELD-SYMBOLS:
     tt_allcomplist TYPE SORTED TABLE OF ts_allcomplist WITH NON-UNIQUE KEY KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="All Components (main and sub)"/>
+     <ITEM LANG="E" TEXT="All Components (main and sub)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_ALV" EXPOSURE="1" STATE="1" EDITORDER="11 " TYPTYPE="4">
     tt_alv TYPE STANDARD TABLE OF ts_alv WITH DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ALV table"/>
+     <ITEM LANG="E" TEXT="ALV table"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_COMPLIST" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4">
     tt_complist TYPE SORTED TABLE OF ts_complist WITH UNIQUE KEY KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component list index"/>
+     <ITEM LANG="E" TEXT="Component list index"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_CURSORS" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_cursors TYPE STANDARD TABLE OF ts_cursor WITH DEFAULT KEY

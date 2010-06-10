@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E6F9B25955DFD9B9ADD967516E9A1F75" CODE_SIGNATURE="56EF4EED26B611FFD585B0D4B0933A6D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_FILE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0A862010A777CFCDBD163C57B433ABB1" CODE_SIGNATURE="56EF4EED26B611FFD585B0D4B0933A6D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_FILE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S">
    <INHERITANCE REFCLSNAME="ZAPLINK_CX" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Files">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAPlink Exception for Files">U1&amp;FUNCTIONALITY&amp;
 ASZAPLINK_FILE&apos;s exception class. Exception class dedicated to error
   handling of exception in ZAPLINK_FILE &amp; inheriting classes. Have a look
   to each Exception text for more details.
@@ -17,24 +16,29 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="FILEKIND" EXPOSURE="2" STATE="1" EDITORDER="11 " TYPTYPE="1" TYPE="T_FILETYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="FileKind"/>
+     <ITEM LANG="E" TEXT="FileKind"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="FILENAME" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="T_FILENAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Filename"/>
+     <ITEM LANG="E" TEXT="Filename"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="FILETYPE" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="T_FILETYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Filetype : Local or Server"/>
+     <ITEM LANG="E" TEXT="Filetype : Local or Server"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -96,12 +100,12 @@ AS</DOCUMENTATION>
   <TYPES>
    <ITEM CMPNAME="T_FILENAME" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Filename"/>
+     <ITEM LANG="E" TEXT="Filename"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="T_FILETYPE" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="CHAR1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Filetype : Local or Server"/>
+     <ITEM LANG="E" TEXT="Filetype : Local or Server"/>
     </TEXTS>
    </ITEM>
   </TYPES>

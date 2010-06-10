@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4CCE9309CA49C86EB4EF13F7F6E4BC40" CODE_SIGNATURE="846A4B83361319CEF74A5969274B285D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="19299E30630AB16DFAA75E8477D52103" CODE_SIGNATURE="846A4B83361319CEF74A5969274B285D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONTAINER_4INST" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZapLink Container :  To store SAP component in XML">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZapLink Container :  To store SAP component in XML">U1&amp;FUNCTIONALITY&amp;
 ASThis object represent the container (the XML file) and allow to handle
   container actions such as :
 AS,,- Loading &amp; saving
@@ -19,29 +18,34 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="DATA" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_CONTDATA_FULL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Full container data"/>
+     <ITEM LANG="E" TEXT="Full container data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+     <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="VERSION" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONTVER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Version"/>
+     <ITEM LANG="E" TEXT="Version"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -63,19 +67,19 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="ADD_COMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add SAP Comoponents to Container"/>
+     <ITEM LANG="E" TEXT="Add SAP Comoponents to Container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT_LIST" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component list"/>
+       <ITEM LANG="E" TEXT="Component list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -122,19 +126,19 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
 xmlengine = cl_ixml=&gt;create( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="COMPACT" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Compact container : remove component already included as sub"/>
+     <ITEM LANG="E" TEXT="Compact container : remove component already included as sub"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -169,29 +173,29 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CREATE_NEW" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create a new Container"/>
+     <ITEM LANG="E" TEXT="Create a new Container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_CONTDATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Full Container data"/>
+       <ITEM LANG="E" TEXT="Full Container data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File Manager"/>
+       <ITEM LANG="E" TEXT="File Manager"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CONTAINER">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPLINK Container : To store SAP component in XML"/>
+       <ITEM LANG="E" TEXT="ZAPLINK Container : To store SAP component in XML"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -207,19 +211,19 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="REMOVE_COMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Remove SAP Components from Container"/>
+     <ITEM LANG="E" TEXT="Remove SAP Components from Container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT_LIST" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component list"/>
+       <ITEM LANG="E" TEXT="Component list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -247,19 +251,19 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SAVE_TO_FILE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export container to XML"/>
+     <ITEM LANG="E" TEXT="Export container to XML"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="O_FILE" CMPTYPE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TO_FILE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File Manager"/>
+       <ITEM LANG="E" TEXT="File Manager"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -305,19 +309,19 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_ADD_COMPONENT" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add a SAP Component to the Container"/>
+     <ITEM LANG="E" TEXT="Add a SAP Component to the Container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Line object"/>
+       <ITEM LANG="E" TEXT="Line object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -424,7 +428,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_REMOVE_COMPONENT" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Remove a SAP Component from the Container"/>
+     <ITEM LANG="E" TEXT="Remove a SAP Component from the Container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT"/>
@@ -432,7 +436,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -462,12 +466,12 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_UPDATE_HEADER" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Update Header into XML Data"/>
+     <ITEM LANG="E" TEXT="Update Header into XML Data"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -499,7 +503,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
 `</ITEM>
    <ITEM CMPNAME="T_XML" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="XML data"/>
+     <ITEM LANG="E" TEXT="XML data"/>
     </TEXTS>
    </ITEM>
   </TYPES>

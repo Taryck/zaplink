@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="149AC036D957F3C1D18025DAFA0A2A94" CODE_SIGNATURE="38DE52551D92900EBC7677AA7040E29F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5BDBCFDE200805CEBC1F17F84647321B" CODE_SIGNATURE="38DE52551D92900EBC7677AA7040E29F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S">
    <INHERITANCE REFCLSNAME="ZAPLINK_CX" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAPlink Exception for Component">U1&amp;FUNCTIONALITY&amp;
 ASZAPLINK_LIST&apos;s exception class. Exception class dedicated to error
   handling of exception in ZAPLINK_LIST. Have a look to each Exception
   text for more details.
@@ -17,8 +16,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -30,22 +34,22 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="CONNCLASS" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="TD_CONNCLASS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Object Type Name"/>
+     <ITEM LANG="E" TEXT="Object Type Name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="NAME" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TD_COMPNAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Object Name"/>
+     <ITEM LANG="E" TEXT="Object Name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SEL_ACTION" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="TD_ACTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Selection Action : Export, Import, Uninstall"/>
+     <ITEM LANG="E" TEXT="Selection Action : Export, Import, Uninstall"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TYPE" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Object Type"/>
+     <ITEM LANG="E" TEXT="Object Type"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>

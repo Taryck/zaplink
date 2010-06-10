@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2BABC3F741BC6B6A55DE7AE8A68E6F5E" CODE_SIGNATURE="ED13F998258585ADA420F10906FDFCC8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3FEF085757EAB228F5B553B70F880DAC" CODE_SIGNATURE="ED13F998258585ADA420F10906FDFCC8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-LOG" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Message Collector">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Message Collector">U1&amp;FUNCTIONALITY&amp;
 ASCollect message and store them in Application Log transaction SLG1.
 U1&amp;RELATIONS&amp;
 AS
@@ -14,8 +13,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
@@ -27,72 +31,72 @@ AS</DOCUMENTATION>
     end of ACTIONS
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Activity on Logs"/>
+     <ITEM LANG="E" TEXT="Activity on Logs"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="EXT_ID" EXPOSURE="2" STATE="1" EDITORDER="5 " ATTRDONLY="X" TYPTYPE="1" TYPE="BALNREXT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: External ID"/>
+     <ITEM LANG="E" TEXT="Application Log: External ID"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MC_MAX_LEVEL" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;9&apos;" TYPTYPE="1" TYPE="N">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Maximum Level of Detail"/>
+     <ITEM LANG="E" TEXT="Maximum Level of Detail"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MC_MIN_LEVEL" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;1&apos;" TYPTYPE="1" TYPE="N">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Minimum Level of Detail"/>
+     <ITEM LANG="E" TEXT="Minimum Level of Detail"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MD_EXTNUMBER" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTRDONLY="X" TYPTYPE="1" TYPE="BALNREXT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: External ID"/>
+     <ITEM LANG="E" TEXT="Application Log: External ID"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MD_HANDLE" EXPOSURE="2" STATE="1" EDITORDER="9 " ATTRDONLY="X" TYPTYPE="1" TYPE="BALLOGHNDL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Log Handle (Internal)"/>
+     <ITEM LANG="E" TEXT="Log Handle (Internal)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MD_LEVEL" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTRDONLY="X" TYPTYPE="1" TYPE="BALLEVEL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Level of Detail for Following Messages (0..9)"/>
+     <ITEM LANG="E" TEXT="Level of Detail for Following Messages (0..9)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MD_SUP_COUNT" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="SYTABIX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Support Mode Only: Number of Messages"/>
+     <ITEM LANG="E" TEXT="Support Mode Only: Number of Messages"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MF_LOG_NOT_STORED" EXPOSURE="1" STATE="1" EDITORDER="7 " ATTVALUE="ABAP_FALSE" TYPTYPE="1" TYPE="ABAP_BOOL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Access to Unsaved Log?"/>
+     <ITEM LANG="E" TEXT="Access to Unsaved Log?"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MR_SUP_CALLSTACK" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="SYS_CALLS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Support Mode Only: Calling Position of Instantiation"/>
+     <ITEM LANG="E" TEXT="Support Mode Only: Calling Position of Instantiation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MSGID" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="SYMSGID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Default Message Class"/>
+     <ITEM LANG="E" TEXT="Default Message Class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MS_LOG" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="BAL_S_LOG">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Log Header Data"/>
+     <ITEM LANG="E" TEXT="Log Header Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MT_SUP_MSG" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="T_MSG_X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Support Mode Only: All Messages"/>
+     <ITEM LANG="E" TEXT="Support Mode Only: All Messages"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="OBJECT" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTRDONLY="X" TYPTYPE="1" TYPE="BALOBJ_D">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Object Name (Application Code)"/>
+     <ITEM LANG="E" TEXT="Application Log: Object Name (Application Code)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="PROBCL" EXPOSURE="2" STATE="1" EDITORDER="8 " ATTDECLTYP="2" TYPTYPE="4">
@@ -105,12 +109,12 @@ AS</DOCUMENTATION>
       END OF probcl
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Problem Classes"/>
+     <ITEM LANG="E" TEXT="Problem Classes"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTRDONLY="X" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -335,97 +339,97 @@ END-OF-DEFINITION.
   <METHODS>
    <ITEM CMPNAME="ADD" EXPOSURE="2" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Adds Message"/>
+     <ITEM LANG="E" TEXT="Adds Message"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ES_MESSAGE" CMPTYPE="1" EDITORDER="18 " PARDECLTYP="1" TYPTYPE="1" TYPE="BAL_S_MSG">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message data"/>
+       <ITEM LANG="E" TEXT="Message data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="13 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Level of Detail (0..9)"/>
+       <ITEM LANG="E" TEXT="Level of Detail (0..9)"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_INDEX" CMPTYPE="1" EDITORDER="16 " PARPASSTYP="1" TYPTYPE="1" TYPE="NUMERIC" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Line Index"/>
+       <ITEM LANG="E" TEXT="Line Index"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGD1" CMPTYPE="1" EDITORDER="9 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYDATUM" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="1st Message Variable as Date"/>
+       <ITEM LANG="E" TEXT="1st Message Variable as Date"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGD2" CMPTYPE="1" EDITORDER="10 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYDATUM" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="2nd Message Variable as Date"/>
+       <ITEM LANG="E" TEXT="2nd Message Variable as Date"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGD3" CMPTYPE="1" EDITORDER="11 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYDATUM" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="3rd Message Variable as Date"/>
+       <ITEM LANG="E" TEXT="3rd Message Variable as Date"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGD4" CMPTYPE="1" EDITORDER="12 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYDATUM" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="4th Message Variable as Date"/>
+       <ITEM LANG="E" TEXT="4th Message Variable as Date"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGID" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGID" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Messages: Message Class"/>
+       <ITEM LANG="E" TEXT="Messages: Message Class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGNO" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGNO" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Messages: Message Number"/>
+       <ITEM LANG="E" TEXT="Messages: Message Number"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Messages: Message Type"/>
+       <ITEM LANG="E" TEXT="Messages: Message Type"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV1" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="1st Message Variable as Text"/>
+       <ITEM LANG="E" TEXT="1st Message Variable as Text"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV2" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="2nd Message Variable as Text"/>
+       <ITEM LANG="E" TEXT="2nd Message Variable as Text"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV3" CMPTYPE="1" EDITORDER="7 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="3rd Message Variable as Text"/>
+       <ITEM LANG="E" TEXT="3rd Message Variable as Text"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV4" CMPTYPE="1" EDITORDER="8 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="4th Message Variable as Text"/>
+       <ITEM LANG="E" TEXT="4th Message Variable as Text"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="15 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Problem class"/>
+       <ITEM LANG="E" TEXT="Problem class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_SUBLOG" CMPTYPE="1" EDITORDER="17 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLOGHNDL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Link to Subordinate Log"/>
+       <ITEM LANG="E" TEXT="Link to Subordinate Log"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_CUMULATE" CMPTYPE="1" EDITORDER="14 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Cumulation of Messages"/>
+       <ITEM LANG="E" TEXT="Cumulation of Messages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IS_MESSAGE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="BAL_S_MSG" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Complete or Individual Message Data:"/>
+       <ITEM LANG="E" TEXT="Complete or Individual Message Data:"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -631,22 +635,22 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="ADD_ABEND" EXPOSURE="2" STATE="1" EDITORDER="2 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add Abend message to bal log"/>
+     <ITEM LANG="E" TEXT="Add Abend message to bal log"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="7 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Application Log: Level of detail"/>
+       <ITEM LANG="E" TEXT="Application Log: Level of detail"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGID" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGID" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Class"/>
+       <ITEM LANG="E" TEXT="Message Class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGNO" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGNO">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Number"/>
+       <ITEM LANG="E" TEXT="Message Number"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X"/>
@@ -655,7 +659,7 @@ DATA:
      <ITEM SCONAME="ID_MSGV4" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X"/>
      <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="8 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Application log: Message problem class"/>
+       <ITEM LANG="E" TEXT="Application log: Message problem class"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -693,22 +697,22 @@ DATA: _detlevel	TYPE ballevel.
    </ITEM>
    <ITEM CMPNAME="ADD_ERROR" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add errror message to bal log"/>
+     <ITEM LANG="E" TEXT="Add errror message to bal log"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="7 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Application Log: Level of detail"/>
+       <ITEM LANG="E" TEXT="Application Log: Level of detail"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGID" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGID" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Class"/>
+       <ITEM LANG="E" TEXT="Message Class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGNO" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGNO">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Number"/>
+       <ITEM LANG="E" TEXT="Message Number"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X"/>
@@ -717,7 +721,7 @@ DATA: _detlevel	TYPE ballevel.
      <ITEM SCONAME="ID_MSGV4" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X"/>
      <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="8 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Application log: Message problem class"/>
+       <ITEM LANG="E" TEXT="Application log: Message problem class"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -755,12 +759,12 @@ DATA: _detlevel	TYPE ballevel.
    </ITEM>
    <ITEM CMPNAME="ADD_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add exception to bal log"/>
+     <ITEM LANG="E" TEXT="Add exception to bal log"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="EXCEPTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CX_ROOT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Abstract Superclass for All Global Exceptions"/>
+       <ITEM LANG="E" TEXT="Abstract Superclass for All Global Exceptions"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X"/>
@@ -839,32 +843,32 @@ DATA: _detlevel	TYPE ballevel.
    </ITEM>
    <ITEM CMPNAME="ADD_FROM_BAPI" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Adds All Messages from BAPI Format"/>
+     <ITEM LANG="E" TEXT="Adds All Messages from BAPI Format"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="EF_ADD_ERROR" CMPTYPE="1" EDITORDER="4 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Error/Termination Message Was Added"/>
+       <ITEM LANG="E" TEXT="Error/Termination Message Was Added"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="EF_ADD_WARNING" CMPTYPE="1" EDITORDER="5 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Warning Message Was Added"/>
+       <ITEM LANG="E" TEXT="Warning Message Was Added"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_CUMULATE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Cumulation of Messages"/>
+       <ITEM LANG="E" TEXT="Cumulation of Messages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IS_BAPIRET" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BAPIRET2" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="BAPI Return Information"/>
+       <ITEM LANG="E" TEXT="BAPI Return Information"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IT_BAPIRET" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="BAPIRETTAB" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table Containing BAPI Return Information"/>
+       <ITEM LANG="E" TEXT="Table Containing BAPI Return Information"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -927,22 +931,22 @@ FIELD-SYMBOLS:
    </ITEM>
    <ITEM CMPNAME="ADD_FROM_INSTANCE" EXPOSURE="2" STATE="1" EDITORDER="6 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Inserts All Messages of Another Log"/>
+     <ITEM LANG="E" TEXT="Inserts All Messages of Another Log"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="IF_ADD_AS_SUBNODE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Insert after Detail Level = md_level + 1"/>
+       <ITEM LANG="E" TEXT="Insert after Detail Level = md_level + 1"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_CUMULATE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Cumulation of Messages"/>
+       <ITEM LANG="E" TEXT="Cumulation of Messages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IO_MSGLIST" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Other Message Collector"/>
+       <ITEM LANG="E" TEXT="Other Message Collector"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1018,22 +1022,22 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="ADD_INFO" EXPOSURE="2" STATE="1" EDITORDER="7 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add info message to bal log"/>
+     <ITEM LANG="E" TEXT="Add info message to bal log"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="7 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Application Log: Level of detail"/>
+       <ITEM LANG="E" TEXT="Application Log: Level of detail"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGID" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGID" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Class"/>
+       <ITEM LANG="E" TEXT="Message Class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGNO" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGNO">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Number"/>
+       <ITEM LANG="E" TEXT="Message Number"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X"/>
@@ -1042,7 +1046,7 @@ DATA:
      <ITEM SCONAME="ID_MSGV4" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X"/>
      <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="8 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Application log: Message problem class"/>
+       <ITEM LANG="E" TEXT="Application log: Message problem class"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1080,22 +1084,22 @@ DATA: _detlevel	TYPE ballevel.
    </ITEM>
    <ITEM CMPNAME="ADD_SUCCESS" EXPOSURE="2" STATE="1" EDITORDER="8 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add Success message to bal log"/>
+     <ITEM LANG="E" TEXT="Add Success message to bal log"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="7 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Application Log: Level of detail"/>
+       <ITEM LANG="E" TEXT="Application Log: Level of detail"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGID" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGID" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Class"/>
+       <ITEM LANG="E" TEXT="Message Class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGNO" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGNO">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Number"/>
+       <ITEM LANG="E" TEXT="Message Number"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X"/>
@@ -1104,7 +1108,7 @@ DATA: _detlevel	TYPE ballevel.
      <ITEM SCONAME="ID_MSGV4" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X"/>
      <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="8 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Application log: Message problem class"/>
+       <ITEM LANG="E" TEXT="Application log: Message problem class"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1142,37 +1146,37 @@ DATA: _detlevel	TYPE ballevel.
    </ITEM>
    <ITEM CMPNAME="ADD_SYMSG" EXPOSURE="2" STATE="1" EDITORDER="9 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Adds Message from SY-MSG* Variables"/>
+     <ITEM LANG="E" TEXT="Adds Message from SY-MSG* Variables"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ES_MESSAGE" CMPTYPE="1" EDITORDER="6 " PARDECLTYP="1" TYPTYPE="1" TYPE="BAL_S_MSG">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message data"/>
+       <ITEM LANG="E" TEXT="Message data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Level of Detail (0..9)"/>
+       <ITEM LANG="E" TEXT="Level of Detail (0..9)"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_INDEX" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="1" TYPE="NUMERIC" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Line Index"/>
+       <ITEM LANG="E" TEXT="Line Index"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="SY-MSGTY" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Type"/>
+       <ITEM LANG="E" TEXT="Message Type"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Problem class"/>
+       <ITEM LANG="E" TEXT="Problem class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_CUMULATE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Cumulation of Messages"/>
+       <ITEM LANG="E" TEXT="Cumulation of Messages"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1217,22 +1221,22 @@ DATA: _detlevel	TYPE ballevel.
    </ITEM>
    <ITEM CMPNAME="ADD_WARNING" EXPOSURE="2" STATE="1" EDITORDER="10 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add Warning message to bal log"/>
+     <ITEM LANG="E" TEXT="Add Warning message to bal log"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="7 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Application Log: Level of detail"/>
+       <ITEM LANG="E" TEXT="Application Log: Level of detail"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGID" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGID" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Class"/>
+       <ITEM LANG="E" TEXT="Message Class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGNO" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGNO">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Number"/>
+       <ITEM LANG="E" TEXT="Message Number"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV1" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X"/>
@@ -1241,7 +1245,7 @@ DATA: _detlevel	TYPE ballevel.
      <ITEM SCONAME="ID_MSGV4" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X"/>
      <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="8 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Application log: Message problem class"/>
+       <ITEM LANG="E" TEXT="Application log: Message problem class"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1279,17 +1283,17 @@ DATA: _detlevel	TYPE ballevel.
    </ITEM>
    <ITEM CMPNAME="AS_CHAR" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Converts Date into CHAR Field"/>
+     <ITEM LANG="E" TEXT="Converts Date into CHAR Field"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_DATE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYDATUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Date"/>
+       <ITEM LANG="E" TEXT="Date"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RD_DATE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="CHAR10">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Date in display format"/>
+       <ITEM LANG="E" TEXT="Date in display format"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1309,22 +1313,22 @@ DATA: _detlevel	TYPE ballevel.
    </ITEM>
    <ITEM CMPNAME="CHANGE_MSG_TYPE" EXPOSURE="2" STATE="1" EDITORDER="12 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Changes Type of Message, e.g. from E to W"/>
+     <ITEM LANG="E" TEXT="Changes Type of Message, e.g. from E to W"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_MSGTY_SRC" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Chanage Message Type from ... (&apos; &apos; = All)"/>
+       <ITEM LANG="E" TEXT="Chanage Message Type from ... (&apos; &apos; = All)"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGTY_TRG" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Change Message Type to ..."/>
+       <ITEM LANG="E" TEXT="Change Message Type to ..."/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RD_CHANGED" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="I">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Number of Changed Messages"/>
+       <ITEM LANG="E" TEXT="Number of Changed Messages"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1403,24 +1407,24 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="CHECK_CUSTO" EXPOSURE="2" STATE="1" EDITORDER="13 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Auto create custo entries"/>
+     <ITEM LANG="E" TEXT="Auto create custo entries"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALOBJ_D">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="See Table BALOBJ"/>
+       <ITEM LANG="E" TEXT="See Table BALOBJ"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_SUBOBJECT" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALSUBOBJ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="See Table BALSUB"/>
+       <ITEM LANG="E" TEXT="See Table BALSUB"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ERROR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Error"/>
+       <ITEM LANG="E" TEXT="Error"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1518,7 +1522,7 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="CLEAR" EXPOSURE="2" STATE="1" EDITORDER="14 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Deletes All Collected Messages"/>
+     <ITEM LANG="E" TEXT="Deletes All Collected Messages"/>
     </TEXTS>
     <SOURCE>`
 * BODY
@@ -1539,17 +1543,17 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="CONVERT_DATE_TO_STRING" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Converts the Date into a String (Text Field)"/>
+     <ITEM LANG="E" TEXT="Converts the Date into a String (Text Field)"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ED_DATE_STRING" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="CSEQUENCE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Date as a String (10 Characters!)"/>
+       <ITEM LANG="E" TEXT="Date as a String (10 Characters!)"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_DATE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYDATUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Date"/>
+       <ITEM LANG="E" TEXT="Date"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1577,12 +1581,12 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="COUNT" EXPOSURE="2" STATE="1" EDITORDER="16 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Gets Number of Messages"/>
+     <ITEM LANG="E" TEXT="Gets Number of Messages"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RD_COUNT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="I">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Number of Messages"/>
+       <ITEM LANG="E" TEXT="Number of Messages"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1612,19 +1616,19 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="DELETE_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="17 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Deletes Individual Message"/>
+     <ITEM LANG="E" TEXT="Deletes Individual Message"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_MSGNUMBER" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALMNR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Internal Sequential Number of the Message"/>
+       <ITEM LANG="E" TEXT="Internal Sequential Number of the Message"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="NOT_FOUND" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message not found"/>
+       <ITEM LANG="E" TEXT="Message not found"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1652,7 +1656,7 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="FREE" EXPOSURE="2" STATE="1" EDITORDER="18 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Releases Resources of Instance"/>
+     <ITEM LANG="E" TEXT="Releases Resources of Instance"/>
     </TEXTS>
     <SOURCE>`
 * BODY
@@ -1670,29 +1674,29 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="GET_FIRST_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="19 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Supplies First Message"/>
+     <ITEM LANG="E" TEXT="Supplies First Message"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ES_MESSAGE" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="BAL_S_MSG">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="First Message"/>
+       <ITEM LANG="E" TEXT="First Message"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Type: Allowed I, W, E, A"/>
+       <ITEM LANG="E" TEXT="Message Type: Allowed I, W, E, A"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Consider More Critical Message Types Also?"/>
+       <ITEM LANG="E" TEXT="Consider More Critical Message Types Also?"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="NOT_FOUND" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="No notifications found"/>
+       <ITEM LANG="E" TEXT="No notifications found"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1757,12 +1761,12 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="GET_HANDLE" EXPOSURE="2" STATE="1" EDITORDER="20 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Supplies Internal Log Handle"/>
+     <ITEM LANG="E" TEXT="Supplies Internal Log Handle"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RD_HANDLE" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="BALLOGHNDL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Log Handle (Internal)"/>
+       <ITEM LANG="E" TEXT="Log Handle (Internal)"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1771,29 +1775,29 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="GET_LAST_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="21 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Supplies Last Message"/>
+     <ITEM LANG="E" TEXT="Supplies Last Message"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ES_MESSAGE" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="BAL_S_MSG">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Last message"/>
+       <ITEM LANG="E" TEXT="Last message"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Type: Allowed I, W, E, A"/>
+       <ITEM LANG="E" TEXT="Message Type: Allowed I, W, E, A"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Consider More Critical Message Types Also?"/>
+       <ITEM LANG="E" TEXT="Consider More Critical Message Types Also?"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="NOT_FOUND" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="No notifications found"/>
+       <ITEM LANG="E" TEXT="No notifications found"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1860,12 +1864,12 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="GET_LIST" EXPOSURE="2" STATE="1" EDITORDER="22 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Supplies All Collected Messages"/>
+     <ITEM LANG="E" TEXT="Supplies All Collected Messages"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ET_LIST" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="T_MSG">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="List of  Collected Messages"/>
+       <ITEM LANG="E" TEXT="List of  Collected Messages"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1890,12 +1894,12 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="GET_LIST_AS_BAPIRET" EXPOSURE="2" STATE="1" EDITORDER="23 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Supplies All Collected Messages as a BAPI Error"/>
+     <ITEM LANG="E" TEXT="Supplies All Collected Messages as a BAPI Error"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ET_LIST" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="BAPIRETTAB">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="List of Messages as BAPI Error Information"/>
+       <ITEM LANG="E" TEXT="List of Messages as BAPI Error Information"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1970,17 +1974,17 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="GET_LIST_X" EXPOSURE="1" STATE="1" EDITORDER="24 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Supplies All Collected Messages with Additional Techn.Fields"/>
+     <ITEM LANG="E" TEXT="Supplies All Collected Messages with Additional Techn.Fields"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ET_LIST_X" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="T_MSG_X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="List of  Collected Messages"/>
+       <ITEM LANG="E" TEXT="List of  Collected Messages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Type: Allowed I, W, E, A"/>
+       <ITEM LANG="E" TEXT="Message Type: Allowed I, W, E, A"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -2051,22 +2055,22 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="GET_MSG_FILTER" EXPOSURE="1" STATE="1" EDITORDER="25 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Supplies Filter Settings for Selecting Messages"/>
+     <ITEM LANG="E" TEXT="Supplies Filter Settings for Selecting Messages"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ES_MSG_FILTER" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="BAL_S_MFIL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Filter Criteria for Messages"/>
+       <ITEM LANG="E" TEXT="Filter Criteria for Messages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" EDITORDER="1 " TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Notification category"/>
+       <ITEM LANG="E" TEXT="Notification category"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" EDITORDER="2 " TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Consider More Critical Message Types Also?"/>
+       <ITEM LANG="E" TEXT="Consider More Critical Message Types Also?"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -2131,17 +2135,17 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="GET_REF_TYPE" EXPOSURE="2" STATE="1" EDITORDER="26 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="For Ref data (like object) type get target type"/>
+     <ITEM LANG="E" TEXT="For Ref data (like object) type get target type"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="REF_TYPE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TYPEDESC" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CL_ABAP_TYPEDESCR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Runtime Type Services"/>
+       <ITEM LANG="E" TEXT="Runtime Type Services"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -2157,12 +2161,12 @@ DATA o_ref      TYPE REF TO cl_abap_refdescr.
    </ITEM>
    <ITEM CMPNAME="GET_STATISTICS" EXPOSURE="2" STATE="1" EDITORDER="27 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Supplies Summary of Number of Messages, etc."/>
+     <ITEM LANG="E" TEXT="Supplies Summary of Number of Messages, etc."/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RS_STATISTICS" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="BAL_S_SCNT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Statistics: Message Type Counter"/>
+       <ITEM LANG="E" TEXT="Statistics: Message Type Counter"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -2181,32 +2185,32 @@ DATA o_ref      TYPE REF TO cl_abap_refdescr.
    </ITEM>
    <ITEM CMPNAME="GET_STATISTICS_AS_TEXT" EXPOSURE="2" STATE="1" EDITORDER="28 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Gets Summary as Text Using Message Number"/>
+     <ITEM LANG="E" TEXT="Gets Summary as Text Using Message Number"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ED_TEXT" CMPTYPE="1" EDITORDER="5 " PARDECLTYP="1" TYPTYPE="1" TYPE="CSEQUENCE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Summary of the Number of Errors"/>
+       <ITEM LANG="E" TEXT="Summary of the Number of Errors"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_OUTPUT_E_MESSAGES" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Output Number of Termination and Error Messages"/>
+       <ITEM LANG="E" TEXT="Output Number of Termination and Error Messages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_OUTPUT_HIGHEST_ONLY" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Output Only Number of Highest Message Type"/>
+       <ITEM LANG="E" TEXT="Output Only Number of Highest Message Type"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_OUTPUT_I_MESSAGES" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Output Number of Information and Status Messages"/>
+       <ITEM LANG="E" TEXT="Output Number of Information and Status Messages"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_OUTPUT_W_MESSAGES" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Output Number of Warning Messages"/>
+       <ITEM LANG="E" TEXT="Output Number of Warning Messages"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -2293,22 +2297,22 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="HAS_MESSAGES_OF_MSGT" EXPOSURE="2" STATE="1" EDITORDER="29 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Are There Messages of a Given Type (I; W; E; A)?"/>
+     <ITEM LANG="E" TEXT="Are There Messages of a Given Type (I; W; E; A)?"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Type: Allowed I, W, E, A"/>
+       <ITEM LANG="E" TEXT="Message Type: Allowed I, W, E, A"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Consider More Critical Message Types Also?"/>
+       <ITEM LANG="E" TEXT="Consider More Critical Message Types Also?"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RF_EXISTS" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Does Message Exist?"/>
+       <ITEM LANG="E" TEXT="Does Message Exist?"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -2369,39 +2373,39 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="INIT" EXPOSURE="2" STATE="1" EDITORDER="30 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="&lt;Only For Factory Methods&gt;"/>
+     <ITEM LANG="E" TEXT="&lt;Only For Factory Methods&gt;"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="AUTO_UPD_CUSTO" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="FLAG" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Auto Update customizing tables"/>
+       <ITEM LANG="E" TEXT="Auto Update customizing tables"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_ACTIVITY" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="1" TYPE="BU_AKTYP" PARVALUE="ACTIONS-CREATE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Activity (Change/Display Not Differentiated)"/>
+       <ITEM LANG="E" TEXT="Activity (Change/Display Not Differentiated)"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_EXTNUMBER" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALNREXT" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="External ID of Log"/>
+       <ITEM LANG="E" TEXT="External ID of Log"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALOBJ_D">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="See Table BALOBJ"/>
+       <ITEM LANG="E" TEXT="See Table BALOBJ"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_SUBOBJECT" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALSUBOBJ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="See Table BALSUB"/>
+       <ITEM LANG="E" TEXT="See Table BALSUB"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ERROR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Error"/>
+       <ITEM LANG="E" TEXT="Error"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -2524,19 +2528,19 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="INIT_BY_HANDLE" EXPOSURE="2" STATE="1" EDITORDER="31 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="&lt;Only For Factory Methods&gt;"/>
+     <ITEM LANG="E" TEXT="&lt;Only For Factory Methods&gt;"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_HANDLE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLOGHNDL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Log Handle (Internal)"/>
+       <ITEM LANG="E" TEXT="Log Handle (Internal)"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ERROR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Error"/>
+       <ITEM LANG="E" TEXT="Error"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -2587,97 +2591,97 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="INSERT" EXPOSURE="2" STATE="1" EDITORDER="32 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Inserts Message at a Given Position"/>
+     <ITEM LANG="E" TEXT="Inserts Message at a Given Position"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ES_MESSAGE" CMPTYPE="1" EDITORDER="18 " PARDECLTYP="1" TYPTYPE="1" TYPE="BAL_S_MSG">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message data"/>
+       <ITEM LANG="E" TEXT="Message data"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="15 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Level of Detail (0..9)"/>
+       <ITEM LANG="E" TEXT="Level of Detail (0..9)"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_INDEX" CMPTYPE="1" EDITORDER="17 " PARPASSTYP="1" TYPTYPE="1" TYPE="NUMERIC" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Line Index"/>
+       <ITEM LANG="E" TEXT="Line Index"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_INSERT_INDEX" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="I">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Position Where Message Inserted"/>
+       <ITEM LANG="E" TEXT="Position Where Message Inserted"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGD1" CMPTYPE="1" EDITORDER="11 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYDATUM" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="1st Message Variable as Date"/>
+       <ITEM LANG="E" TEXT="1st Message Variable as Date"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGD2" CMPTYPE="1" EDITORDER="12 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYDATUM" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="2nd Message Variable as Date"/>
+       <ITEM LANG="E" TEXT="2nd Message Variable as Date"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGD3" CMPTYPE="1" EDITORDER="13 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYDATUM" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="3rd Message Variable as Date"/>
+       <ITEM LANG="E" TEXT="3rd Message Variable as Date"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGD4" CMPTYPE="1" EDITORDER="14 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYDATUM" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="4th Message Variable as Date"/>
+       <ITEM LANG="E" TEXT="4th Message Variable as Date"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGID" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGID" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Messages: Message Class"/>
+       <ITEM LANG="E" TEXT="Messages: Message Class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGNO" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGNO" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Messages: Message Number"/>
+       <ITEM LANG="E" TEXT="Messages: Message Number"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Messages: Message Type"/>
+       <ITEM LANG="E" TEXT="Messages: Message Type"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV1" CMPTYPE="1" EDITORDER="7 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="1st Message Variable as Text"/>
+       <ITEM LANG="E" TEXT="1st Message Variable as Text"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV2" CMPTYPE="1" EDITORDER="8 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="2nd Message Variable as Text"/>
+       <ITEM LANG="E" TEXT="2nd Message Variable as Text"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV3" CMPTYPE="1" EDITORDER="9 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="3rd Message Variable as Text"/>
+       <ITEM LANG="E" TEXT="3rd Message Variable as Text"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_MSGV4" CMPTYPE="1" EDITORDER="10 " PARPASSTYP="1" TYPTYPE="1" TYPE="CLIKE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="4th Message Variable as Text"/>
+       <ITEM LANG="E" TEXT="4th Message Variable as Text"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="16 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Problem class"/>
+       <ITEM LANG="E" TEXT="Problem class"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_SET_FOLLOWING_AS_SUBNODE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Changes Detail Level (+1) of Existing, Following Message"/>
+       <ITEM LANG="E" TEXT="Changes Detail Level (+1) of Existing, Following Message"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IS_MESSAGE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="BAL_S_MSG" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Complete or Individual Message Data:"/>
+       <ITEM LANG="E" TEXT="Complete or Individual Message Data:"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -2823,17 +2827,17 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="IS_DATE_INITIAL" EXPOSURE="2" STATE="1" EDITORDER="33 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT='Bool: Date = &quot;Initial&quot;'/>
+     <ITEM LANG="E" TEXT='Bool: Date = &quot;Initial&quot;'/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_DATE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SY-DATUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Date"/>
+       <ITEM LANG="E" TEXT="Date"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RF_INITIAL" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Bool: Initial"/>
+       <ITEM LANG="E" TEXT="Bool: Initial"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -2853,12 +2857,12 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="IS_EMPTY" EXPOSURE="2" STATE="1" EDITORDER="34 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Is the List of Collected Messages Empty?"/>
+     <ITEM LANG="E" TEXT="Is the List of Collected Messages Empty?"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RF_EMPTY" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Is List Empty?"/>
+       <ITEM LANG="E" TEXT="Is List Empty?"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -2883,12 +2887,12 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="NEW" EXPOSURE="2" STATE="1" EDITORDER="35 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create new instance"/>
+     <ITEM LANG="E" TEXT="Create new instance"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJ" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Collector: Standard Implementation"/>
+       <ITEM LANG="E" TEXT="Message Collector: Standard Implementation"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -2897,24 +2901,24 @@ CREATE OBJECT obj.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="RAISE_FIRST_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="36 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Gets First Message as Exception"/>
+     <ITEM LANG="E" TEXT="Gets First Message as Exception"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;E&apos;" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Message Type: Allowed I, W, E, A"/>
+       <ITEM LANG="E" TEXT="Message Type: Allowed I, W, E, A"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Consider More Critical Message Types Also?"/>
+       <ITEM LANG="E" TEXT="Consider More Critical Message Types Also?"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="FIRST_MESSAGE" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="E-Message Found, Data in SY Variables"/>
+       <ITEM LANG="E" TEXT="E-Message Found, Data in SY Variables"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -2940,12 +2944,12 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="RAISE_ON_ERROR" EXPOSURE="2" STATE="1" EDITORDER="37 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Raise exception when error in BAL Log"/>
+     <ITEM LANG="E" TEXT="Raise exception when error in BAL Log"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -2974,17 +2978,17 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="SET_DETAIL_LEVEL" EXPOSURE="2" STATE="1" EDITORDER="38 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Changes Level of Detail for Following Messages"/>
+     <ITEM LANG="E" TEXT="Changes Level of Detail for Following Messages"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_ABSOLUTE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Level of Detail (0..4)"/>
+       <ITEM LANG="E" TEXT="Level of Detail (0..4)"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_RELATIVE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="INT4" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Increase/Decrease"/>
+       <ITEM LANG="E" TEXT="Increase/Decrease"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -3029,12 +3033,12 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="SET_EXTNUMBER" EXPOSURE="2" STATE="1" EDITORDER="39 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Changes External Identification of Log"/>
+     <ITEM LANG="E" TEXT="Changes External Identification of Log"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ID_EXTNUMBER" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALNREXT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="External ID of Log"/>
+       <ITEM LANG="E" TEXT="External ID of Log"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -3067,19 +3071,19 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="STORE" EXPOSURE="2" STATE="1" EDITORDER="40 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Saves Log with Collected Messages"/>
+     <ITEM LANG="E" TEXT="Saves Log with Collected Messages"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="IF_IN_UPDATE_TASK" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT='Call update program using &quot;IN UPDATE TASK&quot;'/>
+       <ITEM LANG="E" TEXT='Call update program using &quot;IN UPDATE TASK&quot;'/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ERROR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Error when saving"/>
+       <ITEM LANG="E" TEXT="Error when saving"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -3109,7 +3113,7 @@ DATA:
    </ITEM>
    <ITEM CMPNAME="WRITE" EXPOSURE="2" STATE="1" EDITORDER="41 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Write message to screen"/>
+     <ITEM LANG="E" TEXT="Write message to screen"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="_OFFSET" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
@@ -3142,12 +3146,12 @@ DATA lt_messages  TYPE t_msg_x.
    </ITEM>
    <ITEM CMPNAME="_ADD_ZL_CX" EXPOSURE="1" STATE="1" EDITORDER="42 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add Zaplink exception to bal log"/>
+     <ITEM LANG="E" TEXT="Add Zaplink exception to bal log"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="EXCEPTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Abstract Superclass for All Global Exceptions"/>
+       <ITEM LANG="E" TEXT="Abstract Superclass for All Global Exceptions"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X"/>
@@ -3278,20 +3282,20 @@ TYPES:
     msgnumber	TYPE balmnr,
   END OF msg_x
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Msg with tech data"/>
+     <ITEM LANG="E" TEXT="Msg with tech data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="T_MSG" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">
     t_msg TYPE STANDARD TABLE OF bal_s_msg WITH NON-UNIQUE DEFAULT KEY
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Msg list"/>
+     <ITEM LANG="E" TEXT="Msg list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="T_MSG_X" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
     t_msg_x TYPE STANDARD TABLE OF msg_x WITH NON-UNIQUE DEFAULT KEY
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Msg list with tech data"/>
+     <ITEM LANG="E" TEXT="Msg list with tech data"/>
     </TEXTS>
    </ITEM>
   </TYPES>

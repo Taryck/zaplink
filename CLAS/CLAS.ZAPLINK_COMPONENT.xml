@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A7FCF2B86C73C7C3991F5FA705EDB599" CODE_SIGNATURE="E79687CFE6728B0E657703E56201AE9C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E7340A36479B45982F7F50F95FD81894" CODE_SIGNATURE="E79687CFE6728B0E657703E56201AE9C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Zap Link Component">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Zap Link Component">U1&amp;FUNCTIONALITY&amp;
 ASThis object is the concept of &quot;ABAP Component&quot; which is used to identify
   and component either for individual actions or in a list (ZAPLINK_LIST).
 U1&amp;RELATIONS&amp;
@@ -17,8 +16,13 @@ ASYou can&apos;t access directly to object attributes, you have to use &quot;Get
   and &quot;Setter&quot; like in Java Frameworks. This allow to protect attributes
   from changes.
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -50,103 +54,103 @@ AS</DOCUMENTATION>
         END OF connexists
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Exists constants"/>
+     <ITEM LANG="E" TEXT="Connector Exists constants"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="LOCAL_DEVCLASS" EXPOSURE="1" STATE="1" EDITORDER="9 " ATTDECLTYP="2" ATTVALUE="&apos;$LOCAL$&apos;" TYPTYPE="1" TYPE="TD_DEVCLASS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Devclass for Local class"/>
+     <ITEM LANG="E" TEXT="Devclass for Local class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="NAME" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TD_COMPNAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Object Name"/>
+     <ITEM LANG="E" TEXT="Object Name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TYPE" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Object Type"/>
+     <ITEM LANG="E" TEXT="Object Type"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="WITH_SUBCOMP" EXPOSURE="1" STATE="1" EDITORDER="11 " ATTVALUE="ABAP_TRUE" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Also do Sub Component"/>
+     <ITEM LANG="E" TEXT="Also do Sub Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_ACTION" EXPOSURE="1" STATE="1" EDITORDER="14 " TYPTYPE="1" TYPE="TD_ACTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Action for the component"/>
+     <ITEM LANG="E" TEXT="Action for the component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_CHECKSUM" EXPOSURE="1" STATE="1" EDITORDER="12 " TYPTYPE="1" TYPE="TD_CHECKSUM">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Checksum of the whole component"/>
+     <ITEM LANG="E" TEXT="Checksum of the whole component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_CLASSES" EXPOSURE="1" STATE="1" EDITORDER="7 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_CLASSES">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Classe list"/>
+     <ITEM LANG="E" TEXT="Classe list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_CODE_SIGNATURE" EXPOSURE="1" STATE="1" EDITORDER="13 " TYPTYPE="1" TYPE="TD_CHECKSUM">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Checksum of the source code only (if applies)"/>
+     <ITEM LANG="E" TEXT="Checksum of the source code only (if applies)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TS_CONNDATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Info"/>
+     <ITEM LANG="E" TEXT="Connector Info"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_DATA" EXPOSURE="1" STATE="1" EDITORDER="15 " TYPTYPE="1" TYPE="TD_COMPADD_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Additional Data to store"/>
+     <ITEM LANG="E" TEXT="Additional Data to store"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_DEVCLASS" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TD_DEVCLASS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Devlopment class"/>
+     <ITEM LANG="E" TEXT="Devlopment class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TO_CONN_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_EXISTS" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TD_COMPEXISTS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component exists in SAP"/>
+     <ITEM LANG="E" TEXT="Component exists in SAP"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_KIND" EXPOSURE="1" STATE="1" EDITORDER="18 " TYPTYPE="1" TYPE="TD_TRANSPORT_KIND"/>
    <ITEM CMPNAME="_MSG_COLL" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TO_MSG_COLL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector"/>
+     <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="16 " TYPTYPE="3" TYPE="OBJECT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Additional information as object"/>
+     <ITEM LANG="E" TEXT="Additional information as object"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_SRCSYSTEM" EXPOSURE="1" STATE="1" EDITORDER="17 " TYPTYPE="1" TYPE="TD_SRCSYSTEM">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Source System"/>
+     <ITEM LANG="E" TEXT="Source System"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_SUBCOMPONENTS" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="TO_LIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+     <ITEM LANG="E" TEXT="ZapLink Components list"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -174,12 +178,12 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CLONE" EXPOSURE="2" STATE="1" EDITORDER="25 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Clone Component"/>
+     <ITEM LANG="E" TEXT="Clone Component"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -189,19 +193,19 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector : Getter"/>
+     <ITEM LANG="E" TEXT="Connector : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_CONNECTOR">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAP Link Connector interface"/>
+       <ITEM LANG="E" TEXT="ZAP Link Connector interface"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -210,19 +214,19 @@ result = _connector-o_conn.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONNECTOR_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Exists : Getter"/>
+     <ITEM LANG="E" TEXT="Connector Exists : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_CONNEXISTS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Connector exists (&apos;X&apos;) or not (&apos; &apos;)"/>
+       <ITEM LANG="E" TEXT="Connector exists (&apos;X&apos;) or not (&apos; &apos;)"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -231,24 +235,24 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CREATE_NEW" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create new component from key"/>
+     <ITEM LANG="E" TEXT="Create new component from key"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="KEY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_COMPKEY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Key (unique)"/>
+       <ITEM LANG="E" TEXT="Component Key (unique)"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -263,7 +267,7 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="DO_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component Exists : Getter"/>
+     <ITEM LANG="E" TEXT="Component Exists : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPEXISTS"/>
@@ -271,7 +275,7 @@ result = _connector-exists.</SOURCE>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -280,12 +284,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_ACTION" EXPOSURE="2" STATE="1" EDITORDER="27 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Action : Getter"/>
+     <ITEM LANG="E" TEXT="Action : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ACTION">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+       <ITEM LANG="E" TEXT="Component Checksum"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -294,12 +298,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_ADD_DATA" EXPOSURE="2" STATE="1" EDITORDER="29 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Additional Data : Getter"/>
+     <ITEM LANG="E" TEXT="Additional Data : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPADD_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+       <ITEM LANG="E" TEXT="Component Checksum"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -308,12 +312,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="31 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Additional Object : Getter"/>
+     <ITEM LANG="E" TEXT="Additional Object : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="3" TYPE="OBJECT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+       <ITEM LANG="E" TEXT="Component Checksum"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -322,12 +326,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="21 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Checksum : Getter"/>
+     <ITEM LANG="E" TEXT="Checksum : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_CHECKSUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+       <ITEM LANG="E" TEXT="Component Checksum"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -336,12 +340,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="23 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Code Signature : Getter"/>
+     <ITEM LANG="E" TEXT="Code Signature : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_CHECKSUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+       <ITEM LANG="E" TEXT="Component Checksum"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -350,19 +354,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_CONNUUID" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector UUID : Getter"/>
+     <ITEM LANG="E" TEXT="Connector UUID : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_CONNUUID">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Connector UUID"/>
+       <ITEM LANG="E" TEXT="Connector UUID"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -371,19 +375,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="DevClass : Getter"/>
+     <ITEM LANG="E" TEXT="DevClass : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_DEVCLASS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Devlopment class"/>
+       <ITEM LANG="E" TEXT="Devlopment class"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -392,19 +396,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Exception : Getter"/>
+     <ITEM LANG="E" TEXT="Exception : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -413,19 +417,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_KEY" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Key : Getter"/>
+     <ITEM LANG="E" TEXT="Key : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Key (unique)"/>
+       <ITEM LANG="E" TEXT="Component Key (unique)"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -439,19 +443,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector : Getter"/>
+     <ITEM LANG="E" TEXT="Message Collector : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_MSG_COLL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Type"/>
+       <ITEM LANG="E" TEXT="Object Type"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -460,19 +464,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_NAME" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Name : Getter"/>
+     <ITEM LANG="E" TEXT="Name : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPNAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Name"/>
+       <ITEM LANG="E" TEXT="Object Name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -481,19 +485,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_SRC_SYS" EXPOSURE="2" STATE="1" EDITORDER="33 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Source System : Getter"/>
+     <ITEM LANG="E" TEXT="Source System : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SRCSYSTEM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Source System"/>
+       <ITEM LANG="E" TEXT="Source System"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -502,19 +506,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_SUBCOMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Sub-Components list : Getter"/>
+     <ITEM LANG="E" TEXT="Sub-Components list : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Type"/>
+       <ITEM LANG="E" TEXT="Object Type"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -523,19 +527,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_TYPE" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Type : Getter"/>
+     <ITEM LANG="E" TEXT="Type : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPTYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Type"/>
+       <ITEM LANG="E" TEXT="Object Type"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -544,19 +548,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_TYPEKIND" EXPOSURE="2" STATE="1" EDITORDER="35 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport Kind of Type : Getter"/>
+     <ITEM LANG="E" TEXT="Transport Kind of Type : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_TRANSPORT_KIND">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Transport kind"/>
+       <ITEM LANG="E" TEXT="Transport kind"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -565,19 +569,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="With Sub Component : Getter"/>
+     <ITEM LANG="E" TEXT="With Sub Component : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="With subComp Flag"/>
+       <ITEM LANG="E" TEXT="With subComp Flag"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -586,19 +590,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ON_CHANGE_CLEAR" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Type or Name change : clear attr"/>
+     <ITEM LANG="E" TEXT="Type or Name change : clear attr"/>
     </TEXTS>
     <SOURCE>`
   CLEAR: _exists, _connector-uuid, _code_signature, _checksum.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ON_CHANGE_UPDATE" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Type or Name change : update attr"/>
+     <ITEM LANG="E" TEXT="Type or Name change : update attr"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -624,12 +628,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="REFRESH" EXPOSURE="2" STATE="1" EDITORDER="26 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Refresh component informations"/>
+     <ITEM LANG="E" TEXT="Refresh component informations"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -642,12 +646,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_ACTION" EXPOSURE="2" STATE="1" EDITORDER="28 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Action : Setter"/>
+     <ITEM LANG="E" TEXT="Action : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ACTION">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+       <ITEM LANG="E" TEXT="Component Checksum"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -656,12 +660,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_ADD_DATA" EXPOSURE="2" STATE="1" EDITORDER="30 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Additional Data : Setter"/>
+     <ITEM LANG="E" TEXT="Additional Data : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPADD_DATA">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+       <ITEM LANG="E" TEXT="Component Checksum"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -670,12 +674,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="32 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Additional Object : Setter"/>
+     <ITEM LANG="E" TEXT="Additional Object : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="OBJECT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+       <ITEM LANG="E" TEXT="Component Checksum"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -684,12 +688,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="22 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Checksum : Setter"/>
+     <ITEM LANG="E" TEXT="Checksum : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CHECKSUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+       <ITEM LANG="E" TEXT="Component Checksum"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -698,12 +702,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="24 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Code Signature : Settter"/>
+     <ITEM LANG="E" TEXT="Code Signature : Settter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CHECKSUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Checksum"/>
+       <ITEM LANG="E" TEXT="Component Checksum"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -712,19 +716,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_CONNUUID" EXPOSURE="2" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector UUID : Setter"/>
+     <ITEM LANG="E" TEXT="Connector UUID : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CONNUUID">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Connector UUID"/>
+       <ITEM LANG="E" TEXT="Connector UUID"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -754,19 +758,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="DevClass : Setter"/>
+     <ITEM LANG="E" TEXT="DevClass : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_DEVCLASS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Devlopment class"/>
+       <ITEM LANG="E" TEXT="Devlopment class"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -776,19 +780,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Exception : Setter"/>
+     <ITEM LANG="E" TEXT="Exception : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -817,19 +821,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector : Setter"/>
+     <ITEM LANG="E" TEXT="Message Collector : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_MSG_COLL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Type"/>
+       <ITEM LANG="E" TEXT="Object Type"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -858,19 +862,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_NAME" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Name : Setter"/>
+     <ITEM LANG="E" TEXT="Name : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ANY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Name"/>
+       <ITEM LANG="E" TEXT="Object Name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -882,12 +886,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_SRC_SYS" EXPOSURE="2" STATE="1" EDITORDER="34 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Source System: Setter"/>
+     <ITEM LANG="E" TEXT="Source System: Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SRCSYSTEM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Source System"/>
+       <ITEM LANG="E" TEXT="Source System"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -896,19 +900,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_SUBCOMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="20 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Sub-Components list : Setter"/>
+     <ITEM LANG="E" TEXT="Sub-Components list : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Type"/>
+       <ITEM LANG="E" TEXT="Object Type"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -937,19 +941,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_TYPE" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Type : Setter"/>
+     <ITEM LANG="E" TEXT="Type : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object Type"/>
+       <ITEM LANG="E" TEXT="Object Type"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -978,19 +982,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="With Sub Component : Setter"/>
+     <ITEM LANG="E" TEXT="With Sub Component : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="With sub Comp Flag"/>
+       <ITEM LANG="E" TEXT="With sub Comp Flag"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1000,12 +1004,12 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_GET_KEY" EXPOSURE="1" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Key : Getter"/>
+     <ITEM LANG="E" TEXT="Key : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_COMPKEY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Key (unique)"/>
+       <ITEM LANG="E" TEXT="Component Key (unique)"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1015,19 +1019,19 @@ result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_SET_KEY" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Key : Setter"/>
+     <ITEM LANG="E" TEXT="Key : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_COMPKEY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component Key (unique)"/>
+       <ITEM LANG="E" TEXT="Component Key (unique)"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1047,37 +1051,37 @@ DATA _cx TYPE REF TO zaplink_cx_component.
   <TYPES>
    <ITEM CMPNAME="TO_CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="ZAPLINK_CONNECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAP Link Connector interface"/>
+     <ITEM LANG="E" TEXT="ZAP Link Connector interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_CONN_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Framework : Root exception class"/>
+     <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CX_COMPONENT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_LIST" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_LIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZapLink Components list"/>
+     <ITEM LANG="E" TEXT="ZapLink Components list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ME" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="3" TYPE="ZAPLINK_COMPONENT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Zap Link Component"/>
+     <ITEM LANG="E" TEXT="Zap Link Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector"/>
+     <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_CLASS" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_class.
@@ -1095,7 +1099,7 @@ TYPES:
         END OF ts_conndata
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Info"/>
+     <ITEM LANG="E" TEXT="Connector Info"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_CLASSES" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">tt_classes TYPE SORTED TABLE OF ts_class WITH UNIQUE KEY classname
@@ -1104,7 +1108,7 @@ TYPES:
     tt_saptypes TYPE HASHED TABLE OF ko100 WITH UNIQUE KEY object
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="List of SAP CTS Types"/>
+     <ITEM LANG="E" TEXT="List of SAP CTS Types"/>
     </TEXTS>
    </ITEM>
   </TYPES>

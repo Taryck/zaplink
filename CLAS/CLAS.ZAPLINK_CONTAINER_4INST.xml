@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="831991DAF97F69CEE7F3A9A841909E15" CODE_SIGNATURE="39C6ECC7B1E64E68E71C0A1F811EE23F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0F1C2362BD33A229197247EC0FE47160" CODE_SIGNATURE="39C6ECC7B1E64E68E71C0A1F811EE23F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZapLink Container : For install purpose">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZapLink Container : For install purpose">U1&amp;FUNCTIONALITY&amp;
 ASFor internal use. Use ZAPLINK_CONTAINER instead.
 ASThis object is use by ZAPLink installer only to reduce container
   functionality only to :
@@ -18,8 +17,13 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AS</DOCUMENTATION>
-    </ITEM>
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
@@ -91,62 +95,62 @@ AS</DOCUMENTATION>
   <ATTRIBUTS>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;CONTAINER&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="FILE" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TO_FILE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="File Manager"/>
+     <ITEM LANG="E" TEXT="File Manager"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="LOG" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTRDONLY="X" TYPTYPE="1" TYPE="TO_LOG">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector: Standard Implementation"/>
+     <ITEM LANG="E" TEXT="Message Collector: Standard Implementation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_CURSOR" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="IF_IXML_NODE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Node of parent search in _is_subcomponent( )"/>
+     <ITEM LANG="E" TEXT="Node of parent search in _is_subcomponent( )"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+     <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TN_CONTAINER_ROOT" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;CONTAINER&apos;" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Container XML root node name"/>
+     <ITEM LANG="E" TEXT="Container XML root node name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="XMLDATA" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="XML data"/>
+     <ITEM LANG="E" TEXT="XML data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="XMLENGINE" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="3" TYPE="IF_IXML">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="XML Engine"/>
+     <ITEM LANG="E" TEXT="XML Engine"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_COMPLIST" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TO_LIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component list"/>
+     <ITEM LANG="E" TEXT="Component list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_NODEINDEX" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_NODEINDEX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="XML Node component index table"/>
+     <ITEM LANG="E" TEXT="XML Node component index table"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_OPTIONS" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TO_OPTIONS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Container&apos;s Options"/>
+     <ITEM LANG="E" TEXT="Container&apos;s Options"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -171,19 +175,19 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   xmlengine = cl_ixml=&gt;create( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="O_FILE" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File Manager"/>
+       <ITEM LANG="E" TEXT="File Manager"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -210,19 +214,19 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_CONTENT" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Content list"/>
+     <ITEM LANG="E" TEXT="Get Content list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component list"/>
+       <ITEM LANG="E" TEXT="Component list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -235,7 +239,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_OPTIONS" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Options : Getter"/>
+     <ITEM LANG="E" TEXT="Options : Getter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_OPTIONS"/>
@@ -243,7 +247,7 @@ INCLUDE zaplink_macros.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -252,7 +256,7 @@ result = _options.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_ROOT" EXPOSURE="1" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get container root element"/>
+     <ITEM LANG="E" TEXT="Get container root element"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="ROOT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_IXML_NODE"/>
@@ -266,19 +270,19 @@ result = _options.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_FROM_FILE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import XML container from File"/>
+     <ITEM LANG="E" TEXT="Import XML container from File"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="O_FILE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_FILE" PAROPTIONL="X">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="File Manager"/>
+       <ITEM LANG="E" TEXT="File Manager"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -319,7 +323,7 @@ result = _options.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_OPTIONS" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Options : Setter"/>
+     <ITEM LANG="E" TEXT="Options : Setter"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_OPTIONS"/>
@@ -327,7 +331,7 @@ result = _options.</SOURCE>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -337,19 +341,19 @@ check data &lt;&gt; _options.
    </ITEM>
    <ITEM CMPNAME="TRANSPORT_TO_SAP" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport container&apos;s compnents to SAP Components"/>
+     <ITEM LANG="E" TEXT="Transport container&apos;s compnents to SAP Components"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT_LIST" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component list"/>
+       <ITEM LANG="E" TEXT="Component list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -477,19 +481,19 @@ check data &lt;&gt; _options.
    </ITEM>
    <ITEM CMPNAME="UNINSTALL_FROM_SAP" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport container&apos;s compnents to SAP Components"/>
+     <ITEM LANG="E" TEXT="Transport container&apos;s compnents to SAP Components"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT_LIST" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component list"/>
+       <ITEM LANG="E" TEXT="Component list"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -566,19 +570,19 @@ check data &lt;&gt; _options.
    </ITEM>
    <ITEM CMPNAME="_ADD_TO_COMPONENTSLIST" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Add a node to composent&apos;s list"/>
+     <ITEM LANG="E" TEXT="Add a node to composent&apos;s list"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Node to insert"/>
+       <ITEM LANG="E" TEXT="Node to insert"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -663,13 +667,13 @@ check data &lt;&gt; _options.
    </ITEM>
    <ITEM CMPNAME="_FIND_COMPONENT_NODE" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Find component node in container"/>
+     <ITEM LANG="E" TEXT="Find component node in container"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT"/>
      <ITEM SCONAME="NODE" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_IXML_NODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+       <ITEM LANG="E" TEXT="IF_IXML_NODE"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="SUB_COMP" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT" PAROPTIONL="X"/>
@@ -677,7 +681,7 @@ check data &lt;&gt; _options.
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -763,17 +767,17 @@ check data &lt;&gt; _options.
    </ITEM>
    <ITEM CMPNAME="_IS_SUBCOMPONENT" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Is node a sub-component"/>
+     <ITEM LANG="E" TEXT="Is node a sub-component"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="XML Node"/>
+       <ITEM LANG="E" TEXT="XML Node"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="(&apos;X&apos;) node is a sub component (&apos; &apos;) node is root component"/>
+       <ITEM LANG="E" TEXT="(&apos;X&apos;) node is a sub component (&apos; &apos;) node is root component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -794,19 +798,19 @@ check data &lt;&gt; _options.
    </ITEM>
    <ITEM CMPNAME="_SEARCH_COMPONENTS" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Search composents from node"/>
+     <ITEM LANG="E" TEXT="Search composents from node"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_NODE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_NODE"/>
+       <ITEM LANG="E" TEXT="IF_IXML_NODE"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -842,12 +846,12 @@ check data &lt;&gt; _options.
    </ITEM>
    <ITEM CMPNAME="_UPDATE_COMPONENTSLIST" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Update composents list"/>
+     <ITEM LANG="E" TEXT="Update composents list"/>
     </TEXTS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -901,52 +905,52 @@ check data &lt;&gt; _options.
   <TYPES>
    <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="3" TYPE="ZAPLINK_COMPONENT">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPLink Component"/>
+     <ITEM LANG="E" TEXT="ZAPLink Component"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_CONNECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPLink Connector interface"/>
+     <ITEM LANG="E" TEXT="ZAPLink Connector interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONTAINER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_FILE" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="3" TYPE="ZAPLINK_FILE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="File Manager"/>
+     <ITEM LANG="E" TEXT="File Manager"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_LIST" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="ZAPLINK_LIST">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component list"/>
+     <ITEM LANG="E" TEXT="Component list"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_LOG" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector: Standard Implementation"/>
+     <ITEM LANG="E" TEXT="Message Collector: Standard Implementation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_OPTIONS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_OPTIONS">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPLink : Options"/>
+     <ITEM LANG="E" TEXT="ZAPLink : Options"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_RAW" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_RAW">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="RAW component with data"/>
+     <ITEM LANG="E" TEXT="RAW component with data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_RAW_BASE" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_RAW_BASE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Base RAW component without data"/>
+     <ITEM LANG="E" TEXT="Base RAW component without data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception"/>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_NODEINDEX" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">
@@ -955,13 +959,13 @@ check data &lt;&gt; _options.
       node  TYPE REF TO if_ixml_node,
     END OF ts_nodeindex
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="XML Node component index"/>
+     <ITEM LANG="E" TEXT="XML Node component index"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_NODEINDEX" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
     tt_nodeindex type SORTED TABLE OF ts_nodeindex with UNIQUE key key
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="XML Node component index table"/>
+     <ITEM LANG="E" TEXT="XML Node component index table"/>
     </TEXTS>
    </ITEM>
   </TYPES>
