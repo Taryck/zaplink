@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9C2302BDE8B16BED54A81F6A9DA0DBF5" CODE_SIGNATURE="170E95136CD4CB416295BDC84CE1A49A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E46CA0200289ED80A291DDFA5D41DE40" CODE_SIGNATURE="93892E5B54594EB4E2E788BAEE0601FD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -10,8 +10,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Data for Class">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Data for Class">U1&amp;FUNCTIONALITY&amp;
 ASIs a connector for :
 AS- TYPE : Type group
 AS- DOMA : Domain
@@ -29,14 +28,19 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
-    </ITEM>
+AShttps://code.google.com/p/zaplink/wiki/Connector
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;CNX_DICTIONARY&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_TYPEGROUP" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TS_COMPTYPE"/>
@@ -63,7 +67,7 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
     END OF dd_eu_type
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="DD object type in EU management system (domain : DDEUTYPE)"/>
+     <ITEM LANG="E" TEXT="DD object type in EU management system (domain : DDEUTYPE)"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUPPORTEDTYPES" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
@@ -84,17 +88,17 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
     END OF supportedtypes
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector supported types"/>
+     <ITEM LANG="E" TEXT="Connector supported types"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;5079624B82531D63E1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UUID for connector Message class"/>
+     <ITEM LANG="E" TEXT="UUID for connector Message class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_VER" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Version"/>
+     <ITEM LANG="E" TEXT="Connector Version"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -138,14 +142,14 @@ END-OF-DEFINITION.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   c_typegroup-type = &apos;TYPE&apos;.    c_typegroup-kind = zaplink_connectors=&gt;get_typekind( c_typegroup-type ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA type LIKE LINE OF supported_types.
@@ -168,24 +172,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_DATA_ELEMENT" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export Data Element from SAP System"/>
+     <ITEM LANG="E" TEXT="Export Data Element from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_DATA_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Data for data element"/>
+       <ITEM LANG="E" TEXT="Data for data element"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -236,24 +240,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_DOMAIN" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export Domain from SAP System"/>
+     <ITEM LANG="E" TEXT="Export Domain from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_DOMAIN">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Data for Domain"/>
+       <ITEM LANG="E" TEXT="Data for Domain"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -315,24 +319,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_INDEX" EXPOSURE="1" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export table Index from SAP System"/>
+     <ITEM LANG="E" TEXT="Export table Index from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_INDEX">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Index (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Index (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -388,24 +392,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_LOCK_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export Lock Object from SAP System"/>
+     <ITEM LANG="E" TEXT="Export Lock Object from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LOCK_OBJECT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Lock object (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Lock object (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -459,24 +463,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_SEARCH_HELP" EXPOSURE="1" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export Search Help from SAP System"/>
+     <ITEM LANG="E" TEXT="Export Search Help from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_SEARCH_HELP">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Search Help (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Search Help (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -530,24 +534,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_TABLE" EXPOSURE="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export table from SAP System"/>
+     <ITEM LANG="E" TEXT="Export table from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_TABLE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Table (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -616,24 +620,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_TABLE_TYPE" EXPOSURE="1" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export table type from SAP System"/>
+     <ITEM LANG="E" TEXT="Export table type from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_TABLE_TYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table type (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Table type (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -685,24 +689,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_TYPE_GROUP" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export Type Group from SAP System"/>
+     <ITEM LANG="E" TEXT="Export Type Group from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_TYPEGROUP">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Data for Type group"/>
+       <ITEM LANG="E" TEXT="Data for Type group"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -746,24 +750,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_VIEW" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export view from SAP System"/>
+     <ITEM LANG="E" TEXT="Export view from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_VIEW">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Views (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Views (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -819,24 +823,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_TYPEGROUP_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Source code Signature of Type Group"/>
+     <ITEM LANG="E" TEXT="Get Source code Signature of Type Group"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_DATATYPES~TD_CHECKSUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Source Code Signature (Checksum)"/>
+       <ITEM LANG="E" TEXT="Source Code Signature (Checksum)"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TYPE_GROUP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_TYPEGROUP">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Type group name"/>
+       <ITEM LANG="E" TEXT="Type group name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -855,24 +859,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_TYPE_GROUP" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Type Group from SAP System"/>
+     <ITEM LANG="E" TEXT="Get Type Group from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="3" TYPE="CL_WB_SOURCE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Source Management"/>
+       <ITEM LANG="E" TEXT="Source Management"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="TYPE_GROUP" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_TYPEGROUP">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Type group name"/>
+       <ITEM LANG="E" TEXT="Type group name"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -919,24 +923,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_DATA_ELEMENT" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import Data Element to SAP System"/>
+     <ITEM LANG="E" TEXT="Import Data Element to SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_DATA_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Data for Data element"/>
+       <ITEM LANG="E" TEXT="Data for Data element"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -991,24 +995,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_DOMAIN" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import Domain to SAP System"/>
+     <ITEM LANG="E" TEXT="Import Domain to SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_DOMAIN">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Data for Domain"/>
+       <ITEM LANG="E" TEXT="Data for Domain"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1068,24 +1072,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_INDEX" EXPOSURE="1" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import table Index to SAP System"/>
+     <ITEM LANG="E" TEXT="Import table Index to SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INDEX">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Index (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Index (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1159,24 +1163,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_LOCK_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import Lock Object to SAP System"/>
+     <ITEM LANG="E" TEXT="Import Lock Object to SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LOCK_OBJECT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table type (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Table type (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1234,24 +1238,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_SEARCH_HELP" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import Search Help to SAP System"/>
+     <ITEM LANG="E" TEXT="Import Search Help to SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_SEARCH_HELP">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table type (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Table type (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1310,24 +1314,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TABLE" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import table to SAP System"/>
+     <ITEM LANG="E" TEXT="Import table to SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_TABLE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Table (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1418,24 +1422,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TABLE_TYPE" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import table type to SAP System"/>
+     <ITEM LANG="E" TEXT="Import table type to SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_TABLE_TYPE">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Table type (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Table type (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1492,24 +1496,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TYPE_GROUP" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import Type Group to SAP System"/>
+     <ITEM LANG="E" TEXT="Import Type Group to SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_TYPEGROUP">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Data for Type group"/>
+       <ITEM LANG="E" TEXT="Data for Type group"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1618,24 +1622,24 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_VIEW" EXPOSURE="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import view to SAP System"/>
+     <ITEM LANG="E" TEXT="Import view to SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_VIEW">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Views (SE11) Datas"/>
+       <ITEM LANG="E" TEXT="Views (SE11) Datas"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -2065,6 +2069,7 @@ END-OF-DEFINITION.</MACROS>
 
   TRY.
 
+    CREATE OBJECT components.                         &quot; Issue 92
     CASE object-&gt;type.
       WHEN supportedtypes-type_group.
         o_typegroup ?= object-&gt;raw.
@@ -2135,11 +2140,13 @@ END-OF-DEFINITION.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
 
-    CREATE OBJECT o_comp.
-    o_comp-&gt;set_type( object-&gt;type ).
-    o_comp-&gt;set_name( object-&gt;name ).
-    IF NOT components IS BOUND. CREATE OBJECT components. ENDIF.
-    components-&gt;add( o_comp ).
+*    CREATE OBJECT o_comp.
+*    o_comp-&gt;set_type( object-&gt;type ).
+*    o_comp-&gt;set_name( object-&gt;name ).
+*    IF NOT components IS BOUND. CREATE OBJECT components. ENDIF.
+*    components-&gt;add( o_comp ).
+    o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
+    components-&gt;add( o_comp ).                      &quot; Issue 92
 
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
@@ -2151,57 +2158,57 @@ END-OF-DEFINITION.</MACROS>
   <TYPES>
    <ITEM CMPNAME="TD_TYPEGROUP" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TYPEGROUP">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Type group name"/>
+     <ITEM LANG="E" TEXT="Type group name"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_DATA_ELEMENT" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_DTEL_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Data for Data element"/>
+     <ITEM LANG="E" TEXT="Data for Data element"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_DOMAIN" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_DOMA_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Data for Domain"/>
+     <ITEM LANG="E" TEXT="Data for Domain"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_INDEX" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="3" TYPE="ZAPLINK_XINX_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Index (SE11) Datas"/>
+     <ITEM LANG="E" TEXT="Index (SE11) Datas"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_LOCK_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="3" TYPE="ZAPLINK_ENQU_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Lock object (SE11) Datas"/>
+     <ITEM LANG="E" TEXT="Lock object (SE11) Datas"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_SEARCH_HELP" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="3" TYPE="ZAPLINK_SHLP_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Search Help (SE11) Datas"/>
+     <ITEM LANG="E" TEXT="Search Help (SE11) Datas"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_TABLE" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_TABL_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Table (SE11) Datas"/>
+     <ITEM LANG="E" TEXT="Table (SE11) Datas"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_TABLE_TYPE" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="ZAPLINK_TTYP_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Table Type (SE11) Datas"/>
+     <ITEM LANG="E" TEXT="Table Type (SE11) Datas"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_TYPEGROUP" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_TYPE_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Data for Type group"/>
+     <ITEM LANG="E" TEXT="Data for Type group"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_VIEW" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_VIEW_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Views (SE11) Datas"/>
+     <ITEM LANG="E" TEXT="Views (SE11) Datas"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_IDX_KEY" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="ZAPLINK_XINX_DATA=&gt;TS_IDX_KEY">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Index Key structure"/>
+     <ITEM LANG="E" TEXT="Index Key structure"/>
     </TEXTS>
    </ITEM>
   </TYPES>

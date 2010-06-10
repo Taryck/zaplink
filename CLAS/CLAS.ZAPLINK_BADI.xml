@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="91077E8E76947DD9516D52F2004FF495" CODE_SIGNATURE="1F19EC9409DA6E57A9830B9788B2FC57" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="15861464F1F7E23A87BD811951D75339" CODE_SIGNATURE="22B7A128F8D09155C91C60120030BADC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -8,8 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAP Link Connector : BADI Definitions &amp; Implementations">
-     <DOCUMENTATION TDFRELES="700" TDLRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAP Link Connector : BADI Definitions &amp; Implementations">U1&amp;FUNCTIONALITY&amp;
 ASIs a connector for :
 AS- SXSD : BADI Definition
 AS- SXCI : BADI Implementation
@@ -21,46 +20,51 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
-    </ITEM>
+AShttps://code.google.com/p/zaplink/wiki/Connector
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;CNX_BADI&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="R_DOC_ID_DEFINITION" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID"/>
    <ITEM CMPNAME="R_DOC_ID_IMPLEMENTATION" STATE="1" EDITORDER="4 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID"/>
    <ITEM CMPNAME="ST_BADI_DEF" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;SXSD&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport category"/>
+     <ITEM LANG="E" TEXT="Transport category"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ST_BADI_IMPL" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;SXCI&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport category"/>
+     <ITEM LANG="E" TEXT="Transport category"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="T_BADI_IMPL" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;CLAS&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Type interface"/>
+     <ITEM LANG="E" TEXT="Type interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="T_BADI_ITF" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;INTF&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Type interface"/>
+     <ITEM LANG="E" TEXT="Type interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="5 " ATTDECLTYP="2" ATTVALUE="&apos;5DAA0A4B07A5A05AE1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UUID for connector BADI"/>
+     <ITEM LANG="E" TEXT="UUID for connector BADI"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_VER" STATE="1" EDITORDER="6 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Version"/>
+     <ITEM LANG="E" TEXT="Connector Version"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -82,7 +86,7 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
 *table TDCLT
@@ -98,7 +102,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA type LIKE LINE OF supported_types.
@@ -113,12 +117,12 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CREATE_DOC_KEY" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Create document key"/>
+     <ITEM LANG="E" TEXT="Create document key"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DOC_KEY" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_DOC_KEY">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="DOCU key structure"/>
+       <ITEM LANG="E" TEXT="DOCU key structure"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -128,17 +132,17 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="DO_EXISTS_IMPL" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Do Implementation exists in SAP System"/>
+     <ITEM LANG="E" TEXT="Do Implementation exists in SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="RSEXSCRN-IMP_NAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="_EXISTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPEXISTS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Object exists (&apos;X&apos;) or non exists (&apos; &apos;)"/>
+       <ITEM LANG="E" TEXT="Object exists (&apos;X&apos;) or non exists (&apos; &apos;)"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -157,24 +161,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_DEF" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export BADI Definiition from SAP System"/>
+     <ITEM LANG="E" TEXT="Export BADI Definiition from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_BADI_DEF">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="SAP Object"/>
+       <ITEM LANG="E" TEXT="SAP Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -251,24 +255,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_IMPL" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Export BADI Implementation from SAP System"/>
+     <ITEM LANG="E" TEXT="Export BADI Implementation from SAP System"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Component key"/>
+       <ITEM LANG="E" TEXT="Component key"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_BADI_IMPL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="SAP Object"/>
+       <ITEM LANG="E" TEXT="SAP Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -429,24 +433,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_DEF" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import BADI Definiition into SAP system"/>
+     <ITEM LANG="E" TEXT="Import BADI Definiition into SAP system"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Components"/>
+       <ITEM LANG="E" TEXT="Components"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_BADI_DEF">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="SAP Object"/>
+       <ITEM LANG="E" TEXT="SAP Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -543,24 +547,24 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_IMPL" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Import BADI Implementation into SAP system"/>
+     <ITEM LANG="E" TEXT="Import BADI Implementation into SAP system"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPONENTS" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_LIST">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Components"/>
+       <ITEM LANG="E" TEXT="Components"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="O_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_BADI_IMPL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Badi Implémentation Data"/>
+       <ITEM LANG="E" TEXT="Badi Implémentation Data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -909,10 +913,12 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA _o_def         TYPE to_badi_def.
   DATA _o_impl        TYPE to_badi_impl.
-  DATA d_type TYPE td_comptype.
+  DATA d_type         TYPE td_comptype.
+  DATA o_comp         TYPE to_component.              &quot; Issue 92
 
   TRY.
     d_type = object-&gt;type.
+    CREATE OBJECT components.                         &quot; Issue 92
     CASE d_type.
       WHEN st_badi_def.
         _o_def ?= object-&gt;raw.
@@ -925,6 +931,8 @@ INCLUDE zaplink_macros.</MACROS>
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
+    o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
+    components-&gt;add( o_comp ).                      &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -935,12 +943,12 @@ INCLUDE zaplink_macros.</MACROS>
   <TYPES>
    <ITEM CMPNAME="TO_BADI_DEF" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_SXSD_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Badi Definition Data"/>
+     <ITEM LANG="E" TEXT="Badi Definition Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_BADI_IMPL" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_SXCI_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Badi Implémentation Data"/>
+     <ITEM LANG="E" TEXT="Badi Implémentation Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_CLAS_ATTR" STATE="1" EDITORDER="2 " TYPTYPE="4">
@@ -949,7 +957,7 @@ INCLUDE zaplink_macros.</MACROS>
   TYPES:
     END OF ts_clas_attr
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Root attributs for CLAS"/>
+     <ITEM LANG="E" TEXT="Root attributs for CLAS"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_DOC_KEY" STATE="1" EDITORDER="1 " TYPTYPE="4">
@@ -958,7 +966,7 @@ INCLUDE zaplink_macros.</MACROS>
       name       TYPE rsexscrn-exit_name,                   &quot; CHAR 30
     END OF ts_doc_key
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="DOCU key structure"/>
+     <ITEM LANG="E" TEXT="DOCU key structure"/>
     </TEXTS>
    </ITEM>
   </TYPES>

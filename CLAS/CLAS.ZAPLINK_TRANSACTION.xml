@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0220C89D2D9EB043B410DC7D64A211D5" CODE_SIGNATURE="DAEE03F9FD4892268CC48CA2F7C0F813" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5FD35F3667863FFF33BCE41B289DB690" CODE_SIGNATURE="3F84669152CD20428558466E5C08AFC8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -9,8 +9,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Data for Class">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Data for Class">U1&amp;FUNCTIONALITY&amp;
 ASConnector for :
 AS,,- TRAN : Transaction
 U1&amp;RELATIONS&amp;
@@ -22,29 +21,34 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
-    </ITEM>
+AShttps://code.google.com/p/zaplink/wiki/Connector
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="7 " ATTDECLTYP="2" ATTVALUE="&apos;CNX_TRANSACTION&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="C_MSG_ID" STATE="1" EDITORDER="5 " ATTDECLTYP="2" ATTVALUE="&apos;NA&apos;" TYPTYPE="1" TYPE="TD_DOC_ID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Document class for message"/>
+     <ITEM LANG="E" TEXT="Document class for message"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="R_DOC_ID" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Documentation Object"/>
+     <ITEM LANG="E" TEXT="Documentation Object"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ST_TRANSACTION" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;TRAN&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport category : ABAP Object"/>
+     <ITEM LANG="E" TEXT="Transport category : ABAP Object"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TRANSACTION_TYPES" STATE="1" EDITORDER="7 " ATTDECLTYP="2" TYPTYPE="4">
@@ -60,7 +64,7 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
     END OF transaction_types
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transaction type and flags"/>
+     <ITEM LANG="E" TEXT="Transaction type and flags"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="T_COMPONENT" STATE="1" EDITORDER="6 " ATTDECLTYP="2" TYPTYPE="4">
@@ -72,17 +76,17 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
     END OF t_component
 `
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Component type"/>
+     <ITEM LANG="E" TEXT="Component type"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;A816684B5215E22AE1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UUID for connector Message class"/>
+     <ITEM LANG="E" TEXT="UUID for connector Message class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_VER" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Version"/>
+     <ITEM LANG="E" TEXT="Connector Version"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -109,7 +113,7 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
 *table TDCLT
@@ -122,7 +126,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA type LIKE LINE OF supported_types.
@@ -429,7 +433,6 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
     CREATE OBJECT components.
-
     CASE object-&gt;type.
       WHEN st_transaction.
         o_data ?= object-&gt;raw.
@@ -507,16 +510,18 @@ INCLUDE zaplink_macros.</MACROS>
 
         MODIFY tstct FROM TABLE s_fm_data-tstct.
 
-        CREATE OBJECT o_comp.
-        o_comp-&gt;set_type( st_transaction ).
-        d_name = o_data-&gt;a0_maindata-tcode.
-        o_comp-&gt;set_name( d_name ).
-        CREATE OBJECT components.
-        components-&gt;add( o_comp ).
+*        CREATE OBJECT o_comp.
+*        o_comp-&gt;set_type( st_transaction ).
+*        d_name = o_data-&gt;a0_maindata-tcode.
+*        o_comp-&gt;set_name( d_name ).
+*        CREATE OBJECT components.
+*        components-&gt;add( o_comp ).
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
 
+    o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
+    components-&gt;add( o_comp ).                      &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -527,7 +532,7 @@ INCLUDE zaplink_macros.</MACROS>
   <TYPES>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_TRAN_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Commun Data for Class &amp; Interface"/>
+     <ITEM LANG="E" TEXT="Commun Data for Class &amp; Interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_TEXT" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">begin of ts_text,

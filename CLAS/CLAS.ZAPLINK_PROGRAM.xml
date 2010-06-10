@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3E03D6D3BD4BBD75FFA5B701C8F74EF2" CODE_SIGNATURE="9D0A5DEBC26856A3ECA887DBE82076D7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F3A63D407E964F53D7C1806218615C79" CODE_SIGNATURE="446F07941C17E936C4FDD74C71F88FDA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROG_DATA"/>
@@ -9,8 +9,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="Data for Class">
-     <DOCUMENTATION TDFRELES="700" TDLRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Data for Class">U1&amp;FUNCTIONALITY&amp;
 ASConnector for :
 AS,,- PROG : ABAP Program
 U1&amp;RELATIONS&amp;
@@ -20,34 +19,39 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
-    </ITEM>
+AShttps://code.google.com/p/zaplink/wiki/Connector
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="5 " ATTDECLTYP="2" ATTVALUE="&apos;CNX_PROGRAM&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="R_DOC_ID" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Documentation Object"/>
+     <ITEM LANG="E" TEXT="Documentation Object"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ST_PROGRAM" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;PROG&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Transport category : ABAP Object"/>
+     <ITEM LANG="E" TEXT="Transport category : ABAP Object"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;AAAD0A4B07A5A05AE1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UUID for connector Program"/>
+     <ITEM LANG="E" TEXT="UUID for connector Program"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_VER" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Version"/>
+     <ITEM LANG="E" TEXT="Connector Version"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -74,7 +78,7 @@ INCLUDE zaplink_macros.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
 *table TDCLT
@@ -92,7 +96,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA type LIKE LINE OF supported_types.
@@ -106,17 +110,17 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM CMPNAME="GET_PROGRAM_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get Source code Signature of a program"/>
+     <ITEM LANG="E" TEXT="Get Source code Signature of a program"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="PROGRAM_NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Program Name"/>
+       <ITEM LANG="E" TEXT="Program Name"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_DATATYPES~TD_CHECKSUM">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="MD5 Hash"/>
+       <ITEM LANG="E" TEXT="MD5 Hash"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -366,85 +370,85 @@ INCLUDE zaplink_macros.</MACROS>
   DATA _prog       TYPE programm.
   DATA _oname      TYPE e071-obj_name.
   DATA _rep        TYPE progdir.
-  DATA _comp       TYPE to_component.
+  DATA o_comp      TYPE to_component.
   DATA _name       TYPE td_compname.
   DATA s_fm_data   TYPE ts_fm_data.
 
   TRY.
 
-      CASE object-&gt;type.
-        WHEN st_program.
-          o_data ?= object-&gt;raw.
-          _oname = _prog = o_data-&gt;a0_maindata-name = object-&gt;name.
-          s_fm_data = o_data-&gt;to_data( ).
-          CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
-            EXPORTING
-              object                  = &apos;REPS&apos;
-              obj_name                = _oname
+    CREATE OBJECT components.                         &quot; Issue 92
+    CASE object-&gt;type.
+      WHEN st_program.
+        o_data ?= object-&gt;raw.
+        _oname = _prog = o_data-&gt;a0_maindata-name = object-&gt;name.
+        s_fm_data = o_data-&gt;to_data( ).
+        CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+          EXPORTING
+            object                  = &apos;REPS&apos;
+            obj_name                = _oname
 *              DELETED_FLAG            = &apos; &apos;
 *           IMPORTING
 *             OBJECT_INSERTED         =
-            EXCEPTIONS
-              wrong_object_name       = 1
-              OTHERS                  = 2.
-          IF sy-subrc &lt;&gt; 0.
-            mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
-          ENDIF.
+          EXCEPTIONS
+            wrong_object_name       = 1
+            OTHERS                  = 2.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+        ENDIF.
 
-          CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
-            EXPORTING
-              object                  = &apos;REPT&apos;
-              obj_name                = _oname
+        CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+          EXPORTING
+            object                  = &apos;REPT&apos;
+            obj_name                = _oname
 *              DELETED_FLAG            = &apos; &apos;
 *            IMPORTING
 *              OBJECT_INSERTED         =
-            EXCEPTIONS
-              wrong_object_name       = 1
-              OTHERS                  = 2.
-          IF sy-subrc &lt;&gt; 0.
-            mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
-          ENDIF.
+          EXCEPTIONS
+            wrong_object_name       = 1
+            OTHERS                  = 2.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+        ENDIF.
 
-          MOVE-CORRESPONDING s_fm_data-header TO _rep.
-          _rep-state = &apos;I&apos;.   MODIFY progdir FROM _rep.
+        MOVE-CORRESPONDING s_fm_data-header TO _rep.
+        _rep-state = &apos;I&apos;.   MODIFY progdir FROM _rep.
 *      MODIFY reposrc FROM _rep. &quot;The databae view &quot;REPOSRC&quot; is write-protected, so it cannot be changed.
-          _rep-state = &apos;A&apos;.   MODIFY progdir FROM _rep.
+        _rep-state = &apos;A&apos;.   MODIFY progdir FROM _rep.
 
 * Source code
-          set_prog_source( program = _prog
-                            source = s_fm_data-source ).
+        set_prog_source( program = _prog
+                          source = s_fm_data-source ).
 * Text Pool
-          set_prog_textpool( program = _prog
-                            textpool = s_fm_data-textspool ).
+        set_prog_textpool( program = _prog
+                          textpool = s_fm_data-textspool ).
 * Dynpro : Issue 8
-          set_dynpros( program = _prog
-                       dynpros = s_fm_data-dynpros ).
+        set_dynpros( program = _prog
+                     dynpros = s_fm_data-dynpros ).
 
 * Menu Painter : Issue 9
-          set_menus( program = _prog
-                       menus = s_fm_data-menupainter ).
+        set_menus( program = _prog
+                     menus = s_fm_data-menupainter ).
 
 * Documentation
-          zaplink_documentation=&gt;set( t_docs = s_fm_data-docs ).
+        zaplink_documentation=&gt;set( t_docs = s_fm_data-docs ).
 
 *Texts
-          DELETE FROM trdirti WHERE name = s_fm_data-header-name.
-          MODIFY trdirti FROM TABLE s_fm_data-texts.
+        DELETE FROM trdirti WHERE name = s_fm_data-header-name.
+        MODIFY trdirti FROM TABLE s_fm_data-texts.
 
-          CREATE OBJECT _comp.
-          _comp-&gt;set_type( st_program ).
-          _name = _prog.
-          _comp-&gt;set_name( _name ).
-          CREATE OBJECT components.
-          components-&gt;add( _comp ).
-        WHEN OTHERS.
-          mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
-      ENDCASE.
+*          CREATE OBJECT _comp.
+*          _comp-&gt;set_type( st_program ).
+*          _name = _prog.
+*          _comp-&gt;set_name( _name ).
+*          CREATE OBJECT components.
+*          components-&gt;add( _comp ).
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+    ENDCASE.
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+    o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
+    components-&gt;add( o_comp ).                              &quot; Issue 92
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
@@ -454,7 +458,7 @@ INCLUDE zaplink_macros.</MACROS>
   <TYPES>
    <ITEM CMPNAME="TO_PROGRAM" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_PROG_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Commun Data for Class &amp; Interface"/>
+     <ITEM LANG="E" TEXT="Commun Data for Class &amp; Interface"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_FM_DATA" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="ZAPLINK_PROG_DATA=&gt;TS_FM_DATA"/>
@@ -464,12 +468,12 @@ INCLUDE zaplink_macros.</MACROS>
   TYPES:
     END OF ts_prog_attr
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Program Attributs"/>
+     <ITEM LANG="E" TEXT="Program Attributs"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ABAP Source code"/>
+     <ITEM LANG="E" TEXT="ABAP Source code"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_TEXT" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">begin of ts_text,
@@ -485,13 +489,13 @@ INCLUDE zaplink_macros.</MACROS>
    <ITEM CMPNAME="TT_TEXTPOOLS" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">
     TT_TEXTPOOLs type SORTED TABLE OF ts_textpool WITH UNIQUE key ID KEY
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Table of textppool"/>
+     <ITEM LANG="E" TEXT="Table of textppool"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_texts type SORTED TABLE OF ts_text WITH UNIQUE KEY langu</ITEM>
    <ITEM CMPNAME="T_RAW" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="RSWSOURCET">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="ABAP Source"/>
+     <ITEM LANG="E" TEXT="ABAP Source"/>
     </TEXTS>
    </ITEM>
   </TYPES>

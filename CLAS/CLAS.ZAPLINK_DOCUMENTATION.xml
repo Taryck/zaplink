@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8FEBCFE08250D84F5F75CF5BDB40D94B" CODE_SIGNATURE="BDDD2D94B9DF3165AEE339A7CBD8E536" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0A316A8298FCD1D76B909881B6927AD5" CODE_SIGNATURE="C2D56E243064CC37BA17A904AB37E065" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -8,8 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
    <TEXTS>
-    <ITEM LANGU="E" DESCRIPT="ZAPLink - Documentation tools">
-     <DOCUMENTATION TDFRELES="700" TDLINESIZE="072">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAPLink - Documentation tools">U1&amp;FUNCTIONALITY&amp;
 ASIs a connector for :
 AS- DOCT : General Text
 AS- DOCV : Independent Documentation
@@ -20,24 +19,29 @@ AS
 U1&amp;HINTS&amp;
 AS
 U1&amp;FURTHER_SOURCES_OF_INF&amp;
-AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
-    </ITEM>
+AShttps://code.google.com/p/zaplink/wiki/Connector
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;CNX_DOCUMENTATION&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Application Log: Subobject"/>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="LOG" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_MSG_COLL">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Statit log"/>
+     <ITEM LANG="E" TEXT="Statit log"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="NODE_NAME" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;DOCS&apos;" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Node name for documentaiton"/>
+     <ITEM LANG="E" TEXT="Node name for documentaiton"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUPPORTEDTYPES" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF supportedtypes,                                  &quot;#EC NOTEXT
@@ -47,12 +51,12 @@ AShttps://code.google.com/p/zaplink/wiki/Connector</DOCUMENTATION>
 `</ITEM>
    <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;3D34954BEABE5F12E1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="UUID for connector Message class"/>
+     <ITEM LANG="E" TEXT="UUID for connector Message class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="_VER" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Connector Version"/>
+     <ITEM LANG="E" TEXT="Connector Version"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -83,14 +87,14 @@ END-OF-DEFINITION.</MACROS>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CLASS_CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   mac_create_log log ballog_subobject space.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="CONSTRUCTOR"/>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
   DATA type LIKE LINE OF supported_types.
@@ -105,12 +109,12 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="DOCU_GET" STATE="1" EDITORDER="4 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Get documentation"/>
+     <ITEM LANG="E" TEXT="Get documentation"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="DOCU" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="DOKIL">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Index for Documentation Table DOKH"/>
+       <ITEM LANG="E" TEXT="Index for Documentation Table DOKH"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="HEAD" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TS_HEAD"/>
@@ -119,7 +123,7 @@ END-OF-DEFINITION.</MACROS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -179,17 +183,17 @@ END-OF-DEFINITION.</MACROS>
     <PARAMETERS>
      <ITEM SCONAME="IDS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Range of ID"/>
+       <ITEM LANG="E" TEXT="Range of ID"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="DOKU_OBJ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Documentation Object"/>
+       <ITEM LANG="E" TEXT="Documentation Object"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="T_DOCS" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_DOCS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Documents"/>
+       <ITEM LANG="E" TEXT="Documents"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -256,24 +260,24 @@ END-OF-DEFINITION.</MACROS>
     <PARAMETERS>
      <ITEM SCONAME="IDS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Range of ID"/>
+       <ITEM LANG="E" TEXT="Range of ID"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="DOKU_OBJ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Documentation Object"/>
+       <ITEM LANG="E" TEXT="Documentation Object"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="XMLDOC" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="XML Code"/>
+       <ITEM LANG="E" TEXT="XML Code"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -308,12 +312,12 @@ END-OF-DEFINITION.</MACROS>
      <ITEM SCONAME="IDS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_DOC_ID"/>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="DOKU_OBJ">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Documentation Object"/>
+       <ITEM LANG="E" TEXT="Documentation Object"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_DOC">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Document"/>
+       <ITEM LANG="E" TEXT="Document"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -329,7 +333,7 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="NAME_2_MASK" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Convert Component name to mask depending of component type"/>
+     <ITEM LANG="E" TEXT="Convert Component name to mask depending of component type"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
@@ -344,7 +348,7 @@ END-OF-DEFINITION.</MACROS>
    </ITEM>
    <ITEM CMPNAME="RAW2STRING" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="RawTexts to String"/>
+     <ITEM LANG="E" TEXT="RawTexts to String"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RAW" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_RAWTEXT"/>
@@ -365,7 +369,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
    </ITEM>
    <ITEM CMPNAME="RESET" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Reset Bal Log"/>
+     <ITEM LANG="E" TEXT="Reset Bal Log"/>
     </TEXTS>
     <SOURCE>`
   DATA object	TYPE balobj_d.
@@ -403,7 +407,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
     <PARAMETERS>
      <ITEM SCONAME="T_DOCS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_DOCS">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Documents"/>
+       <ITEM LANG="E" TEXT="Documents"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -466,7 +470,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
     <PARAMETERS>
      <ITEM SCONAME="XML" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="IF_IXML_ELEMENT"/>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -503,7 +507,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_DOC">
       <TEXTS>
-       <ITEM LANGU="E" DESCRIPT="Document"/>
+       <ITEM LANG="E" TEXT="Document"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -515,7 +519,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
    </ITEM>
    <ITEM CMPNAME="STRING2RAW" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="String to RawTexts"/>
+     <ITEM LANG="E" TEXT="String to RawTexts"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RAW" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_RAWTEXT"/>
@@ -725,6 +729,7 @@ SPLIT string AT LINE_SEPARATOR
 
   TRY.
 
+      CREATE OBJECT components.                         &quot; Issue 92
       CASE object-&gt;type.
         WHEN supportedtypes-general OR supportedtypes-indep.
           o_data ?= object-&gt;raw.
@@ -743,6 +748,8 @@ SPLIT string AT LINE_SEPARATOR
           mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
 
+      o_comp = object-&gt;get_component( abap_true ).          &quot; Issue 92
+      components-&gt;add( o_comp ).                            &quot; Issue 92
     CATCH zaplink_cx_connector INTO o_mycx.
       ROLLBACK WORK.
       RAISE EXCEPTION o_mycx.
@@ -758,12 +765,12 @@ SPLIT string AT LINE_SEPARATOR
   <TYPES>
    <ITEM CMPNAME="TO_DOC" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_DOCV_DATA">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Data for documentation"/>
+     <ITEM LANG="E" TEXT="Data for documentation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_LOG" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Message Collector"/>
+     <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_NAME_MASK" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_name_mask,
