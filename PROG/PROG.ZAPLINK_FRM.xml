@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B725AFD3D8953B75FC0AC2D79B0A4EA9" CODE_SIGNATURE="210212A529AD001C8D9621CA0957C75E" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="9F2BF6C124260671DD2664F10EE4C5E5" CODE_SIGNATURE="7706605F6FD09CDC15C60EF5CB57363E" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" RMAND="220" RLOAD="E" UCCHECK="X"/>
@@ -8,7 +8,7 @@
 *  Include           ZAPLINK_FRM
 *---------------------------------------------------------------------*
   DEFINE mac_replace.
-    replace first occurrence of regex &apos;&lt;:&amp;2:&gt;&apos; in &amp;1 with sy-&amp;2.
+    replace all occurrences of regex &apos;&lt;:&amp;2:&gt;&apos; in &amp;1 with sy-&amp;2.
   END-OF-DEFINITION.
 */---------------------writeMessage-----------------------\
   FORM writemessage USING value(p_type) TYPE sy-msgty

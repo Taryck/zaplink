@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="1E4B6D64BC5DD461BAF825AE0C6BC759" CODE_SIGNATURE="5C4156A138FC9E4B2F01EFF8F794FDAE" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS_STANDALONE" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="C45D3F1B275260640E288C44E330DD3A" CODE_SIGNATURE="0B52C9E80E2D54F94C48F6EC0E44F817" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS_STANDALONE" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="1" RSTAT="T" RMAND="200" RLOAD="E" UCCHECK="X"/>
@@ -258,6 +258,14 @@ LONG_TXT TYPE TS_LANG,
 END OF TS_TEXT .
 TYPES:
 TT_TEXTS TYPE SORTED TABLE OF TS_TEXT WITH UNIQUE KEY LANGU .
+TYPES:
+BEGIN OF TS_LTEXT,
+LANG TYPE SPRAS,
+TEXT TYPE STRING,
+_ TYPE STRING, &quot; Long text
+END OF TS_LTEXT .
+TYPES:
+TT_LTEXTS TYPE SORTED TABLE OF TS_LTEXT WITH UNIQUE KEY LANG .
 TYPES:
 BEGIN OF TS_DOC.
 INCLUDE TYPE TS_HEAD AS HDR.
@@ -4068,6 +4076,8 @@ public section.
     for ZAPLINK_DATATYPES~TT_DOCS .
   aliases TT_DYNPROS
     for ZAPLINK_DATATYPES~TT_DYNPROS .
+  aliases TT_LTEXTS
+    for ZAPLINK_DATATYPES~TT_LTEXTS .
   aliases TT_TXTP_TEXTPOOLS
     for ZAPLINK_DATATYPES~TT_TXTP_TEXTPOOLS .
   aliases TT_TXTP_TEXTS
@@ -4075,9 +4085,9 @@ public section.
   types TO_MENUPAINTER type ref to ZAPLINK_MENUPAINTER_DATA .
   types:
     BEGIN OF ts_deferred,                   &quot; used to handle
-                classes TYPE seot_clsdeferrds_w,      &quot; class * definition load
-                interfaces TYPE seot_intdeferrds_r,   &quot; interface * load
-              END OF ts_deferred .
+                  classes TYPE seot_clsdeferrds_w,      &quot; class * definition load
+                  interfaces TYPE seot_intdeferrds_r,   &quot; interface * load
+                END OF ts_deferred .
   types:
     tt_seoclasstx TYPE STANDARD TABLE OF seoclasstx WITH DEFAULT KEY .
   types:
@@ -4107,40 +4117,40 @@ public section.
   types:
     tt_seosubcotx_l TYPE SORTED TABLE OF seosubcotx WITH UNIQUE KEY langu .
   types:
-    BEGIN OF ts_Meth_inc.                                  &quot; Issue 82
-        INCLUDE TYPE seop_method_w_include as hdr.
-    types:
+    BEGIN OF ts_meth_inc.                                 &quot; Issue 82
+    INCLUDE TYPE seop_method_w_include AS hdr.
+    TYPES:
         raw_source TYPE tt_abaprawsource,
-      END OF ts_Meth_inc .
+      END OF ts_meth_inc .
   types:
-    tt_meth_incs type STANDARD TABLE OF ts_meth_inc with DEFAULT KEY .
+    tt_meth_incs TYPE STANDARD TABLE OF ts_meth_inc WITH DEFAULT KEY .
   types:
     BEGIN OF ts_include,                                  &quot; Issue 82
-        name       TYPE program,
-        raw_source TYPE tt_abaprawsource,
-      END OF ts_include .
+          name       TYPE program,
+          raw_source TYPE tt_abaprawsource,
+        END OF ts_include .
   types:
     BEGIN OF ts_includes,
-        classpool      TYPE ts_include,
-        pubsec         TYPE ts_include,
-        prisec         TYPE ts_include,
-        prosec         TYPE ts_include,
-        cl             TYPE ts_include,
-        ccimp          TYPE ts_include,
-        ccdef          TYPE ts_include,
-        ccmac          TYPE ts_include,
-        interfacepool  TYPE ts_include,
-        intfsec        TYPE ts_include,
-        localtestclass TYPE ts_include,          &quot; Issue 82
-        methods        TYPE tt_meth_incs,
-      END OF ts_includes .
+          classpool      TYPE ts_include,
+          pubsec         TYPE ts_include,
+          prisec         TYPE ts_include,
+          prosec         TYPE ts_include,
+          cl             TYPE ts_include,
+          ccimp          TYPE ts_include,
+          ccdef          TYPE ts_include,
+          ccmac          TYPE ts_include,
+          interfacepool  TYPE ts_include,
+          intfsec        TYPE ts_include,
+          localtestclass TYPE ts_include,                   &quot; Issue 82
+          methods        TYPE tt_meth_incs,
+        END OF ts_includes .
   types:
     tt_sotr_texts TYPE SORTED TABLE OF sotr_text WITH UNIQUE KEY langu object .
   types:
     tt_sotr_textus TYPE STANDARD TABLE OF sotr_textu WITH DEFAULT KEY .
   types:
     BEGIN OF ts_cx_text,
-          cmpname   TYPE seoo_attribute_r-cmpname.
+            cmpname   TYPE seoo_attribute_r-cmpname.
     INCLUDE TYPE sotr_head AS hdr.
     TYPES:
         lhdr      TYPE sotr_headu,
@@ -4153,57 +4163,57 @@ public section.
     BEGIN OF t_fm_data,
 *      name TYPE seoclsname,
 *      version TYPE seoversion,
-          class TYPE  vseoclass,
-          interface TYPE  vseointerf,
-          attributes  TYPE  seoo_attributes_r,
-          methods TYPE  seoo_methods_r,
-          events  TYPE  seoo_events_r,
-          types TYPE  seoo_types_r,
-          parameters  TYPE  seos_parameters_r,
-          exceps  TYPE  seos_exceptions_r,
-          implementings TYPE  seor_implementings_r,
-          inheritance TYPE  vseoextend,
-          redefinitions TYPE  seor_redefinitions_r,
-          impl_details  TYPE  seor_redefinitions_r,
-          friendships TYPE  seof_friendships_r,
-          typeusages TYPE  seot_typepusages_r,
-          clsdeferrds TYPE  seot_clsdeferrds_r,
-          intdeferrds TYPE  seot_intdeferrds_r,
-          comprisings TYPE  seor_comprisings_r,
-          explore_inheritance TYPE  seok_cls_typeinfos,
-          explore_implementings TYPE  seok_int_typeinfos,
-          explore_comprisings TYPE  seok_int_typeinfos,
-          aliases TYPE  seoo_aliases_r,
-          enhancement_methods TYPE  enhmeth_tabheader,
-          enhancement_attributes  TYPE  enhclasstabattrib,
-          enhancement_events  TYPE  enhclasstabevent,
-          enhancement_implementings TYPE  enhclasstabimplementing,
-          enhancement_comprisings TYPE  enhclasstabintfcompri,
-          class_desc  TYPE tt_seoclasstx,
-          component_desc  TYPE  tt_seocompotx,
-          subcomponent_desc TYPE  tt_seosubcotx,
-          includes TYPE ts_includes,
+            class TYPE  vseoclass,
+            interface TYPE  vseointerf,
+            attributes  TYPE  seoo_attributes_r,
+            methods TYPE  seoo_methods_r,
+            events  TYPE  seoo_events_r,
+            types TYPE  seoo_types_r,
+            parameters  TYPE  seos_parameters_r,
+            exceps  TYPE  seos_exceptions_r,
+            implementings TYPE  seor_implementings_r,
+            inheritance TYPE  vseoextend,
+            redefinitions TYPE  seor_redefinitions_r,
+            impl_details  TYPE  seor_redefinitions_r,
+            friendships TYPE  seof_friendships_r,
+            typeusages TYPE  seot_typepusages_r,
+            clsdeferrds TYPE  seot_clsdeferrds_r,
+            intdeferrds TYPE  seot_intdeferrds_r,
+            comprisings TYPE  seor_comprisings_r,
+            explore_inheritance TYPE  seok_cls_typeinfos,
+            explore_implementings TYPE  seok_int_typeinfos,
+            explore_comprisings TYPE  seok_int_typeinfos,
+            aliases TYPE  seoo_aliases_r,
+            enhancement_methods TYPE  enhmeth_tabheader,
+            enhancement_attributes  TYPE  enhclasstabattrib,
+            enhancement_events  TYPE  enhclasstabevent,
+            enhancement_implementings TYPE  enhclasstabimplementing,
+            enhancement_comprisings TYPE  enhclasstabintfcompri,
+            class_desc  TYPE tt_seoclasstx,
+            component_desc  TYPE  tt_seocompotx,
+            subcomponent_desc TYPE  tt_seosubcotx,
+            includes TYPE ts_includes,
 * FOR SEO_CLASS_CREATE_COMPLETE only
-          method_sources TYPE seo_method_source_table,
-          textspool   TYPE tt_txtp_textpools,
-          locals_def  TYPE  rswsourcet,
-          locals_imp  TYPE  rswsourcet,
-          locals_mac  TYPE  rswsourcet,
-          locals_tst  TYPE  rswsourcet,   &quot; Issue 82 : Test Class
+            method_sources TYPE seo_method_source_table,
+            textspool   TYPE tt_txtp_textpools,
+            locals_def  TYPE  rswsourcet,
+            locals_imp  TYPE  rswsourcet,
+            locals_mac  TYPE  rswsourcet,
+            locals_tst  TYPE  rswsourcet,   &quot; Issue 82 : Test Class
 * FOR Exception class
-          exceptions_texts TYPE tt_cx_texts,
+            exceptions_texts TYPE tt_cx_texts,
 * FOR Class dynpros
-          dynpros     TYPE tt_dynpros,
+            dynpros     TYPE tt_dynpros,
 * FOR Class MENU PAINTER
-          menupainter TYPE to_menupainter,
+            menupainter TYPE to_menupainter,
 * FOR documentation
-          documentation TYPE tt_docs,
-        END OF t_fm_data .
+            documentation TYPE tt_docs,
+          END OF t_fm_data .
   types:
     BEGIN OF ts_param_data.
     INCLUDE TYPE seos_parameter_r AS hdr.
     TYPES:
-        texts   TYPE tt_seosubcotx_l,
+        texts   TYPE tt_ltexts,     &quot; tt_seosubcotx_l,
       END OF ts_param_data .
   types:
     tt_parameters TYPE SORTED TABLE OF ts_param_data WITH UNIQUE KEY sconame .
@@ -4211,7 +4221,7 @@ public section.
     BEGIN OF ts_excep_data.
     INCLUDE TYPE seos_exception_r AS hdr.
     TYPES:
-        texts   TYPE tt_seosubcotx_l,
+        texts   TYPE tt_ltexts,   &quot; tt_seosubcotx_l,
       END OF ts_excep_data .
   types:
     tt_exceptions TYPE SORTED TABLE OF ts_excep_data WITH UNIQUE KEY sconame .
@@ -4219,7 +4229,7 @@ public section.
     BEGIN OF ts_event_data.
     INCLUDE TYPE seoo_event_r AS hdr.
     TYPES:
-        texts         TYPE tt_seocompotx_l,
+        texts         TYPE tt_ltexts,     &quot; tt_seocompotx_l,
 *      redefinition  TYPE seoredef,
         parameters    TYPE tt_parameters,
 *        exceptions    TYPE tt_exceptions,
@@ -4231,7 +4241,7 @@ public section.
     BEGIN OF ts_meth_data.
     INCLUDE TYPE seoo_method_r AS hdr.
     TYPES:
-        texts         TYPE tt_seocompotx_l,
+        texts         TYPE tt_ltexts,     &quot; tt_seocompotx_l,
 *      redefinition  TYPE ts_redefinition,
         parameters    TYPE tt_parameters,
         exceptions    TYPE tt_exceptions,
@@ -4243,7 +4253,7 @@ public section.
     BEGIN OF ts_alias_data.
     INCLUDE TYPE seoo_alias_r AS hdr.
     TYPES:
-        texts   TYPE tt_seocompotx_l,
+        texts   TYPE tt_ltexts,     &quot; tt_seocompotx_l,
       END OF ts_alias_data .
   types:
     tt_alias TYPE SORTED TABLE OF ts_alias_data WITH UNIQUE KEY cmpname .
@@ -4251,7 +4261,7 @@ public section.
     BEGIN OF ts_attr_data.
     INCLUDE TYPE seoo_attribute_r AS hdr.
     TYPES:
-        texts   TYPE tt_seocompotx_l,
+        texts   TYPE tt_ltexts,     &quot; tt_seocompotx_l,
         _       TYPE td_abapsource,
       END OF ts_attr_data .
   types:
@@ -4260,7 +4270,7 @@ public section.
     BEGIN OF ts_type_data.
     INCLUDE TYPE seoo_type_r AS hdr.
     TYPES:
-        texts   TYPE tt_seocompotx_l,
+        texts   TYPE tt_ltexts,     &quot; tt_seocompotx_l,
         _       TYPE td_abapsource,
       END OF ts_type_data .
   types:
@@ -4293,14 +4303,14 @@ public section.
     tt_interfaces TYPE SORTED TABLE OF ts_interface WITH UNIQUE KEY refclsname .
   types:
     BEGIN OF ts_sources,
-                    classpool   TYPE  ts_sourceasstruc,
-                    local_types TYPE  ts_sourceasstruc,
-                    local_imp   TYPE  ts_sourceasstruc,
-                    macros      TYPE  ts_sourceasstruc,
-                    public      TYPE  ts_sourceasstruc,
-                    private     TYPE  ts_sourceasstruc,
-                    protected   TYPE  ts_sourceasstruc,
-                  END OF ts_sources .
+                      classpool   TYPE  ts_sourceasstruc,
+                      local_types TYPE  ts_sourceasstruc,
+                      local_imp   TYPE  ts_sourceasstruc,
+                      macros      TYPE  ts_sourceasstruc,
+                      public      TYPE  ts_sourceasstruc,
+                      private     TYPE  ts_sourceasstruc,
+                      protected   TYPE  ts_sourceasstruc,
+                    END OF ts_sources .
   data ALIASES type TT_ALIAS .
   data ATTRIBUTS type TT_ATTRIBUTS .
   data DOCUMENTATION type TT_DOCS .
@@ -4406,7 +4416,7 @@ protected section.
       !SUB_COMPONENT type SEOSCONAME
       !COMPONENT type SEOCMPNAME
     returning
-      value(TEXTS) type TT_SEOSUBCOTX_L .
+      value(TEXTS) type TT_LTEXTS .
   methods FD_COMP_DESC
     importing
       !DESCRIPTIONS type TT_SEOCOMPOTX
@@ -4414,18 +4424,18 @@ protected section.
       !ID type DOKU_ID
       !DOCUMENTATION type TT_DOCS
     returning
-      value(TEXTS) type TT_SEOCOMPOTX_L .
+      value(TEXTS) type TT_LTEXTS .
   methods TD_SUBC_DESC
     importing
       !SUB_COMPONENT type SEOSCONAME
       !COMPONENT type SEOCMPNAME
-      !TEXTS type TT_SEOSUBCOTX_L
+      !TEXTS type TT_LTEXTS
     changing
       !DESCRIPTIONS type TT_SEOSUBCOTX .
   methods TD_COMP_DESC
     importing
       !COMPONENT type SEOCMPNAME
-      !TEXTS type TT_SEOCOMPOTX_L
+      !TEXTS type TT_LTEXTS
       !ID type DOKU_ID
     changing
       !DOCUMENTATION type TT_DOCS
@@ -4445,7 +4455,7 @@ protected section.
   methods TD_TEXT
     importing
       !CLASSNAME type SEOCLSNAME
-      !TEXTS type TT_SEOCLASSTX_S
+      !TEXTS type TT_LTEXTS
       !ID type DOKU_ID
     changing
       !DOCUMENTATION type TT_DOCS
@@ -4457,7 +4467,7 @@ protected section.
       !ID type DOKU_ID
       !DOCUMENTATION type TT_DOCS
     returning
-      value(TEXTS) type TT_SEOCLASSTX_S .
+      value(TEXTS) type TT_LTEXTS .
   methods CLEAR_TAGS .
   methods FIX_INCLUDED_TYPE_POOL
     importing
@@ -5708,7 +5718,7 @@ public section.
 *        typegroups  TYPE tt_typegroups,
 *        interfaces  TYPE tt_interfaces,
 *        friends     TYPE tt_friends,
-        texts       TYPE tt_seoclasstx_s,
+        texts       TYPE tt_ltexts,   &quot; tt_seoclasstx_s,
         textpool    TYPE tt_txtp_textpools,
         sources     TYPE ts_sources,
       END OF ts_class_data .
@@ -6622,7 +6632,7 @@ public section.
     BEGIN OF ts_main_data.
     INCLUDE TYPE vseointerf AS hdr.
     TYPES:
-        texts       TYPE tt_seoclasstx_s,
+        texts       TYPE tt_ltexts,   &quot; tt_seoclasstx_s,
         textpool    TYPE tt_txtp_textpools,
       END OF ts_main_data .
   data A0_MAINDATA type TS_MAIN_DATA .
@@ -17152,11 +17162,11 @@ method CLASS_CONSTRUCTOR.
   _id-low = doc_ids-class-method.     APPEND _id TO r_doc_ids-class.
   _id-low = doc_ids-class-event.      APPEND _id TO r_doc_ids-class.
   _id-low = doc_ids-class-type.       APPEND _id TO r_doc_ids-class.
-  _id-low = doc_ids-interface-header.     APPEND _id TO r_doc_ids-class.
-  _id-low = doc_ids-interface-attribute.  APPEND _id TO r_doc_ids-class.
-  _id-low = doc_ids-interface-method.     APPEND _id TO r_doc_ids-class.
-  _id-low = doc_ids-interface-event.      APPEND _id TO r_doc_ids-class.
-  _id-low = doc_ids-interface-type.       APPEND _id TO r_doc_ids-class.
+  _id-low = doc_ids-interface-header.     APPEND _id TO r_doc_ids-interface.    &quot; Issue 33 : Wrong Doc IDs
+  _id-low = doc_ids-interface-attribute.  APPEND _id TO r_doc_ids-interface.    &quot; Issue 33 : Wrong Doc IDs
+  _id-low = doc_ids-interface-method.     APPEND _id TO r_doc_ids-interface.    &quot; Issue 33 : Wrong Doc IDs
+  _id-low = doc_ids-interface-event.      APPEND _id TO r_doc_ids-interface.    &quot; Issue 33 : Wrong Doc IDs
+  _id-low = doc_ids-interface-type.       APPEND _id TO r_doc_ids-interface.    &quot; Issue 33 : Wrong Doc IDs
 endmethod.
 method CLEAR_TAGS.
   CLEAR: obj_name, obj_version, obj_langu, obj_type.
@@ -17226,7 +17236,7 @@ method COMPLETE_DATA.
     s_impl_detail-version = &apos;1&apos;. APPEND s_impl_detail TO fm_data-impl_details.
   ENDLOOP.
 endmethod.
-method FD_COMP_DESC.
+METHOD fd_comp_desc.
   DATA _t     LIKE LINE OF texts.
   DATA s_key  TYPE ts_doc_key.
   FIELD-SYMBOLS:
@@ -17236,8 +17246,8 @@ method FD_COMP_DESC.
   LOOP AT descriptions ASSIGNING &lt;desc&gt;
        WHERE clsname = obj_name
          AND cmpname = component.
-    _t-main = &lt;desc&gt;.
-    CLEAR: _t-clsname, _t-cmpname. &quot; VERSION
+    _t-lang = &lt;desc&gt;-langu.      _t-text = &lt;desc&gt;-descript.
+*    CLEAR: _t-clsname, _t-cmpname. &quot; VERSION
 * Issue 33 : Documentation conencted to component
     s_key-name = obj_name.
     s_key-other = component.
@@ -17246,17 +17256,14 @@ method FD_COMP_DESC.
                       id = id.
     IF sy-subrc = 0.
       READ TABLE &lt;d&gt;-texts ASSIGNING &lt;dt&gt;
-          WITH KEY tdspras = _t-langu.
-      IF sy-subrc = 0.
-        _t-documentation = &lt;dt&gt;.
-        CLEAR _t-documentation-tdspras.
-      ENDIF.
+          WITH KEY tdspras = _t-lang.
+      IF sy-subrc = 0.   _t-_ = &lt;dt&gt;-_.   ENDIF.
     ENDIF.
     INSERT _t INTO TABLE texts.
   ENDLOOP.
-endmethod.
-method FD_EXCEPTIONS.
-DATA: _ex  LIKE LINE OF exceptions.
+ENDMETHOD.
+METHOD fd_exceptions.
+  DATA: _ex  LIKE LINE OF exceptions.
   FIELD-SYMBOLS:
     &lt;ex&gt;  LIKE LINE OF fm_data-exceps.
   LOOP AT fm_data-exceps ASSIGNING &lt;ex&gt;
@@ -17270,7 +17277,7 @@ DATA: _ex  LIKE LINE OF exceptions.
     CLEAR: _ex-clsname, _ex-cmpname, _ex-descript. &quot; VERSION
     INSERT _ex INTO TABLE exceptions.
   ENDLOOP.
-endmethod.
+ENDMETHOD.
 method FD_PARAMETERS.
 DATA: _pa  LIKE LINE OF parameters.
   FIELD-SYMBOLS:
@@ -17287,20 +17294,20 @@ DATA: _pa  LIKE LINE OF parameters.
     INSERT _pa INTO TABLE parameters.
   ENDLOOP.
 endmethod.
-method FD_SUBC_DESC.
-DATA: _t   LIKE LINE OF texts.
+METHOD fd_subc_desc.
+  DATA: _t   LIKE LINE OF texts.
   FIELD-SYMBOLS:
-    &lt;desc&gt; LIKE LINE OF DESCRIPTIONS.
-  LOOP AT DESCRIPTIONS ASSIGNING &lt;desc&gt;
+    &lt;desc&gt; LIKE LINE OF descriptions.
+  LOOP AT descriptions ASSIGNING &lt;desc&gt;
        WHERE clsname = obj_name
          AND cmpname = component
          AND sconame = sub_component.
-    _t = &lt;desc&gt;.
-    CLEAR: _t-clsname, _t-cmpname, _t-sconame. &quot; VERSION
+    _t-lang = &lt;desc&gt;-langu.      _t-text = &lt;desc&gt;-descript.
+*    CLEAR: _t-clsname, _t-cmpname, _t-sconame. &quot; VERSION
     INSERT _t INTO TABLE texts.
   ENDLOOP.
-endmethod.
-method FD_TEXT.
+ENDMETHOD.
+METHOD fd_text.
   DATA _t     LIKE LINE OF texts.
   DATA s_key  TYPE ts_doc_key.
   DATA s_txt  LIKE LINE OF texts.
@@ -17312,23 +17319,20 @@ method FD_TEXT.
 * Issue 33 : Documentation connected to text
   LOOP AT descriptions ASSIGNING &lt;desc&gt;
        WHERE clsname = classname.
-    s_txt-main = &lt;desc&gt;.
-    CLEAR: s_txt-clsname. &quot; VERSION
+    s_txt-lang = &lt;desc&gt;-langu.      s_txt-text = &lt;desc&gt;-descript.
+*    CLEAR: s_txt-clsname. &quot; VERSION
     s_key-name = obj_name.
 * Class documentation
     READ TABLE documentation ASSIGNING &lt;doc&gt;
          WITH KEY object = s_key.           &quot; Component name should be unique so no need to check ID
     IF sy-subrc = 0.
       READ TABLE &lt;doc&gt;-texts ASSIGNING &lt;dt&gt;
-          WITH KEY tdspras = s_txt-langu.
-      IF sy-subrc = 0.
-        s_txt-documentation = &lt;dt&gt;.
-        CLEAR: s_txt-documentation-tdspras.
-      ENDIF.
+          WITH KEY tdspras = s_txt-lang.
+      IF sy-subrc = 0.    s_txt-_ = &lt;dt&gt;-_.     ENDIF.
     ENDIF.
     INSERT s_txt INTO TABLE texts.
   ENDLOOP.
-endmethod.
+ENDMETHOD.
 method FIX_INCLUDED_TYPE_POOL.
   DATA d_tabix TYPE sy-tabix.
   DATA t_tokens TYPE STANDARD TABLE OF stokes.
@@ -17515,7 +17519,7 @@ method FROM_DATA.
 *ENHANCEMENT_exVENTS TYPE  ENHCLASSTABEVENT
 *ENHANCEMENT_IMPLEMENTINGS  TYPE  ENHCLASSTABIMPLEMENTING
 endmethod.
-method TD_COMP_DESC.
+METHOD td_comp_desc.
   DATA _t     LIKE LINE OF descriptions.
   DATA _d     LIKE LINE OF documentation.
   DATA _dt    LIKE LINE OF _d-texts.
@@ -17534,21 +17538,17 @@ method TD_COMP_DESC.
   _d-dokform = &apos;S_DOCU_SHOW&apos;.
   _d-dokstyle = &apos;S_DOCUS1&apos;.
   LOOP AT texts ASSIGNING &lt;t&gt;.
-    CLEAR _t.
-    _t = &lt;t&gt;-main.
-    _t-clsname = obj_name.
-    _t-cmpname = component.
+    CLEAR _t.    _t-langu = &lt;t&gt;-lang.   _t-descript = &lt;t&gt;-text.    _t-clsname = obj_name.    _t-cmpname = component.
     INSERT _t INTO TABLE descriptions.
 * Issue 33 : Documentation conencted to component
-    CHECK NOT &lt;t&gt;-documentation IS INITIAL.
-    _dt = &lt;t&gt;-documentation.
-    _dt-tdspras = &lt;t&gt;-langu.
+    CHECK NOT &lt;t&gt;-_ IS INITIAL.
+    _dt-_ = &lt;t&gt;-_.    _dt-tdspras = &lt;t&gt;-lang.
     INSERT _dt INTO TABLE _d-texts.
   ENDLOOP.
   IF NOT _d-texts IS INITIAL. INSERT _d INTO TABLE documentation. ENDIF.
-endmethod.
-method TD_EXCEPTIONS.
-DATA: _ex  LIKE LINE OF fm_data-exceps.
+ENDMETHOD.
+METHOD td_exceptions.
+  DATA _ex  LIKE LINE OF fm_data-exceps.
   FIELD-SYMBOLS:
     &lt;ex&gt;  LIKE LINE OF exception,
     &lt;t&gt;   LIKE LINE OF &lt;ex&gt;-texts.
@@ -17563,19 +17563,15 @@ DATA: _ex  LIKE LINE OF fm_data-exceps.
       CHANGING
         descriptions  = fm_data-subcomponent_desc.
     CLEAR: _ex-clsname, _ex-cmpname. &quot; VERSION
-    _ex-clsname = obj_name.
-    _ex-cmpname = component.
-    _ex-langu = obj_langu.
+    _ex-clsname = obj_name.   _ex-cmpname = component.    _ex-langu = obj_langu.
     READ TABLE &lt;ex&gt;-texts ASSIGNING &lt;t&gt;
-         WITH TABLE KEY langu = _ex-langu.
-    IF sy-subrc = 0.
-      _ex-descript = &lt;t&gt;-descript.
-    ENDIF.
+         WITH TABLE KEY lang = _ex-langu.
+    IF sy-subrc = 0.    _ex-descript = &lt;t&gt;-_.   ENDIF.
     INSERT _ex INTO TABLE fm_data-exceps.
   ENDLOOP.
-endmethod.
-method TD_PARAMETERS.
-DATA: _pa  LIKE LINE OF fm_data-parameters.
+ENDMETHOD.
+METHOD td_parameters.
+  DATA: _pa  LIKE LINE OF fm_data-parameters.
   FIELD-SYMBOLS:
     &lt;pa&gt;  LIKE LINE OF parameters,
     &lt;t&gt;   LIKE LINE OF &lt;pa&gt;-texts.
@@ -17585,31 +17581,29 @@ DATA: _pa  LIKE LINE OF fm_data-parameters.
     CALL METHOD td_subc_desc
       EXPORTING
         sub_component = &lt;pa&gt;-sconame
-        component     = COMPONENT
+        component     = component
         texts         = &lt;pa&gt;-texts
-      changing
+      CHANGING
         descriptions  = fm_data-subcomponent_desc.
     _pa-clsname = obj_name.
     _pa-cmpname = component.
     _pa-langu = obj_langu.
     READ TABLE &lt;pa&gt;-texts ASSIGNING &lt;t&gt;
-         WITH TABLE KEY langu = _pa-langu.
-    IF sy-subrc = 0.
-      _pa-descript = &lt;t&gt;-DESCRIPT.
-    ENDIF.
+         WITH TABLE KEY lang = _pa-langu.
+    IF sy-subrc = 0.    _pa-descript = &lt;t&gt;-_.   ENDIF.
     INSERT _pa INTO TABLE fm_data-parameters.
   ENDLOOP.
-endmethod.
-method TD_SUBC_DESC.
-DATA: _t   LIKE LINE OF texts.
-  LOOP AT texts into _t.
-    _t-clsname = obj_name.
-    _t-cmpname = component.
-    _t-sconame = sub_component.
-    INSERT _t INTO TABLE DESCRIPTIONS.
+ENDMETHOD.
+METHOD td_subc_desc.
+  DATA _d   LIKE LINE OF descriptions.
+  FIELD-SYMBOLS &lt;t&gt; LIKE LINE OF texts.
+  LOOP AT texts ASSIGNING &lt;t&gt;.
+    _d-clsname = obj_name.    _d-cmpname = component.   _d-sconame = sub_component.
+    _d-langu = &lt;t&gt;-lang.     _d-descript = &lt;t&gt;-_.
+    INSERT _d INTO TABLE descriptions.
   ENDLOOP.
-endmethod.
-method TD_TEXT.
+ENDMETHOD.
+METHOD td_text.
   DATA _d   LIKE LINE OF documentation.
   DATA _dt  LIKE LINE OF _d-texts.
   DATA _ct  LIKE LINE OF descriptions.
@@ -17626,18 +17620,15 @@ method TD_TEXT.
   _d-dokstyle = &apos;S_DOCUS1&apos;.
 * Issue 33 : Documentation connected to text
   LOOP AT texts ASSIGNING &lt;t&gt;.
-    CLEAR _ct.
-    _ct = &lt;t&gt;-main.
-    _ct-clsname = classname.
+    CLEAR _ct.    _ct-langu = &lt;t&gt;-lang.   _ct-descript = &lt;t&gt;-text.    _ct-clsname = classname.
     INSERT _ct INTO TABLE descriptions.
-    CHECK NOT &lt;t&gt;-documentation IS INITIAL.
-    _dt = &lt;t&gt;-documentation.
-    _dt-tdspras = &lt;t&gt;-langu.
+    CHECK NOT &lt;t&gt;-_ IS INITIAL.
+    _dt-_ = &lt;t&gt;-_.    _dt-tdspras = &lt;t&gt;-lang.
     INSERT _dt INTO TABLE _d-texts.
   ENDLOOP.
   IF NOT _d-texts IS INITIAL. INSERT _d INTO TABLE documentation. ENDIF.
-endmethod.
-method TO_DATA.
+ENDMETHOD.
+METHOD to_data.
   DATA _id  LIKE LINE OF fm_data-impl_details.
   DATA _at  LIKE LINE OF fm_data-attributes.
   DATA _ty  LIKE LINE OF fm_data-types.
@@ -17715,10 +17706,8 @@ method TO_DATA.
     _at-clsname = obj_name.
     _at-langu = obj_langu.
     READ TABLE &lt;at&gt;-texts ASSIGNING &lt;ct&gt;
-         WITH TABLE KEY langu = _at-langu.
-    IF sy-subrc = 0.
-      _at-descript = &lt;ct&gt;-descript.
-    ENDIF.
+         WITH TABLE KEY lang = _at-langu.
+    IF sy-subrc = 0.    _at-descript = &lt;ct&gt;-_.      ENDIF.
     INSERT _at INTO TABLE fm_data-attributes.
   ENDLOOP.
 *METHODS  TYPE  SEOO_meETHODS_R
@@ -17760,10 +17749,8 @@ method TO_DATA.
     _me-clsname = obj_name.
     _me-langu = obj_langu.
     READ TABLE &lt;me&gt;-texts ASSIGNING &lt;ct&gt;
-         WITH TABLE KEY langu = _me-langu.
-    IF sy-subrc = 0.
-      _me-descript = &lt;ct&gt;-descript.
-    ENDIF.
+         WITH TABLE KEY lang = _me-langu.
+    IF sy-subrc = 0.    _me-descript = &lt;ct&gt;-_.      ENDIF.
     INSERT _me INTO TABLE fm_data-methods.
   ENDLOOP.
 *EVENTS TYPE  SEOO_exVENTS_R
@@ -17791,10 +17778,8 @@ method TO_DATA.
     _ev-clsname = obj_name.
     _ev-langu = obj_langu.
     READ TABLE &lt;ev&gt;-texts ASSIGNING &lt;ct&gt;
-         WITH TABLE KEY langu = _ev-langu.
-    IF sy-subrc = 0.
-      _ev-descript = &lt;ct&gt;-descript.
-    ENDIF.
+         WITH TABLE KEY lang = _ev-langu.
+    IF sy-subrc = 0.    _ev-descript = &lt;ct&gt;-_.      ENDIF.
     INSERT _ev INTO TABLE fm_data-events.
   ENDLOOP.
 *TYPES  TYPE  SEOO_TYPES_R
@@ -17815,10 +17800,8 @@ method TO_DATA.
     _ty-clsname = obj_name.
     _ty-langu = obj_langu.
     READ TABLE &lt;ty&gt;-texts ASSIGNING &lt;ct&gt;
-         WITH TABLE KEY langu = _ty-langu.
-    IF sy-subrc = 0.
-      _ty-descript = &lt;ct&gt;-descript.
-    ENDIF.
+         WITH TABLE KEY lang = _ty-langu.
+    IF sy-subrc = 0.    _ty-descript = &lt;ct&gt;-_.      ENDIF.
     INSERT _ty INTO TABLE fm_data-types.
   ENDLOOP.
 *ALIASES  TYPE  SEOO_atLIASES_R
@@ -17843,7 +17826,7 @@ method TO_DATA.
 *ENHANCEMENT_atTTRIBUTES TYPE  ENHCLASSTABATTRIB
 *ENHANCEMENT_exVENTS TYPE  ENHCLASSTABEVENT
 *ENHANCEMENT_IMPLEMENTINGS  TYPE  ENHCLASSTABIMPLEMENTING
-endmethod.
+ENDMETHOD.
 method UNANONYMIZE.
 * Every thing should be done by SAP injection (data will be completed)
 **  DATA s_al  LIKE LINE OF aliases.
@@ -19656,6 +19639,7 @@ METHOD zaplink_connector~write_to_sap.
   DATA s_mask   TYPE ts_name_mask.
   DATA s_doc    TYPE ts_doc.
   TRY.
+      CREATE OBJECT components.                         &quot; Issue 92
       CASE object-&gt;type.
         WHEN supportedtypes-general OR supportedtypes-indep.
           o_data ?= object-&gt;raw.
@@ -19673,6 +19657,8 @@ METHOD zaplink_connector~write_to_sap.
         WHEN OTHERS.
           mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
+      o_comp = object-&gt;get_component( abap_true ).          &quot; Issue 92
+      components-&gt;add( o_comp ).                            &quot; Issue 92
     CATCH zaplink_cx_connector INTO o_mycx.
       ROLLBACK WORK.
       RAISE EXCEPTION o_mycx.
@@ -19965,23 +19951,24 @@ METHOD zaplink_connector~read_from_sap.
   ENDTRY.
 ENDMETHOD.
 METHOD zaplink_connector~write_to_sap.
-  DATA _data TYPE to_data.
-  DATA _comp TYPE to_component.
-  DATA _name TYPE td_compname.
-  DATA t_docs TYPE zaplink_documentation=&gt;tt_docs.
-  DATA ls_doc LIKE LINE OF t_docs.
-  DATA: lt_t100  TYPE STANDARD TABLE OF t100,
-        ls_t100  LIKE LINE OF lt_t100,
-        lt_t100t TYPE STANDARD TABLE OF t100t,
-        ls_t100t LIKE LINE OF lt_t100t,
-        lt_t100u TYPE STANDARD TABLE OF t100u,
-        ls_t100u LIKE LINE OF lt_t100u,
-        ls_t100a TYPE t100a.
+  DATA _data      TYPE to_data.
+  DATA o_comp     TYPE to_component.
+  DATA _name      TYPE td_compname.
+  DATA t_docs     TYPE zaplink_documentation=&gt;tt_docs.
+  DATA ls_doc     LIKE LINE OF t_docs.
+  DATA: lt_t100   TYPE STANDARD TABLE OF t100,
+        ls_t100   LIKE LINE OF lt_t100,
+        lt_t100t  TYPE STANDARD TABLE OF t100t,
+        ls_t100t  LIKE LINE OF lt_t100t,
+        lt_t100u  TYPE STANDARD TABLE OF t100u,
+        ls_t100u  LIKE LINE OF lt_t100u,
+        ls_t100a  TYPE t100a.
   FIELD-SYMBOLS:
     &lt;m&gt; LIKE LINE OF _data-&gt;messages,
     &lt;l&gt; LIKE LINE OF &lt;m&gt;-texts,
     &lt;t&gt; LIKE LINE OF _data-&gt;texts.
   TRY.
+    CREATE OBJECT components.                         &quot; Issue 92
     CASE object-&gt;type.
       WHEN st_msgclass.
         _data ?= object-&gt;raw.
@@ -20125,15 +20112,17 @@ METHOD zaplink_connector~write_to_sap.
         CALL METHOD zaplink_documentation=&gt;set
           EXPORTING
             t_docs = t_docs.
-        CREATE OBJECT _comp.
-        _comp-&gt;set_type( st_msgclass ).
-        _name = _data-&gt;a0_maindata-arbgb.
-        _comp-&gt;set_name( _name ).
-        CREATE OBJECT components.
-        components-&gt;add( _comp ).
+*        CREATE OBJECT _comp.
+*        _comp-&gt;set_type( st_msgclass ).
+*        _name = _data-&gt;a0_maindata-arbgb.
+*        _comp-&gt;set_name( _name ).
+*        CREATE OBJECT components.
+*        components-&gt;add( _comp ).
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
+    o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
+    components-&gt;add( o_comp ).                              &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
 ENDMETHOD.
@@ -20464,6 +20453,7 @@ METHOD zaplink_connector~write_to_sap.
   DATA o_data  TYPE to_data.
   DATA o_comp  TYPE to_component.
   TRY.
+    CREATE OBJECT components.                         &quot; Issue 92
     d_type = object-&gt;type.
     CASE d_type.
       WHEN st_os_cmd.
@@ -20548,16 +20538,18 @@ METHOD zaplink_connector~write_to_sap.
             RAISE EXCEPTION o_mycx.
           ENDIF.
         ENDIF.
-        CREATE OBJECT o_comp.
-        o_comp-&gt;set_type( st_os_cmd ).
-        MOVE-CORRESPONDING o_data-&gt;a0_maindata TO s_name.
-        d_name = key_to_comp( s_name ).
-        o_comp-&gt;set_name( d_name ).
-        CREATE OBJECT components.
-        components-&gt;add( o_comp ).
+*        CREATE OBJECT o_comp.
+*        o_comp-&gt;set_type( st_os_cmd ).
+*        MOVE-CORRESPONDING o_data-&gt;a0_maindata TO s_name.
+*        d_name = key_to_comp( s_name ).
+*        o_comp-&gt;set_name( d_name ).
+*        CREATE OBJECT components.
+*        components-&gt;add( o_comp ).
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
+    o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
+    components-&gt;add( o_comp ).                      &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
 ENDMETHOD.
@@ -20804,75 +20796,75 @@ METHOD zaplink_connector~write_to_sap.
   DATA _prog       TYPE programm.
   DATA _oname      TYPE e071-obj_name.
   DATA _rep        TYPE progdir.
-  DATA _comp       TYPE to_component.
+  DATA o_comp      TYPE to_component.
   DATA _name       TYPE td_compname.
   DATA s_fm_data   TYPE ts_fm_data.
   TRY.
-      CASE object-&gt;type.
-        WHEN st_program.
-          o_data ?= object-&gt;raw.
-          _oname = _prog = o_data-&gt;a0_maindata-name = object-&gt;name.
-          s_fm_data = o_data-&gt;to_data( ).
-          CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
-            EXPORTING
-              object                  = &apos;REPS&apos;
-              obj_name                = _oname
+    CREATE OBJECT components.                         &quot; Issue 92
+    CASE object-&gt;type.
+      WHEN st_program.
+        o_data ?= object-&gt;raw.
+        _oname = _prog = o_data-&gt;a0_maindata-name = object-&gt;name.
+        s_fm_data = o_data-&gt;to_data( ).
+        CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+          EXPORTING
+            object                  = &apos;REPS&apos;
+            obj_name                = _oname
 *              DELETED_FLAG            = &apos; &apos;
 *           IMPORTING
 *             OBJECT_INSERTED         =
-            EXCEPTIONS
-              wrong_object_name       = 1
-              OTHERS                  = 2.
-          IF sy-subrc &lt;&gt; 0.
-            mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
-          ENDIF.
-          CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
-            EXPORTING
-              object                  = &apos;REPT&apos;
-              obj_name                = _oname
+          EXCEPTIONS
+            wrong_object_name       = 1
+            OTHERS                  = 2.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+        ENDIF.
+        CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+          EXPORTING
+            object                  = &apos;REPT&apos;
+            obj_name                = _oname
 *              DELETED_FLAG            = &apos; &apos;
 *            IMPORTING
 *              OBJECT_INSERTED         =
-            EXCEPTIONS
-              wrong_object_name       = 1
-              OTHERS                  = 2.
-          IF sy-subrc &lt;&gt; 0.
-            mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
-          ENDIF.
-          MOVE-CORRESPONDING s_fm_data-header TO _rep.
-          _rep-state = &apos;I&apos;.   MODIFY progdir FROM _rep.
+          EXCEPTIONS
+            wrong_object_name       = 1
+            OTHERS                  = 2.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+        ENDIF.
+        MOVE-CORRESPONDING s_fm_data-header TO _rep.
+        _rep-state = &apos;I&apos;.   MODIFY progdir FROM _rep.
 *      MODIFY reposrc FROM _rep. &quot;The databae view &quot;REPOSRC&quot; is write-protected, so it cannot be changed.
-          _rep-state = &apos;A&apos;.   MODIFY progdir FROM _rep.
+        _rep-state = &apos;A&apos;.   MODIFY progdir FROM _rep.
 * Source code
-          set_prog_source( program = _prog
-                            source = s_fm_data-source ).
+        set_prog_source( program = _prog
+                          source = s_fm_data-source ).
 * Text Pool
-          set_prog_textpool( program = _prog
-                            textpool = s_fm_data-textspool ).
+        set_prog_textpool( program = _prog
+                          textpool = s_fm_data-textspool ).
 * Dynpro : Issue 8
-          set_dynpros( program = _prog
-                       dynpros = s_fm_data-dynpros ).
+        set_dynpros( program = _prog
+                     dynpros = s_fm_data-dynpros ).
 * Menu Painter : Issue 9
-          set_menus( program = _prog
-                       menus = s_fm_data-menupainter ).
+        set_menus( program = _prog
+                     menus = s_fm_data-menupainter ).
 * Documentation
-          zaplink_documentation=&gt;set( t_docs = s_fm_data-docs ).
+        zaplink_documentation=&gt;set( t_docs = s_fm_data-docs ).
 *Texts
-          DELETE FROM trdirti WHERE name = s_fm_data-header-name.
-          MODIFY trdirti FROM TABLE s_fm_data-texts.
-          CREATE OBJECT _comp.
-          _comp-&gt;set_type( st_program ).
-          _name = _prog.
-          _comp-&gt;set_name( _name ).
-          CREATE OBJECT components.
-          components-&gt;add( _comp ).
-        WHEN OTHERS.
-          mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
-      ENDCASE.
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
+        DELETE FROM trdirti WHERE name = s_fm_data-header-name.
+        MODIFY trdirti FROM TABLE s_fm_data-texts.
+*          CREATE OBJECT _comp.
+*          _comp-&gt;set_type( st_program ).
+*          _name = _prog.
+*          _comp-&gt;set_name( _name ).
+*          CREATE OBJECT components.
+*          components-&gt;add( _comp ).
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+    ENDCASE.
+    o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
+    components-&gt;add( o_comp ).                              &quot; Issue 92
+    mac_def_catch zaplink_cx_connector.
   ENDTRY.
 ENDMETHOD.
 endclass. &quot;ZAPLINK_PROGRAM implementation
@@ -21534,9 +21526,11 @@ ENDMETHOD.
 METHOD zaplink_connector~write_to_sap.
   DATA _o_def         TYPE to_badi_def.
   DATA _o_impl        TYPE to_badi_impl.
-  DATA d_type TYPE td_comptype.
+  DATA d_type         TYPE td_comptype.
+  DATA o_comp         TYPE to_component.              &quot; Issue 92
   TRY.
     d_type = object-&gt;type.
+    CREATE OBJECT components.                         &quot; Issue 92
     CASE d_type.
       WHEN st_badi_def.
         _o_def ?= object-&gt;raw.
@@ -21549,6 +21543,8 @@ METHOD zaplink_connector~write_to_sap.
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
+    o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
+    components-&gt;add( o_comp ).                      &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
 ENDMETHOD.
@@ -22115,10 +22111,8 @@ METHOD to_data.
       fm_data = fm_data.
   fm_data-class = a0_maindata-hdr.
   READ TABLE a0_maindata-texts INTO _t
-       WITH TABLE KEY langu = a0_maindata-langu.
-  IF sy-subrc = 0.
-    fm_data-class-descript = _t-descript.
-  ENDIF.
+       WITH TABLE KEY lang = a0_maindata-langu.
+  IF sy-subrc = 0.    fm_data-class-descript = _t-text.   ENDIF.
 * Dynpro : Issue 8
   fm_data-dynpros = dynpros.
 * TEXTPools : Issue 1
@@ -25433,6 +25427,7 @@ METHOD zaplink_connector~write_to_sap.
       raise exception o_mycx.
   END-OF-DEFINITION.
   TRY.
+    CREATE OBJECT components.                         &quot; Issue 92
     CASE object-&gt;type.
       WHEN supportedtypes-type_group.
         o_typegroup ?= object-&gt;raw.
@@ -25502,11 +25497,13 @@ METHOD zaplink_connector~write_to_sap.
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
-    CREATE OBJECT o_comp.
-    o_comp-&gt;set_type( object-&gt;type ).
-    o_comp-&gt;set_name( object-&gt;name ).
-    IF NOT components IS BOUND. CREATE OBJECT components. ENDIF.
-    components-&gt;add( o_comp ).
+*    CREATE OBJECT o_comp.
+*    o_comp-&gt;set_type( object-&gt;type ).
+*    o_comp-&gt;set_name( object-&gt;name ).
+*    IF NOT components IS BOUND. CREATE OBJECT components. ENDIF.
+*    components-&gt;add( o_comp ).
+    o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
+    components-&gt;add( o_comp ).                      &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
 ENDMETHOD.
@@ -25597,10 +25594,8 @@ METHOD to_data.
       fm_data = fm_data.
   fm_data-interface = a0_maindata-hdr.
   READ TABLE a0_maindata-texts INTO _t
-       WITH TABLE KEY langu = a0_maindata-langu.
-  IF sy-subrc = 0.
-    fm_data-interface-descript = _t-descript.
-  ENDIF.
+       WITH TABLE KEY lang = a0_maindata-langu.
+  IF sy-subrc = 0.    fm_data-interface-descript = _t-_.    ENDIF.
 *CLASS_DESC  TYPE tt_SEOCLASSTX,
 * Issue 33 : Documentation connected to text
   CALL METHOD td_text
@@ -27125,10 +27120,12 @@ method ZAPLINK_CONNECTOR~READ_FROM_SAP.
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
 endmethod.
-method ZAPLINK_CONNECTOR~WRITE_TO_SAP.
+METHOD zaplink_connector~write_to_sap.
   DATA _o_class       TYPE to_class.
   DATA _o_interface   TYPE to_interface.
+  DATA o_comp         TYPE to_component.                    &quot; Issue 92
   TRY.
+    CREATE OBJECT components.                               &quot; Issue 92
     CASE object-&gt;type.
       WHEN zaplink_object_data=&gt;object_types-class.
         _o_class ?= object-&gt;raw.
@@ -27157,9 +27154,11 @@ method ZAPLINK_CONNECTOR~WRITE_TO_SAP.
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
+    o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
+    components-&gt;add( o_comp ).                              &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
-endmethod.
+ENDMETHOD.
 endclass. &quot;ZAPLINK_OBJECT implementation
 class ZAPLINK_PACKAGE implementation.
 *&quot;* macro definitions
@@ -28605,10 +28604,12 @@ method ZAPLINK_CONNECTOR~READ_FROM_SAP.
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
 endmethod.
-method ZAPLINK_CONNECTOR~WRITE_TO_SAP.
+METHOD zaplink_connector~write_to_sap.
   DATA _o_class       TYPE to_package.
   DATA _o_interface   TYPE to_interface.
+  DATA o_comp         TYPE to_component.                    &quot; Issue 92
   TRY.
+    CREATE OBJECT components.                         &quot; Issue 92
     CASE object-&gt;type.
       WHEN st_package.
         _o_class ?= object-&gt;raw.
@@ -28637,9 +28638,11 @@ method ZAPLINK_CONNECTOR~WRITE_TO_SAP.
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
+    o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
+    components-&gt;add( o_comp ).                              &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
-endmethod.
+ENDMETHOD.
 method _DELETE_DEVC.
   DATA interfaces  TYPE tpak_package_interface_list.
   DATA packages    TYPE scompaklis.
@@ -29334,15 +29337,17 @@ METHOD zaplink_connector~write_to_sap.
         PERFORM save_tcode IN PROGRAM saplseuk.
         PERFORM save_classification IN PROGRAM saplseuk.
         MODIFY tstct FROM TABLE s_fm_data-tstct.
-        CREATE OBJECT o_comp.
-        o_comp-&gt;set_type( st_transaction ).
-        d_name = o_data-&gt;a0_maindata-tcode.
-        o_comp-&gt;set_name( d_name ).
-        CREATE OBJECT components.
-        components-&gt;add( o_comp ).
+*        CREATE OBJECT o_comp.
+*        o_comp-&gt;set_type( st_transaction ).
+*        d_name = o_data-&gt;a0_maindata-tcode.
+*        o_comp-&gt;set_name( d_name ).
+*        CREATE OBJECT components.
+*        components-&gt;add( o_comp ).
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
+    o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
+    components-&gt;add( o_comp ).                      &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
 ENDMETHOD.

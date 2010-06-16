@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5F0EDF024C22AD0F86DEE7732D0322A6" CODE_SIGNATURE="DB0C3E4091EE6AD270615285C0FCA40F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNC_RAW" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D0DEAB491022B9064ABAD9E71F99320C" CODE_SIGNATURE="381037C0EDCEA879F84944CF80FFD1A6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_RAW" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_RAW"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUNC_DATA"/>
+  <ITEM TYPE="CLAS" NAME="ZAPLINK_VARI_DATA"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_XINX_DATA"/>
  </DEPENDENCIES>
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
@@ -10,7 +11,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_RAW" STATE="1"/>
    <TEXTS>
-    <ITEM LANG="E" TEXT="RAW object for Function Module">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="RAW object for Package">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_PACKAGE
 U1&amp;RELATIONS&amp;
 AS
@@ -35,6 +36,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   <DEFERRED>
    <CLASSES>
     <ITEM TYPEGROUP="ZAPLINK_FUNC_DATA" TPUTYPE="1" IMPLICIT="X"/>
+    <ITEM TYPEGROUP="ZAPLINK_VARI_DATA" TPUTYPE="1" IMPLICIT="X"/>
     <ITEM TYPEGROUP="ZAPLINK_XINX_DATA" TPUTYPE="1" IMPLICIT="X"/>
    </CLASSES>
   </DEFERRED>
@@ -60,22 +62,32 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FM_DATA" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ZAPLINK_FUNC_DATA=&gt;TS_FM_DATA" PAROPTIONL="X">
+     <ITEM SCONAME="FM_DATA" CMPTYPE="1" MTDTYPE="2" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANG="E" TEXT="Function Module data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  DATA o_comp  TYPE to_component.
-  DATA o_raw   TYPE TO_MYDATA.
-  DATA o_conn  TYPE to_connector.
+  DATA o_comp     TYPE to_component.
+  DATA o_raw      TYPE to_mydata.
+  DATA o_conn     TYPE to_connector.
+  DATA s_variant  TYPE zaplink_vari_data=&gt;ts_variant_key.
+  DATA d_name     TYPE td_compname.
 
   IF fm_data IS INITIAL.    &quot; create from ZL_EZXML
     CREATE OBJECT o_comp.
   ELSE.
     CREATE OBJECT o_comp.
-    o_comp-&gt;set_type( zaplink_function_group=&gt;supportedtypes-function ).   o_comp-&gt;set_name( fm_data-header-name ).
+    IF fm_data-header-variant CP zaplink_vari_data=&gt;variant_prefix-system OR fm_data-header-variant CP zaplink_vari_data=&gt;variant_prefix-customer.
+      o_comp-&gt;set_type( zaplink_program=&gt;supportedtypes-sys_variant ).
+    ELSE.
+      o_comp-&gt;set_type( zaplink_program=&gt;supportedtypes-appl_variant ).
+    ENDIF.
+    s_variant-program = fm_data-header-report.
+    s_variant-variant = fm_data-header-variant.
+    d_name = zaplink_vari_data=&gt;key_2_name( s_variant ).
+    o_comp-&gt;set_name( d_name ).
   ENDIF.
 
   CALL METHOD super-&gt;constructor
@@ -84,9 +96,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
   CREATE OBJECT o_raw.
   raw ?= o_raw.
-  IF NOT fm_data IS INITIAL.    o_raw-&gt;from_data( fm_data ).      CLEAR: o_raw-&gt;a0_maindata-name.     ENDIF.
+  IF NOT fm_data IS INITIAL.    o_raw-&gt;from_data( fm_data ).      CLEAR: o_raw-&gt;a0_maindata-report, o_raw-&gt;a0_maindata-variant.     ENDIF.
 
-  CREATE OBJECT o_conn TYPE zaplink_function_group.
+  CREATE OBJECT o_conn TYPE zaplink_program.
   update_connector_data( o_conn ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1" EDITORDER="2 ">
@@ -94,24 +106,28 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_FUNC_DATA=&gt;TS_FM_DATA">
+     <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
        <ITEM LANG="E" TEXT="Function Module data"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  DATA o_raw   TYPE TO_MYDATA.
+  DATA o_raw      TYPE to_mydata.
+  DATA s_variant  TYPE zaplink_vari_data=&gt;ts_variant_key.
+  DATA d_name     TYPE td_compname.
 
+  s_variant = zaplink_vari_data=&gt;name_2_key( me-&gt;name ).
   o_raw ?= raw.
-  o_raw-&gt;a0_maindata-name = me-&gt;name.
+  o_raw-&gt;a0_maindata-report = s_variant-program.
+  o_raw-&gt;a0_maindata-variant = s_variant-variant.
   fm_data = o_raw-&gt;to_data( ).</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_RAW" MTDNAME="ANONYMIZE">
     <SOURCE>`
-  DATA o_raw   TYPE TO_MYDATA.
+  DATA o_raw   TYPE to_mydata.
 
   TRY.
       CALL METHOD super-&gt;anonymize.
@@ -125,11 +141,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
   </REDEFINITIONS>
   <TYPES>
-   <ITEM CMPNAME="TO_MYDATA" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_FUNC_DATA">
+   <ITEM CMPNAME="TO_MYDATA" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_VARI_DATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Commun Data for Class &amp; Interface"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="ZAPLINK_VARI_DATA=&gt;TS_FM_DATA"/>
   </TYPES>
  </RAW>
 </ZL_OBJECT>

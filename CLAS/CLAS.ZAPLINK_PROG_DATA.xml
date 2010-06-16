@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="31D8E6E99FF0FA7BE65A6F3CF7976482" CODE_SIGNATURE="96DD3DFB66FCF8D8E64BEEAC1215B379" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="7DB7FCC307DE9DA90CD9C8B8B439C2E8" CODE_SIGNATURE="A3E703CD0B7FF337368B52BDFD2D9FF6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -41,12 +41,20 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Program main data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="DOCUMENTATION_OFF" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_DOCS"/>
+   <ITEM CMPNAME="DOCUMENTATION_OFF" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_DOCS">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="No longer used"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="DOC_IDS" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF DOC_IDS,
       Prog      TYPE td_doc_id VALUE &apos;RE&apos;,    &quot; Report
     END OF DOC_IDS
 `</ITEM>
-   <ITEM CMPNAME="DYNPROS" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_DYNPROS"/>
+   <ITEM CMPNAME="DYNPROS" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_DYNPROS">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="DynPro informations"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="MENUPAINTER" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TO_MENUPAINTER">
     <TEXTS>
      <ITEM LANG="E" TEXT="Menu painter Data"/>
@@ -71,6 +79,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Textpool table"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="VARIANTS" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TT_VARIANTS">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Program&apos;s Variants"/>
+    </TEXTS>
+   </ITEM>
   </ATTRIBUTS>
   <FRIENDS>
    <ITEM REFCLSNAME="ZAPLINK_EASYXML" STATE="1"/>
@@ -93,13 +106,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *&quot;* in the implementation part of the class</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="ANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="4 ">
+   <ITEM CMPNAME="ANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="3 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Anonymized component data"/>
     </TEXTS>
     <SOURCE>`
+  FIELD-SYMBOLS &lt;v&gt; LIKE LINE OF variants.
   CLEAR: a0_maindata-cnam, a0_maindata-cdat, a0_maindata-unam, a0_maindata-udat, a0_maindata-sdate, a0_maindata-stime, a0_maindata-idate,
-         a0_maindata-itime, a0_maindata-vern, a0_maindata-state. &quot; Issue 68.</SOURCE>
+         a0_maindata-itime, a0_maindata-vern, a0_maindata-state. &quot; Issue 68.
+  LOOP AT variants ASSIGNING &lt;v&gt;.
+    &lt;v&gt;-zl_object-&gt;anonymize( ).
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
@@ -114,7 +131,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   _id-sign = &apos;I&apos;.   _id-option = &apos;EQ&apos;.
   _id-low = doc_ids-prog.      APPEND _id TO r_doc_ids-prog.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FROM_DATA" EXPOSURE="1" STATE="1" EDITORDER="2 ">
+   <ITEM CMPNAME="FROM_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
     </TEXTS>
@@ -128,7 +145,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     <SOURCE>`
   DATA s_txt     LIKE LINE OF texts.
   DATA t_docs    TYPE tt_docs.
+  DATA s_variant LIKE LINE OF variants.
   FIELD-SYMBOLS:
+    &lt;v&gt;  LIKE LINE OF fm_data-variants,
     &lt;d&gt;  LIKE LINE OF fm_data-docs,
     &lt;dt&gt; LIKE LINE OF &lt;d&gt;-texts,
     &lt;t&gt;  LIKE LINE OF fm_data-texts.
@@ -156,9 +175,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     LOOP AT &lt;d&gt;-texts ASSIGNING &lt;dt&gt;.
       CLEAR s_txt.    s_txt-langu = &lt;dt&gt;-tdspras.   s_txt-long_txt = &lt;dt&gt;.   CLEAR s_txt-long_txt-tdspras.    INSERT s_txt INTO TABLE texts.
     ENDLOOP.
-  ENDIF.</SOURCE>
+  ENDIF.
+
+  LOOP AT fm_data-variants ASSIGNING &lt;v&gt;.
+    CREATE OBJECT s_variant-zl_object EXPORTING fm_data = &lt;v&gt;.
+    APPEND s_variant TO variants.
+  ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TO_DATA" EXPOSURE="1" STATE="1" EDITORDER="3 ">
+   <ITEM CMPNAME="TO_DATA" EXPOSURE="1" STATE="1" EDITORDER="2 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
     </TEXTS>
@@ -173,7 +197,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA s_txt     LIKE LINE OF fm_data-texts.
   DATA s_doc     LIKE LINE OF fm_data-docs.
   DATA s_doc_txt LIKE LINE OF s_doc-texts.
+  data s_variant LIKE LINE OF fm_data-variants.
   FIELD-SYMBOLS:
+    &lt;v&gt;  like LINE OF variants,
     &lt;t&gt;  LIKE LINE OF texts.
 
   fm_data-header = a0_maindata.
@@ -199,14 +225,23 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       IF s_doc-langu IS INITIAL.    s_doc-langu = s_doc_txt-tdspras.    ENDIF.
     ENDIF.
   ENDLOOP.
-  IF NOT s_doc-texts IS INITIAL.    INSERT s_doc INTO TABLE fm_data-docs.   ENDIF.</SOURCE>
+  IF NOT s_doc-texts IS INITIAL.    INSERT s_doc INTO TABLE fm_data-docs.   ENDIF.
+
+  LOOP AT variants ASSIGNING &lt;v&gt;.
+    s_variant = &lt;v&gt;-zl_object-&gt;to_data( ).
+    APPEND s_variant TO fm_data-variants.
+  ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="5 ">
+   <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="4 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="UnAnonymized component data"/>
     </TEXTS>
     <SOURCE>`
-  a0_maindata-cnam = sy-uname.</SOURCE>
+  FIELD-SYMBOLS &lt;v&gt; LIKE LINE OF variants.
+  a0_maindata-cnam = sy-uname.
+  LOOP AT variants ASSIGNING &lt;v&gt;.
+    &lt;v&gt;-zl_object-&gt;unanonymize( ).
+  ENDLOOP.</SOURCE>
    </ITEM>
   </METHODS>
   <TYPEGROUPS>
@@ -218,7 +253,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Menu painter Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">BEGIN OF ts_fm_data,
+   <ITEM CMPNAME="TO_VARIANT" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_VARI_RAW"/>
+   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="4">BEGIN OF ts_fm_data,
 * xx pour type doc
       header          TYPE progdir,
       texts           TYPE tt_trdirti,
@@ -227,20 +263,29 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       dynpros	        TYPE tt_dynpros,
       menupainter	    TYPE to_menupainter,
       source          TYPE td_abapsource,
+      variants        TYPE tt_vari_data,                    &quot; Issue 53
     END OF ts_fm_data
 `</ITEM>
-   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="4">
     BEGIN OF ts_maindata.
 *    INCLUDE TYPE reposrc. &quot;The databae view &quot;REPOSRC&quot; is write-protected, so it cannot be changed.
-    INCLUDE TYPE progdir.
-    TYPES:
-      END OF ts_maindata
+  INCLUDE TYPE progdir.
+  TYPES:
+    END OF ts_maindata
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Program main data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TRDIRTI" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_trdirti TYPE SORTED TABLE OF trdirti WITH UNIQUE KEY sprsl
+   <ITEM CMPNAME="TS_VARIANT" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">BEGIN OF ts_variant,
+      zl_object TYPE to_variant,
+      END OF ts_variant
+`</ITEM>
+   <ITEM CMPNAME="TT_TRDIRTI" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_trdirti TYPE SORTED TABLE OF trdirti WITH UNIQUE KEY sprsl
+`</ITEM>
+   <ITEM CMPNAME="TT_VARIANTS" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4">tt_variants TYPE STANDARD TABLE OF ts_variant WITH DEFAULT KEY
+`</ITEM>
+   <ITEM CMPNAME="TT_VARI_DATA" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4">tt_vari_data TYPE STANDARD TABLE OF zaplink_vari_data=&gt;ts_fm_data WITH DEFAULT KEY
 `</ITEM>
   </TYPES>
  </RAW>

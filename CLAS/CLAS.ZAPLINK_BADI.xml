@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="15861464F1F7E23A87BD811951D75339" CODE_SIGNATURE="22B7A128F8D09155C91C60120030BADC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8F01494CF00948251328337DBEA3DEB3" CODE_SIGNATURE="3E507B98E372C245579F6E1371421964" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -231,7 +231,7 @@ INCLUDE zaplink_macros.</MACROS>
     o_data-&gt;from_data( _d ).
 
 * Load interface
-    IF NOT o_data-&gt;a0_maindata-inter_name IS INITIAL AND f_subcomp = abap_true.
+    IF NOT o_data-&gt;a0_maindata-inter_name IS INITIAL AND ( f_subcomp = sub_component-with_all or f_subcomp = sub_component-with_required ).
       o_conn = zaplink_connectors=&gt;create_connector( type = t_badi_itf ).
       IF o_conn IS BOUND.
         CREATE OBJECT _comp.
@@ -409,7 +409,7 @@ INCLUDE zaplink_macros.</MACROS>
       o_data-&gt;from_data( _d ).
 
 * Load Object
-      IF NOT o_data-&gt;a0_maindata-imp_class IS INITIAL AND f_subcomp = abap_true.
+      IF NOT o_data-&gt;a0_maindata-imp_class IS INITIAL AND ( f_subcomp = sub_component-with_all or f_subcomp = sub_component-with_required ).
         o_conn = zaplink_connectors=&gt;create_connector( type = t_badi_impl ).
         IF o_conn IS BOUND.
           CREATE OBJECT _comp.
