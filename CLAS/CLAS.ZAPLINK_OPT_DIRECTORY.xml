@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="75DB6ADBD2367D0D6E063F4A96052349" CODE_SIGNATURE="AE8F261364F03AC52ADB24DF77ACCD40" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="ED9639A2C322B83DEE75D9969E20D01B" CODE_SIGNATURE="39954B2D684B4D2E1DCD7AC3FC862469" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -229,7 +229,8 @@ result = _substitution.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA _name        TYPE tadir-obj_name.
+  DATA _name        TYPE TROBJ_NAME.    &quot; tadir-obj_name.
+  DATA d_tdname     TYPE tadir-obj_name.
   DATA _type        TYPE tadir-object.
   DATA _pgmid       TYPE tadir-pgmid.
   DATA _act_devc    TYPE tadir-devclass.
@@ -242,7 +243,7 @@ result = _substitution.</SOURCE>
   TRY.
 
     _type = component-&gt;get_type( ).
-    _name = component-&gt;get_name( ).
+    d_tdname = _name = component-&gt;get_name( ).
     _pgmid = component-&gt;get_typekind( ).                    &quot; Issue 87
 
     IF _pgmid = &apos;R3TR&apos;.   f_global = abap_true.   ELSEIF _pgmid = &apos;LIMU&apos;.   f_global = abap_false.    ELSE.   EXIT.   ENDIF.    &quot; Form DETERMINE_LOCK_KEY(LSEUQF01) 125
@@ -268,7 +269,7 @@ result = _substitution.</SOURCE>
         EXPORTING
           iv_pgmid           = _pgmid
           iv_object          = _type
-          iv_obj_name        = _name
+          iv_obj_name        = d_tdname
         IMPORTING
 *      EV_OBJECT          =
 *      EV_SRCSYSTEM       =
@@ -284,7 +285,7 @@ result = _substitution.</SOURCE>
             devclass                   = result-devclass
 *        GENFLAG                    = &apos; &apos;
             object                     = _type
-            obj_name                   = _name
+            obj_name                   = d_tdname
             pgmid                      = _pgmid
 *        SRCSYSTEM                  = SY-SYSID
 *        EDTFLAG                    = &apos; &apos;
@@ -314,7 +315,7 @@ result = _substitution.</SOURCE>
 *        GENFLAG                    = &apos;~&apos;
 *        MASTERLANG                 = &apos;~&apos;
             object                     = _type
-            obj_name                   = _name
+            obj_name                   = d_tdname
             pgmid                      = _pgmid
 *        SRCDEP                     = &apos;~&apos;
 *        SRCSYSTEM                  = &apos;~&apos;

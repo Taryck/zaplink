@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0A316A8298FCD1D76B909881B6927AD5" CODE_SIGNATURE="C2D56E243064CC37BA17A904AB37E065" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="4B965EA036B87B4441605169E13993B4" CODE_SIGNATURE="8F0056FBAB8370D3D3EE2D7439378398" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -622,9 +622,9 @@ SPLIT string AT LINE_SEPARATOR
             head                  = s_head
             typ                   = d_doc_type
             version               = s_dokil-version.
-        IF sy-subrc &lt;&gt; 0.
-          mac_add_mf_and_raise &apos;DOCU_DELETE&apos; sy-subrc.
-        ENDIF.
+*        IF sy-subrc &lt;&gt; 0.
+*          mac_add_mf_and_raise &apos;DOCU_DELETE&apos; sy-subrc.
+*        ENDIF.
         CALL FUNCTION &apos;DEQUEUE_ESDOC&apos;
          EXPORTING
 *             MODE_DOKHL         = &apos;E&apos;

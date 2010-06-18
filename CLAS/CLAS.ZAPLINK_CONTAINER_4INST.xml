@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0F1C2362BD33A229197247EC0FE47160" CODE_SIGNATURE="39C6ECC7B1E64E68E71C0A1F811EE23F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="645847E0B953A9F35DD2B3ACA7B5B48C" CODE_SIGNATURE="105CDC4937D97DDFAD359AC1232F0E27" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -441,18 +441,23 @@ check data &lt;&gt; _options.
                 o_listsub-&gt;init_iter( ).
                 o_subcomp = o_listsub-&gt;get_next( ).
                 WHILE o_subcomp IS BOUND.
-                  _clone = _find_component_node( component = o_comp_s
-                                                  sub_comp = o_subcomp ).
-                  o_raw = zaplink_connectors=&gt;node_2_raw( _clone ).
-                  _options-&gt;directory-&gt;set_directory( o_raw ).
-                  IF _options-&gt;directory-&gt;application_log IS BOUND.
-                    o_log-&gt;add_from_instance( _options-&gt;directory-&gt;application_log ).
-                  ENDIF.
+                  TRY.
+                      _clone = _find_component_node( component = o_comp_s
+                                                      sub_comp = o_subcomp ).
+                      o_raw = zaplink_connectors=&gt;node_2_raw( _clone ).
+                      _options-&gt;directory-&gt;set_directory( o_raw ).
+                      IF _options-&gt;directory-&gt;application_log IS BOUND.
+                        o_log-&gt;add_from_instance( _options-&gt;directory-&gt;application_log ).
+                      ENDIF.
+                    CATCH zaplink_cx INTO o_cx.
+                      o_log-&gt;add_exception( o_cx ).
+                  ENDTRY.
                   o_subcomp = o_listsub-&gt;get_next( ).
                 ENDWHILE.
               ENDIF.
 
-              _components = o_connector-&gt;import_to_sap( _xml_comp ).    If _components is not bound.   create OBJECT _components.   endif.
+              _components = o_connector-&gt;import_to_sap( _xml_comp ).
+              IF _components IS NOT BOUND.   CREATE OBJECT _components.   ENDIF.
               o_comp-&gt;set_subcomponents( _components ).
               o_comp-&gt;set_msg_coll( o_connector-&gt;application_log ).
               IF _components-&gt;search( o_comp ) IS BOUND.    _components-&gt;remove( o_comp ).    ENDIF.

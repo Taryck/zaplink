@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F303C8388656C1E4B99802E6A1BB56D5" CODE_SIGNATURE="E35D6FCF93DD16F436A75B4E41AEBB46" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D9183ACD99E5B694DF7B726AE7AEF430" CODE_SIGNATURE="D2C93670E602621EA7128431B55A228A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -2676,7 +2676,7 @@ DATA _data      TYPE scompidtln.
     ENDCASE.
 
     o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
-    components-&gt;add( o_comp ).                              &quot; Issue 92
+    TRY.    components-&gt;add( o_comp ).    CATCH zaplink_cx_list.    ENDTRY.   &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
