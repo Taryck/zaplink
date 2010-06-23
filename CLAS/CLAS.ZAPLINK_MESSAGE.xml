@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5A327D7F066006684F43A1E45D3DB5B5" CODE_SIGNATURE="4C75E1F547D0B414099B03A8302594B4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A773977B1AAA30562B59D1E799C87DE3" CODE_SIGNATURE="270ACD291688F2737AC4F4AE81A897E9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -114,14 +114,16 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA o_msag TYPE to_data.
 
+  CHECK object IS BOUND.
+
+  o_msag ?= object-&gt;raw.
+  o_msag-&gt;anonymize( ).
+
   TRY.
       super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
     CATCH zaplink_cx_connector INTO o_mycx.
       RAISE EXCEPTION o_mycx.
-  ENDTRY.
-
-  o_msag ?= object-&gt;raw.
-  o_msag-&gt;anonymize( ).</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
     <SOURCE>`
@@ -535,7 +537,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDCASE.
 
     o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
-    components-&gt;add( o_comp ).                              &quot; Issue 92
+    TRY.  components-&gt;add( o_comp ).  CATCH zaplink_cx_list.  ENDTRY.    &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>

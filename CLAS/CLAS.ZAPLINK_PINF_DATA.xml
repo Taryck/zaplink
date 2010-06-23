@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="74C2441E9D7E954C8668085CD073616A" CODE_SIGNATURE="BA51CD059A147C1BE33D582ACB46A788" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PINF_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="DD7C158450DB53144A0CE6625E021900" CODE_SIGNATURE="458150C60D2E3D0AF996BCB1024473C4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PINF_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -55,6 +55,30 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
+  <METHODS>
+   <ITEM CMPNAME="ANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="1 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Anonymized component data"/>
+    </TEXTS>
+    <SOURCE>`
+  CLEAR:
+*    me-&gt;a0_maindata-author,         &quot; Issue 88 : Person responsible : Must be clear because user might not exists
+    me-&gt;a0_maindata-created_by,
+    me-&gt;a0_maindata-created_on,
+    me-&gt;a0_maindata-changed_by,
+    me-&gt;a0_maindata-changed_on.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="2 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Unanonymized component data"/>
+    </TEXTS>
+    <SOURCE>`
+  If me-&gt;a0_maindata-created_by is INITIAL. me-&gt;a0_maindata-created_by = sy-uname. endif.
+  If me-&gt;a0_maindata-created_on is INITIAL. me-&gt;a0_maindata-created_on = sy-datum. endif.
+*    me-&gt;a0_maindata-changed_by,
+*    me-&gt;a0_maindata-changed_on.</SOURCE>
+   </ITEM>
+  </METHODS>
   <TYPES>
    <ITEM CMPNAME="TT_ACLS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">
     tt_acls     TYPE STANDARD TABLE OF scomaclstr WITH NON-UNIQUE DEFAULT KEY

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="44A899235D9AD749E34E370DD88601AD" CODE_SIGNATURE="D73F0E19512F61A4E64B06417CFB7E29" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="61A5B6488EE50F6AD713189E545413CF" CODE_SIGNATURE="6886FD8C6B46A41597AE70B2EB1EC6E0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUGR_DATA"/>
@@ -639,12 +639,6 @@ INCLUDE zaplink_macros.</MACROS>
   DATA o_group    TYPE to_group.
   DATA o_function TYPE to_function.
 
-  TRY.
-      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
-
   CHECK object IS BOUND.
 
   CASE object-&gt;type.
@@ -656,7 +650,13 @@ INCLUDE zaplink_macros.</MACROS>
       o_function-&gt;anonymize( ).
     WHEN OTHERS.
        mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
-  ENDCASE.</SOURCE>
+  ENDCASE.
+
+  TRY.
+      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
     <SOURCE>`
@@ -704,13 +704,16 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA o_group    TYPE to_group.
   DATA o_function TYPE to_function.
+  DATA o_raw_func TYPE to_raw_function.
 
-  CREATE OBJECT object.
   CASE type.
     WHEN supportedtypes-group.
+      CREATE OBJECT object.
       CREATE OBJECT o_group.
       object-&gt;raw = o_group.
     WHEN supportedtypes-function.
+      CREATE OBJECT o_raw_func.
+      object = o_raw_func.
       CREATE OBJECT o_function.
       object-&gt;raw = o_function.
     WHEN OTHERS.
@@ -1090,7 +1093,7 @@ INCLUDE zaplink_macros.</MACROS>
           mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
       _comp = object-&gt;get_component( abap_true ).
-      components-&gt;add( _comp ).
+      TRY.  components-&gt;add( _comp ).  CATCH zaplink_cx_list.  ENDTRY.    &quot; Issue 92
 
     CATCH zaplink_cx_connector INTO o_mycx.
       ROLLBACK WORK.
@@ -1153,6 +1156,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Data for Function group"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TO_RAW_FUNCTION" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="ZAPLINK_FUGR_DATA=&gt;TO_FUNCTION"/>
    <ITEM CMPNAME="TS_FMD_FUGR" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="ZAPLINK_FUGR_DATA=&gt;TS_FM_DATA"/>
    <ITEM CMPNAME="TS_FMD_FUNC" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="ZAPLINK_FUNC_DATA=&gt;TS_FM_DATA"/>
    <ITEM CMPNAME="TS_PROG_ATTR" STATE="1" EDITORDER="1 " TYPTYPE="4">

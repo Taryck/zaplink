@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="ED9639A2C322B83DEE75D9969E20D01B" CODE_SIGNATURE="39954B2D684B4D2E1DCD7AC3FC862469" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="7E6DCB40E86F8F7127C5BEB79B0BE6BF" CODE_SIGNATURE="B84EE1EC5EEC54C435CA1677FF5CEAF3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -118,7 +118,7 @@ INCLUDE zaplink_macros.</MACROS>
                WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="DevClass : Getter"/>
     </TEXTS>
@@ -139,28 +139,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
 result = _devclass.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_SUBSTITUTIONKIND_OFF" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Substitution Kind : Getter"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SUBSTITUTIONKIND">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="Devclass substitution Kind"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
-    <SOURCE>`
-result = _substitution.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="GET_TRANSPORT_REQUEST" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TRANSPORT_REQUEST" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Transport Request : Getter"/>
     </TEXTS>
@@ -181,7 +160,7 @@ result = _substitution.</SOURCE>
     <SOURCE>`
   result = _tr.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="DevClass : Setter"/>
     </TEXTS>
@@ -209,7 +188,7 @@ result = _substitution.</SOURCE>
 *  ENDIF.
   _devclass = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_DIRECTORY" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_DIRECTORY" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Set directory : TADIR + TR"/>
     </TEXTS>
@@ -377,45 +356,7 @@ result = _substitution.</SOURCE>
     mac_def_catch zaplink_cx_options.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_SUBSTITUTIONKIND_OFF" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Substitution Kind : Setter"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SUBSTITUTIONKIND">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="Devclass substitution Kind"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
-    <SOURCE>`
-CHECK data &lt;&gt; _substitution.
-
-  CASE data.
-    WHEN substitutionkinds-keep_container OR
-         substitutionkinds-use_component OR
-         substitutionkinds-local.
-    WHEN substitutionkinds-fixed.
-      IF _devclass IS INITIAL.
-        RAISE EXCEPTION TYPE zaplink_cx_opt_devclass
-              EXPORTING textid = zaplink_cx_opt_devclass=&gt;missing_devclass
-                     substkind = data.
-      ENDIF.
-    WHEN OTHERS.
-      RAISE EXCEPTION TYPE zaplink_cx_opt_devclass
-            EXPORTING textid = zaplink_cx_opt_devclass=&gt;invalid_substitutionkind
-                   substkind = data.
-  ENDCASE.
-  _substitution = data.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="SET_TRANSPORT_REQUEST" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_TRANSPORT_REQUEST" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Transport Request : Setter"/>
     </TEXTS>

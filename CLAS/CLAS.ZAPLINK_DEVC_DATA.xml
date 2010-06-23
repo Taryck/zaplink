@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="99E5077AE29CEC12201BA9AAECF97E1A" CODE_SIGNATURE="47C0B9CD8C67BAF64546FE59CD8BA8D0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEVC_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C5774211CF4D45C76A928F38F726A25B" CODE_SIGNATURE="BF1FF25CBA8D4C4EBC0CB7C9BF72796C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEVC_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -68,10 +68,73 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
+  <METHODS>
+   <ITEM CMPNAME="ANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="1 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Anonymized component data"/>
+    </TEXTS>
+    <SOURCE>`
+  DATA o_raw_i     LIKE LINE OF me-&gt;interfaces.
+  DATA o_interface TYPE to_interface.
+  DATA o_raw_p     LIKE LINE OF me-&gt;packages.
+  DATA o_package   TYPE to_mykind.
+
+  CLEAR:
+    me-&gt;a0_maindata-created_by,
+    me-&gt;a0_maindata-created_on,
+    me-&gt;a0_maindata-changed_by,
+*    me-&gt;a0_maindata-as4user,    &quot; Issue 88 : Person responsible : Must be clear because user might not exists
+    me-&gt;a0_maindata-changed_on.
+
+  LOOP AT me-&gt;interfaces INTO o_raw_i.
+    o_interface ?= o_raw_i-zl_object-&gt;raw.
+    o_interface-&gt;anonymize( ).
+  ENDLOOP.
+
+  LOOP AT me-&gt;packages INTO o_raw_p.
+    o_package ?= o_raw_p-zl_object-&gt;raw.
+    o_package-&gt;anonymize( ).
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="2 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Unanonymized component data"/>
+    </TEXTS>
+    <SOURCE>`
+  DATA o_raw_i     LIKE LINE OF me-&gt;interfaces.
+  DATA o_interface TYPE to_interface.
+  DATA o_raw_p     LIKE LINE OF me-&gt;packages.
+  DATA o_package   TYPE to_mykind.
+
+  If me-&gt;a0_maindata-created_by is INITIAL. me-&gt;a0_maindata-created_by = sy-uname. endif.
+  If me-&gt;a0_maindata-created_on is INITIAL. me-&gt;a0_maindata-created_on = sy-datum. endif.
+  If me-&gt;a0_maindata-as4user is INITIAL. me-&gt;a0_maindata-as4user = sy-uname. endif. &quot; Person responsible
+
+  LOOP AT me-&gt;interfaces INTO o_raw_i.
+    o_interface ?= o_raw_i-zl_object-&gt;raw.
+    o_interface-&gt;unanonymize( ).
+  ENDLOOP.
+
+  LOOP AT me-&gt;packages INTO o_raw_p.
+    o_package ?= o_raw_p-zl_object-&gt;raw.
+    o_package-&gt;unanonymize( ).
+  ENDLOOP.</SOURCE>
+   </ITEM>
+  </METHODS>
   <TYPES>
    <ITEM CMPNAME="TO_DEVC_RAW" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_DEVC_RAW">
     <TEXTS>
      <ITEM LANG="E" TEXT="Raw for package"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_PINF_DATA">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Package Interface datas"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_MYKIND" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_DEVC_DATA">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Protected"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_PINF_RAW" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_PINF_RAW">

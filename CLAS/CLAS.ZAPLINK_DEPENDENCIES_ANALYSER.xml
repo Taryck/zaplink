@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="6FE3663A5B5E2BF19B410B40C48630E9" CODE_SIGNATURE="E16B5DB3F83C361B09E0019B4724C32D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="67985AD7D64AB8755C4498C092C71FD1" CODE_SIGNATURE="4CE3672D1C4629A5CEDEAA878A1ADC51" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -951,7 +951,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   SORT objects_list.
   DELETE ADJACENT DUPLICATES FROM objects_list.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ANALYSE_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="29 " MTDDECLTYP="1">
+   <ITEM CMPNAME="ANALYSE_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="28 " MTDDECLTYP="1">
     <PARAMETERS>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
       <TEXTS>
@@ -1051,33 +1051,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     <SOURCE>`
   target = zaplink_tools=&gt;conv_abap_line( source ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONVERT_SOURCE_OFF" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Convert source code : remove tabs"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="SOURCECODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ABAP Source Code"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="TARGETCODE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_SOURCECODE">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ABAP Source Code"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <SOURCE>`
-  FIELD-SYMBOLS:
-    &lt;l&gt; LIKE LINE OF targetcode.
-  targetcode = sourcecode.
-  LOOP AT targetcode ASSIGNING &lt;l&gt;.
-    IF &lt;l&gt; IS INITIAL. DELETE targetcode. CONTINUE. ENDIF.  &quot; Condense
-    IF &lt;l&gt;(1) = &apos;*&apos;.   DELETE targetcode. CONTINUE. ENDIF.  &quot; Condense
-    &lt;l&gt; = convert_line( &lt;l&gt; ).
-  ENDLOOP.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="CONVERT_SOURCE_UPCASE" EXPOSURE="1" STATE="1" EDITORDER="17 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CONVERT_SOURCE_UPCASE" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert source code to upcase"/>
     </TEXTS>
@@ -1159,7 +1133,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     unstack( ).
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXTRACT_STRINGS" EXPOSURE="1" STATE="1" EDITORDER="18 " MTDDECLTYP="1">
+   <ITEM CMPNAME="EXTRACT_STRINGS" EXPOSURE="1" STATE="1" EDITORDER="17 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Extract strings from source code"/>
     </TEXTS>
@@ -1307,7 +1281,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DELETE ADJACENT DUPLICATES FROM results.
   DELETE results WHERE table_line IS INITIAL.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CLASS_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="19 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_CLASS_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="18 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get Class source codes"/>
     </TEXTS>
@@ -1422,7 +1396,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
   codes-name = name.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_INTERFACE_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="20 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_INTERFACE_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="19 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get interface source codes"/>
     </TEXTS>
@@ -1534,7 +1508,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   ENDIF.
   codes-type = o_type.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="HANDLE_CONTEXT" EXPOSURE="1" STATE="1" EDITORDER="21 ">
+   <ITEM CMPNAME="HANDLE_CONTEXT" EXPOSURE="1" STATE="1" EDITORDER="20 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Handle circular context"/>
     </TEXTS>
@@ -1680,7 +1654,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     APPEND s_order TO me-&gt;order.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INVERSE_ORDER" EXPOSURE="1" STATE="1" EDITORDER="28 " MTDDECLTYP="1">
+   <ITEM CMPNAME="INVERSE_ORDER" EXPOSURE="1" STATE="1" EDITORDER="27 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Inverse table order"/>
     </TEXTS>
@@ -1810,7 +1784,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * customer components
   IF s_comp-devclass IN packages AND s_comp-softcomp IN softcomponents.    result = abap_false.    ELSE.   s_excl_c-name = name.   INSERT s_excl_c INTO TABLE excluded_includes.    ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="PROCESS_TYPE" EXPOSURE="1" STATE="1" EDITORDER="22 ">
+   <ITEM CMPNAME="PROCESS_TYPE" EXPOSURE="1" STATE="1" EDITORDER="21 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Process type."/>
     </TEXTS>
@@ -1858,7 +1832,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   CHECK NOT _key IS INITIAL.
   add_object_to_list( name = _key   full = full   source = ctx-context ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="REMOVE_DEF_LOAD" EXPOSURE="1" STATE="1" EDITORDER="23 " MTDDECLTYP="1">
+   <ITEM CMPNAME="REMOVE_DEF_LOAD" EXPOSURE="1" STATE="1" EDITORDER="22 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Remove definition load"/>
     </TEXTS>
@@ -1937,7 +1911,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     LOOP AT new_order ASSIGNING &lt;o&gt;.    WRITE:/ &lt;o&gt;-name.   ENDLOOP.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SEARCH_FOR_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="24 ">
+   <ITEM CMPNAME="SEARCH_FOR_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="23 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Search include into source code"/>
     </TEXTS>
@@ -1968,6 +1942,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *  DATA d_str TYPE string.
   FIELD-SYMBOLS:
     &lt;st&gt; LIKE LINE OF t_statements,
+    &lt;if&gt; LIKE LINE OF t_tokens,
+    &lt;found&gt; LIKE LINE OF t_tokens,
     &lt;inc&gt; LIKE LINE OF t_tokens,
     &lt;t_deb&gt; LIKE LINE OF t_tokens,
     &lt;t&gt; LIKE LINE OF t_tokens.
@@ -2011,34 +1987,64 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       WHEN &apos;PERFORM&apos;.
 
         LOOP AT t_tokens FROM &lt;st&gt;-from TO &lt;st&gt;-to TRANSPORTING NO FIELDS
-             WHERE str = &apos;PROGRAM&apos;.
+             WHERE str CP &apos;PROGRAM&apos;.
           d_tabix = sy-tabix - 1.   EXIT.
         ENDLOOP.
         CHECK sy-subrc = 0.
         READ TABLE t_tokens ASSIGNING &lt;t_deb&gt; INDEX d_tabix.
-        CHECK sy-subrc = 0.   CHECK &lt;t_deb&gt;-str = &apos;IN&apos;.   &quot; IN PROGRAM
+        CHECK sy-subrc = 0.   CHECK &lt;t_deb&gt;-str CP &apos;IN&apos;.   &quot; IN PROGRAM
         d_tabix = d_tabix + 2.    READ TABLE t_tokens ASSIGNING &lt;inc&gt; INDEX d_tabix.
         CHECK sy-subrc = 0 AND NOT &lt;inc&gt;-str IS INITIAL.
         CHECK &lt;inc&gt;-str(1) &lt;&gt; &apos;(&apos;.    &quot; Dynamic include name
         d_name = &lt;inc&gt;-str.
         CHECK is_excluded_include( d_name ) = abap_false.
+        LOOP AT t_tokens FROM d_tabix TO &lt;st&gt;-to TRANSPORTING NO FIELDS
+             WHERE str CP &apos;FOUND&apos;.
+          d_tabix = sy-tabix - 1.   EXIT.
+        ENDLOOP.
+        IF sy-subrc = 0.
+* search for IF found addition
+          READ TABLE t_tokens ASSIGNING &lt;if&gt; INDEX d_tabix.
+          d_tabix = d_tabix + 1.  READ TABLE t_tokens ASSIGNING &lt;found&gt; INDEX d_tabix.
+          IF &lt;if&gt;-str CP &apos;IF&apos; AND &lt;found&gt;-str CP &apos;FOUND&apos;.
+*            ASSIGN &lt;found&gt; TO &lt;inc&gt;.   &quot; Do not work on preform x in prog y using Z if found.
+            d_l_deb = &lt;if&gt;-row.
+            d_l_fin = &lt;found&gt;-row.
+            LOOP AT codes-impl FROM d_l_deb TO d_l_fin ASSIGNING &lt;l&gt;.
+              CASE sy-tabix.
+                WHEN d_l_deb.
+                  d_deb = &lt;if&gt;-col.
+                  IF d_l_deb = d_l_fin.
+                    d_fin = &lt;found&gt;-col + STRLEN( &lt;found&gt;-str ) - d_deb.
+                  ELSE.
+                    d_fin = STRLEN( &lt;l&gt; ) - d_deb.
+                  ENDIF.
+                WHEN d_l_fin.
+                  d_deb = 0.
+                  d_fin = &lt;found&gt;-col + STRLEN( &lt;found&gt;-str ).
+                WHEN OTHERS.
+                  CLEAR &lt;l&gt;.
+              ENDCASE.
+              IF NOT &lt;l&gt; IS INITIAL.    REPLACE SECTION OFFSET d_deb LENGTH d_fin OF &lt;l&gt; WITH space.    ENDIF.
+            ENDLOOP.
+          ENDIF.
+        ENDIF.
         d_l_deb = &lt;t_deb&gt;-row.
         d_l_fin = &lt;inc&gt;-row.
 
         APPEND d_name TO includes.
-
         LOOP AT codes-impl FROM d_l_deb TO d_l_fin ASSIGNING &lt;l&gt;.
           CASE sy-tabix.
             WHEN d_l_deb.
               d_deb = &lt;t_deb&gt;-col.
               IF d_l_deb = d_l_fin.
-                d_fin = &lt;inc&gt;-col + STRLEN( &lt;inc&gt;-str ) - d_deb + 1.
+                d_fin = &lt;inc&gt;-col + STRLEN( &lt;inc&gt;-str ) - d_deb.
               ELSE.
-                d_fin = STRLEN( &lt;l&gt; ) - d_deb + 1.
+                d_fin = STRLEN( &lt;l&gt; ) - d_deb.
               ENDIF.
             WHEN d_l_fin.
               d_deb = 0.
-              d_fin = &lt;inc&gt;-col + STRLEN( &lt;inc&gt;-str ) + 1.
+              d_fin = &lt;inc&gt;-col + STRLEN( &lt;inc&gt;-str ).
             WHEN OTHERS.
               CLEAR &lt;l&gt;.
           ENDCASE.
@@ -2165,7 +2171,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="STACK" EXPOSURE="1" STATE="1" EDITORDER="25 ">
+   <ITEM CMPNAME="STACK" EXPOSURE="1" STATE="1" EDITORDER="24 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add context to context stack"/>
     </TEXTS>
@@ -2182,7 +2188,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA s_ctx LIKE LINE OF context.
   s_ctx-context = context.   s_ctx-type = type.    s_ctx-full_def = full.   INSERT s_ctx INTO me-&gt;context INDEX 1.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNSTACK" EXPOSURE="1" STATE="1" EDITORDER="26 ">
+   <ITEM CMPNAME="UNSTACK" EXPOSURE="1" STATE="1" EDITORDER="25 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Remove stack entry"/>
     </TEXTS>
@@ -2190,7 +2196,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   IF NOT context IS INITIAL. DELETE context INDEX 1. ENDIF.
   IF context IS INITIAL. CLEAR: circular_ref_on, circular_context. ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_CLEAN_UP" EXPOSURE="1" STATE="1" EDITORDER="27 ">
+   <ITEM CMPNAME="_CLEAN_UP" EXPOSURE="1" STATE="1" EDITORDER="26 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Clean up data"/>
     </TEXTS>

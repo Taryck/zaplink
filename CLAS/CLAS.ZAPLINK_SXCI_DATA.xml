@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="31782ED52B3766E18132A7A53A184A9D" CODE_SIGNATURE="192FCD6139E3FCA347FBDA413BB3CBC6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SXCI_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B440C12C832B733D9035D8F5B1016540" CODE_SIGNATURE="A97CFB938137660E531A457CFC362C8C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SXCI_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_BADI_DATA"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTORS"/>
@@ -73,11 +73,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * Issue 81
   DATA o_conn    TYPE to_connector.
   DATA o_cleaner TYPE REF TO zaplink_cnx_ext_cleaner.
-  TRY.
-      super-&gt;anonymize( ).
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
   CLEAR: a0_maindata-uname, a0_maindata-udate, a0_maindata-utime,a0_maindata-aname, a0_maindata-adate, a0_maindata-atime.
   IF implementation IS BOUND.
     o_conn = zaplink_connectors=&gt;create_connector( type = implementation-&gt;type
@@ -87,7 +82,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         o_cleaner-&gt;anonymize( implementation ).
       CATCH cx_root.
     ENDTRY.
-  ENDIF.</SOURCE>
+  ENDIF.
+  TRY.
+      super-&gt;anonymize( ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_BADI_DATA" MTDNAME="FROM_DATA">
     <SOURCE>`

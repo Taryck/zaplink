@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8F01494CF00948251328337DBEA3DEB3" CODE_SIGNATURE="3E507B98E372C245579F6E1371421964" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C11B75AAC964C5A89B537D7A6FB03AC7" CODE_SIGNATURE="3D60763D0BD33E1D25EFF3E524B3C965" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -742,6 +742,22 @@ INCLUDE zaplink_macros.</MACROS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
     <SOURCE>`
+  DATA o_bdef TYPE to_badi_def.
+  DATA o_impl TYPE to_badi_impl.
+
+  CHECK object IS BOUND.
+
+  CASE object-&gt;type.
+    WHEN st_badi_def.
+      o_bdef ?= object-&gt;raw.
+      o_bdef-&gt;anonymize( ).
+    WHEN st_badi_impl.
+      o_impl ?= object-&gt;raw.
+      o_impl-&gt;anonymize( ).
+    WHEN OTHERS.
+      mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+  ENDCASE.
+
   TRY.
       super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
     CATCH zaplink_cx_connector INTO o_mycx.
@@ -932,7 +948,7 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
     o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
-    components-&gt;add( o_comp ).                      &quot; Issue 92
+    TRY.    components-&gt;add( o_comp ).    CATCH zaplink_cx_list.    ENDTRY.   &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>

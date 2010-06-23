@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D9183ACD99E5B694DF7B726AE7AEF430" CODE_SIGNATURE="D2C93670E602621EA7128431B55A228A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B465282A04474F1372F07A7C70863665" CODE_SIGNATURE="B2DB20A4B45F21E2BA4168D7B9A94644" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -305,16 +305,14 @@ INCLUDE zaplink_macros.</MACROS>
        cx_name = &apos;Package interface save failed !&apos;.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ANONYMIZE_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ANONYMIZE_INTERFACE_OFF" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Interface : Anonymized component data"/>
-     <ITEM LANG="F" TEXT="Interface : Anonymized component data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INTERFACE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Interface Object"/>
-       <ITEM LANG="F" TEXT="Interface Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -322,7 +320,6 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -335,16 +332,14 @@ INCLUDE zaplink_macros.</MACROS>
     object-&gt;a0_maindata-changed_by,
     object-&gt;a0_maindata-changed_on.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ANONYMIZE_PACKAGE" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ANONYMIZE_PACKAGE_OFF" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Package : Anonymized component data"/>
-     <ITEM LANG="F" TEXT="Package : Anonymized component data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_PACKAGE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Package Object"/>
-       <ITEM LANG="F" TEXT="Package Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -352,32 +347,31 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA o_raw_i     LIKE LINE OF object-&gt;interfaces.
-  DATA o_interface TYPE to_interface.
-  DATA o_raw_p     LIKE LINE OF object-&gt;packages.
-  DATA o_package   TYPE to_package.
-
-  CLEAR:
-    object-&gt;a0_maindata-created_by,
-    object-&gt;a0_maindata-created_on,
-    object-&gt;a0_maindata-changed_by,
-*    object-&gt;a0_maindata-as4user,    &quot; Issue 88 : Person responsible : Must be clear because user might not exists
-    object-&gt;a0_maindata-changed_on.
-
-  LOOP AT object-&gt;interfaces INTO o_raw_i.
-    o_interface ?= o_raw_i-zl_object-&gt;raw.
-    anonymize_interface( o_interface ).
-  ENDLOOP.
-
-  LOOP AT object-&gt;packages INTO o_raw_p.
-    o_package ?= o_raw_p-zl_object-&gt;raw.
-    anonymize_package( o_package ).
-  ENDLOOP.</SOURCE>
+*  DATA o_raw_i     LIKE LINE OF object-&gt;interfaces.
+*  DATA o_interface TYPE to_interface.
+*  DATA o_raw_p     LIKE LINE OF object-&gt;packages.
+*  DATA o_package   TYPE to_package.
+*
+*  CLEAR:
+*    object-&gt;a0_maindata-created_by,
+*    object-&gt;a0_maindata-created_on,
+*    object-&gt;a0_maindata-changed_by,
+**    object-&gt;a0_maindata-as4user,    &quot; Issue 88 : Person responsible : Must be clear because user might not exists
+*    object-&gt;a0_maindata-changed_on.
+*
+*  LOOP AT object-&gt;interfaces INTO o_raw_i.
+*    o_interface ?= o_raw_i-zl_object-&gt;raw.
+*    anonymize_interface( o_interface ).
+*  ENDLOOP.
+*
+*  LOOP AT object-&gt;packages INTO o_raw_p.
+*    o_package ?= o_raw_p-zl_object-&gt;raw.
+*    anonymize_package( o_package ).
+*  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="BUILD_ERROR_MSG" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
@@ -853,7 +847,7 @@ INCLUDE zaplink_macros.</MACROS>
 
   IF o_mycx IS BOUND.   RAISE EXCEPTION o_mycx.   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_PACKAGE_RAW" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_PACKAGE_RAW" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get package info as RAW"/>
      <ITEM LANG="F" TEXT="Get package info as RAW"/>
@@ -1678,16 +1672,14 @@ INCLUDE zaplink_macros.</MACROS>
     ENDTRY.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNANONYMIZE_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="23 " MTDNEWEXC="X">
+   <ITEM CMPNAME="UNANONYMIZE_INTERFACE_OFF" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Interface : unanonymized component data"/>
-     <ITEM LANG="F" TEXT="Interface : unanonymized component data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INTERFACE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Interface Object"/>
-       <ITEM LANG="F" TEXT="Interface Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1695,7 +1687,6 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1706,16 +1697,14 @@ INCLUDE zaplink_macros.</MACROS>
 *    object-&gt;a0_maindata-changed_by,
 *    object-&gt;a0_maindata-changed_on.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNANONYMIZE_PACKAGE" EXPOSURE="1" STATE="1" EDITORDER="24 " MTDNEWEXC="X">
+   <ITEM CMPNAME="UNANONYMIZE_PACKAGE_OFF" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Package : unanonymized component data"/>
-     <ITEM LANG="F" TEXT="Package : unanonymized component data"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_PACKAGE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Package Object"/>
-       <ITEM LANG="F" TEXT="Package Object"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
@@ -1723,29 +1712,28 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA o_raw_i     LIKE LINE OF object-&gt;interfaces.
-  DATA o_interface TYPE to_interface.
-  DATA o_raw_p     LIKE LINE OF object-&gt;packages.
-  DATA o_package   TYPE to_package.
-
-  If object-&gt;a0_maindata-created_by is INITIAL. object-&gt;a0_maindata-created_by = sy-uname. endif.
-  If object-&gt;a0_maindata-created_on is INITIAL. object-&gt;a0_maindata-created_on = sy-datum. endif.
-  If object-&gt;a0_maindata-as4user is INITIAL. object-&gt;a0_maindata-as4user = sy-uname. endif. &quot; Person responsible
-
-  LOOP AT object-&gt;interfaces INTO o_raw_i.
-    o_interface ?= o_raw_i-zl_object-&gt;raw.
-    unanonymize_interface( o_interface ).
-  ENDLOOP.
-
-  LOOP AT object-&gt;packages INTO o_raw_p.
-    o_package ?= o_raw_p-zl_object-&gt;raw.
-    unanonymize_package( o_package ).
-  ENDLOOP.</SOURCE>
+*  DATA o_raw_i     LIKE LINE OF object-&gt;interfaces.
+*  DATA o_interface TYPE to_interface.
+*  DATA o_raw_p     LIKE LINE OF object-&gt;packages.
+*  DATA o_package   TYPE to_package.
+*
+*  If object-&gt;a0_maindata-created_by is INITIAL. object-&gt;a0_maindata-created_by = sy-uname. endif.
+*  If object-&gt;a0_maindata-created_on is INITIAL. object-&gt;a0_maindata-created_on = sy-datum. endif.
+*  If object-&gt;a0_maindata-as4user is INITIAL. object-&gt;a0_maindata-as4user = sy-uname. endif. &quot; Person responsible
+*
+*  LOOP AT object-&gt;interfaces INTO o_raw_i.
+*    o_interface ?= o_raw_i-zl_object-&gt;raw.
+*    unanonymize_interface( o_interface ).
+*  ENDLOOP.
+*
+*  LOOP AT object-&gt;packages INTO o_raw_p.
+*    o_package ?= o_raw_p-zl_object-&gt;raw.
+*    unanonymize_package( o_package ).
+*  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_INTERFACE" STATE="1" EDITORDER="25 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -2429,24 +2417,24 @@ DATA _data      TYPE scompidtln.
   DATA o_package   TYPE to_package.
   DATA o_interface TYPE to_interface.
 
-  TRY.
-      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
-
-  check object is bound.
+  CHECK object IS BOUND.
 
   CASE object-&gt;type.
     WHEN st_package.
       o_package ?= object-&gt;raw.
-      anonymize_package( o_package ).
+      o_package-&gt;anonymize( ).
     WHEN st_interface.
       o_interface ?= object-&gt;raw.
-      anonymize_interface( o_interface ).
+      o_interface-&gt;anonymize( ).
     WHEN OTHERS.
       mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
-  ENDCASE.</SOURCE>
+  ENDCASE.
+
+  TRY.
+      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
     <SOURCE>`
@@ -2462,28 +2450,31 @@ DATA _data      TYPE scompidtln.
   CASE object-&gt;type.
     WHEN st_package.
       o_package ?= object-&gt;raw.
-      unanonymize_package( o_package ).
+      o_package-&gt;unanonymize( ).
     WHEN st_interface.
       o_interface ?= object-&gt;raw.
-      unanonymize_interface( o_interface ).
+      o_interface-&gt;unanonymize( ).
     WHEN OTHERS.
   ENDCASE.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
     <SOURCE>`
-  DATA o_devc TYPE to_package.
-  DATA o_pinf TYPE to_interface.
+  DATA o_devc   TYPE to_package.
+  DATA o_pinf   TYPE to_interface.
+  data o_raw_i  type TO_RAW_INTERFACE.
+  data o_raw_p  type TO_RAW_package.
 
-  CREATE OBJECT object.
   CASE type.
     WHEN st_package.
+      CREATE OBJECT o_raw_p.
+      object = o_raw_p.
       CREATE OBJECT o_devc.
       object-&gt;raw = o_devc.
-*      create object object type TO_CLASS.
     WHEN st_interface.
+      CREATE OBJECT o_raw_i.
+      object = o_raw_i.
       CREATE OBJECT o_pinf.
       object-&gt;raw = o_pinf.
-*      create object object type TO_CLASS.
     WHEN OTHERS.
       CLEAR object.
       mac_raise_type_not_supported me-&gt;class_name type.
@@ -2771,6 +2762,8 @@ DATA _data      TYPE scompidtln.
      <ITEM LANG="F" TEXT="Package data as RAW"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TO_RAW_INTERFACE" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="ZAPLINK_DEVC_DATA=&gt;TO_PINF_RAW"/>
+   <ITEM CMPNAME="TO_RAW_PACKAGE" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="ZAPLINK_DEVC_DATA=&gt;TO_DEVC_RAW"/>
    <ITEM CMPNAME="TS_CLAS_ATTR" STATE="1" EDITORDER="4 " TYPTYPE="4">
     BEGIN OF ts_clas_attr.
   INCLUDE TYPE ts_base_attributs AS base.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="39B679849BB2FE0B6FEB0EC7F4982832" CODE_SIGNATURE="70ED2A731B84A676EDE436429188DFB9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SXSD_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="965AC710C680BFA4755CBBE456F0B6A0" CODE_SIGNATURE="ACE7327A1E5504BD73D352D5C5B6F84F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SXSD_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_BADI_DATA"/>
  </DEPENDENCIES>
@@ -84,11 +84,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * Issue 81
   DATA o_conn    TYPE to_connector.
   DATA o_cleaner TYPE REF TO zaplink_cnx_ext_cleaner.
-  TRY.
-      super-&gt;anonymize( ).
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
   CLEAR: a0_maindata-uname, a0_maindata-udate, a0_maindata-utime.
   IF interface IS BOUND.
     o_conn = zaplink_connectors=&gt;create_connector( type = interface-&gt;type
@@ -98,7 +93,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         o_cleaner-&gt;anonymize( interface ).
       CATCH cx_root.
     ENDTRY.
-  ENDIF.</SOURCE>
+  ENDIF.
+  TRY.
+      super-&gt;anonymize( ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_BADI_DATA" MTDNAME="FROM_DATA">
     <SOURCE>`

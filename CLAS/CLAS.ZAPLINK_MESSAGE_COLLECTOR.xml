@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3FEF085757EAB228F5B553B70F880DAC" CODE_SIGNATURE="ED13F998258585ADA420F10906FDFCC8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="89F17269BC4CE48D4D91CA5109047195" CODE_SIGNATURE="01C28C458868235B28524BB8238CC4C2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-LOG" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -440,13 +440,13 @@ DATA:
     ls_par        LIKE LINE OF ls_message-params-t_par,
     ld_parcontext TYPE balpval.
 
-  DEFINE mac_append_par.
-    if &amp;2 is not initial.
-      ls_par-parname  = &amp;1.
-      ls_par-parvalue = &amp;2.
-      append ls_par to ls_message-params-t_par.
-    endif.
-  END-OF-DEFINITION.
+*  DEFINE mac_append_par.
+*    if &amp;2 is not initial.
+*      ls_par-parname  = &amp;1.
+*      ls_par-parvalue = &amp;2.
+*      append ls_par to ls_message-params-t_par.
+*    endif.
+*  END-OF-DEFINITION.
 
 * INIT RESULTS
   CLEAR es_message.
@@ -595,6 +595,13 @@ DATA:
 **        ex_container = ls_message-context-value.
 *
 *  ENDIF.
+
+** trace
+*  CASE ls_message-msgty.
+*    WHEN &apos;E&apos; OR &apos;A&apos;. mac_trace &apos;MSG_E_ADD&apos;.
+*    WHEN &apos;W&apos;.        mac_trace &apos;MSG_W_ADD&apos;.
+*  ENDCASE.
+*  mac_trace &apos;MSG_ADD&apos;.
 
 * add message to application log
 
@@ -772,21 +779,9 @@ DATA: _detlevel	TYPE ballevel.
     </PARAMETERS>
     <SOURCE>`
   DATA _detlevel  TYPE ballevel.
-  DATA cx_text    TYPE string.
-  DATA o_ref      TYPE REF TO cl_abap_refdescr.
-  DATA o_obj      TYPE REF TO cl_abap_classdescr.
-  DATA prog       TYPE syrepid.
-  DATA include    TYPE syrepid.
-  DATA line       TYPE i.
-  DATA cx_src_pos TYPE string.
   DATA o_zl_cx    TYPE REF TO zaplink_cx.
 
-  IF id_detlevel IS INITIAL.
-    _detlevel = md_level.
-  ELSE.
-    _detlevel = id_detlevel.
-  ENDIF.
-
+  IF id_detlevel IS INITIAL.    _detlevel = md_level.   ELSE.   _detlevel = id_detlevel.    ENDIF.
   TRY.
       o_zl_cx ?= exception.
     CATCH cx_root.
@@ -795,51 +790,15 @@ DATA: _detlevel	TYPE ballevel.
     CALL METHOD _add_zl_cx
       EXPORTING
         exception    = o_zl_cx
-        id_detlevel  = id_detlevel
-        id_probclass = id_probclass.
-    EXIT.
-  ENDIF.
-
-  IF exception-&gt;previous IS BOUND.
-    ADD 1 TO _detlevel.
-    CALL METHOD add_exception
-      EXPORTING
-        exception    = exception-&gt;previous
         id_detlevel  = _detlevel
         id_probclass = id_probclass.
-    SUBTRACT 1 FROM _detlevel.
-  ENDIF.
-
-  o_ref ?= cl_abap_classdescr=&gt;describe_by_data( p_data = exception ).
-  o_obj ?= get_ref_type( o_ref ).
-
-  CALL METHOD exception-&gt;get_source_position
-    IMPORTING
-      program_name = prog
-      include_name = include
-      source_line  = line.
-  cx_src_pos = line.
-  IF include IS INITIAL.
-    CONCATENATE prog &apos; @&apos; cx_src_pos INTO cx_src_pos.
   ELSE.
-    CONCATENATE include &apos;(&apos; prog &apos;) @&apos; cx_src_pos INTO cx_src_pos.
-  ENDIF.
-
-  cx_text = exception-&gt;if_message~get_text( ).
-  SET EXTENDED CHECK OFF.
-  IF 1 = 2. MESSAGE e002(zaplink_easyxml) WITH abap_true abap_true abap_true. ENDIF.
-  SET EXTENDED CHECK ON.
-  CALL METHOD add_error
-    EXPORTING
-      id_msgid     = &apos;ZAPLINK_EASYXML&apos;
-      id_msgno     = &apos;002&apos;
-      id_msgv1     = o_obj-&gt;absolute_name
-      id_msgv2     = cx_text
-      id_msgv3     = cx_src_pos
-*      id_msgv4     =
-      id_detlevel  = _detlevel
-      id_probclass = id_probclass
-      .</SOURCE>
+    CALL METHOD _add_exception
+      EXPORTING
+        exception    = exception
+        id_detlevel  = _detlevel
+        id_probclass = id_probclass.
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ADD_FROM_BAPI" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>
@@ -1124,7 +1083,7 @@ DATA: _detlevel	TYPE ballevel.
   CALL METHOD add
     EXPORTING
 *      is_message   =
-      id_msgty     = &apos;I&apos;
+      id_msgty     = &apos;S&apos;
       id_msgid     = ID_MSGID
       id_msgno     = id_msgno
       id_msgv1     = id_msgv1
@@ -3144,18 +3103,18 @@ DATA lt_messages  TYPE t_msg_x.
     WRITE:/ _offset, _light AS ICON, _msg.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_ADD_ZL_CX" EXPOSURE="1" STATE="1" EDITORDER="42 ">
+   <ITEM CMPNAME="_ADD_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="43 ">
     <TEXTS>
-     <ITEM LANG="E" TEXT="Add Zaplink exception to bal log"/>
+     <ITEM LANG="E" TEXT="Add exception to bal log"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="EXCEPTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+     <ITEM SCONAME="EXCEPTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CX_ROOT">
       <TEXTS>
        <ITEM LANG="E" TEXT="Abstract Superclass for All Global Exceptions"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL" PAROPTIONL="X"/>
-     <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL" PAROPTIONL="X"/>
+     <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL"/>
+     <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL"/>
     </PARAMETERS>
     <SOURCE>`
   DATA _detlevel  TYPE ballevel.
@@ -3166,31 +3125,22 @@ DATA lt_messages  TYPE t_msg_x.
   DATA include    TYPE syrepid.
   DATA line       TYPE i.
   DATA cx_src_pos TYPE string.
-
-  IF id_detlevel IS INITIAL.
-    _detlevel = md_level.
-  ELSE.
-    _detlevel = id_detlevel.
-  ENDIF.
-
-  IF exception-&gt;prev_cx IS BOUND.
-    ADD 1 TO _detlevel.
-    CALL METHOD _add_zl_cx
-      EXPORTING
-        exception    = exception-&gt;prev_cx
-        id_detlevel  = _detlevel
-        id_probclass = id_probclass.
-    SUBTRACT 1 FROM _detlevel.
-  ENDIF.
+  DATA f_toolong  TYPE abap_bool.
+  DATA:
+    BEGIN OF s_msg,
+      msgv1	TYPE symsgv,
+      msgv2	TYPE symsgv,
+      msgv3	TYPE symsgv,
+      msgv4	TYPE symsgv,
+    END OF s_msg.
 
   IF exception-&gt;previous IS BOUND.
-    ADD 1 TO _detlevel.
+    _detlevel = id_detlevel + 1.
     CALL METHOD add_exception
       EXPORTING
         exception    = exception-&gt;previous
         id_detlevel  = _detlevel
         id_probclass = id_probclass.
-    SUBTRACT 1 FROM _detlevel.
   ENDIF.
 
   o_ref ?= cl_abap_classdescr=&gt;describe_by_data( p_data = exception ).
@@ -3208,29 +3158,97 @@ DATA lt_messages  TYPE t_msg_x.
     CONCATENATE include &apos;(&apos; prog &apos;) @&apos; cx_src_pos INTO cx_src_pos.
   ENDIF.
 
-  cx_text = exception-&gt;if_message~get_text( ).
-  SET EXTENDED CHECK OFF.
-  IF 1 = 2. MESSAGE e002(zaplink_easyxml) WITH abap_true abap_true abap_true. ENDIF.
-  SET EXTENDED CHECK ON.
-  CALL METHOD add_error
+  s_msg = o_obj-&gt;absolute_name.
+  IF NOT s_msg-msgv2 IS INITIAL OR NOT s_msg-msgv3 IS INITIAL OR NOT s_msg-msgv4 IS INITIAL.    f_toolong = abap_true.    ENDIF.
+  s_msg = cx_src_pos.
+  IF NOT s_msg-msgv2 IS INITIAL OR NOT s_msg-msgv3 IS INITIAL OR NOT s_msg-msgv4 IS INITIAL.    f_toolong = abap_true.    ENDIF.
+  s_msg = cx_text = exception-&gt;if_message~get_text( ).
+  IF NOT s_msg-msgv3 IS INITIAL OR NOT s_msg-msgv4 IS INITIAL.    f_toolong = abap_true.    ENDIF.
+  IF f_toolong IS INITIAL.
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE e002(zaplink_easyxml) WITH abap_true abap_true abap_true abap_true. ENDIF.
+    SET EXTENDED CHECK ON.
+    CALL METHOD add_error
+      EXPORTING
+        id_msgid     = &apos;ZAPLINK_EASYXML&apos;
+        id_msgno     = &apos;002&apos;
+        id_msgv1     = o_obj-&gt;absolute_name
+        id_msgv2     = s_msg-msgv1
+        id_msgv3     = s_msg-msgv2
+        id_msgv4     = cx_src_pos
+        id_detlevel  = id_detlevel
+        id_probclass = id_probclass.
+  ELSE.
+    s_msg = o_obj-&gt;absolute_name.   s_msg+100 = cx_src_pos.
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE e012(zaplink_easyxml) WITH abap_true abap_true abap_true abap_true. ENDIF.
+    SET EXTENDED CHECK ON.
+    CALL METHOD add_error
+      EXPORTING
+        id_msgid     = &apos;ZAPLINK_EASYXML&apos;
+        id_msgno     = &apos;012&apos;
+        id_msgv1     = s_msg-msgv1
+        id_msgv2     = s_msg-msgv2
+        id_msgv3     = s_msg-msgv3
+        id_msgv4     = s_msg-msgv4
+        id_detlevel  = id_detlevel
+        id_probclass = id_probclass.
+    WHILE NOT cx_text IS INITIAL.
+      s_msg = cx_text.
+      SET EXTENDED CHECK OFF.
+      IF 1 = 2. MESSAGE e011(zaplink_easyxml) WITH abap_true abap_true abap_true abap_true. ENDIF.
+      SET EXTENDED CHECK ON.
+      CALL METHOD add_info
+        EXPORTING
+          id_msgid     = &apos;ZAPLINK_EASYXML&apos;
+          id_msgno     = &apos;011&apos;
+          id_msgv1     = s_msg-msgv1
+          id_msgv2     = s_msg-msgv2
+          id_msgv3     = s_msg-msgv3
+          id_msgv4     = s_msg-msgv4
+          id_detlevel  = id_detlevel
+          id_probclass = id_probclass.
+      IF STRLEN( cx_text ) &lt; 200.   CLEAR cx_text.    ELSE.   SHIFT cx_text BY 200 PLACES LEFT.    ENDIF.
+    ENDWHILE.
+  ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="_ADD_ZL_CX" EXPOSURE="1" STATE="1" EDITORDER="42 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Add Zaplink exception to bal log"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="EXCEPTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Abstract Superclass for All Global Exceptions"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="ID_DETLEVEL" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALLEVEL"/>
+     <ITEM SCONAME="ID_PROBCLASS" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="BALPROBCL"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA _detlevel  TYPE ballevel.
+
+  IF exception-&gt;prev_cx IS BOUND.
+    _detlevel = id_detlevel + 1.
+    CALL METHOD _add_zl_cx
+      EXPORTING
+        exception    = exception-&gt;prev_cx
+        id_detlevel  = _detlevel
+        id_probclass = id_probclass.
+  ENDIF.
+
+  CALL METHOD _add_exception
     EXPORTING
-      id_msgid     = &apos;ZAPLINK_EASYXML&apos;
-      id_msgno     = &apos;002&apos;
-      id_msgv1     = o_obj-&gt;absolute_name
-      id_msgv2     = cx_text
-      id_msgv3     = cx_src_pos
-*      id_msgv4     =
-      id_detlevel  = _detlevel
-      id_probclass = id_probclass
-      .
+      exception    = exception
+      id_detlevel  = id_detlevel
+      id_probclass = id_probclass.
 
   IF exception-&gt;messages IS BOUND.
     CALL METHOD add_from_instance
       EXPORTING
         io_msglist        = exception-&gt;messages
-        if_add_as_subnode = abap_true
 *      if_cumulate       =
-        .
+        if_add_as_subnode = abap_true.
   ENDIF.</SOURCE>
    </ITEM>
   </METHODS>

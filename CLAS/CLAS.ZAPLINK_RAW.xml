@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C846DBFABBB74CB0075DDD185DABF8C8" CODE_SIGNATURE="B82D53FFB27EACA02ABE4E450DE77D99" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2222237F751EFDCBA9C455A785DFC966" CODE_SIGNATURE="179C5BBD79CDACE59D66CE9EFB632473" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_RAW_BASE"/>
  </DEPENDENCIES>
@@ -38,6 +38,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
   </ATTRIBUTS>
   <FRIENDS>
+   <ITEM STATE="1"/>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR" STATE="1"/>
    <ITEM REFCLSNAME="ZAPLINK_CONTAINER_4INST" STATE="1"/>
    <ITEM REFCLSNAME="ZAPLINK_EASYXML" STATE="1"/>
@@ -72,6 +73,28 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   super-&gt;constructor( o_comp ).</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="COPY_AS" EXPOSURE="2" STATE="1" EDITORDER="2 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Copy each attributs from an other RAW object"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RAW" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="My kind"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  me-&gt;type = raw-&gt;type.
+  me-&gt;name = raw-&gt;name.
+  me-&gt;connector = raw-&gt;connector.
+  me-&gt;version = raw-&gt;version.
+  me-&gt;directory = raw-&gt;directory.
+  me-&gt;checksum = raw-&gt;checksum.
+  me-&gt;dependencies = raw-&gt;dependencies.
+  me-&gt;code_signature = raw-&gt;code_signature.
+  me-&gt;raw = raw-&gt;raw.</SOURCE>
+   </ITEM>
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_RAW_BASE" MTDNAME="UPDATE_CONNECTOR_DATA">
@@ -86,6 +109,11 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
   </REDEFINITIONS>
   <TYPES>
+   <ITEM CMPNAME="TO_ME" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_RAW">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="My kind"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TO_RAW_DATA" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_RAW_DATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPLink : Abstract class for component data"/>

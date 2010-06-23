@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="6AC748540F49B9A4599BC7D7A0AF4820" CODE_SIGNATURE="FEC2C8D1E5615485A96962D0BA149AC9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2C370CE4D07CF53BE33D23FB6B698A99" CODE_SIGNATURE="0C0D8D0DB9AABC97EAC3E2D710CBF57F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROG_DATA"/>
@@ -35,8 +35,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="CURRENT_PARAM" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="ZAPLINK_VARI_DATA=&gt;TS_PARAM_DATA"/>
-   <ITEM CMPNAME="FLAGS" STATE="1" EDITORDER="6 " ATTDECLTYP="2" TYPTYPE="4">
+   <ITEM CMPNAME="CURRENT_PARAM" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="ZAPLINK_VARI_DATA=&gt;TS_PARAM_DATA"/>
+   <ITEM CMPNAME="FLAGS" STATE="1" EDITORDER="5 " ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF flags,       &quot; include RSDBCOM2
       BEGIN OF varid,
         noimp TYPE x VALUE &apos;10&apos;,
@@ -59,14 +59,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Mask values for XFLAG in VARI and VARID"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="R_DOC_ID" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
+   <ITEM CMPNAME="REPORT" STATE="1" EDITORDER="6 " ATTDECLTYP="1" TYPTYPE="1" TYPE="SY-REPID">
     <TEXTS>
-     <ITEM LANG="E" TEXT="Documentation Object"/>
+     <ITEM LANG="E" TEXT="Program for form"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="ST_PROGRAM_OFF" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;PROG&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
+   <ITEM CMPNAME="R_DOC_ID" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
     <TEXTS>
-     <ITEM LANG="E" TEXT="Transport category : ABAP Object"/>
+     <ITEM LANG="E" TEXT="Documentation Object"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUPPORTEDTYPES" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF supportedtypes,
@@ -75,12 +75,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       appl_variant     TYPE td_comptype VALUE &apos;VARX&apos;,       &quot;#EC NOTEXT
     END OF supportedtypes
 `</ITEM>
-   <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;AAAD0A4B07A5A05AE1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
+   <ITEM CMPNAME="_UUID" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;AAAD0A4B07A5A05AE1000000AC120173&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
      <ITEM LANG="E" TEXT="UUID for connector Program"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_VER" STATE="1" EDITORDER="4 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
+   <ITEM CMPNAME="_VER" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;1.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector Version"/>
     </TEXTS>
@@ -123,13 +123,22 @@ INCLUDE zaplink_macros.</MACROS>
 *CF       Program function                                             Program              Function
 *CM       Pull-down menu/menu bar                                      Program              Menu
 *RE       Report/Function Group, Logical DB                            Program/module pool
-  DATA _id LIKE LINE OF r_doc_id.
+  DATA _id    LIKE LINE OF r_doc_id.
+  DATA f_ok   TYPE abap_bool.
 
   _id-sign = &apos;I&apos;.
   _id-option = &apos;EQ&apos;.
   _id-low = &apos;CF&apos;. APPEND _id TO r_doc_id.
   _id-low = &apos;CM&apos;. APPEND _id TO r_doc_id.
-  _id-low = &apos;RE&apos;. APPEND _id TO r_doc_id.</SOURCE>
+  _id-low = &apos;RE&apos;. APPEND _id TO r_doc_id.
+
+  PERFORM check_vari_form_exists IN PROGRAM (sy-repid) CHANGING f_ok IF FOUND.
+  IF NOT f_ok IS INITIAL.   report = sy-repid.    RETURN.   ENDIF.
+  PERFORM check_vari_form_exists IN PROGRAM zaplink_vari CHANGING f_ok IF FOUND.
+  IF NOT f_ok IS INITIAL.
+    report = &apos;ZAPLINK_VARI&apos;.    &quot; Dump if program name is in lower case
+  ENDIF.
+*      assert ID ZAPLINK CONDITION f_ok is initial.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
@@ -243,7 +252,7 @@ INCLUDE zaplink_macros.</MACROS>
     &lt;vdyn&gt; TYPE tt_vdyn,
     &lt;vdd&gt;  TYPE tt_vdd,
     &lt;dat&gt;  LIKE LINE OF &lt;vdat&gt;,
-    &lt;s&gt; like LINE OF t_screens,
+    &lt;s&gt; LIKE LINE OF t_screens,
     &lt;v&gt; LIKE LINE OF t_vari.
   DATA: BEGIN OF l_formname_0,
           prefix(7) VALUE &apos;%_LINK_&apos;,
@@ -277,7 +286,9 @@ INCLUDE zaplink_macros.</MACROS>
                              CHANGING p_subrc
                              IF FOUND.
 
-  PERFORM set_object IN PROGRAM zaplink_vari USING me.
+*  PERFORM set_object IN PROGRAM report USING me IF FOUND.
+*  IF 1 = 2.   PERFORM set_object IN PROGRAM zaplink_vari USING me IF FOUND.  ENDIF.
+  PERFORM set_object IN PROGRAM zaplink_vari USING me IF FOUND.
 *perform brepi(rsdbspva) in MF : RS_VARIANT_CONTENTS
   LOOP AT t_vari ASSIGNING &lt;v&gt;.
     CLEAR current_param.
@@ -300,6 +311,12 @@ INCLUDE zaplink_macros.</MACROS>
 * end FORM FILL_TABLES_PS IN PROGRAM saplsvar
     MOVE &lt;v&gt;-name TO l_formname_0-suffix.
     CONCATENATE &apos;GET_VAL_&apos; &lt;v&gt;-kind INTO d_formname.
+    IF 1 = 2.   &quot;#EC *
+*      PERFORM get_val_s IN PROGRAM zaplink_vari IF FOUND.   &quot;#EC *
+      PERFORM get_val_p IN PROGRAM zaplink_vari using space space space IF FOUND.   &quot;#EC *
+    ENDIF.
+*    PERFORM (l_formname_0) IN PROGRAM (p_key-report)
+*           USING report d_formname p_subrc IF FOUND.
     PERFORM (l_formname_0) IN PROGRAM (p_key-report)
            USING &apos;ZAPLINK_VARI&apos; d_formname p_subrc IF FOUND.
     LOOP AT &lt;vdat&gt; ASSIGNING &lt;dat&gt;
@@ -309,6 +326,8 @@ INCLUDE zaplink_macros.</MACROS>
     ENDLOOP.
     INSERT current_param INTO TABLE result.
   ENDLOOP.
+*  PERFORM clear_object IN PROGRAM report USING me IF FOUND.
+*  IF 1 = 2.   PERFORM clear_object IN PROGRAM zaplink_vari USING me IF FOUND. ENDIF.
   PERFORM clear_object IN PROGRAM zaplink_vari USING me.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="READ_VARIANTS" EXPOSURE="1" STATE="1" EDITORDER="1 ">
@@ -433,7 +452,8 @@ INCLUDE zaplink_macros.</MACROS>
                                                USING p_key-report p_key
                                             CHANGING p_subrc p_subrc_s.
 
-  PERFORM set_object IN PROGRAM zaplink_vari USING me.
+  PERFORM set_object IN PROGRAM (report) USING me IF FOUND.   &quot; for installer
+  IF 1 = 2.   PERFORM set_object IN PROGRAM zaplink_vari USING me IF FOUND.  ENDIF.
 *  SORT t_screens BY name.
 *perform brepi(rsdbspva) in MF : RS_VARIANT_CONTENTS
   LOOP AT data INTO current_param.
@@ -448,18 +468,24 @@ INCLUDE zaplink_macros.</MACROS>
 *    IF &lt;v&gt;-xflag1 O flags-varid-noimp.      current_param-no_import = abap_true.    ENDIF.
     IF current_param-no_import = abap_true. &lt;s&gt;-xflag1 = &lt;s&gt;-xflag1 BIT-OR flags-varid-noimp.     ELSE.   &lt;s&gt;-xflag1 = &lt;s&gt;-xflag1 BIT-AND flags-varid-imp.      ENDIF.
 *    IF &lt;v&gt;-xflag1 O flags-vari-noint.       current_param-noint = abap_true.        ENDIF.
-    IF current_param-noint = abap_true.     &lt;s&gt;-xflag1 = &lt;s&gt;-xflag1 BIT-OR flags-vari-noint.      ELSE.   &lt;s&gt;-xflag1 = &lt;s&gt;-xflag1 BIT-AND flags-vari-INT.       ENDIF.
+    IF current_param-noint = abap_true.     &lt;s&gt;-xflag1 = &lt;s&gt;-xflag1 BIT-OR flags-vari-noint.      ELSE.   &lt;s&gt;-xflag1 = &lt;s&gt;-xflag1 BIT-AND flags-vari-int.       ENDIF.
 * END FROM MF RS_CHANGE_CREATED_VARIANT (134)
     MOVE &lt;s&gt;-name TO l_formname_0-suffix.
     CONCATENATE &apos;SET_VAL_&apos; &lt;s&gt;-kind INTO d_formname.
+    IF 1 = 2.   &quot;#EC *
+*      PERFORM set_val_s IN PROGRAM zaplink_vari TABLES space                     &quot;#EC *
+*                USING space space space space space IF FOUND.   &quot;#EC *
+      PERFORM set_val_p IN PROGRAM zaplink_vari using space space space IF FOUND.   &quot;#EC *
+    ENDIF.
     PERFORM (l_formname_0) IN PROGRAM (p_key-report)
-           USING &apos;ZAPLINK_VARI&apos; d_formname p_subrc IF FOUND.
+           USING report d_formname p_subrc IF FOUND.
     LOOP AT current_param-params ASSIGNING &lt;p&gt;.
       CLEAR s_vdat.   MOVE-CORRESPONDING &lt;p&gt; TO s_vdat.   s_vdat-selname = current_param-name.
       APPEND s_vdat TO t_varivdat.
     ENDLOOP.
   ENDLOOP.
-  PERFORM clear_object IN PROGRAM zaplink_vari USING me.
+  PERFORM clear_object IN PROGRAM (report) USING me IF FOUND.   &quot; for installer
+  IF 1 = 2.   PERFORM clear_object IN PROGRAM zaplink_vari USING me IF FOUND.   ENDIF.
 
 * MF RS_CREATE_VARIANT
   PERFORM export_variant_static IN PROGRAM rsdbspvd TABLES   t_dyns_fields
@@ -470,6 +496,7 @@ INCLUDE zaplink_macros.</MACROS>
                                                              t_texpr imex
                                                              p_key
                                                              p_subrc.
+
   PERFORM export_%_vari IN PROGRAM saplsvar USING p_key-report
                                                   p_key
                                                   sy-mandt
@@ -513,8 +540,8 @@ INCLUDE zaplink_macros.</MACROS>
         EXPORTING
           report                     = &lt;v&gt;-header-report
           variant                    = &lt;v&gt;-header-variant
-          FLAG_CONFIRMSCREEN         = abap_true
-          FLAG_DELALLCLIENT          = abap_true    &quot; other wise popup screen
+          flag_confirmscreen         = abap_true
+          flag_delallclient          = abap_true    &quot; other wise popup screen
 *       IMPORTING
 *         VARIANT                    =
         EXCEPTIONS
@@ -529,8 +556,8 @@ INCLUDE zaplink_macros.</MACROS>
           variant_protected          = 9
           OTHERS                     = 10.
       IF sy-subrc &lt;&gt; 0.
-* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+        MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+                WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
       ENDIF.
     ENDIF.
 
@@ -554,10 +581,10 @@ INCLUDE zaplink_macros.</MACROS>
         variant_locked            = 8
         OTHERS                    = 9.
     IF sy-subrc &lt;&gt; 0.
-* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+      MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
+              WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
     ENDIF.
-    PERFORM enq_variant IN PROGRAM saplsvar USING &lt;v&gt;-header-report &lt;v&gt;-header-variant.
+*    PERFORM enq_variant IN PROGRAM saplsvar USING &lt;v&gt;-header-report &lt;v&gt;-header-variant.      &quot; Not release by function it seems
     set_variant_params( program = &lt;v&gt;-header-report   variant = &lt;v&gt;-header-variant    data = &lt;v&gt;-params ).
     PERFORM deq_variant IN PROGRAM saplsvar USING &lt;v&gt;-header-report &lt;v&gt;-header-variant.
   ENDLOOP.</SOURCE>
@@ -568,12 +595,6 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA o_prog     TYPE to_program.
   DATA o_variant  TYPE to_variant.
-
-  TRY.
-      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
 
   CHECK object IS BOUND.
 
@@ -586,7 +607,13 @@ INCLUDE zaplink_macros.</MACROS>
       o_prog-&gt;anonymize( ).
     WHEN OTHERS.
       mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
-  ENDCASE.</SOURCE>
+  ENDCASE.
+
+  TRY.
+      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
     <SOURCE>`
@@ -634,13 +661,16 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA o_prog     TYPE to_program.
   DATA o_variant  TYPE to_variant.
+  DATA o_raw_var  TYPE to_raw_variant.
 
-  CREATE OBJECT object.
   CASE type.
     WHEN supportedtypes-sys_variant OR supportedtypes-appl_variant.
+      CREATE OBJECT o_raw_var.
+      object = o_raw_var.
       CREATE OBJECT o_variant.
       object-&gt;raw = o_variant.
     WHEN supportedtypes-program.
+      CREATE OBJECT object.
       CREATE OBJECT o_prog.
       object-&gt;raw = o_prog.
     WHEN OTHERS.
@@ -1033,6 +1063,9 @@ INCLUDE zaplink_macros.</MACROS>
         DELETE FROM trdirti WHERE name = s_fmd_prog-header-name.
         MODIFY trdirti FROM TABLE s_fmd_prog-texts.
 
+* Variants
+        write_variants( s_fmd_prog-variants ).
+
 *          CREATE OBJECT _comp.
 *          _comp-&gt;set_type( supportedtypes-program ).
 *          _name = _prog.
@@ -1044,7 +1077,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDCASE.
 
     o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
-    components-&gt;add( o_comp ).                              &quot; Issue 92
+    TRY.  components-&gt;add( o_comp ).  CATCH zaplink_cx_list.  ENDTRY.    &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -1062,6 +1095,11 @@ INCLUDE zaplink_macros.</MACROS>
    <ITEM CMPNAME="TO_PROGRAM" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_PROG_DATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Data for Program"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_RAW_VARIANT" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="ZAPLINK_PROG_DATA=&gt;TO_VARIANT">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Variant Raw object"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_VARIANT" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_VARI_DATA">

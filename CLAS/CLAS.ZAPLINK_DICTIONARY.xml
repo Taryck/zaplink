@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E46CA0200289ED80A291DDFA5D41DE40" CODE_SIGNATURE="93892E5B54594EB4E2E788BAEE0601FD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C41A7E3736FAF888937AD992FCEAC371" CODE_SIGNATURE="BA3D34A491879A36C30F755D1F15295C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
+  <ITEM TYPE="CLAS" NAME="ZAPLINK_TABL_DATA"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_XINX_DATA"/>
  </DEPENDENCIES>
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
@@ -105,6 +106,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   <DEFERRED>
    <CLASSES>
     <ITEM TYPEGROUP="ZAPLINK_DOCUMENTATION" TPUTYPE="1" IMPLICIT="X"/>
+    <ITEM TYPEGROUP="ZAPLINK_TABL_DATA" TPUTYPE="1" IMPLICIT="X"/>
     <ITEM TYPEGROUP="ZAPLINK_XINX_DATA" TPUTYPE="1" IMPLICIT="X"/>
    </CLASSES>
   </DEFERRED>
@@ -1709,11 +1711,7 @@ END-OF-DEFINITION.</MACROS>
     &amp;1-&gt;anonymize( ).
   END-OF-DEFINITION.
 
-  TRY.      &quot; Issue 86
-      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.
+  CHECK object IS BOUND.
 
   CASE object-&gt;type.
     WHEN supportedtypes-type_group.     lmac_do_obj o_typegroup.
@@ -1727,7 +1725,13 @@ END-OF-DEFINITION.</MACROS>
     WHEN supportedtypes-lock_object.    lmac_do_obj o_lock_obj.     &quot; Issue 86
     WHEN OTHERS.
       mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
-  ENDCASE.</SOURCE>
+  ENDCASE.
+
+  TRY.      &quot; Issue 86
+      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE"/>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
@@ -1752,6 +1756,7 @@ END-OF-DEFINITION.</MACROS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
     <SOURCE>`
   mac_obj_data.
+  DATA o_raw_idx TYPE to_raw_index.
 
   DEFINE lmac_obj_create.
     create object &amp;1.
@@ -1765,7 +1770,10 @@ END-OF-DEFINITION.</MACROS>
     WHEN supportedtypes-data_element.   lmac_obj_create o_data_e.
     WHEN supportedtypes-view.           lmac_obj_create o_view.
     WHEN supportedtypes-table.          lmac_obj_create o_table.
-    WHEN supportedtypes-ext_index or supportedtypes-table_index.      lmac_obj_create o_index.        &quot; Issue 55
+    WHEN supportedtypes-ext_index OR supportedtypes-table_index.
+      CREATE OBJECT o_raw_idx.
+      object = o_raw_idx.
+      lmac_obj_create o_index.                              &quot; Issue 55
     WHEN supportedtypes-table_type.     lmac_obj_create o_tab_type.
     WHEN supportedtypes-search_help.    lmac_obj_create o_s_help.
     WHEN supportedtypes-lock_object.    lmac_obj_create o_lock_obj.
@@ -1803,8 +1811,8 @@ END-OF-DEFINITION.</MACROS>
         d_type = dd_eu_type-lock_object.
       WHEN supportedtypes-matchcode_obj.
         d_type = dd_eu_type-matchcode_obj.
-      WHEN supportedtypes-table_index.
-        d_type = dd_eu_type-table_index.
+*      WHEN supportedtypes-table_index.
+*        d_type = dd_eu_type-table_index.
       WHEN supportedtypes-ext_index or supportedtypes-table_index.                        &quot; Issue 55
         IF type = supportedtypes-table_index.   d_type = dd_eu_type-table_index.    else.   d_type = dd_eu_type-ext_index.    endif.
         s_index = zaplink_xinx_data=&gt;name_2_key( d_name ).
@@ -2146,7 +2154,7 @@ END-OF-DEFINITION.</MACROS>
 *    IF NOT components IS BOUND. CREATE OBJECT components. ENDIF.
 *    components-&gt;add( o_comp ).
     o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
-    components-&gt;add( o_comp ).                      &quot; Issue 92
+    TRY.    components-&gt;add( o_comp ).    CATCH zaplink_cx_list.    ENDTRY.   &quot; Issue 92
 
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
@@ -2181,6 +2189,7 @@ END-OF-DEFINITION.</MACROS>
      <ITEM LANG="E" TEXT="Lock object (SE11) Datas"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TO_RAW_INDEX" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="ZAPLINK_TABL_DATA=&gt;TO_INDEX"/>
    <ITEM CMPNAME="TO_SEARCH_HELP" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="3" TYPE="ZAPLINK_SHLP_DATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Search Help (SE11) Datas"/>

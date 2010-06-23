@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4B965EA036B87B4441605169E13993B4" CODE_SIGNATURE="8F0056FBAB8370D3D3EE2D7439378398" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="BB475B0252E7F16B2A3A973C345CB92F" CODE_SIGNATURE="7CBEC1195508A06B10F6ABDE48ABA753" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -256,57 +256,6 @@ END-OF-DEFINITION.</MACROS>
     ENDAT.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_AS_XML_OFF" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1" MTDNEWEXC="X">
-    <PARAMETERS>
-     <ITEM SCONAME="IDS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="Range of ID"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="OBJECT" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="DOKU_OBJ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="Documentation Object"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="XMLDOC" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="XML Code"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
-    <SOURCE>`
-*  DATA ezxml  TYPE REF TO zaplink_easyxml.
-*  DATA t_docs TYPE tt_docs.
-*
-*  t_docs = get( ids = ids
-*             object = object ).
-*
-*  IF NOT t_docs IS INITIAL.
-*    CREATE OBJECT ezxml.
-*    TRY.
-*        CALL METHOD ezxml-&gt;any2xml
-*          EXPORTING
-*            any        = t_docs
-*            type       = node_name
-**        attributes = &apos;&apos;
-*          RECEIVING
-*            xmldoc     = xmldoc.
-*      CATCH zaplink_cx INTO o_cx.
-*        mac_cascade_raise o_mycx o_cx.
-*    ENDTRY.
-*    CALL METHOD log-&gt;add_from_instance
-*      EXPORTING
-*        io_msglist        = ezxml-&gt;application_log
-*        if_add_as_subnode = abap_true.
-*  ENDIF.</SOURCE>
-   </ITEM>
    <ITEM CMPNAME="GET_SINGLE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <PARAMETERS>
      <ITEM SCONAME="IDS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_DOC_ID"/>
@@ -466,44 +415,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
     ENDLOOP.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_AS_XML_OFF" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
-    <PARAMETERS>
-     <ITEM SCONAME="XML" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <SOURCE>`
-*  DATA t_docs TYPE tt_docs.
-*  DATA ezxml  TYPE REF TO zaplink_easyxml.
-*
-*  CREATE OBJECT ezxml.
-*
-**  TRY.
-*  CALL METHOD ezxml-&gt;_xml2any
-*    EXPORTING
-*      xml = xml
-*    CHANGING
-*      any = t_docs.
-**  ENDTRY.
-*
-*  IF t_docs IS INITIAL AND ezxml-&gt;application_log-&gt;has_messages_of_msgt( id_msgty = &apos;W&apos; ) IS INITIAL.
-*    EXIT. &quot;nothing to do
-*  ENDIF.
-*
-*  reset( ).
-*
-*  CALL METHOD application_log-&gt;add_from_instance
-*    EXPORTING
-*      io_msglist        = ezxml-&gt;application_log
-*      if_add_as_subnode = abap_true
-**      if_cumulate       =
-*      .
-*
-*  set( t_docs ).</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="SET_SINGLE" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
+   <ITEM CMPNAME="SET_SINGLE" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
     <PARAMETERS>
      <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_DOC">
       <TEXTS>
@@ -749,7 +661,7 @@ SPLIT string AT LINE_SEPARATOR
       ENDCASE.
 
       o_comp = object-&gt;get_component( abap_true ).          &quot; Issue 92
-      components-&gt;add( o_comp ).                            &quot; Issue 92
+      TRY.  components-&gt;add( o_comp ).  CATCH zaplink_cx_list.  ENDTRY.                                               &quot; Issue 92
     CATCH zaplink_cx_connector INTO o_mycx.
       ROLLBACK WORK.
       RAISE EXCEPTION o_mycx.
