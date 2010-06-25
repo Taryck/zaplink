@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3F47BF61B65E5EEBF8F8B3397E1E3904" CODE_SIGNATURE="DC406067A90F6EDCA630145651EA7832" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="232EF03DBDEDBAEA9AA42352254D9B99" CODE_SIGNATURE="DC406067A90F6EDCA630145651EA7832" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1009,7 +1009,7 @@ INCLUDE zaplink_macros.</MACROS>
     &lt;source_line&gt; LIKE LINE OF includes-classpool-raw_source.
 
   includes = get_includes( class_name-clsname ).            &quot; Issue 82
-  Check not includes-classpool-name is INITIAL. &quot; check it&apos;s a class
+  CHECK NOT includes-classpool-name IS INITIAL. &quot; check it&apos;s a class
 *  incname = cl_oo_classname_service=&gt;get_classpool_name( class_name-clsname ).   &quot; Issue 82
 *  cpool = get_prog_rawsource( includes-incname ).                                          &quot; Issue 73
 *  READ REPORT incname INTO cpool STATE &apos;I&apos;.

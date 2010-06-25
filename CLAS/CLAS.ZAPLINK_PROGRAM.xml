@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2C370CE4D07CF53BE33D23FB6B698A99" CODE_SIGNATURE="0C0D8D0DB9AABC97EAC3E2D710CBF57F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="7A3D4F083E0610EF8CBE6D3AF1D7CDE2" CODE_SIGNATURE="0ADAEB78694A1E17DE6831833B0C9DBF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROG_DATA"/>
@@ -7,7 +7,7 @@
  </DEPENDENCIES>
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSFINAL="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_PROGRAM">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
    <TEXTS>
     <ITEM LANG="E" TEXT="Data for Class">U1&amp;FUNCTIONALITY&amp;
@@ -148,7 +148,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA type LIKE LINE OF supported_types.
 
   CALL METHOD super-&gt;constructor.
-  mac_create_log application_log ballog_subobject space.
+  mac_create_log application_log ballog_subobject space.    application_log-&gt;msgid = &apos;ZAPLINK_PROGRAM&apos;.
   type-type = supportedtypes-program. INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-sys_variant. INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-appl_variant. INSERT type INTO TABLE supported_types.
@@ -243,7 +243,10 @@ INCLUDE zaplink_macros.</MACROS>
   DATA t_vari    TYPE STANDARD TABLE OF rvari.
   DATA p_subrc   TYPE sy-subrc.
   DATA p_subrc_s TYPE sy-subrc.
+  DATA s_subrc   TYPE string.
+  DATA s_subrc_s TYPE string.
   DATA d_param   LIKE LINE OF current_param-params.
+  DATA d_mandt   TYPE sy-mandt.
   TYPES tt_vdat TYPE STANDARD TABLE OF rsvarivdat.
   TYPES tt_vdyn TYPE STANDARD TABLE OF rsvaridyn.
   TYPES tt_vdd  TYPE STANDARD TABLE OF rsvdatdyn.
@@ -266,6 +269,32 @@ INCLUDE zaplink_macros.</MACROS>
   PERFORM import_var_selc IN PROGRAM saplsvar TABLES t_screens t_vari
                                                USING p_key-report p_key
                                             CHANGING p_subrc p_subrc_s.
+  IF NOT p_subrc_s IS INITIAL.
+    IF 1 = 2.   MESSAGE i000 WITH space space space.  ENDIF.
+    s_subrc = p_subrc_s.
+    CALL METHOD application_log-&gt;add_error
+      EXPORTING
+*        id_msgid     =
+        id_msgno     = &apos;000&apos;
+*        id_msgv4     =
+        id_msgv1     = s_subrc
+        id_msgv2     = p_key-report
+        id_msgv3     = p_key-variant.
+    RETURN.
+  ELSEIF NOT p_subrc IS INITIAL.
+    IF 1 = 2.   MESSAGE i001 WITH space space space.  ENDIF.
+    s_subrc = p_subrc.
+    CALL METHOD application_log-&gt;add_error
+      EXPORTING
+*        id_msgid     =
+        id_msgno     = &apos;001&apos;
+*        id_msgv4     =
+        id_msgv1     = s_subrc
+        id_msgv2     = p_key-report
+        id_msgv3     = p_key-variant.
+    RETURN.
+  ENDIF.
+
 * IN import_var_selc
 *VARIVDAT LIKE RSVARIVDAT OCCURS 2
 *DATA: VARIDYN LIKE RSVARIDYN OCCURS 10 WITH HEADER LINE.
@@ -281,10 +310,25 @@ INCLUDE zaplink_macros.</MACROS>
   ASSIGN (&apos;(SAPLSVAR)varidyn[]&apos;) TO &lt;vdyn&gt;.
   ASSIGN (&apos;(SAPLSVAR)varivdat_dyn[]&apos;) TO &lt;vdd&gt;.
 
+  IF variant CP zaplink_vari_data=&gt;variant_prefix-system OR variant CP zaplink_vari_data=&gt;variant_prefix-customer.    d_mandt = &apos;000&apos;.    ELSE.   d_mandt = sy-mandt.    ENDIF.
   PERFORM %_import_vari_clnt IN PROGRAM (p_key-report)
-                             USING p_key p_subrc_s sy-mandt
+                             USING p_key p_subrc_s d_mandt
                              CHANGING p_subrc
                              IF FOUND.
+  IF NOT p_subrc IS INITIAL OR NOT p_subrc_s IS INITIAL.
+    IF 1 = 2.   MESSAGE i002 WITH space space space space.  ENDIF.
+    s_subrc = p_subrc.
+    s_subrc_s = p_subrc_s.
+    CALL METHOD application_log-&gt;add_error
+      EXPORTING
+*        id_msgid     =
+        id_msgno     = &apos;002&apos;
+        id_msgv1     = s_subrc_s
+        id_msgv2     = s_subrc
+        id_msgv3     = p_key-report
+        id_msgv4     = p_key-variant.
+    RETURN.
+  ENDIF.
 
 *  PERFORM set_object IN PROGRAM report USING me IF FOUND.
 *  IF 1 = 2.   PERFORM set_object IN PROGRAM zaplink_vari USING me IF FOUND.  ENDIF.
@@ -311,9 +355,9 @@ INCLUDE zaplink_macros.</MACROS>
 * end FORM FILL_TABLES_PS IN PROGRAM saplsvar
     MOVE &lt;v&gt;-name TO l_formname_0-suffix.
     CONCATENATE &apos;GET_VAL_&apos; &lt;v&gt;-kind INTO d_formname.
-    IF 1 = 2.   &quot;#EC *
+    IF 1 = 2.                                               &quot;#EC *
 *      PERFORM get_val_s IN PROGRAM zaplink_vari IF FOUND.   &quot;#EC *
-      PERFORM get_val_p IN PROGRAM zaplink_vari using space space space IF FOUND.   &quot;#EC *
+      PERFORM get_val_p IN PROGRAM zaplink_vari USING space space space IF FOUND. &quot;#EC *
     ENDIF.
 *    PERFORM (l_formname_0) IN PROGRAM (p_key-report)
 *           USING report d_formname p_subrc IF FOUND.

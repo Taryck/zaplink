@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="67985AD7D64AB8755C4498C092C71FD1" CODE_SIGNATURE="4CE3672D1C4629A5CEDEAA878A1ADC51" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2DB80F2930DCDF31D3359389C0D850AF" CODE_SIGNATURE="B6C54ED1761AF5988CC6FF03798BF4E5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -1007,7 +1007,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   c_typegroup-type = &apos;TYPE&apos;.    c_typegroup-kind = zaplink_connectors=&gt;get_typekind( c_typegroup-type ).
   c_msg_class-type = &apos;MSAG&apos;.    c_msg_class-kind = zaplink_connectors=&gt;get_typekind( c_msg_class-type ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CLEAN_CODE" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CLEAN_CODE_OFF" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Clean ABAP Source Code"/>
     </TEXTS>
@@ -1306,7 +1306,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA _pos        TYPE sy-tabix.
   DATA t_code      TYPE td_sourcecode.
   DATA t_upcode    TYPE td_sourcecode.
-  DATA t_lines     TYPE td_sourcecode.
+*  DATA t_lines     TYPE td_sourcecode.
   DATA _line       LIKE LINE OF t_upcode.
   FIELD-SYMBOLS:
     &lt;l&gt; LIKE LINE OF t_upcode.
@@ -1321,63 +1321,80 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *      class_not_existing = 1
 *      OTHERS             = 2.
 *  IF sy-subrc &lt;&gt; 0.
-  IF t_code IS INITIAL.
-    RAISE failed.
-  ENDIF.
   zaplink_tools=&gt;remove_comment_on_source( CHANGING table = t_code ).
+  IF t_code IS INITIAL.   RAISE failed.   ENDIF.
 *  t_code = convert_source( o_source-&gt;source ).
   t_upcode = convert_source_upcase( t_code ).
 *  CLEAR o_source.
 
-*Remove text before CLASS Zxxx DEFINITION
+*class-pool MESSAGE-ID ZAPLINK_EXTRACTOR.
+*CLASS lcl_data DEFINITION DEFERRED.
+*CLASS zaplink_synchronizer DEFINITION LOCAL FRIENDS lcl_data.
+*CLASS lcl_data DEFINITION
+*
+* Must became :
+*CLASS lcl_data DEFINITION DEFERRED.
+*CLASS zaplink_synchronizer DEFINITION LOCAL FRIENDS lcl_data.
+*CLASS lcl_data DEFINITION
+  READ TABLE t_upcode ASSIGNING &lt;l&gt; INDEX 1.
+  IF &lt;l&gt; CP &apos;*CLASS-POOL*&apos;.   DELETE t_upcode INDEX 1.    DELETE t_code INDEX 1.    ENDIF.
+* Transform CLASS Zxxx DEFINITION
   CONCATENATE &apos;CLASS&apos; _clskey &apos;DEFINITION&apos; INTO _line SEPARATED BY space.
-  READ TABLE t_upcode TRANSPORTING NO FIELDS
-       FROM _line.
+  READ TABLE t_upcode TRANSPORTING NO FIELDS FROM _line.
   IF sy-subrc = 0.
-    _pos = sy-tabix.
-    APPEND LINES OF t_code FROM _pos TO t_lines.
+    _pos = sy-tabix + 1.
 *class ZAPLINK_MESSAGE_COLLECTOR definition
-*  public
+*  public   &quot; to remove when local class
 *  create public .
-    SUBTRACT 1 FROM _pos.
-    IF _pos &gt;= 1. DELETE t_upcode TO _pos. ENDIF.
-    READ TABLE t_upcode INDEX 2 INTO _line.
+    READ TABLE t_upcode INDEX _pos INTO _line.
     CONDENSE _line NO-GAPS.
     IF _line = &apos;PUBLIC&apos;.
-      DELETE t_lines INDEX 2.
-      DELETE t_upcode INDEX 2.
+      DELETE t_code INDEX _pos.       DELETE t_upcode INDEX _pos.
     ENDIF.
-  ELSE.
-* anormal case
-    t_lines = t_code.
   ENDIF.
+**Remove text before CLASS Zxxx DEFINITION
+*  CONCATENATE &apos;CLASS&apos; _clskey &apos;DEFINITION&apos; INTO _line SEPARATED BY space.
+*  READ TABLE t_upcode TRANSPORTING NO FIELDS
+*       FROM _line.
+*  IF sy-subrc = 0.
+*    _pos = sy-tabix.
+*    APPEND LINES OF t_code FROM _pos TO t_lines.
+**class ZAPLINK_MESSAGE_COLLECTOR definition
+**  public
+**  create public .
+*    SUBTRACT 1 FROM _pos.
+*    IF _pos &gt;= 1. DELETE t_upcode TO _pos. ENDIF.
+*    READ TABLE t_upcode INDEX 2 INTO _line.
+*    CONDENSE _line NO-GAPS.
+*    IF _line = &apos;PUBLIC&apos;.
+*      DELETE t_lines INDEX 2.
+*      DELETE t_upcode INDEX 2.
+*    ENDIF.
+*  ELSE.
+** anormal case
+*    t_lines = t_code.
+*  ENDIF.
 
 * Get implementation
 * class XXXXX implementation.
   CONCATENATE &apos;CLASS&apos; _clskey &apos;IMPLEMENTATION.&apos; INTO _line SEPARATED BY space.
-  READ TABLE t_upcode TRANSPORTING NO FIELDS
-       FROM _line.
+  READ TABLE t_upcode TRANSPORTING NO FIELDS FROM _line.
   IF sy-subrc = 0.
 * Class
     _pos = sy-tabix.
-    APPEND LINES OF t_lines  FROM _pos TO codes-impl.
-    DELETE t_lines FROM _pos.
-    DELETE t_upcode FROM _pos.
+    APPEND LINES OF t_code  FROM _pos TO codes-impl.
+    DELETE t_code FROM _pos.    DELETE t_upcode FROM _pos.
 * endclass. &quot;ZAPLINK_MESSAGE_COLLECTOR definition
     CONCATENATE &apos;ENDCLASS. &quot;&apos; _clskey &apos; DEFINITION&apos; INTO _line.
-    READ TABLE t_upcode TRANSPORTING NO FIELDS
-         FROM _line.
-    IF sy-subrc &lt;&gt; 0.
-      RAISE failed.
-    ENDIF.
+    READ TABLE t_upcode TRANSPORTING NO FIELDS FROM _line.
+    IF sy-subrc &lt;&gt; 0.   RAISE failed.   ENDIF.
     _pos = sy-tabix.
-    APPEND LINES OF t_lines TO _pos TO codes-def.
-    DELETE t_lines TO _pos.
-    DELETE t_upcode TO _pos.
-    codes-macro = t_lines.
+    APPEND LINES OF t_code TO _pos TO codes-def.
+    DELETE t_code TO _pos.    DELETE t_upcode TO _pos.
+    codes-macro = t_code.
   ELSE.
 * normal case for interfaces
-    codes-def = t_lines.
+    codes-def = t_code.
   ENDIF.
 
 *  zaplink_tools=&gt;condense_abap_source( CHANGING codes-macro ).
