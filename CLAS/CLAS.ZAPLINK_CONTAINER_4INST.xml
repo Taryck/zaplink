@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B893EEC43EE6492CEEED1849D8D428FF" CODE_SIGNATURE="C5A50BDF50AC4A7E5632F7B7D6DAAC2A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9B457FB7C37066180FE2C74AA0177CF3" CODE_SIGNATURE="97925C2A8340449F3CB5156353E9B6BD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -643,6 +643,11 @@ check data &lt;&gt; _options.
         ENDIF.
       ENDIF.
 
+      o_comp_p = _complist-&gt;search( o_comp ).
+      IF o_comp_p IS BOUND.
+        o_comp_p-&gt;copy_from( o_comp ).
+        o_comp = o_comp_p.
+      ENDIF.
 * Issue 10 : update node list
       _index-key = o_comp.
       MODIFY TABLE _nodeindex FROM _index.
@@ -651,7 +656,7 @@ check data &lt;&gt; _options.
       ENDIF.
 
       IF _is_subcomponent( _index-node ) = abap_false.
-        _complist-&gt;add( o_comp ).
+        IF NOT o_comp_p IS BOUND.   _complist-&gt;add( o_comp ).     ENDIF.
       ELSE.
 * Not working : node are the same but it&apos;s a new object. :(
 *      READ TABLE _nodeindex INTO _index

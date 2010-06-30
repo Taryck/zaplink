@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2DB80F2930DCDF31D3359389C0D850AF" CODE_SIGNATURE="B6C54ED1761AF5988CC6FF03798BF4E5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F96F7260D5E392DE44813FB786515495" CODE_SIGNATURE="99B8BB5531D2A90044F1FA239547A221" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -364,13 +364,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
                       source = &apos;=&gt;inheritance-refclsname&apos; ).
   ENDIF.
 
-  CALL METHOD add_types( o_data-&gt;types ).
+  add_types( o_data-&gt;types ).
 
-  CALL METHOD add_interfaces( o_data-&gt;interfaces ).
+  add_interfaces( o_data-&gt;interfaces ).
 
-  CALL METHOD add_attributs( o_data-&gt;attributs ).
+  add_attributs( o_data-&gt;attributs ).
 
-  CALL METHOD add_methods( o_data-&gt;methods ).
+  add_source_to_list( code = o_data-&gt;local-types-_   source = _name ).
+  add_source_to_list( code = o_data-&gt;local-implementations-_   source = _name ).
+  add_source_to_list( code = o_data-&gt;local-macros-_  source = _name ).
+
+  add_methods( o_data-&gt;methods ).
 
   LOOP AT o_data-&gt;friends ASSIGNING &lt;f&gt;.
     _key = &lt;f&gt;-refclsname.    CALL METHOD add_object_to_list( name = _key   SOURCE = &apos;=&gt;friends&apos; ).

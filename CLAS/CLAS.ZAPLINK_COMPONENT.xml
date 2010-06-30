@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E7340A36479B45982F7F50F95FD81894" CODE_SIGNATURE="E79687CFE6728B0E657703E56201AE9C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6D4303DADB8B164FDE8B31833735827A" CODE_SIGNATURE="56D155B22B1FCBDA5FFB3828E34F3FD8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -57,98 +57,99 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Connector Exists constants"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="LOCAL_DEVCLASS" EXPOSURE="1" STATE="1" EDITORDER="9 " ATTDECLTYP="2" ATTVALUE="&apos;$LOCAL$&apos;" TYPTYPE="1" TYPE="TD_DEVCLASS">
+   <ITEM CMPNAME="LOCAL_DEVCLASS" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;$LOCAL$&apos;" TYPTYPE="1" TYPE="TD_DEVCLASS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Devclass for Local class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="NAME" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TD_COMPNAME">
+   <ITEM CMPNAME="MY_ATTRIBS" STATE="1" EDITORDER="22 " ATTDECLTYP="1" TYPTYPE="1" TYPE="ABAP_ATTRDESCR_TAB"/>
+   <ITEM CMPNAME="NAME" EXPOSURE="1" STATE="1" EDITORDER="21 " TYPTYPE="1" TYPE="TD_COMPNAME">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Name"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
+   <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
+   <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="4 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TYPE" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TD_COMPTYPE">
+   <ITEM CMPNAME="TYPE" EXPOSURE="1" STATE="1" EDITORDER="20 " TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Type"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="WITH_SUBCOMP" EXPOSURE="1" STATE="1" EDITORDER="11 " ATTVALUE="ABAP_TRUE" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP">
+   <ITEM CMPNAME="WITH_SUBCOMP" EXPOSURE="1" STATE="1" EDITORDER="19 " ATTVALUE="ABAP_TRUE" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP">
     <TEXTS>
      <ITEM LANG="E" TEXT="Also do Sub Component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_ACTION" EXPOSURE="1" STATE="1" EDITORDER="14 " TYPTYPE="1" TYPE="TD_ACTION">
+   <ITEM CMPNAME="_ACTION" EXPOSURE="1" STATE="1" EDITORDER="18 " TYPTYPE="1" TYPE="TD_ACTION">
     <TEXTS>
      <ITEM LANG="E" TEXT="Action for the component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_CHECKSUM" EXPOSURE="1" STATE="1" EDITORDER="12 " TYPTYPE="1" TYPE="TD_CHECKSUM">
+   <ITEM CMPNAME="_CHECKSUM" EXPOSURE="1" STATE="1" EDITORDER="17 " TYPTYPE="1" TYPE="TD_CHECKSUM">
     <TEXTS>
      <ITEM LANG="E" TEXT="Checksum of the whole component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_CLASSES" EXPOSURE="1" STATE="1" EDITORDER="7 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_CLASSES">
+   <ITEM CMPNAME="_CLASSES" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_CLASSES">
     <TEXTS>
      <ITEM LANG="E" TEXT="Classe list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_CODE_SIGNATURE" EXPOSURE="1" STATE="1" EDITORDER="13 " TYPTYPE="1" TYPE="TD_CHECKSUM">
+   <ITEM CMPNAME="_CODE_SIGNATURE" EXPOSURE="1" STATE="1" EDITORDER="16 " TYPTYPE="1" TYPE="TD_CHECKSUM">
     <TEXTS>
      <ITEM LANG="E" TEXT="Checksum of the source code only (if applies)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TS_CONNDATA">
+   <ITEM CMPNAME="_CONNECTOR" EXPOSURE="1" STATE="1" EDITORDER="15 " TYPTYPE="1" TYPE="TS_CONNDATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector Info"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_DATA" EXPOSURE="1" STATE="1" EDITORDER="15 " TYPTYPE="1" TYPE="TD_COMPADD_DATA">
+   <ITEM CMPNAME="_DATA" EXPOSURE="1" STATE="1" EDITORDER="14 " TYPTYPE="1" TYPE="TD_COMPADD_DATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Data to store"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_DEVCLASS" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TD_DEVCLASS">
+   <ITEM CMPNAME="_DEVCLASS" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TD_DEVCLASS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Devlopment class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TO_CONN_EXCEPTION">
+   <ITEM CMPNAME="_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TO_CONN_EXCEPTION">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_EXISTS" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TD_COMPEXISTS">
+   <ITEM CMPNAME="_EXISTS" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TD_COMPEXISTS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Component exists in SAP"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_KIND" EXPOSURE="1" STATE="1" EDITORDER="18 " TYPTYPE="1" TYPE="TD_TRANSPORT_KIND"/>
-   <ITEM CMPNAME="_MSG_COLL" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TO_MSG_COLL">
+   <ITEM CMPNAME="_KIND" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="TD_TRANSPORT_KIND"/>
+   <ITEM CMPNAME="_MSG_COLL" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="TO_MSG_COLL">
     <TEXTS>
      <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="16 " TYPTYPE="3" TYPE="OBJECT">
+   <ITEM CMPNAME="_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="11 " TYPTYPE="3" TYPE="OBJECT">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional information as object"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_SRCSYSTEM" EXPOSURE="1" STATE="1" EDITORDER="17 " TYPTYPE="1" TYPE="TD_SRCSYSTEM">
+   <ITEM CMPNAME="_SRCSYSTEM" EXPOSURE="1" STATE="1" EDITORDER="12 " TYPTYPE="1" TYPE="TD_SRCSYSTEM">
     <TEXTS>
      <ITEM LANG="E" TEXT="Source System"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_SUBCOMPONENTS" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="TO_LIST">
+   <ITEM CMPNAME="_SUBCOMPONENTS" EXPOSURE="1" STATE="1" EDITORDER="13 " TYPTYPE="1" TYPE="TO_LIST">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZapLink Components list"/>
     </TEXTS>
@@ -176,7 +177,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 INCLUDE zaplink_macros.</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="CLONE" EXPOSURE="2" STATE="1" EDITORDER="25 ">
+   <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDTYPE="2" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="CLONE" EXPOSURE="2" STATE="1" EDITORDER="28 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Clone Component"/>
     </TEXTS>
@@ -188,10 +194,10 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-*  create object result.
-  result = me.</SOURCE>
+  CREATE OBJECT result.
+  result-&gt;copy_from( me ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector : Getter"/>
     </TEXTS>
@@ -212,7 +218,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
 result = _connector-o_conn.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONNECTOR_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CONNECTOR_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector Exists : Getter"/>
     </TEXTS>
@@ -232,6 +238,44 @@ result = _connector-o_conn.</SOURCE>
     </EXCEPTIONS>
     <SOURCE>`
 result = _connector-exists.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
+    </TEXTS>
+    <SOURCE>`
+  DATA o_obj TYPE REF TO cl_abap_objectdescr.
+  IF my_attribs IS INITIAL.
+    o_obj ?= cl_abap_typedescr=&gt;describe_by_object_ref( me ).
+    my_attribs = o_obj-&gt;attributes.
+    DELETE my_attribs WHERE is_class = abap_true    &quot; remove class attributes
+                      OR is_constant = abap_true.   &quot; remove constants.
+  ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="COPY_FROM" EXPOSURE="2" STATE="1" EDITORDER="27 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Copy attributes from other Component"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENT" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Zap Link Component"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  FIELD-SYMBOLS:
+    &lt;s&gt; TYPE ANY,
+    &lt;t&gt; TYPE ANY,
+    &lt;a&gt; LIKE LINE OF my_attribs.
+
+  me-&gt;type = component-&gt;type.
+  me-&gt;name = component-&gt;name.
+  LOOP AT my_attribs ASSIGNING &lt;a&gt;.
+    ASSIGN me-&gt;(&lt;a&gt;-name) TO &lt;t&gt;.   CHECK sy-subrc = 0.
+    ASSIGN COMPONENT-&gt;(&lt;a&gt;-name) TO &lt;s&gt;.   CHECK sy-subrc = 0.
+    &lt;t&gt; = &lt;s&gt;.
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CREATE_NEW" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -265,7 +309,7 @@ result = _connector-exists.</SOURCE>
       RAISE EXCEPTION _cx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="DO_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
+   <ITEM CMPNAME="DO_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Component Exists : Getter"/>
     </TEXTS>
@@ -282,7 +326,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _exists.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_ACTION" EXPOSURE="2" STATE="1" EDITORDER="27 ">
+   <ITEM CMPNAME="GET_ACTION" EXPOSURE="2" STATE="1" EDITORDER="30 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Action : Getter"/>
     </TEXTS>
@@ -296,7 +340,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _action.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_ADD_DATA" EXPOSURE="2" STATE="1" EDITORDER="29 ">
+   <ITEM CMPNAME="GET_ADD_DATA" EXPOSURE="2" STATE="1" EDITORDER="32 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Data : Getter"/>
     </TEXTS>
@@ -310,7 +354,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="31 ">
+   <ITEM CMPNAME="GET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="34 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Object : Getter"/>
     </TEXTS>
@@ -324,7 +368,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _object.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="21 ">
+   <ITEM CMPNAME="GET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="23 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Checksum : Getter"/>
     </TEXTS>
@@ -338,7 +382,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _checksum.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="23 ">
+   <ITEM CMPNAME="GET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="25 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Code Signature : Getter"/>
     </TEXTS>
@@ -352,7 +396,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _code_signature.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CONNUUID" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_CONNUUID" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector UUID : Getter"/>
     </TEXTS>
@@ -373,7 +417,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _connector-uuid.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="DevClass : Getter"/>
     </TEXTS>
@@ -394,7 +438,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _devclass.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Exception : Getter"/>
     </TEXTS>
@@ -415,7 +459,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _exception.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_KEY" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_KEY" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Key : Getter"/>
     </TEXTS>
@@ -441,7 +485,7 @@ result = _connector-exists.</SOURCE>
   result-type = type.
   result-name = name.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Message Collector : Getter"/>
     </TEXTS>
@@ -462,7 +506,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _msg_coll.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_NAME" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_NAME" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Name : Getter"/>
     </TEXTS>
@@ -483,7 +527,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = name.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_SRC_SYS" EXPOSURE="2" STATE="1" EDITORDER="33 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_SRC_SYS" EXPOSURE="2" STATE="1" EDITORDER="36 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Source System : Getter"/>
     </TEXTS>
@@ -504,7 +548,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _srcsystem.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_SUBCOMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_SUBCOMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="21 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Sub-Components list : Getter"/>
     </TEXTS>
@@ -525,7 +569,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _subcomponents.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPE" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TYPE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Type : Getter"/>
     </TEXTS>
@@ -546,7 +590,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = type.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPEKIND" EXPOSURE="2" STATE="1" EDITORDER="35 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TYPEKIND" EXPOSURE="2" STATE="1" EDITORDER="38 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Transport Kind of Type : Getter"/>
     </TEXTS>
@@ -567,7 +611,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _kind.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="With Sub Component : Getter"/>
     </TEXTS>
@@ -626,7 +670,7 @@ result = _connector-exists.</SOURCE>
        AND obj_name = name.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="REFRESH" EXPOSURE="2" STATE="1" EDITORDER="26 " MTDNEWEXC="X">
+   <ITEM CMPNAME="REFRESH" EXPOSURE="2" STATE="1" EDITORDER="29 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Refresh component informations"/>
     </TEXTS>
@@ -644,7 +688,7 @@ result = _connector-exists.</SOURCE>
 *      RAISE EXCEPTION o_mycx.    &quot; Exception is ignored
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_ACTION" EXPOSURE="2" STATE="1" EDITORDER="28 ">
+   <ITEM CMPNAME="SET_ACTION" EXPOSURE="2" STATE="1" EDITORDER="31 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Action : Setter"/>
     </TEXTS>
@@ -658,7 +702,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   _action = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_ADD_DATA" EXPOSURE="2" STATE="1" EDITORDER="30 ">
+   <ITEM CMPNAME="SET_ADD_DATA" EXPOSURE="2" STATE="1" EDITORDER="33 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Data : Setter"/>
     </TEXTS>
@@ -672,7 +716,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   _data = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="32 ">
+   <ITEM CMPNAME="SET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="35 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Object : Setter"/>
     </TEXTS>
@@ -686,7 +730,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   _object = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="22 ">
+   <ITEM CMPNAME="SET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="24 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Checksum : Setter"/>
     </TEXTS>
@@ -700,7 +744,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   _checksum = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="24 ">
+   <ITEM CMPNAME="SET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="26 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Code Signature : Settter"/>
     </TEXTS>
@@ -714,7 +758,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   _code_signature = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_CONNUUID" EXPOSURE="2" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_CONNUUID" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector UUID : Setter"/>
     </TEXTS>
@@ -756,7 +800,7 @@ result = _connector-exists.</SOURCE>
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="DevClass : Setter"/>
     </TEXTS>
@@ -778,7 +822,7 @@ result = _connector-exists.</SOURCE>
   CHECK data &lt;&gt; _devclass.
   _devclass = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Exception : Setter"/>
     </TEXTS>
@@ -819,7 +863,7 @@ result = _connector-exists.</SOURCE>
     CLEAR _exception.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="20 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Message Collector : Setter"/>
     </TEXTS>
@@ -860,7 +904,7 @@ result = _connector-exists.</SOURCE>
     CLEAR _msg_coll.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_NAME" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_NAME" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Name : Setter"/>
     </TEXTS>
@@ -884,7 +928,7 @@ result = _connector-exists.</SOURCE>
   on_change_clear( ).
   on_change_update( ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_SRC_SYS" EXPOSURE="2" STATE="1" EDITORDER="34 ">
+   <ITEM CMPNAME="SET_SRC_SYS" EXPOSURE="2" STATE="1" EDITORDER="37 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Source System: Setter"/>
     </TEXTS>
@@ -898,7 +942,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   _srcsystem = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_SUBCOMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="20 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_SUBCOMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="22 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Sub-Components list : Setter"/>
     </TEXTS>
@@ -939,7 +983,7 @@ result = _connector-exists.</SOURCE>
     CLEAR _msg_coll.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_TYPE" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_TYPE" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Type : Setter"/>
     </TEXTS>
@@ -980,7 +1024,7 @@ result = _connector-exists.</SOURCE>
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="With Sub Component : Setter"/>
     </TEXTS>
