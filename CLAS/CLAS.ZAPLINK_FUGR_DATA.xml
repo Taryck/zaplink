@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A109A655A7E854B20BF2D9A66FA0DA09" CODE_SIGNATURE="638FE8669B01E982983BEC8B9D2BF521" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUGR_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="07E89BFBDA42551BAACE34509871C4D6" CODE_SIGNATURE="43A1B2DB37BAD9101175DAA1D1378561" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUGR_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -511,6 +511,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     INSERT s_inc INTO TABLE fm_data-includes.
   ENDLOOP.
 
+  LOOP AT functions ASSIGNING &lt;f&gt;.      &quot; previously missing =&gt; No function imported :-(
+    s_func = &lt;f&gt;-zl_object-&gt;to_data( ).
+    s_func-header-str_area = fm_data-header-area.
+    INSERT s_func INTO TABLE fm_data-functions.
+  ENDLOOP.
 *  LOOP AT functions ASSIGNING &lt;f&gt;.
 *    CLEAR s_func.   MOVE-CORRESPONDING &lt;f&gt; TO s_func-header.
 ** Source code : remove FUNCTION XXX &amp; ENDFUNCTION.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7A3D4F083E0610EF8CBE6D3AF1D7CDE2" CODE_SIGNATURE="0ADAEB78694A1E17DE6831833B0C9DBF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F56852D3D14AC87F834F0CCCE0D4D65D" CODE_SIGNATURE="A8D2220269D7EC201606FC249F0BBE60" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROG_DATA"/>
@@ -557,14 +557,62 @@ INCLUDE zaplink_macros.</MACROS>
   DATA t_varis     TYPE STANDARD TABLE OF varis WITH DEFAULT KEY.
   DATA t_varit     TYPE STANDARD TABLE OF varit WITH DEFAULT KEY.
   DATA t_params    TYPE STANDARD TABLE OF rsparams WITH DEFAULT KEY.
-  DATA d_subrc    TYPE sy-subrc.
+  DATA d_subrc     TYPE sy-subrc.
+*  DATA t_rep       TYPE STANDARD TABLE OF string.
+  DATA d_is_work_i  TYPE abap_bool.
+  DATA d_is_inactiv TYPE abap_bool.
+  DATA d_obj_name   TYPE e071-obj_name.
+  DATA t_variants   TYPE tt_variants.
+  DATA f_ok         TYPE abap_bool.
+  DATA o_activate   TYPE REF TO zaplink_activate.
+  DATA t_comps      TYPE zaplink_list=&gt;tt_compkeys.
+  DATA s_comp       LIKE LINE OF t_comps.
 *  DATA s_vari      LIKE LINE OF result.
   FIELD-SYMBOLS:
 *    &lt;t&gt; LIKE LINE OF t_varit,
 *    &lt;s&gt; LIKE LINE OF t_varis,
     &lt;v&gt; LIKE LINE OF variants.
 
-  LOOP AT variants ASSIGNING &lt;v&gt;.
+  t_variants = variants.    SORT t_variants.    s_comp-type = &apos;PROG&apos;.
+  LOOP AT t_variants ASSIGNING &lt;v&gt;.
+    AT NEW header-report.
+      f_ok = abap_true.
+*    READ REPORT &lt;v&gt;-header-report INTO t_rep STATE &apos;A&apos;.   &quot; Check for active program existence
+      d_obj_name = &lt;v&gt;-header-report.
+      CALL FUNCTION &apos;RS_OBJECT_IN_WORKING_AREA&apos;
+        EXPORTING
+          object                        = &apos;REPS&apos;
+          obj_name                      = d_obj_name
+*     GLOBAL_CHECK                  = &apos; &apos;
+*     MODE                          = &apos;S&apos;
+        IMPORTING
+          object_is_work_item           = d_is_work_i     &quot; My inactive object
+          object_inactive_version       = d_is_inactiv.
+      IF NOT d_is_work_i IS INITIAL OR NOT d_is_inactiv IS INITIAL.
+        REFRESH t_comps.    s_comp-name = &lt;v&gt;-header-report.    APPEND s_comp TO t_comps.
+        CREATE OBJECT o_activate
+          EXPORTING
+            obj_list = t_comps.
+        t_comps = o_activate-&gt;activate( ).
+        IF NOT t_comps IS INITIAL.
+* Can&apos;t insert variant &apos;1&apos; for program &apos;&amp;2&apos;, because do not exist as active
+          SET EXTENDED CHECK OFF.
+          IF 1 = 2.   MESSAGE i003 WITH &lt;v&gt;-header-report &lt;v&gt;-header-variant.   ENDIF.
+          SET EXTENDED CHECK ON.
+          CALL METHOD application_log-&gt;add_warning
+            EXPORTING
+*        id_msgid     =
+              id_msgno     = &apos;003&apos;
+*        id_msgv4     =
+              id_msgv1     = &lt;v&gt;-header-report
+              id_msgv2     = &lt;v&gt;-header-variant.
+          CLEAR f_ok.
+        ENDIF.
+      ENDIF.
+    ENDAT.
+
+    CHECK f_ok = abap_true.
+
     t_varit = &lt;v&gt;-texts.
     t_varis = &lt;v&gt;-screens.
     CALL FUNCTION &apos;RS_VARIANT_EXISTS&apos;
@@ -627,10 +675,11 @@ INCLUDE zaplink_macros.</MACROS>
     IF sy-subrc &lt;&gt; 0.
       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
-    ENDIF.
+    ELSE.
 *    PERFORM enq_variant IN PROGRAM saplsvar USING &lt;v&gt;-header-report &lt;v&gt;-header-variant.      &quot; Not release by function it seems
-    set_variant_params( program = &lt;v&gt;-header-report   variant = &lt;v&gt;-header-variant    data = &lt;v&gt;-params ).
-    PERFORM deq_variant IN PROGRAM saplsvar USING &lt;v&gt;-header-report &lt;v&gt;-header-variant.
+      set_variant_params( program = &lt;v&gt;-header-report   variant = &lt;v&gt;-header-variant    data = &lt;v&gt;-params ).
+      PERFORM deq_variant IN PROGRAM saplsvar USING &lt;v&gt;-header-report &lt;v&gt;-header-variant.
+    ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
   </METHODS>
