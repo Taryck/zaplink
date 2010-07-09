@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="EBF135CCF5BC2C40CECC9B4377C337A5" CODE_SIGNATURE="6886FD8C6B46A41597AE70B2EB1EC6E0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C6C840A2DC2C259580261AD980EB106D" CODE_SIGNATURE="C4381AD3431262392D4EE870959F703E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUGR_DATA"/>
@@ -10,7 +10,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_FUGR">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
    <TEXTS>
-    <ITEM LANG="E" TEXT="Data for Class">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Conneector for Function Group">U1&amp;FUNCTIONALITY&amp;
 ASIs a connector for :
 AS- FUGR : Function Group
 U1&amp;RELATIONS&amp;
@@ -39,6 +39,16 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="C_MAINPROG_PREFIX" STATE="1" EDITORDER="3 " ATTDECLTYP="2" ATTVALUE="&apos;SAPL&apos;" TYPTYPE="1" TYPE="TRDIR-NAME">
     <TEXTS>
      <ITEM LANG="E" TEXT="Function group Main program prefix"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="PREV_FUNC" STATE="1" EDITORDER="4 " TYPTYPE="4">
+    BEGIN OF prev_func,
+     name  TYPE  td_function_name,
+     data  TYPE  ts_fmd_func,
+   END OF prev_func
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Previous function"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUPPORTEDKINDS" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="4">BEGIN OF supportedkinds,
@@ -94,9 +104,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 INCLUDE zaplink_macros.</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="CALC_FUNCTION_SIGNATURE" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
+   <ITEM CMPNAME="CALC_FUNCTION_SIGNATURE" EXPOSURE="1" STATE="1" EDITORDER="1 ">
     <TEXTS>
-     <ITEM LANG="E" TEXT="Get Source code Signature of a function"/>
+     <ITEM LANG="E" TEXT="Determine Source code Signature of a function"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FUNCTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FMD_FUNC">
@@ -377,7 +387,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_FUNCTION_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_FUNCTION_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="4 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get Source code Signature of a function"/>
     </TEXTS>
@@ -396,13 +406,13 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA d_src      TYPE string.
   DATA s_fm_func  TYPE ts_fmd_func.
-  DATA d_lcount   TYPE i.
-  FIELD-SYMBOLS: &lt;s&gt; LIKE LINE OF s_fm_func-source.
+*  DATA d_lcount   TYPE i.
+*  FIELD-SYMBOLS: &lt;s&gt; LIKE LINE OF s_fm_func-source.
 
   s_fm_func = read_function( name ).
   result = CALC_FUNCTION_SIGNATURE( s_fm_func ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_GROUP_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_GROUP_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get Source code Signature of a function group"/>
     </TEXTS>
@@ -489,7 +499,7 @@ INCLUDE zaplink_macros.</MACROS>
       OTHERS        = 6.
   CONCATENATE s_rs38l-namespace c_mainprog_prefix s_rs38l-str_area INTO result.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="READ_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="READ_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Read function from SAP System"/>
     </TEXTS>
@@ -509,8 +519,8 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  STATICS prev_func_name  TYPE  td_function_name.
-  STATICS prev_func_data  TYPE  ts_fmd_func.
+*  STATICS prev_func_name  TYPE  td_function_name.
+*  STATICS prev_func_data  TYPE  ts_fmd_func.
   DATA o_data     TYPE to_group.
   DATA s_fmd_fugr TYPE ts_fmd_fugr.
   DATA d_name     TYPE rs38l-name.
@@ -521,27 +531,29 @@ INCLUDE zaplink_macros.</MACROS>
   DATA s_func LIKE LINE OF s_fmd_fugr-functions.
   DATA t_doc TYPE STANDARD TABLE OF rsfdo WITH DEFAULT KEY.
   DATA t_src TYPE STANDARD TABLE OF rssource WITH DEFAULT KEY.
+  data t_src_new type RSFB_SOURCE.    &quot; Issue 98
   DATA t_tmp_doc TYPE tt_docs.
   DATA d_doc TYPE doku_obj.
   DATA s_doc_param TYPE zaplink_fugr_data=&gt;ts_doc_param.
 *  FIELD-SYMBOLS:
 *    &lt;f&gt; LIKE LINE OF t_functions.
 
-  IF prev_func_name = name.   result = prev_func_data.    RETURN.   ENDIF.    &quot; Use Cache
+  IF prev_func-name = name.   result = prev_func-data.    RETURN.   ENDIF.    &quot; Use Cache
   TRY.
     result-header-name = s_doc_param-func =  name.
 *          s_func-source = get_prog_rawsource( &lt;f&gt;-include ).
     s_doc_param-param = &apos;*&apos;.    d_doc = s_doc_param.
     result-docs = zaplink_documentation=&gt;get( ids = zaplink_fugr_data=&gt;r_doc_ids-function
                                            object =  d_doc ).
-    CALL FUNCTION &apos;RPY_FUNCTIONMODULE_READ&apos;
+*    CALL FUNCTION &apos;RPY_FUNCTIONMODULE_READ&apos;    &quot; Issue 98 : Source might be wider than 72 Chars
+    CALL FUNCTION &apos;RPY_FUNCTIONMODULE_READ_NEW&apos;
       EXPORTING
         functionname             = result-header-name
       IMPORTING
         global_flag              = result-header-global
         remote_call              = result-header-remote
         update_task              = result-header-utask
-*               SHORT_TEXT               =
+*        SHORT_TEXT               =
         function_pool            = result-header-str_area
       TABLES
         import_parameter         = result-import_p
@@ -551,20 +563,21 @@ INCLUDE zaplink_macros.</MACROS>
         exception_list           = result-exceptions
         documentation            = t_doc
         SOURCE                   = t_src
+      CHANGING
+        NEW_SOURCE               = t_src_new
       EXCEPTIONS
         error_message            = 1
         function_not_found       = 2
         invalid_name             = 3
         OTHERS                   = 4.
     IF sy-subrc &lt;&gt; 0.
-* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+      mac_add_mf_and_raise &apos;RPY_FUNCTIONMODULE_READ_NEW&apos; sy-subrc.
     ENDIF.
-    result-source = t_src.
+    If not t_src_new is INITIAL.    result-source = t_src_new.    else.   result-source = t_src.    endif.
     SELECT * INTO TABLE result-texts FROM tftit WHERE funcname = result-header-name.
     SELECT * INTO TABLE result-param_texts FROM funct WHERE funcname = result-header-name.
 
-    prev_func_data = result.    prev_func_name = name.
+    prev_func-data = result.    prev_func-name = name.
 
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
@@ -586,8 +599,10 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA t_doc       TYPE STANDARD TABLE OF rsfdo WITH DEFAULT KEY.
   DATA t_src       TYPE STANDARD TABLE OF rssource WITH DEFAULT KEY.
+  DATA t_src_new   TYPE  rsfb_source.
 
   TRY.
+    t_src_new = func-source.
     CALL FUNCTION &apos;RPY_FUNCTIONMODULE_INSERT&apos;
       EXPORTING
         funcname                      = func-header-name
@@ -599,7 +614,7 @@ INCLUDE zaplink_macros.</MACROS>
         update_task                   = func-header-utask
 *        CORRNUM                       = &apos; &apos;
 *        NAMESPACE                     = &apos; &apos;
-*        NEW_SOURCE                    =
+        new_source                    = t_src_new
 *      IMPORTING
 *        FUNCTION_INCLUDE              =
       TABLES
@@ -941,6 +956,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA t_params    TYPE STANDARD TABLE OF spar WITH DEFAULT KEY.
   DATA s_param     LIKE LINE OF t_params.
   FIELD-SYMBOLS:
+    &lt;i&gt;  LIKE LINE OF s_fmd_fugr-includes,
     &lt;fi&gt; LIKE LINE OF t_functions,
     &lt;f&gt;  LIKE LINE OF s_fmd_fugr-functions.
 
@@ -968,8 +984,8 @@ INCLUDE zaplink_macros.</MACROS>
           ENDIF.
           READ TABLE t_functions ASSIGNING &lt;fi&gt; WITH KEY funcname = s_fmd_func-header-name.
           IF sy-subrc &lt;&gt; 0. mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_CONTENTS&apos; 2. ENDIF.
-          set_prog_rawsource( program = &lt;fi&gt;-include
-                                  raw = s_fmd_func-source ).
+*          set_prog_rawsource( program = &lt;fi&gt;-include
+*                                  raw = s_fmd_func-source ).
 
         WHEN supportedtypes-group.
           o_group ?= object-&gt;raw.
@@ -1003,6 +1019,37 @@ INCLUDE zaplink_macros.</MACROS>
           IF sy-subrc &lt;&gt; 0.
             mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_DELETE&apos; sy-subrc.
           ENDIF.
+
+* INCLUDES
+* Issue 97 : Includes not handled
+          LOOP AT s_fmd_fugr-includes ASSIGNING &lt;i&gt;.
+            set_prog_rawsource( program = &lt;i&gt;-name
+                                    raw = &lt;i&gt;-source ).
+          ENDLOOP.
+* Issue 97 : End
+
+* Text Pool
+          set_prog_textpool( program = d_mainprog
+                            textpool = s_fmd_fugr-textspool ).
+* Dynpro
+          set_dynpros( program = d_mainprog
+                       dynpros = s_fmd_fugr-dynpros ).
+
+* Menu Painter
+          set_menus( program = d_mainprog
+                       menus = s_fmd_fugr-menupainter ).
+
+*Texts
+          DELETE FROM tlibt WHERE area = s_fmd_fugr-header-area.
+          MODIFY tlibt FROM TABLE s_fmd_fugr-texts.
+
+          MODIFY tftit FROM TABLE s_fmd_fugr-function_texts.
+          MODIFY funct FROM TABLE s_fmd_fugr-param_texts.
+
+** Documentation
+*          zaplink_documentation=&gt;set( t_docs = o_group-&gt;documentation ).
+
+* FUNCTIONS
           IF sy-batch = abap_false.   &quot;only delete in foreground
             LOOP AT s_fmd_fugr-functions ASSIGNING &lt;f&gt;.
               del_function( &lt;f&gt; ).
@@ -1065,44 +1112,25 @@ INCLUDE zaplink_macros.</MACROS>
               ROLLBACK WORK.
               mac_add_mf_and_raise &apos;RS_FUNCTIONMODULE_INSERT&apos; 12.
             ENDIF.
-            set_prog_rawsource( program = &lt;fi&gt;-include
-                                    raw = &lt;f&gt;-source ).
+*            set_prog_rawsource( program = &lt;fi&gt;-include
+*                                    raw = &lt;f&gt;-source ).
           ENDLOOP.
-
-* Text Pool
-          set_prog_textpool( program = d_mainprog
-                            textpool = s_fmd_fugr-textspool ).
-* Dynpro
-          set_dynpros( program = d_mainprog
-                       dynpros = s_fmd_fugr-dynpros ).
-
-* Menu Painter
-          set_menus( program = d_mainprog
-                       menus = s_fmd_fugr-menupainter ).
-
-*Texts
-          DELETE FROM tlibt WHERE area = s_fmd_fugr-header-area.
-          MODIFY tlibt FROM TABLE s_fmd_fugr-texts.
-
-          MODIFY tftit FROM TABLE s_fmd_fugr-function_texts.
-          MODIFY funct FROM TABLE s_fmd_fugr-param_texts.
-
-** Documentation
-*          zaplink_documentation=&gt;set( t_docs = o_group-&gt;documentation ).
 
         WHEN OTHERS.
           mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
       _comp = object-&gt;get_component( abap_true ).
-      TRY.  components-&gt;add( _comp ).  CATCH zaplink_cx_list.  ENDTRY.    &quot; Issue 92
+      TRY.
+          components-&gt;add( _comp ).
+          CATCH zaplink_cx_list.  ENDTRY.                   &quot; Issue 92
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      ROLLBACK WORK.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      ROLLBACK WORK.
-      mac_cascade_raise o_mycx o_cx.
-  ENDTRY.</SOURCE>
+          CATCH zaplink_cx_connector INTO o_mycx.
+            ROLLBACK WORK.
+            RAISE EXCEPTION o_mycx.
+            CATCH zaplink_cx INTO o_cx.
+              ROLLBACK WORK.
+              mac_cascade_raise o_mycx o_cx.
+          ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TEXTSPOOL>
@@ -1187,7 +1215,7 @@ INCLUDE zaplink_macros.</MACROS>
     end of ts_textpool</ITEM>
    <ITEM CMPNAME="TT_INCLUDES" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="ZAPLINK_FUGR_DATA=&gt;TT_RAWINCLUDES"/>
    <ITEM CMPNAME="TT_RS38L_INCL" STATE="1" EDITORDER="2 " TYPTYPE="4">
-    TT_RS38L_INCL type STANDARD TABLE OF rs38l_incl with DEFAULT KEY
+    tt_rs38l_incl TYPE STANDARD TABLE OF rs38l_incl WITH DEFAULT KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="standard table of rs38l_incl"/>

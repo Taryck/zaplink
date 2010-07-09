@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="55C18964E204007CF77FE5E49B4790A1" CODE_SIGNATURE="52BF93D7AC18D26EAB5E1AA53E5865A7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3A8509796DCA5C52FDD2D9558D8C8A61" CODE_SIGNATURE="DEECB664BBB729141D422E36171A196A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -998,7 +998,7 @@ AS</ITEM>
     _pa-langu = obj_langu.
     READ TABLE &lt;pa&gt;-texts ASSIGNING &lt;t&gt;
          WITH TABLE KEY lang = _pa-langu.
-    IF sy-subrc = 0.    _pa-descript = &lt;t&gt;-_.   ENDIF.
+    IF sy-subrc = 0.    _pa-descript = &lt;t&gt;-text.   ENDIF.
     INSERT _pa INTO TABLE fm_data-parameters.
   ENDLOOP.</SOURCE>
    </ITEM>
@@ -1190,7 +1190,7 @@ AS</ITEM>
     _at-langu = obj_langu.
     READ TABLE &lt;at&gt;-texts ASSIGNING &lt;ct&gt;
          WITH TABLE KEY lang = _at-langu.
-    IF sy-subrc = 0.    _at-descript = &lt;ct&gt;-_.      ENDIF.
+    IF sy-subrc = 0.    _at-descript = &lt;ct&gt;-text.      ENDIF.
     INSERT _at INTO TABLE fm_data-attributes.
   ENDLOOP.
 
@@ -1240,7 +1240,7 @@ AS</ITEM>
     _me-langu = obj_langu.
     READ TABLE &lt;me&gt;-texts ASSIGNING &lt;ct&gt;
          WITH TABLE KEY lang = _me-langu.
-    IF sy-subrc = 0.    _me-descript = &lt;ct&gt;-_.      ENDIF.
+    IF sy-subrc = 0.    _me-descript = &lt;ct&gt;-text.      ENDIF.
     INSERT _me INTO TABLE fm_data-methods.
   ENDLOOP.
 
@@ -1272,7 +1272,7 @@ AS</ITEM>
     _ev-langu = obj_langu.
     READ TABLE &lt;ev&gt;-texts ASSIGNING &lt;ct&gt;
          WITH TABLE KEY lang = _ev-langu.
-    IF sy-subrc = 0.    _ev-descript = &lt;ct&gt;-_.      ENDIF.
+    IF sy-subrc = 0.    _ev-descript = &lt;ct&gt;-text.      ENDIF.
     INSERT _ev INTO TABLE fm_data-events.
   ENDLOOP.
 
@@ -1297,7 +1297,7 @@ AS</ITEM>
     _ty-langu = obj_langu.
     READ TABLE &lt;ty&gt;-texts ASSIGNING &lt;ct&gt;
          WITH TABLE KEY lang = _ty-langu.
-    IF sy-subrc = 0.    _ty-descript = &lt;ct&gt;-_.      ENDIF.
+    IF sy-subrc = 0.    _ty-descript = &lt;ct&gt;-text.      ENDIF.
     INSERT _ty INTO TABLE fm_data-types.
   ENDLOOP.
 

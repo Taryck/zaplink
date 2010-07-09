@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="232EF03DBDEDBAEA9AA42352254D9B99" CODE_SIGNATURE="DC406067A90F6EDCA630145651EA7832" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="79E4978C7E21CCF5C9F14AA4298CF2D7" CODE_SIGNATURE="CEF4278515C513ADC35C6F70DCE2DD8D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1356,6 +1356,35 @@ AS</ITEM>
       zaplink_clas_data=&gt;update_concept( EXPORTING msg_col = application_log
                                          CHANGING  fm_data = _d ).
     ENDIF.
+
+    d_key-clsname = _d-class-clsname.
+* Allready done in overwrite
+*    CALL FUNCTION &apos;SEO_CLASS_EXISTENCE_CHECK&apos;
+*      EXPORTING
+*        clskey        = d_key
+**      IMPORTING
+**        not_active    = not_active
+*      EXCEPTIONS
+*        not_specified = 1
+*        not_existing  = 2
+*        is_interface  = 3
+*        no_text       = 4
+*        inconsistent  = 5
+*        OTHERS        = 6.
+*    IF sy-subrc = 0.
+*      CALL FUNCTION &apos;SEO_CLASS_DELETE_W_DEPS&apos;
+*        EXPORTING
+*          clskey       = d_key
+*        EXCEPTIONS
+*          not_existing = 1
+*          is_interface = 2
+*          not_deleted  = 3
+*          db_error     = 4
+*          OTHERS       = 5.
+*      IF sy-subrc &lt;&gt; 0.
+*        application_log-&gt;add_symsg( ).
+*      ENDIF.
+*    ENDIF.
 
     CALL FUNCTION &apos;SEO_CLASS_CREATE_COMPLETE&apos;
      EXPORTING
