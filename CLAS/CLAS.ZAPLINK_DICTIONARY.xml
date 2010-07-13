@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C41A7E3736FAF888937AD992FCEAC371" CODE_SIGNATURE="BA3D34A491879A36C30F755D1F15295C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0CB077296D86090EEE3929AA9255262F" CODE_SIGNATURE="4FA7488C60BF29C2794F6873E59A6AF2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -305,8 +305,8 @@ END-OF-DEFINITION.</MACROS>
       FROM dd07t
       WHERE domname = d_name
         AND ddtext &lt;&gt; space.
-    SORT t_vtexts BY ddlanguage as4local.
-    DELETE ADJACENT DUPLICATES FROM t_vtexts COMPARING ddlanguage.
+    SORT t_vtexts BY ddlanguage as4local valpos.            &quot; Issue 96
+    DELETE ADJACENT DUPLICATES FROM t_vtexts COMPARING ddlanguage valpos. &quot; Issue 96
     s_fm_data-values_texts = t_vtexts.
 
     d_mask = d_name.
@@ -966,7 +966,7 @@ END-OF-DEFINITION.</MACROS>
         object_not_found           = 0
         object_not_specified       = 3
         permission_failure         = 4
-        dialog_needed              = 5
+        dialog_needed              = 0      &quot; Object is used : Issue 96
         OTHERS                     = 6.
     IF sy-subrc &lt;&gt; 0.
       mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
@@ -1038,7 +1038,7 @@ END-OF-DEFINITION.</MACROS>
         object_not_found           = 0
         object_not_specified       = 3
         permission_failure         = 4
-        dialog_needed              = 5
+        dialog_needed              = 0      &quot; Object is used : Issue 96
         OTHERS                     = 6.
     IF sy-subrc &lt;&gt; 0.
       mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
@@ -1206,7 +1206,7 @@ END-OF-DEFINITION.</MACROS>
         object_not_found           = 0
         object_not_specified       = 3
         permission_failure         = 4
-        dialog_needed              = 5
+        dialog_needed              = 0      &quot; Object is used : Issue 96
         OTHERS                     = 6.
     IF sy-subrc &lt;&gt; 0.
       mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
@@ -1281,7 +1281,7 @@ END-OF-DEFINITION.</MACROS>
         object_not_found           = 0
         object_not_specified       = 3
         permission_failure         = 4
-        dialog_needed              = 5
+        dialog_needed              = 0      &quot; Object is used : Issue 96
         OTHERS                     = 6.
     IF sy-subrc &lt;&gt; 0.
       mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
@@ -1360,7 +1360,7 @@ END-OF-DEFINITION.</MACROS>
 *        object_not_found           = 0
 *        object_not_specified       = 3
 *        permission_failure         = 4
-*        dialog_needed              = 5
+*        dialog_needed              = 0      &quot; Object is used : Issue 96
 *        OTHERS                     = 6.
 *    IF sy-subrc &lt;&gt; 0.
 *      mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
@@ -1465,7 +1465,7 @@ END-OF-DEFINITION.</MACROS>
         object_not_found           = 0
         object_not_specified       = 3
         permission_failure         = 4
-        dialog_needed              = 5
+        dialog_needed              = 0      &quot; Object is used : Issue 96
         OTHERS                     = 6.
     IF sy-subrc &lt;&gt; 0.
       mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
@@ -1550,7 +1550,7 @@ END-OF-DEFINITION.</MACROS>
           object_not_found           = 0
           object_not_specified       = 3
           permission_failure         = 4
-          dialog_needed              = 5
+          dialog_needed              = 0      &quot; Object is used : Issue 96
           OTHERS                     = 6.
       IF sy-subrc &lt;&gt; 0.
         mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
@@ -1665,7 +1665,7 @@ END-OF-DEFINITION.</MACROS>
         object_not_found           = 0
         object_not_specified       = 3
         permission_failure         = 4
-        dialog_needed              = 5
+        dialog_needed              = 0      &quot; Object is used : Issue 96
         OTHERS                     = 6.
     IF sy-subrc &lt;&gt; 0.
       mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.

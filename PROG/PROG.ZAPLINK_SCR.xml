@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="32BB86D10217BF1F8DA4ADAA7505835A" CODE_SIGNATURE="F839EAEFA29B4DE2B0FF68E5F8E92D79" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="FBF0EE66FE7DEF50B5B69C793DDD4E1D" CODE_SIGNATURE="5736A06ED816B36F6069264510CBBA73" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_SCR" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" LEVL="700" RSTAT="K" RMAND="220" RLOAD="E" UCCHECK="X"/>
@@ -120,6 +120,29 @@ AT SELECTION-SCREEN.
 
 AT SELECTION-SCREEN OUTPUT.
   PERFORM on_scr_output.
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR tr.
+  DATA s_selection TYPE  trwbo_selection.
+  DATA s_request TYPE  trwbo_request_header.
+  DATA s_task TYPE  trwbo_request_header.
+  s_selection-client = sy-mandt.
+  s_selection-reqfunctions = &apos;K&apos;.
+  s_selection-taskstatus = s_selection-reqstatus = &apos;DL&apos;.
+  s_selection-taskfunctions = &apos;RSX&apos;.
+  s_selection-connect_req_task_conditions = abap_true.
+  CALL FUNCTION &apos;TR_PRESENT_REQUESTS_SEL_POPUP&apos;
+    EXPORTING
+      iv_organizer_type          = &apos;W&apos;
+*     IV_USERNAME                = SY-UNAME
+      is_selection               = s_selection
+      iv_title                   = text-ttr
+*     IS_NEW_REQUEST_PROPS       =
+*     IV_PROG_TOP_OF_PAGE        = &apos; &apos;
+*     IV_FORM_TOP_OF_PAGE        =
+    IMPORTING
+      es_selected_request        = s_request
+      es_selected_task           = s_task.
+  tr = s_request-trkorr.
 
 AT SELECTION-SCREEN ON VALUE-REQUEST FOR co_type.
   zaplink_connectors=&gt;get_values( CHANGING type = co_type ).
@@ -300,7 +323,7 @@ FORM on_scr_output .
           WHEN a_import.    IF screen-name IN s_scr_name_import.    _active = 1.    ENDIF.
           WHEN a_dsp.       IF screen-name IN s_scr_name_display.   _active = 1.    ENDIF.
           WHEN a_uninst.    IF screen-name IN s_scr_name_uninst.    _active = 1.    ENDIF.
-          when a_add_p.     IF screen-name IN s_scr_name_add_comp.     _active = 1.    ENDIF.
+          WHEN a_add_p.     IF screen-name IN s_scr_name_add_comp.     _active = 1.    ENDIF.
           WHEN a_add_tr.    IF screen-name IN s_scr_name_add_tr.    _active = 1.    ENDIF.
         ENDCASE.
 

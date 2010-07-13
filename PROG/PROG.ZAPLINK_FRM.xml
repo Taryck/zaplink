@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9F2BF6C124260671DD2664F10EE4C5E5" CODE_SIGNATURE="7706605F6FD09CDC15C60EF5CB57363E" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="99A8C6E4472248530EFCF7DAB5319A62" CODE_SIGNATURE="D2A1DA0F02843C9E77F6EA72AAC3FD17" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" RMAND="220" RLOAD="E" UCCHECK="X"/>
@@ -228,7 +228,7 @@
                                                         ext = p_ext
                                                      author = s_author[] ).
 * No component was selected with this parameters
-        IF _keys  IS INITIAL.   MESSAGE s001(zaplink_gui) WITH &apos;package required&apos;.   EXIT.   ENDIF.
+        IF _keys  IS INITIAL.   MESSAGE s001(zaplink_gui).   EXIT.   ENDIF.
 
         d_name = c_name.
         mac_replace d_name: uname, sysid, datum, uzeit.
@@ -289,7 +289,7 @@
                                                         ext = p_ext
                                                      author = s_author[] ).
 * No component was selected with this parameters
-        IF _keys  IS INITIAL.   MESSAGE s001(zaplink_gui) WITH &apos;package required&apos;.   EXIT.   ENDIF.
+        IF _keys  IS INITIAL.   MESSAGE s001(zaplink_gui).   EXIT.   ENDIF.
         CREATE OBJECT objlist.
         objlist-&gt;add_keys( _keys ).
         zaplink_gui=&gt;change_selection( action = zaplink_list=&gt;sel_actions-export
