@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9B457FB7C37066180FE2C74AA0177CF3" CODE_SIGNATURE="97925C2A8340449F3CB5156353E9B6BD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="73C1C36AB35E714FB800CC157E814585" CODE_SIGNATURE="CFEE0D313A97B5295FC00976520007EF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -432,7 +432,11 @@ check data &lt;&gt; _options.
                 CONTINUE.
               ENDIF.
 * Issue 47 : handling dependencies  &lt;-- END
-              _directory = _options-&gt;directory-&gt;set_directory( o_raw ).
+              TRY.      &quot; Issue 99 : Error while setting directory mustn&apos;t stop importing process
+                  _directory = _options-&gt;directory-&gt;set_directory( o_raw ).
+                CATCH zaplink_cx INTO o_cx.
+                  o_log-&gt;add_exception( o_cx ).
+              ENDTRY.
               o_log-&gt;add_from_instance( _options-&gt;directory-&gt;application_log ).
 * Sub components
               o_listsub = o_comp_s-&gt;get_subcomponents( ).
@@ -441,17 +445,15 @@ check data &lt;&gt; _options.
                 o_listsub-&gt;init_iter( ).
                 o_subcomp = o_listsub-&gt;get_next( ).
                 WHILE o_subcomp IS BOUND.
-                  TRY.
-                      _clone = _find_component_node( component = o_comp_s
-                                                      sub_comp = o_subcomp ).
-                      o_raw = zaplink_connectors=&gt;node_2_raw( _clone ).
+                  _clone = _find_component_node( component = o_comp_s
+                                                  sub_comp = o_subcomp ).
+                  o_raw = zaplink_connectors=&gt;node_2_raw( _clone ).
+                  TRY.      &quot; Issue 99 : Error while setting directory mustn&apos;t stop importing process
                       _options-&gt;directory-&gt;set_directory( o_raw ).
-                      IF _options-&gt;directory-&gt;application_log IS BOUND.
-                        o_log-&gt;add_from_instance( _options-&gt;directory-&gt;application_log ).
-                      ENDIF.
                     CATCH zaplink_cx INTO o_cx.
                       o_log-&gt;add_exception( o_cx ).
                   ENDTRY.
+                  o_log-&gt;add_from_instance( _options-&gt;directory-&gt;application_log ).
                   o_subcomp = o_listsub-&gt;get_next( ).
                 ENDWHILE.
               ENDIF.

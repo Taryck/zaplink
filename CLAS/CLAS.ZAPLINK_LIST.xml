@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FE8F31791C8FEB1C1E197DC7DFCB4D12" CODE_SIGNATURE="B0509DA03F62D945788B45D36E2C9B99" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C24C64550FD2EA03C3751BE321D28D07" CODE_SIGNATURE="D61AAF7D01D2BFEDC0A7646A85F72D6B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -538,21 +538,21 @@ DATA t_allcomp   TYPE	tt_allcomplist.
 
     CASE d_action.
       WHEN sel_actions-import.
-        IF o_comp-&gt;_exists = zaplink_connector=&gt;exists AND selected = abap_true.
+        IF o_comp-&gt;_exists = zaplink_connector=&gt;exists. &quot; AND selected = abap_true.
           result-status = lights-yellow.
           CLEAR result-select.
 * Object &apos;&amp;2&apos; (&amp;1) already exists. Select it to overwrite
           MESSAGE e002 WITH result-type result-name INTO result-msg.
         ENDIF.
       WHEN sel_actions-export.
-        IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists AND selected = abap_true.
+        IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists. &quot; AND selected = abap_true.
           CLEAR result-select.
           result-status = lights-red.
 * Object &apos;&amp;2&apos; (&amp;1) does not exists.
           MESSAGE e003 WITH result-type result-name INTO result-msg.
         ENDIF.
       WHEN sel_actions-uninstall.
-        IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists AND selected = abap_true.
+        IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists. &quot; AND selected = abap_true.
           CLEAR result-select.
           result-status = lights-red.
 * Object &apos;&amp;2&apos; (&amp;1) does not exists.
@@ -1257,10 +1257,9 @@ FIELD-SYMBOLS:
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
     CLEAR &lt;i&gt;-selected.
-    IF     &lt;i&gt;-o_comp-&gt;_exists = zaplink_connector=&gt;exists
-       AND &lt;i&gt;-o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-exists.
-      &lt;i&gt;-selected = abap_true.
+    IF &lt;i&gt;-o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-exists.
       &lt;i&gt;-o_comp-&gt;set_action( sel_actions-export ).
+      IF &lt;i&gt;-o_comp-&gt;_exists = zaplink_connector=&gt;exists.    &lt;i&gt;-selected = abap_true.   ENDIF.
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
@@ -1276,10 +1275,9 @@ FIELD-SYMBOLS:
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
     CLEAR &lt;i&gt;-selected.
-    IF     &lt;i&gt;-o_comp-&gt;_exists = zaplink_connector=&gt;exists-not_exists
-       AND &lt;i&gt;-o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-exists.
-      &lt;i&gt;-selected = abap_true.
+    IF &lt;i&gt;-o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-exists.
       &lt;i&gt;-o_comp-&gt;set_action( sel_actions-import ).
+      IF &lt;i&gt;-o_comp-&gt;_exists = zaplink_connector=&gt;exists-not_exists.    &lt;i&gt;-selected = abap_true.   ENDIF.
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
@@ -1295,10 +1293,9 @@ FIELD-SYMBOLS:
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
     CLEAR &lt;i&gt;-selected.
-    IF     &lt;i&gt;-o_comp-&gt;_exists = zaplink_connector=&gt;exists
-       AND &lt;i&gt;-o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-exists.
-      &lt;i&gt;-selected = abap_true.
+    IF &lt;i&gt;-o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-exists.
       &lt;i&gt;-o_comp-&gt;set_action( sel_actions-uninstall ).
+      IF &lt;i&gt;-o_comp-&gt;_exists = zaplink_connector=&gt;exists.     &lt;i&gt;-selected = abap_true.     ENDIF.
     ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>

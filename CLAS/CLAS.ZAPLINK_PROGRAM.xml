@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F56852D3D14AC87F834F0CCCE0D4D65D" CODE_SIGNATURE="A8D2220269D7EC201606FC249F0BBE60" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F76527550B81DF1760E2C2CC218E6348" CODE_SIGNATURE="803BCD67E5DAB927E9957DC5A0CA77E1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROG_DATA"/>
@@ -962,6 +962,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA s_variant   TYPE ts_variant_key.                     &quot; Issue 53
 *  DATA s_vari      LIKE LINE OF s_fmd_prog-variants.        &quot; Issue 53
   DATA f_subcomp   TYPE td_with_subcomp.
+  DATA l_mandt     LIKE sy-mandt.                           &quot; Issue 99
 
   TRY.
     type = component-&gt;get_type( ).
@@ -974,21 +975,23 @@ INCLUDE zaplink_macros.</MACROS>
         CREATE OBJECT o_variant.
         object-&gt;raw = o_variant.
         s_variant = zaplink_vari_data=&gt;name_2_key( d_name ).
-        CASE type.
-          WHEN supportedtypes-sys_variant.
-            SELECT * UP TO 1 ROWS
-              INTO TABLE t_varid
-              FROM varid CLIENT SPECIFIED
-              WHERE mandt = &apos;000&apos;
-                AND report = s_variant-program
-                AND variant = s_variant-variant.
-          WHEN OTHERS.
-            SELECT * UP TO 1 ROWS
-              INTO TABLE t_varid
-              FROM varid
-              WHERE report = s_variant-program
-                AND variant = s_variant-variant.
-        ENDCASE.
+        PERFORM get_mandt IN PROGRAM saplsvar USING s_variant-variant &quot; Issue 99
+                                           CHANGING l_mandt.
+*        CASE type.                                         &quot; Issue 99
+*          WHEN supportedtypes-sys_variant.
+        SELECT * UP TO 1 ROWS
+          INTO TABLE t_varid
+          FROM varid CLIENT SPECIFIED
+          WHERE mandt = l_mandt
+            AND report = s_variant-program
+            AND variant = s_variant-variant.
+*          WHEN OTHERS.
+*            SELECT * UP TO 1 ROWS
+*              INTO TABLE t_varid
+*              FROM varid
+*              WHERE report = s_variant-program
+*                AND variant = s_variant-variant.
+*        ENDCASE.
         s_fmd_prog-variants = read_variants( t_varid ).
         CHECK NOT s_fmd_prog-variants IS INITIAL.
         READ TABLE s_fmd_prog-variants INDEX 1 INTO s_fmd_vari.

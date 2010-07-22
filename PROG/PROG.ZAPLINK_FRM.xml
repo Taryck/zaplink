@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="99A8C6E4472248530EFCF7DAB5319A62" CODE_SIGNATURE="D2A1DA0F02843C9E77F6EA72AAC3FD17" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="2E5FA12BA1487851F0999FED3EDEA5D9" CODE_SIGNATURE="828AE7651CB1DE4AF35FA552FC86FC42" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" RMAND="220" RLOAD="E" UCCHECK="X"/>
@@ -392,12 +392,10 @@
     PERFORM dsp_result_uninstall USING d_name.
   ENDFORM.                    &quot; uninstall
 *&amp;---------------------------------------------------------------------*
-*&amp;      Form  add_package
+*&amp;      Form  add_comp
 *&amp;---------------------------------------------------------------------*
-  FORM add_comp .
+  FORM add_comp.
     DATA o_comp    TYPE zaplink_gui=&gt;to_component.
-*    DATA _keys     TYPE zaplink_gui=&gt;tt_compkeys.
-*    DATA _key      LIKE LINE OF _keys.
 
     CHECK NOT co_type IS INITIAL AND NOT co_name IS INITIAL.
 
@@ -405,11 +403,13 @@
         CREATE OBJECT: o_comp, objlist.
         o_comp-&gt;set_type( co_type ).    o_comp-&gt;set_name( co_name ).
         IF o_comp-&gt;connector_exists( ) &lt;&gt; zaplink_gui=&gt;exists-exists.
-          MESSAGE w208(00) WITH &apos;No Connector exists&apos;(ncn).
+* There is no ZAPLink connector installed for object type &apos;&amp;1&apos;
+          MESSAGE i000(zaplink_gui) WITH co_type.
           EXIT.
         ENDIF.
         IF o_comp-&gt;do_exists( ) &lt;&gt; zaplink_gui=&gt;exists-exists.
-          MESSAGE w208(00) WITH &apos;Component do not exists&apos;(nco).
+* Component &apos;&amp;2&apos; (object type &apos;&amp;1&apos;) does not exists
+          MESSAGE i003(zaplink_gui) WITH co_type co_name.
           EXIT.
         ENDIF.
         objlist-&gt;add( o_comp ).
@@ -438,7 +438,7 @@
     DATA _keys TYPE zaplink_gui=&gt;tt_compkeys.
 
     IF p_tr[] IS INITIAL.
-      MESSAGE s208(00) WITH &apos;Transport Request required&apos;(003).
+      MESSAGE i000(0k) WITH &apos;Transport Request required&apos;(003).
       EXIT.
     ENDIF.
 

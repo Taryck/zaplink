@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="07E89BFBDA42551BAACE34509871C4D6" CODE_SIGNATURE="43A1B2DB37BAD9101175DAA1D1378561" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUGR_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="1B6AA42BD0FF20CF0B3D2F5D7FDF7032" CODE_SIGNATURE="82DBC89C5D357512C29BF043E5528522" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUGR_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -168,8 +168,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   LOOP AT fm_data-functions ASSIGNING &lt;f&gt;.
     CLEAR s_func.   MOVE-CORRESPONDING &lt;f&gt; TO s_func. &quot; header, import_p, changing_p, export_p, tables, exceptions, source.
     s_func-docs = fm_data-docs.
-    s_func-texts = fm_data-function_texts.    DELETE s_func-texts WHERE funcname &lt;&gt; &lt;f&gt;-header-name.
-    s_func-param_texts = fm_data-param_texts.    DELETE s_func-param_texts WHERE funcname &lt;&gt; &lt;f&gt;-header-name.
+*    s_func-texts = fm_data-function_texts.    DELETE s_func-texts WHERE funcname &lt;&gt; &lt;f&gt;-header-name.             &quot; Issue 100
+*    s_func-param_texts = fm_data-param_texts.    DELETE s_func-param_texts WHERE funcname &lt;&gt; &lt;f&gt;-header-name.    &quot; Issue 100
     APPEND s_func TO result.
   ENDLOOP.
   SORT result BY header-name.</SOURCE>
@@ -206,15 +206,15 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     &lt;d&gt;  LIKE LINE OF fm_data-docs,
     &lt;dt&gt; LIKE LINE OF &lt;d&gt;-texts,
     &lt;t&gt;  LIKE LINE OF fm_data-texts,
-    &lt;ft&gt; LIKE LINE OF fm_data-function_texts,
-    &lt;f&gt;  LIKE LINE OF t_funcs,
+*    &lt;ft&gt; LIKE LINE OF fm_data-function_texts,
+    &lt;f&gt;  LIKE LINE OF fm_data-functions,        &quot; Issue 100
     &lt;i&gt;  LIKE LINE OF fm_data-includes,
     &lt;s&gt;  LIKE LINE OF &lt;i&gt;-source,
     &lt;im&gt; LIKE LINE OF &lt;f&gt;-import_p,
     &lt;ch&gt; LIKE LINE OF &lt;f&gt;-changing_p,
     &lt;ex&gt; LIKE LINE OF &lt;f&gt;-export_p,
 *    &lt;pa&gt; LIKE LINE OF s_func-parameters,
-    &lt;pt&gt; LIKE LINE OF fm_data-param_texts,
+*    &lt;pt&gt; LIKE LINE OF fm_data-param_texts,
     &lt;cx&gt; LIKE LINE OF &lt;f&gt;-exceptions,
     &lt;ta&gt; LIKE LINE OF &lt;f&gt;-tables.
 
@@ -296,8 +296,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   ENDLOOP.
 
 * Functions
-  t_funcs = conv_function( fm_data ).
-  LOOP AT t_funcs ASSIGNING &lt;f&gt;.
+*  t_funcs = conv_function( fm_data ).          &quot; Issue 100
+  LOOP AT fm_data-functions ASSIGNING &lt;f&gt;.      &quot; Issue 100
     CLEAR s_func.
     CREATE OBJECT s_func-zl_object EXPORTING fm_data = &lt;f&gt;.
     APPEND s_func TO functions.
@@ -404,12 +404,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA s_func    LIKE LINE OF fm_data-functions.
   DATA s_line    LIKE LINE OF s_func-source.
   DATA s_txt     LIKE LINE OF fm_data-texts.
-  DATA s_f_txt   LIKE LINE OF fm_data-function_texts.
+*  DATA s_f_txt   LIKE LINE OF fm_data-function_texts.
   DATA s_p_im    LIKE LINE OF s_func-import_p.
   DATA s_p_ch    LIKE LINE OF s_func-changing_p.
   DATA s_p_ex    LIKE LINE OF s_func-export_p.
   DATA s_p_ta    LIKE LINE OF s_func-tables.
-  DATA s_p_txt   LIKE LINE OF fm_data-param_texts.
+*  DATA s_p_txt   LIKE LINE OF fm_data-param_texts.
   DATA s_excep   LIKE LINE OF s_func-exceptions.
   DATA d_suffix  TYPE rs38l-suffix.
   DATA d_group   TYPE rs38l-area.
@@ -632,8 +632,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
                 menupainter	    TYPE to_menupainter,
                 includes        TYPE tt_rawincludes,
                 functions       TYPE tt_funcs,
-                function_texts  TYPE tt_tftit,
-                param_texts     TYPE tt_funct,
+*                function_texts  TYPE tt_tftit,             &quot; Issue 100
+*                param_texts     TYPE tt_funct,             &quot; Issue 100
               END OF ts_fm_data
 `
     <TEXTS>

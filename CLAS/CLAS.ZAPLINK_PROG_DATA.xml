@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7DB7FCC307DE9DA90CD9C8B8B439C2E8" CODE_SIGNATURE="A3E703CD0B7FF337368B52BDFD2D9FF6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="679B443DAD732F025095CBDBEAD55186" CODE_SIGNATURE="3C34E96EB0ACA79E2693F93E12BE6DBC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -197,9 +197,10 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA s_txt     LIKE LINE OF fm_data-texts.
   DATA s_doc     LIKE LINE OF fm_data-docs.
   DATA s_doc_txt LIKE LINE OF s_doc-texts.
-  data s_variant LIKE LINE OF fm_data-variants.
+  DATA s_variant LIKE LINE OF fm_data-variants.
+  DATA d_variant TYPE zaplink_vari_data=&gt;ts_variant_key.
   FIELD-SYMBOLS:
-    &lt;v&gt;  like LINE OF variants,
+    &lt;v&gt;  LIKE LINE OF variants,
     &lt;t&gt;  LIKE LINE OF texts.
 
   fm_data-header = a0_maindata.
@@ -228,6 +229,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   IF NOT s_doc-texts IS INITIAL.    INSERT s_doc INTO TABLE fm_data-docs.   ENDIF.
 
   LOOP AT variants ASSIGNING &lt;v&gt;.
+    d_variant = zaplink_vari_data=&gt;name_2_key( &lt;v&gt;-zl_object-&gt;name ).
+    d_variant-program = fm_data-header-name.
+    &lt;v&gt;-zl_object-&gt;name = zaplink_vari_data=&gt;key_2_name( d_variant ).
     s_variant = &lt;v&gt;-zl_object-&gt;to_data( ).
     APPEND s_variant TO fm_data-variants.
   ENDLOOP.</SOURCE>

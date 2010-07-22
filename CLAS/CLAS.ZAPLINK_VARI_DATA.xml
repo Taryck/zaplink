@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="65876531FBC63DF6CCBDC6D244FCC700" CODE_SIGNATURE="5E40338C4AD9DD6EACD51BDA10983BE0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="DD21DD9103BA297D8DAFA6ACBC071870" CODE_SIGNATURE="10C80161D729CAE603E83585687A5AF7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -202,12 +202,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   fm_data-params = values.
 
   LOOP AT texts ASSIGNING &lt;t&gt;.
-    CLEAR s_txt.    s_txt-report = a0_maindata-report.    s_txt-variant = a0_maindata-variant.
-    s_txt-langu = &lt;t&gt;-lang.   s_txt-vtext = &lt;t&gt;-text.
+    CLEAR s_txt.    s_txt-mandt = a0_maindata-mandt.    s_txt-report = a0_maindata-report.    s_txt-variant = a0_maindata-variant.    s_txt-langu = &lt;t&gt;-lang.   s_txt-vtext = &lt;t&gt;-text.
     INSERT s_txt INTO TABLE fm_data-texts.
   ENDLOOP.
   LOOP AT screens ASSIGNING &lt;s&gt;.
-    CLEAR s_scr.    s_scr-report = a0_maindata-report.    s_scr-variant = a0_maindata-variant.    s_scr-dynnr = &lt;s&gt;-dynnr.
+    CLEAR s_scr.    s_scr-mandt = a0_maindata-mandt.    s_scr-report = a0_maindata-report.    s_scr-variant = a0_maindata-variant.    s_scr-dynnr = &lt;s&gt;-dynnr.
     INSERT s_scr INTO TABLE fm_data-screens.
   ENDLOOP.</SOURCE>
    </ITEM>
