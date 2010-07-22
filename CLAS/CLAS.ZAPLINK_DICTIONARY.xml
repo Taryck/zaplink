@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0CB077296D86090EEE3929AA9255262F" CODE_SIGNATURE="4FA7488C60BF29C2794F6873E59A6AF2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C0FA13C2FF12B00510C8501E1637B7AB" CODE_SIGNATURE="379ECFD025AE0C0CB5D68E5E7E326F9A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -2076,8 +2076,6 @@ END-OF-DEFINITION.</MACROS>
   END-OF-DEFINITION.
 
   TRY.
-
-    CREATE OBJECT components.                         &quot; Issue 92
     CASE object-&gt;type.
       WHEN supportedtypes-type_group.
         o_typegroup ?= object-&gt;raw.
@@ -2148,12 +2146,8 @@ END-OF-DEFINITION.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
 
-*    CREATE OBJECT o_comp.
-*    o_comp-&gt;set_type( object-&gt;type ).
-*    o_comp-&gt;set_name( object-&gt;name ).
-*    IF NOT components IS BOUND. CREATE OBJECT components. ENDIF.
-*    components-&gt;add( o_comp ).
     o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
+    IF NOT components IS BOUND.   CREATE OBJECT components.   ENDIF.          &quot; Issue 92
     TRY.    components-&gt;add( o_comp ).    CATCH zaplink_cx_list.    ENDTRY.   &quot; Issue 92
 
     mac_def_catch zaplink_cx_connector.

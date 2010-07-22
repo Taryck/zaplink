@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BB475B0252E7F16B2A3A973C345CB92F" CODE_SIGNATURE="7CBEC1195508A06B10F6ABDE48ABA753" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2DF128DD12F4FA99E5022C8A677E12B2" CODE_SIGNATURE="C3E7BF338EE39FE644E16A214E17DD73" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -640,8 +640,6 @@ SPLIT string AT LINE_SEPARATOR
   DATA s_doc    TYPE ts_doc.
 
   TRY.
-
-      CREATE OBJECT components.                         &quot; Issue 92
       CASE object-&gt;type.
         WHEN supportedtypes-general OR supportedtypes-indep.
           o_data ?= object-&gt;raw.
@@ -661,6 +659,7 @@ SPLIT string AT LINE_SEPARATOR
       ENDCASE.
 
       o_comp = object-&gt;get_component( abap_true ).          &quot; Issue 92
+      IF NOT components IS BOUND.   CREATE OBJECT components.   ENDIF.          &quot; Issue 92
       TRY.  components-&gt;add( o_comp ).  CATCH zaplink_cx_list.  ENDTRY.                                               &quot; Issue 92
     CATCH zaplink_cx_connector INTO o_mycx.
       ROLLBACK WORK.

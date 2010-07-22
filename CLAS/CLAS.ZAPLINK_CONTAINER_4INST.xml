@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="73C1C36AB35E714FB800CC157E814585" CODE_SIGNATURE="CFEE0D313A97B5295FC00976520007EF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F182832D960EFFC40FBADF3ACB0E1E8E" CODE_SIGNATURE="92EB6AE0B0332C9812D433C5DA02FF68" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONTAINER">
    <TEXTS>
     <ITEM LANG="E" TEXT="ZapLink Container : For install purpose">U1&amp;FUNCTIONALITY&amp;
 ASFor internal use. Use ZAPLINK_CONTAINER instead.
@@ -209,6 +209,7 @@ INCLUDE zaplink_macros.</MACROS>
     MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
                WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
   ENDIF.
+  log-&gt;msgid = &apos;ZAPLINK_CONTAINER&apos;.
   xmldata = xmlengine-&gt;create_document( ).
   file = o_file.</SOURCE>
    </ITEM>
@@ -378,6 +379,8 @@ check data &lt;&gt; _options.
   DATA o_skiplist   TYPE to_list.
   DATA o_deplist    TYPE to_list.
 * Issue 47 : handling dependencies  &lt;-- END
+  DATA d_name       TYPE td_compname.
+  DATA d_type       TYPE td_comptype.
 
   CHECK object_list IS BOUND.
   TRY.
@@ -415,6 +418,20 @@ check data &lt;&gt; _options.
               log-&gt;add_symsg( ).
             ENDIF.
           ENDIF.
+
+          d_name = o_comp_s-&gt;get_name( ).     d_type = o_comp_s-&gt;get_type( ).
+* Processing (&amp;1) &amp;2
+          IF 1 = 2.   MESSAGE i000 WITH space space.    ENDIF.
+          CALL METHOD log-&gt;add_info
+            EXPORTING
+*              id_detlevel  =
+*              id_probclass =
+*              id_msgid     =
+              id_msgno     = &apos;000&apos;
+*              id_msgv3     =
+*              id_msgv4     =
+              id_msgv1     = d_type
+              id_msgv2     = d_name.
 
           _xml_comp = xmlengine-&gt;create_document( ).
           _clone = _find_component_node( o_comp_s ).
@@ -525,6 +542,18 @@ check data &lt;&gt; _options.
 
         TRY.
             s_key = o_comp-&gt;get_key( ).
+* Processing (&amp;1) &amp;2
+            IF 1 = 2.   MESSAGE i000 WITH space space.    ENDIF.
+            CALL METHOD log-&gt;add_info
+              EXPORTING
+*              id_detlevel  =
+*              id_probclass =
+*              id_msgid     =
+                id_msgno     = &apos;000&apos;
+*              id_msgv3     =
+*              id_msgv4     =
+                id_msgv1     = s_key-type
+                id_msgv2     = s_key-name.
             _done = o_connector-&gt;delete_from_sap( o_comp ).
             IF _done = abap_true.
 * Succesfully deleted &amp;1 &amp;2
