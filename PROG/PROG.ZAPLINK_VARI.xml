@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A3E1051C2DE98BE024981D2B99301DB2" CODE_SIGNATURE="FB2314935A2C637473E80F025CFF753B" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="F76A78D0BB5C77D2F996325748F39496" CODE_SIGNATURE="88C62CDE53E52289C14D677A9D789D0A" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="S" RSTAT="K" RMAND="200" RLOAD="E" FIXPT="X" UCCHECK="X"/>
@@ -111,7 +111,7 @@ FORM set_val_p USING p_param value(p_text) p_subrc
 *    mac_raise text-nse.
 *  ENDIF.
   l_value = o_vari_prog-&gt;set_param_value( ).
-  CHECK NOT l_value IS INITIAL.
+*  CHECK NOT l_value IS INITIAL.    &quot; always set value : Clearing (blank in variant) default not null value
   p_param = l_value.
 ENDFORM.                    &quot;set_val_p
 *&amp;---------------------------------------------------------------------*
@@ -132,6 +132,7 @@ FORM set_val_s TABLES p_selopt                              &quot;#EC *
 *    mac_raise text-nse.
 *  ENDIF.
   t_value = o_vari_prog-&gt;set_selectoption_value( ).
+  refresh p_selopt.       &quot; always set value : Clearing (blank in variant) default not null value
   LOOP AT t_value ASSIGNING &lt;v&gt;.
     CLEAR p_selopt.   MOVE-CORRESPONDING &lt;v&gt; TO p_selopt.   APPEND p_selopt.
   ENDLOOP.

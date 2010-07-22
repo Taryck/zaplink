@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7E6DCB40E86F8F7127C5BEB79B0BE6BF" CODE_SIGNATURE="B84EE1EC5EEC54C435CA1677FF5CEAF3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="124CF6853A363D06EF84E118FFD927AD" CODE_SIGNATURE="DCC48EAD2F0926551B68E4F4CB64A48D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -208,13 +208,15 @@ result = _devclass.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA _name        TYPE TROBJ_NAME.    &quot; tadir-obj_name.
+  DATA _name        TYPE trobj_name.    &quot; tadir-obj_name.
   DATA d_tdname     TYPE tadir-obj_name.
   DATA _type        TYPE tadir-object.
   DATA _pgmid       TYPE tadir-pgmid.
   DATA _act_devc    TYPE tadir-devclass.
   DATA _exists      TYPE saus_dpara-tadirexist.
   DATA f_global     TYPE abap_bool.                         &quot; Issue 87
+  DATA s_e071       TYPE e071.
+  DATA s_parent_key TYPE tadir.
 
   CHECK component IS BOUND.
   result = component-&gt;directory.
@@ -243,19 +245,44 @@ result = _devclass.</SOURCE>
       ENDTRY.
     ENDIF.
 
-    IF _pgmid = &apos;R3TR&apos;.     &quot; Do TADIR entry : Issue 87
+    IF _pgmid = &apos;LIMU&apos;.
+      s_e071-pgmid = _pgmid.
+      s_e071-object = _type.
+      s_e071-obj_name = _name.
+      CALL FUNCTION &apos;TR_CHECK_TYPE&apos;
+        EXPORTING
+          wi_e071                              = s_e071
+        IMPORTING
+*          WE_LOCK_KEY                          =
+          we_tadir                             =  s_parent_key.
+      IF s_parent_key-pgmid = &apos;R3TR&apos;.     &quot; Check parent&apos;s devclass
+        CALL FUNCTION &apos;TRINT_TADIR_QUERY&apos;
+          EXPORTING
+            iv_pgmid    = s_parent_key-pgmid
+            iv_object   = s_parent_key-object
+            iv_obj_name = s_parent_key-obj_name
+          IMPORTING
+            ev_devclass = _act_devc
+            ev_exist    = _exists.
+        IF NOT _exists IS INITIAL.
+          result-devclass = _act_devc.    &quot; Never change devclass of parent because of child devclass
+        ENDIF.
+      ENDIF.
+    ELSE.
+      s_parent_key-pgmid = _pgmid.
+      s_parent_key-object = _type.
+      s_parent_key-obj_name = d_tdname.
+*    ENDIF.
+*
+*    IF s_parent_key-pgmid = &apos;R3TR&apos;.     &quot; Do TADIR entry : Issue 87
       CALL FUNCTION &apos;TRINT_TADIR_QUERY&apos;
         EXPORTING
-          iv_pgmid           = _pgmid
-          iv_object          = _type
-          iv_obj_name        = d_tdname
+          iv_pgmid    = s_parent_key-pgmid
+          iv_object   = s_parent_key-object
+          iv_obj_name = s_parent_key-obj_name
         IMPORTING
-*      EV_OBJECT          =
-*      EV_SRCSYSTEM       =
-          ev_devclass        = _act_devc
-*      EV_AUTHOR          =
-*      EV_GENFLAG         =
-          ev_exist           = _exists.
+          ev_devclass = _act_devc
+          ev_exist    = _exists.
       IF _exists IS INITIAL.
         CALL FUNCTION &apos;TRINT_TADIR_INSERT&apos;
           EXPORTING
