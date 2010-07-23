@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F182832D960EFFC40FBADF3ACB0E1E8E" CODE_SIGNATURE="92EB6AE0B0332C9812D433C5DA02FF68" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B32C810D14E4F3761F3F8C40384C88EF" CODE_SIGNATURE="61AA6A34041297F45DFE161AE87DA013" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONTAINER">
@@ -528,6 +528,7 @@ check data &lt;&gt; _options.
   DATA _done        TYPE abap_bool.
   DATA s_key        TYPE ts_component.
   DATA _cx_connector TYPE REF TO zaplink_cx_connector.
+  DATA o_log        TYPE to_log.
 
   CHECK object_list IS BOUND.
   TRY.
@@ -539,6 +540,25 @@ check data &lt;&gt; _options.
       o_comp = object_list-&gt;get_next( ).
       WHILE o_comp IS BOUND.
         o_connector = o_comp-&gt;connector( ).
+
+        o_log = o_comp-&gt;get_msg_coll( ).
+        IF NOT o_log IS BOUND.
+          CREATE OBJECT o_log.
+          o_comp-&gt;set_msg_coll( o_log ).
+          CALL METHOD o_log-&gt;init
+            EXPORTING
+              id_object      = ballog_object
+              id_subobject   = ballog_subobject
+*          id_extnumber   =
+              auto_upd_custo = abap_true
+*          id_activity    = ACT_CREATE
+            EXCEPTIONS
+              error          = 1
+              OTHERS         = 2.
+          IF sy-subrc &lt;&gt; 0.
+            log-&gt;add_symsg( ).
+          ENDIF.
+        ENDIF.
 
         TRY.
             s_key = o_comp-&gt;get_key( ).
@@ -586,14 +606,14 @@ check data &lt;&gt; _options.
             ENDIF.
             IF o_connector-&gt;application_log IS BOUND.
               IF o_connector-&gt;application_log-&gt;has_messages_of_msgt( id_msgty     = &apos;W&apos; ) = abap_true.
-                CALL METHOD log-&gt;add_from_instance
+                CALL METHOD o_log-&gt;add_from_instance
                   EXPORTING
                     io_msglist        = o_connector-&gt;application_log
                     if_add_as_subnode = abap_true.
               ENDIF.
             ENDIF.
           CATCH zaplink_cx_connector INTO _cx_connector.
-            CALL METHOD log-&gt;add_exception
+            CALL METHOD o_log-&gt;add_exception
               EXPORTING
                 exception = _cx_connector.
         ENDTRY.

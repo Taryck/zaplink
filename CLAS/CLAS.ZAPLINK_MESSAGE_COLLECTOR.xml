@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E64954317B5B5EB718D1FB4FB28D3899" CODE_SIGNATURE="ED78EC2DF9C733CFE901924F498B801C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="11D0D4213D587C7BF5C13C6074EDB31A" CODE_SIGNATURE="FDBA740EA19187D4AE6EBCBC113A817D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-LOG" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -3119,9 +3119,9 @@ DATA lt_messages  TYPE t_msg_x.
   DATA cx_text    TYPE string.
   DATA o_ref      TYPE REF TO cl_abap_refdescr.
   DATA o_obj      TYPE REF TO cl_abap_classdescr.
-  DATA prog       TYPE syrepid.
-  DATA include    TYPE syrepid.
-  DATA line       TYPE i.
+*  DATA prog       TYPE syrepid.
+*  DATA include    TYPE syrepid.
+*  DATA line       TYPE i.
   DATA cx_src_pos TYPE string.
   DATA f_toolong  TYPE abap_bool.
   DATA:
@@ -3144,18 +3144,19 @@ DATA lt_messages  TYPE t_msg_x.
   o_ref ?= cl_abap_classdescr=&gt;describe_by_data( p_data = exception ).
   o_obj ?= get_ref_type( o_ref ).
 
-  CALL METHOD exception-&gt;get_source_position
-    IMPORTING
-      program_name = prog
-      include_name = include
-      source_line  = line.
-  cx_src_pos = line.
-  IF include = prog.    CLEAR include.    ENDIF.
-  IF include IS INITIAL.
-    CONCATENATE prog &apos; @&apos; cx_src_pos INTO cx_src_pos.
-  ELSE.
-    CONCATENATE include &apos;(&apos; prog &apos;) @&apos; cx_src_pos INTO cx_src_pos.
-  ENDIF.
+  cx_src_pos = zaplink_cx=&gt;SOURCE_POSITION_AS_STRING( exception ).
+*  CALL METHOD exception-&gt;get_source_position
+*    IMPORTING
+*      program_name = prog
+*      include_name = include
+*      source_line  = line.
+*  cx_src_pos = line.
+*  IF include = prog.    CLEAR include.    ENDIF.
+*  IF include IS INITIAL.
+*    CONCATENATE prog &apos; @&apos; cx_src_pos INTO cx_src_pos.
+*  ELSE.
+*    CONCATENATE include &apos;(&apos; prog &apos;) @&apos; cx_src_pos INTO cx_src_pos.
+*  ENDIF.
 
   s_msg = o_obj-&gt;absolute_name.
   IF NOT s_msg-msgv2 IS INITIAL OR NOT s_msg-msgv3 IS INITIAL OR NOT s_msg-msgv4 IS INITIAL.    f_toolong = abap_true.    ENDIF.

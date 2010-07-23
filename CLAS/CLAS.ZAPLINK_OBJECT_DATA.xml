@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3A8509796DCA5C52FDD2D9558D8C8A61" CODE_SIGNATURE="DEECB664BBB729141D422E36171A196A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5F4A5645E44FC761E37813304DE48116" CODE_SIGNATURE="AE0BAA0F7FD553D284DF46D4F1C1C6CF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -950,7 +950,7 @@ AS</ITEM>
     _ex-clsname = obj_name.   _ex-cmpname = component.    _ex-langu = obj_langu.
     READ TABLE &lt;ex&gt;-texts ASSIGNING &lt;t&gt;
          WITH TABLE KEY lang = _ex-langu.
-    IF sy-subrc = 0.    _ex-descript = &lt;t&gt;-_.   ENDIF.
+    IF sy-subrc = 0.    _ex-descript = &lt;t&gt;-text.   ENDIF.
     INSERT _ex INTO TABLE fm_data-exceps.
   ENDLOOP.</SOURCE>
    </ITEM>
@@ -1030,7 +1030,7 @@ AS</ITEM>
 
   LOOP AT texts ASSIGNING &lt;t&gt;.
     _d-clsname = obj_name.    _d-cmpname = component.   _d-sconame = sub_component.
-    _d-langu = &lt;t&gt;-lang.     _d-descript = &lt;t&gt;-_.
+    _d-langu = &lt;t&gt;-lang.     _d-descript = &lt;t&gt;-text.
 
     INSERT _d INTO TABLE descriptions.
   ENDLOOP.</SOURCE>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D3EB21546478327E7B00FBFA65CF4114" CODE_SIGNATURE="2352A36DDCC83120E2A5261364D30AF0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E9D89F79BA83F7FE8D04E0D0222913D1" CODE_SIGNATURE="27D0DAE9AA60619D2B3A887B0143EA5A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S" MSG_ID="ZAPLINK_CX">
@@ -594,7 +594,7 @@ AS</ITEM>
      <ITEM SCONAME="STR" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING"/>
     </PARAMETERS>
     <SOURCE>`
-str = source_position_as_string( me ).</SOURCE>
+  str = source_position_as_string( me ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SOURCE_POSITION_AS_STRING" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
@@ -613,7 +613,7 @@ str = source_position_as_string( me ).</SOURCE>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA _pos TYPE ts_source_pos.
+  DATA _pos TYPE ts_source_pos.
   DATA _key TYPE seu_objkey.
   DATA _prog TYPE ts_source_def.
   DATA _include TYPE ts_source_def.
@@ -625,10 +625,12 @@ DATA _pos TYPE ts_source_pos.
       source_line  = _pos-source_line.
 
   _key = _pos-program_name. _prog = conv_progname( _key ).
-  _key = _pos-include_name. _include = conv_progname( object_name = _key
-                                                          context = _prog-name ).
-
-  MESSAGE i000 WITH _prog-str _include-str _pos-source_line INTO str.</SOURCE>
+  IF _pos-program_name = _pos-include_name.
+    MESSAGE i002 WITH _prog-str _pos-source_line INTO str.
+  ELSE.
+    _key = _pos-include_name.     _include = conv_progname( object_name = _key   context = _prog-name ).
+    MESSAGE i000 WITH _prog-str _include-str _pos-source_line INTO str.
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
