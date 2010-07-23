@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C077B491B8354BA1E6F51E0967E16866" CODE_SIGNATURE="6ACFF329E3CA9C1F69486DFFCEB16538" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9CB3CA1FB6A03115C38D34A2EED8F347" CODE_SIGNATURE="7C622ADC4DDF5DE194436D9542E1A8DD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
  </DEPENDENCIES>
@@ -30,6 +30,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   </A0_MAINDATA>
   <ALIASES>
    <ITEM CMPNAME="TD_DOC_ID" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_DOC_ID"/>
+   <ITEM CMPNAME="TD_PROGNAME" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_PROGNAME"/>
    <ITEM CMPNAME="TR_DOCID" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_DOCID"/>
    <ITEM CMPNAME="TT_TEXTS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TEXTS"/>
   </ALIASES>
@@ -561,11 +562,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
+     <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
        <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
      </ITEM>
+     <ITEM SCONAME="PROGRAM" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME"/>
     </PARAMETERS>
     <SOURCE>`
   DATA s_title LIKE LINE OF fm_data-titles.
@@ -578,6 +580,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA s_b_det LIKE LINE OF fm_data-bars_det.
   DATA s_k_det LIKE LINE OF fm_data-keyboards.
   DATA s_but   LIKE LINE OF fm_data-buttons_det.
+  DATA s_text  LIKE LINE OF fm_data-texts.
+  DATA d_lang  TYPE sy-langu.
   FIELD-SYMBOLS:
     &lt;mb&gt; LIKE LINE OF menu_bars,
     &lt;bc&gt; LIKE LINE OF &lt;mb&gt;-composition,
@@ -590,14 +594,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     &lt;mn&gt; LIKE LINE OF menu_list,
     &lt;md&gt; LIKE LINE OF &lt;mn&gt;-composition,
     &lt;fu&gt; LIKE LINE OF functions,
-    &lt;ti&gt; LIKE LINE OF titles.
+    &lt;ti&gt; LIKE LINE OF titles,
+    &lt;tl&gt; LIKE LINE OF &lt;fu&gt;-texts,
+    &lt;t&gt;  LIKE LINE OF &lt;st&gt;-texts.
 
   fm_data-header-actcode = bar.
   fm_data-header-mencode = menu.
   fm_data-header-pfkcode = function.
   fm_data-header-defaultact = default_bar.
   fm_data-header-defaultpfk = default_function.
-  fm_data-header-mod_langu = master_lang.
+  fm_data-header-mod_langu = d_lang = master_lang.
+  IF d_lang IS INITIAL.  d_lang = sy-langu.    ENDIF.
 
   LOOP AT titles ASSIGNING &lt;ti&gt;.
     CLEAR s_title.        MOVE-CORRESPONDING &lt;ti&gt;-hdr TO s_title.
@@ -615,6 +622,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
   LOOP AT functions ASSIGNING &lt;fu&gt;.
     CLEAR s_func.     MOVE-CORRESPONDING &lt;fu&gt;-hdr TO s_func.
+    READ TABLE &lt;fu&gt;-texts ASSIGNING &lt;tl&gt; WITH TABLE KEY langu = d_lang.
+    IF sy-subrc = 0.    s_func-fun_text = &lt;tl&gt;-text.  s_func-info_text = &lt;tl&gt;-info.  ENDIF.
+
     INSERT s_func INTO TABLE fm_data-functions.
     CALL METHOD set_func_texts
       EXPORTING
@@ -646,6 +656,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * Menu Bars
   LOOP AT menu_bars ASSIGNING &lt;mb&gt;.
     CLEAR s_attr.         MOVE-CORRESPONDING &lt;mb&gt;-hdr TO s_attr.    s_attr-obj_type = obj_types-menu_bar.
+    READ TABLE &lt;mb&gt;-texts ASSIGNING &lt;t&gt; WITH TABLE KEY langu = d_lang.
+    IF sy-subrc = 0.    s_attr-int_note = &lt;t&gt;-text.  ENDIF.
     INSERT s_attr INTO TABLE fm_data-attributes.
     CALL METHOD set_texts
       EXPORTING
@@ -665,13 +677,26 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * Key settings
   LOOP AT key_settings ASSIGNING &lt;ks&gt;.
     CLEAR s_attr.         MOVE-CORRESPONDING &lt;ks&gt;-hdr TO s_attr.    s_attr-obj_type = obj_types-key_set.
+    READ TABLE &lt;ks&gt;-texts ASSIGNING &lt;t&gt; WITH TABLE KEY langu = d_lang.
+    IF sy-subrc = 0.    s_attr-int_note = &lt;t&gt;-text.  ENDIF.
     INSERT s_attr INTO TABLE fm_data-attributes.
+    CALL METHOD set_texts
+      EXPORTING
+        obj_type = obj_types-key_set
+        obj_code = s_attr-obj_code
+        sub_code = space
+        texttype = text_types-tech_info
+        texts    = &lt;ks&gt;-texts
+      CHANGING
+        RESULT   = fm_data-texts.
     LOOP AT &lt;ks&gt;-keys ASSIGNING &lt;kk&gt;.
       CLEAR s_k_det.      MOVE-CORRESPONDING &lt;kk&gt; TO s_k_det.       s_k_det-code = &lt;ks&gt;-obj_code.
       INSERT s_k_det INTO TABLE fm_data-keyboards.
     ENDLOOP.
     LOOP AT &lt;ks&gt;-pushbuttons ASSIGNING &lt;pb&gt;.
       CLEAR s_attr.       MOVE-CORRESPONDING &lt;pb&gt; TO s_attr.        s_attr-obj_type = obj_types-button.       s_attr-obj_code = &lt;ks&gt;-obj_code.
+      READ TABLE &lt;pb&gt;-texts ASSIGNING &lt;t&gt; WITH TABLE KEY langu = d_lang.
+      IF sy-subrc = 0.    s_attr-int_note = &lt;t&gt;-text.  ENDIF.
       INSERT s_attr INTO TABLE fm_data-attributes.
       CALL METHOD set_texts
         EXPORTING
@@ -691,6 +716,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
   LOOP AT status ASSIGNING &lt;st&gt;.
     CLEAR s_statu.        MOVE-CORRESPONDING &lt;st&gt;-hdr TO s_statu.
+    READ TABLE &lt;st&gt;-texts ASSIGNING &lt;t&gt; WITH TABLE KEY langu = d_lang.
+    IF sy-subrc = 0.    s_statu-int_note = &lt;t&gt;-text.  ENDIF.
     INSERT s_statu INTO TABLE fm_data-status.
     CALL METHOD set_texts
       EXPORTING
@@ -705,7 +732,10 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       CLEAR s_s_fu.     s_s_fu-status = &lt;st&gt;-code.      s_s_fu-function = &lt;sf&gt;.
       INSERT s_s_fu INTO TABLE fm_data-stat_funcs.
     ENDLOOP.
-  ENDLOOP.</SOURCE>
+  ENDLOOP.
+
+  s_text-progname = program.
+  MODIFY fm_data-texts FROM s_text TRANSPORTING progname WHERE progname &lt;&gt; program.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="2" STATE="1" EDITORDER="5 ">
     <TEXTS>

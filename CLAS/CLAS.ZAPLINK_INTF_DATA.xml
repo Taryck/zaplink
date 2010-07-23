@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="15E36DD343D3A2BDFFD0315E79DC1D39" CODE_SIGNATURE="79A643FE75F113D0EB578C270EE2EC35" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="23076FD019D72F1BDA29EA6F06415573" CODE_SIGNATURE="37A027134C8D97D388C55DF5B4DBF66E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INTF_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -165,7 +165,7 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
   fm_data-interface = a0_maindata-hdr.
   READ TABLE a0_maindata-texts INTO _t
        WITH TABLE KEY lang = a0_maindata-langu.
-  IF sy-subrc = 0.    fm_data-interface-descript = _t-_.    ENDIF.
+  IF sy-subrc = 0.    fm_data-interface-descript = _t-text.    ENDIF.
 
 *CLASS_DESC  TYPE tt_SEOCLASSTX,
 * Issue 33 : Documentation connected to text

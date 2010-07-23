@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="22A5FC83CF987AFB4CD4667D74D89DF7" CODE_SIGNATURE="CE9696431947765EE6FDBDE210BF744C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="28B1B49574AFE4C70701E06223A6D454" CODE_SIGNATURE="7031FDC7B7F4D6DB08A6CF425F8D7FD1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -558,7 +558,7 @@ INCLUDE zaplink_macros.</MACROS>
 
     LOOP AT t_container ASSIGNING &lt;c&gt;.
       CLEAR s_cont.
-      IF &lt;c&gt;-type = &apos;SUBSCREEN&apos;.
+      IF &lt;c&gt;-type &lt;&gt; &apos;SCREEN&apos;.
 * Code from SAPLSIFP form I_CONT_TO_FIELD : LSIFPF11(1479-&gt;1493)
 * When importing dynpro and exporting again C_LINE_MIN or C_COLN_MIN are blank sometimes despite in source system they are set to 1
 * After analyzing both read and write dynpro it apears that when writing C_LINE_MIN is not transfered to ADEZ if C_RESIZE_V is initial
@@ -1040,7 +1040,7 @@ INCLUDE zaplink_macros.</MACROS>
         s_field = &lt;f&gt;-hdr.
         s_field-cont_type = &lt;c&gt;-type.
         s_field-cont_name = &lt;c&gt;-name.
-        IF s_field-text IS INITIAL. f_fill = abap_true. ENDIF.    &quot; protect data
+        IF s_field-text IS INITIAL. f_fill = abap_true. ELSE. f_fill = abap_false. ENDIF.    &quot; protect data
         LOOP AT &lt;f&gt;-texts ASSIGNING &lt;t&gt;.
           IF f_fill = abap_true AND ( sy-tabix = 1 OR &lt;t&gt;-langu = sy-langu ). s_field-text = &lt;t&gt;-short_txt. ENDIF.
           CLEAR s_text.
@@ -1164,7 +1164,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA d_trkey   TYPE trkey.
 
   CHECK menus IS BOUND.
-  s_fm_data = menus-&gt;to_data( ).
+  s_fm_data = menus-&gt;to_data( program ).
 
   d_trkey-obj_type = &apos;PROG&apos;.
   d_trkey-sub_name = d_trkey-obj_name = program.
