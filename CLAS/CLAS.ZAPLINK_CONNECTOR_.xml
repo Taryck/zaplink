@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="28B1B49574AFE4C70701E06223A6D454" CODE_SIGNATURE="7031FDC7B7F4D6DB08A6CF425F8D7FD1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="38901FC576C8C2F6F114392BCC0E7B2B" CODE_SIGNATURE="E66ABC906EE3132127FA2125CE48EBD8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -1162,6 +1162,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA s_fm_data TYPE zaplink_menupainter_data=&gt;ts_fm_data.
   DATA d_trkey   TYPE trkey.
+  DATA d_lang    TYPE sy-langu.
 
   CHECK menus IS BOUND.
   s_fm_data = menus-&gt;to_data( program ).
@@ -1169,11 +1170,13 @@ INCLUDE zaplink_macros.</MACROS>
   d_trkey-obj_type = &apos;PROG&apos;.
   d_trkey-sub_name = d_trkey-obj_name = program.
   d_trkey-sub_type = &apos;CUAD&apos;.
+  d_lang = s_fm_data-header-mod_langu.
+  IF d_lang IS INITIAL.   d_lang = sy-langu.    ENDIF.
 
   CALL FUNCTION &apos;RS_CUA_INTERNAL_WRITE&apos;
     EXPORTING
       program   = program
-      language  = s_fm_data-header-mod_langu
+      language  = d_lang
       tr_key    = d_trkey
       adm       = s_fm_data-header
       state     = &apos;I&apos;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F63F0AD7E7BF8D094FB5134001AE8F59" CODE_SIGNATURE="C46ADB2B956911A94BA052DAFC90ED4E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9D7BAE4AFE4F742E30A5A58A13AF6982" CODE_SIGNATURE="F0FB6A4C0FC4D2E8E896F9136CA55A9B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_FILE">
@@ -49,6 +49,16 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Directory and file separator"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="O_CX" EXPOSURE="1" STATE="1" EDITORDER="5 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="O_MYCX" EXPOSURE="1" STATE="1" EDITORDER="4 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="_CONTENT" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TD_CONTENT">
     <TEXTS>
      <ITEM LANG="E" TEXT="File content"/>
@@ -76,7 +86,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *&quot;* local helper classes</IMPLEMENTATIONS>
    <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
-*&quot;* in the implementation part of the class</MACROS>
+*&quot;* in the implementation part of the class
+
+INCLUDE ZAPLINK_MACROS.</MACROS>
   </LOCAL>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
@@ -378,38 +390,31 @@ result = _filetype.</SOURCE>
       CHANGING
         data_tab                = tmptable
       EXCEPTIONS
-        file_open_error         = 1
-        file_read_error         = 2
-        no_batch                = 3
-        gui_refuse_filetransfer = 4
-        invalid_type            = 5
-        no_authority            = 6
-        unknown_error           = 7
-        bad_data_format         = 8
-        header_not_allowed      = 9
-        separator_not_allowed   = 10
+        access_denied           = 1
+        bad_data_format         = 2
+        disk_full               = 3
+        dp_out_of_memory        = 4
+        dp_timeout              = 5
+        error_no_gui            = 6
+        file_open_error         = 7
+        file_read_error         = 8
+        gui_refuse_filetransfer = 9
+        header_not_allowed      = 10
         header_too_long         = 11
-        unknown_dp_error        = 12
-        access_denied           = 13
-        dp_out_of_memory        = 14
-        disk_full               = 15
-        dp_timeout              = 16
-        not_supported_by_gui    = 17
-        error_no_gui            = 18
+        invalid_type            = 12
+        no_authority            = 13
+        no_batch                = 14
+        not_supported_by_gui    = 15
+        separator_not_allowed   = 16
+        unknown_dp_error        = 17
+        unknown_error           = 18
         OTHERS                  = 19.
     IF sy-subrc &lt;&gt; 0.
-      CASE sy-subrc.
-        WHEN &apos;1&apos;.
-          cx_name = &apos;FILE_OPEN_ERROR&apos;.
-        WHEN OTHERS.
-          cx_name = &apos;OTHERS&apos;.
-      ENDCASE.
-* Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;load_error
-                    filename = _filename
-                    filetype = _filetype
-                     cx_name = cx_name.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
+                                                       method = &apos;GUI_UPLOAD&apos;
+                                                        subrc = sy-subrc
+                                                 cx_classname = &apos;ZAPLINK_CX_FILE&apos; ).
+      RAISE EXCEPTION o_mycx.
     ENDIF.
   ELSEIF _filetype = c_ft_server.
     TRY.
@@ -1111,6 +1116,16 @@ IF data &lt;&gt; c_ft_local AND data &lt;&gt; c_ft_server.
    <ITEM CMPNAME="TD_FULLNAME" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="STRING">
     <TEXTS>
      <ITEM LANG="E" TEXT="Full file or directory name"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_CX_FILE">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_FILE_INFO" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">
