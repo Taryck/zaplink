@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D3E836B8BA6B1E1AEC9677EBC18CFFCC" CODE_SIGNATURE="6E3E223A714F4B21F3061F94FB9BAE74" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="4E37348357906B0E60919CF1F12526E3" CODE_SIGNATURE="9098047BED10A7705DA4833D0D89BBB7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -244,7 +244,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
-DATA t_allcomp   TYPE	tt_allcomplist.
+  DATA t_allcomp   TYPE	tt_allcomplist.
   FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
@@ -586,8 +586,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
-  FIELD-SYMBOLS:
-    &lt;i&gt; LIKE LINE OF _index.
+  FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
   DATA _line  LIKE LINE OF result-headers.
   DATA s_item LIKE LINE OF result-items.
   DATA o_list TYPE to_me.
@@ -934,7 +933,7 @@ DATA t_allcomp   TYPE	tt_allcomplist.
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
-DATA t_allcomp TYPE tt_allcomplist.
+  DATA t_allcomp TYPE tt_allcomplist.
   FIELD-SYMBOLS:
     &lt;c&gt; LIKE LINE OF _allcomp.
 
@@ -989,7 +988,7 @@ DATA t_allcomp TYPE tt_allcomplist.
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-FIELD-SYMBOLS:
+  FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
@@ -998,6 +997,31 @@ FIELD-SYMBOLS:
     IF sy-subrc &lt;&gt; 0.
       DELETE _index.
     ENDIF.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="REFRESH" EXPOSURE="2" STATE="1" EDITORDER="29 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Refresh component&apos;s list"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZapLink Components list"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA t_list TYPE tt_complist.
+  FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF t_list.
+
+  t_list = _index.
+  clear( ).
+  LOOP AT t_list ASSIGNING &lt;i&gt;.
+    add( &lt;i&gt;-o_comp ).
+    IF &lt;i&gt;-selected = abap_true.    select( &lt;i&gt;-o_comp ).    ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="REMOVE" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
@@ -1045,7 +1069,7 @@ FIELD-SYMBOLS:
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-FIELD-SYMBOLS:
+  FIELD-SYMBOLS:
     &lt;i&gt; LIKE LINE OF _index.
 
   LOOP AT data-&gt;_index ASSIGNING &lt;i&gt;.
@@ -1120,7 +1144,7 @@ FIELD-SYMBOLS:
     <SOURCE>`
   DATA _key TYPE ts_compkey.
 
-  check comp is bound.
+  CHECK comp IS BOUND.
   _key = comp-&gt;_get_key( ).
 
   READ TABLE _index INTO result
@@ -1372,6 +1396,7 @@ FIELD-SYMBOLS:
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_list TYPE to_me.
+  DATA o_sub  TYPE to_me.
   DATA _comp LIKE LINE OF _allcomp.
 
   CHECK data IS BOUND.
@@ -1386,6 +1411,10 @@ FIELD-SYMBOLS:
     _comp-as_sub = abap_true.
     _comp-o_comp = data.
     INSERT _comp INTO TABLE _allcomp.
+  ENDLOOP.
+
+  LOOP AT o_list-&gt;_allcomp INTO _comp.    &quot; Issue 102
+    _add_subcomp( _comp-o_comp ).
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_SELECT" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AD72C0F5F1C70721D779F24FF1A304D8" CODE_SIGNATURE="8F03196C8A0A370E863BE223E3FD58F6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="EE1DD6B391273D7B73EA5397DBB09483" CODE_SIGNATURE="E32622117EB4A81E27966BDB0811232B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONTAINER">
@@ -119,6 +119,7 @@ INCLUDE zaplink_macros.</MACROS>
       o_comp = object_list-&gt;get_next( ).
     ENDWHILE.
 
+    _complist-&gt;refresh( ).    &quot; Issue 102
     compact( ).
     _update_componentslist( ).
 
@@ -400,28 +401,31 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
         EXIT.
       ENDIF.
 
-      TRY.
-          _complist-&gt;add( component ).
-        CATCH zaplink_cx_list INTO o_cx_list.
-          TRY.
-              component-&gt;set_exception( o_cx_list ).
-            CATCH zaplink_cx INTO o_cx.
-              mac_cascade_raise o_mycx o_cx.
-          ENDTRY.
-* Failed to add component &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;). Look at exception &amp; message collector in component to get the root cause.
-          RAISE EXCEPTION TYPE zaplink_cx_container
-                     EXPORTING textid = zaplink_cx_container=&gt;add_comp_failed
-                                 type = _comp-type
-                                 name = _comp-name.
-      ENDTRY.
+* Issue 102 : Replaced code
+*      TRY.
+*          _complist-&gt;add( component ).
+*        CATCH zaplink_cx_list INTO o_cx_list.
+*          TRY.
+*              component-&gt;set_exception( o_cx_list ).
+*            CATCH zaplink_cx INTO o_cx.
+*              mac_cascade_raise o_mycx o_cx.
+*          ENDTRY.
+** Failed to add component &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;). Look at exception &amp; message collector in component to get the root cause.
+*          RAISE EXCEPTION TYPE zaplink_cx_container
+*                     EXPORTING textid = zaplink_cx_container=&gt;add_comp_failed
+*                                 type = _comp-type
+*                                 name = _comp-name.
+*      ENDTRY.
+*
+*      _index-key = component.
+**      _index-node = _find_component_node( component ).       &quot; Find_component is based on node_index it can&apos;t be used to get node.
+*      _index-node = root.
+*      MODIFY TABLE _nodeindex FROM _index.
+*      IF sy-subrc &lt;&gt; 0.
+*        INSERT _index INTO TABLE _nodeindex.
+*      ENDIF.
 
-      _index-key = component.
-*      _index-node = _find_component_node( component ).       &quot; Find_component is based on node_index it can&apos;t be used to get node.
-      _index-node = root.
-      MODIFY TABLE _nodeindex FROM _index.
-      IF sy-subrc &lt;&gt; 0.
-        INSERT _index INTO TABLE _nodeindex.
-      ENDIF.
+      _search_components( root ).     &quot; Issue 102 : to keep comp list up to date
 
     CATCH zaplink_cx_container INTO o_mycx.
       RAISE EXCEPTION o_mycx.

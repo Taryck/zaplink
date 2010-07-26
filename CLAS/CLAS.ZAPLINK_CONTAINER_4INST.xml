@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D7E8F29B15908EC095CB05BDC4BA0B22" CODE_SIGNATURE="54013C63EF30EB25A5E2DFCF4D5441A8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="72366BB49979CE769E2428979A8DF36A" CODE_SIGNATURE="2E41DB11E63F85FE92C977880B817F8B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONTAINER">
@@ -651,12 +651,14 @@ check data &lt;&gt; _options.
   DATA o_list      TYPE to_list.
   DATA _index      LIKE LINE OF _nodeindex.
   DATA str         TYPE string.
+  DATA d_sub       TYPE abap_bool.
 *  DATA d_uuid_init TYPE td_connuuid.
 
   CHECK node IS BOUND.
   str = node-&gt;get_name( ).
   CHECK str = comp_nodename. &quot; Security
   _index-node = node.          &quot; save current node
+  d_sub = _is_subcomponent( _index-node ).      &quot; Issue 102
 
   TRY.
       o_raw = zaplink_connectors=&gt;node_2_raw( _index-node ).
@@ -694,25 +696,14 @@ check data &lt;&gt; _options.
         ENDIF.
       ENDIF.
 
-      o_comp_p = _complist-&gt;search( o_comp ).
-      IF o_comp_p IS BOUND.
-        o_comp_p-&gt;copy_from( o_comp ).
-        o_comp = o_comp_p.
-      ENDIF.
-* Issue 10 : update node list
-      _index-key = o_comp.
-      MODIFY TABLE _nodeindex FROM _index.
-      IF sy-subrc &lt;&gt; 0.
-        INSERT _index INTO TABLE _nodeindex.
-      ENDIF.
-
-      IF _is_subcomponent( _index-node ) = abap_false.
-        IF NOT o_comp_p IS BOUND.   _complist-&gt;add( o_comp ).     ENDIF.
+      IF d_sub = abap_false.      &quot; Issue 102 : Root comp
+        o_comp_p = _complist-&gt;search( o_comp ).
+        IF o_comp_p IS BOUND.   o_comp = o_comp_p.    ELSE.   _complist-&gt;add( o_comp ).     ENDIF.
       ELSE.
 * Not working : node are the same but it&apos;s a new object. :(
 *      READ TABLE _nodeindex INTO _index
 *           WITH KEY node = o_cursor.
-        o_raw = zaplink_connectors=&gt;node_2_raw( o_cursor ).
+        o_raw = zaplink_connectors=&gt;node_2_raw( o_cursor ).   &quot; Read Parent
         o_comp_p = o_raw-&gt;get_component( ).
         o_comp_p = _complist-&gt;search( o_comp_p ).
         o_list = o_comp_p-&gt;get_subcomponents( ).
@@ -720,8 +711,14 @@ check data &lt;&gt; _options.
           CREATE OBJECT o_list.
           o_comp_p-&gt;set_subcomponents( o_list ).
         ENDIF.
-        o_list-&gt;add( o_comp ).
+        IF NOT o_list-&gt;search( o_comp ) IS BOUND.   o_list-&gt;add( o_comp ).    ENDIF.      &quot; Issue 102
       ENDIF.
+
+* Issue 10 : update node list
+      _index-key = o_comp.
+      MODIFY TABLE _nodeindex FROM _index.
+      IF sy-subrc &lt;&gt; 0.   INSERT _index INTO TABLE _nodeindex.    ENDIF.
+
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
@@ -884,13 +881,15 @@ check data &lt;&gt; _options.
   CHECK node IS BOUND.
   str = node-&gt;get_name( ).
   CHECK str &lt;&gt; &apos;#document&apos;.
-  IF str = comp_nodename.
-    TRY.
-        _add_to_componentslist( node ).
-      CATCH zaplink_cx INTO o_cx.
-        mac_cascade_raise o_mycx o_cx.
-    ENDTRY.
-  ELSE.
+* Issue 102 : Search also for sub component
+*  IF str = comp_nodename.
+*    TRY.
+*        _add_to_componentslist( node ).
+*      CATCH zaplink_cx INTO o_cx.
+*        mac_cascade_raise o_mycx o_cx.
+*    ENDTRY.
+*  ELSE.
+* Search parent &amp; childrens
     o_filt_name = node-&gt;create_filter_name( name = comp_nodename ).
     o_iterator = node-&gt;create_iterator_filtered( filter = o_filt_name ).
     o_node = o_iterator-&gt;get_next( ).
@@ -900,10 +899,10 @@ check data &lt;&gt; _options.
         CATCH zaplink_cx INTO o_cx.
           mac_cascade_raise o_mycx o_cx.
       ENDTRY.
-      o_node = o_iterator-&gt;get_next( ).&quot; get next one to allow to use &apos;continue&apos;
+      o_node = o_iterator-&gt;get_next( ).
 
     ENDWHILE.
-  ENDIF.</SOURCE>
+*  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_UPDATE_COMPONENTSLIST" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
@@ -946,6 +945,7 @@ check data &lt;&gt; _options.
 *the next ZL_OBJECT his unaccessible.
 *and ignored : If XML tag are not closed no problem.
 
+  _complist-&gt;clear( ).    REFRESH _nodeindex.     &quot; Issue 102
   o_iterator = xmldata-&gt;create_iterator( depth = 1 ).   &quot; Do only root level
   o_node = o_iterator-&gt;get_next( ).
   WHILE o_node IS BOUND.
@@ -955,9 +955,8 @@ check data &lt;&gt; _options.
       CATCH zaplink_cx INTO o_cx.
         mac_cascade_raise o_mycx o_cx.
     ENDTRY.
-    o_node = o_iterator-&gt;get_next( ).&quot; get next one to allow to use &apos;continue&apos;
-  ENDWHILE.
-* is equiv to : o_node = xmldata-&gt;get_root( ).</SOURCE>
+    o_node = o_iterator-&gt;get_next( ).
+  ENDWHILE.</SOURCE>
    </ITEM>
   </METHODS>
   <TYPEGROUPS>
