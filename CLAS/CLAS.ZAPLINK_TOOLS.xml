@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BE5416ACBD578C961241773DBB9A6EF7" CODE_SIGNATURE="6A7D67CEE34EA214C394E885C4C8D790" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="DB654F4167DB69A45E8460A13BF1FF11" CODE_SIGNATURE="FB8F4479F07C890A2E8546879FECD732" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" WITH_UNIT_TESTS="X">
@@ -995,7 +995,41 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
 **     MOD_INSTANCE                   =
 **     CONTROL_TYPE                   = &apos; &apos;
 **     ENH_INSTANCE                   =
-**     SUBCONTAINER_TAB               =</SOURCE>
+**     SUBCONTAINER_TAB               =
+
+* Cleanning comments like &apos;&quot; my comment&apos; but keeps comment like &apos;&quot;#EC&apos;
+  DATA t_tokens TYPE STANDARD TABLE OF stokes.
+  DATA t_statements TYPE STANDARD TABLE OF sstmnt.
+  DATA t_lines   TYPE SORTED TABLE OF sstmnt WITH UNIQUE KEY trow.
+*  DATA t_kw      TYPE STANDARD TABLE OF char255.
+*  DATA s_kw      LIKE LINE OF t_kw.
+  DATA d_tabix   TYPE sy-tabix.
+  DATA t_result  TYPE match_result_tab.
+  FIELD-SYMBOLS:
+    &lt;st&gt; LIKE LINE OF t_lines,
+    &lt;r&gt;  LIKE LINE OF t_result.
+
+*  s_kw = &apos;&quot;&apos;.    APPEND s_kw TO t_kw.
+  SCAN ABAP-SOURCE table TOKENS INTO t_tokens
+                     STATEMENTS INTO t_statements.
+*                       KEYWORDS FROM t_kw.
+  SORT t_statements BY trow. DELETE ADJACENT DUPLICATES FROM t_statements COMPARING trow.
+  DELETE t_statements WHERE trow = 0.
+  t_lines = t_statements.
+*  zaplink_tools=&gt;inverse_table_order( CHANGING my_table = t_statements ).
+  LOOP AT table ASSIGNING &lt;a&gt;.
+    CHECK &lt;a&gt; CP &apos;*&quot;*&apos; AND NOT &lt;a&gt; CP &apos;*&quot;##EC*&apos;.
+    d_tabix = sy-tabix.
+    READ TABLE t_lines ASSIGNING &lt;st&gt;
+         WITH TABLE KEY trow = d_tabix.
+*    if sy-subrc = 4.    read TABLE t_lines ASSIGNING &lt;sT&gt; INDEX sy-tabix.     endif.
+    CHECK sy-subrc = 0.
+    FIND ALL OCCURRENCES OF &apos;&quot;&apos; IN &lt;a&gt; RESULTS t_result.
+    LOOP AT t_result ASSIGNING &lt;r&gt;.
+      CHECK &lt;r&gt;-offset &gt;  &lt;st&gt;-tcol.
+      &lt;a&gt; = &lt;a&gt;(&lt;r&gt;-offset).    EXIT.
+    ENDLOOP.
+  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="REMOVE_COMMENT_ON_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
     <TEXTS>
