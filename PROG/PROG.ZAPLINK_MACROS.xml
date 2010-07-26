@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9FD8D7842F9CAB772A8091206000D05C" CODE_SIGNATURE="2A84F9CA1AEDDDBB00583AB60B0CA2FD" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MACROS" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="801CD8A4F54EB1CC9A950C41110375CC" CODE_SIGNATURE="BB9B9D58987D56F3CC86900696169002" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MACROS" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" RSTAT="K" RMAND="200" RLOAD="E" UCCHECK="X"/>
@@ -119,7 +119,7 @@ DEFINE mac_add_name_meth_and_raise.
   o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &amp;1
                                                    method = &amp;2
                                                     subrc = &amp;3
-                                             cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+                                             cx_classname = &amp;4 ).
   application_log-&gt;add_symsg( ).
   application_log-&gt;add_exception( o_mycx ).
   raise exception o_mycx.
