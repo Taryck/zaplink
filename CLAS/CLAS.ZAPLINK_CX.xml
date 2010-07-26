@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E9D89F79BA83F7FE8D04E0D0222913D1" CODE_SIGNATURE="27D0DAE9AA60619D2B3A887B0143EA5A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0C551E0D0C1F7ACC533AC9A2127C1521" CODE_SIGNATURE="1B8904225D424EE5E1AE82B846EF0577" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S" MSG_ID="ZAPLINK_CX">
@@ -375,9 +375,8 @@ AS</ITEM>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA o_desc TYPE REF TO cl_abap_objectdescr.
-*  DATA o_type TYPE REF TO cl_abap_typedescr.
-*  DATA o_ref  TYPE REF TO cl_abap_refdescr.
+  DATA o_desc   TYPE REF TO cl_abap_objectdescr.
+  DATA t_excep  TYPE abap_excpdescr_tab.
   FIELD-SYMBOLS:
     &lt;m&gt; LIKE LINE OF o_desc-&gt;methods,
     &lt;e&gt; LIKE LINE OF &lt;m&gt;-exceptions.
@@ -396,16 +395,12 @@ AS</ITEM>
   TRANSLATE method TO UPPER CASE.
   READ TABLE o_desc-&gt;methods ASSIGNING &lt;m&gt;
        WITH TABLE KEY name = method.
-  IF sy-subrc &lt;&gt; 0.
-  ELSEIF subrc &lt; 0 OR subrc &gt; LINES( &lt;m&gt;-exceptions ).
-  ELSE.
-    SORT &lt;m&gt;-exceptions.
-    READ TABLE &lt;m&gt;-exceptions ASSIGNING &lt;e&gt; INDEX subrc.
-    IF sy-subrc &lt;&gt; 0.
-    ELSE.
-      result-&gt;cx_name = &lt;e&gt;-name.
-    ENDIF.
-  ENDIF.</SOURCE>
+  ASSERT sy-subrc = 0.
+  ASSERT subrc &gt;= 1 AND subrc &lt;= LINES( &lt;m&gt;-exceptions ).
+  t_excep = &lt;m&gt;-exceptions.   SORT t_excep.
+  READ TABLE t_excep ASSIGNING &lt;e&gt; INDEX subrc.
+  ASSERT sy-subrc = 0.
+  result-&gt;cx_name = &lt;e&gt;-name.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CREATE_FROM_MF_CX" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
