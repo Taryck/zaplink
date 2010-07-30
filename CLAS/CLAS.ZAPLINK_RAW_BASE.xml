@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="05E1BFA21E4E2EBB29315B5281C49D9E" CODE_SIGNATURE="90BE0C189126DBBFCAF4F600557D7323" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_BASE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E973B8CEF1CE28374AC4D3D94AE260BA" CODE_SIGNATURE="DDB15028C3409935A5CE92CA98F54443" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_BASE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -177,9 +177,9 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Anonymized component data (excepted RAW)"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -231,13 +231,20 @@ INCLUDE zaplink_macros.</MACROS>
     CATCH zaplink_cx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_TO_XML" EXPOSURE="1" STATE="1" EDITORDER="13 ">
+   <ITEM CMPNAME="CONV_TO_XML" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert me to XML"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_XML"/>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA ez_xml          TYPE to_ez_xml.
   DATA o_xml           TYPE to_xml.
@@ -260,13 +267,6 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
 * result = type.  &quot; Issue 21
   result = checksum.</SOURCE>
@@ -282,13 +282,6 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = code_signature.</SOURCE>
    </ITEM>
@@ -309,7 +302,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -325,8 +318,8 @@ INCLUDE zaplink_macros.</MACROS>
       o_comp-&gt;set_checksum( checksum ).
       o_comp-&gt;set_code_signature( code_signature ).
       o_comp-&gt;set_connuuid( connector ).
-    CATCH zaplink_cx_component INTO o_cx.
-      If without_cx is INITIAL.   mac_cascade_raise o_mycx o_cx.    endif.
+    CATCH zaplink_cx INTO o_cx.
+      IF without_cx IS INITIAL.  RAISE EXCEPTION o_cx.    ENDIF.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_NAME" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
@@ -340,13 +333,6 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = name.</SOURCE>
    </ITEM>
@@ -361,13 +347,6 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = type.</SOURCE>
    </ITEM>
@@ -412,17 +391,24 @@ INCLUDE zaplink_macros.</MACROS>
   IF type = &apos;DEVC&apos;. CLEAR directory-devclass. ENDIF.
 *  devclass = directory-devclass.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="9 ">
+   <ITEM CMPNAME="SET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Checksum calculate"/>
     </TEXTS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA o_xml           TYPE to_xml.
   DATA _tempstring     TYPE string.
   DATA _len            TYPE i.
 
   o_xml = conv_to_xml( ).
-  CHECK o_xml IS BOUND.
+  ASSERT o_xml IS BOUND.
   _tempstring = xml_2_string( o_xml ).
 *  _regex = &apos;&lt;\?.*\?&gt;&apos;.
 *  replace FIRST OCCURRENCE OF REGEX _regex IN _tempstring with ``.
@@ -464,20 +450,13 @@ INCLUDE zaplink_macros.</MACROS>
     <TEXTS>
      <ITEM LANG="E" TEXT="Unanonymized component data (excepted RAW)"/>
     </TEXTS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
 *     me-&gt;DIRECTORY-korrnum,
-  If me-&gt;DIRECTORY-srcsystem is INITIAL. me-&gt;DIRECTORY-srcsystem = Sy-sysid. endif.
-  if me-&gt;DIRECTORY-author is INITIAL. me-&gt;DIRECTORY-author = sy-uname. endif.
+  IF me-&gt;directory-srcsystem IS INITIAL. me-&gt;directory-srcsystem = sy-sysid. ENDIF.
+  IF me-&gt;directory-author IS INITIAL. me-&gt;directory-author = sy-uname. ENDIF.
 *    me-&gt;DIRECTORY-trkorr.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UPDATE_CONNECTOR_DATA" EXPOSURE="2" STATE="1" EDITORDER="3 ">
+   <ITEM CMPNAME="UPDATE_CONNECTOR_DATA" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Update connector data"/>
     </TEXTS>
@@ -488,6 +467,13 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   me-&gt;connector = o_connector-&gt;uuid.
   me-&gt;version = o_connector-&gt;version.</SOURCE>

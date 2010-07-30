@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3BC450B6260D73903A727BAD7EBCD650" CODE_SIGNATURE="5B54D2D69EB0C32AF92F281E65E207FA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="4A5F3DD28955FFEC0D89C86955FBA698" CODE_SIGNATURE="53F275D7CDC2B728FB7369BDC006E3C4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -149,7 +149,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -157,15 +157,15 @@ INCLUDE zaplink_macros.</MACROS>
     </EXCEPTIONS>
     <SOURCE>`
 
-  TRY.
+*  TRY.
 
       _add_connector( class = local_class
                    devclass = local_devclass ).
       _update_def_class( ).
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.</SOURCE>
+*    CATCH zaplink_cx_connector INTO o_mycx.
+*      RAISE EXCEPTION o_mycx.
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
@@ -217,13 +217,6 @@ INCLUDE zaplink_macros.</MACROS>
     <TEXTS>
      <ITEM LANG="E" TEXT="Remove all connectors"/>
     </TEXTS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   clear type_list.</SOURCE>
    </ITEM>
@@ -323,7 +316,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -332,7 +325,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA _conn LIKE LINE OF type_list.
 
-  TRY.
+*  TRY.
       result = exists-not_exists.
       _conn = _search_connector( type ).
 
@@ -340,9 +333,9 @@ INCLUDE zaplink_macros.</MACROS>
         result = exists-exists.
       ENDIF.
 
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
-  ENDTRY.</SOURCE>
+*    CATCH zaplink_cx INTO o_cx.
+*      mac_cascade_raise o_mycx o_cx.
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_CLASSNAME" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -356,13 +349,6 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_CONNCLASS"/>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   DATA o_typedesc TYPE REF TO cl_abap_objectdescr.
 
@@ -370,7 +356,7 @@ INCLUDE zaplink_macros.</MACROS>
   o_typedesc ?= cl_abap_objectdescr=&gt;describe_by_object_ref( o_conn ).
   result = o_typedesc-&gt;get_relative_name( ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CONNECTORLIST" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_CONNECTORLIST" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get Connector as List (object)"/>
     </TEXTS>
@@ -381,6 +367,13 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp TYPE to_component.
   FIELD-SYMBOLS:
@@ -399,7 +392,7 @@ INCLUDE zaplink_macros.</MACROS>
 *    ENDTRY.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPEKIND" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_TYPEKIND" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get Program ID of object type"/>
     </TEXTS>
@@ -414,7 +407,7 @@ INCLUDE zaplink_macros.</MACROS>
        WITH TABLE KEY object = data.
   IF sy-subrc = 0.    result = &lt;t&gt;-pgmid.   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPEORDER" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_TYPEORDER" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get order of object Type"/>
     </TEXTS>
@@ -423,8 +416,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_TYPEORDER"/>
     </PARAMETERS>
     <SOURCE>`
-  FIELD-SYMBOLS:
-    &lt;t&gt; LIKE LINE OF saptypes.
+  FIELD-SYMBOLS &lt;t&gt; LIKE LINE OF saptypes.
 
   READ TABLE saptypes ASSIGNING &lt;t&gt;
        WITH TABLE KEY object = data.
@@ -482,13 +474,11 @@ INCLUDE zaplink_macros.</MACROS>
       no_values_found        = 2
       OTHERS                 = 3.
   IF sy-subrc &lt;&gt; 0.
-    TRY.
-        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;F4IF_INT_TABLE_VALUE_REQUEST&apos;
-                                                    subrc = sy-subrc
-                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-      CATCH zaplink_cx INTO o_cx.
-        mac_cascade_raise o_mycx o_cx.
-    ENDTRY.
+    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;F4IF_INT_TABLE_VALUE_REQUEST&apos;
+                                                subrc = sy-subrc
+                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+    o_mycx-&gt;update( ).
+    RAISE EXCEPTION o_mycx.
   ELSE.
     type = d_value.
   ENDIF.</SOURCE>
@@ -510,7 +500,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
@@ -536,8 +526,8 @@ INCLUDE zaplink_macros.</MACROS>
     CATCH zaplink_cx INTO _cx.
       CREATE OBJECT o_mycx
         EXPORTING
-          textid  = zaplink_cx=&gt;system_error
-          prev_cx = _cx.
+          textid   = zaplink_cx=&gt;system_error
+          previous = _cx.
       o_mycx-&gt;update( ).
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
@@ -559,7 +549,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
@@ -569,17 +559,17 @@ INCLUDE zaplink_macros.</MACROS>
   DATA o_xml  TYPE to_xml.
 
   CHECK data IS BOUND.
-  TRY.
+*  TRY.
       o_xml = raw_2_xml( data ).
       result = xml_2_string( o_xml ).
-    CATCH zaplink_cx INTO o_cx.
-      CREATE OBJECT o_mycx
-        EXPORTING
-          textid  = zaplink_cx=&gt;system_error
-          prev_cx = o_cx.
-      o_mycx-&gt;update( ).
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.</SOURCE>
+*    CATCH zaplink_cx INTO o_cx.
+*      CREATE OBJECT o_mycx
+*        EXPORTING
+*          textid   = zaplink_cx=&gt;system_error
+*          previous = o_cx.
+*      o_mycx-&gt;update( ).
+*      RAISE EXCEPTION o_mycx.
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="RAW_2_XML" EXPOSURE="2" STATE="1" EDITORDER="20 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -590,7 +580,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TO_XML"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
@@ -602,12 +592,12 @@ INCLUDE zaplink_macros.</MACROS>
   CHECK data IS BOUND.
 
   CREATE OBJECT ez_xml.
-  TRY.
+*  TRY.
       result = ez_xml-&gt;any2xml( any       = data
                                 type      = comp_nodename ).
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
-  ENDTRY.</SOURCE>
+*    CATCH zaplink_cx INTO o_cx.
+*      mac_cascade_raise o_mycx o_cx.
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="RESET_CONNECTORS" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
@@ -694,7 +684,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="STRING_2_XML" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDDECLTYP="1">
+   <ITEM CMPNAME="STRING_2_XML" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert string to XML Document"/>
     </TEXTS>
@@ -725,7 +715,7 @@ INCLUDE zaplink_macros.</MACROS>
 
   IF o_doc IS BOUND.  result = o_doc.   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TYPE2TEXT" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
+   <ITEM CMPNAME="TYPE2TEXT" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get object Type as text"/>
     </TEXTS>
@@ -734,8 +724,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_TYPE_AS_TEXT"/>
     </PARAMETERS>
     <SOURCE>`
-  FIELD-SYMBOLS:
-    &lt;t&gt; LIKE LINE OF saptypes.
+  FIELD-SYMBOLS &lt;t&gt; LIKE LINE OF saptypes.
 
   READ TABLE saptypes ASSIGNING &lt;t&gt;
        WITH TABLE KEY object = data.
@@ -759,13 +748,6 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   DATA o_xmlengine    TYPE REF TO if_ixml.
   DATA _streamfactory TYPE REF TO if_ixml_stream_factory.
@@ -842,10 +824,10 @@ INCLUDE zaplink_macros.</MACROS>
           OR cx_sy_create_object_error=&gt;protected_constructor.
 * Ignore these exceptions
         WHEN OTHERS.
-          mac_cascade_raise_root o_mycx o_cx_create.
+          mac_cascade_raise o_mycx o_cx_create.
       ENDCASE.
     CATCH cx_root INTO o_cx_root.
-      mac_cascade_raise_root o_mycx o_cx_root.
+      mac_cascade_raise o_mycx o_cx_root.
   ENDTRY.
 
   CHECK connector IS BOUND.
@@ -957,13 +939,6 @@ INCLUDE zaplink_macros.</MACROS>
     <TEXTS>
      <ITEM LANG="E" TEXT="Update default"/>
     </TEXTS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   TYPES:
     BEGIN OF t_classlist,

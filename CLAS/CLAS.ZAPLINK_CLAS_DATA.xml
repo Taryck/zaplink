@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4C2135E0D0ECC1BBC80666F0E1C4DD36" CODE_SIGNATURE="EA61923431E4824951B61EB456A3D7B7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9E1C527719D22C176D7487681F2C02CB" CODE_SIGNATURE="EA61923431E4824951B61EB456A3D7B7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -459,7 +459,7 @@ INCLUDE zaplink_macros.</MACROS>
         RAISE EXCEPTION TYPE zaplink_cx_connector
            EXPORTING
              textid = zaplink_cx=&gt;system_error
-             cx_name = &apos;Attribut should exists !!&apos;.
+             cx_name = &apos;Attribut should exists !!&apos;. &quot;(F01).
       ENDIF.
       &lt;at&gt;-attvalue = sotr2value( ls_cx-concept ).
 *        CLEAR: _at.

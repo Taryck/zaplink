@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="99A5B79501EE2E58E81D5484258E5601" CODE_SIGNATURE="8DB4AD8D36B411ED9939D299E89D0FDC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_RAW" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C5F940CF4C7FE6E251BCADD7C82613C3" CODE_SIGNATURE="14D08A5541151091F9078EB3FCA56D4C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_RAW" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_RAW"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUNC_DATA"/>
@@ -57,7 +57,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *&quot;* in the implementation part of the class</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
+   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
@@ -68,6 +68,13 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" MTDTYPE="2" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp     TYPE to_component.
   DATA o_raw      TYPE to_mydata.
@@ -129,12 +136,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     <SOURCE>`
   DATA o_raw   TYPE to_mydata.
 
-  if raw IS BOUND.    o_raw ?= raw.   o_raw-&gt;anonymize( ).    endif.
-  TRY.
-      CALL METHOD super-&gt;anonymize.
-    CATCH zaplink_cx_container INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.</SOURCE>
+  IF raw IS BOUND.    o_raw ?= raw.   o_raw-&gt;anonymize( ).    ENDIF.
+*  TRY.
+  CALL METHOD super-&gt;anonymize.
+*    CATCH zaplink_cx_container INTO o_mycx.
+*      RAISE EXCEPTION o_mycx.
+*  ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPES>

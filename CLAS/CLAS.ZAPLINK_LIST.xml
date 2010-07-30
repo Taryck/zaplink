@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4E37348357906B0E60919CF1F12526E3" CODE_SIGNATURE="9098047BED10A7705DA4833D0D89BBB7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="15947D4470EEF7F577E751A51165E843" CODE_SIGNATURE="E75AEA0D25EF3F67901723314B85714F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
@@ -196,7 +196,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 "/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp   TYPE to_component.
@@ -218,8 +218,8 @@ INCLUDE zaplink_macros.</MACROS>
 * Action failed due to exception &apos;&amp;CX_NAME&amp;&apos;
             CREATE OBJECT o_mycx
               EXPORTING
-                textid  = zaplink_cx_list=&gt;failed
-                prev_cx = o_cx_comp.
+                textid   = zaplink_cx_list=&gt;failed
+                previous = o_cx_comp.
             o_mycx-&gt;update( ).
             RAISE EXCEPTION o_mycx.
         ENDTRY.
@@ -427,9 +427,6 @@ INCLUDE zaplink_macros.</MACROS>
     <TEXTS>
      <ITEM LANG="E" TEXT="Clear component list"/>
     </TEXTS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
-    </EXCEPTIONS>
     <SOURCE>`
   CLEAR:
       display_progress,
@@ -755,7 +752,11 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
+      </TEXTS>
+     </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
   DATA component TYPE ts_compkey.
@@ -778,11 +779,12 @@ INCLUDE zaplink_macros.</MACROS>
 
   ADD 1 TO _iterator_tabix.
   READ TABLE t_cursors INDEX _iterator_tabix ASSIGNING &lt;i&gt;.
-  IF sy-subrc &lt;&gt; 0.
-* should not happend
-    RAISE EXCEPTION TYPE zaplink_cx_list
-               EXPORTING textid = zaplink_cx_list=&gt;system_error.
-  ENDIF.
+  ASSERT sy-subrc = 0.
+*  IF sy-subrc &lt;&gt; 0.
+** should not happend
+*    RAISE EXCEPTION TYPE zaplink_cx_list
+*               EXPORTING textid = zaplink_cx_list=&gt;system_error.
+*  ENDIF.
 
   result = &lt;i&gt;-o_comp.
 
@@ -876,9 +878,6 @@ INCLUDE zaplink_macros.</MACROS>
     <TEXTS>
      <ITEM LANG="E" TEXT="Initialize Iterator on selected component"/>
     </TEXTS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E" EDITORDER="1 "/>
-    </EXCEPTIONS>
     <SOURCE>`
   DATA s_cursor LIKE LINE OF t_cursors.
   FIELD-SYMBOLS:

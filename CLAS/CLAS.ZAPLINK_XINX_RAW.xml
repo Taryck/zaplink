@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D4C77F6CCAB4D3FAEC9C8648AC09D91F" CODE_SIGNATURE="6695C77F8B0753DC00B65A7B25E5AE65" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_RAW" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B18B43FE185E432781B503D2BF4B7008" CODE_SIGNATURE="46BEFB3323C918D81BB0FE228C0A5B33" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_RAW" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_RAW"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_XINX_DATA"/>
@@ -53,7 +53,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *&quot;* in the implementation part of the class</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
+   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
@@ -64,6 +64,13 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" MTDTYPE="2" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA s_index TYPE zaplink_xinx_data=&gt;ts_idx_key.
   DATA o_comp  TYPE to_component.
@@ -127,11 +134,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA o_raw   TYPE REF TO zaplink_xinx_data.
 
   if raw IS BOUND.    o_raw ?= raw.   o_raw-&gt;anonymize( ).    endif.
-  TRY.
+*  TRY.
       CALL METHOD super-&gt;anonymize.
-    CATCH zaplink_cx_container INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.</SOURCE>
+*    CATCH zaplink_cx_container INTO o_mycx.
+*      RAISE EXCEPTION o_mycx.
+*  ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
  </RAW>

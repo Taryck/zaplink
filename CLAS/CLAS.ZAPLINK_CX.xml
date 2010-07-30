@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="529E3C67C3720BC8D9F0769AC07845F3" CODE_SIGNATURE="B9A3AB7734D9D1A31888ED6792A22CF3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A2ABF303AA7FB4A2738A6859289B12D5" CODE_SIGNATURE="BDA64A8D61AB8FE78875559E0D6B4F70" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S" MSG_ID="ZAPLINK_CX">
@@ -26,8 +26,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
-   <ITEM CMPNAME="CX_NAME" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="STRING"/>
-   <ITEM CMPNAME="EXT_ID" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="BALNREXT">
+   <ITEM CMPNAME="CX_NAME" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="STRING"/>
+   <ITEM CMPNAME="EXT_ID" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="BALNREXT">
     <TEXTS>
      <ITEM LANG="E" TEXT="Application Log: External ID"/>
     </TEXTS>
@@ -42,19 +42,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Application Log: Object Name (Application Code)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="12 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
+   <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="11 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
      <ITEM LANG="E" TEXT="ROOT Exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="11 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
+   <ITEM CMPNAME="O_MYCX" STATE="1" EDITORDER="10 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="PREV_CX" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="3" TYPE="ZAPLINK_CX">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Previous exception"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUBOBJECT" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="BALSUBOBJ">
@@ -62,7 +57,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Application Log: Subobject"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="_CX_LIST" EXPOSURE="2" STATE="1" EDITORDER="10 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_CX_LIST">
+   <ITEM CMPNAME="SYSTEMSTACK" EXPOSURE="2" STATE="1" EDITORDER="10 " ATTRDONLY="X" TYPTYPE="1" TYPE="ABAP_CALLSTACK">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="System Stack of the exception call"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="_CX_LIST" EXPOSURE="2" STATE="1" EDITORDER="9 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TT_CX_LIST">
     <TEXTS>
      <ITEM LANG="E" TEXT="Exceptions list"/>
     </TEXTS>
@@ -281,7 +281,7 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="ZAPlink exception class"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="E_TXT_ID" PARVALUE="BAL_LOG">
+     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="E_TXT_ID" PARVALUE="BAL_LOG" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
@@ -297,13 +297,14 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _CREATE_CX( cx_name = cx_name
                         textid = textid ).
+  result-&gt;systemstack_up( ).  &quot; remove this method from stack
 
   result-&gt;messages = message_collector.
-  result-&gt;prev_cx = prev_cx.
+  result-&gt;previous = prev_cx.
 
   result-&gt;update( ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CREATE_FROM_METHOD_CX" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CREATE_FROM_METHOD_CX" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Create Exception from Method Exception (non class exception)">U1&amp;FUNCTIONALITY&amp;
 ASGenerate an exception class based on the exception number of the method.
@@ -367,13 +368,6 @@ AS</ITEM>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   DATA o_desc   TYPE REF TO cl_abap_objectdescr.
   DATA t_excep  TYPE abap_excpdescr_tab.
@@ -383,6 +377,7 @@ AS</ITEM>
 
   result = _create_cx( cx_name = cx_classname
                         textid = textid ).
+  result-&gt;systemstack_up( ).  &quot; remove this method from stack
 
   CHECK class IS BOUND OR NOT class_name IS INITIAL.
 
@@ -402,7 +397,7 @@ AS</ITEM>
   ASSERT sy-subrc = 0.
   result-&gt;cx_name = &lt;e&gt;-name.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CREATE_FROM_MF_CX" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CREATE_FROM_MF_CX" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Create Exception from Module Function Exception">U1&amp;FUNCTIONALITY&amp;
 ASGenerate an exception class based on the exception number of the
@@ -450,13 +445,6 @@ AS</ITEM>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   CONSTANTS c_cx_kind TYPE funct-kind VALUE &apos;X&apos;. &quot; Exception
 
@@ -479,6 +467,7 @@ AS</ITEM>
 
   result = _create_cx( cx_name = classname
                         textid = textid ).
+  result-&gt;systemstack_up( ).  &quot; remove this method from stack
 
   CALL FUNCTION &apos;FUNC_GET_OBJECT&apos;
     EXPORTING
@@ -501,7 +490,7 @@ AS</ITEM>
   IF sy-subrc &lt;&gt; 0.
     _cx = create_from_mf_cx( funcname = &apos;FUNC_GET_OBJECT&apos;
                                 subrc = sy-subrc ).
-    result-&gt;prev_cx = _cx.
+    result-&gt;previous = _cx.
     result-&gt;textid = zaplink_cx=&gt;system_error.
     EXIT.
   ENDIF.
@@ -520,10 +509,11 @@ AS</ITEM>
       EXIT.
     ENDIF.
   ENDIF.
-  IF NOT &lt;p&gt; IS ASSIGNED.
-    RAISE EXCEPTION TYPE zaplink_cx
-          EXPORTING textid = zaplink_cx=&gt;system_error.
-  ENDIF.
+  ASSERT &lt;p&gt; IS ASSIGNED.     CHECK &lt;p&gt; IS ASSIGNED.
+*  IF NOT &lt;p&gt; IS ASSIGNED.
+*    RAISE EXCEPTION TYPE zaplink_cx
+*          EXPORTING textid = zaplink_cx=&gt;system_error.
+*  ENDIF.
 
   result-&gt;cx_name = &lt;p&gt;-parameter.
   READ TABLE lt_pfunct ASSIGNING &lt;t&gt;
@@ -545,7 +535,7 @@ AS</ITEM>
     CONCATENATE result-&gt;cx_name &apos;(&apos; &lt;t&gt;-stext &apos;)&apos; INTO result-&gt;cx_name.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CREATE_FROM_SYMSG" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CREATE_FROM_SYMSG" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Create Exception from SY Msg message"/>
     </TEXTS>
@@ -577,6 +567,7 @@ AS</ITEM>
 
   result = _create_cx( cx_name = classname
                         textid = textid ).
+  result-&gt;systemstack_up( ).  &quot; remove this method from stack
 
   MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
              WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4 INTO result-&gt;cx_name.</SOURCE>
@@ -591,9 +582,31 @@ AS</ITEM>
     <SOURCE>`
   str = source_position_as_string( me ).</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="LOAD_SYSTEMSTACK" EXPOSURE="2" STATE="1" EDITORDER="14 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Load systemstack into exception"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FORCE_RELOAD" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Force reload of System Stack"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  IF systemstack IS INITIAL OR force_reload = abap_true.
+    CALL FUNCTION &apos;SYSTEM_CALLSTACK&apos;
+*     EXPORTING
+*       MAX_LEVEL          = 0
+      IMPORTING
+*       ET_CALLSTACK       =
+        callstack          = systemstack.
+    systemstack_up( ).   &quot; Remove load systemstack
+  ENDIF.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="SOURCE_POSITION_AS_STRING" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
-     <ITEM LANG="E" TEXT="Returns Position in Source Text as string"/>
+     <ITEM LANG="E" TEXT="Returns Position in Source as string"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="EXCEPTION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="3" TYPE="CX_ROOT">
@@ -609,43 +622,81 @@ AS</ITEM>
     </PARAMETERS>
     <SOURCE>`
   DATA _pos TYPE ts_source_pos.
+*  DATA _key TYPE seu_objkey.
+*  DATA _prog TYPE ts_source_def.
+*  DATA _include TYPE ts_source_def.
+
+  CALL METHOD exception-&gt;get_source_position
+    IMPORTING
+      program_name = _pos-mainprogram
+      include_name = _pos-include
+      source_line  = _pos-line.
+
+  str = STACK_POSITION_AS_STRING( _pos ).
+*  _key = _pos-mainprogram. _prog = conv_progname( _key ).
+*  IF _pos-mainprogram = _pos-include.
+*    MESSAGE i002 WITH _prog-str _pos-line INTO str.
+*  ELSE.
+*    _key = _pos-include.     _include = conv_progname( object_name = _key   context = _prog-name ).
+*    MESSAGE i000 WITH _prog-str _include-str _pos-line INTO str.
+*  ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="STACK_POSITION_AS_STRING" EXPOSURE="1" STATE="1" EDITORDER="9 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Returns Stack Position in Source as string"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_SOURCE_POS"/>
+     <ITEM SCONAME="STR" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="STRING">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Position as String"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
   DATA _key TYPE seu_objkey.
   DATA _prog TYPE ts_source_def.
   DATA _include TYPE ts_source_def.
 
-  CALL METHOD exception-&gt;get_source_position
-    IMPORTING
-      program_name = _pos-program_name
-      include_name = _pos-include_name
-      source_line  = _pos-source_line.
-
-  _key = _pos-program_name. _prog = conv_progname( _key ).
-  IF _pos-program_name = _pos-include_name.
-    MESSAGE i002 WITH _prog-str _pos-source_line INTO str.
+  _key = source-mainprogram. _prog = conv_progname( _key ).
+  IF source-mainprogram = source-include.
+    MESSAGE i002 WITH _prog-str source-line INTO str.
   ELSE.
-    _key = _pos-include_name.     _include = conv_progname( object_name = _key   context = _prog-name ).
-    MESSAGE i000 WITH _prog-str _include-str _pos-source_line INTO str.
+    _key = source-include.     _include = conv_progname( object_name = _key   context = _prog-name ).
+    MESSAGE i000 WITH _prog-str _include-str source-line INTO str.
   ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="SYSTEMSTACK_UP" EXPOSURE="2" STATE="1" EDITORDER="15 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Clear last entry from systemstack of the exception"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FORCE_RELOAD" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Force reload of System Stack"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  CHECK systemstack IS NOT INITIAL.   DELETE systemstack INDEX 1.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE" EXPOSURE="2" STATE="1" EDITORDER="3 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="Màj parameters"/>
     </TEXTS>
     <SOURCE>`
+  DATA desc TYPE REF TO cl_abap_objectdescr.
+
 * BAl_log
   IF messages IS BOUND.
     object = messages-&gt;object.
     subobject = messages-&gt;subobject.
     ext_id = messages-&gt;ext_id.
-    messages-&gt;STORE( ).
+    messages-&gt;store( ).
   ENDIF.
 
 * cx_name
-  DATA desc TYPE REF TO cl_abap_objectdescr.
-  IF cx_name IS INITIAL AND prev_cx IS BOUND.
-    desc ?= cl_abap_objectdescr=&gt;describe_by_object_ref( prev_cx ).
-    cx_name = desc-&gt;absolute_name.
-  ELSEIF cx_name IS INITIAL AND previous IS BOUND.
+  IF cx_name IS INITIAL AND previous IS BOUND.
     desc ?= cl_abap_objectdescr=&gt;describe_by_object_ref( previous ).
     cx_name = desc-&gt;absolute_name.
   ENDIF.</SOURCE>
@@ -655,24 +706,27 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Write exception as text"/>
     </TEXTS>
     <SOURCE>`
-  DATA _exceptions TYPE STANDARD TABLE OF string.
-  DATA _msg TYPE string.
-  DATA _pos TYPE string.
-  DATA _cx TYPE REF TO zaplink_cx.
-  DATA _order TYPE STANDARD TABLE OF string.
-  DATA _offset TYPE string.
-  DATA _messages TYPE bapirettab.
-  DATA _light TYPE icon_d.
+  DATA _exceptions  TYPE STANDARD TABLE OF string.
+  DATA _msg         TYPE string.
+  DATA _pos         TYPE string.
+  DATA _cx          TYPE REF TO cx_root.
+  DATA _order       TYPE STANDARD TABLE OF string.
+  DATA _offset      TYPE string.
+  DATA _messages    TYPE bapirettab.
+  DATA _light       TYPE icon_d.
+  DATA t_stack      TYPE abap_callstack.
   FIELD-SYMBOLS:
+    &lt;s&gt; LIKE LINE OF t_stack,
     &lt;e&gt; LIKE LINE OF _exceptions.
 
   _cx = me.
   WHILE _cx IS BOUND.
     _msg = _cx-&gt;get_text( ).
-    _pos = _cx-&gt;get_source_position_as_string( ).
+*    if not _cx-&gt;systemstack is INITIAL.   t_stack = _cx-&gt;systemstack.   endif.
+    _pos = zaplink_cx=&gt;source_position_as_string( _cx ).
     CONCATENATE _msg _pos INTO _msg SEPARATED BY space.
     APPEND _msg TO _exceptions.
-    _cx = _cx-&gt;prev_cx.
+    _cx = _cx-&gt;previous.
   ENDWHILE.
 
   LOOP AT _exceptions ASSIGNING &lt;e&gt;.
@@ -694,12 +748,14 @@ AS</ITEM>
       WRITE:/ _offset, icon_arrow_right AS ICON, &lt;e&gt;.
     ENDIF.
   ENDLOOP.
-  IF me-&gt;messages IS BOUND.
-    CONCATENATE ` ` _offset INTO _offset.
-    messages-&gt;write( _offset ).
-  ENDIF.</SOURCE>
+  CONCATENATE ` ` _offset INTO _offset.
+  LOOP AT t_stack ASSIGNING &lt;s&gt;.
+    _msg = stack_position_as_string( &lt;s&gt; ).
+    WRITE:/ _offset, icon_stack AS ICON, _msg.
+  ENDLOOP.
+  IF me-&gt;messages IS BOUND.   messages-&gt;write( _offset ).   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_CREATE_CX" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="_CREATE_CX" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Create Exception from class name"/>
     </TEXTS>
@@ -720,13 +776,6 @@ AS</ITEM>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   DATA f_exists TYPE abap_bool.
 
@@ -739,13 +788,16 @@ AS</ITEM>
       f_exists = abap_false.
     ENDIF.
     TRY.
-        CREATE OBJECT result type (cx_name)
+        CREATE OBJECT result
+          TYPE
+            (cx_name)
           EXPORTING
-            textid = textid.
+            textid    = textid.
       CATCH cx_root INTO o_cx.
-        IF f_exists = abap_true.
-          mac_cascade_raise_root o_mycx o_cx.
-        ENDIF.
+        ASSERT f_exists = abap_false.
+*        IF f_exists = abap_true.
+*          mac_cascade_raise o_mycx o_cx.
+*        ENDIF.
     ENDTRY.
   ENDIF.
 
@@ -753,60 +805,57 @@ AS</ITEM>
     CREATE OBJECT result
       EXPORTING
         textid = textid.
-  ENDIF.</SOURCE>
+  ENDIF.
+  result-&gt;load_systemstack( ).
+  result-&gt;systemstack_up( ).  &quot; remove this method from stack</SOURCE>
    </ITEM>
   </METHODS>
   <TYPEGROUPS>
+   <ITEM TYPEGROUP="ABAP" EXPLICIT="X"/>
    <ITEM TYPEGROUP="ICON" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="E_TXT_ID" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SOTR_CONC">
+   <ITEM CMPNAME="E_TXT_ID" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="SOTR_CONC">
     <TEXTS>
      <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="O_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
+   <ITEM CMPNAME="O_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="Message Collector: Standard Implementation"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="CX_ROOT">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="CX_ROOT">
     <TEXTS>
      <ITEM LANG="E" TEXT="Abstract Superclass for All Global Exceptions"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CX" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_cx,
-      class TYPE seoclsname,
-    END OF ts_cx
+   <ITEM CMPNAME="TS_CX" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">BEGIN OF ts_cx,
+        class TYPE seoclsname,
+      END OF ts_cx
 `</ITEM>
-   <ITEM CMPNAME="TS_SOURCE_DEF" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_SOURCE_DEF" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
     BEGIN OF ts_source_def,
-        type_txt TYPE euobjt-singular,
-        name TYPE	seu_objkey,
-        str type string,
-      END OF ts_source_def
+          type_txt TYPE euobjt-singular,
+          name TYPE	seu_objkey,
+          str TYPE string,
+        END OF ts_source_def
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Source definition (type &amp; name)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCE_POS" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
-    BEGIN OF ts_source_pos,
-        program_name  TYPE  syrepid,
-        include_name  TYPE  syrepid,
-        source_line   TYPE  i,
-      END OF ts_source_pos
-`
+   <ITEM CMPNAME="TS_SOURCE_POS" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="ABAP_CALLSTACK_LINE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Source position"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_CX_LIST" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_cx_list TYPE HASHED TABLE OF ts_cx WITH UNIQUE key class
+   <ITEM CMPNAME="TT_CX_LIST" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">tt_cx_list TYPE HASHED TABLE OF ts_cx WITH UNIQUE KEY class
 `</ITEM>
   </TYPES>
  </RAW>

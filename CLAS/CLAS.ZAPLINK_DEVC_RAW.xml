@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4AD4ED4D11A505D004C36C51A28C702B" CODE_SIGNATURE="C208424811ED81AD3DD1D8E5AA8A1BD0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEVC_RAW" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D51DABBABE9EC1B3A0B3D2DB250D5884" CODE_SIGNATURE="B9D47247FD9DB12B2E744E449B4512E4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEVC_RAW" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_RAW"/>
  </DEPENDENCIES>
@@ -72,12 +72,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     <SOURCE>`
   DATA o_raw   TYPE to_mydata.
 
-  if raw IS BOUND.    o_raw ?= raw.   o_raw-&gt;anonymize( ).    endif.
-  TRY.
-      CALL METHOD super-&gt;anonymize.
-    CATCH zaplink_cx_container INTO o_mycx.
-      RAISE EXCEPTION o_mycx.
-  ENDTRY.</SOURCE>
+  IF raw IS BOUND.    o_raw ?= raw.   o_raw-&gt;anonymize( ).    ENDIF.
+*  TRY.
+  super-&gt;anonymize( ).
+*    CATCH zaplink_cx_container INTO o_mycx.
+*      RAISE EXCEPTION o_mycx.
+*  ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPES>

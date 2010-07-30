@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="CD40E508FEAD3F5576844D3C72AB3DFF" CODE_SIGNATURE="5E8EFEE096E45E683E8FC8E2B4C9623A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="253DCC5669B5C8546AC38C7E697B8F1B" CODE_SIGNATURE="220213068A2A06DB534C0E00D4305CC7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -141,7 +141,7 @@ DEFINE mac_syserr_log.
 END-OF-DEFINITION.</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="ADD_ANY" EXPOSURE="2" STATE="1" EDITORDER="1 ">
+   <ITEM CMPNAME="ADD_ANY" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Transform any data to XML"/>
     </TEXTS>
@@ -232,7 +232,7 @@ END-OF-DEFINITION.</MACROS>
   ENDCASE.
   unstack( ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="1 ">
+   <ITEM CMPNAME="ADD_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Transform Object to XML"/>
     </TEXTS>
@@ -373,7 +373,7 @@ END-OF-DEFINITION.</MACROS>
     mac_syserr_log rc &apos;append_child&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;. &quot;#EC NOTEXT
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_STRUCTURE" EXPOSURE="1" STATE="1" EDITORDER="2 ">
+   <ITEM CMPNAME="ADD_STRUCTURE" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Transform Structure to XML"/>
     </TEXTS>
@@ -492,7 +492,7 @@ END-OF-DEFINITION.</MACROS>
     mac_syserr_log rc &apos;append_child&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;. &quot;#EC NOTEXT
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_TABLE" EXPOSURE="1" STATE="1" EDITORDER="3 ">
+   <ITEM CMPNAME="ADD_TABLE" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Transform table to XML"/>
     </TEXTS>
@@ -692,7 +692,7 @@ END-OF-DEFINITION.</MACROS>
 *    COMMIT WORK AND WAIT.
 *  ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDTYPE="2">
+   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDTYPE="2" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
     </TEXTS>
@@ -700,7 +700,7 @@ END-OF-DEFINITION.</MACROS>
   ixml = cl_ixml=&gt;create( ).
   reset( ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ELEM_2_STRING" EXPOSURE="1" STATE="1" EDITORDER="4 ">
+   <ITEM CMPNAME="ELEM_2_STRING" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert Elementary type to string"/>
     </TEXTS>
@@ -762,18 +762,7 @@ END-OF-DEFINITION.</MACROS>
       TRY.
           string = any.
         CATCH cx_root INTO exception.
-          IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 002 WITH abap_true abap_true abap_true. ENDIF.
-          CALL METHOD application_log-&gt;add_error
-            EXPORTING
-*             id_msgid     = MSGID
-              id_msgno     = &apos;002&apos;
-              id_msgv1     = any
-              id_msgv2     = string
-*             id_msgv3     = &amp;3
-*             id_msgv4     =
-*             id_detlevel  =
-*             id_probclass =
-              .
+          application_log-&gt;add_exception( exception ).
       ENDTRY.
     WHEN OTHERS.
 * Unexpected =&gt; Dump
@@ -848,7 +837,7 @@ END-OF-DEFINITION.</MACROS>
     unstack( ).
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_NODE_TEXT" EXPOSURE="1" STATE="1" EDITORDER="14 ">
+   <ITEM CMPNAME="GET_NODE_TEXT" EXPOSURE="1" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Read XML node for text"/>
     </TEXTS>
@@ -872,7 +861,7 @@ END-OF-DEFINITION.</MACROS>
                                                   filter = o_filter ).
   o_text = o_iterator-&gt;get_next( ).   result = o_text-&gt;get_value( ).    IF result = &apos;#&apos;. clear result. endif.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_REF_TYPE" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_REF_TYPE" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="For Ref data (like object) type get target type"/>
     </TEXTS>
@@ -898,7 +887,7 @@ END-OF-DEFINITION.</MACROS>
     ref_type = typedesc.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IS_SIMPLE_TYPE_KIND" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
+   <ITEM CMPNAME="IS_SIMPLE_TYPE_KIND" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Determine Kind from Type kind for simple kind"/>
     </TEXTS>
@@ -961,7 +950,7 @@ END-OF-DEFINITION.</MACROS>
     WHEN cl_abap_typedescr=&gt;typekind_xsequence.
   ENDCASE.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="NODE2STRING" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
+   <ITEM CMPNAME="NODE2STRING" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert node to String"/>
     </TEXTS>
@@ -988,7 +977,7 @@ END-OF-DEFINITION.</MACROS>
   CREATE OBJECT _printxmldoc.
   _printxmldoc-&gt;parse_string( string ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="NODE_IS_NOT_TYPE" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDDECLTYP="1">
+   <ITEM CMPNAME="NODE_IS_NOT_TYPE" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Do node is not a speficied type"/>
     </TEXTS>
@@ -1010,7 +999,7 @@ END-OF-DEFINITION.</MACROS>
   d_mask = d_mask BIT-AND d_txt_m.
   if d_mask = 00000000.   result = abap_true.   endif.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="NODE_IS_TYPE" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1">
+   <ITEM CMPNAME="NODE_IS_TYPE" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Do node is the speficied type"/>
     </TEXTS>
@@ -1032,7 +1021,7 @@ END-OF-DEFINITION.</MACROS>
   d_mask = d_mask BIT-AND d_txt_m.
   if d_mask = d_txt_m.    result = abap_true.   endif.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="PROTECT_STRING" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
+   <ITEM CMPNAME="PROTECT_STRING" STATE="1" EDITORDER="1 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Protect String for XML value"/>
     </TEXTS>
@@ -1055,7 +1044,7 @@ END-OF-DEFINITION.</MACROS>
   ENDIF.
   IF string+d_last(1) IN char_to_protect.   CONCATENATE result protection_char INTO result.   ENDIF.    &quot; Issue 61 &amp; 68</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="READ_ANY" EXPOSURE="1" STATE="1" EDITORDER="6 ">
+   <ITEM CMPNAME="READ_ANY" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Read XML to Any data"/>
     </TEXTS>
@@ -1072,6 +1061,13 @@ END-OF-DEFINITION.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA _desc     TYPE REF TO cl_abap_typedescr.
   DATA string    TYPE string.
@@ -1135,7 +1131,7 @@ END-OF-DEFINITION.</MACROS>
   ENDCASE.
   unstack( ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="READ_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="7 ">
+   <ITEM CMPNAME="READ_OBJECT" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Read XML to Object"/>
     </TEXTS>
@@ -1152,8 +1148,15 @@ END-OF-DEFINITION.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
-  DATA o_ref      TYPE REF TO cl_abap_refdescr.
+*  DATA o_ref      TYPE REF TO cl_abap_refdescr.
   DATA elem       TYPE REF TO if_ixml_element.
   DATA next_node  TYPE REF TO if_ixml_node.
   DATA node       TYPE REF TO if_ixml_node.
@@ -1167,8 +1170,7 @@ END-OF-DEFINITION.</MACROS>
   DATA svalue     TYPE string.
   DATA typedescr  TYPE REF TO cl_abap_typedescr.
   DATA _cx        TYPE REF TO cx_root.
-  FIELD-SYMBOLS:
-    &lt;d&gt; TYPE ANY.
+  FIELD-SYMBOLS &lt;d&gt; TYPE ANY.
 
   IF NOT object IS BOUND AND NOT typedesc IS BOUND. EXIT. ENDIF.
   IF NOT object IS BOUND.
@@ -1361,7 +1363,7 @@ END-OF-DEFINITION.</MACROS>
     ENDIF.
   ENDWHILE.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="READ_STRUCTURE" EXPOSURE="1" STATE="1" EDITORDER="8 ">
+   <ITEM CMPNAME="READ_STRUCTURE" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Read XML to Structure"/>
     </TEXTS>
@@ -1373,6 +1375,13 @@ END-OF-DEFINITION.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA elem        TYPE REF TO if_ixml_element.
   DATA node        TYPE REF TO if_ixml_node.
@@ -1390,9 +1399,9 @@ END-OF-DEFINITION.</MACROS>
   DATA name       TYPE string.
   DATA data_type  TYPE string.
   DATA exception  TYPE REF TO cx_root.
-  DATA o_filter   TYPE REF TO if_ixml_node_filter.
-  DATA o_iterator TYPE REF TO if_ixml_node_iterator.
-  DATA o_text     TYPE REF TO if_ixml_node.
+*  DATA o_filter   TYPE REF TO if_ixml_node_filter.
+*  DATA o_iterator TYPE REF TO if_ixml_node_iterator.
+*  DATA o_text     TYPE REF TO if_ixml_node.
 
 * XML Value
   svalue = get_node_text( xml_node ).                       &quot; Issue 38
@@ -1557,7 +1566,7 @@ END-OF-DEFINITION.</MACROS>
     ENDIF.
   ENDWHILE.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="READ_TABLE" EXPOSURE="1" STATE="1" EDITORDER="9 ">
+   <ITEM CMPNAME="READ_TABLE" EXPOSURE="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Read XML to Table"/>
     </TEXTS>
@@ -1569,8 +1578,15 @@ END-OF-DEFINITION.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
-  DATA o_node     TYPE REF TO if_ixml_node.
+*  DATA o_node     TYPE REF TO if_ixml_node.
   DATA o_n_elem   TYPE REF TO if_ixml_element.
   DATA o_elem     TYPE REF TO if_ixml_element.
   DATA o_iterator TYPE REF TO if_ixml_node_iterator.
@@ -1629,7 +1645,7 @@ END-OF-DEFINITION.</MACROS>
     unstack( ).
   ENDWHILE.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="RESET" EXPOSURE="2" STATE="1" EDITORDER="8 ">
+   <ITEM CMPNAME="RESET" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Reste attributs"/>
     </TEXTS>
@@ -1673,7 +1689,7 @@ END-OF-DEFINITION.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="STACK" EXPOSURE="1" STATE="1" EDITORDER="10 ">
+   <ITEM CMPNAME="STACK" EXPOSURE="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add context to context stack"/>
     </TEXTS>
@@ -1685,7 +1701,7 @@ END-OF-DEFINITION.</MACROS>
     INSERT item INTO context INDEX 1.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="STACK_DESCR" EXPOSURE="1" STATE="1" EDITORDER="11 ">
+   <ITEM CMPNAME="STACK_DESCR" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add context to context stack from description object"/>
     </TEXTS>
@@ -1703,7 +1719,7 @@ END-OF-DEFINITION.</MACROS>
 
   stack( name ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="STRING_2_ELEM" EXPOSURE="1" STATE="1" EDITORDER="12 ">
+   <ITEM CMPNAME="STRING_2_ELEM" EXPOSURE="1" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert Elementary type to string"/>
     </TEXTS>
@@ -1786,7 +1802,7 @@ END-OF-DEFINITION.</MACROS>
 *    WHEN cl_abap_typedescr=&gt;typekind_w.
   ENDCASE.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNPROTECT_STRING" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
+   <ITEM CMPNAME="UNPROTECT_STRING" STATE="1" EDITORDER="2 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Unprotect String issued from XML value"/>
     </TEXTS>
@@ -1814,7 +1830,7 @@ END-OF-DEFINITION.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNSTACK" EXPOSURE="1" STATE="1" EDITORDER="13 ">
+   <ITEM CMPNAME="UNSTACK" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Remove stack entry"/>
     </TEXTS>
@@ -1886,7 +1902,7 @@ END-OF-DEFINITION.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_XML2ANY" EXPOSURE="2" STATE="1" EDITORDER="10 ">
+   <ITEM CMPNAME="_XML2ANY" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="XML =&gt; Any data"/>
     </TEXTS>
@@ -1898,6 +1914,13 @@ END-OF-DEFINITION.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA root_node   TYPE REF TO if_ixml_element.
   DATA _doc        TYPE REF TO if_ixml_document.

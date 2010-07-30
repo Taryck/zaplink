@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F1EAE4B8B8630F6DE9DC498F16AAAD7A" CODE_SIGNATURE="ECDDB3E3BEEFCC89D5CF0AE85F301314" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="DA7B8CC2C8100E68B2FAC67F6C497258" CODE_SIGNATURE="B8B059D577CF0768E645EFD107BD185D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_GUI">
@@ -449,7 +449,7 @@ INCLUDE zaplink_macros.</MACROS>
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_VALUES" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
+   <ITEM CMPNAME="GET_VALUES" EXPOSURE="2" STATE="1" EDITORDER="10 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Search Help for object of a type"/>
     </TEXTS>
@@ -457,6 +457,13 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
      <ITEM SCONAME="VALUE" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA o_conn TYPE to_connector.
 
@@ -612,8 +619,8 @@ INCLUDE zaplink_macros.</MACROS>
     CATCH zaplink_cx INTO _cx.
       CREATE OBJECT o_mycx
         EXPORTING
-          textid  = zaplink_cx_gui=&gt;system_error
-          prev_cx = _cx.
+          textid   = zaplink_cx_gui=&gt;system_error
+          previous = _cx.
       o_mycx-&gt;update( ).
       RAISE EXCEPTION o_mycx.
 
@@ -911,7 +918,7 @@ INCLUDE zaplink_macros.</MACROS>
     mac_def_catch zaplink_cx_gui.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_UPDATE_SUBOBJ" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
+   <ITEM CMPNAME="_UPDATE_SUBOBJ" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Update sub object in list"/>
     </TEXTS>
@@ -927,6 +934,13 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp TYPE to_component.
 

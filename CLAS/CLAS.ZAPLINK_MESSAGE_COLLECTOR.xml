@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="EF60B4216BBD08049367C25737295B2D" CODE_SIGNATURE="B415211F4FADF7077BB7DED237DBC79D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="81D3B72676ABD1E6A737CF936D3EEC57" CODE_SIGNATURE="9D8C3161361C7D2E0337BA3070582E72" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-LOG" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -64,19 +64,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Level of Detail for Following Messages (0..9)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="MD_SUP_COUNT" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="SYTABIX">
+   <ITEM CMPNAME="MD_SUP_COUNT" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SYTABIX">
     <TEXTS>
      <ITEM LANG="E" TEXT="Support Mode Only: Number of Messages"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="MF_LOG_NOT_STORED" EXPOSURE="1" STATE="1" EDITORDER="7 " ATTVALUE="ABAP_FALSE" TYPTYPE="1" TYPE="ABAP_BOOL">
+   <ITEM CMPNAME="MF_LOG_NOT_STORED" EXPOSURE="1" STATE="1" EDITORDER="6 " ATTVALUE="ABAP_FALSE" TYPTYPE="1" TYPE="ABAP_BOOL">
     <TEXTS>
      <ITEM LANG="E" TEXT="Access to Unsaved Log?"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="MR_SUP_CALLSTACK" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="SYS_CALLS">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Support Mode Only: Calling Position of Instantiation"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MSGID" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="SYMSGID">
@@ -89,7 +84,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Log Header Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="MT_SUP_MSG" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="T_MSG_X">
+   <ITEM CMPNAME="MT_SUP_MSG" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="T_MSG_X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Support Mode Only: All Messages"/>
     </TEXTS>
@@ -782,10 +777,7 @@ DATA: _detlevel	TYPE ballevel.
   DATA o_zl_cx    TYPE REF TO zaplink_cx.
 
   IF id_detlevel IS INITIAL.    _detlevel = md_level.   ELSE.   _detlevel = id_detlevel.    ENDIF.
-  TRY.
-      o_zl_cx ?= exception.
-    CATCH cx_root.
-  ENDTRY.
+  TRY.    o_zl_cx ?= exception.   CATCH cx_root.    ENDTRY.
   IF o_zl_cx IS BOUND.
     CALL METHOD _add_zl_cx
       EXPORTING
@@ -3144,7 +3136,7 @@ DATA lt_messages  TYPE t_msg_x.
   o_ref ?= cl_abap_classdescr=&gt;describe_by_data( p_data = exception ).
   o_obj ?= get_ref_type( o_ref ).
 
-  cx_src_pos = zaplink_cx=&gt;SOURCE_POSITION_AS_STRING( exception ).
+  cx_src_pos = zaplink_cx=&gt;source_position_as_string( exception ).
 *  CALL METHOD exception-&gt;get_source_position
 *    IMPORTING
 *      program_name = prog
@@ -3228,11 +3220,11 @@ DATA lt_messages  TYPE t_msg_x.
     <SOURCE>`
   DATA _detlevel  TYPE ballevel.
 
-  IF exception-&gt;prev_cx IS BOUND.
+  IF exception-&gt;previous IS BOUND.
     _detlevel = id_detlevel + 1.
-    CALL METHOD _add_zl_cx
+    CALL METHOD add_exception
       EXPORTING
-        exception    = exception-&gt;prev_cx
+        exception    = exception-&gt;previous
         id_detlevel  = _detlevel
         id_probclass = id_probclass.
   ENDIF.

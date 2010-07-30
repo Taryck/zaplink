@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D4F887835D6A674E00A8040D8CB89BE9" CODE_SIGNATURE="E2CEDBB5A6D5FE632F8FD2BEF7ABA1AF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="865A9DACBF5E41378794BE2979B2AF54" CODE_SIGNATURE="EE21AA35366059D08BC5B0E0A021489D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -182,7 +182,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="CLONE" EXPOSURE="2" STATE="1" EDITORDER="28 ">
+   <ITEM CMPNAME="CLONE" EXPOSURE="2" STATE="1" EDITORDER="28 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Clone Component"/>
     </TEXTS>
@@ -208,15 +208,8 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
-result = _connector-o_conn.</SOURCE>
+  result = _connector-o_conn.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONNECTOR_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
@@ -229,15 +222,8 @@ result = _connector-o_conn.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
-result = _connector-exists.</SOURCE>
+  result = _connector-exists.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="1 " MTDTYPE="2">
     <TEXTS>
@@ -252,7 +238,7 @@ result = _connector-exists.</SOURCE>
                       OR is_constant = abap_true.   &quot; remove constants.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="COPY_FROM" EXPOSURE="2" STATE="1" EDITORDER="27 ">
+   <ITEM CMPNAME="COPY_FROM" EXPOSURE="2" STATE="1" EDITORDER="27 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Copy attributes from other Component"/>
     </TEXTS>
@@ -294,7 +280,7 @@ result = _connector-exists.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -302,12 +288,12 @@ result = _connector-exists.</SOURCE>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _cx TYPE REF TO zaplink_cx_component.
-  TRY.
+*  TRY.
       CREATE OBJECT result.
       result-&gt;_set_key( key ).
-    CATCH zaplink_cx_component INTO _cx.
-      RAISE EXCEPTION _cx.
-  ENDTRY.</SOURCE>
+*    CATCH zaplink_cx_component INTO _cx.
+*      RAISE EXCEPTION _cx.
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="DO_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
@@ -316,17 +302,10 @@ result = _connector-exists.</SOURCE>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPEXISTS"/>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = _exists.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_ACTION" EXPOSURE="2" STATE="1" EDITORDER="30 ">
+   <ITEM CMPNAME="GET_ACTION" EXPOSURE="2" STATE="1" EDITORDER="30 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Action : Getter"/>
     </TEXTS>
@@ -340,7 +319,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _action.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_ADD_DATA" EXPOSURE="2" STATE="1" EDITORDER="32 ">
+   <ITEM CMPNAME="GET_ADD_DATA" EXPOSURE="2" STATE="1" EDITORDER="32 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Data : Getter"/>
     </TEXTS>
@@ -354,7 +333,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="34 ">
+   <ITEM CMPNAME="GET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="34 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Object : Getter"/>
     </TEXTS>
@@ -368,7 +347,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _object.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="23 ">
+   <ITEM CMPNAME="GET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="23 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Checksum : Getter"/>
     </TEXTS>
@@ -382,7 +361,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   result = _checksum.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="25 ">
+   <ITEM CMPNAME="GET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="25 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Code Signature : Getter"/>
     </TEXTS>
@@ -407,13 +386,6 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = _connector-uuid.</SOURCE>
    </ITEM>
@@ -428,13 +400,6 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = _devclass.</SOURCE>
    </ITEM>
@@ -449,13 +414,6 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = _exception.</SOURCE>
    </ITEM>
@@ -471,7 +429,7 @@ result = _connector-exists.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -496,13 +454,6 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = _msg_coll.</SOURCE>
    </ITEM>
@@ -517,13 +468,6 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = name.</SOURCE>
    </ITEM>
@@ -538,13 +482,6 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = _srcsystem.</SOURCE>
    </ITEM>
@@ -559,13 +496,6 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = _subcomponents.</SOURCE>
    </ITEM>
@@ -580,13 +510,6 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = type.</SOURCE>
    </ITEM>
@@ -601,13 +524,6 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = _kind.</SOURCE>
    </ITEM>
@@ -622,17 +538,10 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   result = with_subcomp.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ON_CHANGE_CLEAR" STATE="1" EDITORDER="1 ">
+   <ITEM CMPNAME="ON_CHANGE_CLEAR" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Type or Name change : clear attr"/>
     </TEXTS>
@@ -644,7 +553,7 @@ result = _connector-exists.</SOURCE>
      <ITEM LANG="E" TEXT="Type or Name change : update attr"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -653,11 +562,11 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   DATA o_cx_cnx TYPE REF TO zaplink_cx_connector.
   IF _connector-o_conn IS BOUND AND NOT name IS INITIAL.
-    TRY.
+*    TRY.
         _exists = _connector-o_conn-&gt;do_exists( me ).
-      CATCH zaplink_cx_connector INTO o_cx_cnx.
-        mac_cascade_raise o_mycx o_cx_cnx.
-    ENDTRY.
+*      CATCH zaplink_cx_connector INTO o_cx_cnx.
+*        mac_cascade_raise o_mycx o_cx_cnx.
+*    ENDTRY.
     _connector-uuid = _connector-o_conn-&gt;uuid.
 
     CHECK NOT type IS INITIAL.
@@ -674,21 +583,14 @@ result = _connector-exists.</SOURCE>
     <TEXTS>
      <ITEM LANG="E" TEXT="Refresh component informations"/>
     </TEXTS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   TRY.
       on_change_update( ).                                  &quot; Issue 31
-    CATCH ZAPLINK_CX_COMPONENT INTO o_mycx.
+    CATCH ZAPLINK_CX.   &quot;_COMPONENT INTO o_mycx.
 *      RAISE EXCEPTION o_mycx.    &quot; Exception is ignored
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_ACTION" EXPOSURE="2" STATE="1" EDITORDER="31 ">
+   <ITEM CMPNAME="SET_ACTION" EXPOSURE="2" STATE="1" EDITORDER="31 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Action : Setter"/>
     </TEXTS>
@@ -702,7 +604,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   _action = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_ADD_DATA" EXPOSURE="2" STATE="1" EDITORDER="33 ">
+   <ITEM CMPNAME="SET_ADD_DATA" EXPOSURE="2" STATE="1" EDITORDER="33 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Data : Setter"/>
     </TEXTS>
@@ -716,7 +618,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   _data = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="35 ">
+   <ITEM CMPNAME="SET_ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="35 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Object : Setter"/>
     </TEXTS>
@@ -730,7 +632,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   _object = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="24 ">
+   <ITEM CMPNAME="SET_CHECKSUM" EXPOSURE="2" STATE="1" EDITORDER="24 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Checksum : Setter"/>
     </TEXTS>
@@ -744,7 +646,7 @@ result = _connector-exists.</SOURCE>
     <SOURCE>`
   _checksum = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="26 ">
+   <ITEM CMPNAME="SET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" EDITORDER="26 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Code Signature : Settter"/>
     </TEXTS>
@@ -770,7 +672,7 @@ result = _connector-exists.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -782,7 +684,7 @@ result = _connector-exists.</SOURCE>
 
   CHECK data &lt;&gt; _connector-uuid.
 
-  TRY.
+*  TRY.
       o_conn = zaplink_connectors=&gt;create_connector( type = type
                                                  connuuid = data ).
 
@@ -796,9 +698,9 @@ result = _connector-exists.</SOURCE>
       ENDIF.
       on_change_update( ).
 
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
-  ENDTRY.</SOURCE>
+*    CATCH zaplink_cx INTO o_cx.
+*      mac_cascade_raise o_mycx o_cx.
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
@@ -811,13 +713,6 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   CHECK data &lt;&gt; _devclass.
   _devclass = data.</SOURCE>
@@ -834,7 +729,7 @@ result = _connector-exists.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -875,7 +770,7 @@ result = _connector-exists.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -916,7 +811,7 @@ result = _connector-exists.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -928,7 +823,7 @@ result = _connector-exists.</SOURCE>
   on_change_clear( ).
   on_change_update( ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_SRC_SYS" EXPOSURE="2" STATE="1" EDITORDER="37 ">
+   <ITEM CMPNAME="SET_SRC_SYS" EXPOSURE="2" STATE="1" EDITORDER="37 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Source System: Setter"/>
     </TEXTS>
@@ -954,7 +849,7 @@ result = _connector-exists.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -995,7 +890,7 @@ result = _connector-exists.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -1007,7 +902,7 @@ result = _connector-exists.</SOURCE>
 
   CHECK data &lt;&gt; type.
 
-  TRY.
+*  TRY.
       TRY.
           o_conn = zaplink_connectors=&gt;create_connector( type = data ).
         CATCH zaplink_cx_connector INTO o_cx_cnx.
@@ -1020,9 +915,9 @@ result = _connector-exists.</SOURCE>
       IF o_conn IS BOUND.   _connector-exists = connexists-exists.    ELSE.     _connector-exists = connexists-not_exists.    ENDIF.
       on_change_update( ).
 
-    CATCH zaplink_cx INTO o_cx.
-      mac_cascade_raise o_mycx o_cx.
-  ENDTRY.</SOURCE>
+*    CATCH zaplink_cx INTO o_cx.
+*      mac_cascade_raise o_mycx o_cx.
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
     <TEXTS>
@@ -1035,18 +930,11 @@ result = _connector-exists.</SOURCE>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   CHECK data &lt;&gt; with_subcomp.
   with_subcomp = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_GET_KEY" EXPOSURE="1" STATE="1" EDITORDER="1 ">
+   <ITEM CMPNAME="_GET_KEY" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Key : Getter"/>
     </TEXTS>
@@ -1073,20 +961,20 @@ result = _connector-exists.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_COMPONENT" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA _cx TYPE REF TO zaplink_cx_component.
-  TRY.
+  DATA _cx TYPE REF TO zaplink_cx_component.
+*  TRY.
       set_type( data-type ).
       set_name( data-name ).
-    CATCH zaplink_cx_component INTO _cx.
-      RAISE EXCEPTION _cx.
-  ENDTRY.</SOURCE>
+*    CATCH zaplink_cx_component INTO _cx.
+*      RAISE EXCEPTION _cx.
+*  ENDTRY.</SOURCE>
    </ITEM>
   </METHODS>
   <TYPEGROUPS>

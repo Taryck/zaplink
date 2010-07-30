@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7E87C41CD6FCE48BAE683C9765D2CD7B" CODE_SIGNATURE="0F689F3A231545262DDF96E150B93D1A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D8D923A25E230C92EFBE7788860D9800" CODE_SIGNATURE="0B19AF7322DC88DAC9072E5ED400FE74" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -106,10 +106,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *&quot;* in the implementation part of the class</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="ANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="3 ">
+   <ITEM CMPNAME="ANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Anonymized component data"/>
     </TEXTS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   FIELD-SYMBOLS &lt;v&gt; LIKE LINE OF variants.
   CLEAR: a0_maindata-cnam, a0_maindata-cdat, a0_maindata-unam, a0_maindata-udat, a0_maindata-sdate, a0_maindata-stime, a0_maindata-idate,
@@ -131,7 +138,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   _id-sign = &apos;I&apos;.   _id-option = &apos;EQ&apos;.
   _id-low = doc_ids-prog.      APPEND _id TO r_doc_ids-prog.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FROM_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 ">
+   <ITEM CMPNAME="FROM_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
     </TEXTS>
@@ -142,6 +149,13 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA s_txt     LIKE LINE OF texts.
   DATA t_docs    TYPE tt_docs.

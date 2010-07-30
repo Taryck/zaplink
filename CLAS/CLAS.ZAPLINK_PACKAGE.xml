@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7ADECB8849B558E346C21AE9D454DD24" CODE_SIGNATURE="82D4DEDB5224A9CE579E52F4CA15B098" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="AE3BB28B5C9B138A60121E0FB4F4C672" CODE_SIGNATURE="78FA4A753379705FE463CE74706A6256" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DEVC_DATA"/>
@@ -296,19 +296,19 @@ INCLUDE zaplink_macros.</MACROS>
     IMPORTING
       e_transport_request   = transport_request
     EXCEPTIONS
-      object_not_changeable = 1
-      object_invalid        = 2
-      cancelled_in_corr     = 3
-      permission_failure    = 4
-      unexpected_error      = 5
-      intern_err            = 6
+      cancelled_in_corr     = 1
+      intern_err            = 2
+      object_invalid        = 3
+      object_not_changeable = 4
+      permission_failure    = 5
+      unexpected_error      = 6
       OTHERS                = 7.
   IF sy-subrc &lt;&gt; 0.
-*    o_mycx ?= ZAPLINK_CX=&gt;CREATE_FROM_METH_CX( ....)
-    RAISE EXCEPTION TYPE zaplink_cx_connector
-      EXPORTING
-        textid = zaplink_cx_connector=&gt;system_error
-       cx_name = &apos;Package interface save failed !&apos;.
+    o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class = interface-&gt;if
+                                                method = &apos;SAVE_ELEMENTS&apos;
+                                                 subrc = sy-subrc
+                                          cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+    RAISE EXCEPTION o_mycx.
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ANONYMIZE_INTERFACE_OFF" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
@@ -696,11 +696,12 @@ INCLUDE zaplink_macros.</MACROS>
           o_comp = o_comp.
       o_data-&gt;raw = _data.
     CATCH zaplink_cx INTO _cx.
-      create OBJECT o_mycx EXPORTING
-             textid = zaplink_cx=&gt;system_error
-            prev_cx = _cx.
+      CREATE OBJECT o_mycx
+        EXPORTING
+          textid   = zaplink_cx=&gt;system_error
+          previous = _cx.
       o_mycx-&gt;update( ).
-      raise EXCEPTION o_mycx.
+      RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_PACKAGE" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
@@ -896,12 +897,12 @@ INCLUDE zaplink_macros.</MACROS>
         EXPORTING
           o_comp = o_comp.
       o_data-&gt;raw = _data.
-      CLEAR: _data-&gt;a0_maindata-devclass, _data-&gt;a0_maindata-parentcl.    &quot; Issue 48
+      CLEAR: _data-&gt;a0_maindata-devclass, _data-&gt;a0_maindata-parentcl. &quot; Issue 48
     CATCH zaplink_cx INTO _cx.
       CREATE OBJECT o_mycx
         EXPORTING
-          textid  = zaplink_cx=&gt;system_error
-          prev_cx = _cx.
+          textid   = zaplink_cx=&gt;system_error
+          previous = _cx.
       o_mycx-&gt;update( ).
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
@@ -927,10 +928,9 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -951,19 +951,19 @@ INCLUDE zaplink_macros.</MACROS>
 *  CALL FUNCTION &apos;RS_ACCESS_PERMISSION&apos;
 *  CALL FUNCTION &apos;RS_CORR_INSERT&apos;
 
-  TRY.
+*  TRY.
     CALL METHOD update_interface
       EXPORTING
         data      = interface-&gt;a0_maindata
       CHANGING
         interface = interface-&gt;if.
 
-    IF NOT interface-&gt;if IS BOUND.
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-        EXPORTING
-          textid  = zaplink_cx_connector=&gt;system_error
-          cx_name = &apos;Failed to create package interface&apos;.
-    ENDIF.
+*    IF NOT interface-&gt;if IS BOUND.
+*      RAISE EXCEPTION TYPE zaplink_cx_connector
+*        EXPORTING
+*          textid  = zaplink_cx_connector=&gt;system_error
+*          cx_name = &apos;Failed to create package interface&apos;.
+*    ENDIF.
 
     CALL METHOD interface-&gt;if-&gt;save
       EXPORTING
@@ -979,10 +979,11 @@ INCLUDE zaplink_macros.</MACROS>
         intern_err            = 6
         OTHERS                = 7.
     IF sy-subrc &lt;&gt; 0.
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-        EXPORTING
-          textid  = zaplink_cx_connector=&gt;system_error
-          cx_name = &apos;Package interface save failed !&apos;.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class = interface-&gt;if
+                                                  method = &apos;SAVE&apos;
+                                                   subrc = sy-subrc
+                                            cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+      RAISE EXCEPTION o_mycx.
     ELSE.
       CREATE OBJECT _component.
       _component-&gt;set_type( st_interface ).
@@ -990,8 +991,8 @@ INCLUDE zaplink_macros.</MACROS>
       components-&gt;add( _component ).
     ENDIF.
 
-    mac_def_catch zaplink_cx_connector.
-  ENDTRY.</SOURCE>
+*    mac_def_catch zaplink_cx_connector.
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CREATE_PACKAGE" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
@@ -1014,10 +1015,9 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-       <ITEM LANG="F" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1043,19 +1043,19 @@ INCLUDE zaplink_macros.</MACROS>
 *  CALL FUNCTION &apos;RS_ACCESS_PERMISSION&apos;
 *  CALL FUNCTION &apos;RS_CORR_INSERT&apos;
 
-  TRY.
+*  TRY.
     CALL METHOD update_package
       EXPORTING
         data    = package-&gt;a0_maindata
       CHANGING
         package = package-&gt;if.
 
-    IF NOT package-&gt;if IS BOUND.
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-        EXPORTING
-          textid  = zaplink_cx_connector=&gt;system_error
-          cx_name = &apos;Failed to create package&apos;.
-    ENDIF.
+*    IF NOT package-&gt;if IS BOUND.
+*      RAISE EXCEPTION TYPE zaplink_cx_connector
+*        EXPORTING
+*          textid  = zaplink_cx_connector=&gt;system_error
+*          cx_name = &apos;Failed to create package&apos;.
+*    ENDIF.
 
     CALL METHOD package-&gt;if-&gt;save
       EXPORTING
@@ -1078,10 +1078,11 @@ INCLUDE zaplink_macros.</MACROS>
       application_log-&gt;add_error( id_msgno = 009
                                   id_msgv1 = name ).
       application_log-&gt;add_symsg( ).
-*    RAISE EXCEPTION TYPE zaplink_cx_connector
-*      EXPORTING
-*        textid = zaplink_cx_connector=&gt;error_message
-*        msg = &apos;Dev Class creation failed !&apos;.
+*      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class = interface-&gt;if
+*                                                  method = &apos;SAVE&apos;
+*                                                   subrc = sy-subrc
+*                                            cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+*      RAISE EXCEPTION o_mycx.
     ELSE.
       CREATE OBJECT _component.
       _component-&gt;set_type( st_package ).
@@ -1108,8 +1109,8 @@ INCLUDE zaplink_macros.</MACROS>
           components = components.
     ENDLOOP.
 
-    mac_def_catch zaplink_cx_connector.
-  ENDTRY.</SOURCE>
+*    mac_def_catch zaplink_cx_connector.
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ELEMENTS2ALV" STATE="1" EDITORDER="14 " MTDDECLTYP="1">
     <TEXTS>
@@ -1569,10 +1570,15 @@ INCLUDE zaplink_macros.</MACROS>
       intern_err            = 6
       OTHERS                = 7.
   IF sy-subrc &lt;&gt; 0.
-    RAISE EXCEPTION TYPE zaplink_cx_connector
-      EXPORTING
-        textid  = zaplink_cx_connector=&gt;system_error
-        cx_name = &apos;Package interface save failed !&apos;.
+    o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class = interface-&gt;if
+                                                method = &apos;SAVE&apos;
+                                                 subrc = sy-subrc
+                                          cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+    RAISE EXCEPTION o_mycx.
+*    RAISE EXCEPTION TYPE zaplink_cx_connector
+*      EXPORTING
+*        textid  = zaplink_cx_connector=&gt;system_error
+*        cx_name = &apos;Package interface save failed !&apos;.
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_PACKAGE_ATTRIB" STATE="1" EDITORDER="22 " MTDNEWEXC="X">
@@ -1769,7 +1775,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA _data      TYPE scompidtln.
+  DATA _data      TYPE scompidtln.
   DATA _data_f    TYPE scompisign.
 
 * Done in method S_LOCK_DB de CL_PACKAGE
@@ -1795,34 +1801,46 @@ DATA _data      TYPE scompidtln.
         unexpected_error            = 10
         OTHERS                      = 11.
     IF sy-subrc &lt;&gt; 0.
-      CASE sy-subrc.
-*      WHEN 1.
-*        RAISE EXCEPTION TYPE zaplink_cx_connector
-*          EXPORTING
-*            textid = zaplink_cx_connector=&gt;Lock_error.
-*        WHEN 2.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( subrc = sy-subrc
+                                                   class = interface
+                                                  method = &apos;set_changeable&apos;
+                                            cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+      RAISE EXCEPTION o_mycx.
+*      CASE sy-subrc.
+**      WHEN 1.
+**        RAISE EXCEPTION TYPE zaplink_cx_connector
+**          EXPORTING
+**            textid = zaplink_cx_connector=&gt;Lock_error.
+**        WHEN 2.
+**          RAISE EXCEPTION TYPE zaplink_cx_connector
+**            EXPORTING
+**              textid = zaplink_cx_connector=&gt;not_authorized.
+*        WHEN OTHERS.
 *          RAISE EXCEPTION TYPE zaplink_cx_connector
 *            EXPORTING
-*              textid = zaplink_cx_connector=&gt;not_authorized.
-        WHEN OTHERS.
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;system_error.
-      ENDCASE.
+*              textid = zaplink_cx_connector=&gt;system_error.
+*      ENDCASE.
     ENDIF.
     CALL METHOD interface-&gt;set_all_attributes
       EXPORTING
         i_package_interface_data = _data
         i_data_sign              = _data_f
       EXCEPTIONS
-        object_deleted           = 1
-        object_not_changeable    = 2
+        acl_not_empty            = 1
+        author_not_existing      = 2
         interface_not_empty      = 3
-        acl_not_empty            = 4
-        author_not_existing      = 5
-        object_type_mismatch     = 6
-        object_invalid           = 7
+        object_deleted           = 4
+        object_invalid           = 5
+        object_not_changeable    = 6
+        object_type_mismatch     = 7
         OTHERS                   = 8.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( subrc = sy-subrc
+                                                   class = interface
+                                                  method = &apos;set_all_attributes&apos;
+                                            cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
   ELSE.
     CALL METHOD cl_package_interface=&gt;if_package_interface~create_new_package_interface
       EXPORTING
@@ -1833,32 +1851,38 @@ DATA _data      TYPE scompidtln.
       IMPORTING
         e_package_interface     = interface
       EXCEPTIONS
-        object_already_existing = 101
-        object_just_created     = 102
-        interface_name_invalid  = 103
-        unexpected_error        = 104
+        interface_name_invalid  = 1
         no_changes_allowed      = 2
-        OTHERS                  = 8
-            .
+        object_already_existing = 3
+        object_just_created     = 4
+        unexpected_error        = 5
+        OTHERS                  = 6.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;cl_package_interface&apos;
+                                                       method = &apos;if_package_interface~create_new_package_interface&apos;
+                                                        subrc = sy-subrc
+                                                 cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
   ENDIF.
 
-  IF sy-subrc &lt;&gt; 0.
-    CASE sy-subrc.
-*      WHEN 2.
+*  IF sy-subrc &lt;&gt; 0.
+*    CASE sy-subrc.
+**      WHEN 2.
+**        RAISE EXCEPTION TYPE zaplink_cx_connector
+**          EXPORTING
+**            textid = zaplink_cx_connector=&gt;not_authorized.
+**      WHEN 103.
+**        RAISE EXCEPTION TYPE zaplink_cx_connector
+**          EXPORTING
+**            textid = zaplink_cx_connector=&gt;error_message
+**            msg = &apos;Problem with package interface name&apos;.
+*      WHEN OTHERS.
 *        RAISE EXCEPTION TYPE zaplink_cx_connector
 *          EXPORTING
-*            textid = zaplink_cx_connector=&gt;not_authorized.
-*      WHEN 103.
-*        RAISE EXCEPTION TYPE zaplink_cx_connector
-*          EXPORTING
-*            textid = zaplink_cx_connector=&gt;error_message
-*            msg = &apos;Problem with package interface name&apos;.
-      WHEN OTHERS.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
-          EXPORTING
-            textid = zaplink_cx_connector=&gt;system_error.
-    ENDCASE.
-  ENDIF.</SOURCE>
+*            textid = zaplink_cx_connector=&gt;system_error.
+*    ENDCASE.
+*  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_PACKAGE" STATE="1" EDITORDER="26 " MTDNEWEXC="X">
     <TEXTS>
@@ -1902,32 +1926,37 @@ DATA _data      TYPE scompidtln.
       EXPORTING
         i_changeable                = &apos;X&apos;
       EXCEPTIONS
-        object_locked_by_other_user = 1
-        permission_failure          = 2
         object_already_changeable   = 0
         object_already_unlocked     = 0
+        object_deleted              = 3
+        object_invalid              = 4
         object_just_created         = 5
-        object_deleted              = 6
+        object_locked_by_other_user = 6
         object_modified             = 7
         object_not_existing         = 8
-        object_invalid              = 9
+        permission_failure          = 9
         unexpected_error            = 10
         OTHERS                      = 11.
     IF sy-subrc &lt;&gt; 0.
-      CASE sy-subrc.
-*      WHEN 1.
-*        RAISE EXCEPTION TYPE zaplink_cx_connector
-*          EXPORTING
-*            textid = zaplink_cx_connector=&gt;Lock_error.
-*        WHEN 2.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( subrc = sy-subrc
+                                                   class = package
+                                                  method = &apos;set_changeable&apos;
+                                            cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+      RAISE EXCEPTION o_mycx.
+*      CASE sy-subrc.
+**      WHEN 1.
+**        RAISE EXCEPTION TYPE zaplink_cx_connector
+**          EXPORTING
+**            textid = zaplink_cx_connector=&gt;Lock_error.
+**        WHEN 2.
+**          RAISE EXCEPTION TYPE zaplink_cx_connector
+**            EXPORTING
+**              textid = zaplink_cx_connector=&gt;not_authorized.
+*        WHEN OTHERS.
 *          RAISE EXCEPTION TYPE zaplink_cx_connector
 *            EXPORTING
-*              textid = zaplink_cx_connector=&gt;not_authorized.
-        WHEN OTHERS.
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;system_error.
-      ENDCASE.
+*              textid = zaplink_cx_connector=&gt;system_error.
+*      ENDCASE.
     ENDIF.
 
     CALL METHOD package-&gt;set_all_attributes
@@ -1935,22 +1964,29 @@ DATA _data      TYPE scompidtln.
         i_package_data             = _data
         i_data_sign                = _data_f
       EXCEPTIONS
-        object_not_changeable      = 101
-        object_deleted             = 102
-        object_invalid             = 103
-        short_text_missing         = 8
-        author_not_existing        = 11
-        local_package              = 6
-        software_component_invalid = 9
-        layer_invalid              = 10
-        korrflag_invalid           = 109
-        component_not_existing     = 12
-        component_missing          = 13
-        authorize_failure          = 3
-        prefix_in_use              = 4
+        authorize_failure          = 1
+        author_not_existing        = 99
+        component_not_existing     = 3
+        component_missing          = 4
+        intern_err                 = 5
+        korrflag_invalid           = 6
+        layer_invalid              = 7
+        local_package              = 8
+        object_deleted             = 9
+        object_invalid             = 10
+        object_not_changeable      = 11
+        prefix_in_use              = 12
+        short_text_missing         = 13
+        software_component_invalid = 14
         unexpected_error           = 15
-        intern_err                 = 16
-        OTHERS                     = 17.
+        OTHERS                     = 16.
+    IF sy-subrc &lt;&gt; 0 AND sy-subrc &lt;&gt; 99.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( subrc = sy-subrc
+                                                   class = package
+                                                  method = &apos;set_all_attributes&apos;
+                                            cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
   ELSE.
     CALL METHOD cl_package=&gt;if_package~create_new_package
 *    EXPORTING
@@ -1960,74 +1996,77 @@ DATA _data      TYPE scompidtln.
       CHANGING
         c_package_data             = _data
       EXCEPTIONS
-        object_already_existing    = 1
-        object_just_created        = 2
-        not_authorized             = 3
-        wrong_name_prefix          = 4
-        undefined_name             = 5
-        reserved_local_name        = 6
-        invalid_package_name       = 7
-        short_text_missing         = 8
-        software_component_invalid = 9
-        layer_invalid              = 10
-        author_not_existing        = 11
-        component_not_existing     = 12
-        component_missing          = 13
-        prefix_in_use              = 14
+        author_not_existing        = 99
+        component_not_existing     = 2
+        component_missing          = 3
+        intern_err                 = 4
+        invalid_package_name       = 5
+        layer_invalid              = 6
+        not_authorized             = 7
+        object_already_existing    = 8
+        object_just_created        = 9
+        prefix_in_use              = 10
+        reserved_local_name        = 11
+        short_text_missing         = 12
+        software_component_invalid = 13
+        undefined_name             = 14
         unexpected_error           = 15
-        intern_err                 = 16
-        OTHERS                     = 17
-            .
+        wrong_name_prefix          = 16
+        OTHERS                     = 17.
+    IF sy-subrc &lt;&gt; 0 AND sy-subrc &lt;&gt; 99.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( subrc = sy-subrc
+                                                   class = package
+                                                  method = &apos;set_all_attributes&apos;
+                                            cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
   ENDIF.
 
-  IF sy-subrc = 11 AND _data-as4user &lt;&gt; sy-uname.           &quot;#EC *
+  IF sy-subrc = 99 AND _data-as4user &lt;&gt; sy-uname.           &quot;#EC *
     _data-as4user = sy-uname.
-    TRY.
-        CALL METHOD update_package
-          EXPORTING
-            data    = _data
-          CHANGING
-            package = package.
-      CATCH zaplink_cx_connector INTO o_mycx.
-        RAISE EXCEPTION o_mycx.
-    ENDTRY.
-  ELSEIF sy-subrc &lt;&gt; 0.
-    CASE sy-subrc.
-*      WHEN 3.
+    CALL METHOD update_package
+      EXPORTING
+        data    = _data
+      CHANGING
+        package = package.
+  ENDIF.
+*  ELSEIF sy-subrc &lt;&gt; 0.
+*    CASE sy-subrc.
+**      WHEN 3.
+**        RAISE EXCEPTION TYPE zaplink_cx_connector
+**          EXPORTING
+**            textid = zaplink_cx_connector=&gt;not_authorized.
+**      WHEN 4 OR 5 OR 6 OR 7.
+**        RAISE EXCEPTION TYPE zaplink_cx_connector
+**          EXPORTING
+**            textid = zaplink_cx_connector=&gt;error_message
+**            msg = &apos;Problem with Dev Class name&apos;.
+**      WHEN 8.
+**        RAISE EXCEPTION TYPE zaplink_cx_connector
+**          EXPORTING
+**            textid = zaplink_cx_connector=&gt;error_message
+**            msg = &apos;Problem with Short Text&apos;.
+**      WHEN 9.
+**        RAISE EXCEPTION TYPE zaplink_cx_connector
+**          EXPORTING
+**            textid = zaplink_cx_connector=&gt;error_message
+**            msg = &apos;Problem with SoftwareComponent&apos;.
+**      WHEN 10.
+**        RAISE EXCEPTION TYPE zaplink_cx_connector
+**          EXPORTING
+**            textid = zaplink_cx_connector=&gt;error_message
+**            msg = &apos;Problem with Layer&apos;.
+**      WHEN 12 OR 13.
+**        RAISE EXCEPTION TYPE zaplink_cx_connector
+**          EXPORTING
+**            textid = zaplink_cx_connector=&gt;error_message
+**            msg = &apos;Problem with Component&apos;.
+*      WHEN OTHERS.
 *        RAISE EXCEPTION TYPE zaplink_cx_connector
 *          EXPORTING
-*            textid = zaplink_cx_connector=&gt;not_authorized.
-*      WHEN 4 OR 5 OR 6 OR 7.
-*        RAISE EXCEPTION TYPE zaplink_cx_connector
-*          EXPORTING
-*            textid = zaplink_cx_connector=&gt;error_message
-*            msg = &apos;Problem with Dev Class name&apos;.
-*      WHEN 8.
-*        RAISE EXCEPTION TYPE zaplink_cx_connector
-*          EXPORTING
-*            textid = zaplink_cx_connector=&gt;error_message
-*            msg = &apos;Problem with Short Text&apos;.
-*      WHEN 9.
-*        RAISE EXCEPTION TYPE zaplink_cx_connector
-*          EXPORTING
-*            textid = zaplink_cx_connector=&gt;error_message
-*            msg = &apos;Problem with SoftwareComponent&apos;.
-*      WHEN 10.
-*        RAISE EXCEPTION TYPE zaplink_cx_connector
-*          EXPORTING
-*            textid = zaplink_cx_connector=&gt;error_message
-*            msg = &apos;Problem with Layer&apos;.
-*      WHEN 12 OR 13.
-*        RAISE EXCEPTION TYPE zaplink_cx_connector
-*          EXPORTING
-*            textid = zaplink_cx_connector=&gt;error_message
-*            msg = &apos;Problem with Component&apos;.
-      WHEN OTHERS.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
-          EXPORTING
-            textid = zaplink_cx_connector=&gt;system_error.
-    ENDCASE.
-  ENDIF.</SOURCE>
+*            textid = zaplink_cx_connector=&gt;system_error.
+*    ENDCASE.
+*  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_DELETE_DEVC" STATE="1" EDITORDER="27 " MTDNEWEXC="X">
     <TEXTS>

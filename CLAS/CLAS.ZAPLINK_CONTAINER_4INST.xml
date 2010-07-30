@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="72366BB49979CE769E2428979A8DF36A" CODE_SIGNATURE="2E41DB11E63F85FE92C977880B817F8B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="86E04D9B7944862DE7F741598D006AF0" CODE_SIGNATURE="03B12F2EE236E21DAE4499C544C0AB37" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONTAINER">
@@ -529,6 +529,10 @@ check data &lt;&gt; _options.
   DATA s_key        TYPE ts_component.
   DATA _cx_connector TYPE REF TO zaplink_cx_connector.
   DATA o_log        TYPE to_log.
+  DATA s_lock       TYPE tlock_int.                         &quot; Issue 101
+  DATA d_flag       TYPE trpari-s_lockflag.                 &quot; Issue 101
+  DATA o_raw        TYPE to_raw_base.                       &quot; Issue 101
+  DATA _directory   TYPE ts_directory.                      &quot; Issue 101
 
   CHECK object_list IS BOUND.
   TRY.
@@ -574,6 +578,21 @@ check data &lt;&gt; _options.
 *              id_msgv4     =
                 id_msgv1     = s_key-type
                 id_msgv2     = s_key-name.
+
+            CALL FUNCTION &apos;TRINT_CHECK_LOCKS&apos;
+              EXPORTING
+                wi_lock_key = s_lock
+              IMPORTING
+                we_lockflag = d_flag
+              EXCEPTIONS
+                empty_key   = 1
+                OTHERS      = 2.
+            IF sy-subrc = 0 AND d_flag IS INITIAL.
+              CREATE OBJECT o_raw.
+              o_raw-&gt;set_component( o_comp ).
+              _directory = _options-&gt;directory-&gt;set_directory( o_raw ).
+            ENDIF.
+
             _done = o_connector-&gt;delete_from_sap( o_comp ).
             IF _done = abap_true.
 * Succesfully deleted &amp;1 &amp;2
@@ -760,7 +779,7 @@ check data &lt;&gt; _options.
           CREATE OBJECT o_mycx
             EXPORTING
               textid  = zaplink_cx=&gt;system_error
-              prev_cx = _cx_list.
+              previous = _cx_list.
           o_mycx-&gt;update( ).
           RAISE EXCEPTION o_mycx.
         ENDIF.
