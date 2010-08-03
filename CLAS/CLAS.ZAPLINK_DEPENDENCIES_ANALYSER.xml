@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="86116110233F4EDF9FEF69225A46CA2D" CODE_SIGNATURE="DC35FA02F5E89EE00F4F7A75EEA252D2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="CA2BC27500FD87A6C7E2A8BF3F00EF70" CODE_SIGNATURE="05225508C525E60D44ABC1A7DD7A3C44" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -34,12 +34,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="TD_COMPNAME" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPNAME"/>
    <ITEM CMPNAME="TD_COMPTYPE" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPTYPE"/>
    <ITEM CMPNAME="TD_DEVCLASS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_DEVCLASS"/>
+   <ITEM CMPNAME="TD_PROGNAME" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_PROGNAME"/>
    <ITEM CMPNAME="TD_SOFTCOMP" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_SOFTCOMP"/>
    <ITEM CMPNAME="TD_TRANSPORT_KIND" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TRANSPORT_KIND"/>
    <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_KERNEL_TYPES" REFCMPNAME="TO_COMPONENT"/>
    <ITEM CMPNAME="TO_RAW" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_KERNEL_TYPES" REFCMPNAME="TO_RAW"/>
    <ITEM CMPNAME="TS_COMPKEY" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPKEY"/>
    <ITEM CMPNAME="TS_COMPTYPE" EXPOSURE="1" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_COMPTYPE"/>
+   <ITEM CMPNAME="TT_TXTP_TEXTPOOLS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TXTP_TEXTPOOLS"/>
   </ALIASES>
   <ATTRIBUTS>
    <ITEM CMPNAME="ALL_COMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTRDONLY="X" TYPTYPE="1" TYPE="TT_COMPS">
@@ -185,6 +187,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Temp component for Is_excluded_class"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TEXTSPOOL" EXPOSURE="2" STATE="1" EDITORDER="13 " ATTRDONLY="X" TYPTYPE="1" TYPE="TT_TXTP_TEXTPOOLS">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Text pool"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TYPEGROUPS" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_TYPEGROUPS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Type Groups list"/>
@@ -267,7 +274,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
    <ITEM CMPNAME="ADD_CLASS_DEP" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
     <TEXTS>
-     <ITEM LANG="E" TEXT="Add class dependenties"/>
+     <ITEM LANG="E" TEXT="Add class and dependenties"/>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="FULL" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
@@ -391,7 +398,49 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
   insert_order( s_order = _order   context = context ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_DEFERED_OK" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_DEFERRED_CODE" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Get deferred declaration code"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="ABAPCODE" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ABAP Source Code"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CLASSTYPE">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Class type"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA _obj      LIKE LINE OF deferred_declaration.
+  DATA _line     LIKE LINE OF abapcode.
+
+  READ TABLE deferred_declaration TRANSPORTING NO FIELDS
+       WITH TABLE KEY name = name.
+  IF sy-subrc = 0.    EXIT.   ENDIF.
+* DEFINE M_124563245. CLASS &amp;1 DEFINITION DEFERRED. END-OF-DEFINITION.
+  CASE type.
+    WHEN objtype-class OR objtype-exception_class.
+      CONCATENATE &apos;CLASS&apos; name &apos;DEFINITION DEFERRED.&apos; INTO _line SEPARATED BY space.
+      APPEND _line TO abapcode.
+      _obj-name = name.
+      INSERT _obj INTO TABLE deferred_declaration.
+    WHEN objtype-interface.
+      CONCATENATE &apos;INTERFACE&apos; name &apos;DEFERRED.&apos; INTO _line SEPARATED BY space.
+      APPEND _line TO abapcode.
+      _obj-name = name.
+      INSERT _obj INTO TABLE deferred_declaration.
+  ENDCASE.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="ADD_DEFERRED_OK" EXPOSURE="1" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Generate ABAP Source Code"/>
     </TEXTS>
@@ -439,49 +488,22 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   ENDLOOP.
   add_without_requirements( ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_DEFERRED_CODE" EXPOSURE="1" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="6 ">
     <TEXTS>
-     <ITEM LANG="E" TEXT="Get deferred declaration code"/>
+     <ITEM LANG="E" TEXT="Add include to list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ABAPCODE" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_SOURCECODE">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ABAP Source Code"/>
-      </TEXTS>
-     </ITEM>
-     <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_NAME">
+     <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME">
       <TEXTS>
        <ITEM LANG="E" TEXT="Class/interface name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TYPE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CLASSTYPE">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="Class type"/>
-      </TEXTS>
-     </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  DATA _obj      LIKE LINE OF deferred_declaration.
-  DATA _line     LIKE LINE OF abapcode.
-
-  READ TABLE deferred_declaration TRANSPORTING NO FIELDS
-       WITH TABLE KEY name = name.
-  IF sy-subrc = 0.    EXIT.   ENDIF.
-* DEFINE M_124563245. CLASS &amp;1 DEFINITION DEFERRED. END-OF-DEFINITION.
-  CASE type.
-    WHEN objtype-class OR objtype-exception_class.
-      CONCATENATE &apos;CLASS&apos; name &apos;DEFINITION DEFERRED.&apos; INTO _line SEPARATED BY space.
-      APPEND _line TO abapcode.
-      _obj-name = name.
-      INSERT _obj INTO TABLE deferred_declaration.
-    WHEN objtype-interface.
-      CONCATENATE &apos;INTERFACE&apos; name &apos;DEFERRED.&apos; INTO _line SEPARATED BY space.
-      APPEND _line TO abapcode.
-      _obj-name = name.
-      INSERT _obj INTO TABLE deferred_declaration.
-  ENDCASE.</SOURCE>
+  APPEND name TO includes.
+  add_prog_textpool( name ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_INTERFACES" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_INTERFACES" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add interfaces"/>
     </TEXTS>
@@ -507,7 +529,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
                       source = &apos;=&gt;interface&apos; ).
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_INTERFACE_DEP" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_INTERFACE_DEP" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add Interface dependenties"/>
     </TEXTS>
@@ -583,7 +605,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
   insert_order( s_order = _order   context = context ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_METHODS" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_METHODS" EXPOSURE="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add méthods"/>
     </TEXTS>
@@ -628,7 +650,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     unstack( ).
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_METHOD_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_METHOD_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add object use in ABAP Code"/>
     </TEXTS>
@@ -659,7 +681,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     add_object( _key ).
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add class/interface to the list"/>
     </TEXTS>
@@ -758,7 +780,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     CALL METHOD _clean_up( ).
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_OBJECT_TO_LIST" EXPOSURE="1" STATE="1" EDITORDER="10 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_OBJECT_TO_LIST" EXPOSURE="1" STATE="1" EDITORDER="12 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add object to dependenties list"/>
     </TEXTS>
@@ -820,7 +842,24 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   IF s_class-category = &apos;40&apos;.    s_obj-type = objtype-exception_class.   ENDIF.
   APPEND s_obj TO required_objects.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_PROG_TEXTPOOL" EXPOSURE="1" STATE="1" EDITORDER="5 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Add Program&apos;s texts pool"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Class/interface name"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA t_texts TYPE tt_txtp_textpools.
+  t_texts = zaplink_connector_=&gt;get_prog_textpool( name ).
+  textspool = zaplink_connector_=&gt;fusion_textpool( source = textspool
+                                               completion = t_texts ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="ADD_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Scan ABAP Code for object use"/>
     </TEXTS>
@@ -844,7 +883,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   LOOP AT code ASSIGNING &lt;f&gt;.   CONCATENATE _code &lt;f&gt; line_separator INTO _code.    ENDLOOP.
   add_method_source( _code ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_SOURCE_TO_LIST" STATE="1" EDITORDER="1 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_SOURCE_TO_LIST" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add object use in ABAP Code"/>
     </TEXTS>
@@ -882,7 +921,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     _key = &lt;o&gt;.   add_object_to_list( name = _key   full = full   source = source ).
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_TYPES" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_TYPES" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add types"/>
     </TEXTS>
@@ -910,7 +949,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     unstack( ).
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ADD_WITHOUT_REQUIREMENTS" EXPOSURE="2" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ADD_WITHOUT_REQUIREMENTS" EXPOSURE="2" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Generate ABAP Source Code"/>
     </TEXTS>
@@ -932,7 +971,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     IF sy-subrc &lt;&gt; 0.   clear s_order.    s_order-name = &lt;c&gt;-name.    s_order-type = &lt;c&gt;-type.    APPEND s_order TO new_order.    DELETE requirements WHERE name = &lt;c&gt;-name.    result = abap_true.   DELETE remain_classes.    ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ANALYSE_METHOD_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ANALYSE_METHOD_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Scan ABAP Code for object use"/>
     </TEXTS>
@@ -1003,7 +1042,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *  APPEND LINES OF static_objs TO objects_list.
   SORT objects_list.      DELETE ADJACENT DUPLICATES FROM objects_list.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ANALYSE_METHOD_SOURCE_SAVE" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDNEWEXC="X">
+   <ITEM CMPNAME="ANALYSE_METHOD_SOURCE_SAVE" EXPOSURE="1" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Scan ABAP Code for object use"/>
     </TEXTS>
@@ -1042,7 +1081,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   SORT objects_list.
   DELETE ADJACENT DUPLICATES FROM objects_list.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="APPEND_MESSAGE" EXPOSURE="1" STATE="1" EDITORDER="17 " MTDNEWEXC="X">
+   <ITEM CMPNAME="APPEND_MESSAGE" EXPOSURE="1" STATE="1" EDITORDER="19 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add message"/>
     </TEXTS>
@@ -1054,7 +1093,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   CHECK NOT data IS INITIAL.
   s_msg-name = data.    APPEND s_msg TO messages.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="APPEND_TYPEGROUPS" EXPOSURE="1" STATE="1" EDITORDER="18 " MTDNEWEXC="X">
+   <ITEM CMPNAME="APPEND_TYPEGROUPS" EXPOSURE="1" STATE="1" EDITORDER="20 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add type groups"/>
     </TEXTS>
@@ -1068,7 +1107,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     _tg-name = &lt;t&gt;-typegroup.     APPEND _tg TO me-&gt;typegroups.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDTYPE="2" MTDDECLTYP="1">
+   <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" EDITORDER="21 " MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
@@ -1106,7 +1145,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   SORT t_types BY name.   DELETE ADJACENT DUPLICATES FROM t_types.
   predeftypes = t_types.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONVERT_LINE" EXPOSURE="1" STATE="1" EDITORDER="20 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CONVERT_LINE" EXPOSURE="1" STATE="1" EDITORDER="22 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert code line : remove tabs"/>
     </TEXTS>
@@ -1125,7 +1164,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     <SOURCE>`
   target = zaplink_tools=&gt;conv_abap_line( source ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONVERT_SOURCE_UPCASE" EXPOSURE="1" STATE="1" EDITORDER="21 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CONVERT_SOURCE_UPCASE" EXPOSURE="1" STATE="1" EDITORDER="23 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert source code to upcase"/>
     </TEXTS>
@@ -1148,7 +1187,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     TRANSLATE &lt;l&gt; TO UPPER CASE.  &quot;#EC SYNTCHAR
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="DO_CLASS" STATE="1" EDITORDER="2 " MTDNEWEXC="X">
+   <ITEM CMPNAME="DO_CLASS" STATE="1" EDITORDER="24 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add class dependenties"/>
     </TEXTS>
@@ -1168,18 +1207,24 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </EXCEPTIONS>
     <SOURCE>`
   DATA _codes      LIKE LINE OF classes.
-
+  DATA d_prog      TYPE td_progname.
+  DATA d_class     TYPE seoclsname.
+  DATA d_includes  TYPE zaplink_object_data=&gt;ts_includes.
 *  TRY.
-      _codes = get_source( name ).
+  _codes = get_source( name ).
 *    CATCH cx_root.
 *      RAISE failed.
 *  ENDTRY.
 
   search_for_include( CHANGING codes = _codes ).
 
-  INSERT _codes INTO TABLE classes.</SOURCE>
+  INSERT _codes INTO TABLE classes.
+  d_class = name.
+  d_includes = zaplink_object=&gt;get_includes( d_class ).
+  d_prog = d_includes-classpool-name.
+  add_prog_textpool( d_prog ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="DO_OBJECT_LIST" STATE="1" EDITORDER="3 " MTDNEWEXC="X">
+   <ITEM CMPNAME="DO_OBJECT_LIST" STATE="1" EDITORDER="25 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add required object stored in the list"/>
     </TEXTS>
@@ -1212,7 +1257,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     unstack( ).
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="EXTRACT_STRINGS" EXPOSURE="1" STATE="1" EDITORDER="24 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="EXTRACT_STRINGS" EXPOSURE="1" STATE="1" EDITORDER="26 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Extract strings from source code"/>
     </TEXTS>
@@ -1360,7 +1405,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DELETE ADJACENT DUPLICATES FROM results.
   DELETE results WHERE table_line IS INITIAL.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CLASS_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="25 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_CLASS_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="27 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get Class source codes"/>
     </TEXTS>
@@ -1489,7 +1534,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
   codes-name = name.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_INTERFACE_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="26 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_INTERFACE_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="28 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get interface source codes"/>
     </TEXTS>
@@ -1541,7 +1586,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
   codes-name = name.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="27 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="29 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get class/interface source codes"/>
     </TEXTS>
@@ -1601,7 +1646,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   ENDIF.
   codes-type = o_type.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="HANDLE_CONTEXT" EXPOSURE="1" STATE="1" EDITORDER="28 " MTDNEWEXC="X">
+   <ITEM CMPNAME="HANDLE_CONTEXT" EXPOSURE="1" STATE="1" EDITORDER="30 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Handle circular context"/>
     </TEXTS>
@@ -1686,7 +1731,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   ENDLOOP.
   CLEAR: circular_context, circular_ref_on.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INSERT_ORDER" STATE="1" EDITORDER="4 ">
+   <ITEM CMPNAME="INSERT_ORDER" STATE="1" EDITORDER="31 ">
     <TEXTS>
      <ITEM LANG="E" TEXT="insert order at the right position"/>
     </TEXTS>
@@ -1744,7 +1789,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     APPEND s_order TO me-&gt;order.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INVERSE_ORDER" EXPOSURE="1" STATE="1" EDITORDER="30 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="INVERSE_ORDER" EXPOSURE="1" STATE="1" EDITORDER="32 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Inverse table order"/>
     </TEXTS>
@@ -1758,7 +1803,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     <SOURCE>`
   zaplink_tools=&gt;inverse_table_order( CHANGING my_table = order ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IS_EXCLUDED_CLASS" EXPOSURE="1" STATE="1" EDITORDER="31 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IS_EXCLUDED_CLASS" EXPOSURE="1" STATE="1" EDITORDER="33 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Is excluded class"/>
     </TEXTS>
@@ -1798,7 +1843,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * customer components
   IF s_comp-devclass IN packages AND s_comp-softcomp IN softcomponents.    result = abap_false.    ELSE.   s_excl_c-name = name.   INSERT s_excl_c INTO TABLE excluded_classes.    ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IS_EXCLUDED_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="32 " MTDNEWEXC="X">
+   <ITEM CMPNAME="IS_EXCLUDED_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="34 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Is excluded include"/>
     </TEXTS>
@@ -1883,7 +1928,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * customer components
   IF s_comp-devclass IN packages AND s_comp-softcomp IN softcomponents.    result = abap_false.    ELSE.   s_excl_c-name = name.   INSERT s_excl_c INTO TABLE excluded_includes.    ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IS_PREDEFTYPE" EXPOSURE="1" STATE="1" EDITORDER="33 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="IS_PREDEFTYPE" EXPOSURE="1" STATE="1" EDITORDER="35 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Is a predefinied type"/>
     </TEXTS>
@@ -1911,7 +1956,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   READ TABLE predeftypes TRANSPORTING NO FIELDS WITH TABLE KEY name = name.
   IF sy-subrc = 0.    result = abap_true.     ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="PROCESS_TYPE" EXPOSURE="1" STATE="1" EDITORDER="34 " MTDNEWEXC="X">
+   <ITEM CMPNAME="PROCESS_TYPE" EXPOSURE="1" STATE="1" EDITORDER="36 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Process type."/>
     </TEXTS>
@@ -1966,7 +2011,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   CHECK NOT _key IS INITIAL.
   add_object_to_list( name = _key   full = full   source = ctx-context ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="REMOVE_DEF_LOAD" EXPOSURE="1" STATE="1" EDITORDER="35 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="REMOVE_DEF_LOAD" EXPOSURE="1" STATE="1" EDITORDER="37 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Remove definition load"/>
     </TEXTS>
@@ -2021,7 +2066,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     CONCATENATE &apos;*&apos; &lt;m&gt; INTO &lt;m&gt;.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="RESOLVE" EXPOSURE="2" STATE="1" EDITORDER="36 " MTDNEWEXC="X">
+   <ITEM CMPNAME="RESOLVE" EXPOSURE="2" STATE="1" EDITORDER="38 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Generate ABAP Source Code"/>
     </TEXTS>
@@ -2036,7 +2081,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   remain_classes = classes.
 * intf/class without any dependances
   WHILE add_without_requirements( ) = abap_true.  ENDWHILE.
-  WHILE add_defered_ok( ) = abap_true.  ENDWHILE.
+  WHILE add_deferred_ok( ) = abap_true.  ENDWHILE.
 
   IF requirements IS INITIAL.
     LOOP AT remain_classes ASSIGNING &lt;c&gt;.   CLEAR s_order.    s_order-name = &lt;c&gt;-name.    s_order-type = &lt;c&gt;-type.    APPEND s_order TO new_order.    DELETE requirements WHERE name = &lt;c&gt;-name.    DELETE remain_classes.    ENDLOOP.
@@ -2045,7 +2090,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     LOOP AT new_order ASSIGNING &lt;o&gt;.    WRITE:/ &lt;o&gt;-name.   ENDLOOP.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SEARCH_FOR_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="37 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SEARCH_FOR_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="39 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Search include into source code"/>
     </TEXTS>
@@ -2080,6 +2125,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA d_l_deb   TYPE int4.
   DATA d_l_fin   TYPE int4.
   DATA d_name    TYPE td_name.
+  data d_prog    type TD_PROGNAME.
 *  DATA d_str TYPE string.
   FIELD-SYMBOLS:
     &lt;st&gt; LIKE LINE OF t_statements,
@@ -2173,7 +2219,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         d_l_deb = &lt;t_deb&gt;-row.
         d_l_fin = &lt;inc&gt;-row.
 
-        APPEND d_name TO includes.
+        d_prog = d_name.      add_include( d_prog ).
         LOOP AT codes-impl FROM d_l_deb TO d_l_fin ASSIGNING &lt;l&gt;.
           CASE sy-tabix.
             WHEN d_l_deb.
@@ -2208,7 +2254,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         READ TABLE t_tokens ASSIGNING &lt;inc&gt; INDEX d_tabix.    CHECK sy-subrc = 0.
         d_name = &lt;inc&gt;-str.
         CHECK is_excluded_include( d_name ) = abap_false.
-        APPEND d_name TO includes.
+        d_prog = d_name.      add_include( d_prog ).
         LOOP AT codes-macro FROM &lt;t_deb&gt;-row TO &lt;st&gt;-trow ASSIGNING &lt;l&gt;.
           CASE sy-tabix.
             WHEN &lt;t_deb&gt;-row.
@@ -2285,7 +2331,29 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *    ENDIF.
 *  ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SOURCE_2_STRING" EXPOSURE="2" STATE="1" EDITORDER="38 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_TEXTPOOL" EXPOSURE="2" STATE="1" EDITORDER="44 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Add class/interface to the list"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="NAME" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Program name"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  zaplink_connector_=&gt;set_prog_textpool( program = name
+                                        textpool = textspool ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="SOURCE_2_STRING" EXPOSURE="2" STATE="1" EDITORDER="40 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert source code : remove tabs"/>
     </TEXTS>
@@ -2305,7 +2373,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF data.
   LOOP AT data ASSIGNING &lt;l&gt;.   IF result IS INITIAL.   result = &lt;l&gt;.   ELSE.     CONCATENATE result line_separator &lt;l&gt; INTO result.    ENDIF.    ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="STACK" EXPOSURE="1" STATE="1" EDITORDER="39 " MTDNEWEXC="X">
+   <ITEM CMPNAME="STACK" EXPOSURE="1" STATE="1" EDITORDER="41 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add context to context stack"/>
     </TEXTS>
@@ -2322,7 +2390,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA s_ctx LIKE LINE OF context.
   s_ctx-context = context.   s_ctx-type = type.    s_ctx-full_def = full.   INSERT s_ctx INTO me-&gt;context INDEX 1.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNSTACK" EXPOSURE="1" STATE="1" EDITORDER="40 " MTDNEWEXC="X">
+   <ITEM CMPNAME="UNSTACK" EXPOSURE="1" STATE="1" EDITORDER="42 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Remove stack entry"/>
     </TEXTS>
@@ -2330,7 +2398,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   IF NOT context IS INITIAL. DELETE context INDEX 1. ENDIF.
   IF context IS INITIAL. CLEAR: circular_ref_on, circular_context. ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_CLEAN_UP" EXPOSURE="1" STATE="1" EDITORDER="41 " MTDNEWEXC="X">
+   <ITEM CMPNAME="_CLEAN_UP" EXPOSURE="1" STATE="1" EDITORDER="43 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Clean up data"/>
     </TEXTS>

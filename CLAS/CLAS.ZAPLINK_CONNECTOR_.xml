@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AC260DF0B3C06B7CB66E2F2D409B9F63" CODE_SIGNATURE="6E406347476DA953BA37BA114EC61871" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="96CF69C82AA41681BB8B69627FAF0AB9" CODE_SIGNATURE="E3459032AEA89407039300397A47211F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
@@ -134,6 +134,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
    <ITEM CMPNAME="R_TEXT_FIELDS" STATE="1" EDITORDER="1 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_SCRNTYPE"/>
   </ATTRIBUTS>
+  <FRIENDS>
+   <ITEM REFCLSNAME="ZAPLINK_DEPENDENCIES_ANALYSER" STATE="1"/>
+  </FRIENDS>
   <INTERFACES>
    <ITEM REFCLSNAME="ZAPLINK_CNX_EXT_CLEANER" EXPOSURE="2" STATE="1" RELTYPE="1">
     <COMPONENTS>
@@ -392,7 +395,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   class_name = zaplink_tools=&gt;get_clas_name( me ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_ABAPSOURCE2FLOWLOGIC" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_ABAPSOURCE2FLOWLOGIC" EXPOSURE="1" STATE="1" EDITORDER="17 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Structured ABAP source to flow logic"/>
     </TEXTS>
@@ -439,7 +442,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_FLOWLOGIC2ABAPSOURCE" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_FLOWLOGIC2ABAPSOURCE" EXPOSURE="1" STATE="1" EDITORDER="16 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert flow logic table to ABAP Source"/>
     </TEXTS>
@@ -455,7 +458,55 @@ INCLUDE zaplink_macros.</MACROS>
     CONCATENATE result &lt;c&gt; INTO result SEPARATED BY line_separator. &quot; will start with line_sep better for XML display and required because get_value remove spaces
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_DYNPROS" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDNEWEXC="X">
+   <ITEM CMPNAME="FUSION_TEXTPOOL" EXPOSURE="1" STATE="1" EDITORDER="12 " MTDDECLTYP="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Fusion 2 texts pool"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPLETION" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_TXTP_TEXTPOOLS">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Completion text pool"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="3 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_TXTP_TEXTPOOLS">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="REsult text pool"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="SOURCE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_TXTP_TEXTPOOLS">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Main text pool"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  FIELD-SYMBOLS:
+    &lt;c&gt;  LIKE LINE OF completion,
+    &lt;ct&gt; LIKE LINE OF &lt;c&gt;-texts,
+    &lt;t&gt;  LIKE LINE OF source.
+
+  result = source.
+  LOOP AT result ASSIGNING &lt;t&gt;.
+    READ TABLE completion ASSIGNING &lt;c&gt;
+         WITH TABLE KEY id = &lt;t&gt;-id
+                       key = &lt;t&gt;-key.
+    CHECK sy-subrc = 0.
+    LOOP AT &lt;c&gt;-texts ASSIGNING &lt;ct&gt;.
+      READ TABLE &lt;t&gt;-texts TRANSPORTING NO FIELDS
+           WITH TABLE KEY langu = &lt;ct&gt;-langu.
+      CHECK sy-subrc &lt;&gt; 0.
+      INSERT &lt;ct&gt; INTO TABLE &lt;t&gt;-texts.
+    ENDLOOP.
+  ENDLOOP.
+  LOOP AT completion ASSIGNING &lt;c&gt;.
+    READ TABLE result ASSIGNING &lt;t&gt;
+         WITH TABLE KEY id = &lt;c&gt;-id
+                       key = &lt;c&gt;-key.
+    CHECK sy-subrc &lt;&gt; 0.
+    INSERT &lt;c&gt; INTO TABLE result.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_DYNPROS" EXPOSURE="1" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get program Dynpros"/>
     </TEXTS>
@@ -596,7 +647,7 @@ INCLUDE zaplink_macros.</MACROS>
     INSERT s_result INTO TABLE result.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_MENUS" EXPOSURE="1" STATE="1" EDITORDER="17 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_MENUS" EXPOSURE="1" STATE="1" EDITORDER="18 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get program Menus"/>
     </TEXTS>
@@ -961,7 +1012,7 @@ INCLUDE zaplink_macros.</MACROS>
 *     EV_EXIST           =
       ev_devclass        = attributs-devclass.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_DYNPROS" EXPOSURE="1" STATE="1" EDITORDER="14 " MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_DYNPROS" EXPOSURE="1" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="set program Dynpros"/>
     </TEXTS>
@@ -1137,7 +1188,7 @@ INCLUDE zaplink_macros.</MACROS>
   ENDLOOP.
   IF o_mycx IS BOUND.   RAISE EXCEPTION o_mycx.   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_MENUS" EXPOSURE="1" STATE="1" EDITORDER="18 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_MENUS" EXPOSURE="1" STATE="1" EDITORDER="19 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Set program Menus"/>
     </TEXTS>
@@ -1222,7 +1273,7 @@ DATA _raw TYPE tt_abaprawsource.
   set_prog_rawsource( program = program
                           raw = _raw ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_PROG_TEXTPOOL" EXPOSURE="1" STATE="1" EDITORDER="12 " MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_PROG_TEXTPOOL" EXPOSURE="1" STATE="1" EDITORDER="13 " MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Set program Texts pool"/>
     </TEXTS>
