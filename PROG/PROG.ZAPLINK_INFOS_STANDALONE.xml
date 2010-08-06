@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="88A287914E90E3F9E33EFDEB263B5E04" CODE_SIGNATURE="D84286EE185F4E8C3652A1391E6E5427" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS_STANDALONE" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="8228F53DB996979DCF3B228DC23BF5F7" CODE_SIGNATURE="AA7FBDB8A43495BD72938AAA42A909FA" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_INFOS_STANDALONE" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="1" RSTAT="T" RMAND="200" RLOAD="E" UCCHECK="X"/>
@@ -12,7 +12,7 @@
 *&amp;
 *&amp;---------------------------------------------------------------------*
 
-REPORT  zaplink_infos MESSAGE-ID zaplink_cx.
+REPORT  zaplink_infos MESSAGE-ID zaplink.
 TYPE-POOLS:ABAP,ICON,RPYTY,RSDS,SANA,SEDI,SEEX,SEOF,SEOK,SEOO,SEOP,SEOR,SEOS,SEOT,SEOX,SEWOR,SLIS,SMODI,STSTC,SWBM.
 CLASS ZAPLINK_ACTIVATE DEFINITION DEFERRED.
 CLASS ZAPLINK_BADI DEFINITION DEFERRED.
@@ -5841,7 +5841,6 @@ protected section.
       !ATTRIBUTS type ZAPLINK_OBJECT_DATA=&gt;TT_ATTRIBUTS
     raising
       ZAPLINK_CX .
-  type-pools ABAP .
   methods ADD_CLASS_DEP
     importing
       !NAME type TD_NAME
@@ -9145,10 +9144,10 @@ METHOD STACK_POSITION_AS_STRING.
   DATA _include TYPE ts_source_def.
   _key = source-mainprogram. _prog = conv_progname( _key ).
   IF source-mainprogram = source-include.
-    MESSAGE i002 WITH _prog-str source-line INTO str.
+    MESSAGE i102 WITH _prog-str source-line INTO str.
   ELSE.
     _key = source-include.     _include = conv_progname( object_name = _key   context = _prog-name ).
-    MESSAGE i000 WITH _prog-str _include-str source-line INTO str.
+    MESSAGE i100 WITH _prog-str _include-str source-line INTO str.
   ENDIF.
 ENDMETHOD.
 METHOD SYSTEMSTACK_UP.
@@ -15272,7 +15271,7 @@ METHOD comp_to_alv.
   IF o_comp-&gt;_connector-exists = zaplink_component=&gt;connexists-not_exists.
     result-connector = lights-red.
     result-status = lights-no.
-    MESSAGE e001 WITH result-type INTO result-msg.
+    MESSAGE e050 WITH result-type INTO result-msg.
   ELSE.
     result-connector = lights-green.
     result-checksum = o_comp-&gt;get_checksum( ).
@@ -15285,23 +15284,23 @@ METHOD comp_to_alv.
         IF o_comp-&gt;_exists = zaplink_connector=&gt;exists. &quot; AND selected = abap_true.
           result-status = lights-yellow.
           CLEAR result-select.
-          MESSAGE e002 WITH result-type result-name INTO result-msg.
+          MESSAGE e051 WITH result-type result-name INTO result-msg.
         ENDIF.
       WHEN sel_actions-export.
         IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists. &quot; AND selected = abap_true.
           CLEAR result-select.
           result-status = lights-red.
-          MESSAGE e003 WITH result-type result-name INTO result-msg.
+          MESSAGE e052 WITH result-type result-name INTO result-msg.
         ENDIF.
       WHEN sel_actions-uninstall.
         IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists. &quot; AND selected = abap_true.
           CLEAR result-select.
           result-status = lights-red.
-          MESSAGE e003 WITH result-type result-name INTO result-msg.
+          MESSAGE e052 WITH result-type result-name INTO result-msg.
         ENDIF.
       WHEN sel_actions-unreplicable.
         result-status = lights-red.
-        MESSAGE e004 WITH result-type result-name INTO result-msg.
+        MESSAGE e053 WITH result-type result-name INTO result-msg.
       WHEN OTHERS.
     ENDCASE.
   ENDIF.
@@ -17460,6 +17459,7 @@ method UPDATE_CONCEPT.
   DATA t_texts TYPE  sotr_textl_tt.
   DATA s_text  LIKE LINE OF t_texts.
   DATA s_sotrl TYPE sotr_link.
+  Data d_cxtxt type string.
   TRY.
     LOOP AT fm_data-exceptions_texts ASSIGNING &lt;cx&gt;.
       CALL FUNCTION &apos;SOTR_OBJECT_GET_OBJECTS&apos;
@@ -17636,10 +17636,11 @@ method UPDATE_CONCEPT.
              WITH KEY cmpname = &lt;cx&gt;-cmpname.
       ENDIF.
       IF sy-subrc &lt;&gt; 0.
+        d_cxtxt = &apos;Attribut should exists !!&apos;(F01).
         RAISE EXCEPTION TYPE zaplink_cx_connector
            EXPORTING
              textid = zaplink_cx=&gt;system_error
-             cx_name = &apos;Attribut should exists !!&apos;. &quot;(F01).
+             cx_name = d_cxtxt.
       ENDIF.
       &lt;at&gt;-attvalue = sotr2value( ls_cx-concept ).
       CHECK ls_cx-concept &lt;&gt; &lt;cx&gt;-concept.
@@ -17766,10 +17767,10 @@ METHOD get_dynpros.
   LOOP AT t_dynpros ASSIGNING &lt;r&gt;.
     CLEAR s_result.
     SET EXTENDED CHECK OFF.
-    IF 1 = 2. MESSAGE i004(zaplink_connector) WITH space space. ENDIF.
+    IF 1 = 2. MESSAGE i500 WITH space space. ENDIF.
     SET EXTENDED CHECK ON.
     application_log-&gt;add_info( id_msgid = &apos;ZAPLINK_CONNECTOR&apos;
-                               id_msgno = &apos;004&apos;
+                               id_msgno = &apos;500&apos;
                                id_msgv1 = &lt;r&gt;-prog
                                id_msgv2 = &lt;r&gt;-dnum ).
     SELECT lang dtxt
@@ -18018,10 +18019,10 @@ METHOD set_dynpros.
     header = &lt;r&gt;-hdr.
     header-program = program.
     SET EXTENDED CHECK OFF.
-    IF 1 = 2. MESSAGE i004(zaplink_connector) WITH space space. ENDIF.
+    IF 1 = 2. MESSAGE i500 WITH space space. ENDIF.
     SET EXTENDED CHECK ON.
     application_log-&gt;add_info( id_msgid = &apos;ZAPLINK_CONNECTOR&apos;
-                               id_msgno = &apos;004&apos;
+                               id_msgno = &apos;500&apos;
                                id_msgv1 = header-program
                                id_msgv2 = header-screen ).
     LOOP AT &lt;r&gt;-texts ASSIGNING &lt;l&gt;.
@@ -18580,23 +18581,21 @@ METHOD uninstall_from_sap.
             _done = o_connector-&gt;delete_from_sap( o_comp ).
             IF _done = abap_true.
               SET EXTENDED CHECK OFF.
-              IF 1 = 2. MESSAGE s001(zaplink_connector) WITH space space. ENDIF.
+              IF 1 = 2. MESSAGE s006 WITH space space. ENDIF.
               SET EXTENDED CHECK ON.
               CALL METHOD log-&gt;add_success
                 EXPORTING
-                  id_msgid     = &apos;ZAPLINK_CONNECTOR&apos;
-                  id_msgno     = &apos;001&apos;
+                  id_msgno     = &apos;006&apos;
                   id_msgv1     = s_key-type
                   id_msgv2     = s_key-name
                  .
             ELSE.
               SET EXTENDED CHECK OFF.
-              IF 1 = 2. MESSAGE e003(zaplink_connector) WITH space space. ENDIF.
+              IF 1 = 2. MESSAGE e007 WITH space space. ENDIF.
               SET EXTENDED CHECK ON.
               CALL METHOD log-&gt;add_error
                 EXPORTING
-                  id_msgid     = &apos;ZAPLINK_CONNECTOR&apos;
-                  id_msgno     = &apos;003&apos;
+                  id_msgno     = &apos;007&apos;
                   id_msgv1     = s_key-type
                   id_msgv2     = s_key-name
                   .
@@ -19070,7 +19069,8 @@ METHOD add_object_to_list.
   DATA o_type      TYPE seoclstype.
   DATA s_class     TYPE vseoclass.
   CHECK NOT name IS INITIAL. CHECK is_predeftype( name ) = abap_false.
-  s_key-clsname = name.   TRANSLATE s_key-clsname TO UPPER CASE.    s_obj-name = s_key-clsname. &quot;#EC NOTEXT
+  s_key-clsname = name.     TRANSLATE s_key-clsname TO UPPER CASE.    &quot;#EC SYNTCHAR
+  s_obj-name = s_key-clsname.
   CHECK is_excluded_class( name = s_key-clsname ) = abap_false.
   CALL FUNCTION &apos;SEO_CLIF_GET&apos;
     EXPORTING
@@ -19154,7 +19154,7 @@ METHOD analyse_method_source.
        STATEMENTS INTO t_statments.
   LOOP AT t_tokens ASSIGNING &lt;t&gt; WHERE str CP &apos;*=&gt;*&apos;.
     FIND FIRST OCCURRENCE OF &apos;=&gt;&apos; IN &lt;t&gt;-str MATCH OFFSET d_offset.
-    s_obj = &lt;t&gt;-str(d_offset). TRANSLATE s_obj TO UPPER CASE.
+    s_obj = &lt;t&gt;-str(d_offset). TRANSLATE s_obj TO UPPER CASE.     &quot;#EC SYNTCHAR
     CHECK NOT s_obj CA c_symbols_ascii.   &quot; FROM SEO_CLIF_CHECK_NAME
     APPEND s_obj TO objects_list.
   ENDLOOP.
@@ -19164,7 +19164,7 @@ METHOD analyse_method_source.
     ADD 1 TO d_tabix.         READ TABLE t_tokens ASSIGNING &lt;c&gt; INDEX d_tabix.
     CHECK sy-subrc = 0.       CHECK &lt;c&gt;-str = &apos;TO&apos;.
     ADD 1 TO d_tabix.         READ TABLE t_tokens ASSIGNING &lt;c&gt; INDEX d_tabix.
-    s_obj = &lt;c&gt;-str. TRANSLATE s_obj TO UPPER CASE.
+    s_obj = &lt;c&gt;-str. TRANSLATE s_obj TO UPPER CASE.       &quot;#EC SYNTCHAR
     CHECK NOT s_obj CA c_symbols_ascii.   &quot; FROM SEO_CLIF_CHECK_NAME
     APPEND s_obj TO objects_list.
   ENDLOOP.

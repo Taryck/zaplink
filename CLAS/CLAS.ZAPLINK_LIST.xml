@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="15947D4470EEF7F577E751A51165E843" CODE_SIGNATURE="E75AEA0D25EF3F67901723314B85714F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D6A412A475A6EA169F03B0276D9093F9" CODE_SIGNATURE="C02909A094C22CF32AC0F61765206106" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_LIST">
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
    <TEXTS>
     <ITEM LANG="E" TEXT="ZapLink Components list">U1&amp;FUNCTIONALITY&amp;
 ASList of component with
@@ -523,7 +523,7 @@ INCLUDE zaplink_macros.</MACROS>
     result-connector = lights-red.
     result-status = lights-no.
 * There is no ZAPLink connector installed for object type &apos;&amp;1&apos;
-    MESSAGE e001 WITH result-type INTO result-msg.
+    MESSAGE e050 WITH result-type INTO result-msg.
   ELSE.
     result-connector = lights-green.
     result-checksum = o_comp-&gt;get_checksum( ).
@@ -539,26 +539,26 @@ INCLUDE zaplink_macros.</MACROS>
           result-status = lights-yellow.
           CLEAR result-select.
 * Object &apos;&amp;2&apos; (&amp;1) already exists. Select it to overwrite
-          MESSAGE e002 WITH result-type result-name INTO result-msg.
+          MESSAGE e051 WITH result-type result-name INTO result-msg.
         ENDIF.
       WHEN sel_actions-export.
         IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists. &quot; AND selected = abap_true.
           CLEAR result-select.
           result-status = lights-red.
 * Object &apos;&amp;2&apos; (&amp;1) does not exists.
-          MESSAGE e003 WITH result-type result-name INTO result-msg.
+          MESSAGE e052 WITH result-type result-name INTO result-msg.
         ENDIF.
       WHEN sel_actions-uninstall.
         IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists. &quot; AND selected = abap_true.
           CLEAR result-select.
           result-status = lights-red.
 * Object &apos;&amp;2&apos; (&amp;1) does not exists.
-          MESSAGE e003 WITH result-type result-name INTO result-msg.
+          MESSAGE e052 WITH result-type result-name INTO result-msg.
         ENDIF.
       WHEN sel_actions-unreplicable.
         result-status = lights-red.
 * Changes made on both (file&amp;SAP) for Object &apos;&amp;2&apos; (&amp;1) =&gt; Manual ajustment
-        MESSAGE e004 WITH result-type result-name INTO result-msg.
+        MESSAGE e053 WITH result-type result-name INTO result-msg.
       WHEN OTHERS.
     ENDCASE.
   ENDIF.</SOURCE>

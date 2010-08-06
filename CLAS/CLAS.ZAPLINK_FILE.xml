@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D2BB10FF5F0641997D3063C88B9E2771" CODE_SIGNATURE="C70B94088DF996E272FA4C5C2671E8E7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="DBB03AB8DB19E83FAE9CFDF12D34778E" CODE_SIGNATURE="86B054EE094B9DA228EDD0943F85A339" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_FILE">
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
    <TEXTS>
     <ITEM LANG="E" TEXT="ZAPLink : File Manager">U1&amp;FUNCTIONALITY&amp;
 ASObject that handle file managment.
@@ -106,6 +106,73 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       OTHERS               = 4.
   IF sy-subrc &lt;&gt; 0.
     file_sep = &apos;\&apos;.
+  ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="DELETE" EXPOSURE="2" STATE="1" EDITORDER="15 " MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Delete File"/>
+    </TEXTS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA d_rc TYPE i.
+  DATA cx   TYPE REF TO cx_root.
+
+  IF _filetype = c_ft_local.
+    CALL METHOD cl_gui_frontend_services=&gt;file_delete
+      EXPORTING
+        filename             = _filename
+      CHANGING
+        rc                   = d_rc
+      EXCEPTIONS
+        access_denied        = 1
+        cntl_error           = 2
+        error_no_gui         = 3
+        file_delete_failed   = 4
+        file_not_found       = 5
+        not_supported_by_gui = 6
+        unknown_error        = 7
+        wrong_parameter      = 8
+        OTHERS               = 9.
+    IF d_rc &lt;&gt; 0 AND sy-subrc = 0.     sy-subrc = 9.   ENDIF.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
+                                                       method = &apos;FILE_DELETE&apos;
+                                                        subrc = sy-subrc
+                                                 cx_classname = &apos;ZAPLINK_CX_FILE&apos; ).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
+  ELSEIF _filetype = c_ft_server.
+    TRY.
+        DELETE DATASET _filename.
+      CATCH cx_root INTO cx.
+* Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
+        CREATE OBJECT o_mycx
+          EXPORTING
+            textid   = zaplink_cx_file=&gt;delete_error
+            filename = _filename
+            filetype = _filetype
+            previous = cx.
+        o_mycx-&gt;update( ).
+        RAISE EXCEPTION o_mycx.
+    ENDTRY.
+    IF sy-subrc &lt;&gt; 0.
+* Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
+      RAISE EXCEPTION TYPE zaplink_cx_file
+            EXPORTING textid = zaplink_cx_file=&gt;delete_error
+                    filename = _filename
+                    filetype = _filetype
+                     cx_name = &apos;DELETE DATASET&apos;.
+    ENDIF.
+  ELSE.
+    RAISE EXCEPTION TYPE zaplink_cx_file
+          EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+                  filetype = _filetype.
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="FILE_EXISTS" EXPOSURE="2" STATE="1" EDITORDER="12 " MTDNEWEXC="X">

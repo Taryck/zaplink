@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="96CF69C82AA41681BB8B69627FAF0AB9" CODE_SIGNATURE="E3459032AEA89407039300397A47211F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="72F63BBC782CEBFF7EC51F9F0ECF2A0D" CODE_SIGNATURE="0AE70DF6C73161BDA9EDA473BD5E74C5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONNECTOR">
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
    <TEXTS>
     <ITEM LANG="E" TEXT="Zap Link Connector base implementation">U1&amp;FUNCTIONALITY&amp;
 ASDefault implementation of Interface ZAPLINK_CONNECTOR. The following
@@ -566,10 +566,10 @@ INCLUDE zaplink_macros.</MACROS>
 
 * Processing Dynpro #&amp;2 (&amp;1)
     SET EXTENDED CHECK OFF.
-    IF 1 = 2. MESSAGE i004(zaplink_connector) WITH space space. ENDIF.
+    IF 1 = 2. MESSAGE i500 WITH space space. ENDIF.
     SET EXTENDED CHECK ON.
     application_log-&gt;add_info( id_msgid = &apos;ZAPLINK_CONNECTOR&apos;
-                               id_msgno = &apos;004&apos;
+                               id_msgno = &apos;500&apos;
                                id_msgv1 = &lt;r&gt;-prog
                                id_msgv2 = &lt;r&gt;-dnum ).
 
@@ -1061,10 +1061,10 @@ INCLUDE zaplink_macros.</MACROS>
 
 * Processing Dynpro #&amp;2 (&amp;1)
     SET EXTENDED CHECK OFF.
-    IF 1 = 2. MESSAGE i004(zaplink_connector) WITH space space. ENDIF.
+    IF 1 = 2. MESSAGE i500 WITH space space. ENDIF.
     SET EXTENDED CHECK ON.
     application_log-&gt;add_info( id_msgid = &apos;ZAPLINK_CONNECTOR&apos;
-                               id_msgno = &apos;004&apos;
+                               id_msgno = &apos;500&apos;
                                id_msgv1 = header-program
                                id_msgv2 = header-screen ).
 

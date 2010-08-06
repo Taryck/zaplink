@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="86E04D9B7944862DE7F741598D006AF0" CODE_SIGNATURE="03B12F2EE236E21DAE4499C544C0AB37" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6B7820D259187F651194611803E27FF8" CODE_SIGNATURE="EF80C5BCA3D0DD893FF40DDA34629D87" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_CONTAINER">
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
    <TEXTS>
     <ITEM LANG="E" TEXT="ZapLink Container : For install purpose">U1&amp;FUNCTIONALITY&amp;
 ASFor internal use. Use ZAPLINK_CONTAINER instead.
@@ -597,12 +597,12 @@ check data &lt;&gt; _options.
             IF _done = abap_true.
 * Succesfully deleted &amp;1 &amp;2
               SET EXTENDED CHECK OFF.
-              IF 1 = 2. MESSAGE s001(zaplink_connector) WITH space space. ENDIF.
+              IF 1 = 2. MESSAGE s006 WITH space space. ENDIF.
               SET EXTENDED CHECK ON.
               CALL METHOD log-&gt;add_success
                 EXPORTING
-                  id_msgid     = &apos;ZAPLINK_CONNECTOR&apos;
-                  id_msgno     = &apos;001&apos;
+*                  id_msgid     = &apos;ZAPLINK_CONNECTOR&apos;
+                  id_msgno     = &apos;006&apos;
                   id_msgv1     = s_key-type
                   id_msgv2     = s_key-name
 *                  id_msgv3     =
@@ -611,12 +611,12 @@ check data &lt;&gt; _options.
             ELSE.
 * Failed to delete &amp;1 &amp;2
               SET EXTENDED CHECK OFF.
-              IF 1 = 2. MESSAGE e003(zaplink_connector) WITH space space. ENDIF.
+              IF 1 = 2. MESSAGE e007 WITH space space. ENDIF.
               SET EXTENDED CHECK ON.
               CALL METHOD log-&gt;add_error
                 EXPORTING
-                  id_msgid     = &apos;ZAPLINK_CONNECTOR&apos;
-                  id_msgno     = &apos;003&apos;
+*                  id_msgid     = &apos;ZAPLINK_CONNECTOR&apos;
+                  id_msgno     = &apos;007&apos;
                   id_msgv1     = s_key-type
                   id_msgv2     = s_key-name
 **              id_msgv3     =
