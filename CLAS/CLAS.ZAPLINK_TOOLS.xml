@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8756F91E82F14701C3BD01419BBBE296" CODE_SIGNATURE="BCADAD93478832F14425774F6AE21311" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C68E5B34DF1835CB19DE5A4A9422DD71" CODE_SIGNATURE="C0D6242F8E5D1A3D91C8ECCBDD7F45A5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" WITH_UNIT_TESTS="X">
@@ -100,11 +100,21 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="TT_COMPKEYS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_COMPKEYS"/>
    <ITEM CMPNAME="TT_CONN_CLASSES" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_CONN_CLASSES"/>
    <ITEM CMPNAME="TT_DOCS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_DOCS"/>
+   <ITEM CMPNAME="TT_GENSETC" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_GENSETC"/>
    <ITEM CMPNAME="TT_RAWTEXT" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_RAWTEXT"/>
    <ITEM CMPNAME="TT_TXTP_TEXTPOOLS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TXTP_TEXTPOOLS"/>
    <ITEM CMPNAME="TT_TXTP_TEXTS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TXTP_TEXTS"/>
    <ITEM CMPNAME="TT_TYPES" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TYPES"/>
   </ALIASES>
+  <ATTRIBUTS>
+   <ITEM CMPNAME="GC_GEN_TYPES" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" ATTVALUE="&apos;1CFJKMST&apos;" TYPTYPE="4">
+    gc_gen_types(8) TYPE c
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Activable program types"/>
+    </TEXTS>
+   </ITEM>
+  </ATTRIBUTS>
   <INTERFACES>
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
@@ -219,6 +229,49 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
       OTHERS               = 3.
   IF sy-subrc = 0.    result = _md5.    ENDIF.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="CHECK_VALID_PROGLIST" EXPOSURE="2" STATE="1" EDITORDER="17 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Check that component are valid and activable"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_GENSETC"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_GENSETC"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA gc_infoline_on TYPE oax.
+  DATA it_gensetc_raw TYPE tt_gensetc.
+  DATA t_trdir TYPE HASHED TABLE OF trdir WITH UNIQUE KEY name.
+  FIELD-SYMBOLS:
+    &lt;dir&gt; LIKE LINE OF t_trdir,
+    &lt;obj&gt; LIKE LINE OF it_gensetc_raw.
+
+  it_gensetc_raw = list.
+* determine the program names on the basis of the TADIR keys *
+  PERFORM  tadir_2_trdir IN PROGRAM rsparagenlod
+           CHANGING it_gensetc_raw.
+* delete non existing or invalid objects from generation set
+  IF LINES( it_gensetc_raw ) &gt; 1000.
+    PERFORM trdir_check IN PROGRAM rsparagenlod
+      USING    gc_infoline_on
+               it_gensetc_raw
+    CHANGING result.
+  ELSE.
+    SELECT * INTO TABLE t_trdir
+      FROM trdir
+      FOR ALL ENTRIES IN it_gensetc_raw
+      WHERE name = it_gensetc_raw-name
+      %_HINTS ORACLE &apos;&amp;max_blocking_factor 50&amp;&apos;.
+    LOOP AT it_gensetc_raw ASSIGNING &lt;obj&gt;.
+      READ TABLE t_trdir ASSIGNING &lt;dir&gt;
+           WITH TABLE KEY name = &lt;obj&gt;-name.
+      CHECK sy-subrc = 0.
+      CHECK &lt;dir&gt;-subc CA gc_gen_types.
+      APPEND &lt;obj&gt; TO result.
+    ENDLOOP.
+  ENDIF.
+
+  SORT result BY pgmid object objname.   DELETE ADJACENT DUPLICATES FROM result COMPARING pgmid object objname.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="CLEAN_ABAP_STRING" EXPOSURE="2" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Clean ABAP String of not important characters."/>
@@ -282,6 +335,23 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
 * Convert also constants &apos;#document&apos; =&gt; &apos;#DOCUMENT&apos;. so removed
 *  TRANSLATE target TO UPPER CASE.  &quot;#EC SYNTCHAR
   REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;horizontal_tab IN target WITH ` `.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CONV_COMPKEY_2_PROGLIST" EXPOSURE="2" STATE="1" EDITORDER="18 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert compkey to Program list"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="KEYS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_COMPKEYS"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_GENSETC"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA s_entry      LIKE LINE OF result.
+  FIELD-SYMBOLS &lt;k&gt; LIKE LINE OF keys.
+
+  LOOP AT keys ASSIGNING &lt;k&gt;.
+    s_entry-pgmid = &apos;R3TR&apos;.     s_entry-object = &lt;k&gt;-type.      s_entry-objname = &lt;k&gt;-name.   APPEND s_entry TO result.
+  ENDLOOP.
+  SORT result. DELETE ADJACENT DUPLICATES FROM result.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_LIMU_2_R3TR" EXPOSURE="1" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
@@ -347,6 +417,24 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   SORT result BY type name.
   DELETE ADJACENT DUPLICATES FROM result COMPARING type name.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="CONV_PROGLIST_2_COMPKEY" EXPOSURE="2" STATE="1" EDITORDER="19 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert Program list to compkey"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="LIST" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_GENSETC"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_COMPKEYS"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA s_entry      LIKE LINE OF result.
+  FIELD-SYMBOLS &lt;k&gt; LIKE LINE OF list.
+
+  LOOP AT list ASSIGNING &lt;k&gt;.
+    CHECK NOT &lt;k&gt;-name IS INITIAL.
+    s_entry-type = &apos;PROG&apos;.      s_entry-name = &lt;k&gt;-name.   APPEND s_entry TO result.
+  ENDLOOP.
+  SORT result. DELETE ADJACENT DUPLICATES FROM result.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="CONV_TABLE_2UPCASE" EXPOSURE="2" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert source code to upercase"/>
@@ -361,6 +449,39 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
     <SOURCE>`
   FIELD-SYMBOLS &lt;l&gt; type any.
   LOOP AT table ASSIGNING &lt;l&gt;.    TRANSLATE &lt;l&gt; TO UPPER CASE.  ENDLOOP.    &quot;#EC SYNTCHAR</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="EXTEND_PACKAGE" EXPOSURE="1" STATE="1" EDITORDER="2 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert to package list"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="PACKAGES" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_PACK"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_PACK">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Test package"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA r_exclu TYPE tr_packages.
+  DATA t_level TYPE tt_pack.
+
+  t_level = result = packages .
+  WHILE NOT t_level[] IS INITIAL.
+    SORT t_level.
+    DELETE ADJACENT DUPLICATES FROM t_level.
+
+    SELECT devclass
+        FROM tdevc
+        INTO TABLE t_level
+           FOR ALL ENTRIES IN t_level
+        WHERE parentcl = t_level-table_line.
+
+    APPEND LINES OF t_level TO result.
+  ENDWHILE.
+
+  SORT result.
+  DELETE ADJACENT DUPLICATES FROM result.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXTEND_PACKAGES" EXPOSURE="2" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
     <TEXTS>
@@ -477,7 +598,8 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   TYPES tt_pack TYPE STANDARD TABLE OF tdevc-devclass.
   DATA r_exclu TYPE tr_packages.
   DATA t_devc  TYPE tt_pack.
-  DATA t_level TYPE tt_pack.
+  DATA t_exclu TYPE tt_pack.
+  FIELD-SYMBOLS: &lt;p&gt; LIKE LINE OF t_exclu.
 
   IF packages IS INITIAL.
     CHECK srcsystem IS NOT INITIAL OR type IS NOT INITIAL OR name IS NOT INITIAL OR author IS NOT INITIAL. &quot; to prevent extracting all tadir
@@ -500,28 +622,20 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
       INTO TABLE t_devc
       WHERE devclass IN packages.
 
-* Package extention
-  IF ext = abap_true.
-    t_level = t_devc .
-    WHILE NOT t_level[] IS INITIAL.
-      SORT t_level.
-      DELETE ADJACENT DUPLICATES FROM t_level.
+  t_devc = extend_package( t_devc ).
 
-      SELECT devclass
-          FROM tdevc
-          INTO TABLE t_level
-             FOR ALL ENTRIES IN t_level
-          WHERE parentcl = t_level-table_line.
+* Package selection
+  IF NOT r_exclu IS INITIAL.
+    SELECT devclass
+        FROM tdevc
+        INTO TABLE t_exclu
+        WHERE NOT devclass IN r_exclu.
 
-      APPEND LINES OF t_level TO t_devc.
-    ENDWHILE.
-    IF NOT r_exclu IS INITIAL.
-      DELETE t_devc WHERE NOT table_line IN r_exclu.
-    ENDIF.
+    t_exclu = extend_package( t_exclu ).
+    LOOP AT t_exclu ASSIGNING &lt;p&gt;.
+      DELETE TABLE t_devc FROM &lt;p&gt;.
+    ENDLOOP.
   ENDIF.
-
-  SORT t_devc.
-  DELETE ADJACENT DUPLICATES FROM t_devc.
 
   IF NOT t_devc IS INITIAL.
     SELECT object obj_name
@@ -1153,6 +1267,8 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
      <ITEM LANG="E" TEXT="Transport Request entries"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TT_PACK" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_pack TYPE STANDARD TABLE OF tdevc-devclass with DEFAULT KEY
+`</ITEM>
   </TYPES>
  </RAW>
 </ZL_OBJECT>

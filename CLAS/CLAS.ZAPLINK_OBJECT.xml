@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="939110EA386F8A299E585FC46390DFD4" CODE_SIGNATURE="ECA166D83018BE6E89BFC4333689B8C5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="7CBD674C46B660668BC7EE2C73194EF5" CODE_SIGNATURE="D46155D3828C3E6FE3FA52D6E0864208" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -75,6 +75,42 @@ AS,,Introducing : Screen &amp; Menu data</ITEM>
 INCLUDE zaplink_macros.</MACROS>
   </LOCAL>
   <METHODS>
+   <ITEM CMPNAME="CHECK_CLASS_SECTIONS" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Service : Regenerate Class sections if needed"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="APPLICATION_LOG" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_MSG_COLL"/>
+     <ITEM SCONAME="CLASSKEY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSKEY">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Class Key"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA includes      TYPE t_fm_data-includes.
+  DATA _msgid        TYPE symsgid.
+
+  IF application_log IS BOUND.    _msgid = application_log-&gt;msgid.    application_log-&gt;msgid = &apos;ZAPLINK_OBJECT&apos;.    ENDIF.
+  includes = get_includes( classkey-clsname ).
+
+  CALL METHOD _check_class_sections
+    EXPORTING
+      classkey        = classkey
+      pub_source      = includes-pubsec-raw_source
+      pro_source      = includes-prosec-raw_source
+      pri_source      = includes-prisec-raw_source
+      application_log = application_log.
+
+  IF application_log IS BOUND.    application_log-&gt;msgid = _msgid.    ENDIF.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="CHECK_CLAS_SECTIONS" EXPOSURE="1" STATE="1" EDITORDER="7 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Regenerate Class sections if needed"/>
@@ -94,182 +130,19 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA pubsec_source TYPE seo_section_source.
-  DATA prosec_source TYPE seo_section_source.
-  DATA prisec_source TYPE seo_section_source.
-*  DATA code          TYPE tt_abaprawsource.
   DATA classkey      TYPE seoclskey.
 
   classkey-clsname = class-class-clsname.
 
-  CALL FUNCTION &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+  CALL METHOD _check_class_sections
     EXPORTING
-      clskey                               = classkey
-      public                               = seox_true
-      protected                            = seox_true
-      private                              = seox_true
-*      SUPPRESS_CORR                        = SEOX_FALSE
-      return_generated_sections_only       = seox_true
-*      TYPEINFO                             =
-*      LINE_SIZE                            = 255
-*      SUPPRESS_INDEX_UPDATE                = SEOX_FALSE
-    IMPORTING
-      pubsec_source                        = pubsec_source
-      prosec_source                        = prosec_source
-      prisec_source                        = prisec_source
-    EXCEPTIONS
-      not_existing                         = 1
-      model_only                           = 2
-      public_sec_not_generated             = 3
-      protected_sec_not_generated          = 4
-      private_sec_not_generated            = 5
-      public_sec_not_initialised           = 6
-      protected_sec_not_initialised        = 7
-      private_sec_not_initialised          = 8
-      _internal_class_not_existing         = 9
-      OTHERS                               = 10.
-  IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
-                                                subrc = sy-subrc
-                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-    application_log-&gt;add_symsg( ).
-    RAISE EXCEPTION o_mycx.
-  ENDIF.
-
-*  code = get_prog_rawsource( class-includes-pubsec-name ).
-  IF pubsec_source = class-includes-pubsec-raw_source.
-    CLEAR pubsec_source.
-  ELSE.
-    SET EXTENDED CHECK OFF.
-    IF 1 = 2. MESSAGE w003 WITH text-pub classkey. ENDIF.
-    SET EXTENDED CHECK ON.
-    CALL METHOD application_log-&gt;add_warning
-      EXPORTING
-*            id_msgid     =
-        id_msgno     = &apos;003&apos;
-          id_msgv1     = &apos;Public section&apos;(pub)
-        id_msgv2     = classkey.
-*            id_msgv3     =
-*            id_msgv4     =
-*            id_detlevel  =
-*            id_probclass =
-  ENDIF.
-*  code = get_prog_rawsource( class-includes-prosec ).
-  IF prosec_source = class-includes-prosec-raw_source.
-    CLEAR prosec_source.
-  ELSE.
-    SET EXTENDED CHECK OFF.
-    IF 1 = 2. MESSAGE w003 WITH text-pro classkey. ENDIF.
-    SET EXTENDED CHECK ON.
-    CALL METHOD application_log-&gt;add_warning
-      EXPORTING
-*        id_msgid     =
-        id_msgno     = &apos;003&apos;
-        id_msgv1     = &apos;Protected section&apos;(pro)
-        id_msgv2     = classkey.
-*        id_msgv3     =
-*        id_msgv4     =
-*        id_detlevel  =
-*        id_probclass =
-  ENDIF.
-*  code = get_prog_rawsource( class-includes-prisec ).
-  IF prisec_source = class-includes-prisec-raw_source.
-    CLEAR prisec_source.
-  ELSE.
-    SET EXTENDED CHECK OFF.
-    IF 1 = 2. MESSAGE w003 WITH text-pri classkey. ENDIF.
-    SET EXTENDED CHECK ON.
-    CALL METHOD application_log-&gt;add_warning
-      EXPORTING
-*        id_msgid     =
-        id_msgno     = &apos;003&apos;
-        id_msgv1     = &apos;Private section&apos;(pri)
-        id_msgv2     = classkey.
-*        id_msgv3     =
-*        id_msgv4     =
-*        id_detlevel  =
-*        id_probclass =
-  ENDIF.
-  IF NOT pubsec_source IS INITIAL OR NOT prosec_source IS INITIAL OR NOT prisec_source IS INITIAL.
-    CALL FUNCTION &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
-      EXPORTING
-        clskey                               = classkey
-        public                               = seox_true
-        protected                            = seox_true
-        private                              = seox_true
-*         SUPPRESS_CORR                        = SEOX_FALSE
-*         return_generated_sections_only       = seox_false
-*         TYPEINFO                             =
-*         LINE_SIZE                            = 255
-*         SUPPRESS_INDEX_UPDATE                = SEOX_FALSE
-*        IMPORTING
-*          pubsec_source                        = pubsec_source
-*          prosec_source                        = prosec_source
-*          prisec_source                        = prisec_source
-      EXCEPTIONS
-        not_existing                         = 1
-        model_only                           = 2
-        public_sec_not_generated             = 3
-        protected_sec_not_generated          = 4
-        private_sec_not_generated            = 5
-        public_sec_not_initialised           = 6
-        protected_sec_not_initialised        = 7
-        private_sec_not_initialised          = 8
-        _internal_class_not_existing         = 9
-        OTHERS                               = 10.
-    IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
-                                                  subrc = sy-subrc
-                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-      application_log-&gt;add_symsg( ).
-      RAISE EXCEPTION o_mycx.
-    ENDIF.
-* Already a commi inside
-*    CALL FUNCTION &apos;SEO_CLIF_SAVE_ALL&apos;
-*      EXPORTING
-*        cifkey                              = classkey
-**       NO_SECTIONS                         = SEOX_FALSE
-*        SECTIONS_ONLY                       = SEOX_true
-**       SUPPRESS_CORR                       = SEOX_FALSE
-**       SUPPRESS_REFACTORING_ENTRIES        = SEOX_FALSE
-**       SUPPRESS_METHOD_GENERATION          = SEOX_FALSE
-**       SUPPRESS_PUBSEC_GENERATION          = SEOX_FALSE
-**       SUPPRESS_PROSEC_GENERATION          = SEOX_FALSE
-**       SUPPRESS_PRISEC_GENERATION          = SEOX_FALSE
-**       SUPPRESS_DOCU_DELETE                = SEOX_FALSE
-**       SUPPRESS_MODIFICATION_SUPPORT       = SEOX_FALSE
-**       DISABLE_MODIFICATION_SUPPORT        = SEOX_FALSE
-**       GENERATE_IF_METHODS_INITIAL         = SEOX_FALSE
-**       LINE_SIZE                           = 255
-**       SUPPRESS_COMMIT                     = SEOX_FALSE
-**       NOTEASS_MODE                        = SEOX_FALSE
-**       SUPPRESS_INDEX_UPDATE               = SEOX_FALSE
-**     IMPORTING
-**       ERROR_OCCURRED                      =
-**       PUBLIC_SAVED                        =
-**       PRIVATE_SAVED                       =
-**       PROTECTED_SAVED                     =
-**     CHANGING
-**       CORRNR                              =
-**       DEVCLASS                            =
-**       GENFLAG                             =
-*      EXCEPTIONS
-*        NOT_EXISTING                        = 1
-*        NOTHING_TO_DO                       = 2
-*        ACCESS_ERROR                        = 3
-*        DB_ERROR                            = 4
-*        ERROR_IN_CODE_GENERATION            = 5
-*        OTHERS                              = 6.
-*    IF sy-subrc &lt;&gt; 0.
-*      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLIF_SAVE_ALL&apos;
-*                                                  subrc = sy-subrc
-*                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-*      application_log-&gt;add_symsg( ).
-*      RAISE EXCEPTION o_mycx.
-*    ENDIF.
-  ENDIF.</SOURCE>
+      classkey        = classkey
+      pub_source      = class-includes-pubsec-raw_source
+      pro_source      = class-includes-prosec-raw_source
+      pri_source      = class-includes-prisec-raw_source
+      application_log = application_log.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CHECK_INTF_SECTION" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDNEWEXC="X">
+   <ITEM CMPNAME="CHECK_INTF_SECTION" EXPOSURE="1" STATE="1" EDITORDER="9 " MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Regenerate Interface section if needed"/>
     </TEXTS>
@@ -1748,6 +1621,219 @@ AS</ITEM>
 
   IF d_flag IS INITIAL. CLEAR new_sourcecode. ENDIF.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="_CHECK_CLASS_SECTIONS" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDDECLTYP="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Internal Regenerate Class sections if needed"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="APPLICATION_LOG" CMPTYPE="1" EDITORDER="5 " PARPASSTYP="1" TYPTYPE="1" TYPE="TO_MSG_COLL"/>
+     <ITEM SCONAME="CLASSKEY" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="SEOCLSKEY">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Class Key"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="PRI_SOURCE" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Actual Private section source"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="PRO_SOURCE" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Actual Protected section source"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="PUB_SOURCE" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Actual Public section source"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E" EDITORDER="1 ">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA pubsec_source TYPE seo_section_source.
+  DATA prosec_source TYPE seo_section_source.
+  DATA prisec_source TYPE seo_section_source.
+  DATA d_text        TYPE string.
+
+  IF NOT application_log IS BOUND.
+    d_text = &apos;APPLICATION_LOG can&apos;&apos;t be null&apos;(eal).
+    RAISE EXCEPTION TYPE zaplink_cx_connector
+          EXPORTING textid = zaplink_cx_connector=&gt;system_error
+                    cx_name = d_text.
+  ENDIF.
+
+  CALL FUNCTION &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+    EXPORTING
+      clskey                               = classkey
+      public                               = seox_true
+      protected                            = seox_true
+      private                              = seox_true
+*      SUPPRESS_CORR                        = SEOX_FALSE
+      return_generated_sections_only       = seox_true
+*      TYPEINFO                             =
+*      LINE_SIZE                            = 255
+*      SUPPRESS_INDEX_UPDATE                = SEOX_FALSE
+    IMPORTING
+      pubsec_source                        = pubsec_source
+      prosec_source                        = prosec_source
+      prisec_source                        = prisec_source
+    EXCEPTIONS
+      not_existing                         = 1
+      model_only                           = 2
+      public_sec_not_generated             = 3
+      protected_sec_not_generated          = 4
+      private_sec_not_generated            = 5
+      public_sec_not_initialised           = 6
+      protected_sec_not_initialised        = 7
+      private_sec_not_initialised          = 8
+      _internal_class_not_existing         = 9
+      OTHERS                               = 10.
+  IF sy-subrc &lt;&gt; 0.
+    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+                                                subrc = sy-subrc
+                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+    application_log-&gt;add_symsg( ).
+    RAISE EXCEPTION o_mycx.
+  ENDIF.
+
+  IF pubsec_source = pub_source.
+    CLEAR pubsec_source.
+  ELSE.
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE w002 WITH text-pub classkey. ENDIF.
+    SET EXTENDED CHECK ON.
+    CALL METHOD application_log-&gt;add_warning
+      EXPORTING
+*            id_msgid     =
+        id_msgno     = &apos;002&apos;
+        id_msgv1     = &apos;Public section&apos;(pub)
+        id_msgv2     = classkey.
+*            id_msgv3     =
+*            id_msgv4     =
+*            id_detlevel  =
+*            id_probclass =
+  ENDIF.
+
+  IF prosec_source = pro_source.
+    CLEAR prosec_source.
+  ELSE.
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE w002 WITH text-pro classkey. ENDIF.
+    SET EXTENDED CHECK ON.
+    CALL METHOD application_log-&gt;add_warning
+      EXPORTING
+*        id_msgid     =
+        id_msgno     = &apos;002&apos;
+        id_msgv1     = &apos;Protected section&apos;(pro)
+        id_msgv2     = classkey.
+*        id_msgv3     =
+*        id_msgv4     =
+*        id_detlevel  =
+*        id_probclass =
+  ENDIF.
+
+  IF prisec_source = pri_source.
+    CLEAR prisec_source.
+  ELSE.
+    SET EXTENDED CHECK OFF.
+    IF 1 = 2. MESSAGE w002 WITH text-pri classkey. ENDIF.
+    SET EXTENDED CHECK ON.
+    CALL METHOD application_log-&gt;add_warning
+      EXPORTING
+*        id_msgid     =
+        id_msgno     = &apos;002&apos;
+        id_msgv1     = &apos;Private section&apos;(pri)
+        id_msgv2     = classkey.
+*        id_msgv3     =
+*        id_msgv4     =
+*        id_detlevel  =
+*        id_probclass =
+  ENDIF.
+  IF NOT pubsec_source IS INITIAL OR NOT prosec_source IS INITIAL OR NOT prisec_source IS INITIAL.
+    CALL FUNCTION &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+      EXPORTING
+        clskey                               = classkey
+        public                               = seox_true
+        protected                            = seox_true
+        private                              = seox_true
+*         SUPPRESS_CORR                        = SEOX_FALSE
+*         return_generated_sections_only       = seox_false
+*         TYPEINFO                             =
+*         LINE_SIZE                            = 255
+*         SUPPRESS_INDEX_UPDATE                = SEOX_FALSE
+*        IMPORTING
+*          pubsec_source                        = pubsec_source
+*          prosec_source                        = prosec_source
+*          prisec_source                        = prisec_source
+      EXCEPTIONS
+        not_existing                         = 1
+        model_only                           = 2
+        public_sec_not_generated             = 3
+        protected_sec_not_generated          = 4
+        private_sec_not_generated            = 5
+        public_sec_not_initialised           = 6
+        protected_sec_not_initialised        = 7
+        private_sec_not_initialised          = 8
+        _internal_class_not_existing         = 9
+        OTHERS                               = 10.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+                                                  subrc = sy-subrc
+                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+      application_log-&gt;add_symsg( ).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
+* Already a commit inside
+*    CALL FUNCTION &apos;SEO_CLIF_SAVE_ALL&apos;
+*      EXPORTING
+*        cifkey                              = classkey
+**       NO_SECTIONS                         = SEOX_FALSE
+*        SECTIONS_ONLY                       = SEOX_true
+**       SUPPRESS_CORR                       = SEOX_FALSE
+**       SUPPRESS_REFACTORING_ENTRIES        = SEOX_FALSE
+**       SUPPRESS_METHOD_GENERATION          = SEOX_FALSE
+**       SUPPRESS_PUBSEC_GENERATION          = SEOX_FALSE
+**       SUPPRESS_PROSEC_GENERATION          = SEOX_FALSE
+**       SUPPRESS_PRISEC_GENERATION          = SEOX_FALSE
+**       SUPPRESS_DOCU_DELETE                = SEOX_FALSE
+**       SUPPRESS_MODIFICATION_SUPPORT       = SEOX_FALSE
+**       DISABLE_MODIFICATION_SUPPORT        = SEOX_FALSE
+**       GENERATE_IF_METHODS_INITIAL         = SEOX_FALSE
+**       LINE_SIZE                           = 255
+**       SUPPRESS_COMMIT                     = SEOX_FALSE
+**       NOTEASS_MODE                        = SEOX_FALSE
+**       SUPPRESS_INDEX_UPDATE               = SEOX_FALSE
+**     IMPORTING
+**       ERROR_OCCURRED                      =
+**       PUBLIC_SAVED                        =
+**       PRIVATE_SAVED                       =
+**       PROTECTED_SAVED                     =
+**     CHANGING
+**       CORRNR                              =
+**       DEVCLASS                            =
+**       GENFLAG                             =
+*      EXCEPTIONS
+*        NOT_EXISTING                        = 1
+*        NOTHING_TO_DO                       = 2
+*        ACCESS_ERROR                        = 3
+*        DB_ERROR                            = 4
+*        ERROR_IN_CODE_GENERATION            = 5
+*        OTHERS                              = 6.
+*    IF sy-subrc &lt;&gt; 0.
+*      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLIF_SAVE_ALL&apos;
+*                                                  subrc = sy-subrc
+*                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+*      application_log-&gt;add_symsg( ).
+*      RAISE EXCEPTION o_mycx.
+*    ENDIF.
+  ENDIF.</SOURCE>
+   </ITEM>
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
@@ -2065,6 +2151,11 @@ AS</ITEM>
      <ITEM LANGU="E" ENTRY='&quot;Auto commented by ZAPLINK_OBJECT connector and added as Explicit type group' LENGTH="80 "/>
     </TEXTS>
    </ITEM>
+   <ITEM ID="I" KEY="EAL">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="APPLICATION_LOG can&apos;t be null" LENGTH="132 "/>
+    </TEXTS>
+   </ITEM>
    <ITEM ID="I" KEY="PRI">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="Private section" LENGTH="40 "/>
@@ -2092,7 +2183,7 @@ AS</ITEM>
    <ITEM TYPEGROUP="SEOX" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TD_SOURCECODE" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="SEOP_SOURCE_STRING">
+   <ITEM CMPNAME="TD_SOURCECODE" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="SEOP_SOURCE_STRING">
     <TEXTS>
      <ITEM LANG="E" TEXT="ABAP Source Code"/>
     </TEXTS>
