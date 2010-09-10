@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C68E5B34DF1835CB19DE5A4A9422DD71" CODE_SIGNATURE="C0D6242F8E5D1A3D91C8ECCBDD7F45A5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8662D8826B291045B7B374717D5C1EF9" CODE_SIGNATURE="CA451DAA89EF85E6851577432577D4A1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" WITH_UNIT_TESTS="X">
@@ -500,30 +500,15 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   r_exclu = packages.   DELETE r_exclu WHERE sign &lt;&gt; &apos;E&apos;. &quot; Keep only Devcclass to remove
 
 * Package selection
-  SELECT devclass AS low
-      FROM tdevc
-      INTO CORRESPONDING FIELDS OF TABLE result
-      WHERE devclass IN packages.
+  result = get_sub_packages( packages ).
 
-* Package extention
-  t_level = result.
-  WHILE NOT t_level[] IS INITIAL.
-    SORT t_level.
-    DELETE ADJACENT DUPLICATES FROM t_level.
-
-    SELECT devclass AS low
-        FROM tdevc
-        INTO CORRESPONDING FIELDS OF TABLE t_level
-           FOR ALL ENTRIES IN t_level
-        WHERE parentcl = t_level-low.
-
-    APPEND LINES OF t_level TO result.
-  ENDWHILE.
-
-  IF NOT r_exclu IS INITIAL.    DELETE result WHERE NOT low IN r_exclu.    ENDIF.
+  IF NOT r_exclu IS INITIAL.
+    s_pack-sign = &apos;I&apos;.   MODIFY r_exclu FROM s_pack TRANSPORTING sign WHERE sign &lt;&gt; s_pack-sign.
+    r_exclu = get_sub_packages( r_exclu ).
+    DELETE result WHERE low IN r_exclu.
+  ENDIF.
 
   SORT result.    DELETE ADJACENT DUPLICATES FROM result COMPARING low.
-
   s_pack-sign = &apos;I&apos;.  s_pack-option = &apos;EQ&apos;.   MODIFY result FROM s_pack TRANSPORTING sign option WHERE NOT low IS INITIAL.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_CLAS_NAME" EXPOSURE="2" STATE="1" EDITORDER="7 " MTDDECLTYP="1">
@@ -622,7 +607,9 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
       INTO TABLE t_devc
       WHERE devclass IN packages.
 
-  t_devc = extend_package( t_devc ).
+  IF NOT ext IS INITIAL.
+    t_devc = extend_package( t_devc ).
+  ENDIF.
 
 * Package selection
   IF NOT r_exclu IS INITIAL.
@@ -703,6 +690,44 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
 *    result-&gt;add_keys( keys  ).
     result = conv_limu_2_r3tr( objlist ).
   ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GET_SUB_PACKAGES" EXPOSURE="1" STATE="1" EDITORDER="20 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Get Sub Package of packages"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="PACKAGES" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TR_PACKAGES"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TR_PACKAGES"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA t_level TYPE tr_packages.
+  DATA s_pack LIKE LINE OF result.
+
+  CHECK NOT packages IS INITIAL.
+
+* Package selection
+  SELECT devclass AS low
+      FROM tdevc
+      INTO CORRESPONDING FIELDS OF TABLE result
+      WHERE devclass in packages.
+
+* Package extention
+  t_level = result.
+  WHILE NOT t_level[] IS INITIAL.
+    SORT t_level.
+    DELETE ADJACENT DUPLICATES FROM t_level.
+
+    SELECT devclass AS low
+        FROM tdevc
+        INTO CORRESPONDING FIELDS OF TABLE t_level
+           FOR ALL ENTRIES IN t_level
+        WHERE parentcl = t_level-low.
+
+    APPEND LINES OF t_level TO result.
+  ENDWHILE.
+
+  SORT result.    DELETE ADJACENT DUPLICATES FROM result COMPARING low.
+  s_pack-sign = &apos;I&apos;.  s_pack-option = &apos;EQ&apos;.   MODIFY result FROM s_pack TRANSPORTING sign option WHERE NOT low IS INITIAL.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="INVERSE_TABLE_ORDER" EXPOSURE="2" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
     <TEXTS>

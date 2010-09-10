@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7893866A79D49A3AC971AF165B7A8E4C" CODE_SIGNATURE="20FCC6B7983EEB3C8FB8E273ADAE1490" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5794E4AD1143C799411AEE197CB87555" CODE_SIGNATURE="8FE00CDB7D886C9D018BE5E203DCEFEF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DOCUMENTATION"/>
@@ -177,14 +177,15 @@ INCLUDE zaplink_macros.</MACROS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
     <SOURCE>`
   DATA d_name TYPE tstc-tcode.
-  DATA d_type   TYPE td_comptype.
+  DATA d_type TYPE td_comptype.
+  DATA _name  TYPE td_compname.
 
   TRY.
 
     d_type = component-&gt;get_type( ).
     CASE d_type.
       WHEN st_transaction.
-        d_name = component-&gt;get_name( ).
+        d_name = _name = component-&gt;get_name( ).
         CALL FUNCTION &apos;RPY_TRANSACTION_DELETE&apos;
           EXPORTING
             transaction                    = d_name
@@ -199,7 +200,9 @@ INCLUDE zaplink_macros.</MACROS>
           CASE sy-subrc.
             WHEN 2.
               RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+                EXPORTING textid = zaplink_cx_connector=&gt;not_found
+                            type = d_type
+                            name = _name.
             WHEN OTHERS.
               RAISE EXCEPTION TYPE zaplink_cx_connector
                 EXPORTING textid = zaplink_cx_connector=&gt;system_error.

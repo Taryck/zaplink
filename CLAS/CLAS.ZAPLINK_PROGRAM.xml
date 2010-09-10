@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4EBAE5C8595097BA5436E5A27A72509C" CODE_SIGNATURE="48BE9B6E330AE8DB9EE769BC4092A1D5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D477FFA33DD9545330A259F4EDA1F5E3" CODE_SIGNATURE="56B36224BB70E22AFBAE9856B7835902" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROG_DATA"/>
@@ -783,6 +783,7 @@ INCLUDE zaplink_macros.</MACROS>
     d_name = component-&gt;get_name( ).
     CASE type.
       WHEN supportedtypes-sys_variant OR supportedtypes-appl_variant.
+        CHECK do_exists( component ) = exists-exists.     &quot; UI when variant do not exists (detected with Issue 104)
         s_variant = zaplink_vari_data=&gt;name_2_key( d_name ).
         CALL FUNCTION &apos;RS_VARIANT_DELETE&apos;
           EXPORTING
