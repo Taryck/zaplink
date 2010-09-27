@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ZL_OBJECT CHECKSUM="752839228EFAB3BA478F8D8D2976585D" CODE_SIGNATURE="11D5473D2EEBDA2E882A3AA7F9B58757" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACID_DATA" TYPE="CLAS" VERSION="1.01">
+ <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
+ <RAW>
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+   <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" STATE="1"/>
+   <TEXTS>
+    <ITEM LANG="E" TEXT="Data for Check Point Group">U1&amp;FUNCTIONALITY&amp;
+ASIs part of connector : ZAPLINK_FUNCTION_GROUP
+ASDefine XML structure of a Function group
+U1&amp;RELATIONS&amp;
+AS
+U1&amp;EXAMPLE&amp;
+AS
+U1&amp;HINTS&amp;
+AS
+U1&amp;FURTHER_SOURCES_OF_INF&amp;
+AS
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
+   </TEXTS>
+  </A0_MAINDATA>
+  <ALIASES>
+   <ITEM CMPNAME="LINE_SEPARATOR" EXPOSURE="2" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="LINE_SEPARATOR"/>
+   <ITEM CMPNAME="TD_ABAPSOURCE" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_ABAPSOURCE"/>
+   <ITEM CMPNAME="TD_CHECKBOX" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_CHECKBOX"/>
+   <ITEM CMPNAME="TD_CHECKSUM" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_CHECKSUM"/>
+   <ITEM CMPNAME="TT_ABAPRAWSOURCE" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_ABAPRAWSOURCE"/>
+   <ITEM CMPNAME="TT_DOCS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_DOCS"/>
+   <ITEM CMPNAME="TT_DYNPROS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_DYNPROS"/>
+   <ITEM CMPNAME="TT_LTEXTS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_LTEXTS"/>
+   <ITEM CMPNAME="TT_TXTP_TEXTPOOLS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TXTP_TEXTPOOLS"/>
+  </ALIASES>
+  <ATTRIBUTS>
+   <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TS_MAINDATA">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Program main data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="DESCRIPTIONS" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_LTEXTS">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Description texts"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="GLOBAL_SETTINGS" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TS_ACTIVATION"/>
+   <ITEM CMPNAME="SETTINGS_FOR_SERVERS" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_SERVERS"/>
+   <ITEM CMPNAME="SETTINGS_FOR_USERS" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_USERS"/>
+  </ATTRIBUTS>
+  <FRIENDS>
+   <ITEM REFCLSNAME="ZAPLINK_CHECKPOINTS" STATE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_EASYXML" STATE="1"/>
+  </FRIENDS>
+  <INTERFACES>
+   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+  </INTERFACES>
+  <LOCAL>
+   <TYPES>`
+*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+*&quot;* definitions, interfaces or data types) you need for method
+*&quot;* implementation or private method&apos;s signature</TYPES>
+   <IMPLEMENTATIONS>`
+*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+*&quot;* use this source file for the implementation part of
+*&quot;* local helper classes</IMPLEMENTATIONS>
+   <MACROS>`
+*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+*&quot;* in the implementation part of the class</MACROS>
+  </LOCAL>
+  <METHODS>
+   <ITEM CMPNAME="ANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="3 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Anonymized component data"/>
+    </TEXTS>
+    <SOURCE>`
+  CLEAR: a0_maindata-create_user,  a0_maindata-create_date.
+*ACT_USER
+*ACT_DATE
+*ACT_TIME</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CONV_ACTIVATION2MODE" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert activation checkboxes to Mode number"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="ACTIVATION" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_ACTIVATION">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Activation checkbox structure"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_MODE">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Activation Mode for Checkpoint Groups"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+* From LSAABP01 : Methode pai_0310.
+
+* convert activation mode
+  CALL METHOD cl_aab_tool=&gt;convert_input_to_mode
+    EXPORTING
+      bp_inactive            = activation-breakpoints-inactive
+      bp_stop                = activation-breakpoints-break
+      lp_inactive            = activation-logpoints-inactive
+      lp_log                 = activation-logpoints-log
+      as_fg_inactive         = activation-assertions-inactive
+      as_fg_stop_bg_protocol = activation-assertions-break-log
+      as_fg_stop_bg_rabax    = activation-assertions-break-abort
+      as_fg_protocol         = activation-assertions-log
+      as_fg_rabax            = activation-assertions-abort
+    IMPORTING
+      mode                   = result
+    EXCEPTIONS
+      mode_not_valid         = 1
+      OTHERS                 = 2.
+  ASSERT sy-subrc = 0.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CONV_MODE2ACTIVATION" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert Mode number to activation checkboxes"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="MODE" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_MODE">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Activation Mode for Checkpoint Groups"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_ACTIVATION">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Activation checkbox structure"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+* From LSAABP01 : Methode pbo_0310.
+
+* convert activation mode
+  CALL METHOD cl_aab_tool=&gt;convert_mode_to_output
+    EXPORTING
+      mode                   = mode
+    IMPORTING
+      bp_inactive            = result-breakpoints-inactive
+      bp_stop                = result-breakpoints-break
+      lp_inactive            = result-logpoints-inactive
+      lp_log                 = result-logpoints-log
+      as_fg_inactive         = result-assertions-inactive
+      as_fg_stop_bg_protocol = result-assertions-break-log
+      as_fg_stop_bg_rabax    = result-assertions-break-abort
+      as_fg_protocol         = result-assertions-log
+      as_fg_rabax            = result-assertions-abort.
+*      as_bg_text             = s_fmd_acid-header-as_bg_act_txt.
+*  IF NOT result-assertions-break-log IS INITIAL
+*    OR NOT result-assertions-break-abort IS INITIAL.
+*    CALL METHOD cl_aab_tool=&gt;convert_flags_comb_to_single
+*      EXPORTING
+*        as_fg_stop_bg_protocol = result-assertions-break-log
+*        as_fg_stop_bg_rabax    = result-assertions-break-abort
+*      IMPORTING
+*        as_fg_stop             = s_fmd_acid-header-as_fg_stop
+*        as_bg_protocol         = s_fmd_acid-header-as_bg_protocol
+*        as_bg_rabax            = s_fmd_acid-header-as_bg_rabax.
+*  ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="FROM_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Function Modules object Data"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA s_user     LIKE LINE OF settings_for_users.
+  DATA s_server   LIKE LINE OF settings_for_servers.
+  DATA s_desc     LIKE LINE OF descriptions.
+  FIELD-SYMBOLS:
+    &lt;d&gt; LIKE LINE OF fm_data-descriptions,
+    &lt;m&gt; LIKE LINE OF fm_data-modes.
+
+*  a0_maindata = fm_data-header.
+*  CLEAR: a0_maindata-devclass_txt, a0_maindata-masterlang_txt, a0_maindata-component_txt.
+  LOOP AT fm_data-descriptions ASSIGNING &lt;d&gt;.
+    CLEAR s_desc.   s_desc-lang = &lt;d&gt;-langu.     s_desc-text = &lt;d&gt;-descript.   INSERT s_desc INTO TABLE descriptions.
+  ENDLOOP.
+
+*ACT_USERS_INFO
+*ACT_SERVERS_INFO
+  LOOP AT fm_data-modes ASSIGNING &lt;m&gt;.
+    IF NOT &lt;m&gt;-username IS INITIAL.
+      CLEAR s_user.   s_user-user = &lt;m&gt;-username.   s_user-activation = conv_mode2activation( &lt;m&gt;-actmode ).
+      INSERT s_user INTO TABLE settings_for_users.
+    ELSEIF NOT &lt;m&gt;-server IS INITIAL.
+      CLEAR s_server.   s_server-server = &lt;m&gt;-server.   s_server-activation = conv_mode2activation( &lt;m&gt;-actmode ).
+      INSERT s_server INTO TABLE settings_for_servers.
+    ELSEIF NOT &lt;m&gt;-actdefault IS INITIAL OR global_settings IS INITIAL.
+      global_settings = conv_mode2activation( &lt;m&gt;-actmode ).
+    ENDIF.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="TO_DATA" EXPOSURE="1" STATE="1" EDITORDER="2 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Function Modules object Data"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA s_mode     LIKE LINE OF fm_data-modes.
+  DATA s_server   LIKE LINE OF settings_for_servers.
+  DATA s_desc     LIKE LINE OF fm_data-descriptions.
+  FIELD-SYMBOLS:
+    &lt;d&gt; LIKE LINE OF descriptions,
+    &lt;s&gt; LIKE LINE OF settings_for_servers,
+    &lt;u&gt; LIKE LINE OF settings_for_users.
+
+  LOOP AT descriptions ASSIGNING &lt;d&gt;.
+    CLEAR s_desc.   s_desc-langu = &lt;d&gt;-lang.     s_desc-descript = &lt;d&gt;-text.   INSERT s_desc INTO TABLE fm_data-descriptions.
+  ENDLOOP.
+
+  s_mode-actmode = conv_activation2mode( global_settings ).     s_mode-actdefault = abap_true.
+  INSERT s_mode INTO TABLE fm_data-modes.
+*ACT_USERS_INFO
+  LOOP AT settings_for_users ASSIGNING &lt;u&gt;.
+    CLEAR s_mode.     s_mode-username = &lt;u&gt;-user.   s_mode-actmode = conv_activation2mode( &lt;u&gt;-activation ).
+    INSERT s_mode INTO TABLE fm_data-modes.
+  ENDLOOP.
+
+*ACT_SERVERS_INFO
+  LOOP AT settings_for_servers ASSIGNING &lt;s&gt;.
+    CLEAR s_mode.     s_mode-server = &lt;s&gt;-server.   s_mode-actmode = conv_activation2mode( &lt;s&gt;-activation ).
+    INSERT s_mode INTO TABLE fm_data-modes.
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="4 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="UnAnonymized component data"/>
+    </TEXTS>
+   </ITEM>
+  </METHODS>
+  <TYPEGROUPS>
+   <ITEM TYPEGROUP="ABAP" IMPLICIT="X"/>
+  </TYPEGROUPS>
+  <TYPES>
+   <ITEM CMPNAME="TD_MODE" EXPOSURE="1" STATE="1" EDITORDER="11 " TYPTYPE="1" TYPE="AAB_ID_MODE">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Activation Mode for Checkpoint Groups"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_4SERVER" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="4">
+    BEGIN OF ts_4server,
+      server  TYPE aab_id_act-server.
+  INCLUDE TYPE ts_activation as activation.
+  TYPES:
+    END OF ts_4server
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Activation checkbox for a user"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_4USER" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="4">
+    BEGIN OF ts_4user,
+      user    TYPE aab_id_act-username.
+  INCLUDE TYPE ts_activation as activation.
+  TYPES:
+    END OF ts_4user
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Activation checkbox for a server"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_ACTIVATION" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4">
+    BEGIN OF ts_activation,
+      breakpoints TYPE ts_bp_act,
+      logpoints   TYPE ts_lp_act,
+      assertions  TYPE ts_a_act,
+    END OF ts_activation
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Activation checkbox structure"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_A_ACT" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4">
+    BEGIN OF ts_a_act,
+      inactive    TYPE td_checkbox,
+      log         TYPE td_checkbox,
+      abort       TYPE td_checkbox,
+      BEGIN OF break,
+        log         TYPE td_checkbox,
+        abort       TYPE td_checkbox,
+      END OF break,
+    END OF ts_a_act
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Assertion Activation checkboxes"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_BP_ACT" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">
+    BEGIN OF ts_bp_act,
+      inactive    TYPE td_checkbox,
+      break       TYPE td_checkbox,
+    END OF ts_bp_act
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Break Point Activation checkboxes"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">
+    BEGIN OF ts_fm_data,
+      header          TYPE aab_id_prop,     &quot; aab_id_sfields,
+      descriptions    TYPE STANDARD TABLE OF aab_id_propt WITH DEFAULT KEY,
+      modes           TYPE aab_id_act_tab,
+    END OF ts_fm_data
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Function Module Data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_LP_ACT" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4">
+    BEGIN OF ts_lp_act,
+      inactive    TYPE td_checkbox,
+      log         TYPE td_checkbox,
+    END OF ts_lp_act
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="LogPoint Activation checkboxes"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
+    BEGIN OF ts_maindata.
+  INCLUDE TYPE aab_id_sfields.
+  TYPES:
+    END OF ts_maindata
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Function Module main data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_SERVERS" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="4">
+    tt_servers TYPE SORTED TABLE OF ts_4server WITH UNIQUE KEY server
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Activation checkbox for servers"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_USERS" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="4">
+    tt_users TYPE SORTED TABLE OF ts_4user WITH UNIQUE KEY user
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Activation checkbox for users"/>
+    </TEXTS>
+   </ITEM>
+  </TYPES>
+ </RAW>
+</ZL_OBJECT>
