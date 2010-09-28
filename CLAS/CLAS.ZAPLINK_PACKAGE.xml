@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AE3BB28B5C9B138A60121E0FB4F4C672" CODE_SIGNATURE="78FA4A753379705FE463CE74706A6256" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="33CF2083708CDCBC9C0FA2E3A69C91C3" CODE_SIGNATURE="B13AC79256B7AE57605D9A489B0A9FA3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_DEVC_DATA"/>
@@ -1783,21 +1783,45 @@ INCLUDE zaplink_macros.</MACROS>
 *  CALL FUNCTION &apos;RS_CORR_INSERT&apos;
 
   _data = data.
+
+  IF NOT interface IS BOUND.        &quot; Issue 106 : Check if interface exists
+    CALL METHOD cl_package_interface=&gt;if_package_interface~load_package_interface
+      EXPORTING
+        i_package_interface_name   = data-intf_name
+*        i_force_reload             =
+      IMPORTING
+        e_package_interface        = interface
+      EXCEPTIONS
+        db_read_error              = 1
+        object_locked_and_modified = 2
+        object_not_existing        = 0
+        shorttext_not_existing     = 4
+        unexpected_error           = 5
+        OTHERS                     = 6.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( subrc = sy-subrc
+                                              class_name = &apos;CL_PACKAGE_INTERFACE&apos;
+                                                  method = &apos;IF_PACKAGE_INTERFACE~LOAD_PACKAGE_INTERFACE&apos;
+                                            cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
+  ENDIF.
+
   IF interface IS BOUND.
     _data_f = sy-uline.
     CALL METHOD interface-&gt;set_changeable
       EXPORTING
         i_changeable                = &apos;X&apos;
       EXCEPTIONS
-        object_locked_by_other_user = 1
-        permission_failure          = 2
         object_already_changeable   = 0
         object_already_unlocked     = 0
+        object_deleted              = 3
+        object_invalid              = 4
         object_just_created         = 5
-        object_deleted              = 6
+        object_locked_by_other_user = 6
         object_modified             = 7
         object_not_existing         = 8
-        object_invalid              = 9
+        permission_failure          = 9
         unexpected_error            = 10
         OTHERS                      = 11.
     IF sy-subrc &lt;&gt; 0.
@@ -1920,6 +1944,29 @@ INCLUDE zaplink_macros.</MACROS>
 *  CALL FUNCTION &apos;RS_CORR_INSERT&apos;
 
   _data = data.
+
+  IF NOT package IS BOUND.        &quot; Issue 106 : Check if package exists
+    CALL METHOD cl_package=&gt;if_package~load_package
+      EXPORTING
+        i_package_name             = data-devclass
+*        i_force_reload             =
+      IMPORTING
+        e_package                  = package
+      EXCEPTIONS
+        intern_err                 = 1
+        object_locked_and_modified = 2
+        object_not_existing        = 0
+        unexpected_error           = 4
+        OTHERS                     = 5.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( subrc = sy-subrc
+                                              class_name = &apos;CL_PACKAGE&apos;
+                                                  method = &apos;if_package~load_package&apos;
+                                            cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
+  ENDIF.
+
   IF package IS BOUND.
     _data_f = sy-uline.
     CALL METHOD package-&gt;set_changeable
@@ -2015,8 +2062,8 @@ INCLUDE zaplink_macros.</MACROS>
         OTHERS                     = 17.
     IF sy-subrc &lt;&gt; 0 AND sy-subrc &lt;&gt; 99.
       o_mycx ?= zaplink_cx=&gt;create_from_method_cx( subrc = sy-subrc
-                                                   class = package
-                                                  method = &apos;set_all_attributes&apos;
+                                              class_name = &apos;CL_PACKAGE&apos;
+                                                  method = &apos;if_package~create_new_package&apos;
                                             cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
       RAISE EXCEPTION o_mycx.
     ENDIF.
