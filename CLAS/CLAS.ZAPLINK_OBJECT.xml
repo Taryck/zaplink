@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7CBD674C46B660668BC7EE2C73194EF5" CODE_SIGNATURE="D46155D3828C3E6FE3FA52D6E0864208" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="FE0E058BBB11FCC2C3F85A90A6AA9FCC" CODE_SIGNATURE="047BB7FBDB6BAD1A632DF51C012E2B82" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1668,6 +1668,28 @@ AS</ITEM>
                     cx_name = d_text.
   ENDIF.
 
+  CALL FUNCTION &apos;SEO_CLASS_TYPEINFO_BY_VIS&apos;         &quot; Issue 105 : First call for nothing to ensure method order
+    EXPORTING
+      clskey                              = classkey
+      version                             = seoc_version_inactive
+      state                               = seoc_state_implemented
+*     RESOLVE_EVENTHANDLER_TYPEINFO       = SEOX_FALSE
+*     WITH_MASTER_LANGUAGE                = SEOX_FALSE
+*     WITH_ENHANCEMENTS                   = SEOX_FALSE
+*   IMPORTING
+    EXCEPTIONS
+      not_existing                        = 1
+      is_interface                        = 2
+      model_only                          = 3
+      OTHERS                              = 4.
+  IF sy-subrc &lt;&gt; 0.
+    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_TYPEINFO_BY_VIS&apos;
+                                                subrc = sy-subrc
+                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+    application_log-&gt;add_symsg( ).
+    RAISE EXCEPTION o_mycx.
+  ENDIF.
+
   CALL FUNCTION &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
     EXPORTING
       clskey                               = classkey
@@ -1756,6 +1778,7 @@ AS</ITEM>
 *        id_probclass =
   ENDIF.
   IF NOT pubsec_source IS INITIAL OR NOT prosec_source IS INITIAL OR NOT prisec_source IS INITIAL.
+    LOG-POINT ID ZAPLINK FIELDS pubsec_source prosec_source prisec_source.
     CALL FUNCTION &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
       EXPORTING
         clskey                               = classkey
