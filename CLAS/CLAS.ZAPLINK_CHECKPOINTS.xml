@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="6D7FF32AC1C7E17929D541E8966B8817" CODE_SIGNATURE="D97E78BA1925D25A8B7824EA4ACC44AE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CHECKPOINTS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="07A2E49CF96EB2D8E7744A2DE0CCD39C" CODE_SIGNATURE="922376EC6FCF332B6E6B00197134F97B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CHECKPOINTS" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUGR_DATA"/>
@@ -111,48 +111,51 @@ INCLUDE zaplink_macros.</MACROS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
     <SOURCE>`
-*  DATA o_checkpoint    TYPE to_checkpoint.
-*  DATA o_variant TYPE to_variant.
-*
-*  CHECK object IS BOUND.
-*
-*  CASE object-&gt;type.
-*    WHEN supportedtypes-checkpoint.
-*      o_checkpoint ?= object-&gt;raw.
-*      o_checkpoint-&gt;anonymize( ).
+  DATA o_checkpoint    TYPE to_checkpoint.
+*  DATA o_variant       TYPE to_variant.
+
+  CHECK object IS BOUND.
+
+  CASE object-&gt;type.
+    WHEN supportedtypes-checkpoint.
+      o_checkpoint ?= object-&gt;raw.
+      o_checkpoint-&gt;anonymize( ).
 *    WHEN supportedtypes-variant.
 *      o_variant ?= object-&gt;raw.
 *      o_variant-&gt;anonymize( ).
-*    WHEN OTHERS.
-*       mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
-*  ENDCASE.
-*
-*  TRY.
-*      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-*    CATCH zaplink_cx_connector INTO o_mycx.
-*      RAISE EXCEPTION o_mycx.
-*  ENDTRY.
-*</SOURCE>
+    WHEN OTHERS.
+       mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+  ENDCASE.
+
+  TRY.
+      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
     <SOURCE>`
-*  DATA o_prog TYPE to_program.
-*
-*  TRY.
-*      super-&gt;zaplink_cnx_ext_cleaner~unanonymize( object ).
-*    CATCH zaplink_cx_connector INTO o_mycx.
-*      RAISE EXCEPTION o_mycx.
-*  ENDTRY.
-*
-*  o_prog ?= object-&gt;raw.
-*  o_prog-&gt;A0_MAINDATA-CNAM = sy-uname.
-**    o_prog-&gt;A0_MAINDATA-CDAT,
-**    o_prog-&gt;A0_MAINDATA-UNAM,
-**    o_prog-&gt;A0_MAINDATA-UDAT,
-**    o_prog-&gt;A0_MAINDATA-SDATE,
-**    o_prog-&gt;A0_MAINDATA-STIME,
-**    o_prog-&gt;A0_MAINDATA-IDATE,
-**    o_prog-&gt;A0_MAINDATA-ITIME.</SOURCE>
+  DATA o_checkpoint    TYPE to_checkpoint.
+*  DATA o_variant       TYPE to_variant.
+
+  CHECK object IS BOUND.
+
+  CASE object-&gt;type.
+    WHEN supportedtypes-checkpoint.
+      o_checkpoint ?= object-&gt;raw.
+      o_checkpoint-&gt;unanonymize( ).
+*    WHEN supportedtypes-variant.
+*      o_variant ?= object-&gt;raw.
+*      o_variant-&gt;unanonymize( ).
+    WHEN OTHERS.
+       mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+  ENDCASE.
+
+  TRY.
+      super-&gt;zaplink_cnx_ext_cleaner~unanonymize( object ).
+    CATCH zaplink_cx_connector INTO o_mycx.
+      RAISE EXCEPTION o_mycx.
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
     <SOURCE>`
