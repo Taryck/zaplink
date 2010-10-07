@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="81D3B72676ABD1E6A737CF936D3EEC57" CODE_SIGNATURE="9D8C3161361C7D2E0337BA3070582E72" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="711424E31640D4800A9D6E21E15C39A1" CODE_SIGNATURE="9D8C3161361C7D2E0337BA3070582E72" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-LOG" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -429,7 +429,7 @@ END-OF-DEFINITION.
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     ls_message    TYPE bal_s_msg,
 *    ls_msgcontext TYPE recamsgcontext,
     ls_par        LIKE LINE OF ls_message-params-t_par,
@@ -1199,7 +1199,7 @@ DATA: _detlevel	TYPE ballevel.
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA: _detlevel	TYPE ballevel.
+  DATA: _detlevel	TYPE ballevel.
 
   IF id_detlevel IS INITIAL.
     _detlevel = md_level.
@@ -1211,7 +1211,7 @@ DATA: _detlevel	TYPE ballevel.
     EXPORTING
 *      is_message   =
       id_msgty     = &apos;W&apos;
-      id_msgid     = ID_MSGID
+      id_msgid     = id_msgid
       id_msgno     = id_msgno
       id_msgv1     = id_msgv1
       id_msgv2     = id_msgv2

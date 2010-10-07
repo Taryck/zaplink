@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="865A9DACBF5E41378794BE2979B2AF54" CODE_SIGNATURE="EE21AA35366059D08BC5B0E0A021489D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F085848EE36F2FFEB2B7A4BCE99EF8D6" CODE_SIGNATURE="1C35B997FF81674637385335855210C0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -903,17 +903,17 @@ INCLUDE zaplink_macros.</MACROS>
   CHECK data &lt;&gt; type.
 
 *  TRY.
-      TRY.
-          o_conn = zaplink_connectors=&gt;create_connector( type = data ).
-        CATCH zaplink_cx_connector INTO o_cx_cnx.
-          IF o_cx_cnx-&gt;textid &lt;&gt; zaplink_cx_connector=&gt;invalid_type.    RAISE EXCEPTION o_cx_cnx.   ENDIF.
-      ENDTRY.
+  TRY.
+      o_conn = zaplink_connectors=&gt;create_connector( type = data ).
+    CATCH zaplink_cx_connector INTO o_cx_cnx.
+      IF o_cx_cnx-&gt;is_exception_text( zaplink_cx_connector=&gt;invalid_type ) IS INITIAL.    RAISE EXCEPTION o_cx_cnx.   ENDIF.
+  ENDTRY.
 
-      type = data.    CLEAR _connector.
-      on_change_clear( ).
-      _connector-o_conn = o_conn.
-      IF o_conn IS BOUND.   _connector-exists = connexists-exists.    ELSE.     _connector-exists = connexists-not_exists.    ENDIF.
-      on_change_update( ).
+  type = data.    CLEAR _connector.
+  on_change_clear( ).
+  _connector-o_conn = o_conn.
+  IF o_conn IS BOUND.   _connector-exists = connexists-exists.    ELSE.     _connector-exists = connexists-not_exists.    ENDIF.
+  on_change_update( ).
 
 *    CATCH zaplink_cx INTO o_cx.
 *      mac_cascade_raise o_mycx o_cx.

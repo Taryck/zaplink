@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E973B8CEF1CE28374AC4D3D94AE260BA" CODE_SIGNATURE="DDB15028C3409935A5CE92CA98F54443" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_BASE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6C2522E91ADFE3C0ADE0F8EF44E2FBA6" CODE_SIGNATURE="B46902E7E658B23175136E70338F4DA0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_BASE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -406,6 +406,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA o_xml           TYPE to_xml.
   DATA _tempstring     TYPE string.
   DATA _len            TYPE i.
+  DATA _key            TYPE string.
 
   o_xml = conv_to_xml( ).
   ASSERT o_xml IS BOUND.
@@ -413,7 +414,9 @@ INCLUDE zaplink_macros.</MACROS>
 *  _regex = &apos;&lt;\?.*\?&gt;&apos;.
 *  replace FIRST OCCURRENCE OF REGEX _regex IN _tempstring with ``.
   REPLACE FIRST OCCURRENCE OF REGEX &apos;&lt;\?.*\?&gt;&apos; IN _tempstring WITH ``.
-  checksum = zaplink_tools=&gt;calculate_md5_hash( _tempstring ).</SOURCE>
+  checksum = zaplink_tools=&gt;calculate_md5_hash( _tempstring ).
+  CONCATENATE type &apos;/&apos; name INTO _key.
+  LOG-POINT ID zaplink  SUBKEY _key FIELDS checksum _tempstring.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_COMPONENT" EXPOSURE="2" STATE="1" EDITORDER="4 " MTDNEWEXC="X">
     <TEXTS>

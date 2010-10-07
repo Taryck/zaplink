@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="120DB1FF61D53BC87F9D2C1868101060" CODE_SIGNATURE="673954E7B124AB1AD944D3C6322A3615" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_CONNECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B7DE82E5E613A7AEE02904AE6A2E2BDA" CODE_SIGNATURE="BEA00621BB4F0F71C96F1FD1571A5894" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_CONNECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S">
@@ -55,6 +55,42 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Devlopment Class"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="INVALID_CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="8 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_CONNECTOR,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;061&apos;,
+      attr1 type scx_attrname value &apos;CONNCLASS&apos;,
+      attr2 type scx_attrname value &apos;TYPE&apos;,
+      attr3 type scx_attrname value &apos;CX_NAME&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of INVALID_CONNECTOR
+`</ITEM>
+   <ITEM CMPNAME="INVALID_TYPE" EXPOSURE="2" STATE="1" EDITORDER="7 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_TYPE,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;060&apos;,
+      attr1 type scx_attrname value &apos;TYPE&apos;,
+      attr2 type scx_attrname value &apos;&apos;,
+      attr3 type scx_attrname value &apos;&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of INVALID_TYPE
+`</ITEM>
+   <ITEM CMPNAME="INVALID_UUID" EXPOSURE="2" STATE="1" EDITORDER="9 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_UUID,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;062&apos;,
+      attr1 type scx_attrname value &apos;CONNUUID&apos;,
+      attr2 type scx_attrname value &apos;TYPE&apos;,
+      attr3 type scx_attrname value &apos;CONNCLASS&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of INVALID_UUID
+`</ITEM>
+   <ITEM CMPNAME="INVALID_XML" EXPOSURE="2" STATE="1" EDITORDER="10 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_XML,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;063&apos;,
+      attr1 type scx_attrname value &apos;NODE_NAME&apos;,
+      attr2 type scx_attrname value &apos;&apos;,
+      attr3 type scx_attrname value &apos;&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of INVALID_XML
+`</ITEM>
    <ITEM CMPNAME="NAME" EXPOSURE="2" STATE="1" EDITORDER="15 " ATTVALUE="&apos;[NAME]&apos;" TYPTYPE="1" TYPE="TD_COMPNAME">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Name"/>
@@ -65,89 +101,98 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Node name"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="NOT_AUTHORIZED" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of NOT_AUTHORIZED,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;056&apos;,
+      attr1 type scx_attrname value &apos;NAME&apos;,
+      attr2 type scx_attrname value &apos;TYPE&apos;,
+      attr3 type scx_attrname value &apos;&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of NOT_AUTHORIZED
+`</ITEM>
+   <ITEM CMPNAME="NOT_FOUND" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of NOT_FOUND,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;057&apos;,
+      attr1 type scx_attrname value &apos;NAME&apos;,
+      attr2 type scx_attrname value &apos;TYPE&apos;,
+      attr3 type scx_attrname value &apos;&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of NOT_FOUND
+`</ITEM>
+   <ITEM CMPNAME="OBJECT_LOCKED" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of OBJECT_LOCKED,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;058&apos;,
+      attr1 type scx_attrname value &apos;NAME&apos;,
+      attr2 type scx_attrname value &apos;TYPE&apos;,
+      attr3 type scx_attrname value &apos;&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of OBJECT_LOCKED
+`</ITEM>
    <ITEM CMPNAME="OTHERCLASS" EXPOSURE="2" STATE="1" EDITORDER="22 " ATTVALUE="&apos;[OTHERCLASS]&apos;" TYPTYPE="1" TYPE="TD_CONNCLASS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector ClassName"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TWICE_CLASS" EXPOSURE="2" STATE="1" EDITORDER="6 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of TWICE_CLASS,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;059&apos;,
+      attr1 type scx_attrname value &apos;CONNCLASS&apos;,
+      attr2 type scx_attrname value &apos;&apos;,
+      attr3 type scx_attrname value &apos;&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of TWICE_CLASS
+`</ITEM>
+   <ITEM CMPNAME="TWICE_UUID" EXPOSURE="2" STATE="1" EDITORDER="13 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of TWICE_UUID,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;066&apos;,
+      attr1 type scx_attrname value &apos;CONNCLASS&apos;,
+      attr2 type scx_attrname value &apos;OTHERCLASS&apos;,
+      attr3 type scx_attrname value &apos;CONNUUID&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of TWICE_UUID
+`</ITEM>
    <ITEM CMPNAME="TYPE" EXPOSURE="2" STATE="1" EDITORDER="16 " ATTVALUE="&apos;[TY]&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Type"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TYPE_NOT_SUPPORTED" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of TYPE_NOT_SUPPORTED,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;065&apos;,
+      attr1 type scx_attrname value &apos;TYPE&apos;,
+      attr2 type scx_attrname value &apos;CONNCLASS&apos;,
+      attr3 type scx_attrname value &apos;&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of TYPE_NOT_SUPPORTED
+`</ITEM>
+   <ITEM CMPNAME="UNSUPORTED_VERSION" EXPOSURE="2" STATE="1" EDITORDER="11 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of UNSUPORTED_VERSION,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;064&apos;,
+      attr1 type scx_attrname value &apos;CONN_VER&apos;,
+      attr2 type scx_attrname value &apos;CONNUUID&apos;,
+      attr3 type scx_attrname value &apos;CONNCLASS&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of UNSUPORTED_VERSION
+`</ITEM>
+   <ITEM CMPNAME="XML_ERROR" EXPOSURE="2" STATE="1" EDITORDER="14 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of XML_ERROR,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;067&apos;,
+      attr1 type scx_attrname value &apos;TYPE&apos;,
+      attr2 type scx_attrname value &apos;NAME&apos;,
+      attr3 type scx_attrname value &apos;&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of XML_ERROR
+`</ITEM>
+   <ITEM CMPNAME="ZAPLINK_CX_CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="5 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_CONNECTOR,
+      msgid type symsgid value &apos;ZAPLINK&apos;,
+      msgno type symsgno value &apos;055&apos;,
+      attr1 type scx_attrname value &apos;CX_NAME&apos;,
+      attr2 type scx_attrname value &apos;&apos;,
+      attr3 type scx_attrname value &apos;&apos;,
+      attr4 type scx_attrname value &apos;&apos;,
+    end of ZAPLINK_CX_CONNECTOR
+`</ITEM>
   </ATTRIBUTS>
-  <EXCEPTIONS_TEXTS>
-   <ITEM EDITORDER="5 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="ZapLink Connectors Root exception"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="FILE_ERROR" EDITORDER="1 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Error with file"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="INVALID_CONNECTOR" EDITORDER="8 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Connector &apos;&amp;CONNCLASS&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; can&apos;t be instancied due to exception &apos;&amp;CX_NAME&amp;&apos;"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="INVALID_TYPE" EDITORDER="7 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Type &apos;&amp;TYPE&amp;&apos; is not assigned to a ZAPLINK connector and is not a known SAPobject type (transaction SE01)."/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="INVALID_UUID" EDITORDER="9 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Class &apos;&amp;CONNUUID&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNUUID&amp;&apos;"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="INVALID_XML" EDITORDER="10 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Invalid XML : Component root node should be &apos;ZL_OBJECT&apos; and not &apos;&amp;NODE_NAME&amp;&apos;"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="NOT_AUTHORIZED" EDITORDER="2 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Object &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;) can&apos;t be found"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="NOT_FOUND" EDITORDER="3 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Object &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;) can&apos;t be found"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="OBJECT_LOCKED" EDITORDER="4 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Object &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;) is allready locked"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TWICE_CLASS" EDITORDER="6 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Class &apos;&amp;CONNCLASS&amp;&apos; loaded twice."/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TWICE_UUID" EDITORDER="14 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Class &apos;&amp;CONNCLASS&amp;&apos; and &apos;&amp;OTHERCLASS&amp;&apos; have the same UUID : &apos;&amp;CONNUUID&amp;&apos;."/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TYPE_NOT_SUPPORTED" EDITORDER="12 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="UNSUPORTED_VERSION" EDITORDER="11 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Version &apos;&amp;CONN_VER&amp;&apos; is not (or no longer) suported by this connector."/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="XML_ERROR" EDITORDER="23 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="XML Error on component (&amp;TYPE&amp;) &amp;NAME&amp; =&gt; User abort"/>
-    </TEXTS>
-   </ITEM>
-  </EXCEPTIONS_TEXTS>
   <INTERFACES>
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>

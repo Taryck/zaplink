@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0048C988B419024C1C0EDFCC7A305A54" CODE_SIGNATURE="47801ED91976A37A586A8B033E106A7A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="00957CD7BDC857A81ED25695F02D0FA1" CODE_SIGNATURE="B7152C9345473D92F7A1694115741AD2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -26,6 +26,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="TT_COMPKEYS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_COMPKEYS"/>
   </ALIASES>
   <ATTRIBUTS>
+   <ITEM CMPNAME="COMPONENT_LIST" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_COMPKEYS">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Component list"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="IT_ITEMS" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TT_ITEMS"/>
    <ITEM CMPNAME="IT_OBJ_LIST" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TT_OBJLIST">
     <TEXTS>
@@ -55,7 +60,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Activate objects"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="OBJ_LIST" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_COMPKEYS">
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_COMPKEYS">
       <TEXTS>
        <ITEM LANG="E" TEXT="Objects list not activate"/>
       </TEXTS>
@@ -79,7 +84,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *    &lt;item&gt;  LIKE LINE OF it_items,
 *    &lt;obj&gt;   LIKE LINE OF it_obj_list.
 
-*  add_obj_to_wa( ).
+  it_obj_list = compkeys_2_objlist( component_list ).
+  SORT it_obj_list BY object obj_name.
+  DELETE ADJACENT DUPLICATES FROM it_obj_list COMPARING object obj_name.
 
   CALL METHOD split_list
     EXPORTING
@@ -129,7 +136,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
   APPEND LINES OF it_ddic TO it_objlist.
   APPEND LINES OF it_progs TO it_objlist.
-  obj_list = objlist_2_compkeys( it_objlist ).
+  result = objlist_2_compkeys( it_objlist ).
 ** Switch into activation and generation
 *  CALL FUNCTION &apos;RS_WORKING_OBJECTS_ACTIVATE&apos;
 *    EXPORTING
@@ -892,6 +899,38 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     IF inact IS INITIAL.    DELETE obj_list.    ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="COMPKEYS_2_GENSET" EXPOSURE="1" STATE="1" EDITORDER="10 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert List from Compkeys to Generation Set"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="KEYS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_COMPKEYS">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Component List"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_GENSET">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Generation SET"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA          s_obj LIKE LINE OF result.
+  FIELD-SYMBOLS &lt;k&gt;   LIKE LINE OF keys.
+
+  LOOP AT keys ASSIGNING &lt;k&gt;.
+    CLEAR s_obj.
+    s_obj-object = &lt;k&gt;-type.
+    s_obj-objname = &lt;k&gt;-name.
+    s_obj-pgmid = zaplink_connectors=&gt;get_typekind( &lt;k&gt;-type ).
+*    s_obj-component
+    APPEND s_obj TO result.
+  ENDLOOP.
+* determine the program names on the basis of the TADIR keys *
+  PERFORM tadir_2_trdir IN PROGRAM rsparagenlod
+          CHANGING result.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="COMPKEYS_2_OBJLIST" EXPOSURE="1" STATE="1" EDITORDER="8 " MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert List from Compkeys to Objlist"/>
@@ -925,6 +964,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
+  component_list = obj_list.
   it_obj_list = compkeys_2_objlist( obj_list ).
   SORT it_obj_list BY object obj_name.
   DELETE ADJACENT DUPLICATES FROM it_obj_list COMPARING object obj_name.</SOURCE>
@@ -949,6 +989,90 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA _item LIKE LINE OF item_list.
   FIELD-SYMBOLS &lt;obj&gt;   LIKE LINE OF obj_list.
   LOOP AT obj_list ASSIGNING &lt;obj&gt;.   MOVE-CORRESPONDING &lt;obj&gt; TO _item.    APPEND _item TO item_list.    ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GENERATE" EXPOSURE="2" STATE="1" EDITORDER="5 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Generate components"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_COMPKEYS">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Objects list not activate"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  CONSTANTS gc_gen_types(8) TYPE c VALUE &apos;1CFJKMST&apos;.
+  DATA t_genset   TYPE tt_genset.
+  DATA t_trdir    TYPE HASHED TABLE OF trdir WITH UNIQUE KEY name.
+  FIELD-SYMBOLS:
+    &lt;dir&gt; LIKE LINE OF t_trdir,
+    &lt;obj&gt; LIKE LINE OF t_genset.
+
+  t_genset = compkeys_2_genset( component_list ).
+
+* Clean list
+  SORT t_genset BY name.
+  DELETE ADJACENT DUPLICATES FROM t_genset COMPARING name.
+* Remove component type that can&apos;t be generated
+* FROM RSPARAGENLOD(3496) FORM get_component_objects
+  DELETE t_genset WHERE name IS INITIAL
+                    OR NOT ( object = &apos;PROG&apos; OR
+                             object = &apos;FUGR&apos; OR
+                             object = &apos;FUGS&apos; OR
+                             object = &apos;CLAS&apos; OR
+                             object = &apos;INTF&apos; OR
+                             object = &apos;TYPE&apos; OR
+                             object = &apos;LDBA&apos; )
+                   OR NOT pgmid = &apos;R3TR&apos;.
+
+* Remove programs that can&apos;t be generated : Include, ....
+*      PERFORM trdir_check IN PROGRAM rsparagenlod
+  SELECT * INTO TABLE t_trdir
+    FROM trdir
+    FOR ALL ENTRIES IN t_genset
+    WHERE name = t_genset-name
+    %_HINTS ORACLE &apos;&amp;max_blocking_factor 250&amp;&apos;.
+
+  LOOP AT t_genset ASSIGNING &lt;obj&gt;.
+    READ TABLE t_trdir ASSIGNING &lt;dir&gt;
+         WITH TABLE KEY name = &lt;obj&gt;-name.
+    CHECK sy-subrc = 0.
+    If not &lt;dir&gt;-subc CA gc_gen_types.    Clear &lt;obj&gt;-name.     endif.
+  ENDLOOP.
+  DELETE t_genset WHERE name IS INITIAL.
+
+  CALL FUNCTION &apos;SUBST_GENER8_ABAP_LOADS&apos;
+    EXPORTING
+      countmax   = 100    &quot; commit every 100 obejcts
+    TABLES
+      it_gensetc = t_genset.
+
+* Generation Status (X = generated, E/S = error, I = initial)
+  DELETE t_genset WHERE NOT genstatus = &apos;E&apos; AND NOT genstatus = &apos;S&apos;.
+
+  result = genset_2_compkeys( t_genset ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="GENSET_2_COMPKEYS" EXPOSURE="1" STATE="1" EDITORDER="11 " MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert List from Generation Set to Compkeys"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="KEYS" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TT_GENSET">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Generation Set"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TT_COMPKEYS">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Component List"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA          s_obj LIKE LINE OF result.
+  FIELD-SYMBOLS &lt;k&gt;   LIKE LINE OF keys.
+  LOOP AT keys ASSIGNING &lt;k&gt;.   CLEAR s_obj.  s_obj-type = &lt;k&gt;-object.    s_obj-name = &lt;k&gt;-objname.    APPEND s_obj TO result.   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_INACTIVE_OBJECTS" EXPOSURE="2" STATE="1" EDITORDER="3 " MTDDECLTYP="1">
     <TEXTS>
@@ -1046,7 +1170,15 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM TYPEGROUP="SWBM" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TT_DET_OBJ" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_det_obj TYPE STANDARD TABLE OF dwinactiv WITH NON-UNIQUE DEFAULT KEY</ITEM>
+   <ITEM CMPNAME="TT_DET_OBJ" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">tt_det_obj TYPE STANDARD TABLE OF dwinactiv WITH NON-UNIQUE DEFAULT KEY
+`</ITEM>
+   <ITEM CMPNAME="TT_GENSET" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">
+    tt_GENSET  type STANDARD TABLE OF GENSETC with NON-UNIQUE DEFAULT KEY
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Generation Set of component"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TT_ITEMS" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">
     tt_items TYPE STANDARD TABLE OF sewor_working_area WITH NON-UNIQUE DEFAULT KEY
     <TEXTS>
@@ -1061,6 +1193,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
    <ITEM CMPNAME="TT_OBJLIST" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">
     TT_OBJLIST type STANDARD TABLE OF E071 with NON-UNIQUE DEFAULT KEY
+`
     <TEXTS>
      <ITEM LANG="E" TEXT="Objects list"/>
     </TEXTS>

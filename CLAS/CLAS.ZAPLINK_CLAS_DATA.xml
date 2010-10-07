@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C9A479502CD025253E6B950C934BF183" CODE_SIGNATURE="C241BF63BAD3FC8181A81BCEF7D1F4C7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="80259AE757BD9EBFBF46993CA5CDE72E" CODE_SIGNATURE="FB3463D514987EA992494D58344C0092" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
  </DEPENDENCIES>
@@ -58,8 +58,16 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
   &quot;/&quot;.</ITEM>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="C_KIND" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TD_TRANSPORT_KIND"/>
-   <ITEM CMPNAME="C_TYPE" STATE="1" EDITORDER="4 " ATTDECLTYP="1" ATTVALUE="OBJECT_TYPES-CLASS" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
+   <ITEM CMPNAME="C_KIND" STATE="1" EDITORDER="3 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TD_TRANSPORT_KIND">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Pseudo constant : Object kind (R3TR, LIMU, ...)"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="C_TYPE" STATE="1" EDITORDER="4 " ATTDECLTYP="1" ATTVALUE="OBJECT_TYPES-CLASS" TYPTYPE="1" TYPE="TD_COMPTYPE">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Pseudo constant : Object type (CLAS)"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="DYNPROS" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TT_DYNPROS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Class Dynpro"/>
@@ -71,12 +79,36 @@ ASUse &quot;/&quot; as prefix with care or prefer simple attribute names without
      <ITEM LANG="E" TEXT="Class Friends list"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="INTF_4_MESSAGE_EXCEPTION_CL" EXPOSURE="1" STATE="1" EDITORDER="2 " ATTDECLTYP="2" ATTVALUE="&apos;IF_T100_MESSAGE&apos;" TYPTYPE="1" TYPE="SEOCLSNAME">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Interface name for message based exception classes"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="LOCAL" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TS_LOCALS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Local data : Type, Implementaiton &amp; Macros"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="MENUPAINTER" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TO_MENUPAINTER"/>
+   <ITEM CMPNAME="MESSAGE_BASED_FIELDS" EXPOSURE="1" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4">
+    begin of MESSAGE_BASED_FIELDS,
+      class       type string value &apos;MSGID&apos;,
+      number      type string value &apos;MSGNO&apos;,
+      attribut_1  type string value &apos;ATTR1&apos;,
+      attribut_2  type string value &apos;ATTR2&apos;,
+      attribut_3  type string value &apos;ATTR3&apos;,
+      attribut_4  type string value &apos;ATTR4&apos;,
+    end of MESSAGE_BASED_FIELDS
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Name of the field in message definition"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="MESSAGE_CX_TYPE_SOURCE" EXPOSURE="1" STATE="1" EDITORDER="4 " ATTDECLTYP="1" TYPTYPE="1" TYPE="STRING">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Type definition for message exception text"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="O_CX" STATE="1" EDITORDER="2 " ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
@@ -135,7 +167,16 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
-  c_kind = zaplink_connectors=&gt;get_typekind( c_type ).</SOURCE>
+  c_kind = zaplink_connectors=&gt;get_typekind( c_type ).
+  CONCATENATE &apos;begin of #NAME#,&apos; CL_ABAP_CHAR_UTILITIES=&gt;CR_LF
+&apos;      msgid type symsgid value &apos;&apos;#CLASS#&apos;&apos;,&apos; CL_ABAP_CHAR_UTILITIES=&gt;CR_LF
+&apos;      msgno type symsgno value &apos;&apos;#NUMBER#&apos;&apos;,&apos; CL_ABAP_CHAR_UTILITIES=&gt;CR_LF
+&apos;      attr1 type scx_attrname value &apos;&apos;#A1#&apos;&apos;,&apos; CL_ABAP_CHAR_UTILITIES=&gt;CR_LF
+&apos;      attr2 type scx_attrname value &apos;&apos;#A2#&apos;&apos;,&apos; CL_ABAP_CHAR_UTILITIES=&gt;CR_LF
+&apos;      attr3 type scx_attrname value &apos;&apos;#A3#&apos;&apos;,&apos; CL_ABAP_CHAR_UTILITIES=&gt;CR_LF
+&apos;      attr4 type scx_attrname value &apos;&apos;#A4#&apos;&apos;,&apos; CL_ABAP_CHAR_UTILITIES=&gt;CR_LF
+&apos;    end of #NAME#&apos;
+      into MESSAGE_CX_TYPE_SOURCE.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_SOURCE" STATE="1" EDITORDER="1 " MTDDECLTYP="1">
     <TEXTS>
@@ -665,6 +706,14 @@ AS</ITEM>
 *    &lt;dt&gt;   LIKE LINE OF &lt;doc&gt;-texts.
   DATA s_txt  LIKE LINE OF a0_maindata-texts.
   DATA s_key  TYPE ts_doc_key.
+  DATA t_tokens       TYPE STANDARD TABLE OF stokes.
+  DATA t_statements   TYPE STANDARD TABLE OF sstmnt.
+  DATA d_field        TYPE string.
+  DATA d_is_ok        TYPE abap_bool.
+  DATA d_len          TYPE i.
+  FIELD-SYMBOLS:
+    &lt;st&gt; LIKE LINE OF t_statements,
+    &lt;tk&gt; LIKE LINE OF t_tokens.
 
   a0_maindata-hdr = fm_data-class.
   obj_name = a0_maindata-clsname.
@@ -689,50 +738,93 @@ AS</ITEM>
   _fm_data = fm_data.
   IF fm_data-class-category = &apos;40&apos;.  &quot; 40	Exception Class
     DELETE _fm_data-methods WHERE cmpname = &apos;CONSTRUCTOR&apos;.    &quot; Auto generated
-    LOOP AT _fm_data-attributes ASSIGNING &lt;at&gt;
-         WHERE attdecltyp = &apos;2&apos;   &quot; Constant
-           AND locked = abap_true
-           AND type = &apos;SOTR_CONC&apos;
-           AND NOT attvalue IS INITIAL.
-      CLEAR _cx_text.   MOVE-CORRESPONDING &lt;at&gt; TO _cx_text. &quot; Issue 71.
+    READ TABLE _fm_data-implementings TRANSPORTING NO FIELDS WITH KEY refclsname = intf_4_message_exception_cl.
+    IF sy-subrc = 0.      &quot; Message based Exception
+      LOOP AT _fm_data-attributes ASSIGNING &lt;at&gt;
+           WHERE attdecltyp = &apos;2&apos;   &quot; Constant
+             AND locked = abap_true
+             AND typtype = &apos;4&apos;
+             AND type = &apos;&apos;
+             AND NOT typesrc IS INITIAL.
+        CLEAR _cx_text.   MOVE-CORRESPONDING &lt;at&gt; TO _cx_text.
+        SCAN ABAP-SOURCE  &lt;at&gt;-typesrc TOKENS INTO t_tokens
+                                   STATEMENTS INTO t_statements.
+        ASSERT sy-subrc = 0.
+        CHECK LINES( t_statements ) = 8.
+        d_is_ok = abap_true.
+        LOOP AT t_statements ASSIGNING &lt;st&gt; FROM 2 TO 7.
+          CASE sy-tabix.
+            WHEN 2.   d_field = message_based_fields-class.
+            WHEN 3.   d_field = message_based_fields-number.
+            WHEN 4.   d_field = message_based_fields-attribut_1.
+            WHEN 5.   d_field = message_based_fields-attribut_2.
+            WHEN 6.   d_field = message_based_fields-attribut_3.
+            WHEN 7.   d_field = message_based_fields-attribut_4.
+            WHEN OTHERS.
+              ASSERT sy-tabix &gt;= 2 AND sy-tabix &lt;= 7.
+          ENDCASE.
+          ADD 1 TO &lt;st&gt;-from.   &quot; CRLF is the first token
+          READ TABLE t_tokens ASSIGNING &lt;tk&gt; INDEX &lt;st&gt;-from.
+          TRANSLATE &lt;tk&gt;-str TO UPPER CASE.   TRANSLATE d_field TO UPPER CASE.
+          IF &lt;tk&gt;-str &lt;&gt; d_field.
+            CLEAR d_is_ok.
+            EXIT.
+          ENDIF.
+          READ TABLE t_tokens ASSIGNING &lt;tk&gt; INDEX &lt;st&gt;-to.
+          d_len = STRLEN( &lt;tk&gt;-str ) - 2.
+          ASSERT  d_len &gt;= 0.
+          &lt;tk&gt;-str = &lt;tk&gt;-str+1(d_len).    &quot; &apos;ZAPLINK_DEVTOOLS&apos; =&gt; ZAPLINK_DEVTOOLS
+          CASE d_field.
+            WHEN message_based_fields-class.        _cx_text-message-class = &lt;tk&gt;-str.
+            WHEN message_based_fields-number.       _cx_text-message-number = &lt;tk&gt;-str.
+            WHEN message_based_fields-attribut_1.   _cx_text-message-attribut_1 = &lt;tk&gt;-str.
+            WHEN message_based_fields-attribut_2.   _cx_text-message-attribut_2 = &lt;tk&gt;-str.
+            WHEN message_based_fields-attribut_3.   _cx_text-message-attribut_3 = &lt;tk&gt;-str.
+            WHEN message_based_fields-attribut_4.   _cx_text-message-attribut_4 = &lt;tk&gt;-str.
+            WHEN OTHERS.
+              ASSERT d_field IS INITIAL.
+          ENDCASE.
+        ENDLOOP.
+        CHECK d_is_ok = abap_true.
+        INSERT _cx_text INTO TABLE exceptions_texts.
+        DELETE _fm_data-attributes.                 &quot; exception text no logner an attribute
+      ENDLOOP.
+    ELSE.     &quot; Standard Exception
+      LOOP AT _fm_data-attributes ASSIGNING &lt;at&gt;
+           WHERE attdecltyp = &apos;2&apos;   &quot; Constant
+             AND locked = abap_true
+             AND typtype = &apos;1&apos;
+             AND type = &apos;SOTR_CONC&apos;
+             AND NOT attvalue IS INITIAL.
+        CLEAR _cx_text.   MOVE-CORRESPONDING &lt;at&gt; TO _cx_text. &quot; Issue 71.
 *      _sotr_key = value2sotr( &lt;at&gt;-attvalue ).
 * Issue 62 : Start
-      READ TABLE fm_data-exceptions_texts ASSIGNING &lt;cx&gt;
-           WITH TABLE KEY cmpname = _cx_text-cmpname.
-      IF sy-subrc &lt;&gt; 0.
-        CONTINUE.
-      ENDIF.
-      LOOP AT &lt;cx&gt;-texts ASSIGNING &lt;cxt&gt;.
-        CLEAR _text.
-        _text-langu = &lt;cxt&gt;-langu.
-        _text-short_txt = &lt;cxt&gt;-text.
-        READ TABLE &lt;cx&gt;-longtexts ASSIGNING &lt;cxl&gt;
-             WITH KEY langu = _text-langu.
-        IF sy-subrc = 0.    &quot; has long texts
-          _text-long_txt-_ = &lt;cxl&gt;-text.
-          REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;cr_lf IN _text-long_txt-_ WITH cl_abap_char_utilities=&gt;newline.   &quot; Issue 63 : Text has CR &amp; CR+LF
+        READ TABLE fm_data-exceptions_texts ASSIGNING &lt;cx&gt;
+             WITH TABLE KEY cmpname = _cx_text-cmpname.
+        IF sy-subrc = 0.
+          LOOP AT &lt;cx&gt;-texts ASSIGNING &lt;cxt&gt;.       &quot; Short &amp; Long texts
+            CLEAR _text.
+            _text-langu = &lt;cxt&gt;-langu.
+            _text-short_txt = &lt;cxt&gt;-text.
+            READ TABLE &lt;cx&gt;-longtexts ASSIGNING &lt;cxl&gt;
+                 WITH KEY langu = _text-langu.
+            IF sy-subrc = 0.    &quot; has long texts
+              _text-long_txt-_ = &lt;cxl&gt;-text.
+              REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;cr_lf IN _text-long_txt-_ WITH cl_abap_char_utilities=&gt;newline.   &quot; Issue 63 : Text has CR &amp; CR+LF
+            ENDIF.
+            INSERT _text INTO TABLE _cx_text-texts.
+          ENDLOOP.
         ENDIF.
-        INSERT _text INTO TABLE _cx_text-texts.
-      ENDLOOP.
-*      _cx_text-cx = &lt;cx&gt;-hdr.
-*      _cx_text-longtexts = &lt;cx&gt;-texts.
-*      _cx_text-texts = fd_comp_desc( descriptions = fm_data-component_desc
-*                                               id = doc_ids-class-attribute
-*                                    documentation = fm_data-documentation
-*                                        component = &lt;at&gt;-cmpname ).
-**      _cx_text-texts = &lt;cx&gt;-texts.
-**      MODIFY _cx_text-texts FROM _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
-*      MODIFY _cx_text-longtexts FROM _text TRANSPORTING concept WHERE concept &lt;&gt; _text-concept.    &quot; SOTR
-*      CLEAR: _cx_text-attvalue, _cx_text-clsname, _cx_text-langu, _cx_text-descript.    &quot; Attribut
 ** SOTR can&apos;t be change or created using external key.
 ** When you change texts of an exception it&apos;s SOTR GUID change :-(
 *      CLEAR: _cx_text-concept.                                                          &quot; SOTR
 ** So don&apos;t save KEY to component useless
-      IF &lt;at&gt;-cmpname = a0_maindata-clsname. CLEAR _cx_text-cmpname. ENDIF.  &quot; do not repeat self exception text : Issue 64
-      INSERT _cx_text INTO TABLE exceptions_texts.
+        IF &lt;at&gt;-cmpname = a0_maindata-clsname. CLEAR _cx_text-cmpname. ENDIF.  &quot; do not repeat self exception text : Issue 64
+        INSERT _cx_text INTO TABLE exceptions_texts.
 * Issue 62 : End
-      DELETE _fm_data-attributes.                 &quot; exception text no logner an attribute
-    ENDLOOP.
+        DELETE _fm_data-attributes.                 &quot; exception text no logner an attribute
+      ENDLOOP.
+    ENDIF.
   ENDIF.
 
   CALL METHOD super-&gt;from_data
@@ -752,7 +844,7 @@ AS</ITEM>
   local-types-_ = conv_source( fm_data-includes-ccdef-raw_source ).
   local-implementations-_ = conv_source( fm_data-includes-ccimp-raw_source ).
   local-macros-_ = conv_source( fm_data-includes-ccmac-raw_source ).
-  local-local_test_class-_ = conv_source( fm_data-includes-localtestclass-raw_source ).     &quot; Issue 82
+  local-local_test_class-_ = conv_source( fm_data-includes-localtestclass-raw_source ). &quot; Issue 82
 
 *IMPLEMENTINGS  TYPE  SEOR_IMPLEMENTINGS_R
   LOOP AT fm_data-implementings ASSIGNING &lt;im&gt;
@@ -899,6 +991,7 @@ AS</ITEM>
   DATA _cx_l LIKE LINE OF _cx-longtexts.
   DATA _cx_t LIKE LINE OF _cx-texts.
   DATA l_obj_name  TYPE  tadir-obj_name.
+  DATA d_type_src  TYPE string.
 
   obj_name = a0_maindata-clsname.
   obj_version = a0_maindata-version.
@@ -1001,14 +1094,26 @@ AS</ITEM>
     _at-exposure = &apos;2&apos;.     &quot; Public
     _at-state = &apos;1&apos;.        &quot; Implemented
     _at-locked = abap_true.
-    _at-typtype = &apos;1&apos;.      &quot; Type
-    _at-type = &apos;SOTR_CONC&apos;.
+    IF &lt;cx&gt;-message IS INITIAL.
+      _at-typtype = &apos;1&apos;.      &quot; Type
+      _at-type = &apos;SOTR_CONC&apos;.
 * Useless :
-    CALL FUNCTION &apos;GUID_CREATE&apos;
-      IMPORTING
-        ev_guid_32 = _cx-concept.
-    _at-attvalue = sotr2value( _cx-concept ).
-
+      CALL FUNCTION &apos;GUID_CREATE&apos;
+        IMPORTING
+          ev_guid_32 = _cx-concept.
+      _at-attvalue = sotr2value( _cx-concept ).
+    ELSE.
+      _at-typtype = &apos;4&apos;.      &quot; Type
+      d_type_src = message_cx_type_source.
+      REPLACE ALL OCCURRENCES OF REGEX &apos;\#NAME\#&apos; IN d_type_src WITH _at-cmpname.
+      REPLACE ALL OCCURRENCES OF REGEX &apos;\#CLASS\#&apos; IN d_type_src WITH &lt;cx&gt;-message-class.
+      REPLACE ALL OCCURRENCES OF REGEX &apos;\#NUMBER\#&apos; IN d_type_src WITH &lt;cx&gt;-message-number.
+      REPLACE ALL OCCURRENCES OF REGEX &apos;\#A1\#&apos; IN d_type_src WITH &lt;cx&gt;-message-attribut_1.
+      REPLACE ALL OCCURRENCES OF REGEX &apos;\#A2\#&apos; IN d_type_src WITH &lt;cx&gt;-message-attribut_2.
+      REPLACE ALL OCCURRENCES OF REGEX &apos;\#A3\#&apos; IN d_type_src WITH &lt;cx&gt;-message-attribut_3.
+      REPLACE ALL OCCURRENCES OF REGEX &apos;\#A4\#&apos; IN d_type_src WITH &lt;cx&gt;-message-attribut_4.
+      _at-typesrc = d_type_src.
+    ENDIF.
     _cx-cmpname = _at-cmpname.
 
     l_obj_name = a0_maindata-clsname.
@@ -1080,7 +1185,7 @@ U1&amp;HINTS&amp;
 AS</ITEM>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CLASS_DATA" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_CLASS_DATA" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4">
     BEGIN OF ts_class_data.
     INCLUDE TYPE vseoclass AS hdr.
 *      Include type VSEOEXTEND as Inh.  &quot; Duplicate name for some fields
@@ -1107,7 +1212,8 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Maindata of Class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_EXCEPTION_TEXT" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_exception_text,
+   <ITEM CMPNAME="TS_EXCEPTION_TEXT" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">
+    BEGIN OF ts_exception_text,
 *    BEGIN OF ts_exception_text.
 *    INCLUDE TYPE seoo_attribute_r AS attr.
 *    INCLUDE TYPE sotr_head AS cx.
@@ -1117,9 +1223,14 @@ AS</ITEM>
         texts     TYPE tt_texts,
 *        texts     TYPE tt_seocompotx_l,
 *        longtexts TYPE tt_sotr_texts,
+        message   type ts_message,
       END OF ts_exception_text
-`</ITEM>
-   <ITEM CMPNAME="TS_LOCALS" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="An exception definition : message, texts, ..."/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_LOCALS" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
     BEGIN OF ts_locals,
           types           TYPE ts_sourceasstruc,
           implementations TYPE ts_sourceasstruc,
@@ -1138,7 +1249,21 @@ U1&amp;HINTS&amp;
 AS</ITEM>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_REDEFINITION" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">
+    begin of ts_message,
+      class       type symsgid,
+      number      type symsgno,
+      attribut_1  type scx_attrname,
+      attribut_2  type scx_attrname,
+      attribut_3  type scx_attrname,
+      attribut_4  type scx_attrname,
+    end of ts_message
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Message mapping for exception"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_REDEFINITION" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
     BEGIN OF ts_redefinition.
     INCLUDE TYPE seoredef AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
     TYPES:
@@ -1149,16 +1274,21 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Method&apos;s redefinition data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname
-`</ITEM>
-   <ITEM CMPNAME="TT_FRIENDS" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">
+    tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Exceptions with texts"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_FRIENDS" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">
     tt_friends    TYPE SORTED TABLE OF seofriends WITH UNIQUE KEY refclsname friendtype
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class Friends list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_REDEFINITIONS" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_REDEFINITIONS" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">
     tt_redefinitions TYPE SORTED TABLE OF ts_redefinition WITH UNIQUE KEY mtdname
 `
     <TEXTS>

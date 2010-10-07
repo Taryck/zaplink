@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="EB6E37094040CE271B47D7292324BE6F" CODE_SIGNATURE="9445DD5EDACE15FB80DC3FA06BA9D0C2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F624FAF0B83FB66AFB9BC20D123504B6" CODE_SIGNATURE="910DCC2EA2C5F3FFF9D38F476DAF0A09" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
+ <DEPENDENCIES>
+  <ITEM TYPE="INTF" NAME="IF_T100_MESSAGE"/>
+ </DEPENDENCIES>
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S" MSG_ID="ZAPLINK">
@@ -25,6 +28,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
+  <ALIASES>
+   <ITEM CMPNAME="TEXTID_MSG" EXPOSURE="1" REFCLSNAME="IF_T100_MESSAGE" REFCMPNAME="T100KEY"/>
+  </ALIASES>
   <ATTRIBUTS>
    <ITEM CMPNAME="CX_NAME" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="STRING"/>
    <ITEM CMPNAME="EXT_ID" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="BALNREXT">
@@ -68,31 +74,28 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
+  <DEFERRED>
+   <INTERFACES>
+    <ITEM TYPEGROUP="IF_T100_MESSAGE" TPUTYPE="2" EXPLICIT="X"/>
+   </INTERFACES>
+  </DEFERRED>
   <EXCEPTIONS_TEXTS>
-   <ITEM EDITORDER="2 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="ZapLink Root Exception"/>
-    </TEXTS>
-   </ITEM>
    <ITEM CMPNAME="BAL_LOG" EDITORDER="1 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="See transaction SLG1 with : &amp;OBJECT&amp; / &amp;SUBOBJECT&amp; (&amp;EXT_ID&amp;)">
-      <LONG_TXT>Application log has been generated.
-Check at stransation SLG1 and search for the following log
-&amp;OBJECT&amp; and &amp;SUBOBJECT&amp;
-It will details exception reasons</LONG_TXT>
-     </ITEM>
-    </TEXTS>
+    <MESSAGE CLASS="ZAPLINK" NUMBER="103" ATTRIBUT_1="OBJECT" ATTRIBUT_2="SUBOBJECT" ATTRIBUT_3="EXT_ID"/>
    </ITEM>
    <ITEM CMPNAME="SYSTEM_ERROR" EDITORDER="3 ">
-    <TEXTS>
-     <ITEM LANGU="E" SHORT_TXT="Exception &apos;&amp;CX_NAME&amp;&apos; has occured"/>
-    </TEXTS>
+    <MESSAGE CLASS="ZAPLINK" NUMBER="104" ATTRIBUT_1="CX_NAME"/>
+   </ITEM>
+   <ITEM CMPNAME="ZAPLINK_CX" EDITORDER="2 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="105" ATTRIBUT_1="CX_NAME"/>
    </ITEM>
   </EXCEPTIONS_TEXTS>
   <FRIENDS>
    <ITEM STATE="1"/>
   </FRIENDS>
+  <INTERFACES>
+   <ITEM REFCLSNAME="IF_T100_MESSAGE" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+  </INTERFACES>
   <LOCAL>
    <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
@@ -281,7 +284,7 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="ZAPlink exception class"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="E_TXT_ID" PARVALUE="BAL_LOG" PAROPTIONL="X">
+     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="3 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_EXCEPTION" PARVALUE="BAL_LOG">
       <TEXTS>
        <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
@@ -295,7 +298,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  result = _CREATE_CX( cx_name = cx_name
+  result = _create_cx( cx_name = cx_name
                         textid = textid ).
   result-&gt;systemstack_up( ).  &quot; remove this method from stack
 
@@ -362,7 +365,7 @@ AS</ITEM>
        <ITEM LANG="E" TEXT="ASSUMING exception are in the exact order of the MF def."/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC" PARVALUE="SYSTEM_ERROR" PAROPTIONL="X">
+     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="6 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_EXCEPTION" PARVALUE="SYSTEM_ERROR">
       <TEXTS>
        <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
@@ -439,7 +442,7 @@ AS</ITEM>
        <ITEM LANG="E" TEXT="ASSUMING exception are in the exact order of the MF def."/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC" PARVALUE="SYSTEM_ERROR" PAROPTIONL="X">
+     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="4 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_EXCEPTION" PARVALUE="SYSTEM_ERROR">
       <TEXTS>
        <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
@@ -491,7 +494,7 @@ AS</ITEM>
     _cx = create_from_mf_cx( funcname = &apos;FUNC_GET_OBJECT&apos;
                                 subrc = sy-subrc ).
     result-&gt;previous = _cx.
-    result-&gt;textid = zaplink_cx=&gt;system_error.
+    result-&gt;textid_msg = zaplink_cx=&gt;system_error.
     EXIT.
   ENDIF.
 
@@ -550,7 +553,7 @@ AS</ITEM>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC" PARVALUE="SYSTEM_ERROR" PAROPTIONL="X">
+     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_EXCEPTION" PARVALUE="SYSTEM_ERROR">
       <TEXTS>
        <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
@@ -581,6 +584,25 @@ AS</ITEM>
     </PARAMETERS>
     <SOURCE>`
   str = source_position_as_string( me ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="IS_EXCEPTION_TEXT" EXPOSURE="2" STATE="1" EDITORDER="16 ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Do the exception has the text ID"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Exception has this Text ID"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_EXCEPTION">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Exception ID : Message or GUID"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  If textid_msg = textid.     result = abap_true.   endif.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_SYSTEMSTACK" EXPOSURE="2" STATE="1" EDITORDER="14 ">
     <TEXTS>
@@ -770,7 +792,7 @@ AS</ITEM>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="SOTR_CONC">
+     <ITEM SCONAME="TEXTID" CMPTYPE="1" EDITORDER="2 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_EXCEPTION">
       <TEXTS>
        <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
       </TEXTS>
@@ -815,14 +837,14 @@ AS</ITEM>
    <ITEM TYPEGROUP="ICON" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="E_TXT_ID" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="SOTR_CONC">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Key for Logical Object in the OTR"/>
-    </TEXTS>
-   </ITEM>
    <ITEM CMPNAME="O_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="Message Collector: Standard Implementation"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TD_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="SCX_T100KEY">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Exception ID : Message or GUID"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">

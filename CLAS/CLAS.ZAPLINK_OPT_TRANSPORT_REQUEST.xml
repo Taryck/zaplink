@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="07A01FA2FF6100BCCE984A529D26D288" CODE_SIGNATURE="B26D725802A25CBB6612137AAFC3FD04" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_TRANSPORT_REQUEST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5ABD9AEEA06EA19778DAA2FD5AFF6C68" CODE_SIGNATURE="B01349B958D939EF5BACE1E28E2658AB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_TRANSPORT_REQUEST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -147,13 +147,13 @@ result = _substitution.</SOURCE>
          substitutionkinds-input.
     WHEN substitutionkinds-fixed.
       IF _transport_request IS INITIAL.
-        RAISE EXCEPTION TYPE zaplink_cx_opt_devclass
-              EXPORTING textid = zaplink_cx_opt_devclass=&gt;missing_devclass
+        RAISE EXCEPTION TYPE zaplink_cx_opt_transport_req
+              EXPORTING textid = zaplink_cx_opt_transport_req=&gt;missing_transport_request
                      substkind = data.
       ENDIF.
     WHEN OTHERS.
-      RAISE EXCEPTION TYPE zaplink_cx_opt_devclass
-            EXPORTING textid = zaplink_cx_opt_devclass=&gt;invalid_substitutionkind
+      RAISE EXCEPTION TYPE zaplink_cx_opt_transport_req
+            EXPORTING textid = zaplink_cx_opt_transport_req=&gt;invalid_substitutionkind
                    substkind = data.
   ENDCASE.
   _substitution = data.</SOURCE>
@@ -176,8 +176,8 @@ result = _substitution.</SOURCE>
 CHECK data &lt;&gt; _transport_request.
 
   IF _transport_request IS INITIAL AND _substitution = substitutionkinds-fixed.
-    RAISE EXCEPTION TYPE zaplink_cx_opt_devclass
-          EXPORTING textid = zaplink_cx_opt_devclass=&gt;missing_devclass
+    RAISE EXCEPTION TYPE zaplink_cx_opt_transport_req
+          EXPORTING textid = zaplink_cx_opt_transport_req=&gt;missing_transport_request
                  substkind = _substitution.
   ENDIF.
   _transport_request = data.</SOURCE>
@@ -274,8 +274,8 @@ CHECK data &lt;&gt; _transport_request.
 * to develop using MF TRINT_ORDER_CHOICE
       ENDIF.
     WHEN OTHERS.
-      RAISE EXCEPTION TYPE zaplink_cx_opt_devclass
-            EXPORTING textid = zaplink_cx_opt_devclass=&gt;invalid_substitutionkind
+      RAISE EXCEPTION TYPE zaplink_cx_opt_transport_req
+            EXPORTING textid = zaplink_cx_opt_transport_req=&gt;invalid_substitutionkind
                    substkind = _substitution.
   ENDCASE.</SOURCE>
    </ITEM>

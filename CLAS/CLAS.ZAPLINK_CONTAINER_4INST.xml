@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9DDA5C3C2100BF0B3D81F3E39AE4C3E3" CODE_SIGNATURE="518388E9E3C62A75F31B2320B8AE5584" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="017478CD262CF8238A020D4CAC92E0F3" CODE_SIGNATURE="9D70DB75DF0614623294CF76FACD6FDA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -706,12 +706,12 @@ check data &lt;&gt; _options.
     TRY.
         o_comp = _complist-&gt;search( component ).
       CATCH zaplink_cx_list INTO _cx_list.
-        IF _cx_list-&gt;textid = zaplink_cx_list=&gt;not_found.
+        IF _cx_list-&gt;is_exception_text( zaplink_cx_list=&gt;not_found ) = abap_true.
           EXIT.
         ELSE.
           CREATE OBJECT o_mycx
             EXPORTING
-              textid  = zaplink_cx=&gt;system_error
+              textid   = zaplink_cx=&gt;system_error
               previous = _cx_list.
           o_mycx-&gt;update( ).
           RAISE EXCEPTION o_mycx.
@@ -772,7 +772,7 @@ check data &lt;&gt; _options.
 *      EXIT.
 *    ENDIF.
 *  ENDWHILE.
-    mac_def_catch ZAPLINK_CX_CONTAINER.
+    mac_def_catch zaplink_cx_container.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_IS_SUBCOMPONENT" EXPOSURE="1" STATE="1" EDITORDER="4 ">
