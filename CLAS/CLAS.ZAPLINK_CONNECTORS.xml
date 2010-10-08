@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="13C5E52277A274EACD27A0FF32780E47" CODE_SIGNATURE="4E504351A6E477F152F85F0EBF06F75B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="12BBE8CE573EE65C60959D2722D91277" CODE_SIGNATURE="77AD4BDDCC6B2468ECE68A3887EAF886" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -265,19 +265,16 @@ INCLUDE zaplink_macros.</MACROS>
         IF sy-subrc &lt;&gt; 0.
 * Class &apos;&amp;CONNUUID&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNCLASS&amp;&apos;
           RAISE EXCEPTION TYPE zaplink_cx_connector
-                     EXPORTING textid = zaplink_cx_connector=&gt;invalid_uuid
+                     EXPORTING textid = zaplink_cx_connector=&gt;type_not_supported
                                  type = type
+                            connclass = &lt;cl&gt;-classname
                              connuuid = connuuid.
         ENDIF.
       ENDIF.
     ENDIF.
     _classname = &lt;cl&gt;-classname.
   ELSEIF NOT type IS INITIAL.
-    TRY.
-        _conn = _search_connector( type ).
-      CATCH zaplink_cx_connector INTO o_mycx.
-        RAISE EXCEPTION o_mycx.
-    ENDTRY.
+    _conn = _search_connector( type ).
     IF NOT _conn-classes IS INITIAL AND _conn-default_class IS INITIAL.
       READ TABLE _conn-classes ASSIGNING &lt;c&gt; INDEX 1.
       IF sy-subrc = 0.
@@ -286,11 +283,12 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
     _classname = _conn-default_class.
   ELSE.
-* Class &apos;&amp;CONNUUID&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNCLASS&amp;&apos;
-    RAISE EXCEPTION TYPE zaplink_cx_connector
-               EXPORTING textid = zaplink_cx_connector=&gt;invalid_uuid
-                           type = type
-                       connuuid = connuuid.
+    EXIT.
+** Class &apos;&amp;CONNUUID&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNCLASS&amp;&apos;
+*    RAISE EXCEPTION TYPE zaplink_cx_connector
+*               EXPORTING textid = zaplink_cx_connector=&gt;invalid_uuid
+*                           type = type
+*                       connuuid = connuuid.
   ENDIF.
 
   IF NOT _classname IS INITIAL.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="6C2522E91ADFE3C0ADE0F8EF44E2FBA6" CODE_SIGNATURE="B46902E7E658B23175136E70338F4DA0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_BASE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="7535DA52628849D679DDF37538164642" CODE_SIGNATURE="A0025202E727E932EAE5BC9AEEE8B480" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_RAW_BASE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -317,7 +317,12 @@ INCLUDE zaplink_macros.</MACROS>
       o_comp-&gt;set_devclass( directory-devclass ).
       o_comp-&gt;set_checksum( checksum ).
       o_comp-&gt;set_code_signature( code_signature ).
-      o_comp-&gt;set_connuuid( connector ).
+      TRY.
+          o_comp-&gt;set_connuuid( connector ).
+        CATCH zaplink_cx INTO o_cx.
+* Ignore if Connector do not exists on this system
+          IF o_cx-&gt;is_exception_text( zaplink_cx_connector=&gt;invalid_uuid ) IS INITIAL.     RAISE EXCEPTION o_cx.    ENDIF.
+      ENDTRY.
     CATCH zaplink_cx INTO o_cx.
       IF without_cx IS INITIAL.  RAISE EXCEPTION o_cx.    ENDIF.
   ENDTRY.</SOURCE>
