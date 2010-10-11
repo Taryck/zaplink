@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="73CABF76F662EBDDEED480FEF45B59CA" CODE_SIGNATURE="671D98483F5FB114F163264F5113695F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="DCD8A195DBABA440EB3522B022291E37" CODE_SIGNATURE="D393885FF538DF6E9B1183833CFEF3D7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -903,16 +903,15 @@ INCLUDE zaplink_macros.</MACROS>
 
   LOOP AT t_langlist ASSIGNING &lt;l&gt;.
     READ TEXTPOOL program INTO t_textpool LANGUAGE &lt;l&gt;.
-    IF sy-subrc = 0.
-      _text-langu = &lt;l&gt;.
-      LOOP AT t_textpool ASSIGNING &lt;t&gt;.
-        _text-id = &lt;t&gt;-id.
-        _text-key = &lt;t&gt;-key.
-        _text-entry = &lt;t&gt;-entry.
-        _text-length = &lt;t&gt;-length.
-        APPEND _text TO t_texts.
-      ENDLOOP.
-    ENDIF.
+    CHECK sy-subrc = 0.
+    _text-langu = &lt;l&gt;.
+    LOOP AT t_textpool ASSIGNING &lt;t&gt;.
+      _text-id = &lt;t&gt;-id.
+      _text-key = &lt;t&gt;-key.
+      _text-entry = &lt;t&gt;-entry.
+      _text-length = &lt;t&gt;-length.
+      APPEND _text TO t_texts.
+    ENDLOOP.
   ENDLOOP.
 
   SORT t_texts BY id key langu.

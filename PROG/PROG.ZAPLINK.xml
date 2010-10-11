@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="34C316C1A3CC12F074BF0B2304CFA2BF" CODE_SIGNATURE="9E8C69D1E2C7E9E54D23ABB5D6EBCB36" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="AD51563EBD3508D79B8DC5A22A40D307" CODE_SIGNATURE="9E8C69D1E2C7E9E54D23ABB5D6EBCB36" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="1" APPL="S" RSTAT="S" RMAND="321" RLOAD="E" FIXPT="X" UCCHECK="X"/>
@@ -86,130 +86,146 @@ AS</LONG_TXT>
   <TEXTSPOOL>
    <ITEM ID="I" KEY="001">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Object list for Container" LENGTH="25 "/>
+     <ITEM LANGU="E" ENTRY="Object list for Container" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Liste des objects pour le conteneur" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="002">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="You have an empty Container" LENGTH="27 "/>
+     <ITEM LANGU="E" ENTRY="You have an empty Container" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Le conteneur est vide" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="003">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Transport Request required" LENGTH="26 "/>
+     <ITEM LANGU="E" ENTRY="Transport Request required" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="OT requis" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="ACT">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Activation" LENGTH="35 "/>
+     <ITEM LANGU="E" ENTRY="Activation" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Activation" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="BAC">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="Actions :" LENGTH="25 "/>
-     <ITEM LANGU="E" ENTRY="Actions :" LENGTH="25 "/>
-     <ITEM LANGU="F" ENTRY="Actions :" LENGTH="25 "/>
+     <ITEM LANGU="E" ENTRY="Actions :" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Actions :" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="BFI">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="Container&apos;s file" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Fichier du conteneur" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="BOP">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="Options :" LENGTH="25 "/>
-     <ITEM LANGU="E" ENTRY="Options :" LENGTH="25 "/>
-     <ITEM LANGU="F" ENTRY="Options :" LENGTH="25 "/>
+     <ITEM LANGU="E" ENTRY="Options :" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Options :" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="DEV">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="Package" LENGTH="7 "/>
-     <ITEM LANGU="E" ENTRY="Package" LENGTH="7 "/>
+     <ITEM LANGU="E" ENTRY="Package" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Classe de développement" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="DVF">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="Fixed package value :" LENGTH="35 "/>
-     <ITEM LANGU="E" ENTRY="Fixed package value :" LENGTH="35 "/>
-     <ITEM LANGU="F" ENTRY="Valeur fixe pour classe de dev." LENGTH="35 "/>
+     <ITEM LANGU="E" ENTRY="Fixed package value :" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Valeur fixe pour classe de dev." LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="FAI">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="FAILED" LENGTH="6 "/>
+     <ITEM LANGU="E" ENTRY="FAILED" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="ECHEC" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="HFI">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="Filename documentation" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Nom du fichier de documentation" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="NCO">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="no connector" LENGTH="12 "/>
+     <ITEM LANGU="E" ENTRY="no connector" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="pas de connecteur" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="NCS">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Container created" LENGTH="25 "/>
-     <ITEM LANGU="F" ENTRY="Conteneur créé" LENGTH="25 "/>
+     <ITEM LANGU="E" ENTRY="Container created" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Conteneur créé" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="NRE">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="not requested" LENGTH="13 "/>
+     <ITEM LANGU="E" ENTRY="not requested" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="non demandé" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="OTH">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Others" LENGTH="35 "/>
+     <ITEM LANGU="E" ENTRY="Others" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Autres" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="SAC">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="SUCCEED &amp; Activated" LENGTH="19 "/>
+     <ITEM LANGU="E" ENTRY="SUCCEED &amp; Activated" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="SUCCES &amp; Activé" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="SIN">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="SUCCEED but NOT activated" LENGTH="25 "/>
+     <ITEM LANGU="E" ENTRY="SUCCEED but NOT activated" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="SUCCES mais pas activé" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="SUC">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="SUCCEED" LENGTH="7 "/>
+     <ITEM LANGU="E" ENTRY="SUCCEED" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="SUCCES" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="TRF">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="Fixed value Transport Request :" LENGTH="35 "/>
-     <ITEM LANGU="E" ENTRY="Fixed value Transport Request :" LENGTH="35 "/>
-     <ITEM LANGU="F" ENTRY="Valeur fixe pour ordre de transport" LENGTH="35 "/>
+     <ITEM LANGU="E" ENTRY="Fixed value Transport Request :" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Valeur fixe pour ordre de transport" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="TRO">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="Transport Request" LENGTH="132 "/>
-     <ITEM LANGU="E" ENTRY="Transport Request" LENGTH="35 "/>
-     <ITEM LANGU="F" ENTRY="Ordre de transport" LENGTH="35 "/>
+     <ITEM LANGU="E" ENTRY="Transport Request" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Ordre de transport" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="TTR">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="Select a transport request" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Sélectionner un OT" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="U01">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Uninstall" LENGTH="9 "/>
+     <ITEM LANGU="E" ENTRY="Uninstall" LENGTH="40 "/>
+     <ITEM LANGU="F" ENTRY="Désintaller" LENGTH="40 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="R">
     <TEXTS>
-     <ITEM LANGU="D" ENTRY="ZAPlink" LENGTH="7 "/>
-     <ITEM LANGU="E" ENTRY="ZAPlink V0.0.006" LENGTH="16 "/>
+     <ITEM LANGU="D" ENTRY="ZAPLINK V0.0.006+" LENGTH="17 "/>
+     <ITEM LANGU="E" ENTRY="ZAPLINK V0.0.006+" LENGTH="17 "/>
      <ITEM LANGU="F" ENTRY="ZAPLINK V0.0.006+" LENGTH="70 "/>
     </TEXTS>
    </ITEM>
@@ -217,23 +233,27 @@ AS</LONG_TXT>
     <TEXTS>
      <ITEM LANGU="D" LENGTH="36 "/>
      <ITEM LANGU="E" ENTRY="        Add components to container" LENGTH="37 "/>
+     <ITEM LANGU="F" ENTRY="        Ajouter des composants" LENGTH="37 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_ADD_P">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="35 "/>
      <ITEM LANGU="E" ENTRY="        Add a component to container" LENGTH="36 "/>
+     <ITEM LANGU="F" ENTRY="        Ajouter un composant au cont." LENGTH="37 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_ADD_TR">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="37 "/>
      <ITEM LANGU="E" ENTRY="        Add components from Transport" LENGTH="37 "/>
+     <ITEM LANGU="F" ENTRY="        Ajouter composants depuis OT" LENGTH="37 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_AUTO">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="        One Step export (4 background)" LENGTH="38 "/>
+     <ITEM LANGU="F" ENTRY="        Export en une étape&gt;&gt;arr. plan" LENGTH="38 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_CREATE">
@@ -254,18 +274,20 @@ AS</LONG_TXT>
     <TEXTS>
      <ITEM LANGU="D" LENGTH="33 "/>
      <ITEM LANGU="E" ENTRY="        Import container to SAP" LENGTH="33 "/>
-     <ITEM LANGU="F" ENTRY="        Importer containeur dans SAP" LENGTH="36 "/>
+     <ITEM LANGU="F" ENTRY="        Importer conteneur dans SAP" LENGTH="35 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_SYNCH">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="        Synchronize container with SAP" LENGTH="38 "/>
+     <ITEM LANGU="F" ENTRY="        Synchronizer le cont. avec SAP" LENGTH="38 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="A_UNINST">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="36 "/>
      <ITEM LANGU="E" ENTRY="        Uninstall container from SAP" LENGTH="36 "/>
+     <ITEM LANGU="F" ENTRY="        Désintaller le conteneur" LENGTH="36 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="CO_NAME">
@@ -307,6 +329,7 @@ AS</LONG_TXT>
     <TEXTS>
      <ITEM LANGU="D" LENGTH="21 "/>
      <ITEM LANGU="E" ENTRY="        Keep existing" LENGTH="21 "/>
+     <ITEM LANGU="F" ENTRY="        Conserver l&apos;existant" LENGTH="28 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="DEVC_LO">
@@ -327,26 +350,31 @@ AS</LONG_TXT>
     <TEXTS>
      <ITEM LANGU="D" LENGTH="29 "/>
      <ITEM LANGU="E" ENTRY="        Use container package" LENGTH="29 "/>
+     <ITEM LANGU="F" ENTRY="        Utiliser le package du cont." LENGTH="36 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="F_LOCAL">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="        Local/workstation file" LENGTH="30 "/>
+     <ITEM LANGU="F" ENTRY="        Fichier local" LENGTH="30 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="F_NOSUB">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="        Only specified component" LENGTH="32 "/>
+     <ITEM LANGU="F" ENTRY="        Seulement le composant spécifi" LENGTH="38 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="F_SERVER">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="        Server file" LENGTH="19 "/>
+     <ITEM LANGU="F" ENTRY="        Server file" LENGTH="19 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="F_SUB">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="        With sub-components" LENGTH="27 "/>
+     <ITEM LANGU="F" ENTRY="        Avec sous-composants" LENGTH="28 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="PACKAGE">
@@ -357,11 +385,13 @@ AS</LONG_TXT>
    <ITEM ID="S" KEY="P_ACTIV">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="        Active components after import" LENGTH="38 "/>
+     <ITEM LANGU="F" ENTRY="        Activer comp. après import" LENGTH="38 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="P_EXT">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="        Extend to sub-packages" LENGTH="30 "/>
+     <ITEM LANGU="F" ENTRY="        Etendre au class de dev enfant" LENGTH="38 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="P_FILE">
@@ -381,6 +411,7 @@ AS</LONG_TXT>
    <ITEM ID="S" KEY="P_ZIP">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="        ZIP File" LENGTH="16 "/>
+     <ITEM LANGU="F" ENTRY="        Fichier compressé (ZIP)" LENGTH="31 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="S_AUTHOR">
@@ -424,30 +455,35 @@ AS</LONG_TXT>
     <TEXTS>
      <ITEM LANGU="D" LENGTH="19 "/>
      <ITEM LANGU="E" ENTRY="        Fixed value" LENGTH="19 "/>
+     <ITEM LANGU="F" ENTRY="        Valeur fixe" LENGTH="19 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="TR_IN">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="37 "/>
      <ITEM LANGU="E" ENTRY="        User Input for each component" LENGTH="37 "/>
+     <ITEM LANGU="F" ENTRY="        Saisie pour chaque composant" LENGTH="37 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="TR_UC">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="29 "/>
      <ITEM LANGU="E" ENTRY="        Use container&apos;s value" LENGTH="29 "/>
+     <ITEM LANGU="F" ENTRY="        Util. valeur du conteneur" LENGTH="33 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="S" KEY="TR_US">
     <TEXTS>
      <ITEM LANGU="D" LENGTH="36 "/>
      <ITEM LANGU="E" ENTRY="        Same transport for all comp." LENGTH="36 "/>
+     <ITEM LANGU="F" ENTRY="        Même OT pour tous les comp." LENGTH="36 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="T">
     <TEXTS>
      <ITEM LANGU="D" ENTRY="ZAP Link : ABAP Component Import/Export tools" LENGTH="45 "/>
      <ITEM LANGU="E" ENTRY="ZAPLink : ABAP Component Import/Export tools" LENGTH="44 "/>
+     <ITEM LANGU="F" ENTRY="ZAPLink : Outil d&apos;import/export de composants ABAP" LENGTH="50 "/>
     </TEXTS>
    </ITEM>
   </TEXTSPOOL>
