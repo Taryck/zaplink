@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="063252EE26A90C06E900DB54D3244415" CODE_SIGNATURE="B6111E63BC5630ECC4679A0CF9E4E42F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_COMPONENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6686C0C69D7640569B4160108A499BC5" CODE_SIGNATURE="B6111E63BC5630ECC4679A0CF9E4E42F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_COMPONENT" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S">
@@ -32,12 +32,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="TD_OBJ_TYPE" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_OBJ_TYPE"/>
   </ALIASES>
   <ATTRIBUTS>
-   <ITEM CMPNAME="CONNCLASS" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="TD_CONNCLASS">
+   <ITEM CMPNAME="CONNCLASS" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TD_CONNCLASS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Type Name"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_EXCEPTION,
+   <ITEM CMPNAME="INVALID_EXCEPTION" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_EXCEPTION,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;068&apos;,
       attr1 type scx_attrname value &apos;OBJTYPE&apos;,
@@ -46,7 +46,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_EXCEPTION
 `</ITEM>
-   <ITEM CMPNAME="INVALID_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_MSG_COLL,
+   <ITEM CMPNAME="INVALID_MSG_COLL" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_MSG_COLL,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;069&apos;,
       attr1 type scx_attrname value &apos;OBJTYPE&apos;,
@@ -55,7 +55,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_MSG_COLL
 `</ITEM>
-   <ITEM CMPNAME="INVALID_SUBCOMPONENTS" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_SUBCOMPONENTS,
+   <ITEM CMPNAME="INVALID_SUBCOMPONENTS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_SUBCOMPONENTS,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;070&apos;,
       attr1 type scx_attrname value &apos;OBJTYPE&apos;,
@@ -64,7 +64,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_SUBCOMPONENTS
 `</ITEM>
-   <ITEM CMPNAME="INVALID_TYPE" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_TYPE,
+   <ITEM CMPNAME="INVALID_TYPE" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_TYPE,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;060&apos;,
       attr1 type scx_attrname value &apos;TYPE&apos;,
@@ -73,22 +73,22 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_TYPE
 `</ITEM>
-   <ITEM CMPNAME="NAME" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="TD_COMPNAME">
+   <ITEM CMPNAME="NAME" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TD_COMPNAME">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Name"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="OBJTYPE" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="TD_OBJ_TYPE">
+   <ITEM CMPNAME="OBJTYPE" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TD_OBJ_TYPE">
     <TEXTS>
      <ITEM LANG="E" TEXT="ABAP Class type"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TYPE" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="TD_COMPTYPE">
+   <ITEM CMPNAME="TYPE" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Type"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CX_COMPONENT" EXPOSURE="2" STATE="1" EDITORDER="5 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_COMPONENT,
+   <ITEM CMPNAME="ZAPLINK_CX_COMPONENT" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_COMPONENT,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;106&apos;,
       attr1 type scx_attrname value &apos;CX_NAME&apos;,

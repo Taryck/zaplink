@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B7DE82E5E613A7AEE02904AE6A2E2BDA" CODE_SIGNATURE="BEA00621BB4F0F71C96F1FD1571A5894" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_CONNECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="657A49847E4E1FA1BF89BBFA74025DA8" CODE_SIGNATURE="BEA00621BB4F0F71C96F1FD1571A5894" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_CONNECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S">
@@ -35,27 +35,27 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="TD_DEVCLASS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_DEVCLASS"/>
   </ALIASES>
   <ATTRIBUTS>
-   <ITEM CMPNAME="CONNCLASS" EXPOSURE="2" STATE="1" EDITORDER="18 " ATTVALUE="&apos;[CONNCLASS]&apos;" TYPTYPE="1" TYPE="TD_CONNCLASS">
+   <ITEM CMPNAME="CONNCLASS" EXPOSURE="2" STATE="1" ATTVALUE="&apos;[CONNCLASS]&apos;" TYPTYPE="1" TYPE="TD_CONNCLASS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector ClassName"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="CONNUUID" EXPOSURE="2" STATE="1" EDITORDER="19 " ATTVALUE="&apos;00000000000000000000000000000000&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
+   <ITEM CMPNAME="CONNUUID" EXPOSURE="2" STATE="1" ATTVALUE="&apos;00000000000000000000000000000000&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector UUID"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="CONN_VER" EXPOSURE="2" STATE="1" EDITORDER="21 " ATTVALUE="&apos;[CONN_VER]&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
+   <ITEM CMPNAME="CONN_VER" EXPOSURE="2" STATE="1" ATTVALUE="&apos;[CONN_VER]&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector Version"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="17 " ATTVALUE="&apos;[DEVCLASS]&apos;" TYPTYPE="1" TYPE="TD_DEVCLASS">
+   <ITEM CMPNAME="DEVCLASS" EXPOSURE="2" STATE="1" ATTVALUE="&apos;[DEVCLASS]&apos;" TYPTYPE="1" TYPE="TD_DEVCLASS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Devlopment Class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="8 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_CONNECTOR,
+   <ITEM CMPNAME="INVALID_CONNECTOR" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_CONNECTOR,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;061&apos;,
       attr1 type scx_attrname value &apos;CONNCLASS&apos;,
@@ -64,7 +64,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_CONNECTOR
 `</ITEM>
-   <ITEM CMPNAME="INVALID_TYPE" EXPOSURE="2" STATE="1" EDITORDER="7 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_TYPE,
+   <ITEM CMPNAME="INVALID_TYPE" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_TYPE,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;060&apos;,
       attr1 type scx_attrname value &apos;TYPE&apos;,
@@ -73,7 +73,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_TYPE
 `</ITEM>
-   <ITEM CMPNAME="INVALID_UUID" EXPOSURE="2" STATE="1" EDITORDER="9 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_UUID,
+   <ITEM CMPNAME="INVALID_UUID" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_UUID,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;062&apos;,
       attr1 type scx_attrname value &apos;CONNUUID&apos;,
@@ -82,7 +82,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_UUID
 `</ITEM>
-   <ITEM CMPNAME="INVALID_XML" EXPOSURE="2" STATE="1" EDITORDER="10 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_XML,
+   <ITEM CMPNAME="INVALID_XML" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_XML,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;063&apos;,
       attr1 type scx_attrname value &apos;NODE_NAME&apos;,
@@ -91,17 +91,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_XML
 `</ITEM>
-   <ITEM CMPNAME="NAME" EXPOSURE="2" STATE="1" EDITORDER="15 " ATTVALUE="&apos;[NAME]&apos;" TYPTYPE="1" TYPE="TD_COMPNAME">
+   <ITEM CMPNAME="NAME" EXPOSURE="2" STATE="1" ATTVALUE="&apos;[NAME]&apos;" TYPTYPE="1" TYPE="TD_COMPNAME">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Name"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="NODE_NAME" EXPOSURE="2" STATE="1" EDITORDER="20 " ATTVALUE="&apos;[NODE_NAME]&apos;" TYPTYPE="1" TYPE="STRING">
+   <ITEM CMPNAME="NODE_NAME" EXPOSURE="2" STATE="1" ATTVALUE="&apos;[NODE_NAME]&apos;" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
      <ITEM LANG="E" TEXT="Node name"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="NOT_AUTHORIZED" EXPOSURE="2" STATE="1" EDITORDER="2 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of NOT_AUTHORIZED,
+   <ITEM CMPNAME="NOT_AUTHORIZED" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of NOT_AUTHORIZED,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;056&apos;,
       attr1 type scx_attrname value &apos;NAME&apos;,
@@ -110,7 +110,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of NOT_AUTHORIZED
 `</ITEM>
-   <ITEM CMPNAME="NOT_FOUND" EXPOSURE="2" STATE="1" EDITORDER="3 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of NOT_FOUND,
+   <ITEM CMPNAME="NOT_FOUND" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of NOT_FOUND,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;057&apos;,
       attr1 type scx_attrname value &apos;NAME&apos;,
@@ -119,7 +119,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of NOT_FOUND
 `</ITEM>
-   <ITEM CMPNAME="OBJECT_LOCKED" EXPOSURE="2" STATE="1" EDITORDER="4 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of OBJECT_LOCKED,
+   <ITEM CMPNAME="OBJECT_LOCKED" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of OBJECT_LOCKED,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;058&apos;,
       attr1 type scx_attrname value &apos;NAME&apos;,
@@ -128,12 +128,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of OBJECT_LOCKED
 `</ITEM>
-   <ITEM CMPNAME="OTHERCLASS" EXPOSURE="2" STATE="1" EDITORDER="22 " ATTVALUE="&apos;[OTHERCLASS]&apos;" TYPTYPE="1" TYPE="TD_CONNCLASS">
+   <ITEM CMPNAME="OTHERCLASS" EXPOSURE="2" STATE="1" ATTVALUE="&apos;[OTHERCLASS]&apos;" TYPTYPE="1" TYPE="TD_CONNCLASS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector ClassName"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TWICE_CLASS" EXPOSURE="2" STATE="1" EDITORDER="6 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of TWICE_CLASS,
+   <ITEM CMPNAME="TWICE_CLASS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of TWICE_CLASS,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;059&apos;,
       attr1 type scx_attrname value &apos;CONNCLASS&apos;,
@@ -142,7 +142,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of TWICE_CLASS
 `</ITEM>
-   <ITEM CMPNAME="TWICE_UUID" EXPOSURE="2" STATE="1" EDITORDER="13 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of TWICE_UUID,
+   <ITEM CMPNAME="TWICE_UUID" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of TWICE_UUID,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;066&apos;,
       attr1 type scx_attrname value &apos;CONNCLASS&apos;,
@@ -151,12 +151,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of TWICE_UUID
 `</ITEM>
-   <ITEM CMPNAME="TYPE" EXPOSURE="2" STATE="1" EDITORDER="16 " ATTVALUE="&apos;[TY]&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
+   <ITEM CMPNAME="TYPE" EXPOSURE="2" STATE="1" ATTVALUE="&apos;[TY]&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Type"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TYPE_NOT_SUPPORTED" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of TYPE_NOT_SUPPORTED,
+   <ITEM CMPNAME="TYPE_NOT_SUPPORTED" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of TYPE_NOT_SUPPORTED,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;065&apos;,
       attr1 type scx_attrname value &apos;TYPE&apos;,
@@ -165,7 +165,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of TYPE_NOT_SUPPORTED
 `</ITEM>
-   <ITEM CMPNAME="UNSUPORTED_VERSION" EXPOSURE="2" STATE="1" EDITORDER="11 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of UNSUPORTED_VERSION,
+   <ITEM CMPNAME="UNSUPORTED_VERSION" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of UNSUPORTED_VERSION,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;064&apos;,
       attr1 type scx_attrname value &apos;CONN_VER&apos;,
@@ -174,7 +174,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of UNSUPORTED_VERSION
 `</ITEM>
-   <ITEM CMPNAME="XML_ERROR" EXPOSURE="2" STATE="1" EDITORDER="14 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of XML_ERROR,
+   <ITEM CMPNAME="XML_ERROR" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of XML_ERROR,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;067&apos;,
       attr1 type scx_attrname value &apos;TYPE&apos;,
@@ -183,7 +183,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of XML_ERROR
 `</ITEM>
-   <ITEM CMPNAME="ZAPLINK_CX_CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="5 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_CONNECTOR,
+   <ITEM CMPNAME="ZAPLINK_CX_CONNECTOR" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_CONNECTOR,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;055&apos;,
       attr1 type scx_attrname value &apos;CX_NAME&apos;,

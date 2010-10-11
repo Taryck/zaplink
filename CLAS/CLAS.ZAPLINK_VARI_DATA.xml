@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B2F8F49204986A9719162FA558817495" CODE_SIGNATURE="CD996E1D72A4872677C04E02A310B3B7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5A085370EDD06BC6C603E36950DD2330" CODE_SIGNATURE="CD996E1D72A4872677C04E02A310B3B7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -38,22 +38,22 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="TT_TXTP_TEXTPOOLS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TXTP_TEXTPOOLS"/>
   </ALIASES>
   <ATTRIBUTS>
-   <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TS_MAINDATA">
+   <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TS_MAINDATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Program main data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="SCREENS" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="TT_SCREENS">
+   <ITEM CMPNAME="SCREENS" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_SCREENS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Screens list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TEXTS" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TT_LTEXTS">
+   <ITEM CMPNAME="TEXTS" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_LTEXTS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Program texts"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TRANSPORT" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">BEGIN OF transport,
+   <ITEM CMPNAME="TRANSPORT" STATE="1" ATTDECLTYP="2" TYPTYPE="4">BEGIN OF transport,
 * FROM FORM BUILD_DESCRIPTION (LSVARF02)
 ** Variante transportieren
 ** Systemvariante sind immer geschützt
@@ -76,12 +76,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       normal      TYPE varid-transport VALUE &apos;F&apos;,           &quot;#EC NOTEXT
     END OF transport
 `</ITEM>
-   <ITEM CMPNAME="VALUES" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="TT_PARAMS">
+   <ITEM CMPNAME="VALUES" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_PARAMS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Values of parameters"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="VARIANT_PREFIX" EXPOSURE="1" STATE="1" EDITORDER="1 " ATTDECLTYP="2" TYPTYPE="4">
+   <ITEM CMPNAME="VARIANT_PREFIX" EXPOSURE="1" STATE="1" ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF variant_prefix,
       system    TYPE varid-variant VALUE &apos;SAP&amp;*&apos;,
       customer  TYPE varid-variant VALUE &apos;CUS&amp;*&apos;,
@@ -115,19 +115,19 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *&quot;* in the implementation part of the class</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="ANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="3 ">
+   <ITEM CMPNAME="ANONYMIZE" EXPOSURE="1" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Anonymized component data"/>
     </TEXTS>
     <SOURCE>`
   CLEAR: a0_maindata-mandt, a0_maindata-ename, a0_maindata-edat, a0_maindata-etime, a0_maindata-aename, a0_maindata-aedat, a0_maindata-aetime.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FROM_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 ">
+   <ITEM CMPNAME="FROM_DATA" EXPOSURE="1" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
+     <ITEM SCONAME="FM_DATA" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
        <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
@@ -158,34 +158,34 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     INSERT s_scr INTO TABLE screens.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="KEY_2_NAME" EXPOSURE="1" STATE="1" EDITORDER="6 " MTDDECLTYP="1">
+   <ITEM CMPNAME="KEY_2_NAME" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert Key to Name (E071 Entrie)"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TS_VARIANT_KEY"/>
-     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPNAME"/>
+     <ITEM SCONAME="DATA" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TS_VARIANT_KEY"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPNAME"/>
     </PARAMETERS>
     <SOURCE>`
   result = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="NAME_2_KEY" EXPOSURE="1" STATE="1" EDITORDER="5 " MTDDECLTYP="1">
+   <ITEM CMPNAME="NAME_2_KEY" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert Name (E071 Entrie) to Key"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" CMPTYPE="1" EDITORDER="1 " PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
-     <ITEM SCONAME="RESULT" CMPTYPE="1" EDITORDER="2 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_VARIANT_KEY"/>
+     <ITEM SCONAME="DATA" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_VARIANT_KEY"/>
     </PARAMETERS>
     <SOURCE>`
   result = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TO_DATA" EXPOSURE="1" STATE="1" EDITORDER="2 ">
+   <ITEM CMPNAME="TO_DATA" EXPOSURE="1" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FM_DATA" CMPTYPE="1" EDITORDER="1 " PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
+     <ITEM SCONAME="FM_DATA" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FM_DATA">
       <TEXTS>
        <ITEM LANG="E" TEXT="Function Modules object Data"/>
       </TEXTS>
@@ -210,7 +210,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     INSERT s_scr INTO TABLE fm_data-screens.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="1" STATE="1" EDITORDER="4 ">
+   <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="1" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="UnAnonymized component data"/>
     </TEXTS>
@@ -222,14 +222,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM TYPEGROUP="ABAP" IMPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TR_STRING" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">
+   <ITEM CMPNAME="TR_STRING" EXPOSURE="1" STATE="1" TYPTYPE="4">
     tr_string TYPE RANGE OF string
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Values"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
     BEGIN OF ts_fm_data,
 * xx pour type doc
       header          TYPE varid,
@@ -242,7 +242,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Data retrieve from FM"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
     BEGIN OF ts_maindata.
   INCLUDE TYPE varid.
   TYPES:
@@ -252,7 +252,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Program main data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_PARAM_DATA" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_PARAM_DATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
     BEGIN OF ts_param_data.
   INCLUDE TYPE vanz as hdr.
   TYPES:
@@ -265,7 +265,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Parameters &amp; Select-options data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_VARIANT_KEY" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_VARIANT_KEY" EXPOSURE="1" STATE="1" TYPTYPE="4">
     BEGIN OF ts_variant_key,
         program  TYPE varid-report,
         variant  TYPE varid-variant,
@@ -275,28 +275,28 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Structure that define variant&apos;s key"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_PARAMS" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_PARAMS" EXPOSURE="1" STATE="1" TYPTYPE="4">
     tt_params TYPE SORTED TABLE OF ts_param_data WITH UNIQUE KEY name
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Params list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SCREENS" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_SCREENS" EXPOSURE="1" STATE="1" TYPTYPE="4">
     tt_screens TYPE SORTED TABLE OF rsdynnr WITH UNIQUE KEY dynnr
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Screens list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_VARIS" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_VARIS" EXPOSURE="1" STATE="1" TYPTYPE="4">
     tt_varis TYPE SORTED TABLE OF varis WITH UNIQUE KEY dynnr
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Variant&apos;s screens"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_VARIT" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_VARIT" EXPOSURE="1" STATE="1" TYPTYPE="4">
     tt_varit TYPE SORTED TABLE OF varit WITH UNIQUE KEY langu
 `
     <TEXTS>

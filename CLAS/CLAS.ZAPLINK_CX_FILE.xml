@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="75344F779F818ED871E3CAC21C28E3A5" CODE_SIGNATURE="A3075938D9C25838FD5671E0DD3A74C8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_FILE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6986BDA6E4C3E028A19C80CBCE1BB53C" CODE_SIGNATURE="A3075938D9C25838FD5671E0DD3A74C8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_FILE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-ERR_HANDLING" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" CATEGORY="40" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" VARCL="X" UNICODE="X" RSTAT="S">
@@ -26,7 +26,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
-   <ITEM CMPNAME="DELETE_ERROR" EXPOSURE="2" STATE="1" EDITORDER="13 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of DELETE_ERROR,
+   <ITEM CMPNAME="DELETE_ERROR" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of DELETE_ERROR,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;210&apos;,
       attr1 type scx_attrname value &apos;CX_NAME&apos;,
@@ -35,7 +35,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of DELETE_ERROR
 `</ITEM>
-   <ITEM CMPNAME="DIALOG_CANCELED" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of DIALOG_CANCELED,
+   <ITEM CMPNAME="DIALOG_CANCELED" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of DIALOG_CANCELED,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;209&apos;,
       attr1 type scx_attrname value &apos;&apos;,
@@ -44,22 +44,22 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of DIALOG_CANCELED
 `</ITEM>
-   <ITEM CMPNAME="FILEKIND" EXPOSURE="2" STATE="1" EDITORDER="11 " TYPTYPE="1" TYPE="T_FILETYPE">
+   <ITEM CMPNAME="FILEKIND" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="T_FILETYPE">
     <TEXTS>
      <ITEM LANG="E" TEXT="FileKind"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="FILENAME" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="1" TYPE="T_FILENAME">
+   <ITEM CMPNAME="FILENAME" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="T_FILENAME">
     <TEXTS>
      <ITEM LANG="E" TEXT="Filename"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="FILETYPE" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="1" TYPE="T_FILETYPE">
+   <ITEM CMPNAME="FILETYPE" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="T_FILETYPE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Filetype : Local or Server"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_FILEKIND" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_FILEKIND,
+   <ITEM CMPNAME="INVALID_FILEKIND" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_FILEKIND,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;208&apos;,
       attr1 type scx_attrname value &apos;FILEKIND&apos;,
@@ -68,7 +68,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_FILEKIND
 `</ITEM>
-   <ITEM CMPNAME="INVALID_FILENAME" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_FILENAME,
+   <ITEM CMPNAME="INVALID_FILENAME" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_FILENAME,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;207&apos;,
       attr1 type scx_attrname value &apos;FILENAME&apos;,
@@ -77,7 +77,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_FILENAME
 `</ITEM>
-   <ITEM CMPNAME="INVALID_FILETYPE" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_FILETYPE,
+   <ITEM CMPNAME="INVALID_FILETYPE" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_FILETYPE,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;206&apos;,
       attr1 type scx_attrname value &apos;FILETYPE&apos;,
@@ -86,7 +86,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of INVALID_FILETYPE
 `</ITEM>
-   <ITEM CMPNAME="LOAD_ERROR" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of LOAD_ERROR,
+   <ITEM CMPNAME="LOAD_ERROR" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of LOAD_ERROR,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;205&apos;,
       attr1 type scx_attrname value &apos;CX_NAME&apos;,
@@ -95,7 +95,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of LOAD_ERROR
 `</ITEM>
-   <ITEM CMPNAME="MISSING_FILENAME" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of MISSING_FILENAME,
+   <ITEM CMPNAME="MISSING_FILENAME" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of MISSING_FILENAME,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;204&apos;,
       attr1 type scx_attrname value &apos;&apos;,
@@ -104,7 +104,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of MISSING_FILENAME
 `</ITEM>
-   <ITEM CMPNAME="SAVE_ERROR" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of SAVE_ERROR,
+   <ITEM CMPNAME="SAVE_ERROR" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of SAVE_ERROR,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;203&apos;,
       attr1 type scx_attrname value &apos;CX_NAME&apos;,
@@ -113,7 +113,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of SAVE_ERROR
 `</ITEM>
-   <ITEM CMPNAME="SEARCH_ERROR" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of SEARCH_ERROR,
+   <ITEM CMPNAME="SEARCH_ERROR" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of SEARCH_ERROR,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;202&apos;,
       attr1 type scx_attrname value &apos;CX_NAME&apos;,
@@ -122,7 +122,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       attr4 type scx_attrname value &apos;&apos;,
     end of SEARCH_ERROR
 `</ITEM>
-   <ITEM CMPNAME="ZAPLINK_CX_FILE" EXPOSURE="2" STATE="1" EDITORDER="12 " ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_FILE,
+   <ITEM CMPNAME="ZAPLINK_CX_FILE" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_FILE,
       msgid type symsgid value &apos;ZAPLINK&apos;,
       msgno type symsgno value &apos;108&apos;,
       attr1 type scx_attrname value &apos;CX_NAME&apos;,
