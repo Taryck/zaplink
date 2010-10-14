@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5A085370EDD06BC6C603E36950DD2330" CODE_SIGNATURE="CD996E1D72A4872677C04E02A310B3B7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6DBA72EF690FABA9544CB4A6C494AEED" CODE_SIGNATURE="DD8F3CADBACFF0D4382A85249B2B0931" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -153,10 +153,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     INSERT s_txt INTO TABLE texts.
   ENDLOOP.
 
-  LOOP AT fm_data-screens ASSIGNING &lt;s&gt;.
-    CLEAR s_scr.    s_scr-dynnr = &lt;s&gt;-dynnr.
-    INSERT s_scr INTO TABLE screens.
-  ENDLOOP.</SOURCE>
+  screens = fm_data-screens.
+*  LOOP AT fm_data-screens ASSIGNING &lt;s&gt;.
+*    CLEAR s_scr.    s_scr-dynnr = &lt;s&gt;-dynnr.
+*    INSERT s_scr INTO TABLE screens.
+*  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="KEY_2_NAME" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
@@ -205,10 +206,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     CLEAR s_txt.    s_txt-mandt = a0_maindata-mandt.    s_txt-report = a0_maindata-report.    s_txt-variant = a0_maindata-variant.    s_txt-langu = &lt;t&gt;-lang.   s_txt-vtext = &lt;t&gt;-text.
     INSERT s_txt INTO TABLE fm_data-texts.
   ENDLOOP.
-  LOOP AT screens ASSIGNING &lt;s&gt;.
-    CLEAR s_scr.    s_scr-mandt = a0_maindata-mandt.    s_scr-report = a0_maindata-report.    s_scr-variant = a0_maindata-variant.    s_scr-dynnr = &lt;s&gt;-dynnr.
-    INSERT s_scr INTO TABLE fm_data-screens.
-  ENDLOOP.</SOURCE>
+  fm_data-screens = screens.
+*  LOOP AT screens ASSIGNING &lt;s&gt;.
+*    CLEAR s_scr.    &quot; s_scr-mandt = a0_maindata-mandt.    s_scr-report = a0_maindata-report.    s_scr-variant = a0_maindata-variant.
+*    s_scr-dynnr = &lt;s&gt;-dynnr.
+*    INSERT s_scr INTO TABLE fm_data-screens.
+*  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="1" STATE="1">
     <TEXTS>
@@ -234,7 +237,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * xx pour type doc
       header          TYPE varid,
       texts           TYPE tt_varit,
-      screens         TYPE tt_varis,
+      screens         TYPE tt_screens,
       params          TYPE tt_params,
     END OF ts_fm_data
 `
@@ -254,7 +257,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
    <ITEM CMPNAME="TS_PARAM_DATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
     BEGIN OF ts_param_data.
-  INCLUDE TYPE vanz as hdr.
+  INCLUDE TYPE vanz AS hdr.
   TYPES:
     value           TYPE string,
     values          TYPE tr_string,
@@ -287,13 +290,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Screens list"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TT_VARIS" EXPOSURE="1" STATE="1" TYPTYPE="4">
-    tt_varis TYPE SORTED TABLE OF varis WITH UNIQUE KEY dynnr
-`
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Variant&apos;s screens"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_VARIT" EXPOSURE="1" STATE="1" TYPTYPE="4">

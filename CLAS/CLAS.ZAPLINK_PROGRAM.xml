@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0704CDDD266054192EDEFC987D6DECC6" CODE_SIGNATURE="5AD13C55345BDF9E124C200D4E5664C9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="48B6DFBFACA83147365822B71384B5AC" CODE_SIGNATURE="5788B18DDAE35E6545164EAF3C68ED7A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -376,20 +376,23 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="VARIANTS" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_VARIANT_LIST"/>
     </PARAMETERS>
     <SOURCE>`
-  DATA t_varis     TYPE STANDARD TABLE OF varis WITH DEFAULT KEY.
+*  DATA t_varis     TYPE STANDARD TABLE OF varis WITH DEFAULT KEY.
+  DATA t_dynnr     TYPE STANDARD TABLE OF rsdynnr WITH DEFAULT KEY.
+  DATA t_varis     TYPE STANDARD TABLE OF rsdynnr WITH DEFAULT KEY.
   DATA t_varit     TYPE STANDARD TABLE OF varit WITH DEFAULT KEY.
   DATA s_vari      LIKE LINE OF result.
+  DATA s_varis     LIKE LINE OF t_varis.
   FIELD-SYMBOLS:
     &lt;v&gt; LIKE LINE OF variants,
     &lt;t&gt; LIKE LINE OF t_varit,
     &lt;s&gt; LIKE LINE OF t_varis.
 
-  SELECT * INTO TABLE t_varis
-    FROM varis CLIENT SPECIFIED
-    FOR ALL ENTRIES IN variants
-    WHERE mandt = variants-mandt
-      AND report = variants-report
-      AND variant = variants-variant.
+*  SELECT * INTO TABLE t_varis
+*    FROM varis CLIENT SPECIFIED
+*    FOR ALL ENTRIES IN variants
+*    WHERE mandt = variants-mandt
+*      AND report = variants-report
+*      AND variant = variants-variant.
 
   SELECT * INTO TABLE t_varit
     FROM varit CLIENT SPECIFIED
@@ -406,12 +409,31 @@ INCLUDE zaplink_macros.</MACROS>
          AND variant = &lt;v&gt;-variant.
       INSERT &lt;t&gt; INTO TABLE s_vari-texts.
     ENDLOOP.
-    LOOP AT t_varis ASSIGNING &lt;s&gt;
-         WHERE mandt = &lt;v&gt;-mandt
-          AND report = &lt;v&gt;-report
-         AND variant = &lt;v&gt;-variant.
-      INSERT &lt;s&gt; INTO TABLE s_vari-screens.
-    ENDLOOP.
+    CALL FUNCTION &apos;RS_GET_SCREENS_4_1_VARIANT&apos;
+      EXPORTING
+        program                    = &lt;v&gt;-report
+        variant                    = &lt;v&gt;-variant
+*     IMPORTING
+*       FLAG_1000                  =
+*       FLAG_ALL_SCREENS           =
+      TABLES
+        dynnr                      = t_dynnr
+        variscreens                = t_varis
+      EXCEPTIONS
+        no_screens                 = 1
+        variant_not_existent       = 2
+        OTHERS                     = 3.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_GET_SCREENS_4_1_VARIANT&apos; sy-subrc.
+    ENDIF.
+    MODIFY t_varis FROM s_varis TRANSPORTING kind WHERE NOT kind IS INITIAL.    &quot; not used on import
+    s_vari-screens = t_varis.
+*    LOOP AT t_varis ASSIGNING &lt;s&gt;
+*         WHERE mandt = &lt;v&gt;-mandt
+*          AND report = &lt;v&gt;-report
+*         AND variant = &lt;v&gt;-variant.
+*      INSERT &lt;s&gt; INTO TABLE s_vari-screens.
+*    ENDLOOP.
     s_vari-params = get_variant_params( program = &lt;v&gt;-report   variant = &lt;v&gt;-variant ).
     INSERT s_vari INTO TABLE result.
   ENDLOOP.</SOURCE>
@@ -547,9 +569,10 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="VARIANTS" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_VARIANTS"/>
     </PARAMETERS>
     <SOURCE>`
-  DATA t_varis     TYPE STANDARD TABLE OF varis WITH DEFAULT KEY.
+  DATA t_varis     TYPE STANDARD TABLE OF rsdynnr WITH DEFAULT KEY.
   DATA t_varit     TYPE STANDARD TABLE OF varit WITH DEFAULT KEY.
   DATA t_params    TYPE STANDARD TABLE OF rsparams WITH DEFAULT KEY.
+  DATA s_param     LIKE LINE OF t_params.
   DATA d_subrc     TYPE sy-subrc.
 *  DATA t_rep       TYPE STANDARD TABLE OF string.
   DATA d_is_work_i  TYPE abap_bool.
@@ -564,7 +587,9 @@ INCLUDE zaplink_macros.</MACROS>
   FIELD-SYMBOLS:
 *    &lt;t&gt; LIKE LINE OF t_varit,
 *    &lt;s&gt; LIKE LINE OF t_varis,
-    &lt;v&gt; LIKE LINE OF variants.
+    &lt;v&gt; LIKE LINE OF variants,
+    &lt;p&gt; LIKE LINE OF &lt;v&gt;-params,
+    &lt;val&gt; LIKE LINE OF &lt;p&gt;-values.
 
   t_variants = variants.    SORT t_variants.    s_comp-type = &apos;PROG&apos;.
   LOOP AT t_variants ASSIGNING &lt;v&gt;.
@@ -605,7 +630,16 @@ INCLUDE zaplink_macros.</MACROS>
     ENDAT.
 
     CHECK f_ok = abap_true.
-
+    REFRESH t_params.
+    LOOP AT &lt;v&gt;-params ASSIGNING &lt;p&gt;.
+      IF NOT &lt;p&gt;-value IS INITIAL.
+        CLEAR s_param.    s_param-kind = &apos;P&apos;.       s_param-selname = &lt;p&gt;-name.     s_param-low = &lt;p&gt;-value.                  APPEND s_param TO t_params.
+      ELSEIF NOT &lt;p&gt;-values IS INITIAL.
+        LOOP AT &lt;p&gt;-values ASSIGNING &lt;val&gt;.
+          CLEAR s_param.    s_param-kind = &apos;S&apos;.     s_param-selname = &lt;p&gt;-name.     MOVE-CORRESPONDING &lt;val&gt; TO s_param.      APPEND s_param TO t_params.
+        ENDLOOP.
+      ENDIF.
+    ENDLOOP.
     t_varit = &lt;v&gt;-texts.
     t_varis = &lt;v&gt;-screens.
     CALL FUNCTION &apos;RS_VARIANT_EXISTS&apos;
