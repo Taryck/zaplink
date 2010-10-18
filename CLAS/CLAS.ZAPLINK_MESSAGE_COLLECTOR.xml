@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E49F90B12C69F2187C501A9FD4012BB8" CODE_SIGNATURE="9D8C3161361C7D2E0337BA3070582E72" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="578611AD8E54F97A82A876303DBB1996" CODE_SIGNATURE="886368178EFB8E0BAC290703647AB4CD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-LOG" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -666,7 +666,7 @@ END-OF-DEFINITION.
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA: _detlevel	TYPE ballevel.
+  DATA: _detlevel	TYPE ballevel.
 
   IF id_detlevel IS INITIAL.
     _detlevel = md_level.
@@ -678,7 +678,7 @@ DATA: _detlevel	TYPE ballevel.
     EXPORTING
 *      is_message   =
       id_msgty     = &apos;A&apos;
-      id_msgid     = ID_MSGID
+      id_msgid     = id_msgid
       id_msgno     = id_msgno
       id_msgv1     = id_msgv1
       id_msgv2     = id_msgv2
@@ -728,7 +728,7 @@ DATA: _detlevel	TYPE ballevel.
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA: _detlevel	TYPE ballevel.
+  DATA: _detlevel	TYPE ballevel.
 
   IF id_detlevel IS INITIAL.
     _detlevel = md_level.
@@ -740,7 +740,7 @@ DATA: _detlevel	TYPE ballevel.
     EXPORTING
 *      is_message   =
       id_msgty     = &apos;E&apos;
-      id_msgid     = ID_MSGID
+      id_msgid     = id_msgid
       id_msgno     = id_msgno
       id_msgv1     = id_msgv1
       id_msgv2     = id_msgv2
@@ -777,7 +777,10 @@ DATA: _detlevel	TYPE ballevel.
   DATA o_zl_cx    TYPE REF TO zaplink_cx.
 
   IF id_detlevel IS INITIAL.    _detlevel = md_level.   ELSE.   _detlevel = id_detlevel.    ENDIF.
-  TRY.    o_zl_cx ?= exception.   CATCH cx_root.    ENDTRY.
+  TRY.
+      o_zl_cx ?= exception.
+    CATCH cx_root.
+  ENDTRY.
   IF o_zl_cx IS BOUND.
     CALL METHOD _add_zl_cx
       EXPORTING
@@ -824,8 +827,8 @@ DATA: _detlevel	TYPE ballevel.
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-FIELD-SYMBOLS:
-    &lt;ls_bapiret&gt; LIKE is_bapiret.
+  FIELD-SYMBOLS:
+      &lt;ls_bapiret&gt; LIKE is_bapiret.
 
 * INIT RESULTS
   ef_add_error   = abap_false.
@@ -836,14 +839,14 @@ FIELD-SYMBOLS:
   LOOP AT it_bapiret ASSIGNING &lt;ls_bapiret&gt;.
     CALL METHOD add
       EXPORTING
-        id_msgty     = &lt;ls_bapiret&gt;-type
-        id_msgid     = &lt;ls_bapiret&gt;-id
-        id_msgno     = &lt;ls_bapiret&gt;-number
-        id_msgv1     = &lt;ls_bapiret&gt;-message_v1
-        id_msgv2     = &lt;ls_bapiret&gt;-message_v2
-        id_msgv3     = &lt;ls_bapiret&gt;-message_v3
-        id_msgv4     = &lt;ls_bapiret&gt;-message_v4
-        if_cumulate  = if_cumulate.
+        id_msgty    = &lt;ls_bapiret&gt;-type
+        id_msgid    = &lt;ls_bapiret&gt;-id
+        id_msgno    = &lt;ls_bapiret&gt;-number
+        id_msgv1    = &lt;ls_bapiret&gt;-message_v1
+        id_msgv2    = &lt;ls_bapiret&gt;-message_v2
+        id_msgv3    = &lt;ls_bapiret&gt;-message_v3
+        id_msgv4    = &lt;ls_bapiret&gt;-message_v4
+        if_cumulate = if_cumulate.
 *       id_tabname   = &lt;ls_bapiret&gt;-parameter
 *       id_fieldname = &lt;ls_bapiret&gt;-field
 *       id_index     = &lt;ls_bapiret&gt;-row
@@ -860,14 +863,14 @@ FIELD-SYMBOLS:
   IF is_bapiret IS NOT INITIAL.
     CALL METHOD add
       EXPORTING
-        id_msgty     = is_bapiret-type
-        id_msgid     = is_bapiret-id
-        id_msgno     = is_bapiret-number
-        id_msgv1     = is_bapiret-message_v1
-        id_msgv2     = is_bapiret-message_v2
-        id_msgv3     = is_bapiret-message_v3
-        id_msgv4     = is_bapiret-message_v4
-        if_cumulate  = if_cumulate.
+        id_msgty    = is_bapiret-type
+        id_msgid    = is_bapiret-id
+        id_msgno    = is_bapiret-number
+        id_msgv1    = is_bapiret-message_v1
+        id_msgv2    = is_bapiret-message_v2
+        id_msgv3    = is_bapiret-message_v3
+        id_msgv4    = is_bapiret-message_v4
+        if_cumulate = if_cumulate.
 *       id_tabname   = is_bapiret-parameter
 *       id_fieldname = is_bapiret-field
 *       id_index     = is_bapiret-row
@@ -902,9 +905,9 @@ FIELD-SYMBOLS:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     lt_msglist            TYPE t_msg,
-    ls_msglist            TYPE BAL_S_MSG,
+    ls_msglist            TYPE bal_s_msg,
     ld_num_max_level      TYPE int1 VALUE mc_max_level,
     ld_num_detlevel_diff  TYPE int1,
     ld_num_detlevel_other TYPE int1,
@@ -914,7 +917,7 @@ DATA:
     &lt;ls_msglist&gt;          LIKE LINE OF lt_msglist.
 
 * PRECONDITION
-  check io_msglist IS BOUND.
+  CHECK io_msglist IS BOUND.
 
 * BODY
   lt_msglist = io_msglist-&gt;get_list( ).
@@ -1000,7 +1003,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA: _detlevel	TYPE ballevel.
+  DATA _detlevel  TYPE ballevel.
 
   IF id_detlevel IS INITIAL.
     _detlevel = md_level.
@@ -1062,7 +1065,7 @@ DATA: _detlevel	TYPE ballevel.
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA: _detlevel	TYPE ballevel.
+  DATA: _detlevel	TYPE ballevel.
 
   IF id_detlevel IS INITIAL.
     _detlevel = md_level.
@@ -1074,7 +1077,7 @@ DATA: _detlevel	TYPE ballevel.
     EXPORTING
 *      is_message   =
       id_msgty     = &apos;S&apos;
-      id_msgid     = ID_MSGID
+      id_msgid     = id_msgid
       id_msgno     = id_msgno
       id_msgv1     = id_msgv1
       id_msgv2     = id_msgv2
@@ -1132,9 +1135,9 @@ DATA: _detlevel	TYPE ballevel.
     <SOURCE>`
   DATA ls_symsg TYPE symsg.
 
-  check not sy-msgid is INITIAL AND
+  CHECK NOT sy-msgid IS INITIAL AND
 *        not id_msgty is INITIAL AND
-        not sy-msgno is INITIAL.
+        NOT sy-msgno IS INITIAL.
 * BODY
 * pass local copies of current sy-msg*-values
   ls_symsg-msgty = id_msgty.
@@ -1282,7 +1285,7 @@ DATA: _detlevel	TYPE ballevel.
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     lt_log_handle   TYPE bal_t_logh,
     lt_msg_handle   TYPE bal_t_msgh,
     ls_msg          TYPE bal_s_msg.
@@ -1540,7 +1543,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     lt_log_handle TYPE bal_t_logh,
     lt_msg_handle TYPE bal_t_msgh.
 
@@ -1582,7 +1585,7 @@ DATA:
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA:
+  DATA:
     ls_msg_handle TYPE balmsghndl.
 
 * BODY
@@ -1650,7 +1653,7 @@ DATA:
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA:
+  DATA:
     lt_log_handle TYPE bal_t_logh,
     lt_msg_handle TYPE bal_t_msgh,
     ls_msg_filter TYPE bal_s_mfil,
@@ -1751,7 +1754,7 @@ DATA:
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA:
+  DATA:
     lt_log_handle TYPE bal_t_logh,
     lt_msg_handle TYPE bal_t_msgh,
     ls_msg_filter TYPE bal_s_mfil,
@@ -1823,11 +1826,9 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
-    lt_msglist_x   TYPE t_msg_x.
+  DATA lt_msglist_x   TYPE t_msg_x.
 
-  FIELD-SYMBOLS:
-    &lt;ls_msglist_x&gt; LIKE LINE OF lt_msglist_x.
+  FIELD-SYMBOLS &lt;ls_msglist_x&gt; LIKE LINE OF lt_msglist_x.
 
 * INIT RESULTS
   CLEAR et_list.
@@ -1853,7 +1854,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     lt_msglist_x  TYPE t_msg_x,
     ls_list       LIKE LINE OF et_list,
     ls_par        TYPE bal_s_par,
@@ -1861,8 +1862,7 @@ DATA:
     ld_bapi_field TYPE bapiret2-field,
     ld_bapi_row   TYPE bapiret2-row.
 
-  FIELD-SYMBOLS:
-    &lt;ls_msglist_x&gt; LIKE LINE OF lt_msglist_x.
+  FIELD-SYMBOLS &lt;ls_msglist_x&gt; LIKE LINE OF lt_msglist_x.
 
 * INIT RESULTS
   CLEAR et_list.
@@ -1938,15 +1938,14 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     lt_log_handle   TYPE bal_t_logh,
     lt_msg_handle   TYPE bal_t_msgh,
     ls_msg_filter   TYPE bal_s_mfil,
     ls_msg          TYPE bal_s_msg,
     ls_list_x       LIKE LINE OF et_list_x.
 
-  FIELD-SYMBOLS:
-    &lt;ls_msg_handle&gt; LIKE LINE OF lt_msg_handle.
+  FIELD-SYMBOLS &lt;ls_msg_handle&gt; LIKE LINE OF lt_msg_handle.
 
 * INIT RESULTS
   CLEAR et_list_x.
@@ -2024,8 +2023,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
-    ls_so_msgty LIKE LINE OF es_msg_filter-msgty.
+  DATA ls_so_msgty LIKE LINE OF es_msg_filter-msgty.
 
   DEFINE mac_add_msgty.
     clear ls_so_msgty.
@@ -2099,7 +2097,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA o_ref      TYPE REF TO cl_abap_refdescr.
+  DATA o_ref      TYPE REF TO cl_abap_refdescr.
 
   IF typedesc-&gt;kind = cl_abap_datadescr=&gt;kind_ref.
     o_ref ?= typedesc.
@@ -2164,7 +2162,7 @@ DATA o_ref      TYPE REF TO cl_abap_refdescr.
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     ls_statistics   TYPE bal_s_scnt,
     ld_result       TYPE string,
     ld_result_cnt   TYPE string,
@@ -2266,7 +2264,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     ls_statistics TYPE bal_s_scnt,
     ld_msg_count  TYPE i.
 
@@ -2359,7 +2357,7 @@ DATA:
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA:
+  DATA:
     lt_log_header TYPE balhdr_t,
     ls_log_header TYPE balhdr,
     ls_log_filter TYPE bal_s_lfil,
@@ -2494,7 +2492,7 @@ DATA:
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA:
+  DATA:
     lt_log_handle TYPE bal_t_logh,
     lf_load_error TYPE abap_bool.
 
@@ -2505,7 +2503,7 @@ DATA:
 * read log from DB
   CALL FUNCTION &apos;BAL_DB_LOAD&apos;
     EXPORTING
-      i_t_log_handle = lt_log_handle
+      i_t_log_handle     = lt_log_handle
     EXCEPTIONS
       no_logs_specified  = 1
       log_not_found      = 2
@@ -2635,7 +2633,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     lt_msglist_x              TYPE t_msg_x,
     ld_insert_index           TYPE i,
     ld_delete_index           TYPE i,
@@ -2644,8 +2642,7 @@ DATA:
     ld_num_detlevel_diff      TYPE i,
     ld_num_detlevel_following TYPE i.
 
-  FIELD-SYMBOLS:
-    &lt;ls_msglist_x&gt;            LIKE LINE OF lt_msglist_x.
+  FIELD-SYMBOLS &lt;ls_msglist_x&gt;            LIKE LINE OF lt_msglist_x.
 
 * BODY
 * adopt index as inserting position
@@ -2816,8 +2813,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
-    lt_log_handle TYPE bal_t_logh.
+  DATA lt_log_handle TYPE bal_t_logh.
 
 * BODY
 * try to get handles of messages
@@ -2846,7 +2842,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-CREATE OBJECT obj.</SOURCE>
+  CREATE OBJECT obj.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="RAISE_FIRST_MESSAGE" EXPOSURE="2" STATE="1">
     <TEXTS>
@@ -2872,8 +2868,7 @@ CREATE OBJECT obj.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA:
-    ls_msg TYPE BAL_S_MSG.
+  DATA ls_msg TYPE BAL_S_MSG.
 
 * BODY
   CALL METHOD get_first_message
@@ -2942,7 +2937,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
+  DATA:
     ld_num_min_level    LIKE id_relative,
     ld_num_max_level    LIKE id_relative,
     ld_num_level_signed LIKE id_relative.
@@ -2992,8 +2987,7 @@ DATA:
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-DATA:
-    ls_log_temp LIKE ms_log.
+  DATA ls_log_temp LIKE ms_log.
 
 * PRECONDITION
   CHECK id_extnumber IS NOT INITIAL.
@@ -3037,8 +3031,7 @@ DATA:
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-DATA:
-    lt_log_handle TYPE bal_t_logh.
+  DATA lt_log_handle TYPE bal_t_logh.
 
 * BODY
   INSERT md_handle INTO TABLE lt_log_handle.
@@ -3068,11 +3061,10 @@ DATA:
      <ITEM SCONAME="_OFFSET" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
     </PARAMETERS>
     <SOURCE>`
-DATA lt_messages  TYPE t_msg_x.
+  DATA lt_messages  TYPE t_msg_x.
   DATA _msg TYPE string.
   DATA _light TYPE icon_d.
-  FIELD-SYMBOLS:
-    &lt;m&gt; LIKE LINE OF lt_messages.
+  FIELD-SYMBOLS &lt;m&gt; LIKE LINE OF lt_messages.
 
 * get messages
   CALL METHOD get_list_x

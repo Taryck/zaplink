@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2C88CD7651F175591A1E96BDF98F340C" CODE_SIGNATURE="AC12C72D9A2E31D3481A0ECA57D7FF62" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="FCB359AC429DA6D1C74C5395FEBC83D4" CODE_SIGNATURE="FD300A149614C2DF8724544A0B0A5208" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -559,6 +559,7 @@ INCLUDE zaplink_macros.</MACROS>
                        f_sub = with_subcomp ).
       list-&gt;select_default( zaplink_list=&gt;sel_actions-import ).
       list-&gt;change_selection( ).
+      _update_selection( list ).
 
 *  IF my_badi IS BOUND.
 *    TRY.
@@ -918,6 +919,37 @@ INCLUDE zaplink_macros.</MACROS>
     mac_def_catch zaplink_cx_gui.
   ENDTRY.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="_UPDATE_SELECTION" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Update selection in sub component of the list&apos;s component"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="O_LIST" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Component List to export"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA o_comp   TYPE to_component.
+  DATA o_slist  TYPE to_list.
+
+  o_list-&gt;init_sel_iter( ).
+  o_list-&gt;display_progress = abap_false.
+  o_comp = o_list-&gt;get_next( ).
+  WHILE o_comp IS BOUND.
+    CLEAR o_slist.    o_slist = o_comp-&gt;get_subcomponents( ).
+    IF o_slist IS BOUND.    o_slist-&gt;select_all( ).   ENDIF.    &quot; for display list
+    o_comp = o_list-&gt;get_next( ).
+  ENDWHILE.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="_UPDATE_SUBOBJ" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Update sub object in list"/>
@@ -942,7 +974,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA o_comp TYPE to_component.
+  DATA o_comp   TYPE to_component.
 
   o_list-&gt;init_iter( ).
   o_list-&gt;display_progress = abap_false.

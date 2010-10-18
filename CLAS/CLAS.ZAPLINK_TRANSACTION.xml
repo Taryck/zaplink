@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="7EEBA76BAF335DE0CE8723A86C2AE4B8" CODE_SIGNATURE="8FE00CDB7D886C9D018BE5E203DCEFEF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A43F631423A68787EE5C722686B912AA" CODE_SIGNATURE="03F4E66BF7CD23BA177EA3D367994625" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -449,83 +449,84 @@ INCLUDE zaplink_macros.</MACROS>
   END-OF-DEFINITION.
 
   TRY.
-    CREATE OBJECT components.
-    CASE object-&gt;type.
-      WHEN st_transaction.
-        o_data ?= object-&gt;raw.
+      CREATE OBJECT components.
+      CASE object-&gt;type.
+        WHEN st_transaction.
+          o_data ?= object-&gt;raw.
 * Main data
-        o_data-&gt;a0_maindata-tcode = object-&gt;name.
+          o_data-&gt;a0_maindata-tcode = object-&gt;name.
 
 * Sub object
-        IF o_data-&gt;zl_object IS BOUND.
-          IF o_data-&gt;a0_maindata-cinfo O transaction_types-object.
+          IF o_data-&gt;zl_object IS BOUND.
+            IF o_data-&gt;a0_maindata-cinfo O transaction_types-object.
 * Object
-            o_data-&gt;a0_maindata-classname = o_data-&gt;zl_object-&gt;name.
-            o_conn = zaplink_connectors=&gt;create_connector( type = t_component-object ).
-          ELSEIF o_data-&gt;a0_maindata-cinfo O transaction_types-program.
+              o_data-&gt;a0_maindata-classname = o_data-&gt;zl_object-&gt;name.
+              o_conn = zaplink_connectors=&gt;create_connector( type = t_component-object ).
+            ELSEIF o_data-&gt;a0_maindata-cinfo O transaction_types-program.
 * Program
-            o_data-&gt;a0_maindata-pgmna = o_data-&gt;zl_object-&gt;name.
-            o_conn = zaplink_connectors=&gt;create_connector( type = t_component-program ).
-          ELSEIF o_data-&gt;a0_maindata-cinfo O transaction_types-transaction.
+              o_data-&gt;a0_maindata-pgmna = o_data-&gt;zl_object-&gt;name.
+              o_conn = zaplink_connectors=&gt;create_connector( type = t_component-program ).
+            ELSEIF o_data-&gt;a0_maindata-cinfo O transaction_types-transaction.
 * Transaction
-            o_data-&gt;a0_maindata-call_tcode = o_data-&gt;zl_object-&gt;name.
-            o_conn = me.
+              o_data-&gt;a0_maindata-call_tcode = o_data-&gt;zl_object-&gt;name.
+              o_conn = me.
+            ENDIF.
+            IF o_conn IS BOUND.
+              o_list = o_conn-&gt;write_to_sap( o_data-&gt;zl_object ).
+              IF o_conn-&gt;application_log IS BOUND.    application_log-&gt;add_from_instance( o_conn-&gt;application_log ).   ENDIF.
+              components-&gt;add_list( o_list ).
+            ENDIF.
           ENDIF.
-          IF o_conn IS BOUND.
-            o_list = o_conn-&gt;write_to_sap( o_data-&gt;zl_object ).
-            components-&gt;add_list( o_list ).
-          ENDIF.
-        ENDIF.
 
-        s_fm_data = o_data-&gt;to_data( ).
+          s_fm_data = o_data-&gt;to_data( ).
 
-        PERFORM refresh_global_data IN PROGRAM saplseuk.    &quot; to load program in memory
+          PERFORM refresh_global_data IN PROGRAM saplseuk.    &quot; to load program in memory
 * SEUK : LSEUKF01
 *3441      perform save_tcode.
 *   tstca
 *   tstcp &lt;= cobj
 *   cobj
-        LOOP AT s_fm_data-tstca ASSIGNING &lt;v&gt;.
-          IF sy-tabix = 1. lmac_assign &apos;(SAPLSEUK)TSTCA&apos; &lt;v&gt;. ENDIF.
-          s_cobj-field = &lt;v&gt;-field.
-          s_cobj-value = &lt;v&gt;-value.
-          APPEND s_cobj TO t_cobj.
-        ENDLOOP.
-        lmac_assign &apos;(SAPLSEUK)COBJ[]&apos; t_cobj.
+          LOOP AT s_fm_data-tstca ASSIGNING &lt;v&gt;.
+            IF sy-tabix = 1. lmac_assign &apos;(SAPLSEUK)TSTCA&apos; &lt;v&gt;. ENDIF.
+            s_cobj-field = &lt;v&gt;-field.
+            s_cobj-value = &lt;v&gt;-value.
+            APPEND s_cobj TO t_cobj.
+          ENDLOOP.
+          lmac_assign &apos;(SAPLSEUK)COBJ[]&apos; t_cobj.
 *   tstcc
-        lmac_assign &apos;(SAPLSEUK)TSTCC&apos; s_fm_data-tstcc.
+          lmac_assign &apos;(SAPLSEUK)TSTCC&apos; s_fm_data-tstcc.
 *   tc_typ, tc_chk
-        IF s_fm_data-tstc-cinfo O transaction_types-check. lmac_assign &apos;(SAPLSEUK)TC_CHK&apos; transaction_types-check. SUBTRACT transaction_types-check FROM s_fm_data-tstc-cinfo .  ENDIF.
-        IF s_fm_data-tstc-cinfo O transaction_types-enqueue. lmac_assign &apos;(SAPLSEUK)TC_ENQ&apos; transaction_types-enqueue. SUBTRACT transaction_types-enqueue FROM s_fm_data-tstc-cinfo .  ENDIF.
-        lmac_assign &apos;(SAPLSEUK)TC_TYP&apos; s_fm_data-tstc-cinfo.
+          IF s_fm_data-tstc-cinfo O transaction_types-check. lmac_assign &apos;(SAPLSEUK)TC_CHK&apos; transaction_types-check. SUBTRACT transaction_types-check FROM s_fm_data-tstc-cinfo .  ENDIF.
+          IF s_fm_data-tstc-cinfo O transaction_types-enqueue. lmac_assign &apos;(SAPLSEUK)TC_ENQ&apos; transaction_types-enqueue. SUBTRACT transaction_types-enqueue FROM s_fm_data-tstc-cinfo .  ENDIF.
+          lmac_assign &apos;(SAPLSEUK)TC_TYP&apos; s_fm_data-tstc-cinfo.
 *   rsstcd
-        lmac_assign &apos;(SAPLSEUK)RSSTCD&apos; s_fm_data-rsstcd.
-        IF NOT s_fm_data-rsstcd-call_tcode IS INITIAL. lmac_assign &apos;(SAPLSEUK)PARAM_VARI&apos; abap_true. ENDIF.      &quot; For transaction parameter @*
+          lmac_assign &apos;(SAPLSEUK)RSSTCD&apos; s_fm_data-rsstcd.
+          IF NOT s_fm_data-rsstcd-call_tcode IS INITIAL. lmac_assign &apos;(SAPLSEUK)PARAM_VARI&apos; abap_true. ENDIF.      &quot; For transaction parameter @*
 *   action
 *          lmac_assign &apos;(SAPLSEUK)ACTION&apos; &apos;ADD&apos;. Issue 57
 *   tstc
-        lmac_assign &apos;(SAPLSEUK)TSTC&apos; s_fm_data-tstc.
+          lmac_assign &apos;(SAPLSEUK)TSTC&apos; s_fm_data-tstc.
 *   tran_langu &amp; tstct
-        IF NOT s_fm_data-tstct IS INITIAL.
-          READ TABLE s_fm_data-tstct INTO s_tstct INDEX 1.
-          lmac_assign &apos;(SAPLSEUK)TRAN_LANGU&apos; s_tstct-sprsl.
-          lmac_assign &apos;(SAPLSEUK)TSTCT&apos; s_tstct.
-        ENDIF.
+          IF NOT s_fm_data-tstct IS INITIAL.
+            READ TABLE s_fm_data-tstct INTO s_tstct INDEX 1.
+            lmac_assign &apos;(SAPLSEUK)TRAN_LANGU&apos; s_tstct-sprsl.
+            lmac_assign &apos;(SAPLSEUK)TSTCT&apos; s_tstct.
+          ENDIF.
 *   params
-        lmac_assign_table &apos;(SAPLSEUK)param[]&apos; s_fm_data-t_params.
+          lmac_assign_table &apos;(SAPLSEUK)param[]&apos; s_fm_data-t_params.
 
 *3442      perform save_classification.
 *   tstc
 *   g_gui_inhe
-        lmac_assign &apos;(SAPLSEUK)G_GUI_INHE&apos; s_fm_data-gui_inh.
+          lmac_assign &apos;(SAPLSEUK)G_GUI_INHE&apos; s_fm_data-gui_inh.
 *   g_iac_ewt &lt;= tstcc-s_webgui
-        IF s_fm_data-tstcc-s_webgui = &apos;2&apos;.    &quot; LSEUKF01(426-427)
-          lmac_assign &apos;(SAPLSEUK)G_IAC_EWT&apos; &apos;X&apos;.
-        ENDIF.
-        PERFORM save_tcode IN PROGRAM saplseuk.
-        PERFORM save_classification IN PROGRAM saplseuk.
+          IF s_fm_data-tstcc-s_webgui = &apos;2&apos;.    &quot; LSEUKF01(426-427)
+            lmac_assign &apos;(SAPLSEUK)G_IAC_EWT&apos; &apos;X&apos;.
+          ENDIF.
+          PERFORM save_tcode IN PROGRAM saplseuk.
+          PERFORM save_classification IN PROGRAM saplseuk.
 
-        MODIFY tstct FROM TABLE s_fm_data-tstct.
+          MODIFY tstct FROM TABLE s_fm_data-tstct.
 
 *        CREATE OBJECT o_comp.
 *        o_comp-&gt;set_type( st_transaction ).
@@ -533,15 +534,17 @@ INCLUDE zaplink_macros.</MACROS>
 *        o_comp-&gt;set_name( d_name ).
 *        CREATE OBJECT components.
 *        components-&gt;add( o_comp ).
-      WHEN OTHERS.
-        mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
-    ENDCASE.
+        WHEN OTHERS.
+          mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+      ENDCASE.
 
-    o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
-    IF NOT components IS BOUND.   CREATE OBJECT components.   ENDIF.     &quot; Issue 92
-    TRY.  components-&gt;add( o_comp ).  CATCH zaplink_cx_list.  ENDTRY.    &quot; Issue 92
-    mac_def_catch zaplink_cx_connector.
-  ENDTRY.</SOURCE>
+      o_comp = object-&gt;get_component( abap_true ).          &quot; Issue 92
+      IF NOT components IS BOUND.   CREATE OBJECT components.   ENDIF. &quot; Issue 92
+      TRY.
+          components-&gt;add( o_comp ).
+          CATCH zaplink_cx_list.  ENDTRY.                   &quot; Issue 92
+          mac_def_catch zaplink_cx_connector.
+      ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>

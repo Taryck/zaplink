@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="6F31EADD53F8D35E460568CEB2930B5D" CODE_SIGNATURE="153F8D5EB4B7F4AD8090BA957B62D47D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="1EAEB19D3409AD0EF140EF7FF7C7A338" CODE_SIGNATURE="835C0DF14039E32617AF6372BEAF11DB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -464,8 +464,21 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Get Variant parameters"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="DATA" CMPTYPE="1" TYPTYPE="1" TYPE="TT_VARIANT_DATA"/>
-     <ITEM SCONAME="PROGRAM" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME"/>
+     <ITEM SCONAME="DATA" CMPTYPE="1" TYPTYPE="1" TYPE="TT_VARIANT_DATA">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Variant data"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="PROGRAM" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Program name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Everything was OK"/>
+      </TEXTS>
+     </ITEM>
      <ITEM SCONAME="VARIANT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_VARIANT">
       <TEXTS>
        <ITEM LANG="E" TEXT="ABAP: Name of variant (without program name)"/>
@@ -505,6 +518,7 @@ INCLUDE zaplink_macros.</MACROS>
 
   p_key-report = program.
   p_key-variant = variant.
+  result = abap_true.
 
 * CALL FUNCTION &apos;SELTAB_2_SELOPTS&apos;
 
@@ -532,13 +546,14 @@ INCLUDE zaplink_macros.</MACROS>
 * END FROM MF RS_CHANGE_CREATED_VARIANT (134)
     MOVE &lt;s&gt;-name TO l_formname_0-suffix.
     CONCATENATE &apos;SET_VAL_&apos; &lt;s&gt;-kind INTO d_formname.
-    IF 1 = 2.   &quot;#EC *
+    IF 1 = 2.                                               &quot;#EC *
 *      PERFORM set_val_s IN PROGRAM zaplink_vari TABLES space                     &quot;#EC *
 *                USING space space space space space IF FOUND.   &quot;#EC *
-      PERFORM set_val_p IN PROGRAM zaplink_vari using space space space IF FOUND.   &quot;#EC *
+      PERFORM set_val_p IN PROGRAM zaplink_vari USING space space space IF FOUND. &quot;#EC *
     ENDIF.
     PERFORM (l_formname_0) IN PROGRAM (p_key-report)
            USING report d_formname p_subrc IF FOUND.
+    IF p_subrc &lt;&gt; 0.    result = abap_false.    ENDIF.
     LOOP AT current_param-params ASSIGNING &lt;p&gt;.
       CLEAR s_vdat.   MOVE-CORRESPONDING &lt;p&gt; TO s_vdat.   s_vdat-selname = current_param-name.
       APPEND s_vdat TO t_varivdat.
@@ -556,6 +571,7 @@ INCLUDE zaplink_macros.</MACROS>
                                                              t_texpr imex
                                                              p_key
                                                              p_subrc.
+  IF p_subrc &lt;&gt; 0.    result = abap_false.    ENDIF.
 
   PERFORM export_%_vari IN PROGRAM saplsvar USING p_key-report
                                                   p_key
@@ -567,6 +583,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Read variant from SAP"/>
     </TEXTS>
     <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TT_VARIANTS"/>
      <ITEM SCONAME="VARIANTS" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_VARIANTS"/>
     </PARAMETERS>
     <SOURCE>`
@@ -613,24 +630,25 @@ INCLUDE zaplink_macros.</MACROS>
           EXPORTING
             obj_list = t_comps.
         t_comps = o_activate-&gt;activate( ).
-        IF NOT t_comps IS INITIAL.
-* Can&apos;t insert variant &apos;1&apos; for program &apos;&amp;2&apos;, because do not exist as active
-          SET EXTENDED CHECK OFF.
-          IF 1 = 2.   MESSAGE i003 WITH &lt;v&gt;-header-report &lt;v&gt;-header-variant.   ENDIF.
-          SET EXTENDED CHECK ON.
-          CALL METHOD application_log-&gt;add_warning
-            EXPORTING
-*        id_msgid     =
-              id_msgno     = &apos;003&apos;
-*        id_msgv4     =
-              id_msgv1     = &lt;v&gt;-header-report
-              id_msgv2     = &lt;v&gt;-header-variant.
-          CLEAR f_ok.
-        ENDIF.
+        IF NOT t_comps IS INITIAL.      CLEAR f_ok.     ENDIF.
       ENDIF.
     ENDAT.
 
+    IF f_ok IS INITIAL.
+* Can&apos;t insert variant &apos;&amp;1&apos; for program &apos;&amp;2&apos;, because do not exist as active
+      SET EXTENDED CHECK OFF.
+      IF 1 = 2.   MESSAGE i003 WITH &lt;v&gt;-header-report &lt;v&gt;-header-variant.   ENDIF.
+      SET EXTENDED CHECK ON.
+      CALL METHOD application_log-&gt;add_error
+        EXPORTING
+*        id_msgid     =
+          id_msgno     = &apos;003&apos;
+*        id_msgv4     =
+          id_msgv1     = &lt;v&gt;-header-report
+          id_msgv2     = &lt;v&gt;-header-variant.
+    ENDIF.
     CHECK f_ok = abap_true.
+
     REFRESH t_params.
     LOOP AT &lt;v&gt;-params ASSIGNING &lt;p&gt;.
       IF NOT &lt;p&gt;-value IS INITIAL.
@@ -705,7 +723,9 @@ INCLUDE zaplink_macros.</MACROS>
               WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
     ELSE.
 *    PERFORM enq_variant IN PROGRAM saplsvar USING &lt;v&gt;-header-report &lt;v&gt;-header-variant.      &quot; Not release by function it seems
-      set_variant_params( program = &lt;v&gt;-header-report   variant = &lt;v&gt;-header-variant    data = &lt;v&gt;-params ).
+      IF set_variant_params( program = &lt;v&gt;-header-report   variant = &lt;v&gt;-header-variant    data = &lt;v&gt;-params ) = abap_true.
+        APPEND &lt;v&gt; TO result.
+      ENDIF.
       PERFORM deq_variant IN PROGRAM saplsvar USING &lt;v&gt;-header-report &lt;v&gt;-header-variant.
     ENDIF.
   ENDLOOP.</SOURCE>
@@ -1119,6 +1139,8 @@ INCLUDE zaplink_macros.</MACROS>
 *  DATA _name       TYPE td_compname.
   DATA s_fmd_prog  TYPE ts_fm_data.
   DATA s_fmd_vari  TYPE ts_fmd_vari.
+  DATA t_vari      TYPE tt_variants.
+  FIELD-SYMBOLS &lt;v&gt; LIKE LINE OF o_prog-&gt;variants.
 
   TRY.
 
@@ -1189,27 +1211,41 @@ INCLUDE zaplink_macros.</MACROS>
         MODIFY trdirti FROM TABLE s_fmd_prog-texts.
 
 * Variants
-        write_variants( s_fmd_prog-variants ).
+        t_vari = write_variants( s_fmd_prog-variants ).
+        LOOP AT o_prog-&gt;variants ASSIGNING &lt;v&gt;.
+          o_vari ?= &lt;v&gt;-zl_object-&gt;raw.
+          READ TABLE t_vari TRANSPORTING NO FIELDS WITH KEY header-variant = o_vari-&gt;a0_maindata-variant.
+          IF sy-subrc = 0.
+            o_comp = &lt;v&gt;-zl_object-&gt;get_component( abap_true ).
+            components-&gt;add( o_comp ).    components-&gt;select( o_comp ).
+* Done in Write_variants
+*          ELSE.
+** Can&apos;t insert variant &apos;&amp;1&apos; for program &apos;&amp;2&apos;, because don&apos;t exist as active
+*            SET EXTENDED CHECK OFF.
+*            IF 1 = 2.   MESSAGE i003 WITH space space.   ENDIF.
+*            SET EXTENDED CHECK ON.
+*            CALL METHOD application_log-&gt;add_error
+*              EXPORTING
+**                id_msgid = &apos;ZAPLINK&apos;
+*                id_msgno = &apos;003&apos;
+*                id_msgv1 = s_fmd_prog-header-name
+*                id_msgv2 = o_vari-&gt;a0_maindata-variant.
+          ENDIF.
+        ENDLOOP.
 
-*          CREATE OBJECT _comp.
-*          _comp-&gt;set_type( supportedtypes-program ).
-*          _name = _prog.
-*          _comp-&gt;set_name( _name ).
-*          CREATE OBJECT components.
-*          components-&gt;add( _comp ).
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
 
     o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
-    IF NOT components IS BOUND.   CREATE OBJECT components.   ENDIF.     &quot; Issue 92
-    TRY.  components-&gt;add( o_comp ).  CATCH zaplink_cx_list.  ENDTRY.    &quot; Issue 92
+    components-&gt;add( o_comp ).
+
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>
-   <ITEM TYPEGROUP="ABAP" IMPLICIT="X"/>
+   <ITEM TYPEGROUP="ABAP" EXPLICIT="X"/>
    <ITEM TYPEGROUP="RSDS" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
