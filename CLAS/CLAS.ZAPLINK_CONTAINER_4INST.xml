@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3EA82923A16B6C2442FFDAB03869F2F2" CODE_SIGNATURE="235C278D7EC6F9128D183C7F040BCA52" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="135F55C2CB98B18C9722EF54EDC09274" CODE_SIGNATURE="8557AC0ED92811F28BF625C095CAF031" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -360,6 +360,7 @@ check data &lt;&gt; _options.
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_connector  TYPE to_connector.
+  DATA o_list_comp  TYPE to_component.
   DATA o_comp       TYPE to_component.
   DATA o_comp_n     TYPE to_component.
   DATA o_comp_s     TYPE to_component.
@@ -401,6 +402,9 @@ check data &lt;&gt; _options.
         WHILE o_comp_n IS BOUND.
           o_comp = o_comp_n.    o_comp_n = o_todo-&gt;get_next( ).    &quot; to allow continue
           o_comp_s = _complist-&gt;search( o_comp ).
+          ASSERT ID zaplink CONDITION o_comp_s IS BOUND.
+          o_list_comp = object_list-&gt;search( o_comp ).
+          ASSERT ID zaplink CONDITION o_list_comp IS BOUND.
           o_connector = o_comp_s-&gt;connector( ).
           o_connector-&gt;options = _options.
           o_log = o_comp_s-&gt;get_msg_coll( ).
@@ -482,8 +486,8 @@ check data &lt;&gt; _options.
 
               _components = o_connector-&gt;import_to_sap( _xml_comp ).
               IF _components IS NOT BOUND.   CREATE OBJECT _components.   ELSE.   f_ok = abap_true. ENDIF.
-              o_comp-&gt;set_subcomponents( _components ).
-              o_comp-&gt;set_msg_coll( o_connector-&gt;application_log ).
+              o_list_comp-&gt;set_subcomponents( _components ).
+              o_list_comp-&gt;set_msg_coll( o_connector-&gt;application_log ).
               IF o_connector-&gt;application_log IS BOUND.   IF o_connector-&gt;application_log-&gt;has_messages_of_msgt(&apos;W&apos;) = abap_true.      f_ok = abap_false. log-&gt;add_from_instance( o_connector-&gt;application_log ).   ENDIF.   ENDIF.
               IF _components-&gt;search( o_comp ) IS BOUND.    _components-&gt;remove( o_comp ).    ELSE.     f_ok = abap_false.     ENDIF.
               o_remain-&gt;remove( o_comp ).                   &quot; Issue 47
