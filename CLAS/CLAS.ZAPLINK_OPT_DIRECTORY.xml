@@ -309,7 +309,6 @@ result = _devclass.</SOURCE>
             OTHERS                     = 3.
         IF sy-subrc &lt;&gt; 0.
           mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_INSERT&apos; sy-subrc.
-                                                funcname = &apos;TRINT_TADIR_INSERT&apos;
         ENDIF.
       ELSEIF _act_devc &lt;&gt; result-devclass.
         CALL FUNCTION &apos;TRINT_TADIR_MODIFY&apos;
@@ -379,7 +378,6 @@ result = _devclass.</SOURCE>
         OTHERS                         = 4.
     IF sy-subrc &lt;&gt; 0.
       mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;RS_CORR_INSERT&apos; sy-subrc.
-                                              funcname = &apos;RS_CORR_INSERT&apos;
     ENDIF.
 
     mac_def_catch zaplink_cx_options.

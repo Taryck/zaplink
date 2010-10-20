@@ -121,10 +121,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
    <ITEM CMPNAME="OBJ_NAME" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="SEOCLSNAME">
     <TEXTS>
-     <ITEM LANGU="E" DESCRIPT="Method separator"/>
-    </TEXTS>
-   </ITEM>
-    <TEXTS>
      <ITEM LANG="E" TEXT="Object Type Name"/>
     </TEXTS>
    </ITEM>
