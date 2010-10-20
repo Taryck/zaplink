@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BD73335F75A541EC93BC72C1A28BCF77" CODE_SIGNATURE="68F9C013BB13A2A08C3B7020986DC695" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="179843E05F37DEE172A536140A503846" CODE_SIGNATURE="CAE5FA2C3881431C8A041A03CCC8B285" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <TEXTS>
-    <ITEM LANG="E" TEXT="ZAPLink : Stand Alone Generator (local class&amp;intf)">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="ZAPLink : Dependencies analyser for SA generator">U1&amp;FUNCTIONALITY&amp;
 ASTools used to maps dependencies of :
 AS,,- Programs
 AS,,- Classes
@@ -886,9 +886,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </PARAMETERS>
     <SOURCE>`
   DATA t_texts TYPE tt_txtp_textpools.
-  t_texts = zaplink_connector_=&gt;get_prog_textpool( name ).
-  textspool = zaplink_connector_=&gt;fusion_textpool( source = textspool
-                                               completion = t_texts ).</SOURCE>
+  t_texts = zaplink_program_4dep_analyser=&gt;get_prog_textpool( name ).               &quot; Issue 110
+  textspool = zaplink_program_4dep_analyser=&gt;fusion_textpool( source = textspool
+                                                          completion = t_texts ).   &quot; Issue 110</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ADD_SOURCE" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
     <TEXTS>
@@ -2407,8 +2407,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  zaplink_connector_=&gt;set_prog_textpool( program = name
-                                        textpool = textspool ).</SOURCE>
+  zaplink_program_4dep_analyser=&gt;set_prog_textpool( program = name
+                                                   textpool = textspool ). &quot; Issue 110</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SOURCE_2_STRING" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
