@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="786C4361C1A8864B7B1E5ACC572F3F99" CODE_SIGNATURE="BE9E25CE71BE93D44F36F0392732D931" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C831C13326F55F60F6674A802A901CD6" CODE_SIGNATURE="8514456315D953A3070057176C74083B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_RAW_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANG="E" TEXT="Index (SE11) Datas">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Table Index (SE11) Datas">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_DICTIONARY
 ASDefine XML structure of a Table or Structure
 U1&amp;RELATIONS&amp;
@@ -47,6 +47,16 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="FIELDS" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TT_FIELDS"/>
+   <ITEM CMPNAME="O_CX" EXPOSURE="1" STATE="1" ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="O_MYCX" EXPOSURE="1" STATE="1" ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="R_DOC_IDS" EXPOSURE="1" STATE="1" ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID">
     <TEXTS>
      <ITEM LANG="E" TEXT="Documentation IDS"/>
@@ -74,7 +84,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
    <MACROS>`
 *&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
-*&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
+*&quot;* IN THE IMPLEMENTATION PART OF THE CLASS
+
+INCLUDE zaplink_macros.</MACROS>
   </LOCAL>
   <METHODS>
    <ITEM CMPNAME="ANONYMIZE" EXPOSURE="2" STATE="1">
@@ -175,8 +187,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       illegal_input       = 1
       OTHERS              = 2.
   IF sy-subrc &lt;&gt; 0.
-* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+    mac_raise_mf &apos;DD_DD_TO_E071&apos; sy-subrc.
   ELSE.
     result = d_obj_name.
   ENDIF.</SOURCE>
@@ -209,8 +220,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       ILLEGAL_INPUT       = 1
       OTHERS              = 2.
   IF sy-subrc &lt;&gt; 0.
-* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+    mac_raise_mf &apos;DD_DD_TO_E071&apos; sy-subrc.
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1">
@@ -280,6 +290,16 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
   </METHODS>
   <TYPES>
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
     BEGIN OF ts_fm_data,
 * DO pour type doc

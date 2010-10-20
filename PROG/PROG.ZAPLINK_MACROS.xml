@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="138B37E8738831C3E3C22D4612560B17" CODE_SIGNATURE="8A4C4E1B982687038B40D361F95EA835" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MACROS" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="01DAA69D682B2F984A9B9E5CAB5A6C92" CODE_SIGNATURE="1C54D084BC34AA98FFCF60207E114500" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MACROS" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" RSTAT="K" RMAND="200" RLOAD="E" UCCHECK="X"/>
@@ -93,6 +93,13 @@ DEFINE mac_add_mf_and_raise.
                                           classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
   application_log-&gt;add_symsg( ).
   application_log-&gt;add_exception( o_mycx ).
+  raise exception o_mycx.
+END-OF-DEFINITION.
+
+DEFINE mac_raise_mf.
+  o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &amp;1
+                                              subrc = &amp;2
+                                          classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
   raise exception o_mycx.
 END-OF-DEFINITION.
 

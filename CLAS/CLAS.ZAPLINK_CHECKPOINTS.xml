@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="46B4C6CE76563343102FFB702F6DE6A1" CODE_SIGNATURE="C08042A14C3BAE4F14830DEB14DBFADD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CHECKPOINTS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="BD6330ECA80C1DC61807DC5DA1A25335" CODE_SIGNATURE="49339690B1CBA37C57460A99373AA4DC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CHECKPOINTS" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
+  <ITEM TYPE="CLAS" NAME="ZAPLINK_ACID_DATA"/>
+  <ITEM TYPE="CLAS" NAME="ZAPLINK_AVAR_DATA"/>
  </DEPENDENCIES>
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
@@ -60,6 +62,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
+  <DEFERRED>
+   <CLASSES>
+    <ITEM TYPEGROUP="ZAPLINK_ACID_DATA" TPUTYPE="1" EXPLICIT="X"/>
+    <ITEM TYPEGROUP="ZAPLINK_AVAR_DATA" TPUTYPE="1" EXPLICIT="X"/>
+   </CLASSES>
+  </DEFERRED>
   <LOCAL>
    <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
@@ -199,6 +207,7 @@ INCLUDE zaplink_macros.</MACROS>
 *  DATA d_variant      TYPE td_checkpoint.
   DATA type           TYPE td_comptype.
   DATA name           TYPE td_compname.
+  DATA s_variant      TYPE zaplink_avar_data=&gt;ts_name.
 
   TRY.
     type = component-&gt;get_type( ).
@@ -251,7 +260,35 @@ INCLUDE zaplink_macros.</MACROS>
 *        o_checkpoint-&gt;dequeue =&gt; Made on commit
 
       WHEN supportedtypes-variant.
-*        d_function = component-&gt;get_name( ).
+        name = component-&gt;get_name( ).
+        s_variant = zaplink_avar_data=&gt;name_2_key( name ).
+        CREATE OBJECT o_variant
+          EXPORTING
+            im_name          = s_variant-name
+            im_local         = s_variant-user
+          EXCEPTIONS
+            name_not_allowed = 1
+            no_authorization = 2
+            user_not_valid   = 3
+            OTHERS           = 4.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_name_meth_and_raise &apos;cl_aab_variant&apos; &apos;CONSTRUCTOR&apos; sy-subrc &apos;ZAPLINK_CX_CONNECTOR&apos;.
+        ENDIF.
+
+        CALL METHOD o_variant-&gt;delete
+          EXCEPTIONS
+            cts_devclass     = 1
+            cts_error        = 2
+            no_authorization = 3
+            prop_error       = 4
+            propt_error      = 5
+            var_id_error     = 6
+            var_not_found    = 7
+            others           = 8.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_obj_meth_and_raise o_variant &apos;DELETE&apos; sy-subrc.
+        ENDIF.
+
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
@@ -269,6 +306,8 @@ INCLUDE zaplink_macros.</MACROS>
   DATA o_variant      TYPE REF TO cl_aab_variant.
 *  DATA d_variant      TYPE td_checkpoint.
   DATA type           TYPE td_comptype.
+  DATA name           TYPE td_compname.
+  DATA s_variant      TYPE zaplink_avar_data=&gt;ts_name.
 
   exists = me-&gt;exists-not_exists.
 
@@ -283,13 +322,31 @@ INCLUDE zaplink_macros.</MACROS>
           EXCEPTIONS
             name_not_allowed = 1
             OTHERS           = 2.
-        IF sy-subrc = 0.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_name_meth_and_raise &apos;cl_aab_variant&apos; &apos;CONSTRUCTOR&apos; sy-subrc &apos;ZAPLINK_CX_CONNECTOR&apos;.
+        ELSE.
           o_checkpoint-&gt;get_state( IMPORTING ex_state = state ).
           IF NOT state IS INITIAL.     exists = me-&gt;exists-exists.     ENDIF.
         ENDIF.
 
       WHEN supportedtypes-variant.
-*        d_function = component-&gt;get_name( ).
+        name = component-&gt;get_name( ).
+        s_variant = zaplink_avar_data=&gt;name_2_key( name ).
+        CREATE OBJECT o_variant
+          EXPORTING
+            im_name          = s_variant-name
+            im_local         = s_variant-user
+          EXCEPTIONS
+            name_not_allowed = 1
+            no_authorization = 2
+            user_not_valid   = 3
+            OTHERS           = 4.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_name_meth_and_raise &apos;cl_aab_variant&apos; &apos;CONSTRUCTOR&apos; sy-subrc &apos;ZAPLINK_CX_CONNECTOR&apos;.
+        ELSE.
+          o_variant-&gt;get_state( IMPORTING ex_state = state ).
+          IF NOT state IS INITIAL.     exists = me-&gt;exists-exists.     ENDIF.
+        ENDIF.
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
@@ -314,6 +371,10 @@ INCLUDE zaplink_macros.</MACROS>
   DATA name             TYPE td_compname.
   DATA l_mode           TYPE aab_id_mode.
   DATA l_tstamp         TYPE aab_id_act-act_tstamp.
+  DATA o_aab_variant    TYPE REF TO cl_aab_variant.
+  DATA o_variant        TYPE to_variant.
+  DATA s_variant        TYPE zaplink_avar_data=&gt;ts_name.
+  DATA s_fmd_avar       TYPE ts_fmd_avar.
 
   TRY.
     type = component-&gt;get_type( ).
@@ -358,7 +419,7 @@ INCLUDE zaplink_macros.</MACROS>
           EXCEPTIONS
             no_mode_found = 1
             system_error  = 2
-            others        = 3.
+            OTHERS        = 3.
         IF sy-subrc &lt;&gt; 0.
           mac_add_obj_meth_and_raise o_aab_id &apos;GET_ALL_MODES&apos; sy-subrc.
         ENDIF.
@@ -369,134 +430,191 @@ INCLUDE zaplink_macros.</MACROS>
         object-&gt;raw = o_checkpoint.
 
       WHEN supportedtypes-variant.
-*        d_function = component-&gt;get_name( ).
+        name = component-&gt;get_name( ).
+        s_variant = zaplink_avar_data=&gt;name_2_key( name ).
+        s_fmd_avar-header-name = s_variant-name.
+        s_fmd_avar-header-local = s_variant-user.
+        CREATE OBJECT o_aab_variant
+          EXPORTING
+            im_name          = s_fmd_avar-header-name
+            im_local         = s_fmd_avar-header-local
+          EXCEPTIONS
+            name_not_allowed = 1
+            no_authorization = 2
+            user_not_valid   = 3
+            OTHERS           = 4.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_name_meth_and_raise &apos;cl_aab_variant&apos; &apos;CONSTRUCTOR&apos; sy-subrc &apos;ZAPLINK_CX_CONNECTOR&apos;.
+        ENDIF.
+
+* Multilang =&gt;
+        SELECT * INTO TABLE s_fmd_avar-descriptions
+          FROM aab_var_propt
+          WHERE name = s_fmd_avar-header-name
+           AND local = s_fmd_avar-header-local.
+
+        CALL METHOD o_aab_variant-&gt;get_ids
+          IMPORTING
+            ex_ids       = s_fmd_avar-modes
+          EXCEPTIONS
+            id_not_valid = 1
+            OTHERS       = 2.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_obj_meth_and_raise o_aab_variant &apos;GET_IDS&apos; sy-subrc.
+        ENDIF.
+
+        CREATE OBJECT o_variant.
+        o_variant-&gt;from_data( s_fmd_avar ).
+        CLEAR: s_fmd_avar-header-name, s_fmd_avar-header-local.
+        object-&gt;raw = o_variant.
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
 
+    object-&gt;update_connector_data( me ).                    &quot; Issue 66
     mac_def_catch zaplink_cx_connector.
-  ENDTRY.
-
-*    CASE type.
-*      WHEN supportedtypes-variant.
-*        s_fmd_func-header-name = object-&gt;name.
-*        s_fmd_func = read_function( s_fmd_func-header-name ).
-*        s_fmd_func-code_signature = calc_function_signature( s_fmd_func ).
-*        CREATE OBJECT o_variant.
-*        o_variant-&gt;from_data( s_fmd_func ).
-*        CLEAR o_variant-&gt;a0_maindata-name.
-*        object-&gt;raw = o_variant.
-*      WHEN supportedtypes-checkpoint.
-*        s_fmd_acid-header-area = d_name = object-&gt;name.
-*        CALL FUNCTION &apos;RS_FUNCTION_POOL_CONTENTS&apos;
-*          EXPORTING
-*            function_pool           = s_fmd_acid-header-area
-*          TABLES
-*            functab                 = t_functions
-*          EXCEPTIONS
-*            function_pool_not_found = 1
-*            OTHERS                  = 2.
-*        IF sy-subrc &lt;&gt; 0.
-*          mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_CONTENTS&apos; sy-subrc.
-*        ENDIF.
-*
-*        d_doc = d_mainprog = get_mainprogram( s_fmd_acid-header-area ).
-*        s_fmd_acid-docs = zaplink_documentation=&gt;get( ids = zaplink_acid_data=&gt;r_doc_ids-group
-*                                                  object = d_doc  ).
-*
-*        SELECT * INTO TABLE s_fmd_acid-texts FROM tlibt WHERE area = s_fmd_acid-header-area.
-** Issue 95
-**        SELECT * INTO TABLE s_fmd_acid-function_texts FROM tftit FOR ALL ENTRIES IN t_functions WHERE funcname = t_functions-funcname.
-**        SELECT * INTO TABLE s_fmd_acid-param_texts FROM funct FOR ALL ENTRIES IN t_functions WHERE funcname = t_functions-funcname.
-*        LOOP AT t_functions ASSIGNING &lt;f&gt;.
-*          s_fmd_func = read_function( &lt;f&gt;-funcname ).   clear s_fmd_func-header-str_area.
-*          s_fmd_func-code_signature = calc_function_signature( s_fmd_func ).
-*          INSERT s_fmd_func INTO TABLE s_fmd_acid-functions.
-*        ENDLOOP.
-*
-*        SELECT SINGLE dlvunit INTO d_soft_comp
-*          FROM v_tralan
-*          WHERE pgmid = supportedkinds-group
-*            AND object = supportedtypes-checkpoint
-*            AND obj_name = s_fmd_acid-header-area.
-*
-*        s_fmd_acid-includes = get_all_includes( s_fmd_acid-header-area ).
-*
-**          s_fmd_acid-includes = remove_unwanted_includes( includes = s_fmd_acid-includes
-**                                                        functions = t_functions
-**                                                        soft_comp = d_soft_comp ).
-*
-** Texts Pool
-*        s_fmd_acid-textspool = get_prog_textpool( d_mainprog ).
-*
-** Dynpro
-*        s_fmd_acid-dynpros = get_dynpros( d_mainprog ).
-*
-** Menu Painter
-*        s_fmd_acid-menupainter = get_menus( d_mainprog ).
-*** Documentation
-***      CONCATENATE _name &apos;*&apos; INTO _obj. &quot; Issue:7
-**          s_obj-prog = _name.
-**          s_obj-wildcard = &apos;*&apos;.
-**          _obj = s_obj.
-***Issue:7
-**          o_checkpoint-&gt;documentation = zaplink_documentation=&gt;get( ids = r_doc_id
-**                                                          object = _obj ).
-*        CREATE OBJECT o_checkpoint.
-*        o_checkpoint-&gt;from_data( s_fmd_acid ).
-*        o_checkpoint-&gt;_code_signature = get_group_signature( o_checkpoint-&gt;a0_maindata-area ).
-*        CLEAR o_checkpoint-&gt;a0_maindata-area.
-*        object-&gt;raw = o_checkpoint.
-*      WHEN OTHERS.
-*        CLEAR object.
-*        mac_raise_type_not_supported me-&gt;class_name type.
-*    ENDCASE.
-*    object-&gt;update_connector_data( me ).                    &quot; Issue 66
-*    mac_def_catch zaplink_cx_connector.
-*  ENDTRY.</SOURCE>
+  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>`
   DATA o_aab_id         TYPE REF TO cl_aab_id.
   DATA o_checkpoint     TYPE to_checkpoint.
   DATA s_fmd_acid       TYPE ts_fmd_acid.
-*  DATA o_variant   TYPE to_variant.
-*  DATA s_fmd_func  TYPE ts_fmd_func.
-  DATA _comp        TYPE to_component.
-  DATA s_desc       LIKE LINE OF s_fmd_acid-descriptions.
-  DATA d_nb_err     TYPE i.
-  DATA lt_modes     TYPE aab_id_act_tab.
+  DATA o_variant        TYPE to_variant.
+  DATA s_fmd_avar       TYPE ts_fmd_avar.
+  DATA _comp            TYPE to_component.
+  DATA s_desc           LIKE LINE OF s_fmd_acid-descriptions.
+  DATA d_nb_err         TYPE i.
+  DATA lt_modes         TYPE aab_id_act_tab.
+  DATA o_aab_variant    TYPE REF TO cl_aab_variant.
+  DATA s_variant        TYPE zaplink_avar_data=&gt;ts_name.
+  DATA s_var_desc       LIKE LINE OF s_fmd_avar-descriptions.
+  DATA lt_var_modes     TYPE aab_var_obj_act_tab.
   FIELD-SYMBOLS:
     &lt;o&gt;  LIKE LINE OF lt_modes,
+    &lt;v&gt;  LIKE LINE OF lt_var_modes,
+    &lt;w&gt;  LIKE LINE OF s_fmd_avar-modes,
     &lt;m&gt;  LIKE LINE OF s_fmd_acid-modes.
 
   TRY.
       CREATE OBJECT components.
       CASE object-&gt;type.
         WHEN supportedtypes-variant.
-*          o_variant ?= object-&gt;raw.
-*          o_variant-&gt;a0_maindata-name = object-&gt;name.
-*          s_fmd_func = o_variant-&gt;to_data( ).
-*
-*          del_function( s_fmd_func ).
-*          write_function( s_fmd_func ).
-*          CALL FUNCTION &apos;RS_FUNCTION_POOL_CONTENTS&apos;
+          o_variant ?= object-&gt;raw.   s_variant = object-&gt;name.
+          o_variant-&gt;a0_maindata-name = s_variant-name.     o_variant-&gt;a0_maindata-local = s_variant-user.
+          s_fmd_avar = o_variant-&gt;to_data( ).
+          CREATE OBJECT o_aab_variant
+            EXPORTING
+              im_name          = s_variant-name
+              im_local         = s_variant-user
+            EXCEPTIONS
+              name_not_allowed = 1
+              no_authorization = 2
+              user_not_valid   = 3
+              OTHERS           = 4.
+          IF sy-subrc &lt;&gt; 0.
+            mac_add_name_meth_and_raise &apos;cl_aab_variant&apos; &apos;CONSTRUCTOR&apos; sy-subrc &apos;ZAPLINK_CX_CONNECTOR&apos;.
+          ENDIF.
+
+          CALL METHOD o_aab_variant-&gt;enqueue
+            EXPORTING
+              enqueue_mode = &apos;E&apos;
+            EXCEPTIONS
+              cts_error    = 1
+              foreign_lock = 2
+              system_error = 3
+              OTHERS       = 4.
+          IF sy-subrc &lt;&gt; 0.
+            mac_add_obj_meth_and_raise o_aab_variant &apos;ENQUEUE&apos; sy-subrc.
+          ENDIF.
+
+          CALL METHOD o_aab_variant-&gt;get_ids
+            IMPORTING
+              ex_ids       = lt_var_modes
+            EXCEPTIONS
+              id_not_valid = 1
+              OTHERS       = 2.
+          IF sy-subrc = 0.
+            LOOP AT lt_var_modes ASSIGNING &lt;v&gt;.
+              READ TABLE s_fmd_avar-modes TRANSPORTING NO FIELDS WITH KEY
+                  name = &lt;v&gt;-name
+                object = &lt;v&gt;-object.
+              CHECK sy-subrc &lt;&gt; 0.
+              CALL METHOD o_aab_variant-&gt;del_id
+                EXPORTING
+                  im_name          = &lt;v&gt;-name
+                  im_object        = &lt;v&gt;-object
+                EXCEPTIONS
+                  id_not_found     = 0
+                  no_authorization = 2
+                  OTHERS           = 3.
+              IF sy-subrc &lt;&gt; 0.
+                mac_add_obj_meth_and_raise o_aab_variant &apos;DEL_ID&apos; sy-subrc.
+              ENDIF.
+            ENDLOOP.
+          ENDIF.
+
+          LOOP AT s_fmd_avar-modes ASSIGNING &lt;w&gt;.
+            CALL METHOD o_aab_variant-&gt;set_id
+              EXPORTING
+                im_name              = &lt;w&gt;-name
+                im_object            = &lt;w&gt;-object
+                im_actmode           = &lt;w&gt;-actmode
+              EXCEPTIONS
+                id_not_exists        = 1
+                id_not_transportable = 2
+                no_authorization     = 3
+                OTHERS               = 4.
+            IF sy-subrc &lt;&gt; 0.
+              mac_add_obj_meth_and_raise o_aab_variant &apos;SET_ID&apos; sy-subrc.
+            ENDIF.
+          ENDLOOP.
+
+          READ TABLE s_fmd_avar-descriptions INTO s_var_desc WITH KEY langu = sy-langu.
+          IF sy-subrc &lt;&gt; 0.     READ TABLE s_fmd_avar-descriptions INTO s_var_desc INDEX 1.     ENDIF.
+          IF sy-subrc &lt;&gt; 0.     s_var_desc-descript = s_variant-name.     ENDIF.
+
+          CALL METHOD o_aab_variant-&gt;set_descript
+            EXPORTING
+              im_descript      = s_var_desc-descript
+            EXCEPTIONS
+              no_authorization = 1
+              OTHERS           = 2.
+          IF sy-subrc &lt;&gt; 0.
+            mac_add_obj_meth_and_raise o_aab_variant &apos;SET_DESCRIPT&apos; sy-subrc.
+          ENDIF.
+
+          CALL METHOD o_aab_variant-&gt;save
+            EXCEPTIONS
+              cts_error             = 1
+              no_changes_found      = 2
+              no_descript_specified = 3
+              prop_error            = 4
+              propt_error           = 5
+              var_id_error          = 6
+              OTHERS                = 7.
+          IF sy-subrc &lt;&gt; 0.
+            mac_add_obj_meth_and_raise o_aab_variant &apos;SAVE&apos; sy-subrc.
+          ENDIF.
+
+*          CALL METHOD o_aab_id-&gt;set_descript
 *            EXPORTING
-*              function_pool           = s_fmd_func-header-str_area
-*            TABLES
-*              functab                 = t_functions
-*            EXCEPTIONS
-*              function_pool_not_found = 1
-*              OTHERS                  = 2.
-*          IF sy-subrc &lt;&gt; 0.
-*            ROLLBACK WORK.
-          mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_CONTENTS&apos; sy-subrc.
-*          ENDIF.
-*          READ TABLE t_functions ASSIGNING &lt;fi&gt; WITH KEY funcname = s_fmd_func-header-name.
-*          IF sy-subrc &lt;&gt; 0. mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_CONTENTS&apos; 2. ENDIF.
-**          set_prog_rawsource( program = &lt;fi&gt;-include
-**                                  raw = s_fmd_func-source ).
-*
+*              im_descript      =
+**            EXCEPTIONS
+**              no_authorization = 1
+**              others           = 2
+*                  .
+* Multilang =&gt;
+          DELETE FROM aab_var_propt WHERE name = s_fmd_avar-header-name
+                                     AND local = s_fmd_avar-header-local.
+          s_var_desc-name = s_variant-name.     s_var_desc-local = s_variant-user.
+          MODIFY s_fmd_avar-descriptions FROM s_var_desc TRANSPORTING name local WHERE name IS INITIAL OR name IS NOT INITIAL.
+          INSERT aab_var_propt FROM TABLE s_fmd_avar-descriptions.
+
+          CALL METHOD o_aab_variant-&gt;dequeue
+            EXPORTING
+              dequeue_mode = &apos;E&apos;.
+
         WHEN supportedtypes-checkpoint.
           o_checkpoint ?= object-&gt;raw.
           o_checkpoint-&gt;a0_maindata-name = object-&gt;name.
@@ -525,11 +643,13 @@ INCLUDE zaplink_macros.</MACROS>
             mac_add_obj_meth_and_raise o_aab_id &apos;ENQUEUE&apos; sy-subrc.
           ENDIF.
 
+* Delete previously existing modes
           CALL METHOD o_aab_id-&gt;get_all_modes
             IMPORTING
               ex_modes_tab  = lt_modes
             EXCEPTIONS
-              no_mode_found = 1.
+              no_mode_found = 1
+              OTHERS        = 2.
           IF sy-subrc = 0.
             LOOP AT lt_modes ASSIGNING &lt;o&gt;.
               READ TABLE s_fmd_acid-modes TRANSPORTING NO FIELDS WITH KEY
@@ -666,15 +786,24 @@ INCLUDE zaplink_macros.</MACROS>
    <ITEM CMPNAME="TD_VARIANT" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="STRING"/>
    <ITEM CMPNAME="TO_CHECKPOINT" EXPOSURE="1" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_ACID_DATA">
     <TEXTS>
-     <ITEM LANG="E" TEXT="Data for Function group"/>
+     <ITEM LANG="E" TEXT="Data for Checkpoint"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_VARIANT" EXPOSURE="1" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_FUNC_DATA">
+   <ITEM CMPNAME="TO_VARIANT" EXPOSURE="1" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_AVAR_DATA">
     <TEXTS>
-     <ITEM LANG="E" TEXT="Commun Data for Class &amp; Interface"/>
+     <ITEM LANG="E" TEXT="Data for Checkpoint variant"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_FMD_ACID" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="ZAPLINK_ACID_DATA=&gt;TS_FM_DATA"/>
+   <ITEM CMPNAME="TS_FMD_ACID" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="ZAPLINK_ACID_DATA=&gt;TS_FM_DATA">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="FM Data for check points"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_FMD_AVAR" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="ZAPLINK_AVAR_DATA=&gt;TS_FM_DATA">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="FM Data for check points variant"/>
+    </TEXTS>
+   </ITEM>
   </TYPES>
  </RAW>
 </ZL_OBJECT>

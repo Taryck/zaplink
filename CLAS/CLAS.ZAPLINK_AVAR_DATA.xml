@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A924A323B52C37118699C5AC0EE0A7DD" CODE_SIGNATURE="9D6E174BC110D7A35E5F4766707055D5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACID_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D129FEBFB8B818EA64DB4033E0D2560A" CODE_SIGNATURE="CAF4B7D4466A7D17EBB5A4C65823D4D0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_AVAR_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_CHECKPOINTS_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANG="E" TEXT="Data for Check Point Group">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Data for variant for Check Point Group">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_FUNCTION_GROUP
 ASDefine XML structure of a Function group
 U1&amp;RELATIONS&amp;
@@ -24,10 +24,19 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
+  <ALIASES>
+   <ITEM CMPNAME="TD_COMPNAME" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPNAME"/>
+   <ITEM CMPNAME="TD_COMPTYPE" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_COMPTYPE"/>
+  </ALIASES>
   <ATTRIBUTS>
    <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TS_MAINDATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Program main data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="DEFINITIONS" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_DEFINITIONS">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Variant list of definitions"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DESCRIPTIONS" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_LTEXTS">
@@ -35,9 +44,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Description texts"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="GLOBAL_SETTINGS" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TS_ACTIVATION"/>
-   <ITEM CMPNAME="SETTINGS_FOR_SERVERS" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_SERVERS"/>
-   <ITEM CMPNAME="SETTINGS_FOR_USERS" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_USERS"/>
+   <ITEM CMPNAME="SEPARATOR" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;~&apos;" TYPTYPE="1" TYPE="CHAR01">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Separator for variant name"/>
+    </TEXTS>
+   </ITEM>
   </ATTRIBUTS>
   <FRIENDS>
    <ITEM REFCLSNAME="ZAPLINK_CHECKPOINTS" STATE="1"/>
@@ -79,8 +90,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  DATA s_user     LIKE LINE OF settings_for_users.
-  DATA s_server   LIKE LINE OF settings_for_servers.
+  DATA s_def      LIKE LINE OF definitions.
   DATA s_desc     LIKE LINE OF descriptions.
   FIELD-SYMBOLS:
     &lt;d&gt; LIKE LINE OF fm_data-descriptions,
@@ -92,19 +102,51 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     CLEAR s_desc.   s_desc-lang = &lt;d&gt;-langu.     s_desc-text = &lt;d&gt;-descript.   INSERT s_desc INTO TABLE descriptions.
   ENDLOOP.
 
-*ACT_USERS_INFO
-*ACT_SERVERS_INFO
   LOOP AT fm_data-modes ASSIGNING &lt;m&gt;.
-    IF NOT &lt;m&gt;-username IS INITIAL.
-      CLEAR s_user.   s_user-user = &lt;m&gt;-username.   s_user-activation = conv_mode2activation( &lt;m&gt;-actmode ).
-      INSERT s_user INTO TABLE settings_for_users.
-    ELSEIF NOT &lt;m&gt;-server IS INITIAL.
-      CLEAR s_server.   s_server-server = &lt;m&gt;-server.   s_server-activation = conv_mode2activation( &lt;m&gt;-actmode ).
-      INSERT s_server INTO TABLE settings_for_servers.
-    ELSEIF NOT &lt;m&gt;-actdefault IS INITIAL OR global_settings IS INITIAL.
-      global_settings = conv_mode2activation( &lt;m&gt;-actmode ).
-    ENDIF.
+    CLEAR s_def.    s_def-type = &lt;m&gt;-object.    s_def-name = &lt;m&gt;-name.    s_def-activation = conv_mode2activation( &lt;m&gt;-actmode ).    INSERT s_def INTO TABLE definitions.
   ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="KEY_2_NAME" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert Key to Name (E071 Entrie)"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TS_NAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Checkpoint Variant Key structure"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPNAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Component name"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  IF data-user IS INITIAL.
+    result = data-name.
+  ELSE.
+    CONCATENATE data-name separator data-user INTO result.
+  ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="NAME_2_KEY" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert Name (E071 Entrie) to Key"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DATA" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Component name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_NAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Checkpoint Variant Key structure"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  SPLIT data AT separator INTO result-name result-user.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="1" STATE="1">
     <TEXTS>
@@ -119,29 +161,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </PARAMETERS>
     <SOURCE>`
   DATA s_mode     LIKE LINE OF fm_data-modes.
-  DATA s_server   LIKE LINE OF settings_for_servers.
   DATA s_desc     LIKE LINE OF fm_data-descriptions.
   FIELD-SYMBOLS:
     &lt;d&gt; LIKE LINE OF descriptions,
-    &lt;s&gt; LIKE LINE OF settings_for_servers,
-    &lt;u&gt; LIKE LINE OF settings_for_users.
+    &lt;s&gt; LIKE LINE OF definitions.
 
   LOOP AT descriptions ASSIGNING &lt;d&gt;.
     CLEAR s_desc.   s_desc-langu = &lt;d&gt;-lang.     s_desc-descript = &lt;d&gt;-text.   INSERT s_desc INTO TABLE fm_data-descriptions.
   ENDLOOP.
 
-  s_mode-actmode = conv_activation2mode( global_settings ).     s_mode-actdefault = abap_true.
-  INSERT s_mode INTO TABLE fm_data-modes.
-*ACT_USERS_INFO
-  LOOP AT settings_for_users ASSIGNING &lt;u&gt;.
-    CLEAR s_mode.     s_mode-username = &lt;u&gt;-user.   s_mode-actmode = conv_activation2mode( &lt;u&gt;-activation ).
-    INSERT s_mode INTO TABLE fm_data-modes.
-  ENDLOOP.
-
-*ACT_SERVERS_INFO
-  LOOP AT settings_for_servers ASSIGNING &lt;s&gt;.
-    CLEAR s_mode.     s_mode-server = &lt;s&gt;-server.   s_mode-actmode = conv_activation2mode( &lt;s&gt;-activation ).
-    INSERT s_mode INTO TABLE fm_data-modes.
+  LOOP AT definitions ASSIGNING &lt;s&gt;.
+    CLEAR s_mode.     s_mode-object = &lt;s&gt;-type.   s_mode-name = &lt;s&gt;-name.   s_mode-actmode = conv_activation2mode( &lt;s&gt;-activation ).    INSERT s_mode INTO TABLE fm_data-modes.
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="1" STATE="1">
@@ -154,33 +184,23 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM TYPEGROUP="ABAP" IMPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TS_4SERVER" EXPOSURE="1" STATE="1" TYPTYPE="4">
-    BEGIN OF ts_4server,
-      server  TYPE aab_id_act-server.
-  INCLUDE TYPE ts_activation as activation.
+   <ITEM CMPNAME="TS_DEFINITION" EXPOSURE="1" STATE="1" TYPTYPE="4">
+    BEGIN OF ts_definition,
+      type    TYPE td_comptype,
+      name    type td_compname.
+  INCLUDE TYPE ts_activation AS activation.
   TYPES:
-    END OF ts_4server
+    END OF ts_definition
 `
     <TEXTS>
-     <ITEM LANG="E" TEXT="Activation checkbox for a user"/>
-    </TEXTS>
-   </ITEM>
-   <ITEM CMPNAME="TS_4USER" EXPOSURE="1" STATE="1" TYPTYPE="4">
-    BEGIN OF ts_4user,
-      user    TYPE aab_id_act-username.
-  INCLUDE TYPE ts_activation as activation.
-  TYPES:
-    END OF ts_4user
-`
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Activation checkbox for a server"/>
+     <ITEM LANG="E" TEXT="Variant single definition"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
     BEGIN OF ts_fm_data,
-      header          TYPE aab_id_prop,     &quot; aab_id_sfields,
-      descriptions    TYPE STANDARD TABLE OF aab_id_propt WITH DEFAULT KEY,
-      modes           TYPE aab_id_act_tab,
+      header          TYPE aab_var_prop,     &quot; aab_var_sfields,
+      descriptions    TYPE STANDARD TABLE OF aab_var_propt WITH DEFAULT KEY,
+      modes           TYPE aab_var_obj_act_tab,
     END OF ts_fm_data
 `
     <TEXTS>
@@ -189,7 +209,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
    <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
     BEGIN OF ts_maindata.
-  INCLUDE TYPE aab_id_sfields.
+  INCLUDE TYPE aab_var_sfields.
   TYPES:
     END OF ts_maindata
 `
@@ -197,18 +217,21 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Function Module main data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SERVERS" EXPOSURE="1" STATE="1" TYPTYPE="4">
-    tt_servers TYPE SORTED TABLE OF ts_4server WITH UNIQUE KEY server
+   <ITEM CMPNAME="TS_NAME" EXPOSURE="1" STATE="1" TYPTYPE="4">
+    BEGIN OF ts_name,
+      name    TYPE aab_var_name,
+      user    TYPE aab_var_local,
+    END OF ts_name
 `
     <TEXTS>
-     <ITEM LANG="E" TEXT="Activation checkbox for servers"/>
+     <ITEM LANG="E" TEXT="Variant keys"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_USERS" EXPOSURE="1" STATE="1" TYPTYPE="4">
-    tt_users TYPE SORTED TABLE OF ts_4user WITH UNIQUE KEY user
+   <ITEM CMPNAME="TT_DEFINITIONS" EXPOSURE="1" STATE="1" TYPTYPE="4">
+    tt_definitions TYPE SORTED TABLE OF ts_definition WITH UNIQUE KEY type name
 `
     <TEXTS>
-     <ITEM LANG="E" TEXT="Activation checkbox for users"/>
+     <ITEM LANG="E" TEXT="Variant list of definitions"/>
     </TEXTS>
    </ITEM>
   </TYPES>
