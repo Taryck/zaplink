@@ -162,14 +162,95 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </COMPONENTS>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE" EXPOSURE="2" STATE="1" RELTYPE="1">
+   </ITEM>
+   <ITEM CMPNAME="TS_TXTP_TEXT" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_TXTP_TEXT">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_TXTP_TEXTPOOL" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_TXTP_TEXTPOOL">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_TYPE" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TS_TYPE">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_ABAPRAWSOURCE" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_ABAPRAWSOURCE">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_COMPKEYS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_COMPKEYS">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_CONNECTORLIST" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_CONNECTORLIST">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_CONN_CLASSES" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_CONN_CLASSES">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_TXTP_TEXTPOOLS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TXTP_TEXTPOOLS">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_TXTP_TEXTS" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_TXTP_TEXTS">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_TYPES" VERSION="1" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TT_TYPES">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="UNANONYMIZE" VERSION="1" EXPOSURE="2" CMPTYPE="1" REFCLSNAME="ZAPLINK_CNX_EXT_CLEANER" REFCMPNAME="UNANONYMIZE">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="UUID" VERSION="1" EXPOSURE="2" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="UUID">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="VERSION" VERSION="1" EXPOSURE="2" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="VERSION">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="WRITE_TO_SAP" VERSION="1" EXPOSURE="2" CMPTYPE="1" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="WRITE_TO_SAP">
+    <TEXTS>
+     <ITEM LANGU="E"/>
+    </TEXTS>
+   </ITEM>
+  </ALIASES>
+  <ATTRIBUTS>
+   <ITEM CMPNAME="O_MYCX" VERSION="1" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TO_EXCEPTION">
+    <TEXTS>
+     <ITEM LANGU="E" DESCRIPT="Exception for connector"/>
+    </TEXTS>
+   </ITEM>
+  </ATTRIBUTS>
+  <INTERFACES>
+   <ITEM REFCLSNAME="ZAPLINK_CNX_EXT_CLEANER" VERSION="1" EXPOSURE="2" STATE="1" RELTYPE="1">
     <COMPONENTS>
      <ITEM MTDNAME="GET_SIGNATURE">
       <SOURCE>`
 * Method implemented empty by default because most of SAP Component do not have source code.
 * This prevent connector using inheriting from this object to have to implement an empty method.</SOURCE>
      </ITEM>
+     </ITEM>
     </COMPONENTS>
-   </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR" EXPOSURE="2" STATE="1" RELTYPE="1">
     <COMPONENTS>
      <ITEM MTDNAME="CREATE_NEW_RAW" MTDABSTRCT="X"/>
@@ -178,11 +259,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM MTDNAME="EXPORT_FROM_SAP">
       <SOURCE>`
   DATA ez_xml          TYPE to_ez_xml.
+     <ITEM VERSION="1" MTDNAME="EXPORT_FROM_SAP">
+      <SOURCE>  DATA ez_xml          TYPE to_ez_xml.
   DATA o_data          TYPE to_raw.
 
   o_data = read_from_sap( component ).
   IF o_data IS BOUND.
     o_data-&gt;update_connector_data( me ).
+    o_data-&gt;version = me-&gt;version.
     CREATE OBJECT ez_xml.
 
     TRY.
@@ -196,6 +280,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM MTDNAME="GET_VALUES">
       <SOURCE>`
   DATA _obj_type TYPE  euobj-id.
+     </ITEM>
+     <ITEM VERSION="1" MTDNAME="GET_VALUES">
+      <SOURCE>  DATA _obj_type TYPE  euobj-id.
   DATA _name TYPE td_compname.
 
   _obj_type = type.
@@ -219,6 +306,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       <SOURCE>`
   DATA root_node TYPE REF TO if_ixml_node.
   DATA o_raw_b   TYPE to_raw_base.
+      <SOURCE>  DATA root_node TYPE REF TO if_ixml_node.
   DATA o_raw     TYPE to_raw.
   DATA _name     TYPE string.
 *  DATA o_comp    TYPE to_component.
@@ -359,7 +447,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM MTDNAME="READ_FROM_SAP" MTDABSTRCT="X"/>
      <ITEM MTDNAME="WRITE_TO_SAP" MTDABSTRCT="X"/>
     </COMPONENTS>
-   </ITEM>
   </INTERFACES>
   <LOCAL>
    <TYPES>`
@@ -378,27 +465,19 @@ INCLUDE zaplink_macros.</MACROS>
   </LOCAL>
   <METHODS>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" MTDTYPE="2" MTDDECLTYP="1">
-    <TEXTS>
      <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
-    </TEXTS>
     <SOURCE>`
   DATA s_type LIKE LINE OF r_text_fields.
   s_type-sign = &apos;I&apos;. s_type-option = &apos;EQ&apos;.
   s_type-low = rpyty_dynp_ftype-text.       APPEND s_type TO r_text_fields.
   s_type-low = rpyty_dynp_ftype-frame.      APPEND s_type TO r_text_fields.
   s_type-low = rpyty_dynp_ftype-push.       APPEND s_type TO r_text_fields.</SOURCE>
-   </ITEM>
    <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" MTDTYPE="2" MTDNEWEXC="X">
-    <TEXTS>
      <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
-    </TEXTS>
     <SOURCE>`
   class_name = zaplink_tools=&gt;get_clas_name( me ).</SOURCE>
-   </ITEM>
    <ITEM CMPNAME="CONV_ABAPSOURCE2FLOWLOGIC" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
-    <TEXTS>
      <ITEM LANG="E" TEXT="Structured ABAP source to flow logic"/>
-    </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TT_FLOW_LOGIC"/>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ABAPSOURCE"/>
@@ -410,11 +489,8 @@ INCLUDE zaplink_macros.</MACROS>
       DELETE result INDEX 1.
     ENDIF.
   ENDIF.</SOURCE>
-   </ITEM>
    <ITEM CMPNAME="CONV_ABAP_RAW2SOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
-    <TEXTS>
      <ITEM LANG="E" TEXT="Raw data to structured source data"/>
-    </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RAW" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE"/>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ABAPSOURCE"/>
@@ -425,11 +501,8 @@ INCLUDE zaplink_macros.</MACROS>
   LOOP AT raw ASSIGNING &lt;c&gt;.
     CONCATENATE result &lt;c&gt; INTO result SEPARATED BY line_separator. &quot; will start with line_sep better for XML display and required because get_value remove spaces
   ENDLOOP.</SOURCE>
-   </ITEM>
    <ITEM CMPNAME="CONV_ABAP_SOURCE2RAW" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
-    <TEXTS>
      <ITEM LANG="E" TEXT="Structured source data to Raw data"/>
-    </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE"/>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ABAPSOURCE"/>
@@ -441,11 +514,8 @@ INCLUDE zaplink_macros.</MACROS>
       DELETE result INDEX 1.
     ENDIF.
   ENDIF.</SOURCE>
-   </ITEM>
    <ITEM CMPNAME="CONV_FLOWLOGIC2ABAPSOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
-    <TEXTS>
      <ITEM LANG="E" TEXT="Convert flow logic table to ABAP Source"/>
-    </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="RAW" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_FLOW_LOGIC"/>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ABAPSOURCE"/>
@@ -457,11 +527,8 @@ INCLUDE zaplink_macros.</MACROS>
   LOOP AT raw ASSIGNING &lt;c&gt;.
     CONCATENATE result &lt;c&gt; INTO result SEPARATED BY line_separator. &quot; will start with line_sep better for XML display and required because get_value remove spaces
   ENDLOOP.</SOURCE>
-   </ITEM>
    <ITEM CMPNAME="FUSION_TEXTPOOL" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
-    <TEXTS>
      <ITEM LANG="E" TEXT="Fusion 2 texts pool"/>
-    </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="COMPLETION" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_TXTP_TEXTPOOLS">
       <TEXTS>

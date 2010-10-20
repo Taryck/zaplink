@@ -188,6 +188,11 @@ INCLUDE zaplink_macros.</MACROS>
     <TEXTS>
      <ITEM LANG="E" TEXT="Clean ABAP Source code"/>
     </TEXTS>
+      CLEAR: _cx_text-attvalue, _cx_text-clsname, _cx_text-langu, _cx_text-descript.    &quot; Attribut
+* SOTR can&apos;t be change or created using external key.
+* When you change texts of an exception it&apos;s SOTR GUID change :-(
+      CLEAR: _cx_text-concept.                                                          &quot; SOTR
+* So don&apos;t save KEY to component useless
     <PARAMETERS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_ABAPSOURCE"/>
      <ITEM SCONAME="SOURCE" CMPTYPE="1" TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE">
@@ -826,6 +831,10 @@ AS</ITEM>
 *      CLEAR: _cx_text-concept.                                                          &quot; SOTR
 ** So don&apos;t save KEY to component useless
         IF &lt;at&gt;-cmpname = a0_maindata-clsname. CLEAR _cx_text-cmpname. ENDIF.  &quot; do not repeat self exception text : Issue 64
+* SOTR can&apos;t be change or created using external key.
+* When you change texts of an exception it&apos;s SOTR GUID change :-(
+      CLEAR: _cx_text-concept.                                                          &quot; SOTR
+* So don&apos;t save KEY to component useless
         INSERT _cx_text INTO TABLE exceptions_texts.
 * Issue 62 : End
         DELETE _fm_data-attributes.                 &quot; exception text no logner an attribute
