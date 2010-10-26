@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="36D100EA4B6CFF8F1A8F5F7A358929F4" CODE_SIGNATURE="6E10411F43A76E66DE79E0B426A0902D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="BB3A6991A020A2A96442BAF08DDCD140" CODE_SIGNATURE="9540C15CB116BE7AE66596F99EF62421" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -494,8 +494,9 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA _key TYPE ts_compkey.
+  DATA _key     TYPE ts_compkey.
   DATA d_action TYPE td_sel_action.
+  DATA o_cx     TYPE REF TO cx_root.
 
   _key = o_comp-&gt;_get_key( ).
   result-type = _key-type.
@@ -530,6 +531,7 @@ INCLUDE zaplink_macros.</MACROS>
     result-code_signature = o_comp-&gt;get_code_signature( ).
     result-devclass = o_comp-&gt;get_devclass( ).
     result-srcsystem = o_comp-&gt;get_src_sys( ).
+    o_cx = o_comp-&gt;get_exception( ).
 
     result-status = lights-green.
 
@@ -540,6 +542,9 @@ INCLUDE zaplink_macros.</MACROS>
           CLEAR result-select.
 * Object &apos;&amp;2&apos; (&amp;1) already exists. Select it to overwrite
           MESSAGE e051 WITH result-type result-name INTO result-msg.
+        ELSEIF o_cx IS BOUND.
+          result-status = lights-yellow.
+          result-msg = o_cx-&gt;get_text( ).
         ENDIF.
       WHEN sel_actions-export.
         IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists. &quot; AND selected = abap_true.
@@ -547,6 +552,9 @@ INCLUDE zaplink_macros.</MACROS>
           result-status = lights-red.
 * Object &apos;&amp;2&apos; (&amp;1) does not exists.
           MESSAGE e052 WITH result-type result-name INTO result-msg.
+        ELSEIF o_cx IS BOUND.
+          result-status = lights-yellow.
+          result-msg = o_cx-&gt;get_text( ).
         ENDIF.
       WHEN sel_actions-uninstall.
         IF o_comp-&gt;_exists &lt;&gt; zaplink_connector=&gt;exists. &quot; AND selected = abap_true.
@@ -554,6 +562,9 @@ INCLUDE zaplink_macros.</MACROS>
           result-status = lights-red.
 * Object &apos;&amp;2&apos; (&amp;1) does not exists.
           MESSAGE e052 WITH result-type result-name INTO result-msg.
+        ELSEIF o_cx IS BOUND.
+          result-status = lights-yellow.
+          result-msg = o_cx-&gt;get_text( ).
         ENDIF.
       WHEN sel_actions-unreplicable.
         result-status = lights-red.

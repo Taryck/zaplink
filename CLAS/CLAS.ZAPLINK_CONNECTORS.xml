@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B0DEFF32D23ACAA6521DCCB18528AE49" CODE_SIGNATURE="77AD4BDDCC6B2468ECE68A3887EAF886" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8FBBF7A8DCD2712D254DD153741D5AB5" CODE_SIGNATURE="5C34C98321E22523CF9E0271429C179E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -602,7 +602,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Reset all connectors to default (remove local)"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
@@ -655,7 +655,7 @@ INCLUDE zaplink_macros.</MACROS>
           CATCH zaplink_cx INTO o_cx.
             IF o_cx-&gt;is_exception_text( zaplink_cx_connector=&gt;twice_uuid ) = abap_true OR
                o_cx-&gt;is_exception_text( zaplink_cx_connector=&gt;twice_class ) = abap_true.
-              mac_cascade_raise o_mycx o_cx.
+              RAISE EXCEPTION o_cx.
             ENDIF.
         ENDTRY.
 
@@ -672,7 +672,7 @@ INCLUDE zaplink_macros.</MACROS>
           CATCH zaplink_cx INTO o_cx.
             IF o_cx-&gt;is_exception_text( zaplink_cx_connector=&gt;twice_uuid ) = abap_true OR
                o_cx-&gt;is_exception_text( zaplink_cx_connector=&gt;twice_class ) = abap_true.
-              mac_cascade_raise o_mycx o_cx.
+              RAISE EXCEPTION o_cx.
             ENDIF.
         ENDTRY.
 
