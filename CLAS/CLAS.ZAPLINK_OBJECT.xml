@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3ACB215ED0CF4FDED53338D7837A72C5" CODE_SIGNATURE="20FDB8C94CBE40337EA767071ABA92FF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="63ADD5BE726FD01A4A37BB9953371476" CODE_SIGNATURE="5CAF23D2C990C50F56E9798EE32BBAB3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -170,6 +170,7 @@ INCLUDE zaplink_macros.</MACROS>
 *  DATA code          TYPE tt_abaprawsource.
   DATA intkey        TYPE seoclskey.
 
+  CHECK interface-interface-state &lt;&gt; seoc_state_model_only.        &quot; Issue 111
   intkey-clsname = interface-interface-clsname.
   CALL FUNCTION &apos;SEO_INTERFACE_GENERATE_SECTION&apos;
     EXPORTING
@@ -1764,7 +1765,9 @@ AS</ITEM>
       is_interface                        = 2
       model_only                          = 3
       OTHERS                              = 4.
-  IF sy-subrc = 1.
+  IF sy-subrc = 3.        &quot; Issue 111
+    return.
+  ELSEIF sy-subrc = 1.
     d_name = classkey.
     RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING textid = zaplink_cx_connector=&gt;not_found
                                                           type = zaplink_object_data=&gt;object_types-class
