@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D80F9038374AE82A08CB0C021A6D7237" CODE_SIGNATURE="917EECF7DE8ADE8B18BE7A8C4F33333B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3ACB215ED0CF4FDED53338D7837A72C5" CODE_SIGNATURE="20FDB8C94CBE40337EA767071ABA92FF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -525,6 +525,8 @@ INCLUDE zaplink_macros.</MACROS>
     CALL FUNCTION &apos;SEO_CLASS_GET&apos;
       EXPORTING
         clskey       = classkey
+        version      = seoc_version_inactive     &quot; Issue 111
+        state        = seoc_state_model_only     &quot; Issue 111
       IMPORTING
         class        = object_data-class
       EXCEPTIONS
@@ -616,11 +618,29 @@ INCLUDE zaplink_macros.</MACROS>
     CHECK component-&gt;get_type( ) = zaplink_object_data=&gt;object_types-interface.
 
     classkey-clsname = component-&gt;get_name( ).
+    CALL FUNCTION &apos;SEO_BUFFER_REFRESH&apos;.
+    CALL FUNCTION &apos;SEO_INTERFACE_GET&apos;
+      EXPORTING
+        intkey             = classkey
+        version            = seoc_version_inactive   &quot; Issue 111
+        state              = seoc_state_model_only   &quot; Issue 111
+      IMPORTING
+        INTERFACE          = _d-interface
+      EXCEPTIONS
+        NOT_EXISTING       = 1
+        DELETED            = 2
+        IS_CLASS           = 3
+        MODEL_ONLY         = 4
+        OTHERS             = 5.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;SEO_INTERFACE_GET&apos; sy-subrc.
+    ENDIF.
+
     CALL FUNCTION &apos;SEO_INTERFACE_TYPEINFO_GET&apos;
       EXPORTING
         intkey                        = classkey
-*     VERSION                       = SEOC_VERSION_INACTIVE
-*     STATE                         = &apos;1&apos;
+        version                       = _d-interface-version
+        state                         = _d-interface-state
         with_master_language          = seox_true
         with_enhancements             = seox_true
 *     READ_ACTIVE_ENHA              = SEOX_FALSE
@@ -648,11 +668,7 @@ INCLUDE zaplink_macros.</MACROS>
         model_only                    = 3
         OTHERS                        = 4.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_TYPEINFO_GET&apos;
-                                                  subrc = sy-subrc
-                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-      application_log-&gt;add_symsg( ).
-      RAISE EXCEPTION o_mycx.
+      mac_add_mf_and_raise &apos;SEO_INTERFACE_TYPEINFO_GET&apos; sy-subrc.
     ENDIF.
 
 * Includes
