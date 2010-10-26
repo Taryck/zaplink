@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FCB359AC429DA6D1C74C5395FEBC83D4" CODE_SIGNATURE="FD300A149614C2DF8724544A0B0A5208" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="EED35AB97AB0274455AE4FA93C559AA1" CODE_SIGNATURE="EA5381EB66B38968FDA93037F5A9C9EE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -224,25 +224,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
     <SOURCE>`
-
-*==============================================
-*==========     APPLICATION_LOG     ===========
-*==============================================
-  CREATE OBJECT application_log.
-  CALL METHOD application_log-&gt;init
-    EXPORTING
-      id_object      = ballog_object
-      id_subobject   = ballog_subobject
-*      id_extnumber   =
-      auto_upd_custo = abap_true
-      id_activity    = zaplink_message_collector=&gt;actions-create
-     EXCEPTIONS
-       error          = 1
-       OTHERS         = 2.
-  IF sy-subrc &lt;&gt; 0.
-*   MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-*              WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
-  ENDIF.</SOURCE>
+  mac_create_log application_log ballog_subobject space.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONTAINERFILE_SELECT" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>

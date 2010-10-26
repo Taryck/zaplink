@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F949DDC796A53E468014F56E47C9BEEE" CODE_SIGNATURE="799FC93F3B1226C055A2DEC1B426EE23" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0A5F061B882761AC9EB6B306FB6B8F2F" CODE_SIGNATURE="7A9FCE79EF8BF64971E9138F2089FF5F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -565,7 +565,7 @@ INCLUDE zaplink_macros.</MACROS>
     SET EXTENDED CHECK OFF.
     IF 1 = 2. MESSAGE i500 WITH space space. ENDIF.
     SET EXTENDED CHECK ON.
-    application_log-&gt;add_info( id_msgid = &apos;ZAPLINK_CONNECTOR&apos;
+    application_log-&gt;add_info( id_msgid = &apos;ZAPLINK&apos;
                                id_msgno = &apos;500&apos;
                                id_msgv1 = &lt;r&gt;-prog
                                id_msgv2 = &lt;r&gt;-dnum ).
@@ -1074,7 +1074,7 @@ INCLUDE zaplink_macros.</MACROS>
     SET EXTENDED CHECK OFF.
     IF 1 = 2. MESSAGE i500 WITH space space. ENDIF.
     SET EXTENDED CHECK ON.
-    application_log-&gt;add_info( id_msgid = &apos;ZAPLINK_CONNECTOR&apos;
+    application_log-&gt;add_info( id_msgid = &apos;ZAPLINK&apos;
                                id_msgno = &apos;500&apos;
                                id_msgv1 = header-program
                                id_msgv2 = header-screen ).

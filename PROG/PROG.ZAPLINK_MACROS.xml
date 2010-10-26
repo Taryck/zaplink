@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="01DAA69D682B2F984A9B9E5CAB5A6C92" CODE_SIGNATURE="1C54D084BC34AA98FFCF60207E114500" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MACROS" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="098ECD5EF1526465688D55FC44A9A8B1" CODE_SIGNATURE="CC23CF0F73944C581D6F4E3023A223F9" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MACROS" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" RSTAT="K" RMAND="200" RLOAD="E" UCCHECK="X"/>
@@ -56,10 +56,12 @@ END-OF-DEFINITION.
 
 * Add application logs if message present
 DEFINE mac_add_log.
+  clear sy-subrc.
   if &amp;1 is bound and &amp;2 is bound.             &quot; for security
     if &amp;1-&gt;has_messages_of_msgt( id_msgty = &amp;3 ) = abap_true.
       &amp;2-&gt;add_from_instance( io_msglist = &amp;1
                       if_add_as_subnode = abap_true ).
+      sy-subrc = 8.
     endif.
   endif.
 END-OF-DEFINITION.

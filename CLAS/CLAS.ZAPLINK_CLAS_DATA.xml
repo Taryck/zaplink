@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="EC6661493EB46EB1EC0AF71065491AD0" CODE_SIGNATURE="ACB77982CC581383ECBB59F5E4991864" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8393C97C45282A6989C27815F624BCEB" CODE_SIGNATURE="D7F52F3E9186E750DB87F8EA9DA02EAA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROGRAM"/>
@@ -298,7 +298,19 @@ INCLUDE zaplink_macros.</MACROS>
   DATA t_texts TYPE  sotr_textl_tt.
   DATA s_text  LIKE LINE OF t_texts.
   DATA s_sotrl TYPE sotr_link.
-  Data d_cxtxt type string.
+  DATA d_cxtxt TYPE string.
+
+  DEFINE mac_handle_cx.
+    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
+                                         classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
+                                          funcname = &amp;1 ).
+    if not msg_col is bound.
+      raise exception o_mycx.
+    else.
+      msg_col-&gt;add_symsg( ).
+      msg_col-&gt;add_exception( exception = o_mycx ).
+    endif.
+  END-OF-DEFINITION.
 
   TRY.
     LOOP AT fm_data-exceptions_texts ASSIGNING &lt;cx&gt;.
@@ -312,7 +324,7 @@ INCLUDE zaplink_macros.</MACROS>
           object_not_found = 1
           OTHERS           = 2.
       IF sy-subrc &lt;&gt; 0 OR lt_types IS INITIAL.
-        CALL METHOD msg_col-&gt;add_symsg( ).
+        mac_handle_cx &apos;SOTR_OBJECT_GET_OBJECTS&apos;.
         CONTINUE.
       ENDIF.
       READ TABLE lt_types INTO _type INDEX 1.
@@ -360,17 +372,7 @@ INCLUDE zaplink_macros.</MACROS>
             alias_not_allowed                   = 19
             OTHERS                              = 20.
         IF sy-subrc &lt;&gt; 0.
-          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                               classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
-                                                funcname = &apos;SOTR_STRING_CREATE_CONCEPT&apos; ).
-          IF NOT msg_col IS BOUND.
-            RAISE EXCEPTION o_mycx.
-          ELSE.
-            msg_col-&gt;add_symsg( ).
-            CALL METHOD msg_col-&gt;add_exception
-              EXPORTING
-                exception = o_mycx.
-          ENDIF.
+          mac_handle_cx &apos;SOTR_STRING_CREATE_CONCEPT&apos;.
         ENDIF.
       ENDIF.
 
@@ -454,17 +456,7 @@ INCLUDE zaplink_macros.</MACROS>
               OTHERS                              = 19.
       ENDTRY.
       IF sy-subrc &lt;&gt; 0.
-        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                             classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
-                                              funcname = &apos;SOTR_CREATE_CONCEPT&apos; ).
-        IF NOT msg_col IS BOUND.
-          RAISE EXCEPTION o_mycx.
-        ELSE.
-          msg_col-&gt;add_symsg( ).
-          CALL METHOD msg_col-&gt;add_exception
-            EXPORTING
-              exception = o_mycx.
-        ENDIF.
+        mac_handle_cx &apos;SOTR_CREATE_CONCEPT&apos;.
         CONTINUE.
       ENDIF.
 
@@ -479,17 +471,7 @@ INCLUDE zaplink_macros.</MACROS>
             concept_not_found = 2
             OTHERS            = 3.
         IF sy-subrc &lt;&gt; 0.
-          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                               classname = &apos;ZAPLINK_CX_CONNECTOR&apos;
-                                                funcname = &apos;SOTR_LINK_UPDATE_LINK&apos; ).
-          IF NOT msg_col IS BOUND.
-            RAISE EXCEPTION o_mycx.
-          ELSE.
-            msg_col-&gt;add_symsg( ).
-            CALL METHOD msg_col-&gt;add_exception
-              EXPORTING
-                exception = o_mycx.
-          ENDIF.
+          mac_handle_cx &apos;SOTR_LINK_UPDATE_LINK&apos;.
         ENDIF.
 
       ENDIF.
@@ -504,7 +486,7 @@ INCLUDE zaplink_macros.</MACROS>
              WITH KEY cmpname = &lt;cx&gt;-cmpname.
       ENDIF.
       IF sy-subrc &lt;&gt; 0.
-        d_cxtxt = &apos;Attribut should exists !!&apos;(F01).
+        d_cxtxt = &apos;Attribut should exists !!&apos;(f01).
         RAISE EXCEPTION TYPE zaplink_cx_connector
            EXPORTING
              textid = zaplink_cx=&gt;system_error

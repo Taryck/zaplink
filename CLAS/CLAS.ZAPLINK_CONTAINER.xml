@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="CB61F3415457C5663799E8AF83B63D42" CODE_SIGNATURE="4A1361C4C7AC5F8390927778D6DC0506" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B16ACE4450640A23E376028A60B2345F" CODE_SIGNATURE="3E72B317E71BA9EFDE5015946504CCE2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -356,13 +356,14 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
                              name = _comp-name.
   ENDTRY.
 
-  CHECK o_connector IS BOUND.
+  ASSERT o_connector IS BOUND.
 
 * Extract Component
   TRY.
       o_connector-&gt;options = _options.
       object = o_connector-&gt;export_from_sap( component ).
       component-&gt;set_msg_coll( o_connector-&gt;application_log ).
+      mac_add_log o_connector-&gt;application_log log &apos;W&apos;.
     CATCH zaplink_cx_connector INTO o_cx_cnx.
       TRY.
           component-&gt;set_exception( o_cx_cnx ).
