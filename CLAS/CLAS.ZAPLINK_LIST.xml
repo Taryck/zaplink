@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BB3A6991A020A2A96442BAF08DDCD140" CODE_SIGNATURE="9540C15CB116BE7AE66596F99EF62421" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="AFE909739A047C38CF422E624D3992E3" CODE_SIGNATURE="E1D852D60E468BF12DFCF162AC87F1AD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -50,9 +50,19 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       item      TYPE slis_tabname VALUE &apos;ITM&apos;,
     END OF alv_h_tables
 `</ITEM>
+   <ITEM CMPNAME="CALLBACK_PROGRAM" EXPOSURE="1" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;ZAPLINK_LIST&apos;" TYPTYPE="1" TYPE="SY-REPID">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Callback program for ALV Grid"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="DISPLAY_PROGRESS" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="ABAP_BOOL">
     <TEXTS>
      <ITEM LANG="E" TEXT="Display SAPGUI progress indication while iterating"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="IS_CONFIRMED" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="ABAP_BOOL">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Selection has been confirmed"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="ITERATOR_TYPES" STATE="1" ATTDECLTYP="2" TYPTYPE="4">
@@ -83,13 +93,22 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Lights icons"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="ORDER_KIND" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="ABAP_BOOL"/>
-   <ITEM CMPNAME="ORDER_KINDS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4">begin of ORDER_KINDS,
+   <ITEM CMPNAME="ORDER_KIND" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TD_ORDERKIND">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Order kind"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="ORDER_KINDS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4">
+    begin of ORDER_KINDS,
       no_order  type td_orderkind value space,
       install   type td_orderkind value &apos;B&apos;,  &quot; Bottom up
       uninstall type td_orderkind value &apos;T&apos;,  &quot; Top down
     end of ORDER_KINDS
-`</ITEM>
+`
+    <TEXTS>
+     <ITEM LANG="E" TEXT='List of possible &quot;order kind&quot;'/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="O_CX" STATE="1" ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
@@ -105,7 +124,22 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for List"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="PF_STATUS" EXPOSURE="1" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;PF_STATUS_SET &apos;" TYPTYPE="1" TYPE="SLIS_FORMNAME">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="PF status set Formname"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="PF_STATUS_NO_ACTIONS" EXPOSURE="1" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;PF_STATUS_NO_ACTION &apos;" TYPTYPE="1" TYPE="SLIS_FORMNAME">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="PF status set Formname"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="T_CURSORS" STATE="1" TYPTYPE="1" TYPE="TT_CURSORS"/>
+   <ITEM CMPNAME="USER_COMMAND" EXPOSURE="1" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;USER_COMMAND_USER&apos;" TYPTYPE="1" TYPE="SLIS_FORMNAME">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="User comand Formname"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="_ALLCOMP" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_ALLCOMPLIST">
     <TEXTS>
      <ITEM LANG="E" TEXT="All Component list index"/>
@@ -132,6 +166,26 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
+  <DYNPROS>
+   <ITEM SCREEN="0100" LANGUAGE="E" DESCRIPT="test screen" TYPE="N" NEXTSCREEN="0100" LINES="027" COLUMNS="120">
+    <TEXTS>
+     <ITEM LANG="E" DTXT="test screen"/>
+    </TEXTS>
+    <FLOW_LOGIC>`
+PROCESS BEFORE OUTPUT.
+* MODULE STATUS_0100.
+*
+PROCESS AFTER INPUT.
+* MODULE USER_COMMAND_0100.</FLOW_LOGIC>
+    <CONTAINERS>
+     <ITEM TYPE="SCREEN" NAME="SCREEN">
+      <FIELDS>
+       <ITEM TYPE="OKCODE" TEXT="____________________" LENGTH="020" VISLENGTH="020" HEIGHT="001" FORMAT="CHAR" INPUT_FLD="X"/>
+      </FIELDS>
+     </ITEM>
+    </CONTAINERS>
+   </ITEM>
+  </DYNPROS>
   <INTERFACES>
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
@@ -273,11 +327,13 @@ INCLUDE zaplink_macros.</MACROS>
 
   alv = conv_to_alv( ).
 
+  PERFORM set_list IN PROGRAM zaplink_list USING me.
+*  PERFORM show_list IN PROGRAM zaplink_list using alv_conf-simple-layout alv_conf-simple-fields alv-headers.
   CALL FUNCTION &apos;REUSE_ALV_GRID_DISPLAY&apos;
     EXPORTING
-*      i_callback_program       =
-*      i_callback_pf_status_set =
-*      i_callback_user_command  =
+      i_callback_program       = callback_program
+      i_callback_pf_status_set = pf_status
+      i_callback_user_command  = user_command
       i_grid_title             = &apos;Select objects&apos;(lst)
       it_fieldcat              = alv_conf-simple-fields
       is_layout                = alv_conf-simple-layout
@@ -286,7 +342,12 @@ INCLUDE zaplink_macros.</MACROS>
     EXCEPTIONS
       OTHERS                   = 0.
 
-  update_from_alv( alv ).</SOURCE>
+  PERFORM clear_list IN PROGRAM zaplink_list.
+  IF is_confirmed IS INITIAL.
+    unselect_all( ).
+  ELSE.
+    update_from_alv( alv ).
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" MTDTYPE="2" MTDDECLTYP="1">
     <TEXTS>
@@ -656,9 +717,9 @@ INCLUDE zaplink_macros.</MACROS>
   CALL FUNCTION &apos;REUSE_ALV_HIERSEQ_LIST_DISPLAY&apos;
     EXPORTING
 *     I_INTERFACE_CHECK              = &apos; &apos;
-*     I_CALLBACK_PROGRAM             =
-*     I_CALLBACK_PF_STATUS_SET       = &apos; &apos;
-*     I_CALLBACK_USER_COMMAND        = &apos; &apos;
+      i_callback_program             = callback_program
+      i_callback_pf_status_set       = pf_status_no_actions
+      i_callback_user_command        = user_command
       is_layout                      = alv_conf-hierar-layout
       it_fieldcat                    = alv_conf-hierar-fields
 *     IT_EXCLUDING                   =
@@ -1348,6 +1409,18 @@ INCLUDE zaplink_macros.</MACROS>
     CATCH zaplink_cx_list INTO o_exception.
       RAISE EXCEPTION o_exception.
   ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="UNSELECT_ALL" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Unselect all components from list"/>
+    </TEXTS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA s_idx LIKE LINE OF _index.
+
+  s_idx-selected = abap_false.   MODIFY _index FROM s_idx TRANSPORTING selected WHERE selected &lt;&gt; s_idx-selected.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_FROM_ALV" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
     <TEXTS>
