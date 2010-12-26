@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A7FE2070FFD154EC0467AAACA0FAFD7E" CODE_SIGNATURE="AFAAF0E41818FE8A6E2568A1E9D84251" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="87BE8C8B73DDAA64566CF825F89A9E78" CODE_SIGNATURE="2F0F359D618FAF89F6428FD307C0A31C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -203,6 +203,7 @@ result = _devclass.</SOURCE>
   DATA f_global     TYPE abap_bool.                         &quot; Issue 87
   DATA s_e071       TYPE e071.
   DATA s_parent_key TYPE tadir.
+  DATA f_hide_dia   TYPE abap_bool.
 
   CHECK component IS BOUND.
   result = component-&gt;directory.
@@ -331,6 +332,7 @@ result = _devclass.</SOURCE>
       ENDIF.
     ENDIF.
 
+    IF NOT result-trkorr IS INITIAL.    f_hide_dia = abap_true.   ENDIF.
     CALL FUNCTION &apos;RS_CORR_INSERT&apos;
       EXPORTING
         object                         = _name
@@ -339,24 +341,24 @@ result = _devclass.</SOURCE>
         global_lock                    = f_global   &quot; R3TR or LIMU
         devclass                       = result-devclass
         korrnum                        = result-trkorr
-*      USE_KORRNUM_IMMEDIATEDLY       = &apos; &apos;
-*      AUTHOR                         = &apos; &apos;
-*      MASTER_LANGUAGE                = &apos; &apos;
-*      GENFLAG                        = &apos; &apos;
-*      PROGRAM                        = &apos; &apos;
-*      OBJECT_CLASS_SUPPORTS_MA       = &apos; &apos;
-*      EXTEND                         = &apos; &apos;
-        suppress_dialog                = abap_true
-*      MOD_LANGU                      = &apos; &apos;
-*      ACTIVATION_CALL                = &apos; &apos;
+*        USE_KORRNUM_IMMEDIATEDLY       = &apos; &apos;
+*        AUTHOR                         = &apos; &apos;
+*        MASTER_LANGUAGE                = &apos; &apos;
+*        GENFLAG                        = &apos; &apos;
+*        PROGRAM                        = &apos; &apos;
+*        OBJECT_CLASS_SUPPORTS_MA       = &apos; &apos;
+*        EXTEND                         = &apos; &apos;
+        suppress_dialog                = f_hide_dia
+*        MOD_LANGU                      = &apos; &apos;
+*        ACTIVATION_CALL                = &apos; &apos;
       IMPORTING
-*      DEVCLASS                       =
+*        DEVCLASS                       =
         korrnum                        = result-trkorr
-*      ORDERNUM                       =
-*      NEW_CORR_ENTRY                 =
-*      AUTHOR                         =
-*      TRANSPORT_KEY                  =
-*      NEW_EXTEND                     =
+*        ORDERNUM                       =
+*        NEW_CORR_ENTRY                 =
+*        AUTHOR                         =
+*        TRANSPORT_KEY                  =
+*        NEW_EXTEND                     =
       EXCEPTIONS
         cancelled                      = 1
         permission_failure             = 2

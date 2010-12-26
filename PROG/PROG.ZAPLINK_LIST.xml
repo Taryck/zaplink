@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="EA9F4BC3BE3ADDC71760E0CAAD709E90" CODE_SIGNATURE="F7C5A734788AC82793DC751FBC5C9B8E" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="85611F450ACB6CEFF1D4363130913C5D" CODE_SIGNATURE="2CDD542F74A37209A1097E0590CD0CD8" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VARCL="X" SUBC="M" RSTAT="K" RMAND="200" RLOAD="E" FIXPT="X" UCCHECK="X"/>
@@ -27,7 +27,7 @@
     </ITEM>
     <ITEM CODE="&amp;ABC" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_CALCULATION" ICON_ID="@0M@">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="ABC-Analyse" ICON="ABC"/>
+      <ITEM LANGU="E" TEXT="ABC-Analyse"/>
      </TEXTS>
     </ITEM>
     <ITEM CODE="&amp;ALL" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_SELECT_ALL" ICON_ID="@4B@">
@@ -87,7 +87,7 @@
     </ITEM>
     <ITEM CODE="&amp;NFO" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_INFORMATION" ICON_ID="@0S@">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="Information" ICON="Selektionen"/>
+      <ITEM LANGU="E" TEXT="Information"/>
      </TEXTS>
     </ITEM>
     <ITEM CODE="&amp;NTE" TEXTNO="001" TEXT_TYPE="S">
@@ -333,17 +333,17 @@
    <MENU_LIST>
     <ITEM CODE="000001" TEXT_TYPE="S">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="List"/>
+      <ITEM LANGU="E"/>
      </TEXTS>
     </ITEM>
     <ITEM CODE="000002" TEXT_TYPE="S">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="Edit"/>
+      <ITEM LANGU="E"/>
      </TEXTS>
     </ITEM>
     <ITEM CODE="000003" TEXT_TYPE="S">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="List"/>
+      <ITEM LANGU="E"/>
      </TEXTS>
      <COMPOSITION>
       <ITEM NO="01" REF_TYPE="F" REF_CODE="&amp;RNT" REF_NO="001"/>
@@ -356,7 +356,7 @@
     </ITEM>
     <ITEM CODE="000004" TEXT_TYPE="S">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="Export"/>
+      <ITEM LANGU="E"/>
      </TEXTS>
      <COMPOSITION>
       <ITEM NO="01" REF_TYPE="F" REF_CODE="&amp;AQW" REF_NO="001"/>
@@ -366,7 +366,7 @@
     </ITEM>
     <ITEM CODE="000005" TEXT_TYPE="S">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="Edit"/>
+      <ITEM LANGU="E"/>
      </TEXTS>
      <COMPOSITION>
       <ITEM NO="01" REF_TYPE="F" REF_CODE="&amp;ALL" REF_NO="002"/>
@@ -419,7 +419,7 @@ TYPE-POOLS: slis.
 TYPES to_list TYPE REF TO zaplink_list.
 TYPES td_action TYPE rsmpe-func.
 
-DATA o_list  TYPE to_list.
+DATA o_list_u0zi0gu276j00cars51w  TYPE to_list.
 
 CONSTANTS:
   c_act_cancel  TYPE td_action VALUE &apos;CANCEL&apos;,
@@ -453,9 +453,9 @@ FORM user_command_user USING r_ucomm LIKE sy-ucomm
   rs_selfield-exit = &apos;X&apos;.
   CASE r_ucomm.
     WHEN c_act_confirm.
-      IF o_list IS BOUND.   o_list-&gt;is_confirmed = abap_true.   ENDIF.
+      IF o_list_u0zi0gu276j00cars51w IS BOUND.   o_list_u0zi0gu276j00cars51w-&gt;is_confirmed = abap_true.   ENDIF.
     WHEN c_act_cancel.
-      IF o_list IS BOUND.   o_list-&gt;is_confirmed = abap_false.   ENDIF.
+      IF o_list_u0zi0gu276j00cars51w IS BOUND.   o_list_u0zi0gu276j00cars51w-&gt;is_confirmed = abap_false.   ENDIF.
     WHEN OTHERS.
       CLEAR rs_selfield-exit.
   ENDCASE.
@@ -465,15 +465,15 @@ ENDFORM.                    &quot;user_command_user
 *&amp;      Form  set_list
 *&amp;---------------------------------------------------------------------*
 FORM set_list USING list TYPE to_list.
-  o_list = list.
-  IF o_list IS BOUND.   o_list-&gt;is_confirmed = abap_false.   ENDIF.
+  o_list_u0zi0gu276j00cars51w = list.
+  IF o_list_u0zi0gu276j00cars51w IS BOUND.   o_list_u0zi0gu276j00cars51w-&gt;is_confirmed = abap_false.   ENDIF.
 ENDFORM.                    &quot;set_list
 
 *&amp;---------------------------------------------------------------------*
 *&amp;      Form  clear_list
 *&amp;---------------------------------------------------------------------*
 FORM clear_list.
-  CLEAR o_list.
+  CLEAR o_list_u0zi0gu276j00cars51w.
 ENDFORM.                    &quot;clear_list
 
 **&amp;---------------------------------------------------------------------*
