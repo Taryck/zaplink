@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AFE909739A047C38CF422E624D3992E3" CODE_SIGNATURE="E1D852D60E468BF12DFCF162AC87F1AD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E3EDC642F71742B198061FB41F228634" CODE_SIGNATURE="38F73DD561F60485CA4BE7F94928662E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -77,16 +77,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
    <ITEM CMPNAME="LIGHTS" EXPOSURE="1" STATE="1" ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF lights,
-      no        TYPE td_light VALUE icon_light_out,
-      red       TYPE td_light VALUE icon_red_light,
-      yellow    TYPE td_light VALUE icon_yellow_light,
-      green     TYPE td_light VALUE icon_green_light,
-      export    TYPE td_light VALUE icon_arrow_left,
-      import    TYPE td_light VALUE icon_arrow_right,
-      uninst    TYPE td_light VALUE icon_delete,
-      active    TYPE td_light VALUE icon_activate,
-      inactive  TYPE td_light VALUE icon_deactivate,
-      rep_error TYPE td_light VALUE icon_message_error_small,   &quot; ICON_STATUS_CRITICAL ICON_ALERT ICON_MESSAGE_CRITICAL_SMALL
+      no            TYPE td_light VALUE icon_light_out,
+      red           TYPE td_light VALUE icon_red_light,
+      yellow        TYPE td_light VALUE icon_yellow_light,
+      green         TYPE td_light VALUE icon_green_light,
+      export        TYPE td_light VALUE icon_arrow_left,
+      import        TYPE td_light VALUE icon_arrow_right,
+      uninst        TYPE td_light VALUE icon_delete,
+      active        TYPE td_light VALUE icon_activate,
+      inactive      TYPE td_light VALUE icon_deactivate,
+      rep_error     TYPE td_light VALUE icon_message_error_small,   &quot; ICON_STATUS_CRITICAL ICON_ALERT ICON_MESSAGE_CRITICAL_SMALL
+      delete_file   type td_light value ICON_CLOSED_FOLDER_ORPHANED,    &quot; ICON_BOOKING_STOP ICON_BEN_TERMINATION ICON_TERMINATED_ORG_UNIT ICON_TERMINATED_TASK ICON_MESSAGE_ORPHANED
     END OF lights
 `
     <TEXTS>
@@ -565,6 +566,8 @@ INCLUDE zaplink_macros.</MACROS>
 
   d_action = o_comp-&gt;get_action( ).
   CASE d_action.
+    WHEN sel_actions-delete_file.
+      result-action = lights-delete_file.
     WHEN sel_actions-import.
       result-action = lights-import.
     WHEN sel_actions-export.
@@ -1291,14 +1294,16 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
+  DATA action TYPE td_sel_action.
   FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
 
   LOOP AT _index ASSIGNING &lt;i&gt;.
     CLEAR &lt;i&gt;-selected.
-    IF &lt;i&gt;-o_comp-&gt;get_action( ) = sel_actions-export
-    or &lt;i&gt;-o_comp-&gt;get_action( ) = sel_actions-import.
-      &lt;i&gt;-selected = abap_true.
-    ENDIF.
+    action = &lt;i&gt;-o_comp-&gt;get_action( ).
+    CASE action.
+      WHEN sel_actions-export OR sel_actions-import OR sel_actions-uninstall OR sel_actions-delete_file.
+        &lt;i&gt;-selected = abap_true.
+    ENDCASE.
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SELECT_DEFAULT" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
@@ -1598,38 +1603,38 @@ INCLUDE zaplink_macros.</MACROS>
    <ITEM TYPEGROUP="SLIS" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TD_ALV" EXPOSURE="1" STATE="1" TYPTYPE="4">BEGIN OF td_alv,
+   <ITEM CMPNAME="TD_ALV" EXPOSURE="1" STATE="1" EDITORDER="12 " TYPTYPE="4">BEGIN OF td_alv,
       headers TYPE tt_alv,
       items   TYPE tt_alv,
     END OF td_alv
 `</ITEM>
-   <ITEM CMPNAME="TD_ALVID" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="GUID_16"/>
-   <ITEM CMPNAME="TD_ITERATOR_TYPE" STATE="1" TYPTYPE="1" TYPE="CHAR1">
+   <ITEM CMPNAME="TD_ALVID" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="GUID_16"/>
+   <ITEM CMPNAME="TD_ITERATOR_TYPE" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="CHAR1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Iterator type : all, selected, ...."/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_COMPONENT">
+   <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_COMPONENT">
     <TEXTS>
      <ITEM LANG="E" TEXT="Zap Link Component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_EXCEPTION" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX_LIST">
+   <ITEM CMPNAME="TO_EXCEPTION" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX_LIST">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ME" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_LIST">
+   <ITEM CMPNAME="TO_ME" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_LIST">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZapLink Components list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ALLCOMPLIST" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_ALLCOMPLIST" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4">
     BEGIN OF ts_allcomplist,
     key      TYPE ts_compkey,
     o_comp   TYPE to_component,
@@ -1640,7 +1645,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="All Component list index line"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ALV" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_ALV" EXPOSURE="1" STATE="1" EDITORDER="10 " TYPTYPE="4">
     BEGIN OF ts_alv,
       action     TYPE td_light, &quot;type pools ICON
       type       TYPE td_comptype,
@@ -1663,7 +1668,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="ALV line"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ALV_CONF" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_ALV_CONF" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="4">
     BEGIN OF ts_alv_conf,
         fields TYPE slis_t_fieldcat_alv,
         layout TYPE slis_layout_alv,
@@ -1673,12 +1678,12 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="ALV configuration"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ALV_CONFS" EXPOSURE="1" STATE="1" TYPTYPE="4">BEGIN OF ts_alv_confs,
+   <ITEM CMPNAME="TS_ALV_CONFS" EXPOSURE="1" STATE="1" EDITORDER="9 " TYPTYPE="4">BEGIN OF ts_alv_confs,
       simple TYPE ts_alv_conf,
       hierar TYPE ts_alv_conf,
       END OF ts_alv_confs
 `</ITEM>
-   <ITEM CMPNAME="TS_COMPLIST" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_COMPLIST" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">
     BEGIN OF ts_complist,
     key      TYPE ts_compkey,
     o_comp   TYPE to_component,
@@ -1689,34 +1694,34 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Component list index"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CURSOR" EXPOSURE="1" STATE="1" TYPTYPE="4">BEGIN OF ts_cursor,
+   <ITEM CMPNAME="TS_CURSOR" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_cursor,
     key      TYPE ts_compkey,
     o_comp   TYPE to_component,
     order    TYPE i,
   END OF ts_cursor
 `</ITEM>
-   <ITEM CMPNAME="TT_ALLCOMPLIST" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_ALLCOMPLIST" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4">
     tt_allcomplist TYPE SORTED TABLE OF ts_allcomplist WITH NON-UNIQUE KEY KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="All Components (main and sub)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_ALV" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_ALV" EXPOSURE="1" STATE="1" EDITORDER="11 " TYPTYPE="4">
     tt_alv TYPE STANDARD TABLE OF ts_alv WITH DEFAULT KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="ALV table"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_COMPLIST" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_COMPLIST" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4">
     tt_complist TYPE SORTED TABLE OF ts_complist WITH UNIQUE KEY KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Component list index"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_CURSORS" EXPOSURE="1" STATE="1" TYPTYPE="4">tt_cursors TYPE STANDARD TABLE OF ts_cursor WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_CURSORS" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_cursors TYPE STANDARD TABLE OF ts_cursor WITH DEFAULT KEY
 `</ITEM>
   </TYPES>
  </RAW>
