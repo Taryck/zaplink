@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3F9EB88473D459FD0EAF36B4C96CF7BD" CODE_SIGNATURE="412144232F177A7A41DE201D56EA66CE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="69CF5C4FFFB1DF2E473160EB0642907A" CODE_SIGNATURE="AC6074D9CAC0746630195FA880391795" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MENUPAINTER_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -615,7 +615,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   LOOP AT functions ASSIGNING &lt;fu&gt;.
     CLEAR s_func.     MOVE-CORRESPONDING &lt;fu&gt;-hdr TO s_func.
     READ TABLE &lt;fu&gt;-texts ASSIGNING &lt;tl&gt; WITH TABLE KEY langu = d_lang.
-    IF sy-subrc = 0.    s_func-fun_text = &lt;tl&gt;-text.  s_func-info_text = &lt;tl&gt;-info.  ENDIF.
+    IF sy-subrc = 0.    s_func-fun_text = &lt;tl&gt;-text.  s_func-icon_text = &lt;tl&gt;-icon.  s_func-info_text = &lt;tl&gt;-info.  ENDIF.    &quot; Issue 116
 
     INSERT s_func INTO TABLE fm_data-functions.
     CALL METHOD set_func_texts
