@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9AAFFC335496D2B8D43CA37D9DDC37D1" CODE_SIGNATURE="CCEA1322069C0BD0FCD08F90FC67A951" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="89ACAC517D8B1AA6AC36853C86BE930E" CODE_SIGNATURE="B037C3171EB8A56793781FCC45E67CE6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -249,7 +249,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
          WHERE NOT clsname IS INITIAL OR clsname IS INITIAL.
 
 *TYPES
-  MODIFY types FROM s_ty TRANSPORTING author createdon changedby changedon r3release version editorder &quot; Issue 75 / Issue 108
+  MODIFY types FROM s_ty TRANSPORTING author createdon changedby changedon r3release version &quot; editorder Issue 117 (preserve edit order) &quot; Issue 75 / Issue 108
          WHERE NOT cmpname IS INITIAL OR cmpname IS INITIAL.
 
 *DEFERRED
@@ -1415,22 +1415,22 @@ AS</ITEM>
    <ITEM TYPEGROUP="SEOT" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_MENUPAINTER" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_MENUPAINTER_DATA">
+   <ITEM CMPNAME="TO_MENUPAINTER" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_MENUPAINTER_DATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Menu painter Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_CX">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ALIAS_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_ALIAS_DATA" EXPOSURE="2" STATE="1" EDITORDER="30 " TYPTYPE="4">
     BEGIN OF ts_alias_data.
     INCLUDE TYPE seoo_alias_r AS hdr.
     TYPES:
@@ -1441,7 +1441,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Alias definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_ATTR_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_ATTR_DATA" EXPOSURE="2" STATE="1" EDITORDER="32 " TYPTYPE="4">
     BEGIN OF ts_attr_data.
     INCLUDE TYPE seoo_attribute_r AS hdr.
     TYPES:
@@ -1453,7 +1453,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Attribute definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_COMPONENT" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_COMPONENT" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
     BEGIN OF ts_component,
       cmpname TYPE seoo_method_r-cmpname,
     END OF ts_component
@@ -1462,7 +1462,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Component (Types, alias, method, attribute) definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CX_TEXT" EXPOSURE="2" STATE="1" TYPTYPE="4">BEGIN OF ts_cx_text,
+   <ITEM CMPNAME="TS_CX_TEXT" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4">BEGIN OF ts_cx_text,
             cmpname   TYPE seoo_attribute_r-cmpname.
     INCLUDE TYPE sotr_head AS hdr.
     TYPES:
@@ -1471,17 +1471,17 @@ AS</ITEM>
         longtexts TYPE tt_sotr_textus,
       END OF ts_cx_text
 `</ITEM>
-   <ITEM CMPNAME="TS_DEFERRED" EXPOSURE="2" STATE="1" TYPTYPE="4">BEGIN OF ts_deferred,                   &quot; used to handle
+   <ITEM CMPNAME="TS_DEFERRED" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_deferred,                   &quot; used to handle
                   classes TYPE seot_clsdeferrds_w,      &quot; class * definition load
                   interfaces TYPE seot_intdeferrds_r,   &quot; interface * load
                 END OF ts_deferred
 `</ITEM>
-   <ITEM CMPNAME="TS_DOC_KEY" EXPOSURE="1" STATE="1" TYPTYPE="4">BEGIN OF ts_doc_key,                                    &quot; equiv DOKU_OBJ = CHAR 60
+   <ITEM CMPNAME="TS_DOC_KEY" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_doc_key,                                    &quot; equiv DOKU_OBJ = CHAR 60
       name       TYPE seoclsname,                           &quot; CHAR 30
       other(30)  TYPE c,
     END OF ts_doc_key
 `</ITEM>
-   <ITEM CMPNAME="TS_EVENT_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_EVENT_DATA" EXPOSURE="2" STATE="1" EDITORDER="26 " TYPTYPE="4">
     BEGIN OF ts_event_data.
     INCLUDE TYPE seoo_event_r AS hdr.
     TYPES:
@@ -1496,7 +1496,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Event definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_EXCEP_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_EXCEP_DATA" EXPOSURE="2" STATE="1" EDITORDER="24 " TYPTYPE="4">
     BEGIN OF ts_excep_data.
     INCLUDE TYPE seos_exception_r AS hdr.
     TYPES:
@@ -1507,12 +1507,12 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Exception definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_INCLUDE" EXPOSURE="2" STATE="1" TYPTYPE="4">BEGIN OF ts_include,                                  &quot; Issue 82
+   <ITEM CMPNAME="TS_INCLUDE" EXPOSURE="2" STATE="1" EDITORDER="15 " TYPTYPE="4">BEGIN OF ts_include,                                  &quot; Issue 82
           name       TYPE program,
           raw_source TYPE tt_abaprawsource,
         END OF ts_include
 `</ITEM>
-   <ITEM CMPNAME="TS_INCLUDES" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_INCLUDES" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="4">
     BEGIN OF ts_includes,
           classpool      TYPE ts_include,
           pubsec         TYPE ts_include,
@@ -1532,14 +1532,14 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="List of Class&apos;s include with ABAP Code"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_INTERFACE" EXPOSURE="2" STATE="1" TYPTYPE="4">BEGIN OF ts_interface.
+   <ITEM CMPNAME="TS_INTERFACE" EXPOSURE="2" STATE="1" EDITORDER="40 " TYPTYPE="4">BEGIN OF ts_interface.
     INCLUDE TYPE seor_implementing_r AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
     TYPES:
         components TYPE tt_comp_impl,   &quot; Interface public attribute default value &amp; Method implementation
 *      attributes_redefinition TYPE tt_itf_default_values,   &quot; Interface public attribute default value
       END OF ts_interface
 `</ITEM>
-   <ITEM CMPNAME="TS_METH_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_METH_DATA" EXPOSURE="2" STATE="1" EDITORDER="28 " TYPTYPE="4">
     BEGIN OF ts_meth_data.
     INCLUDE TYPE seoo_method_r AS hdr.
     TYPES:
@@ -1554,13 +1554,13 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Method definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_METH_INC" EXPOSURE="2" STATE="1" TYPTYPE="4">BEGIN OF ts_meth_inc.                                 &quot; Issue 82
+   <ITEM CMPNAME="TS_METH_INC" EXPOSURE="2" STATE="1" EDITORDER="13 " TYPTYPE="4">BEGIN OF ts_meth_inc.                                 &quot; Issue 82
     INCLUDE TYPE seop_method_w_include AS hdr.
     TYPES:
         raw_source TYPE tt_abaprawsource,
       END OF ts_meth_inc
 `</ITEM>
-   <ITEM CMPNAME="TS_PARAM_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_PARAM_DATA" EXPOSURE="2" STATE="1" EDITORDER="22 " TYPTYPE="4">
     BEGIN OF ts_param_data.
     INCLUDE TYPE seos_parameter_r AS hdr.
     TYPES:
@@ -1571,19 +1571,19 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Parameter definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_REDEF_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">BEGIN OF ts_redef_data.
+   <ITEM CMPNAME="TS_REDEF_DATA" EXPOSURE="2" STATE="1" EDITORDER="38 " TYPTYPE="4">BEGIN OF ts_redef_data.
     INCLUDE TYPE seoredef AS hdr.
     TYPES:
         source        TYPE ts_sourceasstruc,
       END OF ts_redef_data
 `</ITEM>
-   <ITEM CMPNAME="TS_SEOCLASSTX" EXPOSURE="2" STATE="1" TYPTYPE="4">BEGIN OF ts_seoclasstx.
+   <ITEM CMPNAME="TS_SEOCLASSTX" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">BEGIN OF ts_seoclasstx.
     INCLUDE TYPE seoclasstx AS main.
     TYPES:
         documentation  TYPE ts_lang,
       END OF ts_seoclasstx
 `</ITEM>
-   <ITEM CMPNAME="TS_SEOCOMPOTX" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_SEOCOMPOTX" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">
     BEGIN OF ts_seocompotx.
     INCLUDE TYPE seocompotx AS main.
     TYPES:
@@ -1594,7 +1594,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Short description component (Langu key) + Documentation"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCES" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_SOURCES" EXPOSURE="2" STATE="1" EDITORDER="42 " TYPTYPE="4">
     BEGIN OF ts_sources,
                       classpool   TYPE  ts_sourceasstruc,
                       local_types TYPE  ts_sourceasstruc,
@@ -1609,7 +1609,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Class ABAP Source codes as structure"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_TGRP_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_TGRP_DATA" EXPOSURE="2" STATE="1" EDITORDER="36 " TYPTYPE="4">
     BEGIN OF ts_tgrp_data.
     INCLUDE TYPE seot_typepusage_r AS hdr.
     TYPES:
@@ -1621,7 +1621,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Type pool used data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_TYPE_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_TYPE_DATA" EXPOSURE="2" STATE="1" EDITORDER="34 " TYPTYPE="4">
     BEGIN OF ts_type_data.
     INCLUDE TYPE seoo_type_r AS hdr.
     TYPES:
@@ -1633,143 +1633,143 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Type definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_ALIAS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_ALIAS" EXPOSURE="2" STATE="1" EDITORDER="31 " TYPTYPE="4">
     tt_alias TYPE SORTED TABLE OF ts_alias_data WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class&apos;s Aliases"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_ATTRIBUTS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_ATTRIBUTS" EXPOSURE="2" STATE="1" EDITORDER="33 " TYPTYPE="4">
     tt_attributs TYPE SORTED TABLE OF ts_attr_data WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class&apos;s attributes"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_COMPONENTS" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_COMPONENTS" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">
     tt_components TYPE SORTED TABLE OF ts_component WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Component&apos;s list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_COMP_IMPL" EXPOSURE="2" STATE="1" TYPTYPE="4">tt_comp_impl TYPE SORTED TABLE OF ts_redef_data WITH UNIQUE KEY mtdname
+   <ITEM CMPNAME="TT_COMP_IMPL" EXPOSURE="2" STATE="1" EDITORDER="39 " TYPTYPE="4">tt_comp_impl TYPE SORTED TABLE OF ts_redef_data WITH UNIQUE KEY mtdname
 `</ITEM>
-   <ITEM CMPNAME="TT_CX_TEXTS" EXPOSURE="2" STATE="1" TYPTYPE="4">tt_cx_texts TYPE SORTED TABLE OF ts_cx_text WITH UNIQUE KEY cmpname
+   <ITEM CMPNAME="TT_CX_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="20 " TYPTYPE="4">tt_cx_texts TYPE SORTED TABLE OF ts_cx_text WITH UNIQUE KEY cmpname
 `</ITEM>
-   <ITEM CMPNAME="TT_EVENTS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_EVENTS" EXPOSURE="2" STATE="1" EDITORDER="27 " TYPTYPE="4">
     tt_events TYPE SORTED TABLE OF ts_event_data WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class&apos;s Events"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_EXCEPTIONS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_EXCEPTIONS" EXPOSURE="2" STATE="1" EDITORDER="25 " TYPTYPE="4">
     tt_exceptions TYPE SORTED TABLE OF ts_excep_data WITH UNIQUE KEY sconame
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Method&apos;s &amp; Event Exceptions"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_INTERFACES" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_INTERFACES" EXPOSURE="2" STATE="1" EDITORDER="41 " TYPTYPE="4">
     tt_interfaces TYPE SORTED TABLE OF ts_interface WITH UNIQUE KEY refclsname
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class interface use"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_METHODS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_METHODS" EXPOSURE="2" STATE="1" EDITORDER="29 " TYPTYPE="4">
     tt_methods TYPE SORTED TABLE OF ts_meth_data WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class&apos;s methods"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_METH_INCS" EXPOSURE="2" STATE="1" TYPTYPE="4">tt_meth_incs TYPE STANDARD TABLE OF ts_meth_inc WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_METH_INCS" EXPOSURE="2" STATE="1" EDITORDER="14 " TYPTYPE="4">tt_meth_incs TYPE STANDARD TABLE OF ts_meth_inc WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_PARAMETERS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_PARAMETERS" EXPOSURE="2" STATE="1" EDITORDER="23 " TYPTYPE="4">
     tt_parameters TYPE SORTED TABLE OF ts_param_data WITH UNIQUE KEY sconame
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Method&apos;s &amp; Event parameters"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOCLASSTX" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_SEOCLASSTX" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">
     tt_seoclasstx TYPE STANDARD TABLE OF seoclasstx WITH DEFAULT KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Short description class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOCLASSTX_S" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_SEOCLASSTX_S" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
     tt_seoclasstx_s TYPE SORTED TABLE OF ts_seoclasstx WITH UNIQUE KEY langu
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Short description class With unique Key"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOCOMPOTX" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_SEOCOMPOTX" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
     tt_seocompotx TYPE STANDARD TABLE OF seocompotx WITH DEFAULT KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Short description component (full key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOCOMPOTX_L" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_SEOCOMPOTX_L" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4">
     tt_seocompotx_l TYPE SORTED TABLE OF ts_seocompotx WITH UNIQUE KEY langu
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Short description component (Langu key) + Documentation"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOCOMPOTX_S" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_SEOCOMPOTX_S" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">
     tt_seocompotx_s TYPE SORTED TABLE OF seocompotx WITH UNIQUE KEY cmpname langu
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Short description component (With unique Key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOSUBCOTX" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_SEOSUBCOTX" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="4">
     tt_seosubcotx TYPE STANDARD TABLE OF seosubcotx WITH DEFAULT KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Short description Sub component (full key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOSUBCOTX_L" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_SEOSUBCOTX_L" EXPOSURE="2" STATE="1" EDITORDER="12 " TYPTYPE="4">
     tt_seosubcotx_l TYPE SORTED TABLE OF seosubcotx WITH UNIQUE KEY langu
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Short description Sub component (Langu key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SEOSUBCOTX_S" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_SEOSUBCOTX_S" EXPOSURE="2" STATE="1" EDITORDER="11 " TYPTYPE="4">
     tt_seosubcotx_s TYPE SORTED TABLE OF seosubcotx WITH UNIQUE KEY cmpname sconame langu
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Short description Sub component (With unique Key)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SOTR_TEXTS" EXPOSURE="2" STATE="1" TYPTYPE="4">tt_sotr_texts TYPE SORTED TABLE OF sotr_text WITH UNIQUE KEY langu object
+   <ITEM CMPNAME="TT_SOTR_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4">tt_sotr_texts TYPE SORTED TABLE OF sotr_text WITH UNIQUE KEY langu object
 `</ITEM>
-   <ITEM CMPNAME="TT_SOTR_TEXTUS" EXPOSURE="2" STATE="1" TYPTYPE="4">tt_sotr_textus TYPE STANDARD TABLE OF sotr_textu WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_SOTR_TEXTUS" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="4">tt_sotr_textus TYPE STANDARD TABLE OF sotr_textu WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_TYPEGROUPS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_TYPEGROUPS" EXPOSURE="2" STATE="1" EDITORDER="37 " TYPTYPE="4">
     tt_typegroups TYPE SORTED TABLE OF ts_tgrp_data WITH UNIQUE KEY typegroup
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class&apos;s type pool used"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TYPES" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_TYPES" EXPOSURE="2" STATE="1" EDITORDER="35 " TYPTYPE="4">
     tt_types TYPE SORTED TABLE OF ts_type_data WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class&apos;s types"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="T_FM_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="T_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="21 " TYPTYPE="4">
     BEGIN OF t_fm_data,
 *      name TYPE seoclsname,
 *      version TYPE seoversion,
