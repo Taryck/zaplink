@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="10DAEFD8E81CF01767750103BEEA9E0E" CODE_SIGNATURE="B7152C9345473D92F7A1694115741AD2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="89013ACA0C7F33A0A09E399CAC22FCDF" CODE_SIGNATURE="3807AE2BC5A0C714B28A9F5A9E132500" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -23,9 +23,20 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </TEXTS>
   </A0_MAINDATA>
   <ALIASES>
+   <ITEM CMPNAME="TD_CHECKBOX" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_CHECKBOX"/>
+   <ITEM CMPNAME="TR_AUTHOR" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_AUTHOR"/>
+   <ITEM CMPNAME="TR_COMPNAME" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_COMPNAME"/>
+   <ITEM CMPNAME="TR_COMPTYPE" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_COMPTYPE"/>
+   <ITEM CMPNAME="TR_PACKAGES" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_PACKAGES"/>
+   <ITEM CMPNAME="TR_SRCSYSTEM" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TR_SRCSYSTEM"/>
    <ITEM CMPNAME="TT_COMPKEYS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_COMPKEYS"/>
   </ALIASES>
   <ATTRIBUTS>
+   <ITEM CMPNAME="ACTIVATION_REQUESTED" EXPOSURE="2" STATE="1" ATTRDONLY="X" TYPTYPE="1" TYPE="TD_CHECKBOX">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Do activation has been requested by user"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="COMPONENT_LIST" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_COMPKEYS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Component list"/>
@@ -35,6 +46,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="IT_OBJ_LIST" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_OBJLIST">
     <TEXTS>
      <ITEM LANG="E" TEXT="Objects list"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="OBJECT_COUNT" EXPOSURE="2" STATE="1" ATTRDONLY="X" TYPTYPE="1" TYPE="I">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Object count in the list"/>
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
@@ -842,6 +858,99 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     ENDCASE.
   ENDLOOP.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="ADD_FROM_TADIR" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Analyse components"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="AUTHOR" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TR_AUTHOR">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Author"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="EXT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Extend to sub packages"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TR_COMPNAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Component Name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="PACKAGES" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TR_PACKAGES">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Package"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="SRCSYSTEM" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TR_SRCSYSTEM">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Package"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="TYPE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TR_COMPTYPE">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Component Type"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA t_keys      TYPE tt_compkeys.
+
+  t_keys = zaplink_tools=&gt;get_keys_from_tadir( srcsystem = srcsystem
+                                                   type  = type
+                                                    name = name
+                                                packages = packages
+                                                     ext = ext
+                                                  author = author ).
+  CHECK NOT t_keys IS INITIAL.
+  add_keys( t_keys ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="ADD_KEYS" EXPOSURE="2" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Add keys to worklist"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="OBJ_LIST" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_COMPKEYS">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Object list"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA t_obj_list TYPE tt_objlist.
+
+  APPEND LINES OF obj_list TO component_list.
+  SORT component_list BY type name.   DELETE ADJACENT DUPLICATES FROM component_list COMPARING type name.
+  t_obj_list = compkeys_2_objlist( obj_list ).
+  APPEND LINES OF t_obj_list TO it_obj_list.
+  SORT it_obj_list BY object obj_name.    DELETE ADJACENT DUPLICATES FROM it_obj_list COMPARING object obj_name.
+  object_count = LINES( it_obj_list ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="ADD_LIST" EXPOSURE="2" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Add list to worklist"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="O_LIST" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZapLink Components list"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA t_comps      TYPE tt_compkeys.
+  CHECK o_list IS BOUND.
+  t_comps = o_list-&gt;get_keys( ).
+  add_keys( t_comps ).</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="ADD_OBJ_TO_WA" EXPOSURE="1" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Add objects to Work area"/>
@@ -866,6 +975,62 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
     ENDIF.
   ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="ASK_FOR_ACTIVATION" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Ask to user before Activate"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TT_COMPKEYS">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Objects list not activate"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA d_count    TYPE i.
+  DATA d_answer   TYPE c.
+  DATA d_msg      TYPE string.
+  DATA o_cx       TYPE REF TO zaplink_cx.
+
+  CLEAR activation_requested.
+  d_count = LINES( it_obj_list ).   d_msg = d_count.  CONDENSE d_msg.
+  CONCATENATE &apos;Would you like to activate the objects (&apos;(t01) d_msg &apos;) that have been installed ?&apos;(t02) INTO d_msg. &quot;#EC NOTEXT
+  CALL FUNCTION &apos;POPUP_TO_CONFIRM&apos;
+    EXPORTING
+      titlebar              = &apos;Activate imported objects&apos;(ptb)
+      text_question         = d_msg
+      text_button_1         = &apos;Yes&apos;(yes)
+      icon_button_1         = &apos;ICON_ACTIVATE&apos;               &quot;#EC NOTEXT
+      text_button_2         = &apos;No&apos;(no_)
+      icon_button_2         = &apos;ICON_SKIP&apos;                   &quot;#EC NOTEXT
+      default_button        = &apos;1&apos;                           &quot;#EC NOTEXT
+      display_cancel_button = abap_false
+      iv_quickinfo_button_1 = &apos;All object will be activate as far as possible&apos;(qi1) &quot;#EC NOTEXT
+      iv_quickinfo_button_2 = &apos;No object activation at all&apos;(qi2) &quot;#EC NOTEXT
+    IMPORTING
+      answer                = d_answer
+    EXCEPTIONS
+      text_not_found        = 1
+      OTHERS                = 2.
+  IF sy-subrc &lt;&gt; 0.
+    o_cx = zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;POPUP_TO_CONFIRM&apos;
+                                             subrc = sy-subrc ) .
+    RAISE EXCEPTION o_cx.
+  ENDIF.
+  IF d_answer CO &apos;YJ1&apos;.
+    activation_requested = abap_true.
+    result = activate( ).
+  ELSE.
+    result = objlist_2_compkeys( it_obj_list ).
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CHECK_INACTIVE_OBJECTS" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
@@ -951,23 +1116,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA          s_obj LIKE LINE OF result.
   FIELD-SYMBOLS &lt;k&gt;   LIKE LINE OF keys.
   LOOP AT keys ASSIGNING &lt;k&gt;.   CLEAR s_obj.  s_obj-object = &lt;k&gt;-type.    s_obj-obj_name = &lt;k&gt;-name.  APPEND s_obj TO result.   ENDLOOP.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" MTDTYPE="2">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="OBJ_LIST" CMPTYPE="1" MTDTYPE="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_COMPKEYS">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="Objects list"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <SOURCE>`
-  component_list = obj_list.
-  it_obj_list = compkeys_2_objlist( obj_list ).
-  SORT it_obj_list BY object obj_name.
-  DELETE ADJACENT DUPLICATES FROM it_obj_list COMPARING object obj_name.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONV_LIST" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
@@ -1164,41 +1312,58 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   ENDLOOP.</SOURCE>
    </ITEM>
   </METHODS>
+  <TEXTSPOOL>
+   <ITEM ID="I" KEY="T01">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY="Would you like to activate the objects (" LENGTH="50 "/>
+    </TEXTS>
+   </ITEM>
+   <ITEM ID="I" KEY="T02">
+    <TEXTS>
+     <ITEM LANGU="E" ENTRY=") that have been installed ?" LENGTH="40 "/>
+    </TEXTS>
+   </ITEM>
+  </TEXTSPOOL>
   <TYPEGROUPS>
    <ITEM TYPEGROUP="ABAP" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SEWOR" EXPLICIT="X"/>
    <ITEM TYPEGROUP="SWBM" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TT_DET_OBJ" EXPOSURE="2" STATE="1" TYPTYPE="4">tt_det_obj TYPE STANDARD TABLE OF dwinactiv WITH NON-UNIQUE DEFAULT KEY
+   <ITEM CMPNAME="TO_LIST" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_LIST">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="ZapLink Components list"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TT_DET_OBJ" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">tt_det_obj TYPE STANDARD TABLE OF dwinactiv WITH NON-UNIQUE DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_GENSET" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_GENSET" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">
     tt_GENSET  type STANDARD TABLE OF GENSETC with NON-UNIQUE DEFAULT KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Generation Set of component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_ITEMS" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_ITEMS" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">
     tt_items TYPE STANDARD TABLE OF sewor_working_area WITH NON-UNIQUE DEFAULT KEY
     <TEXTS>
      <ITEM LANG="E" TEXT="Detailled list of object in Working area"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_MAINPROGS" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_MAINPROGS" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
     tt_mainprogs TYPE STANDARD TABLE OF t_mainprog WITH NON-UNIQUE DEFAULT KEY
     <TEXTS>
      <ITEM LANG="E" TEXT="List of main programs"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_OBJLIST" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_OBJLIST" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">
     TT_OBJLIST type STANDARD TABLE OF E071 with NON-UNIQUE DEFAULT KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Objects list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="T_MAINPROG" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="T_MAINPROG" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">
     BEGIN OF t_mainprog,
       master TYPE d010inc-master,
       include TYPE d010inc-include,
