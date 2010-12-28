@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="6DBA72EF690FABA9544CB4A6C494AEED" CODE_SIGNATURE="DD8F3CADBACFF0D4382A85249B2B0931" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="7252227CBE5898C3045E36C16F77262B" CODE_SIGNATURE="DD8F3CADBACFF0D4382A85249B2B0931" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_VARI_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -225,14 +225,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM TYPEGROUP="ABAP" IMPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TR_STRING" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TR_STRING" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
     tr_string TYPE RANGE OF string
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Values"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4">
     BEGIN OF ts_fm_data,
 * xx pour type doc
       header          TYPE varid,
@@ -245,7 +245,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Data retrieve from FM"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="4">
     BEGIN OF ts_maindata.
   INCLUDE TYPE varid.
   TYPES:
@@ -255,7 +255,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Program main data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_PARAM_DATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_PARAM_DATA" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4">
     BEGIN OF ts_param_data.
   INCLUDE TYPE vanz AS hdr.
   TYPES:
@@ -268,7 +268,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Parameters &amp; Select-options data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_VARIANT_KEY" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_VARIANT_KEY" EXPOSURE="1" STATE="1" EDITORDER="8 " TYPTYPE="4">
     BEGIN OF ts_variant_key,
         program  TYPE varid-report,
         variant  TYPE varid-variant,
@@ -278,21 +278,21 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Structure that define variant&apos;s key"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_PARAMS" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_PARAMS" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4">
     tt_params TYPE SORTED TABLE OF ts_param_data WITH UNIQUE KEY name
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Params list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SCREENS" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_SCREENS" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">
     tt_screens TYPE SORTED TABLE OF rsdynnr WITH UNIQUE KEY dynnr
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Screens list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_VARIT" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_VARIT" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">
     tt_varit TYPE SORTED TABLE OF varit WITH UNIQUE KEY langu
 `
     <TEXTS>

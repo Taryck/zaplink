@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A924A323B52C37118699C5AC0EE0A7DD" CODE_SIGNATURE="9D6E174BC110D7A35E5F4766707055D5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACID_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="75B8BF3B842391DEB95C432334B4259F" CODE_SIGNATURE="9D6E174BC110D7A35E5F4766707055D5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACID_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -154,7 +154,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM TYPEGROUP="ABAP" IMPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TS_4SERVER" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_4SERVER" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4">
     BEGIN OF ts_4server,
       server  TYPE aab_id_act-server.
   INCLUDE TYPE ts_activation as activation.
@@ -165,7 +165,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Activation checkbox for a user"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_4USER" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_4USER" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">
     BEGIN OF ts_4user,
       user    TYPE aab_id_act-username.
   INCLUDE TYPE ts_activation as activation.
@@ -176,7 +176,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Activation checkbox for a server"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">
     BEGIN OF ts_fm_data,
       header          TYPE aab_id_prop,     &quot; aab_id_sfields,
       descriptions    TYPE STANDARD TABLE OF aab_id_propt WITH DEFAULT KEY,
@@ -187,7 +187,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Function Module Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
     BEGIN OF ts_maindata.
   INCLUDE TYPE aab_id_sfields.
   TYPES:
@@ -197,14 +197,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Function Module main data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_SERVERS" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_SERVERS" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="4">
     tt_servers TYPE SORTED TABLE OF ts_4server WITH UNIQUE KEY server
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Activation checkbox for servers"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_USERS" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_USERS" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4">
     tt_users TYPE SORTED TABLE OF ts_4user WITH UNIQUE KEY user
 `
     <TEXTS>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8393C97C45282A6989C27815F624BCEB" CODE_SIGNATURE="D7F52F3E9186E750DB87F8EA9DA02EAA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="980AE0F32B76572CAFAC45735438E96A" CODE_SIGNATURE="D7F52F3E9186E750DB87F8EA9DA02EAA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROGRAM"/>
@@ -1165,7 +1165,7 @@ AS</ITEM>
    <ITEM TYPEGROUP="SEOT" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TO_MSG_COL" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
+   <ITEM CMPNAME="TO_MSG_COL" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="Message Collector">U1&amp;MEANING&amp;
 ASMessage collector
@@ -1173,7 +1173,7 @@ U1&amp;HINTS&amp;
 AS</ITEM>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CLASS_DATA" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_CLASS_DATA" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4">
     BEGIN OF ts_class_data.
     INCLUDE TYPE vseoclass AS hdr.
 *      Include type VSEOEXTEND as Inh.  &quot; Duplicate name for some fields
@@ -1200,7 +1200,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Maindata of Class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_EXCEPTION_TEXT" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_EXCEPTION_TEXT" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">
     BEGIN OF ts_exception_text,
 *    BEGIN OF ts_exception_text.
 *    INCLUDE TYPE seoo_attribute_r AS attr.
@@ -1218,7 +1218,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="An exception definition : message, texts, ..."/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_LOCALS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_LOCALS" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
     BEGIN OF ts_locals,
           types           TYPE ts_sourceasstruc,
           implementations TYPE ts_sourceasstruc,
@@ -1237,7 +1237,7 @@ U1&amp;HINTS&amp;
 AS</ITEM>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_MESSAGE" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">
     begin of ts_message,
       class       type symsgid,
       number      type symsgno,
@@ -1251,7 +1251,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Message mapping for exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_REDEFINITION" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_REDEFINITION" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
     BEGIN OF ts_redefinition.
     INCLUDE TYPE seoredef AS hdr.  &quot; Méthodes redéfinies par relation d&apos;héritage
     TYPES:
@@ -1262,21 +1262,21 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Method&apos;s redefinition data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_EXCEPTIONS_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">
     tt_exceptions_texts TYPE SORTED TABLE OF ts_exception_text WITH UNIQUE KEY cmpname
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Exceptions with texts"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_FRIENDS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_FRIENDS" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">
     tt_friends    TYPE SORTED TABLE OF seofriends WITH UNIQUE KEY refclsname friendtype
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class Friends list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_REDEFINITIONS" EXPOSURE="2" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_REDEFINITIONS" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">
     tt_redefinitions TYPE SORTED TABLE OF ts_redefinition WITH UNIQUE KEY mtdname
 `
     <TEXTS>

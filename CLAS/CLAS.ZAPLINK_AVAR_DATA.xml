@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D129FEBFB8B818EA64DB4033E0D2560A" CODE_SIGNATURE="CAF4B7D4466A7D17EBB5A4C65823D4D0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_AVAR_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="26A0E966D796B573BFFE4D4F46A6A4B0" CODE_SIGNATURE="CAF4B7D4466A7D17EBB5A4C65823D4D0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_AVAR_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -184,7 +184,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM TYPEGROUP="ABAP" IMPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TS_DEFINITION" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_DEFINITION" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="4">
     BEGIN OF ts_definition,
       type    TYPE td_comptype,
       name    type td_compname.
@@ -196,7 +196,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Variant single definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
     BEGIN OF ts_fm_data,
       header          TYPE aab_var_prop,     &quot; aab_var_sfields,
       descriptions    TYPE STANDARD TABLE OF aab_var_propt WITH DEFAULT KEY,
@@ -207,7 +207,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Function Module Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="4">
     BEGIN OF ts_maindata.
   INCLUDE TYPE aab_var_sfields.
   TYPES:
@@ -217,7 +217,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Function Module main data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_NAME" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_NAME" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">
     BEGIN OF ts_name,
       name    TYPE aab_var_name,
       user    TYPE aab_var_local,
@@ -227,7 +227,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Variant keys"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_DEFINITIONS" EXPOSURE="1" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TT_DEFINITIONS" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="4">
     tt_definitions TYPE SORTED TABLE OF ts_definition WITH UNIQUE KEY type name
 `
     <TEXTS>
