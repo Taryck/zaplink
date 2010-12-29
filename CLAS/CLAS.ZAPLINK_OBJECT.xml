@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A08EBC3F3A33B980E16B2354B34D0E79" CODE_SIGNATURE="B3FB697FA9B7A87A3997051C43261FD0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2A84C4784A011E836E61C9B8C317D346" CODE_SIGNATURE="9DB47C19AB9172746D98E731A9D43B4A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1234,6 +1234,7 @@ AS</ITEM>
   DATA _component       TYPE to_component.
   DATA _name            TYPE td_compname.
   DATA d_key            TYPE seoclskey.
+  DATA f_exists         TYPE abap_bool.
 
   TRY.
 
@@ -1246,6 +1247,17 @@ AS</ITEM>
     ENDIF.
 
     d_key-clsname = _d-class-clsname.
+    CALL FUNCTION &apos;SEO_CLIF_EXISTENCE_CHECK&apos;                &quot; Issue 119
+      EXPORTING
+        cifkey              = d_key
+      EXCEPTIONS
+        not_specified       = 1
+        not_existing        = 2
+        OTHERS              = 3.
+    IF sy-subrc = 0.
+      f_exists = abap_true.
+    ENDIF.
+
 * Allready done in overwrite
 *    CALL FUNCTION &apos;SEO_CLASS_EXISTENCE_CHECK&apos;
 *      EXPORTING
@@ -1321,6 +1333,59 @@ AS</ITEM>
        no_access                          = 5
        other                              = 6
        OTHERS                             = 7.
+    IF sy-subrc = 4 AND f_exists IS INITIAL.                &quot; Issue 119
+      CALL FUNCTION &apos;SEO_BSP_CLASS_DELETE_COMPLETE&apos;         &quot; Brute force delete
+        EXPORTING
+          clskey = d_key.
+* Do it again
+      CALL FUNCTION &apos;SEO_CLASS_CREATE_COMPLETE&apos;
+       EXPORTING
+*     corrnr                             = e_corrnr
+*     devclass                           = &apos;$TMP&apos;                &quot;devclass
+*     version                            = e_version
+*     genflag                            = e_genflag
+*     authority_check                    = e_authority_check
+         overwrite                          = &apos;X&apos;                   &quot;overwrite
+*   SUPPRESS_METHOD_GENERATION         = e_suppress_meth_gen
+*   SUPPRESS_REFACTORING_SUPPORT       = e_suppress_refac_gen
+         method_sources                     = _d-method_sources    &quot; Methods source
+         locals_def                         = _d-locals_def        &quot; LOCAL_TYPES
+         locals_imp                         = _d-locals_imp        &quot; LOCAL_IMP
+         locals_mac                         = _d-locals_mac        &quot; MACROS
+*   SUPPRESS_INDEX_UPDATE              = e_suppress_ind_update
+       IMPORTING
+         korrnr                             = i_korrnr
+       TABLES
+         class_descriptions                 = _d-class_desc
+         component_descriptions             = _d-component_desc
+         subcomponent_descriptions          = _d-subcomponent_desc
+       CHANGING
+         class                              = _d-class
+         inheritance                        = _d-inheritance
+         redefinitions                      = _d-redefinitions
+         implementings                      = _d-implementings
+         impl_details                       = _d-impl_details
+         attributes                         = _d-attributes
+         methods                            = _d-methods
+         events                             = _d-events
+         types                              = _d-types
+*   TYPE_SOURCE                        = ch_type_source &quot;???
+         PARAMETERS                         = _d-parameters
+         exceps                             = _d-exceps
+         aliases                            = _d-aliases
+         typepusages                        = _d-typeusages
+         clsdeferrds                        = _d-clsdeferrds
+         intdeferrds                        = _d-intdeferrds
+         friendships                        = _d-friendships
+       EXCEPTIONS
+         existing                           = 1
+         is_interface                       = 2
+         db_error                           = 3
+         component_error                    = 4
+         no_access                          = 5
+         other                              = 6
+         OTHERS                             = 7.
+    ENDIF.
     IF sy-subrc &lt;&gt; 0.
       o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_CREATE_COMPLETE&apos;
                                                   subrc = sy-subrc
@@ -1410,23 +1475,36 @@ AS</ITEM>
   DATA _component   TYPE to_component.
   DATA _name        TYPE td_compname.
 * Patch SAP do not create type alias.
-  DATA  intkey TYPE seoclskey.
-  DATA  type   TYPE vseotype.
+  DATA intkey       TYPE seoclskey.
+  DATA type         TYPE vseotype.
+  DATA f_exists     TYPE abap_bool.
   FIELD-SYMBOLS &lt;alias&gt; LIKE LINE OF _d-aliases.
 
   TRY.
 
     _d = o_data-&gt;to_data( ).
+    MOVE-CORRESPONDING _d-interface TO intkey.
+
+    CALL FUNCTION &apos;SEO_CLIF_EXISTENCE_CHECK&apos;      &quot; Issue 119
+      EXPORTING
+        cifkey              = intkey
+      EXCEPTIONS
+        NOT_SPECIFIED       = 1
+        NOT_EXISTING        = 2
+        OTHERS              = 3.
+    IF sy-subrc = 0.
+      f_exists = abap_true.
+    ENDIF.
 
     CALL FUNCTION &apos;SEO_INTERFACE_CREATE_COMPLETE&apos;
       EXPORTING
-*     CORRNR                             =
-*     devclass                           = &apos;$TMP&apos;
-*     VERSION                            = SEOC_VERSION_INACTIVE
-*     GENFLAG                            = &apos; &apos;
-*     AUTHORITY_CHECK                    = SEOX_TRUE
+*        CORRNR                             =
+*        devclass                           = &apos;$TMP&apos;
+*        VERSION                            = SEOC_VERSION_INACTIVE
+*        GENFLAG                            = &apos; &apos;
+*        AUTHORITY_CHECK                    = SEOX_TRUE
         overwrite                          = seox_true
-*     SUPPRESS_REFACTORING_SUPPORT       = SEOX_TRUE
+*        SUPPRESS_REFACTORING_SUPPORT       = SEOX_TRUE
       IMPORTING
         korrnr                             = i_korrnr
       TABLES
@@ -1454,7 +1532,49 @@ AS</ITEM>
         no_access                          = 5
         other                              = 6
         OTHERS                             = 7.
-    IF sy-subrc &lt;&gt; 0.   &quot; Issue 118
+    IF sy-subrc = 4 AND f_exists IS INITIAL.            &quot; Issue 119
+      CALL FUNCTION &apos;SEO_BSP_CLASS_DELETE_COMPLETE&apos;     &quot; Brute force delete
+        EXPORTING
+          clskey = intkey.
+* Do it again
+      CALL FUNCTION &apos;SEO_INTERFACE_CREATE_COMPLETE&apos;
+        EXPORTING
+*        CORRNR                             =
+*        devclass                           = &apos;$TMP&apos;
+*        VERSION                            = SEOC_VERSION_INACTIVE
+*        GENFLAG                            = &apos; &apos;
+*        AUTHORITY_CHECK                    = SEOX_TRUE
+          overwrite                          = seox_true
+*        SUPPRESS_REFACTORING_SUPPORT       = SEOX_TRUE
+        IMPORTING
+          korrnr                             = i_korrnr
+        TABLES
+          class_descriptions                 = _d-class_desc
+          component_descriptions             = _d-component_desc
+          subcomponent_descriptions          = _d-subcomponent_desc
+        CHANGING
+          interface                          = _d-interface
+          comprisings                        = _d-comprisings
+          attributes                         = _d-attributes
+          methods                            = _d-methods
+          events                             = _d-events
+          PARAMETERS                         = _d-parameters
+          exceps                             = _d-exceps
+          aliases                            = _d-aliases
+          typepusages                        = _d-typeusages
+          clsdeferrds                        = _d-clsdeferrds
+          intdeferrds                        = _d-intdeferrds
+          types                              = _d-types
+        EXCEPTIONS
+          existing                           = 1
+          is_class                           = 2
+          db_error                           = 3
+          component_error                    = 4
+          no_access                          = 5
+          other                              = 6
+          OTHERS                             = 7.
+    ENDIF.
+    IF sy-subrc &lt;&gt; 0.                                       &quot; Issue 118
       o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_CREATE_COMPLETE&apos;
                                                   subrc = sy-subrc
                                               classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
@@ -1487,7 +1607,6 @@ AS</ITEM>
     ENDLOOP.
 * End of patch
 
-    MOVE-CORRESPONDING _d-interface TO intkey.
     CALL FUNCTION &apos;SEO_CLIF_SAVE_ALL&apos;
       EXPORTING
         cifkey                        = intkey
@@ -2232,29 +2351,46 @@ AS</ITEM>
     <SOURCE>`
   DATA clskey TYPE seoclskey.
   DATA d_type TYPE td_comptype.
+  DATA s_subrc TYPE sy-subrc.
 
   TRY.
     d_type = component-&gt;get_type( ).
     CASE d_type.
       WHEN zaplink_object_data=&gt;object_types-class.
         clskey-clsname = component-&gt;get_name( ).
-        CALL FUNCTION &apos;SEO_CLASS_DELETE_W_DEPS&apos;
+        CALL FUNCTION &apos;SEO_CLASS_DELETE_COMPLETE&apos;
           EXPORTING
             clskey       = clskey
+*           GENFLAG                    = &apos; &apos;
+*           AUTHORITY_CHECK            = SEOX_TRUE
+*           SUPPRESS_DOCU_DELETE       = SEOX_FALSE
+*           SUPPRESS_COMMIT            = SEOX_FALSE
+*         CHANGING
+*           CORRNR                     =
           EXCEPTIONS
-            not_existing = 1
-            is_interface = 2
-            not_deleted  = 3
-            db_error     = 4
-            OTHERS       = 5.
+            not_existing               = 1
+            is_interface               = 2
+            db_error                   = 3
+            no_access                  = 4
+            other                      = 5
+            OTHERS                     = 6.
         IF sy-subrc &lt;&gt; 0.
           CASE sy-subrc.
             WHEN 1.
               RAISE EXCEPTION TYPE zaplink_cx_connector
                 EXPORTING textid = zaplink_cx_connector=&gt;not_found.
             WHEN OTHERS.
-              RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+              s_subrc = sy-subrc.
+              CALL FUNCTION &apos;SEO_BSP_CLASS_DELETE_COMPLETE&apos;     &quot; Issue 119 : Brute force delete
+                EXPORTING
+                  clskey = clskey.
+              IF do_exists( component ) = abap_true.
+                o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_DELETE_W_DEPS&apos;
+                                                            subrc = s_subrc
+                                                        classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                application_log-&gt;add_symsg( ).
+                RAISE EXCEPTION o_mycx.
+              ENDIF.
           ENDCASE.
         ENDIF.
       WHEN zaplink_object_data=&gt;object_types-interface.
@@ -2293,8 +2429,17 @@ AS</ITEM>
               RAISE EXCEPTION TYPE zaplink_cx_connector
                 EXPORTING textid = zaplink_cx_connector=&gt;not_found.
             WHEN OTHERS.
-              RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+              s_subrc = sy-subrc.
+              CALL FUNCTION &apos;SEO_BSP_CLASS_DELETE_COMPLETE&apos;     &quot; Issue 119 : Brute force delete
+                EXPORTING
+                  clskey = clskey.
+              IF do_exists( component ) = abap_true.
+                o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_DELETE_COMPLETE&apos;
+                                                            subrc = s_subrc
+                                                        classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                application_log-&gt;add_symsg( ).
+                RAISE EXCEPTION o_mycx.
+              ENDIF.
           ENDCASE.
         ENDIF.
       WHEN OTHERS.
