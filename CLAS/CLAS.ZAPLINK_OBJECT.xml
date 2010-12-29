@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="9C203116E082173A144089C465770E29" CODE_SIGNATURE="192AB629D6EF68FAFA7A95CD5359B7D0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A08EBC3F3A33B980E16B2354B34D0E79" CODE_SIGNATURE="B3FB697FA9B7A87A3997051C43261FD0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1321,17 +1321,13 @@ AS</ITEM>
        no_access                          = 5
        other                              = 6
        OTHERS                             = 7.
-    CASE sy-subrc.
-      WHEN 0.
-** i guess if we made it this far, we will assume success
-** successful install
-      WHEN OTHERS.
-        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_CREATE_COMPLETE&apos;
-                                                    subrc = sy-subrc
-                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-        application_log-&gt;add_symsg( ).
-        RAISE EXCEPTION o_mycx.
-    ENDCASE.
+    IF sy-subrc &lt;&gt; 0.
+      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_CREATE_COMPLETE&apos;
+                                                  subrc = sy-subrc
+                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+      application_log-&gt;add_symsg( ).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
 
     _d-includes = get_includes( _d-class-clsname ).
 
@@ -1413,6 +1409,10 @@ AS</ITEM>
   DATA i_korrnr     TYPE trkorr.                  &quot;#EC NEEDED for debug
   DATA _component   TYPE to_component.
   DATA _name        TYPE td_compname.
+* Patch SAP do not create type alias.
+  DATA  intkey TYPE seoclskey.
+  DATA  type   TYPE vseotype.
+  FIELD-SYMBOLS &lt;alias&gt; LIKE LINE OF _d-aliases.
 
   TRY.
 
@@ -1454,20 +1454,15 @@ AS</ITEM>
         no_access                          = 5
         other                              = 6
         OTHERS                             = 7.
-    CASE sy-subrc.
-      WHEN &apos;0&apos;.
-** i guess if we made it this far, we will assume success
-** successful install
-      WHEN OTHERS.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
-          EXPORTING textid = zaplink_cx_connector=&gt;system_error.
-    ENDCASE.
+    IF sy-subrc &lt;&gt; 0.   &quot; Issue 118
+      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_CREATE_COMPLETE&apos;
+                                                  subrc = sy-subrc
+                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+      application_log-&gt;add_symsg( ).
+      RAISE EXCEPTION o_mycx.
+    ENDIF.
 
 * Patch SAP do not create type alias.
-    DATA  intkey TYPE seoclskey.
-    DATA  type   TYPE vseotype.
-    FIELD-SYMBOLS &lt;alias&gt; LIKE LINE OF _d-aliases.
-
     LOOP AT _d-aliases ASSIGNING &lt;alias&gt;
             WHERE cmptype = seoo_cmptype_type.
       MOVE-CORRESPONDING &lt;alias&gt; TO type.
