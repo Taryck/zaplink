@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="980AE0F32B76572CAFAC45735438E96A" CODE_SIGNATURE="D7F52F3E9186E750DB87F8EA9DA02EAA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="AE138E56898EF54A5F07BC3EBDD74BDD" CODE_SIGNATURE="0BBA8E87B3AB277FC9B617D69E08539C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROGRAM"/>
@@ -866,9 +866,10 @@ AS</ITEM>
             CLEAR &lt;m_&gt;. &quot; do it once : DELETE _fm_data-includes-methods. dump
           ENDIF.
         ENDIF.
-        IF _ia-source-_ IS INITIAL.
-          _ia-source-_ = &apos;Source code Expected&apos;(sce). &quot; to generate a compilation error on target method in order to user to investigate the reson
-        ENDIF.
+* Issue 120 : Method can be empty... Shame on me.
+*        IF _ia-source-_ IS INITIAL.
+*          _ia-source-_ = &apos;Source code Expected&apos;(sce). &quot; to generate a compilation error on target method in order to user to investigate the reson
+*        ENDIF.
       ENDIF.
 
       INSERT _ia  INTO TABLE _in-components.
@@ -1147,11 +1148,6 @@ AS</ITEM>
    <ITEM ID="I" KEY="F01">
     <TEXTS>
      <ITEM LANGU="E" ENTRY="Attribut should exists !!" LENGTH="30 "/>
-    </TEXTS>
-   </ITEM>
-   <ITEM ID="I" KEY="SCE">
-    <TEXTS>
-     <ITEM LANGU="E" ENTRY="Source code Expected" LENGTH="20 "/>
     </TEXTS>
    </ITEM>
   </TEXTSPOOL>
