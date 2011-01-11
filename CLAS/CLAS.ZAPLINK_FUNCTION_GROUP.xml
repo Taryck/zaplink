@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="204AF713DC78BAC2CA71BEBB8A4A2EF9" CODE_SIGNATURE="C2C5C1CFA0C21295591E993B799E3FAD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="62CA12A7CA29706BC1753F3B4596E35A" CODE_SIGNATURE="BCD1C049F2ACDDFBB5C5C5F0EBC97960" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -598,10 +598,11 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA t_doc       TYPE STANDARD TABLE OF rsfdo WITH DEFAULT KEY.
   DATA t_src       TYPE STANDARD TABLE OF rssource WITH DEFAULT KEY.
-  DATA t_src_new   TYPE  rsfb_source.
+*  DATA t_src_new   TYPE rsfb_source.                       &quot; Issue 122
+  DATA fm_include  TYPE rs38l-include.                      &quot; Issue 122
 
   TRY.
-    t_src_new = func-source.
+*    t_src_new = func-source.
     CALL FUNCTION &apos;RPY_FUNCTIONMODULE_INSERT&apos;
       EXPORTING
         funcname                      = func-header-name
@@ -613,9 +614,9 @@ INCLUDE zaplink_macros.</MACROS>
         update_task                   = func-header-utask
 *        CORRNUM                       = &apos; &apos;
 *        NAMESPACE                     = &apos; &apos;
-        new_source                    = t_src_new
-*      IMPORTING
-*        FUNCTION_INCLUDE              =
+*        new_source                    = t_src_new                    &quot; Issue 122
+      IMPORTING
+        function_include              = fm_include                    &quot; Issue 122
       TABLES
         import_parameter              = func-import_p
         export_parameter              = func-export_p
@@ -640,6 +641,8 @@ INCLUDE zaplink_macros.</MACROS>
       ROLLBACK WORK.
       mac_add_mf_and_raise &apos;RPY_FUNCTIONMODULE_INSERT&apos; sy-subrc.
     ENDIF.
+    set_prog_rawsource( program = fm_include                        &quot; Issue 122
+                            raw = func-source ).
     MODIFY tftit FROM TABLE func-texts.
     MODIFY funct FROM TABLE func-param_texts.
 
