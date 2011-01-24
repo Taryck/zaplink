@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="89013ACA0C7F33A0A09E399CAC22FCDF" CODE_SIGNATURE="3807AE2BC5A0C714B28A9F5A9E132500" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="70DC61224DADF583F7E017A8DFFFDE10" CODE_SIGNATURE="B3B5C95FC23CDDBAC36EB0192D7D862B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -42,6 +42,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Component list"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="FORCE_ACTIVATION" EXPOSURE="2" STATE="1" ATTRDONLY="X" TYPTYPE="1" TYPE="TD_CHECKBOX">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Force activation if error found"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="IT_ITEMS" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_ITEMS"/>
    <ITEM CMPNAME="IT_OBJ_LIST" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="TT_OBJLIST">
     <TEXTS>
@@ -76,6 +81,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Activate objects"/>
     </TEXTS>
     <PARAMETERS>
+     <ITEM SCONAME="FORCE_ACTIVATION" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CHECKBOX" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Activate Anyway"/>
+      </TEXTS>
+     </ITEM>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TT_COMPKEYS">
       <TEXTS>
        <ITEM LANG="E" TEXT="Objects list not activate"/>
@@ -149,6 +159,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
     IF lb_actdone IS INITIAL. EXIT. ENDIF.
   ENDDO.
+
+  IF force_activation IS NOT INITIAL.
+    activate_nonddic( EXPORTING force_activation = force_activation
+                                CHANGING it_list = it_progs ).
+  ENDIF.
 
   APPEND LINES OF it_ddic TO it_objlist.
   APPEND LINES OF it_progs TO it_objlist.
@@ -499,12 +514,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Activate NONDDIC"/>
     </TEXTS>
     <PARAMETERS>
+     <ITEM SCONAME="FORCE_ACTIVATION" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CHECKBOX" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Activate Anyway"/>
+      </TEXTS>
+     </ITEM>
      <ITEM SCONAME="IT_LIST" CMPTYPE="1" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_OBJLIST">
       <TEXTS>
        <ITEM LANG="E" TEXT="Objects list"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="ONE_BY_ONE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="XFLAG" PAROPTIONL="X">
+     <ITEM SCONAME="ONE_BY_ONE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CHECKBOX" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANG="E" TEXT="Activate objects one by one"/>
       </TEXTS>
@@ -512,7 +532,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </PARAMETERS>
     <SOURCE>`
   DATA:
-    _wb_manager TYPE REF TO  if_wb_manager,   &quot;#EC NEEDED
+    _wb_manager TYPE REF TO  if_wb_manager,                 &quot;#EC NEEDED
     it_obj TYPE tt_det_obj,
     it_det_obj TYPE tt_det_obj.
   FIELD-SYMBOLS:
@@ -534,6 +554,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         p_wb_manager = _wb_manager
       TABLES
         OBJECTS      = it_det_obj.
+    IF force_activation IS NOT INITIAL.
+      PERFORM activate_object IN PROGRAM saplseworkingarea.
+    ENDIF.
   ELSE.
     it_det_obj = conv_list( it_list ).
     LOOP AT it_det_obj ASSIGNING &lt;obj&gt;.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0F486D0C9B7F2562693BA1B3AF11CD84" CODE_SIGNATURE="5877631B2666CCA419528B929A7E32A6" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="B4869ED12B1981E05962617DA7226212" CODE_SIGNATURE="DD0729CF0602CA8ECA5DA8A86782F52D" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" RMAND="220" RLOAD="E" UCCHECK="X"/>
@@ -347,9 +347,10 @@
 
         CALL METHOD zaplink_gui=&gt;import
           EXPORTING
-            file         = o_file
-            with_subcomp = f_sub
-            activate     = p_activ
+            file            = o_file
+            with_subcomp    = f_sub
+            activate        = p_activ
+            activate_anyway = P_force
           IMPORTING
             name         = d_name
 *        CHANGING
