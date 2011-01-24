@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="62CA12A7CA29706BC1753F3B4596E35A" CODE_SIGNATURE="BCD1C049F2ACDDFBB5C5C5F0EBC97960" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="5CF19339D9E1DB502D303E702A4DDFE5" CODE_SIGNATURE="ACBFF4356BEFF2BFE31EF19D6C4E83C6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -649,6 +649,139 @@ INCLUDE zaplink_macros.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="WRITE_INCLUDE" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Write include to SAP System"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="AREA" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TLIBG-AREA">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Function group, to which the function module belongs"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="INCLUDE" CMPTYPE="1" TYPTYPE="1" TYPE="TS_INCLUDE">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Include Name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="MAINPROGRAM" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TRDIR-NAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ABAP Program Name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="SOURCE" CMPTYPE="1" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_ABAPRAWSOURCE">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="MainProgram source"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA _oname   TYPE e071-obj_name.
+  DATA _rep     TYPE progdir.
+  DATA _fugr    TYPE rs38l-area.
+  DATA _sufix   TYPE rs38l-suffix.
+  DATA f_noinc  TYPE abap_bool.
+  DATA _include TYPE rs38l-include.
+
+  _rep-name = _oname = _include = include-name.
+  CALL FUNCTION &apos;FUNCTION_INCLUDE_SPLIT&apos;
+*   EXPORTING
+*     PROGRAM                            =
+*     SUPPRESS_SELECT                    = &apos;X&apos;
+*     COMPLETE_AREA                      = &apos; &apos;
+    IMPORTING
+*     NAMESPACE                          =
+*     FUNCTION_NOT_EXISTS                =
+      group                              = _fugr
+*     FUNCNAME                           =
+*     INCLUDE_NUMBER                     =
+      no_function_include                = f_noinc
+*     NO_FUNCTION_MODULE                 =
+      suffix                             = _sufix
+*     RESERVED_NAME                      =
+*     TOO_MANY_DELIMITERS                =
+*     RESERVED_FOR_EXITS                 =
+*     HIDDEN_NAME                        =
+    CHANGING
+      include                            = _include
+    EXCEPTIONS
+      include_not_exists                 = 1
+      group_not_exists                   = 2
+      no_selections                      = 3
+      no_function_include                = 4
+      no_function_pool                   = 5
+      delimiter_wrong_position           = 6
+      no_customer_function_group         = 7
+      no_customer_function_include       = 8
+      reserved_name_customer             = 9
+      namespace_too_long                 = 10
+      area_length_error                  = 11
+      OTHERS                             = 12.
+  IF sy-subrc &lt;&gt; 0.
+    mac_add_mf_and_raise &apos;FUNCTION_INCLUDE_SPLIT&apos; sy-subrc.
+  ENDIF.
+  IF _sufix &lt;&gt; &apos;TOP&apos; OR _fugr &lt;&gt; area OR NOT f_noinc IS INITIAL.
+    CALL FUNCTION &apos;RS_CREATE_NEW_INCLUDE&apos;
+      EXPORTING
+        master                   = mainprogram
+        include_name             = _rep-name
+        new_include              = abap_true
+        insert_include_statement = abap_true
+      TABLES
+        master_source            = source
+      EXCEPTIONS
+        program_enqueued         = 1
+        OTHERS                   = 2.
+    IF sy-subrc &lt;&gt; 0.
+      mac_add_mf_and_raise &apos;RS_CREATE_NEW_INCLUDE&apos; sy-subrc.
+    ENDIF.
+  ENDIF.
+
+  CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+    EXPORTING
+      object                  = &apos;REPS&apos;
+      obj_name                = _oname
+*      DELETED_FLAG            = &apos; &apos;
+*    IMPORTING
+*      OBJECT_INSERTED         =
+    EXCEPTIONS
+      wrong_object_name       = 1
+      OTHERS                  = 2.
+  IF sy-subrc &lt;&gt; 0.
+    mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+  ENDIF.
+
+  CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+    EXPORTING
+      object                  = &apos;REPT&apos;
+      obj_name                = _oname
+*      DELETED_FLAG            = &apos; &apos;
+*    IMPORTING
+*      OBJECT_INSERTED         =
+    EXCEPTIONS
+      wrong_object_name       = 1
+      OTHERS                  = 2.
+  IF sy-subrc &lt;&gt; 0.
+    mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+  ENDIF.
+
+  _rep-subc = &apos;I&apos;.
+  _rep-varcl = abap_true.   &quot; Case sensitive
+  _rep-appl = &apos;S&apos;.    &quot; System
+  _rep-state = &apos;I&apos;.   MODIFY progdir FROM _rep.
+* MODIFY reposrc FROM _rep. &quot;The databae view &quot;REPOSRC&quot; is write-protected, so it cannot be changed.
+  _rep-state = &apos;A&apos;.   MODIFY progdir FROM _rep.
+
+  set_prog_rawsource( program = include-name
+                          raw = include-source ).</SOURCE>
+   </ITEM>
   </METHODS>
   <REDEFINITIONS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
@@ -941,22 +1074,26 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>`
-  DATA o_group     TYPE to_group.
-  DATA o_function  TYPE to_function.
-  DATA s_fmd_fugr  TYPE ts_fmd_fugr.
-  DATA s_fmd_func  TYPE ts_fmd_func.
-  DATA _comp       TYPE to_component.
-  DATA d_pname     TYPE tfdir-pname.
-  DATA d_group     TYPE rs38l-area.
-  DATA _name       TYPE td_compname.
-  DATA d_mainprog  TYPE td_progname.
-  DATA t_functions TYPE tt_rs38l_incl.
-  DATA d_msg       TYPE string.
-  DATA d_answer    TYPE c.
-  DATA t_doc       TYPE STANDARD TABLE OF rsfdo WITH DEFAULT KEY.
-  DATA t_src       TYPE STANDARD TABLE OF rssource WITH DEFAULT KEY.
-  DATA t_params    TYPE STANDARD TABLE OF spar WITH DEFAULT KEY.
-  DATA s_param     LIKE LINE OF t_params.
+  DATA o_group      TYPE to_group.
+  DATA o_function   TYPE to_function.
+  DATA s_fmd_fugr   TYPE ts_fmd_fugr.
+  DATA s_fmd_func   TYPE ts_fmd_func.
+  DATA _comp        TYPE to_component.
+  DATA d_pname      TYPE tfdir-pname.
+  DATA d_group      TYPE rs38l-area.
+  DATA _name        TYPE td_compname.
+  DATA d_mainprog   TYPE td_progname.
+  DATA t_functions  TYPE tt_rs38l_incl.
+  DATA d_msg        TYPE string.
+  DATA d_answer     TYPE c.
+  DATA t_doc        TYPE STANDARD TABLE OF rsfdo WITH DEFAULT KEY.
+  DATA t_src        TYPE STANDARD TABLE OF rssource WITH DEFAULT KEY.
+  DATA t_params     TYPE STANDARD TABLE OF spar WITH DEFAULT KEY.
+  DATA t_source     TYPE tt_abaprawsource.
+  DATA s_param      LIKE LINE OF t_params.
+  DATA o_source     TYPE REF TO cl_wb_source.
+  DATA t_key        TYPE  trkey.
+  DATA source_name  TYPE  trdir-name.
   FIELD-SYMBOLS:
     &lt;i&gt;  LIKE LINE OF s_fmd_fugr-includes,
     &lt;fi&gt; LIKE LINE OF t_functions,
@@ -1022,35 +1159,6 @@ INCLUDE zaplink_macros.</MACROS>
             mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_DELETE&apos; sy-subrc.
           ENDIF.
 
-* INCLUDES
-* Issue 97 : Includes not handled
-          LOOP AT s_fmd_fugr-includes ASSIGNING &lt;i&gt;.
-            set_prog_rawsource( program = &lt;i&gt;-name
-                                    raw = &lt;i&gt;-source ).
-          ENDLOOP.
-* Issue 97 : End
-
-* Text Pool
-          set_prog_textpool( program = d_mainprog
-                            textpool = s_fmd_fugr-textspool ).
-* Dynpro
-          set_dynpros( program = d_mainprog
-                       dynpros = s_fmd_fugr-dynpros ).
-
-* Menu Painter
-          set_menus( program = d_mainprog
-                       menus = s_fmd_fugr-menupainter ).
-
-*Texts
-          DELETE FROM tlibt WHERE area = s_fmd_fugr-header-area.
-          MODIFY tlibt FROM TABLE s_fmd_fugr-texts.
-
-*          MODIFY tftit FROM TABLE s_fmd_fugr-function_texts.     &quot; Issue 100
-*          MODIFY funct FROM TABLE s_fmd_fugr-param_texts.        &quot; Issue 100
-
-** Documentation
-*          zaplink_documentation=&gt;set( t_docs = o_group-&gt;documentation ).
-
 * FUNCTIONS
           IF sy-batch = abap_false.   &quot;only delete in foreground
             LOOP AT s_fmd_fugr-functions ASSIGNING &lt;f&gt;.
@@ -1090,6 +1198,78 @@ INCLUDE zaplink_macros.</MACROS>
             mac_add_mf_and_raise &apos;RS_FUNCTION_POOL_INSERT&apos; sy-subrc.
           ENDIF.
 
+* Text Pool
+          set_prog_textpool( program = d_mainprog
+                            textpool = s_fmd_fugr-textspool ).
+* Dynpro
+          set_dynpros( program = d_mainprog
+                       dynpros = s_fmd_fugr-dynpros ).
+
+* Menu Painter
+          set_menus( program = d_mainprog
+                       menus = s_fmd_fugr-menupainter ).
+
+*Texts
+          DELETE FROM tlibt WHERE area = s_fmd_fugr-header-area.
+          MODIFY tlibt FROM TABLE s_fmd_fugr-texts.
+
+*          MODIFY tftit FROM TABLE s_fmd_fugr-function_texts.     &quot; Issue 100
+*          MODIFY funct FROM TABLE s_fmd_fugr-param_texts.        &quot; Issue 100
+
+** Documentation
+*          zaplink_documentation=&gt;set( t_docs = o_group-&gt;documentation ).
+
+* INCLUDES
+*ISSUE 125
+          t_key-obj_type = supportedtypes-group.
+          t_key-obj_name = s_fmd_fugr-header-area.
+          t_key-sub_type = &apos;REPS&apos;.
+          t_key-sub_name = d_mainprog.
+          CREATE OBJECT o_source
+             EXPORTING
+               transport_key = t_key
+               source_name = d_mainprog
+*              modification_mode =
+*              abap_editor =
+*              method_key =
+              .
+          CALL METHOD o_source-&gt;read_source
+*            EXPORTING
+*              status                        = SPACE
+*              toggle_enh_status             = SPACE
+*              source_name                   = space
+*              initialize_edit_control       = &apos; &apos;
+*              load_from_temp_storage        = &apos;X&apos;
+*              load_from_temp_storage_uncond = SPACE
+*              with_conversion               = &apos;X&apos;
+*              mode                          =
+*              with_enhancements             = &apos;X&apos;
+*              insert_impl_enh_points        = &apos; &apos;
+*              p_current_enhname             =
+             IMPORTING
+               source_tab                    = t_source
+*            CHANGING
+*              mod_instance                  =
+             EXCEPTIONS
+               cancelled                     = 1
+               enhancement_locked            = 2
+               not_found                     = 3
+               read_protected                = 4
+               OTHERS                        = 5.
+          IF sy-subrc &lt;&gt; 0.
+            mac_add_obj_meth_and_raise o_source &apos;READ_SOURCE&apos; sy-subrc.
+          ENDIF.
+*ISSUE 125 - END
+* Issue 97 : Includes not handled
+          LOOP AT s_fmd_fugr-includes ASSIGNING &lt;i&gt;.
+            write_include( EXPORTING area = s_fmd_fugr-header-area        &quot; ISSUE 125
+                              mainprogram = d_mainprog
+                                  include = &lt;i&gt;
+                          CHANGING source = t_source ).
+          ENDLOOP.
+* Issue 97 : End
+          o_source-&gt;set_source_tab( t_source ).       &quot; ISSUE 125
+
           LOOP AT s_fmd_fugr-functions ASSIGNING &lt;f&gt;.
             write_function( &lt;f&gt; ).
           ENDLOOP.
@@ -1122,15 +1302,17 @@ INCLUDE zaplink_macros.</MACROS>
           mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
       _comp = object-&gt;get_component( abap_true ).
-      TRY.    components-&gt;add( _comp ).   CATCH zaplink_cx_list.  ENDTRY.       &quot; Issue 92
+      TRY.
+          components-&gt;add( _comp ).
+          CATCH zaplink_cx_list.  ENDTRY.                   &quot; Issue 92
 
-    CATCH zaplink_cx_connector INTO o_mycx.
-      ROLLBACK WORK.
-      RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
-      ROLLBACK WORK.
-      mac_cascade_raise o_mycx o_cx.
-  ENDTRY.</SOURCE>
+        CATCH zaplink_cx_connector INTO o_mycx.
+          ROLLBACK WORK.
+          RAISE EXCEPTION o_mycx.
+        CATCH zaplink_cx INTO o_cx.
+          ROLLBACK WORK.
+          mac_cascade_raise o_mycx o_cx.
+      ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TEXTSPOOL>
@@ -1188,6 +1370,7 @@ INCLUDE zaplink_macros.</MACROS>
    <ITEM CMPNAME="TO_RAW_FUNCTION" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="ZAPLINK_FUGR_DATA=&gt;TO_FUNCTION"/>
    <ITEM CMPNAME="TS_FMD_FUGR" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="ZAPLINK_FUGR_DATA=&gt;TS_FM_DATA"/>
    <ITEM CMPNAME="TS_FMD_FUNC" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="ZAPLINK_FUNC_DATA=&gt;TS_FM_DATA"/>
+   <ITEM CMPNAME="TS_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="ZAPLINK_FUGR_DATA=&gt;TS_RAWINCLUDE"/>
    <ITEM CMPNAME="TS_PROG_ATTR" STATE="1" EDITORDER="1 " TYPTYPE="4">
     BEGIN OF ts_prog_attr.
   INCLUDE TYPE ts_base_attributs AS base.

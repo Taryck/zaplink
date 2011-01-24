@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C05B76C42F5E7BB512334A9A8CD3741B" CODE_SIGNATURE="8FE88EBBA109D129BB3BE2770641F536" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUGR_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D10E0744D0C9C231AB7FE11FEC8C4263" CODE_SIGNATURE="20334504A07ABC42337E6CB3B6666116" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUGR_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -462,7 +462,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   IF NOT s_doc-texts IS INITIAL.    INSERT s_doc INTO TABLE fm_data-docs.   ENDIF.
 
   LOOP AT includes ASSIGNING &lt;i&gt;.
-    CLEAR s_inc.   d_suffix = s_inc-name = &lt;i&gt;-name.
+    CLEAR s_inc.   d_suffix = s_inc-name = s_inc-short = &lt;i&gt;-name.
     s_inc-source = zaplink_function_group=&gt;conv_abap_source2raw( &lt;i&gt;-source-_ ).
     IF d_suffix = s_inc-name.   &quot; include has been truncated
       CONCATENATE &apos;L&apos; a0_maindata-area d_suffix INTO s_inc-name.
@@ -649,7 +649,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
    <ITEM CMPNAME="TS_FUNC" EXPOSURE="1" STATE="1" EDITORDER="19 " TYPTYPE="1" TYPE="ZAPLINK_FUNC_DATA=&gt;TS_FM_DATA"/>
    <ITEM CMPNAME="TS_FUNCTION" EXPOSURE="1" STATE="1" EDITORDER="31 " TYPTYPE="4">BEGIN OF ts_function,
-      zl_object type to_function,
+      zl_object TYPE to_function,
       END OF ts_function
 `</ITEM>
    <ITEM CMPNAME="TS_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="15 " TYPTYPE="4">BEGIN OF ts_include,
@@ -659,7 +659,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 `</ITEM>
    <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="1" STATE="1" EDITORDER="22 " TYPTYPE="4">
     BEGIN OF ts_maindata.
-  INCLUDE TYPE tlibg as hdr.
+  INCLUDE TYPE tlibg AS hdr.
   TYPES:
       texts       TYPE tt_texts,
     END OF ts_maindata
@@ -676,6 +676,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     END OF ts_param
 `</ITEM>
    <ITEM CMPNAME="TS_RAWINCLUDE" EXPOSURE="1" STATE="1" EDITORDER="17 " TYPTYPE="4">BEGIN OF ts_rawinclude,
+      short  TYPE rs38l-suffix,   &quot; Short name TOP, F01
       name   TYPE td_includename,
       source TYPE tt_abaprawsource,
     END OF ts_rawinclude
