@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2A84C4784A011E836E61C9B8C317D346" CODE_SIGNATURE="9DB47C19AB9172746D98E731A9D43B4A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B35F087130A16C95E105AD5E22CA7EEE" CODE_SIGNATURE="8AB6F2D1D66DD77CD8BF4A6E1A79BCB1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -318,12 +318,24 @@ INCLUDE zaplink_macros.</MACROS>
     LOOP AT t_typegrp INTO s_tgroup.
       s_tgroup-clsname = object_data-class-clsname.
       s_tgroup-version = object_data-class-version.
-      READ TABLE object_data-typeusages TRANSPORTING NO FIELDS WITH KEY typegroup = s_tgroup-typegroup.
+*      READ TABLE object_data-typeusages TRANSPORTING NO FIELDS WITH KEY typegroup = s_tgroup-typegroup.
       CASE s_tgroup-tputype.
 
         WHEN 0.     &quot; Type-pool
+          MOVE-CORRESPONDING s_tgroup TO s_grp_key.
+          CALL FUNCTION &apos;SEO_TYPEPUSAGE_GET&apos;
+            EXPORTING
+              tplkey              = s_grp_key
+*             VERSION             = SEOC_VERSION_INACTIVE
+*           IMPORTING
+*             TYPEPUSAGE          =
+            EXCEPTIONS
+              not_existing        = 1
+              deleted             = 2
+              is_clsdeferrd       = 3
+              is_intdeferrd       = 4
+              OTHERS              = 5.
           IF sy-subrc = 0.
-            MOVE-CORRESPONDING s_tgroup TO s_grp_key.
             CALL FUNCTION &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
               EXPORTING
                 tplkey        = s_grp_key
@@ -365,8 +377,20 @@ INCLUDE zaplink_macros.</MACROS>
           ENDIF.
 
         WHEN 1.     &quot; Class
+          s_clas_key-clsname = s_tgroup-clsname.      s_clas_key-typegroup = s_tgroup-typegroup.
+          CALL FUNCTION &apos;SEO_CLSDEFERRD_GET&apos;
+            EXPORTING
+              cdfkey              = s_clas_key
+*             VERSION             = SEOC_VERSION_INACTIVE
+*           IMPORTING
+*             CLSDEFERRD          =
+            EXCEPTIONS
+              not_existing        = 1
+              deleted             = 2
+              is_intdeferrd       = 3
+              is_typepusage       = 4
+              OTHERS              = 5.
           IF sy-subrc = 0.
-            s_clas_key-clsname = s_tgroup-clsname.      s_clas_key-typegroup = s_tgroup-typegroup.
             CALL FUNCTION &apos;SEO_CLSDEFERRD_DELETE_W_DEPS&apos;
               EXPORTING
                 cdfkey        = s_clas_key
@@ -408,8 +432,20 @@ INCLUDE zaplink_macros.</MACROS>
           ENDIF.
 
         WHEN 2.     &quot; Interface
+          s_clas_key-clsname = s_tgroup-clsname.      s_clas_key-typegroup = s_tgroup-typegroup.
+          CALL FUNCTION &apos;SEO_INTDEFERRD_GET&apos;
+            EXPORTING
+              idfkey              = s_clas_key
+*             VERSION             = SEOC_VERSION_INACTIVE
+*           IMPORTING
+*             INTDEFERRD          =
+            EXCEPTIONS
+              not_existing        = 1
+              deleted             = 2
+              is_typepusage       = 3
+              is_clsdeferrd       = 4
+              OTHERS              = 5.
           IF sy-subrc = 0.
-            s_clas_key-clsname = s_tgroup-clsname.      s_clas_key-typegroup = s_tgroup-typegroup.
             CALL FUNCTION &apos;SEO_INTDEFERRD_DELETE_W_DEPS&apos;
               EXPORTING
                 idfkey        = s_clas_key
