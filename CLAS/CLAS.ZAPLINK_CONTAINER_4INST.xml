@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B5876C163E7D845B3BA44D61255C8851" CODE_SIGNATURE="B6CBC607986333C6CFE3480A99D3454A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C9007827DF2C44DFA0BD624A5A1D64CB" CODE_SIGNATURE="CBA92F26CEF93E725337961AB29FDDEE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -366,6 +366,12 @@ check data &lt;&gt; _options.
   DATA o_skiplist   TYPE to_list.
   DATA o_deplist    TYPE to_list.
 * Issue 47 : handling dependencies  &lt;-- END
+* Issue 124 : Check dependencies --&gt; Start
+  DATA o_chk_exist  TYPE to_component.
+  DATA d_chk_name   TYPE td_compname.
+  DATA d_chk_type   TYPE td_comptype.
+  DATA f_dep_ok     TYPE abap_bool.
+* Issue 124 : Check dependencies &lt;-- End
   DATA d_name       TYPE td_compname.
   DATA d_type       TYPE td_comptype.
   DATA f_ok         TYPE abap_bool.
@@ -393,10 +399,12 @@ check data &lt;&gt; _options.
           ASSERT ID zaplink CONDITION o_list_comp IS BOUND.
           o_connector = o_comp_s-&gt;connector( ).
           o_connector-&gt;options = _options.
-          o_log = o_comp_s-&gt;get_msg_coll( ).
+*         o_log = o_comp_s-&gt;get_msg_coll( ).
+          o_log = o_list_comp-&gt;get_msg_coll( ).
           IF NOT o_log IS BOUND.
             CREATE OBJECT o_log.
-            o_comp_s-&gt;set_msg_coll( o_log ).
+*            o_comp_s
+            o_list_comp-&gt;set_msg_coll( o_log ).
             CALL METHOD o_log-&gt;init
               EXPORTING
                 id_object      = ballog_object
@@ -440,10 +448,40 @@ check data &lt;&gt; _options.
               CREATE OBJECT o_deplist.
               o_deplist-&gt;add_keys( o_raw-&gt;dependencies ).
               IF o_remain-&gt;has_any( o_deplist ) = abap_true.
-                o_skiplist-&gt;add( o_comp ). &quot; because dependcies will be processed
+                o_skiplist-&gt;add( o_comp ). &quot; because dependcies will be processed first
                 CONTINUE.
               ENDIF.
 * Issue 47 : handling dependencies  &lt;-- END
+* Issue 124 : Check dependencies --&gt; Start
+              o_deplist-&gt;display_progress = abap_false.
+              o_deplist-&gt;init_iter( ).
+              o_chk_exist = o_deplist-&gt;get_next( ).
+              WHILE o_chk_exist IS BOUND.
+                f_dep_ok = o_chk_exist-&gt;do_exists( ).
+                IF f_dep_ok = abap_false.
+                  d_chk_name = o_chk_exist-&gt;get_name( ).     d_chk_type = o_chk_exist-&gt;get_type( ).
+* Failed to import (&amp;1) &amp;2 : Dependencie (&amp;3) &amp;4 is missing
+                  SET EXTENDED CHECK OFF.
+                  IF 1 = 2.   MESSAGE i008 WITH space space.    ENDIF.
+                  SET EXTENDED CHECK ON.
+                  CALL METHOD o_log-&gt;add
+                    EXPORTING
+*                      is_message   =
+                      id_msgty     = &apos;E&apos;
+                      id_msgid     = &apos;ZAPLINK&apos;
+                      id_msgno     = 008
+                      id_msgv1     = d_type
+                      id_msgv2     = d_name
+                      id_msgv3     = d_chk_type
+                      id_msgv4     = d_chk_name.
+                  EXIT.
+                ENDIF.
+                o_chk_exist = o_deplist-&gt;get_next( ).
+              ENDWHILE.
+              IF f_dep_ok = abap_false.
+                CONTINUE.                     &quot; Skip object
+              ENDIF.
+* Issue 124 : Check dependencies &lt;-- End
               TRY.      &quot; Issue 99 : Error while setting directory mustn&apos;t stop importing process
                   _directory = _options-&gt;directory-&gt;set_directory( o_raw ).
                 CATCH zaplink_cx INTO o_cx.
