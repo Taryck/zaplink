@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="3835C08C8BB3154F52A2355513702812" CODE_SIGNATURE="7796531B26ABF73CC8F0B06B945A1F46" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="21FCFED926A052E3E1F7AF46F600378A" CODE_SIGNATURE="F90AFD65142CBA87F4ED28DDD50717E8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -81,6 +81,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       table_index       TYPE td_comptype VALUE &apos;INDX&apos;,    &quot;#EC NOTEXT : N  Table Index
       ext_index         TYPE td_comptype VALUE &apos;XINX&apos;,    &quot;#EC NOTEXT : O  Extention Index MF INTERN_TRANSL_EUTYPE
       table             TYPE td_comptype VALUE &apos;TABL&apos;,    &quot;#EC NOTEXT
+      table_content     TYPE td_comptype VALUE &apos;TABU&apos;,    &quot;#EC NOTEXT
       view              TYPE td_comptype VALUE &apos;VIEW&apos;,    &quot;#EC NOTEXT
       t_cluster_pool    TYPE td_comptype VALUE &apos;SQLT&apos;,    &quot;#EC NOTEXT
     END OF supportedtypes
@@ -125,6 +126,7 @@ DEFINE mac_obj_data.
   data o_data_e    type to_data_element.
   data o_view      type to_view.
   data o_table     type to_table.
+  data o_content   type to_content.
   data o_index     type to_index.
   data o_tab_type  type to_table_type.
   data o_s_help    type to_search_help.
@@ -153,6 +155,7 @@ END-OF-DEFINITION.</MACROS>
   type-type = supportedtypes-data_element.  INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-view.          INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-table.         INSERT type INTO TABLE supported_types.
+  type-type = supportedtypes-table_content. INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-table_type.    INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-search_help.   INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-lock_object.   INSERT type INTO TABLE supported_types.
@@ -606,6 +609,41 @@ END-OF-DEFINITION.</MACROS>
 
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).
+
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="EXPORT_TABLE_CONTENT" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Export table content from SAP System"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Component key"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_CONTENT">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Table content"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA d_table    TYPE zaplink_tabu_data=&gt;td_table_name.
+
+  TRY.
+    d_table = component-&gt;get_name( ).
+
+    CREATE OBJECT object.
+    object-&gt;from_data( d_table ).
 
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
@@ -1760,6 +1798,7 @@ END-OF-DEFINITION.</MACROS>
     WHEN supportedtypes-data_element.   lmac_obj_create o_data_e.
     WHEN supportedtypes-view.           lmac_obj_create o_view.
     WHEN supportedtypes-table.          lmac_obj_create o_table.
+    WHEN supportedtypes-table_content.  lmac_obj_create o_content.
     WHEN supportedtypes-ext_index OR supportedtypes-table_index.
       CREATE OBJECT o_raw_idx.
       object = o_raw_idx.
@@ -1826,6 +1865,9 @@ END-OF-DEFINITION.</MACROS>
               mac_add_mf_and_raise &apos;RS_DD_INDX_DELETE&apos; sy-subrc.
           ENDCASE.
         ENDIF.
+        EXIT.
+      WHEN supportedtypes-table_content.
+*        DELETE
         EXIT.
       WHEN supportedtypes-table.
         d_type = dd_eu_type-transp_table.
@@ -1909,7 +1951,7 @@ END-OF-DEFINITION.</MACROS>
         s_idxkey = zaplink_xinx_data=&gt;name_2_key( d_name ).
         d_secname = s_idxkey-index.
         d_name = s_idxkey-table.
-      WHEN supportedtypes-table OR supportedtypes-t_cluster_pool.
+      WHEN supportedtypes-table OR supportedtypes-table_content OR supportedtypes-t_cluster_pool.
         d_type = dd_eu_type-transp_table.
       WHEN supportedtypes-view.
         d_type = dd_eu_type-view.
@@ -2014,6 +2056,13 @@ END-OF-DEFINITION.</MACROS>
           ENDTRY.
           CLEAR o_table-&gt;a0_maindata-tabname.
           object-&gt;raw = o_table.
+        WHEN supportedtypes-table_content.
+          TRY.
+            o_content = export_table_content( component ).
+            mac_catch_local_cx.
+          ENDTRY.
+*          CLEAR o_content-&gt;a0_maindata-tabname.
+          object-&gt;raw = o_content.
         WHEN supportedtypes-ext_index or supportedtypes-table_index.                      &quot; Issue 55
           TRY.
             o_index = export_index( component ).
@@ -2063,85 +2112,94 @@ END-OF-DEFINITION.</MACROS>
         o_mycx-&gt;update( ).
       endif.
       raise exception o_mycx.
-  END-OF-DEFINITION.
+    END-OF-DEFINITION.
 
-  TRY.
-    CASE object-&gt;type.
-      WHEN supportedtypes-type_group.
-        o_typegroup ?= object-&gt;raw.
-        o_typegroup-&gt;a0_maindata-name = object-&gt;name.
-        TRY.
-          components = import_type_group( o_typegroup ).
-          lmac_catch_local_cx.
-        ENDTRY.
-      WHEN supportedtypes-domain.
-        o_domain ?= object-&gt;raw.
-        o_domain-&gt;a0_maindata-domname = object-&gt;name.
-        TRY.
-          components = import_domain( o_domain ).
-          lmac_catch_local_cx.
-        ENDTRY.
-      WHEN supportedtypes-data_element.
-        o_data_e ?= object-&gt;raw.
-        o_data_e-&gt;a0_maindata-rollname = object-&gt;name.
-        TRY.
-          components = import_data_element( o_data_e ).
-          lmac_catch_local_cx.
-        ENDTRY.
-      WHEN supportedtypes-view.
-        o_view ?= object-&gt;raw.
-        o_view-&gt;a0_maindata-viewname = object-&gt;name.
-        TRY.
-          components = import_view( o_view ).
-          lmac_catch_local_cx.
-        ENDTRY.
-      WHEN supportedtypes-table.
-        o_table ?= object-&gt;raw.
-        o_table-&gt;a0_maindata-tabname = object-&gt;name.
-        TRY.
-          components = import_table( o_table ).
-          lmac_catch_local_cx.
-        ENDTRY.
-      WHEN supportedtypes-ext_index or supportedtypes-table_index.                        &quot; Issue 55
-        o_index ?= object-&gt;raw.
-        s_index = zaplink_xinx_data=&gt;name_2_key( object-&gt;name ).
-        o_index-&gt;a0_maindata-sqltab = s_index-table.
-        o_index-&gt;a0_maindata-indexname = s_index-index.
-        TRY.
-          components = import_index( o_index ).
-          lmac_catch_local_cx.
-        ENDTRY.
-      WHEN supportedtypes-table_type.
-        o_tab_type ?= object-&gt;raw.
-        o_tab_type-&gt;a0_maindata-typename = object-&gt;name.
-        TRY.
-          components = import_table_type( o_tab_type ).
-          lmac_catch_local_cx.
-        ENDTRY.
-      WHEN supportedtypes-search_help.
-        o_s_help ?= object-&gt;raw.
-        o_s_help-&gt;a0_maindata-shlpname = object-&gt;name.
-        TRY.
-          components = import_search_help( o_s_help ).
-          lmac_catch_local_cx.
-        ENDTRY.
-      WHEN supportedtypes-lock_object.
-        o_lock_obj ?= object-&gt;raw.
-        o_lock_obj-&gt;a0_maindata-viewname = object-&gt;name.
-        TRY.
-          components = import_lock_object( o_lock_obj ).
-          lmac_catch_local_cx.
-        ENDTRY.
-      WHEN OTHERS.
-        mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
-    ENDCASE.
+    TRY.
+        CASE object-&gt;type.
+          WHEN supportedtypes-type_group.
+            o_typegroup ?= object-&gt;raw.
+            o_typegroup-&gt;a0_maindata-name = object-&gt;name.
+            TRY.
+              components = import_type_group( o_typegroup ).
+              lmac_catch_local_cx.
+            ENDTRY.
+          WHEN supportedtypes-domain.
+            o_domain ?= object-&gt;raw.
+            o_domain-&gt;a0_maindata-domname = object-&gt;name.
+            TRY.
+              components = import_domain( o_domain ).
+              lmac_catch_local_cx.
+            ENDTRY.
+          WHEN supportedtypes-data_element.
+            o_data_e ?= object-&gt;raw.
+            o_data_e-&gt;a0_maindata-rollname = object-&gt;name.
+            TRY.
+              components = import_data_element( o_data_e ).
+              lmac_catch_local_cx.
+            ENDTRY.
+          WHEN supportedtypes-view.
+            o_view ?= object-&gt;raw.
+            o_view-&gt;a0_maindata-viewname = object-&gt;name.
+            TRY.
+              components = import_view( o_view ).
+              lmac_catch_local_cx.
+            ENDTRY.
+          WHEN supportedtypes-table.
+            o_table ?= object-&gt;raw.
+            o_table-&gt;a0_maindata-tabname = object-&gt;name.
+            TRY.
+              components = import_table( o_table ).
+              lmac_catch_local_cx.
+            ENDTRY.
+          WHEN supportedtypes-table_content.
+            o_content ?= object-&gt;raw.
+*            o_content-&gt;a0_maindata-tabname = object-&gt;name.
+            TRY.
+*              components = import_table_content( o_content ).
+              lmac_catch_local_cx.
+            ENDTRY.
+          WHEN supportedtypes-ext_index OR supportedtypes-table_index. &quot; Issue 55
+            o_index ?= object-&gt;raw.
+            s_index = zaplink_xinx_data=&gt;name_2_key( object-&gt;name ).
+            o_index-&gt;a0_maindata-sqltab = s_index-table.
+            o_index-&gt;a0_maindata-indexname = s_index-index.
+            TRY.
+              components = import_index( o_index ).
+              lmac_catch_local_cx.
+            ENDTRY.
+          WHEN supportedtypes-table_type.
+            o_tab_type ?= object-&gt;raw.
+            o_tab_type-&gt;a0_maindata-typename = object-&gt;name.
+            TRY.
+              components = import_table_type( o_tab_type ).
+              lmac_catch_local_cx.
+            ENDTRY.
+          WHEN supportedtypes-search_help.
+            o_s_help ?= object-&gt;raw.
+            o_s_help-&gt;a0_maindata-shlpname = object-&gt;name.
+            TRY.
+              components = import_search_help( o_s_help ).
+              lmac_catch_local_cx.
+            ENDTRY.
+          WHEN supportedtypes-lock_object.
+            o_lock_obj ?= object-&gt;raw.
+            o_lock_obj-&gt;a0_maindata-viewname = object-&gt;name.
+            TRY.
+              components = import_lock_object( o_lock_obj ).
+              lmac_catch_local_cx.
+            ENDTRY.
+          WHEN OTHERS.
+            mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+        ENDCASE.
 
-    o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
-    IF NOT components IS BOUND.   CREATE OBJECT components.   ENDIF.          &quot; Issue 92
-    TRY.    components-&gt;add( o_comp ).    CATCH zaplink_cx_list.    ENDTRY.   &quot; Issue 92
+        o_comp = object-&gt;get_component( abap_true ).        &quot; Issue 92
+        IF NOT components IS BOUND.   CREATE OBJECT components.   ENDIF. &quot; Issue 92
+        TRY.
+            components-&gt;add( o_comp ).
+            CATCH zaplink_cx_list.    ENDTRY.               &quot; Issue 92
 
-    mac_def_catch zaplink_cx_connector.
-  ENDTRY.</SOURCE>
+            mac_def_catch zaplink_cx_connector.
+        ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>
@@ -2151,6 +2209,11 @@ END-OF-DEFINITION.</MACROS>
    <ITEM CMPNAME="TD_TYPEGROUP" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TYPEGROUP">
     <TEXTS>
      <ITEM LANG="E" TEXT="Type group name"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_CONTENT" EXPOSURE="1" STATE="1" EDITORDER="11 " TYPTYPE="3" TYPE="ZAPLINK_TABU_DATA">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Table content (SE11) Datas"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_DATA_ELEMENT" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_DTEL_DATA">

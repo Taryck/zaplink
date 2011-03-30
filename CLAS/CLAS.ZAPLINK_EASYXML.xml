@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="594891202198E95B47AD80A30C1782FE" CODE_SIGNATURE="220213068A2A06DB534C0E00D4305CC7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="46F6399880898CB87AEC60CE40D2E332" CODE_SIGNATURE="A9BE416845B57AD026D21E110BEFE9C1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -166,8 +166,8 @@ END-OF-DEFINITION.</MACROS>
     </PARAMETERS>
     <SOURCE>`
   DATA _desc     TYPE REF TO cl_abap_typedescr.
-  DATA string    TYPE string.
-  DATA node      TYPE REF TO if_ixml_element.
+  DATA svalue    TYPE string.
+  FIELD-SYMBOLS: &lt;any&gt; TYPE ANY.
 
   IF typedesc IS BOUND.
     _desc = typedesc.
@@ -179,20 +179,25 @@ END-OF-DEFINITION.</MACROS>
   stack_descr( _desc ).
   CASE _desc-&gt;kind.
     WHEN cl_abap_datadescr=&gt;kind_ref.
+      IF _desc-&gt;type_kind = cl_abap_refdescr=&gt;typekind_dref.   &quot; Data Ref
+        ASSIGN any-&gt;* TO &lt;any&gt;.
+        _desc = cl_abap_typedescr=&gt;describe_by_data( p_data = &lt;any&gt; ).
+        add_any(   xmldoc = xmldoc
+                 xml_node = xml_node
+                     name = name
+                      any = &lt;any&gt;
+                 typedesc = _desc ).
+      ELSE.
 * Unexpected =&gt; Ignored
-      mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_ANY&apos;.
+        mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_ANY&apos;.
+      ENDIF.
     WHEN cl_abap_datadescr=&gt;kind_elem.
-      string = elem_2_string( any = any
+      svalue = elem_2_string( any = any
                         type_desc = _desc ).
-      IF NOT string IS INITIAL.
-        IF name IS INITIAL.
-          node = xml_node.
-        ELSE.
-          node = xmldoc-&gt;create_element( name ).
-        ENDIF.
-        rc = node-&gt;set_value( string ).
-        mac_syserr_log rc &apos;set_value&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_ANY&apos;.
-        xml_node-&gt;append_child( node ).
+      IF NOT svalue IS INITIAL.
+        rc = xml_node-&gt;set_attribute( name = name
+                                 value = svalue ).
+        mac_syserr_log rc &apos;set_attribute&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_ANY&apos;. &quot;#EC NOTEXT
       ENDIF.
     WHEN cl_abap_datadescr=&gt;kind_struct.
       add_structure(   xmldoc = xmldoc
@@ -212,18 +217,18 @@ END-OF-DEFINITION.</MACROS>
                   typedesc = _desc ).
     WHEN cl_abap_datadescr=&gt;kind_intf.
 * To be ignored
-      string = _desc-&gt;get_relative_name( ).
+      svalue = _desc-&gt;get_relative_name( ).
 *      IF NOT application_log IS BOUND. MESSAGE ID MSGID TYPE &apos;E&apos; NUMBER 001 WITH abap_true abap_true. ENDIF.
 * Assuming Application_log is bound
       SET EXTENDED CHECK OFF.
-      IF 1 = 2. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 001 WITH name string. ENDIF.
+      IF 1 = 2. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 001 WITH name svalue. ENDIF.
       SET EXTENDED CHECK ON.
       CALL METHOD application_log-&gt;add_warning
         EXPORTING
 *          id_msgid     = MSGID
           id_msgno     = &apos;001&apos;
           id_msgv1     = name
-          id_msgv2     = string
+          id_msgv2     = svalue
 *          id_msgv3     = &amp;3
 *          id_msgv4     =
 *          id_detlevel  =
@@ -265,6 +270,7 @@ END-OF-DEFINITION.</MACROS>
   DATA self_done TYPE flag.
   FIELD-SYMBOLS:
     &lt;d&gt; TYPE ANY,
+    &lt;any&gt; TYPE ANY,
     &lt;a&gt; LIKE LINE OF o_obj-&gt;attributes.
 
   IF NOT object IS BOUND. EXIT. ENDIF.
@@ -298,36 +304,10 @@ END-OF-DEFINITION.</MACROS>
 *Error handling
       mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT &lt;c&gt;-name OF STRUCTURE structure&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;. &quot;#EC NOTEXT
     ELSE.
-      typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
-      typedescr = get_ref_type( typedescr ).
-      CASE typedescr-&gt;kind.
-        WHEN cl_abap_datadescr=&gt;kind_elem.
-          svalue = elem_2_string( any = &lt;d&gt;
-                            type_desc = typedescr ).
-          IF svalue IS NOT INITIAL.
-            svalue = protect_string( svalue ).              &quot; Issue 61
-            rc = node-&gt;set_value( svalue ).
-            mac_syserr_log rc &apos;set_value&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;. &quot;#EC NOTEXT
-            IF rc = 0.
-              self_done = abap_true.
-            ENDIF.
-          ENDIF.
-        WHEN OTHERS.
-* Self field &apos;&amp;1&apos; of structure &amp;2 (&amp;3) must be simple data type, not &apos;&amp;4&apos;
-          IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 004 WITH abap_true abap_true abap_true abap_true. ENDIF.
-          svalue = typedescr-&gt;get_relative_name( ).
-          CALL METHOD application_log-&gt;add_warning
-            EXPORTING
-*              id_msgid     = MSGID
-              id_msgno     = 004
-              id_msgv1     = self_fieldname
-              id_msgv2     = name
-              id_msgv3     = svalue
-              id_msgv4     = typedescr-&gt;kind
-*              id_detlevel  =
-*              id_probclass =
-              .
-      ENDCASE.
+      add_self( xml_node = node
+                    name = name
+                    any = &lt;d&gt; ).
+      self_done = abap_true.
     ENDIF.
   ENDIF.
 
@@ -345,33 +325,70 @@ END-OF-DEFINITION.</MACROS>
       mac_syserr_log sy-subrc &apos;ASSIGN object-&gt;(&lt;a&gt;-name)&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;. &quot;#EC NOTEXT
       CONTINUE.
     ENDIF.
-    typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;d&gt; ).
-    typedescr = get_ref_type( typedescr ).
-    sname = &lt;a&gt;-name.
-    CASE typedescr-&gt;kind.
-      WHEN cl_abap_datadescr=&gt;kind_elem.
-        svalue = elem_2_string( any = &lt;d&gt;
-                          type_desc = typedescr ).
-        IF svalue IS NOT INITIAL AND ( &lt;a&gt;-name &lt;&gt; self_fieldname OR self_done &lt;&gt; abap_true ).
-          rc = node-&gt;set_attribute( name = sname
-                                   value = svalue ).
-          mac_syserr_log rc &apos;set_attribute&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;. &quot;#EC NOTEXT
-        ENDIF.
-      WHEN OTHERS.
-        attr_name = &lt;a&gt;-name.
-        stack( attr_name ).
-        add_any(   xmldoc = xmldoc
-                 xml_node = node
-                     name = attr_name
-                      any = &lt;d&gt; ).
-        unstack( ).
-    ENDCASE.
+    IF &lt;a&gt;-name = self_fieldname AND self_done = abap_true.     CONTINUE.   ENDIF.
+    attr_name = &lt;a&gt;-name.
+    stack( attr_name ).
+    add_any(   xmldoc = xmldoc
+             xml_node = node
+                 name = attr_name
+                  any = &lt;d&gt; ).
+    unstack( ).
   ENDLOOP.
 
   IF node IS BOUND AND NOT name IS INITIAL.
     rc = xml_node-&gt;append_child( node ).
     mac_syserr_log rc &apos;append_child&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_OBJECT&apos;. &quot;#EC NOTEXT
   ENDIF.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="ADD_SELF" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Transform special self field to XML"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="ANY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ANY"/>
+     <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING" PAROPTIONL="X"/>
+     <ITEM SCONAME="XML_NODE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="3" TYPE="IF_IXML_ELEMENT">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="IF_IXML_ELEMENT"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA svalue    TYPE string.
+  DATA typedescr TYPE REF TO cl_abap_typedescr.
+  FIELD-SYMBOLS: &lt;any&gt; TYPE ANY.
+
+  typedescr = cl_abap_typedescr=&gt;describe_by_data( any ).
+  typedescr = get_ref_type( typedescr ).
+  IF typedescr-&gt;kind = cl_abap_datadescr=&gt;kind_ref.
+    ASSIGN any-&gt;* TO &lt;any&gt;.
+    typedescr = cl_abap_typedescr=&gt;describe_by_data( p_data = &lt;any&gt; ).
+  ENDIF.
+  CASE typedescr-&gt;kind.
+    WHEN cl_abap_datadescr=&gt;kind_elem.
+      svalue = elem_2_string( any = any
+                        type_desc = typedescr ).
+      IF svalue IS NOT INITIAL.
+        svalue = protect_string( svalue ).                  &quot; Issue 61
+        rc = xml_node-&gt;set_value( svalue ).
+        mac_syserr_log rc &apos;set_value&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_SELF&apos;. &quot;#EC NOTEXT
+      ENDIF.
+    WHEN OTHERS.
+      svalue = typedescr-&gt;get_relative_name( ).
+* Self field &apos;&amp;1&apos; of &amp;2 (&amp;3) must be simple data type, not &apos;&amp;4&apos;
+      IF NOT application_log IS BOUND. MESSAGE E004 WITH self_fieldname name svalue typedescr-&gt;kind. ENDIF.
+      CALL METHOD application_log-&gt;add_warning
+        EXPORTING
+*              id_msgid     = MSGID
+          id_msgno     = 004
+          id_msgv1     = self_fieldname
+          id_msgv2     = name
+          id_msgv3     = svalue
+          id_msgv4     = typedescr-&gt;kind
+*              id_detlevel  =
+*              id_probclass =
+          .
+  ENDCASE.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ADD_STRUCTURE" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
     <TEXTS>
@@ -392,14 +409,16 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  DATA node        TYPE REF TO if_ixml_element.
-  DATA sname       TYPE string.
-  DATA svalue      TYPE string.
-  DATA structdescr TYPE REF TO cl_abap_structdescr.
-  DATA typedescr   TYPE REF TO cl_abap_typedescr.
+  DATA node         TYPE REF TO if_ixml_element.
+  DATA sname        TYPE string.
+  DATA svalue       TYPE string.
+  DATA structdescr  TYPE REF TO cl_abap_structdescr.
+  DATA typedescr    TYPE REF TO cl_abap_typedescr.
+  DATA self_done    TYPE flag.
   FIELD-SYMBOLS:
     &lt;fieldvalue&gt; TYPE ANY,
     &lt;fld&gt; TYPE ANY,
+    &lt;any&gt; TYPE ANY,
     &lt;c&gt; LIKE LINE OF structdescr-&gt;components.
 
   IF structure IS INITIAL. EXIT. ENDIF.
@@ -420,33 +439,10 @@ END-OF-DEFINITION.</MACROS>
 *Error handling
       mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT &lt;c&gt;-name OF STRUCTURE structure&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;. &quot;#EC NOTEXT
     ELSE.
-      typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;fieldvalue&gt; ).
-      typedescr = get_ref_type( typedescr ).
-      CASE typedescr-&gt;kind.
-        WHEN cl_abap_datadescr=&gt;kind_elem.
-          svalue = elem_2_string( any = &lt;fieldvalue&gt;
-                            type_desc = typedescr ).
-          IF svalue IS NOT INITIAL.
-            svalue = protect_string( svalue ).              &quot; Issue 61
-            rc = node-&gt;set_value( svalue ).
-            mac_syserr_log rc &apos;set_value&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;. &quot;#EC NOTEXT
-          ENDIF.
-        WHEN OTHERS.
-* Self field &apos;&amp;1&apos; of structure &amp;2 (&amp;3) must be simple data type, not &apos;&amp;4&apos;
-          IF NOT application_log IS BOUND. MESSAGE ID msgid TYPE &apos;E&apos; NUMBER 004 WITH abap_true abap_true abap_true abap_true. ENDIF.
-          svalue = typedescr-&gt;get_relative_name( ).
-          CALL METHOD application_log-&gt;add_warning
-            EXPORTING
-*              id_msgid     = MSGID
-              id_msgno     = 004
-              id_msgv1     = self_fieldname
-              id_msgv2     = name
-              id_msgv3     = svalue
-              id_msgv4     = typedescr-&gt;kind
-*              id_detlevel  =
-*              id_probclass =
-              .
-      ENDCASE.
+      add_self( xml_node = node
+                    name = name
+                     any = &lt;fieldvalue&gt; ).
+      self_done = abap_true.
     ENDIF.
   ENDIF.
   LOOP AT structdescr-&gt;components ASSIGNING &lt;c&gt;.
@@ -456,35 +452,25 @@ END-OF-DEFINITION.</MACROS>
       mac_syserr_log sy-subrc &apos;ASSIGN COMPONENT &lt;c&gt;-name OF STRUCTURE structure&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;. &quot;#EC NOTEXT
       CONTINUE.
     ENDIF.
+    IF &lt;c&gt;-name = self_fieldname AND self_done = abap_true.     CONTINUE.   ENDIF.
+
     typedescr = cl_abap_typedescr=&gt;describe_by_data( &lt;fieldvalue&gt; ).
     typedescr = get_ref_type( typedescr ).
     sname = &lt;c&gt;-name.
-    CASE typedescr-&gt;kind.
-      WHEN cl_abap_datadescr=&gt;kind_ref.
-* Exception ref of ref ?
-        mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;. &quot;#EC NOTEXT
-      WHEN cl_abap_datadescr=&gt;kind_elem.
-        svalue = elem_2_string( any = &lt;fieldvalue&gt;
-                          type_desc = typedescr ).
-        IF svalue IS NOT INITIAL AND &lt;c&gt;-name &lt;&gt; self_fieldname.
-          IF sname(1) CO &apos;0123456789&apos;.    &quot; Issue 46 : Field names strating with numbre in attributes
-            CONCATENATE issue46_prefix sname INTO sname. UNASSIGN &lt;fld&gt;. ASSIGN COMPONENT sname OF STRUCTURE structure TO &lt;fld&gt;.
-            WHILE &lt;fld&gt; IS ASSIGNED. CONCATENATE issue46_prefix sname INTO sname. UNASSIGN &lt;fld&gt;. ASSIGN COMPONENT sname OF STRUCTURE structure TO &lt;fld&gt;. ENDWHILE.
-          ENDIF.
-          rc = node-&gt;set_attribute( name = sname
-                                   value = svalue ).
-          mac_syserr_log rc &apos;set_attribute&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_STRUCTURE&apos;. &quot;#EC NOTEXT
-        ENDIF.
-* cl_abap_datadescr=&gt;kind_struct cl_abap_datadescr=&gt;kind_table cl_abap_datadescr=&gt;kind_class cl_abap_datadescr=&gt;kind_intf.
-      WHEN OTHERS.
-        stack( sname ).
-        add_any( xmldoc = xmldoc
-               xml_node = node
-                   name = sname
-                    any = &lt;fieldvalue&gt;
-               typedesc = typedescr ).
-        unstack( ).
-    ENDCASE.
+
+* Issue 46 : Field names strating with numbre in attributes
+    IF sname(1) CO &apos;0123456789&apos; AND typedescr-&gt;kind = cl_abap_datadescr=&gt;kind_elem.
+      CONCATENATE issue46_prefix sname INTO sname. UNASSIGN &lt;fld&gt;. ASSIGN COMPONENT sname OF STRUCTURE structure TO &lt;fld&gt;.
+      WHILE &lt;fld&gt; IS ASSIGNED. CONCATENATE issue46_prefix sname INTO sname. UNASSIGN &lt;fld&gt;. ASSIGN COMPONENT sname OF STRUCTURE structure TO &lt;fld&gt;. ENDWHILE.
+    ENDIF.
+
+    stack( sname ).
+    add_any( xmldoc = xmldoc
+           xml_node = node
+               name = sname
+                any = &lt;fieldvalue&gt;
+           typedesc = typedescr ).
+    unstack( ).
   ENDLOOP.
 
   IF node IS BOUND AND NOT name IS INITIAL.
@@ -879,13 +865,38 @@ END-OF-DEFINITION.</MACROS>
     </PARAMETERS>
     <SOURCE>`
   DATA o_ref      TYPE REF TO cl_abap_refdescr.
+  FIELD-SYMBOLS &lt;a&gt; TYPE ANY.
 
+  ref_type = typedesc.
   IF typedesc-&gt;kind = cl_abap_datadescr=&gt;kind_ref.
     o_ref ?= typedesc.
-    ref_type = o_ref-&gt;get_referenced_type( ).
-  ELSE.
-    ref_type = typedesc.
-  ENDIF.</SOURCE>
+    IF o_ref-&gt;type_kind = cl_abap_refdescr=&gt;typekind_oref.    &quot; Object
+      ref_type = o_ref-&gt;get_referenced_type( ).
+    ENDIF.
+  ENDIF.
+*  DATA o_ref      TYPE REF TO cl_abap_refdescr.
+*  DATA _desc      TYPE REF TO cl_abap_typedescr.
+*  FIELD-SYMBOLS &lt;a&gt; TYPE ANY.
+*
+*  IF typedesc IS BOUND.
+*    _desc = typedesc.
+*  ELSE.
+*    _desc = cl_abap_typedescr=&gt;describe_by_data( p_data = data ).
+*  ENDIF.
+*
+*  IF _desc-&gt;kind = cl_abap_datadescr=&gt;kind_ref.
+*    o_ref ?= _desc.
+*    IF o_ref-&gt;type_kind = cl_abap_refdescr=&gt;typekind_oref.    &quot; Object
+*      ref_type = o_ref-&gt;get_referenced_type( ).
+*    ELSEIF o_ref-&gt;type_kind = cl_abap_refdescr=&gt;typekind_dref.   &quot; Data Ref
+*      ASSIGN data-&gt;* TO &lt;a&gt;.
+*      ref_type = cl_abap_typedescr=&gt;describe_by_data( &lt;a&gt; ).
+*    ELSE.
+*      ASSERT 0 = 1.
+*    ENDIF.
+*  ELSE.
+*    ref_type = typedesc.
+*  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IS_SIMPLE_TYPE_KIND" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
