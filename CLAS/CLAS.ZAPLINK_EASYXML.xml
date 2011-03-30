@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="46F6399880898CB87AEC60CE40D2E332" CODE_SIGNATURE="A9BE416845B57AD026D21E110BEFE9C1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E4047AA69032F6E28DC6D2CC173A0513" CODE_SIGNATURE="34C3C6073209ACE9FC43A76605B337E0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -195,9 +195,14 @@ END-OF-DEFINITION.</MACROS>
       svalue = elem_2_string( any = any
                         type_desc = _desc ).
       IF NOT svalue IS INITIAL.
-        rc = xml_node-&gt;set_attribute( name = name
-                                 value = svalue ).
-        mac_syserr_log rc &apos;set_attribute&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_ANY&apos;. &quot;#EC NOTEXT
+        IF name IS INITIAL.
+          rc = xml_node-&gt;set_value( svalue ).
+          mac_syserr_log rc &apos;set_value&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_ANY&apos;.
+        ELSE.
+          rc = xml_node-&gt;set_attribute( name = name
+                                       value = svalue ).
+          mac_syserr_log rc &apos;set_attribute&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_ANY&apos;. &quot;#EC NOTEXT
+        ENDIF.
       ENDIF.
     WHEN cl_abap_datadescr=&gt;kind_struct.
       add_structure(   xmldoc = xmldoc
@@ -497,27 +502,31 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  DATA node        TYPE REF TO if_ixml_element.
+  DATA t_node        TYPE REF TO if_ixml_element.
+  DATA i_node        TYPE REF TO if_ixml_element.
   FIELD-SYMBOLS:
     &lt;l&gt; TYPE ANY.
 
   IF table IS INITIAL. EXIT. ENDIF.
 
   IF name IS INITIAL.
-    node = xml_node.
+    t_node = xml_node.
   ELSE.
-    node = xmldoc-&gt;create_element( name ).
+    t_node = xmldoc-&gt;create_element( name ).
   ENDIF.
+  ASSERT t_node IS BOUND.
 
   LOOP AT table ASSIGNING &lt;l&gt;.
+    i_node = xmldoc-&gt;create_element( en_line ).
     add_any(   xmldoc = xmldoc
-             xml_node = node
-                 name = EN_LINE
+             xml_node = i_node
+*                 name = EN_LINE
                   any = &lt;l&gt; ).
+    t_node-&gt;append_child( i_node ).
   ENDLOOP.
 
-  IF node IS BOUND AND NOT name IS INITIAL.
-    rc = xml_node-&gt;append_child( node ).
+  IF NOT name IS INITIAL.
+    rc = xml_node-&gt;append_child( t_node ).
     mac_syserr_log rc &apos;append_child&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_TABLE&apos;.
   ENDIF.</SOURCE>
    </ITEM>
