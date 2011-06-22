@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ZL_OBJECT CHECKSUM="9A6EF1D4BBEC2530CC3FE570A3205978" CODE_SIGNATURE="6B82634D7713D163DB7194F92895D7C9" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+ <DEPENDENCIES>
+  <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
+ </DEPENDENCIES>
+ <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
+ <RAW>
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+   <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
+   <TEXTS>
+    <ITEM LANG="E" TEXT="ZAP Link Connector : BADI Definitions &amp; Implementations">U1&amp;FUNCTIONALITY&amp;
+ASIs a connector for :
+AS- SXSD : BADI Definition
+AS- SXCI : BADI Implementation
+U1&amp;RELATIONS&amp;
+ASIs part of ZAP Link Framework as Official Connector.
+ASRequire Official connector for Object types (CLAS &amp; INTF).
+U1&amp;EXAMPLE&amp;
+AS
+U1&amp;HINTS&amp;
+AS
+U1&amp;FURTHER_SOURCES_OF_INF&amp;
+AShttps://code.google.com/p/zaplink/wiki/Connector
+U1Memories
+ASThis application is dedicated to the memories of :
+B2My father : Lamri BENSIALI (1940-2004) without whom I never started
+  programming
+B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
+  application</ITEM>
+   </TEXTS>
+  </A0_MAINDATA>
+  <ATTRIBUTS>
+   <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;CNX_ENHENCEMENT&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Application Log: Subobject"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="R_DOC_ID_DEFINITION" STATE="1" ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID"/>
+   <ITEM CMPNAME="R_DOC_ID_IMPLEMENTATION" STATE="1" ATTDECLTYP="1" TYPTYPE="1" TYPE="TR_DOCID"/>
+   <ITEM CMPNAME="ST_COMP_ENH_SPOT" EXPOSURE="2" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;ENSC&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Transport category"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="ST_ENH_SPOT" EXPOSURE="2" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;ENHS&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Transport category"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="T_BADI_IMPL" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;CLAS&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Type interface"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="T_BADI_ITF" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;INTF&apos;" TYPTYPE="1" TYPE="TD_COMPTYPE">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Type interface"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="_UUID" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;4181014E2AC27D33E1000000AC1201D6&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="UUID for connector BADI"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="_VER" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;0.0&apos;" TYPTYPE="1" TYPE="TD_CONNVER">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Connector Version"/>
+    </TEXTS>
+   </ITEM>
+  </ATTRIBUTS>
+  <LOCAL>
+   <TYPES>`
+*&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
+*&quot;* definitions, interfaces or data types) you need for method
+*&quot;* IMPLEMENTATION OR PRIVATE METHOD&apos;S SIGNATURE</TYPES>
+   <IMPLEMENTATIONS>`
+*&quot;* LOCAL CLASS IMPLEMENTATION FOR PUBLIC CLASS
+*&quot;* use this source file for the implementation part of
+*&quot;* LOCAL HELPER CLASSES</IMPLEMENTATIONS>
+   <MACROS>`
+*&quot;* USE THIS SOURCE FILE FOR ANY MACRO DEFINITIONS YOU NEED
+*&quot;* IN THE IMPLEMENTATION PART OF THE CLASS
+
+INCLUDE zaplink_macros.</MACROS>
+  </LOCAL>
+  <METHODS>
+   <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" MTDTYPE="2" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
+    </TEXTS>
+    <SOURCE>`
+*table TDCLT
+*DOKCLASS DOKTITEL
+*BI       Business Add-Ins: Implementations
+  DATA _id LIKE LINE OF r_doc_id_definition.
+
+  _id-sign = &apos;I&apos;.
+  _id-option = &apos;EQ&apos;.
+  _id-low = &apos;HY&apos;. APPEND _id TO r_doc_id_definition.
+
+  _id-low = &apos;BI&apos;. APPEND _id TO r_doc_id_implementation.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CONSTRUCTOR" EXPOSURE="2" STATE="1" MTDTYPE="2">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="CONSTRUCTOR"/>
+    </TEXTS>
+    <SOURCE>`
+  DATA type LIKE LINE OF supported_types.
+
+  CALL METHOD super-&gt;constructor.
+  mac_create_log application_log ballog_subobject space.
+  type-type = st_comp_enh_spot.   INSERT type INTO TABLE supported_types.
+  type-type = st_enh_spot.        INSERT type INTO TABLE supported_types.
+
+  uuid = _uuid.
+  version = _ver.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CREATE_DOC_KEY" STATE="1" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Create document key"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="DOC_KEY" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_DOC_KEY">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="DOCU key structure"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+* SELECT WHERE &quot;ID&quot; = &apos;HY&apos; AND &quot;OBJECT&quot; = &apos;SIMGZAPLINK_ACTION&apos; AND &quot;LANGU&quot; = &apos;E&apos; AND &quot;TYP&quot; = &apos;E&apos; AND &quot;DOKVERSION&quot; = 0001 ORDER BY
+  doc_key-simg = &apos;SIMG&apos;.</SOURCE>
+   </ITEM>
+  </METHODS>
+  <REDEFINITIONS>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
+    <SOURCE>`
+*  DATA o_bdef TYPE to_badi_def.
+*  DATA o_impl TYPE to_badi_impl.
+*
+*  CHECK object IS BOUND.
+*
+*  CASE object-&gt;type.
+*    WHEN st_badi_def.
+*      o_bdef ?= object-&gt;raw.
+*      o_bdef-&gt;anonymize( ).
+*    WHEN st_badi_impl.
+*      o_impl ?= object-&gt;raw.
+*      o_impl-&gt;anonymize( ).
+*    WHEN OTHERS.
+*      mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+*  ENDCASE.
+*
+*  TRY.
+*      super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
+*    CATCH zaplink_cx_connector INTO o_mycx.
+*      RAISE EXCEPTION o_mycx.
+*  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
+    <SOURCE>`
+  DATA o_conn   TYPE to_connector.
+  DATA o_ensc   TYPE to_comp_enh.
+*  DATA o_sxci   TYPE to_badi_impl.
+  DATA _type    TYPE td_comptype.
+
+  CREATE OBJECT object.
+  CASE type.
+    WHEN st_comp_enh_spot.
+      CREATE OBJECT o_ensc.
+      object-&gt;raw = o_ensc.
+    WHEN st_enh_spot.
+    WHEN OTHERS.
+      CLEAR object.
+      mac_raise_type_not_supported me-&gt;class_name type.
+  ENDCASE.</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
+    <SOURCE>`
+*  DATA exit_name  TYPE rsexscrn-exit_name.
+*  DATA d_type TYPE td_comptype.
+*
+*  TRY.
+*    d_type = component-&gt;get_type( ).
+*    CASE d_type.
+*      WHEN st_badi_def.
+*        exit_name = component-&gt;get_name( ).
+*        CALL FUNCTION &apos;SXO_BADI_DELETE&apos;
+*          EXPORTING
+*            exit_name                = exit_name
+*            no_dialog                = seex_true
+**        CHANGING
+**          KORR_NUM                 =
+*          EXCEPTIONS
+*            badi_not_existing        = 1
+*            action_canceled          = 2
+*            access_failure           = 3
+*            data_inconsistency       = 4
+*            OTHERS                   = 5
+*                  .
+*        IF sy-subrc &lt;&gt; 0.
+*          CASE sy-subrc.
+**          WHEN 1.
+**            RAISE EXCEPTION TYPE zaplink_cx_connector
+**              EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+*            WHEN OTHERS.
+*              RAISE EXCEPTION TYPE zaplink_cx_connector
+*                EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+*          ENDCASE.
+*        ENDIF.
+*      WHEN st_badi_impl.
+*        exit_name = component-&gt;get_name( ).
+*        CALL FUNCTION &apos;SXO_IMPL_DELETE&apos;
+*          EXPORTING
+*            imp_name                 = exit_name
+**         NO_DIALOG                = SEEX_FALSE
+**       CHANGING
+**         KORR_NUM                 =
+*          EXCEPTIONS
+*            imp_not_existing         = 1
+*            action_canceled          = 2
+*            access_failure           = 3
+*            data_inconsistency       = 4
+*            OTHERS                   = 5.
+*        IF sy-subrc &lt;&gt; 0.
+*          CASE sy-subrc.
+**          WHEN 1.
+**            RAISE EXCEPTION TYPE zaplink_cx_connector
+**              EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+*            WHEN OTHERS.
+*              RAISE EXCEPTION TYPE zaplink_cx_connector
+*                EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+*          ENDCASE.
+*        ENDIF.
+*      WHEN OTHERS.
+*        mac_raise_type_not_supported me-&gt;class_name d_type.
+*    ENDCASE.
+*    mac_def_catch zaplink_cx_connector.
+*  ENDTRY.
+*  result = abap_true.</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
+    <SOURCE>`
+  DATA d_type         TYPE td_comptype.
+  DATA enh_name       TYPE enhspotname.
+  DATA enh_comp_name  TYPE enhspotcompositename.
+  DATA o_spot         TYPE REF TO if_enh_spot_tool.
+  DATA o_comp         TYPE REF TO if_enh_spot_composite.
+
+
+  TRY.
+    exists = me-&gt;exists-not_exists.
+    d_type = component-&gt;get_type( ).
+    CASE d_type.
+      WHEN st_comp_enh_spot.
+        enh_comp_name = component-&gt;get_name( ).
+        TRY.
+            o_comp = cl_enh_factory=&gt;load_enhancement_spot_comp( name = enh_comp_name
+                                                                 lock = abap_false ).
+            IF o_comp IS BOUND.
+              exists = me-&gt;exists-exists.
+            ENDIF.
+          CATCH cx_enh_io_error.      &quot; Do not exists
+          CATCH cx_enh_is_locked .    &quot; Should not happend
+            exists = me-&gt;exists-exists.
+*           CATCH cx_enh_permission_denied .
+*           CATCH cx_enh_canceled .
+*           CATCH cx_enh_internal_error .
+        ENDTRY.
+      WHEN st_enh_spot.
+        enh_name = component-&gt;get_name( ).
+        TRY.
+            o_spot = cl_enh_factory=&gt;get_enhancement_spot( enh_name ).
+            IF o_spot IS BOUND.
+              exists = me-&gt;exists-exists.
+            ENDIF.
+          CATCH cx_enh_io_error.      &quot; Do not exists
+          CATCH cx_enh_is_locked .    &quot; Should not happend
+            exists = me-&gt;exists-exists.
+*           CATCH cx_enh_permission_denied .
+*           CATCH cx_enh_canceled .
+*           CATCH cx_enh_internal_error .
+        ENDTRY.
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
+    ENDCASE.
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
+    <SOURCE>`
+  result = abap_false.
+  if version = _ver.    result = abap_true.   endif.</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP">
+    <SOURCE>`
+  DATA d_type         TYPE td_comptype.
+  DATA enh_name       TYPE enhspotname.
+  DATA enh_comp_name  TYPE enhspotcompositename.
+  DATA o_spot         TYPE REF TO if_enh_spot_tool.
+  DATA o_comp         TYPE REF TO CL_ENH_SPOT_COMPOSITE.    &quot; if_enh_spot_composite.
+  DATA o_ensc         TYPE to_comp_enh.
+
+  TRY.
+    CREATE OBJECT object.
+    object-&gt;set_component( component ).
+    d_type = component-&gt;get_type( ).
+    CASE d_type.
+      WHEN st_comp_enh_spot.
+        enh_comp_name = component-&gt;get_name( ).
+        TRY.
+            o_comp ?= cl_enh_factory=&gt;load_enhancement_spot_comp( name = enh_comp_name
+                                                                  lock = abap_false ).
+            IF o_comp IS BOUND.
+              CREATE OBJECT o_ensc.
+              o_ensc-&gt;from_data( o_comp ).
+              object-&gt;raw = o_ensc.
+            ENDIF.
+          CATCH cx_enh_io_error.      &quot; Do not exists
+*          CATCH cx_enh_is_locked .    &quot; Should not happend
+*           CATCH cx_enh_permission_denied .
+*           CATCH cx_enh_canceled .
+*           CATCH cx_enh_internal_error .
+        ENDTRY.
+      WHEN st_enh_spot.
+        enh_name = component-&gt;get_name( ).
+        TRY.
+            o_spot = cl_enh_factory=&gt;get_enhancement_spot( enh_name ).
+            IF o_spot IS BOUND.
+            ENDIF.
+          CATCH cx_enh_io_error.      &quot; Do not exists
+*          CATCH cx_enh_is_locked .    &quot; Should not happend
+*           CATCH cx_enh_permission_denied .
+*           CATCH cx_enh_canceled .
+*           CATCH cx_enh_internal_error .
+        ENDTRY.
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name d_type.
+    ENDCASE.
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
+   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
+    <SOURCE>`
+*  DATA _o_def         TYPE to_badi_def.
+*  DATA _o_impl        TYPE to_badi_impl.
+*  DATA d_type         TYPE td_comptype.
+*  DATA o_comp         TYPE to_component.              &quot; Issue 92
+*
+*  TRY.
+*    d_type = object-&gt;type.
+*    CASE d_type.
+*      WHEN st_badi_def.
+*        _o_def ?= object-&gt;raw.
+*        _o_def-&gt;a0_maindata-exit_name = object-&gt;name.
+*        components = import_to_sap_def( _o_def ).
+*      WHEN st_badi_impl.
+*        _o_impl ?= object-&gt;raw.
+*        _o_impl-&gt;a0_maindata-imp_name = object-&gt;name.
+*        components = import_to_sap_impl( _o_impl ).
+*      WHEN OTHERS.
+*        mac_raise_type_not_supported me-&gt;class_name d_type.
+*    ENDCASE.
+*    o_comp = object-&gt;get_component( abap_true ).    &quot; Issue 92
+*    IF NOT components IS BOUND.   CREATE OBJECT components.   ENDIF.          &quot; Issue 92
+*    TRY.    components-&gt;add( o_comp ).    CATCH zaplink_cx_list.    ENDTRY.   &quot; Issue 92
+*    mac_def_catch zaplink_cx_connector.
+*  ENDTRY.</SOURCE>
+   </ITEM>
+  </REDEFINITIONS>
+  <TYPEGROUPS>
+   <ITEM TYPEGROUP="SEEX" EXPLICIT="X"/>
+  </TYPEGROUPS>
+  <TYPES>
+   <ITEM CMPNAME="TO_BADI_IMPL" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_SXCI_DATA">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Badi Implémentation Data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TO_COMP_ENH" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_ENSC_DATA">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Data for Composit Enhancement Spot"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_CLAS_ATTR" STATE="1" EDITORDER="2 " TYPTYPE="4">
+    BEGIN OF ts_clas_attr.
+  INCLUDE TYPE ts_base_attributs AS base.
+  TYPES:
+    END OF ts_clas_attr
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Root attributs for CLAS"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="TS_DOC_KEY" STATE="1" EDITORDER="1 " TYPTYPE="4">
+    BEGIN OF ts_doc_key,                                    &quot; equiv DOKU_OBJ = CHAR 60
+      simg(4)    TYPE c,     &quot;SIMG
+      name       TYPE rsexscrn-exit_name,                   &quot; CHAR 30
+    END OF ts_doc_key
+    <TEXTS>
+     <ITEM LANG="E" TEXT="DOCU key structure"/>
+    </TEXTS>
+   </ITEM>
+  </TYPES>
+ </RAW>
+</ZL_OBJECT>
