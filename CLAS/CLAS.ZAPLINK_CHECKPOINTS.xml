@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B6136870A814F493E8CEA4E628056AAB" CODE_SIGNATURE="49339690B1CBA37C57460A99373AA4DC" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CHECKPOINTS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="77955CC707477CFAE7799EEDB4448A6C" CODE_SIGNATURE="F1BF71CB560F4137FF569C5D57C6D463" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CHECKPOINTS" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ACID_DATA"/>
@@ -733,18 +733,16 @@ INCLUDE zaplink_macros.</MACROS>
         WHEN OTHERS.
           mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
-      _comp = object-&gt;get_component( abap_true ).
-      TRY.
-          components-&gt;add( _comp ).
-          CATCH zaplink_cx_list.  ENDTRY.                   &quot; Issue 92
+      check_component_list( EXPORTING     object = object
+                             CHANGING components = components ). &quot; Issue 92
 
-        CATCH zaplink_cx_connector INTO o_mycx.
-          ROLLBACK WORK.
-          RAISE EXCEPTION o_mycx.
-        CATCH zaplink_cx INTO o_cx.
-          ROLLBACK WORK.
-          mac_cascade_raise o_mycx o_cx.
-      ENDTRY.</SOURCE>
+    CATCH zaplink_cx_connector INTO o_mycx.
+      ROLLBACK WORK.
+      RAISE EXCEPTION o_mycx.
+    CATCH zaplink_cx INTO o_cx.
+      ROLLBACK WORK.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TEXTSPOOL>

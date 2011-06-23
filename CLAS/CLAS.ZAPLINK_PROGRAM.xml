@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="818C19FA654E171DD5754650ACE40C90" CODE_SIGNATURE="BBA63BFC63276069EA40282197F8049F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="AE74E10E2292CAC3FE1A790FAC96FE18" CODE_SIGNATURE="50A62CB7E873039A5A5F2043EAE9A762" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1235,10 +1235,8 @@ INCLUDE zaplink_macros.</MACROS>
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
     ENDCASE.
-
-    o_comp = object-&gt;get_component( abap_true ).            &quot; Issue 92
-    components-&gt;add( o_comp ).
-
+    check_component_list( EXPORTING     object = object
+                           CHANGING components = components ). &quot; Issue 92
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>

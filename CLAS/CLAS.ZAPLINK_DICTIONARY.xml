@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="21FCFED926A052E3E1F7AF46F600378A" CODE_SIGNATURE="F90AFD65142CBA87F4ED28DDD50717E8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="246D7F823530E8F4AF96141D976E2067" CODE_SIGNATURE="87956E13DA000D4AE0F98A69D7E81A3D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -2112,94 +2112,90 @@ END-OF-DEFINITION.</MACROS>
         o_mycx-&gt;update( ).
       endif.
       raise exception o_mycx.
-    END-OF-DEFINITION.
+  END-OF-DEFINITION.
 
-    TRY.
-        CASE object-&gt;type.
-          WHEN supportedtypes-type_group.
-            o_typegroup ?= object-&gt;raw.
-            o_typegroup-&gt;a0_maindata-name = object-&gt;name.
-            TRY.
-              components = import_type_group( o_typegroup ).
-              lmac_catch_local_cx.
-            ENDTRY.
-          WHEN supportedtypes-domain.
-            o_domain ?= object-&gt;raw.
-            o_domain-&gt;a0_maindata-domname = object-&gt;name.
-            TRY.
-              components = import_domain( o_domain ).
-              lmac_catch_local_cx.
-            ENDTRY.
-          WHEN supportedtypes-data_element.
-            o_data_e ?= object-&gt;raw.
-            o_data_e-&gt;a0_maindata-rollname = object-&gt;name.
-            TRY.
-              components = import_data_element( o_data_e ).
-              lmac_catch_local_cx.
-            ENDTRY.
-          WHEN supportedtypes-view.
-            o_view ?= object-&gt;raw.
-            o_view-&gt;a0_maindata-viewname = object-&gt;name.
-            TRY.
-              components = import_view( o_view ).
-              lmac_catch_local_cx.
-            ENDTRY.
-          WHEN supportedtypes-table.
-            o_table ?= object-&gt;raw.
-            o_table-&gt;a0_maindata-tabname = object-&gt;name.
-            TRY.
-              components = import_table( o_table ).
-              lmac_catch_local_cx.
-            ENDTRY.
-          WHEN supportedtypes-table_content.
-            o_content ?= object-&gt;raw.
-*            o_content-&gt;a0_maindata-tabname = object-&gt;name.
-            TRY.
-*              components = import_table_content( o_content ).
-              lmac_catch_local_cx.
-            ENDTRY.
-          WHEN supportedtypes-ext_index OR supportedtypes-table_index. &quot; Issue 55
-            o_index ?= object-&gt;raw.
-            s_index = zaplink_xinx_data=&gt;name_2_key( object-&gt;name ).
-            o_index-&gt;a0_maindata-sqltab = s_index-table.
-            o_index-&gt;a0_maindata-indexname = s_index-index.
-            TRY.
-              components = import_index( o_index ).
-              lmac_catch_local_cx.
-            ENDTRY.
-          WHEN supportedtypes-table_type.
-            o_tab_type ?= object-&gt;raw.
-            o_tab_type-&gt;a0_maindata-typename = object-&gt;name.
-            TRY.
-              components = import_table_type( o_tab_type ).
-              lmac_catch_local_cx.
-            ENDTRY.
-          WHEN supportedtypes-search_help.
-            o_s_help ?= object-&gt;raw.
-            o_s_help-&gt;a0_maindata-shlpname = object-&gt;name.
-            TRY.
-              components = import_search_help( o_s_help ).
-              lmac_catch_local_cx.
-            ENDTRY.
-          WHEN supportedtypes-lock_object.
-            o_lock_obj ?= object-&gt;raw.
-            o_lock_obj-&gt;a0_maindata-viewname = object-&gt;name.
-            TRY.
-              components = import_lock_object( o_lock_obj ).
-              lmac_catch_local_cx.
-            ENDTRY.
-          WHEN OTHERS.
-            mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
-        ENDCASE.
-
-        o_comp = object-&gt;get_component( abap_true ).        &quot; Issue 92
-        IF NOT components IS BOUND.   CREATE OBJECT components.   ENDIF. &quot; Issue 92
+  TRY.
+    CASE object-&gt;type.
+      WHEN supportedtypes-type_group.
+        o_typegroup ?= object-&gt;raw.
+        o_typegroup-&gt;a0_maindata-name = object-&gt;name.
         TRY.
-            components-&gt;add( o_comp ).
-            CATCH zaplink_cx_list.    ENDTRY.               &quot; Issue 92
+          components = import_type_group( o_typegroup ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN supportedtypes-domain.
+        o_domain ?= object-&gt;raw.
+        o_domain-&gt;a0_maindata-domname = object-&gt;name.
+        TRY.
+          components = import_domain( o_domain ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN supportedtypes-data_element.
+        o_data_e ?= object-&gt;raw.
+        o_data_e-&gt;a0_maindata-rollname = object-&gt;name.
+        TRY.
+          components = import_data_element( o_data_e ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN supportedtypes-view.
+        o_view ?= object-&gt;raw.
+        o_view-&gt;a0_maindata-viewname = object-&gt;name.
+        TRY.
+          components = import_view( o_view ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN supportedtypes-table.
+        o_table ?= object-&gt;raw.
+        o_table-&gt;a0_maindata-tabname = object-&gt;name.
+        TRY.
+          components = import_table( o_table ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN supportedtypes-table_content.
+        o_content ?= object-&gt;raw.
+*            o_content-&gt;a0_maindata-tabname = object-&gt;name.
+        TRY.
+*              components = import_table_content( o_content ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN supportedtypes-ext_index OR supportedtypes-table_index. &quot; Issue 55
+        o_index ?= object-&gt;raw.
+        s_index = zaplink_xinx_data=&gt;name_2_key( object-&gt;name ).
+        o_index-&gt;a0_maindata-sqltab = s_index-table.
+        o_index-&gt;a0_maindata-indexname = s_index-index.
+        TRY.
+          components = import_index( o_index ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN supportedtypes-table_type.
+        o_tab_type ?= object-&gt;raw.
+        o_tab_type-&gt;a0_maindata-typename = object-&gt;name.
+        TRY.
+          components = import_table_type( o_tab_type ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN supportedtypes-search_help.
+        o_s_help ?= object-&gt;raw.
+        o_s_help-&gt;a0_maindata-shlpname = object-&gt;name.
+        TRY.
+          components = import_search_help( o_s_help ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN supportedtypes-lock_object.
+        o_lock_obj ?= object-&gt;raw.
+        o_lock_obj-&gt;a0_maindata-viewname = object-&gt;name.
+        TRY.
+          components = import_lock_object( o_lock_obj ).
+          lmac_catch_local_cx.
+        ENDTRY.
+      WHEN OTHERS.
+        mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
+    ENDCASE.
 
-            mac_def_catch zaplink_cx_connector.
-        ENDTRY.</SOURCE>
+    check_component_list( EXPORTING     object = object
+                           CHANGING components = components ). &quot; Issue 92
+    mac_def_catch zaplink_cx_connector.
+  ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPEGROUPS>

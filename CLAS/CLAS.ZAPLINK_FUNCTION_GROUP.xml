@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BF9791A772ACC8AB4B2A5E4505A2DCF5" CODE_SIGNATURE="ACBFF4356BEFF2BFE31EF19D6C4E83C6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="51C733047DCF48B8A4C6A793B8996D7A" CODE_SIGNATURE="9D1618946558856A64ACBCE9D195777A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUGR_DATA"/>
@@ -1268,13 +1268,13 @@ INCLUDE zaplink_macros.</MACROS>
 *ISSUE 125 - END
 * Issue 97 : Includes not handled
           LOOP AT s_fmd_fugr-includes ASSIGNING &lt;i&gt;.
-            write_include( EXPORTING area = s_fmd_fugr-header-area        &quot; ISSUE 125
+            write_include( EXPORTING area = s_fmd_fugr-header-area &quot; ISSUE 125
                               mainprogram = d_mainprog
                                   include = &lt;i&gt;
                           CHANGING source = t_source ).
           ENDLOOP.
 * Issue 97 : End
-          o_source-&gt;set_source_tab( t_source ).       &quot; ISSUE 125
+          o_source-&gt;set_source_tab( t_source ).             &quot; ISSUE 125
 
           LOOP AT s_fmd_fugr-functions ASSIGNING &lt;f&gt;.
             write_function( &lt;f&gt; ).
@@ -1307,18 +1307,16 @@ INCLUDE zaplink_macros.</MACROS>
         WHEN OTHERS.
           mac_raise_type_not_supported me-&gt;class_name object-&gt;type.
       ENDCASE.
-      _comp = object-&gt;get_component( abap_true ).
-      TRY.
-          components-&gt;add( _comp ).
-          CATCH zaplink_cx_list.  ENDTRY.                   &quot; Issue 92
+      check_component_list( EXPORTING     object = object
+                             CHANGING components = components ). &quot; Issue 92
 
-        CATCH zaplink_cx_connector INTO o_mycx.
-          ROLLBACK WORK.
-          RAISE EXCEPTION o_mycx.
-        CATCH zaplink_cx INTO o_cx.
-          ROLLBACK WORK.
-          mac_cascade_raise o_mycx o_cx.
-      ENDTRY.</SOURCE>
+    CATCH zaplink_cx_connector INTO o_mycx.
+      ROLLBACK WORK.
+      RAISE EXCEPTION o_mycx.
+    CATCH zaplink_cx INTO o_cx.
+      ROLLBACK WORK.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TEXTSPOOL>
