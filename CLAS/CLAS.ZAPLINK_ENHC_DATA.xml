@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="31AE02108DF00EFFD59D382D85FE8D5E" CODE_SIGNATURE="C5AD2847D21EB29973E24F6A7F5D021B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENSC_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="80E0911A026C83157212F3129A8C32BB" CODE_SIGNATURE="47B32C53DE556590DCDCED5F7DB5CFCE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHC_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
  </DEPENDENCIES>
@@ -8,7 +8,7 @@
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
    <INHERITANCE REFCLSNAME="ZAPLINK_ENHANCEMENT_DATA" STATE="1"/>
    <TEXTS>
-    <ITEM LANG="E" TEXT="Data for Composit Enhancement Spot">U1&amp;FUNCTIONALITY&amp;
+    <ITEM LANG="E" TEXT="Data for Composit Enhancement Implementation">U1&amp;FUNCTIONALITY&amp;
 ASIs part of connector : ZAPLINK_BADI
 U1&amp;RELATIONS&amp;
 AS
@@ -27,13 +27,13 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
-   <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="2" STATE="1" ATTRDONLY="X" TYPTYPE="1" TYPE="TS_HEADER">
+   <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TS_HEADER">
     <TEXTS>
      <ITEM LANG="E" TEXT="Enhancement Composite Header Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="COMPOSIT_ENHANCEMENTS" EXPOSURE="2" STATE="1" ATTRDONLY="X" TYPTYPE="1" TYPE="TT_COMP_ENH"/>
-   <ITEM CMPNAME="ENHANCEMENTS" EXPOSURE="2" STATE="1" ATTRDONLY="X" TYPTYPE="1" TYPE="TT_ENH"/>
+   <ITEM CMPNAME="COMPOSIT_ENH_IMPLEMENTATIONS" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TT_COMP_ENH"/>
+   <ITEM CMPNAME="ENHANCEMENT_IMPLEMENTATIONS" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TT_ENH"/>
   </ATTRIBUTS>
   <FRIENDS>
    <ITEM REFCLSNAME="ZAPLINK_EASYXML" STATE="1"/>
@@ -53,7 +53,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *&quot;* IN THE IMPLEMENTATION PART OF THE CLASS</MACROS>
   </LOCAL>
   <METHODS>
-   <ITEM CMPNAME="FROM_DATA" EXPOSURE="1" STATE="1">
+   <ITEM CMPNAME="FROM_DATA" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert FM Data to object attributes"/>
     </TEXTS>
@@ -65,8 +65,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  DATA s_enh    LIKE LINE OF enhancements.
-  DATA s_comp   LIKE LINE OF composit_enhancements.
+  DATA s_enh    LIKE LINE OF enhancement_implementations.
+  DATA s_comp   LIKE LINE OF composit_enh_implementations.
   FIELD-SYMBOLS:
     &lt;enh&gt;   LIKE LINE OF data-enh,
     &lt;comp&gt;  LIKE LINE OF data-comp_enh.
@@ -75,15 +75,15 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   LOOP AT data-enh ASSIGNING &lt;enh&gt;.
     CLEAR s_enh.
     s_enh-name = &lt;enh&gt;.
-    APPEND s_enh TO enhancements.
+    APPEND s_enh TO enhancement_implementations.
   ENDLOOP.
   LOOP AT data-comp_enh ASSIGNING &lt;comp&gt;.
     CLEAR s_comp.
     s_comp-name = &lt;comp&gt;.
-    APPEND s_comp TO composit_enhancements.
+    APPEND s_comp TO composit_enh_implementations.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TO_DATA" EXPOSURE="1" STATE="1">
+   <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert object attributes to FM Data"/>
     </TEXTS>
@@ -98,16 +98,16 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA s_enh    LIKE LINE OF data-enh.
   DATA s_comp   LIKE LINE OF data-comp_enh.
   FIELD-SYMBOLS:
-    &lt;enh&gt;   LIKE LINE OF enhancements,
-    &lt;comp&gt;  LIKE LINE OF composit_enhancements.
+    &lt;enh&gt;   LIKE LINE OF enhancement_implementations,
+    &lt;comp&gt;  LIKE LINE OF composit_enh_implementations.
 
   data-header = a0_maindata.
-  LOOP AT enhancements ASSIGNING &lt;enh&gt;.
+  LOOP AT enhancement_implementations ASSIGNING &lt;enh&gt;.
     CLEAR s_enh.
     s_enh = &lt;enh&gt;-name.
     APPEND s_enh TO data-enh.
   ENDLOOP.
-  LOOP AT composit_enhancements ASSIGNING &lt;comp&gt;.
+  LOOP AT composit_enh_implementations ASSIGNING &lt;comp&gt;.
     CLEAR s_comp.
     s_comp = &lt;comp&gt;-name.
     APPEND s_comp TO data-comp_enh.
@@ -115,46 +115,45 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
-   <ITEM REFCLSNAME="ZAPLINK_ENHANCEMENT_DATA" MTDNAME="ZAPLINK_CNX_EXT_CLEANER_4DATA~ANONYMIZE">
-    <SOURCE>`
-  CLEAR a0_maindata-createdon.</SOURCE>
-   </ITEM>
+   <ITEM REFCLSNAME="ZAPLINK_ENHANCEMENT_DATA" MTDNAME="ZAPLINK_CNX_EXT_CLEANER_4DATA~ANONYMIZE"/>
    <ITEM REFCLSNAME="ZAPLINK_ENHANCEMENT_DATA" MTDNAME="ZAPLINK_CNX_EXT_CLEANER_4DATA~UNANONYMIZE"/>
   </REDEFINITIONS>
-  <TYPEGROUPS>
-   <ITEM TYPEGROUP="SEEX" EXPLICIT="X"/>
-  </TYPEGROUPS>
   <TYPES>
+   <ITEM CMPNAME="TO_COMP_ENH" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="CL_ENH_SPOT_COMPOSITE">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Enhancement Spot Composite"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="TS_COMP_ENH" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_comp_enh,
-        name        TYPE enhspotcompositename,
-        zl_object   TYPE to_raw,
+        name      TYPE ENHCOMPOSITENAME,
+        zl_object TYPE to_raw,
       END OF ts_comp_enh
 `</ITEM>
    <ITEM CMPNAME="TS_ENH" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">BEGIN OF ts_enh,
-        name        TYPE enhspotname,
-        zl_object   TYPE to_raw,
+        name      TYPE ENHCOMPOSITENAME,
+        zl_object TYPE to_raw,
       END OF ts_enh
 `</ITEM>
-   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">
     BEGIN OF ts_fm_data,
         header          TYPE ts_header,
-        comp_enh        TYPE enhspotcompositename_it,
-        enh             TYPE enhspotname_it,
-*     documentation   TYPE tt_docs,
+        comp_enh        TYPE enhcompositename_it,
+        enh             TYPE enhname_it,
+*      documentation   TYPE tt_docs,
       END OF ts_fm_data
 `
     <TEXTS>
-     <ITEM LANG="E" TEXT="Composite Enhancement Spot definition"/>
+     <ITEM LANG="E" TEXT="Composite Enhancement Implementation definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_HEADER" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="ENHSPOTCOMPHEAD">
+   <ITEM CMPNAME="TS_HEADER" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="ENHCOMPHEADER">
     <TEXTS>
      <ITEM LANG="E" TEXT="Enhancement Composite Header Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_COMP_ENH" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">tt_comp_enh TYPE STANDARD TABLE OF ts_comp_enh WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_ENH" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_enh TYPE STANDARD TABLE OF ts_enh WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_ENH" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_enh TYPE STANDARD TABLE OF ts_enh with DEFAULT KEY
 `</ITEM>
   </TYPES>
  </RAW>

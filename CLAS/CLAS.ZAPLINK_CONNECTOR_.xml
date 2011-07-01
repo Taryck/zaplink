@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BC44906D17FB7828F2024B81F713D91E" CODE_SIGNATURE="8272DA4CC5DCD4228E702C187DFF5C28" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E65C7B2D53B245B57F3C6BA2ED5D242A" CODE_SIGNATURE="9FFDE0EFF4ADCEF35F99FCC59FF307C2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -70,6 +70,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="TD_TXTP_TEXT" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_TXTP_TEXT"/>
    <ITEM CMPNAME="TD_WITH_SUBCOMP" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_WITH_SUBCOMP"/>
    <ITEM CMPNAME="TEXTPOOL_KINDS" EXPOSURE="2" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TEXTPOOL_KINDS"/>
+   <ITEM CMPNAME="TI_CLEANNING" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TI_CLEANNING"/>
+   <ITEM CMPNAME="TI_CLEANNING_4DATA" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TI_CLEANNING_4DATA"/>
    <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_COMPONENT"/>
    <ITEM CMPNAME="TO_CONNECTOR" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_CONNECTOR"/>
    <ITEM CMPNAME="TO_EZ_XML" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_CONNECTOR" REFCMPNAME="TO_EZ_XML"/>
@@ -139,9 +141,19 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     <COMPONENTS>
      <ITEM MTDNAME="ANONYMIZE">
       <SOURCE>`
+  DATA o_intf TYPE ti_cleanning_4data.
 * Must be call backward child to parent
+  CHECK object IS BOUND.
   TRY.
-      CHECK object IS BOUND.
+      TRY.
+          o_intf ?= object.
+        CATCH cx_sy_move_cast_error.    &quot; Auto anonymize can&apos;t be done
+      ENDTRY.
+      IF o_intf is bound.     o_intf-&gt;anonymize( ).     ENDIF.
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.
+  TRY.
       object-&gt;anonymize( ).
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
@@ -149,8 +161,19 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
      <ITEM MTDNAME="UNANONYMIZE">
       <SOURCE>`
+  DATA o_intf TYPE ti_cleanning_4data.
+* Must be call backward child to parent
+  CHECK object IS BOUND.
   TRY.
-      CHECK object IS BOUND.
+      TRY.
+          o_intf ?= object.
+        CATCH cx_sy_move_cast_error.    &quot; Auto anonymize can&apos;t be done
+      ENDTRY.
+      IF o_intf is bound.       o_intf-&gt;unanonymize( ).     endif.
+    CATCH zaplink_cx INTO o_cx.
+      mac_cascade_raise o_mycx o_cx.
+  ENDTRY.
+  TRY.
       object-&gt;unanonymize( ).
     CATCH zaplink_cx INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
