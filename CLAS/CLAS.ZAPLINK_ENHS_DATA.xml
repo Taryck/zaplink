@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C299B04B322D287B411BB25F7403486B" CODE_SIGNATURE="992892EBF6000A98BC436144EDE40D26" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="CC1F7CC59879DB5689F77F9D330259CD" CODE_SIGNATURE="6EDBF19408188331BD5C2CD711E3692D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
  </DEPENDENCIES>
@@ -73,7 +73,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   LOOP AT data-def_data ASSIGNING &lt;def&gt;.
     CLEAR s_def.
     s_def = &lt;def&gt;.
-    CLEAR: s_def-badi_shorttext, s_def-badi_shorttext_id.
+    CLEAR: s_def-badi_shorttext, s_def-badi_shorttext_id, s_def-badi_longtext_id.
     LOOP AT s_def-filters ASSIGNING &lt;f&gt;.
       CLEAR: &lt;f&gt;-filtertext, &lt;f&gt;-filtertext_id.
     ENDLOOP.
