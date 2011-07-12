@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="818697C2CAF3087FE8B0A67AEF0DB7BB" CODE_SIGNATURE="41C7E57BC8122CFFA367F3AD6EE63299" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C299B04B322D287B411BB25F7403486B" CODE_SIGNATURE="992892EBF6000A98BC436144EDE40D26" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
  </DEPENDENCIES>
@@ -66,14 +66,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     <SOURCE>`
   DATA s_def LIKE LINE OF badi_definitions.
   FIELD-SYMBOLS:
+    &lt;f&gt;   LIKE LINE OF s_def-filters,
     &lt;def&gt; LIKE LINE OF data-def_data.
 
   a0_maindata = data-header.
   LOOP AT data-def_data ASSIGNING &lt;def&gt;.
     CLEAR s_def.
     s_def = &lt;def&gt;.
-*    CLEAR: s_def-spot_name. &quot;s_impl-impl_name.
-* s_impl-IMPL_SHORTTEXT, s_impl-IMPL_SHORTTEXT_ID.
+    CLEAR: s_def-badi_shorttext, s_def-badi_shorttext_id.
+    LOOP AT s_def-filters ASSIGNING &lt;f&gt;.
+      CLEAR: &lt;f&gt;-filtertext, &lt;f&gt;-filtertext_id.
+    ENDLOOP.
     INSERT s_def INTO TABLE badi_definitions.
   ENDLOOP.</SOURCE>
    </ITEM>
