@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AD53A83C7AE34C150F6F7DF439AFFD4C" CODE_SIGNATURE="34639F3EDC7960E4C4FF4653FA9A4D52" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="DC09F2E4DF19F62505047D6456E74EA7" CODE_SIGNATURE="BAE4D1FE46B49628FBC198ACD078D962" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -849,6 +849,310 @@ INCLUDE zaplink_macros.</MACROS>
 *    mac_def_catch zaplink_cx_connector.
 *  ENDTRY.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="REVERSE_COMP_ENH_IMPL" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert Composit Enhancement Implementation RAW data to SAP"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENTS_LIST" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
+     <ITEM SCONAME="OFF_SUB_COMPONENTS" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Composite Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RAW_OBJECT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMP_ENH_IMPL">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Data for Composit Enhancement Implementation"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="SAP_OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_COMP_ENH_IMPL_SAP">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Composite"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+*  DATA s_comp         TYPE zaplink_enhc_data=&gt;ts_fm_data.
+*  DATA version        TYPE r3state.
+*  DATA o_enh          TYPE to_enh_impl_sap.
+*  DATA o_comp         TYPE to_comp_enh_impl_sap.
+*  FIELD-SYMBOLS:
+*    &lt;enh&gt;   LIKE LINE OF raw_object-&gt;enhancement_implementations,
+*    &lt;comp&gt;  LIKE LINE OF raw_object-&gt;composit_enh_implementations.
+*
+*  ASSERT sap_object IS BOUND.
+*  CREATE OBJECT raw_object.
+*  version = get_version( sap_object ).
+*  s_comp-header = sap_object-&gt;get_enhcompheader( version ).
+*  s_comp-comp_enh = sap_object-&gt;if_enh_composite~get_composite_childs( version ).
+*  s_comp-enh = sap_object-&gt;if_enh_composite~get_enh_childs( version ).
+*  raw_object-&gt;from_data( s_comp ).
+*
+*  IF sub_components = abap_true.
+*    LOOP AT raw_object-&gt;enhancement_implementations ASSIGNING &lt;enh&gt;.
+*      o_enh = _load_enh_impl( &lt;enh&gt;-name ).
+*      CREATE OBJECT &lt;enh&gt;-zl_object.
+*      &lt;enh&gt;-zl_object-&gt;raw = convert_enh_impl( sap_object = o_enh
+*                                           sub_components = sub_components
+*                                          components_list = components_list ).
+*      IF &lt;enh&gt;-zl_object IS BOUND.      CLEAR &lt;enh&gt;-name.       ENDIF.
+*    ENDLOOP.
+*
+*    LOOP AT raw_object-&gt;composit_enh_implementations ASSIGNING &lt;comp&gt;.
+*      o_comp = _load_comp_enh_impl( &lt;comp&gt;-name ).
+*      CREATE OBJECT &lt;comp&gt;-zl_object.
+*      &lt;comp&gt;-zl_object-&gt;raw = convert_comp_enh_impl( sap_object = o_comp
+*                                                 sub_components = sub_components
+*                                                components_list = components_list ).
+*      IF &lt;comp&gt;-zl_object IS BOUND.      CLEAR &lt;comp&gt;-name.       ENDIF.
+*    ENDLOOP.
+*  ENDIF.
+*  CLEAR raw_object-&gt;a0_maindata-enhcomposite.
+*</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="REVERSE_COMP_ENH_SPOT" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert Composit Enhancement Spot RAW data to SAP object"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENTS_LIST" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
+     <ITEM SCONAME="OFF_SUB_COMPONENTS" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="OFF Composite Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RAW_OBJECT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMP_ENH_SPOT">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Data for Composit Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="SAP_OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_COMP_ENH_SPOT_SAP">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Composite"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+*  DATA s_comp         TYPE zaplink_ensc_data=&gt;ts_fm_data.
+*  DATA version        TYPE r3state.
+**  DATA short_id       TYPE sotr_conc.
+**  DATA long_id        TYPE sotr_conc.
+*  DATA o_enh          TYPE to_enh_spot_sap.
+*  DATA o_comp         TYPE to_comp_enh_spot_sap.
+*  FIELD-SYMBOLS:
+*    &lt;enh&gt;   LIKE LINE OF raw_object-&gt;enhancements,
+*    &lt;comp&gt;  LIKE LINE OF raw_object-&gt;composit_enhancements.
+*
+*  ASSERT sap_object IS BOUND.
+*  CREATE OBJECT raw_object.
+*  version = get_version( sap_object ).
+*  s_comp-header = sap_object-&gt;get_enhspotcomphead( version ).
+**  short_id = s_comp-header-shorttextid.
+**  long_id = s_comp-header-docuid.
+**  CLEAR: s_comp-header-shorttextid, s_comp-header-docuid.
+*  s_comp-comp_enh = sap_object-&gt;if_enh_spot_composite~get_composite_childs( version ).
+*  s_comp-enh = sap_object-&gt;if_enh_spot_composite~get_enh_spot_childs( version ).
+*  raw_object-&gt;from_data( s_comp ).
+*
+*  IF sub_components = abap_true.
+*    LOOP AT raw_object-&gt;enhancements ASSIGNING &lt;enh&gt;.
+*      o_enh = _load_enh_spot( &lt;enh&gt;-name ).
+*      CREATE OBJECT &lt;enh&gt;-zl_object.
+*      &lt;enh&gt;-zl_object-&gt;raw = convert_enh_spot( sap_object = o_enh
+*                                           sub_components = sub_components
+*                                          components_list = components_list ).
+*      IF &lt;enh&gt;-zl_object IS BOUND.      CLEAR &lt;enh&gt;-name.       ENDIF.
+*    ENDLOOP.
+*
+*    LOOP AT raw_object-&gt;composit_enhancements ASSIGNING &lt;comp&gt;.
+*      o_comp = _load_comp_enh_spot( &lt;comp&gt;-name ).
+*      CREATE OBJECT &lt;comp&gt;-zl_object.
+*      &lt;comp&gt;-zl_object-&gt;raw = convert_comp_enh_spot( sap_object = o_comp
+*                                                 sub_components = sub_components
+*                                                components_list = components_list ).
+*      IF &lt;comp&gt;-zl_object IS BOUND.      CLEAR &lt;comp&gt;-name.       ENDIF.
+*    ENDLOOP.
+*  ENDIF.
+*  CLEAR raw_object-&gt;a0_maindata-enhspotcomposite.
+*</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="REVERSE_ENH_IMPL" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert Enhancement Implementation RAW data to SAP object"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENTS_LIST" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
+     <ITEM SCONAME="OFF_SUB_COMPONENTS" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Composite Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RAW_OBJECT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ENH_IMPL">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Data for Enhancement Implementation"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="SAP_OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ENH_IMPL_SAP">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Tool Redefinition BAdI"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+*  DATA s_comp         TYPE zaplink_enho_data=&gt;ts_fm_data.
+*  DATA version        TYPE r3state.
+*  Data name           TYPE ENHNAME.
+*
+*  ASSERT sap_object IS BOUND.
+*  CREATE OBJECT raw_object.
+*  version = get_version( sap_object ).
+*  name = s_comp-header-spot_name = sap_object-&gt;get_spot_name( version ).
+*  s_comp-impl_data = sap_object-&gt;get_implementations( version ).
+** From : Module STATUS_0100 in SAPLENHANCEMENT_EDITOR
+*  s_comp-header-composite = cl_enh_factory=&gt;enh_find_parent_composite( name ) .
+** From : FORM lesen_sfw in SAPLENHANCEMENT_EDITOR
+**  l_wa_swf-objecttype = &apos;ENHO&apos;.
+**  l_wa_swf-objectname = i_objekt.
+**
+**  APPEND l_wa_swf TO l_it_swf.
+**
+**  CALL FUNCTION &apos;SFW_GET_SWITCHPOS&apos;
+**    EXPORTING
+**      provide_text = &apos;X&apos;
+**    TABLES
+**      switchtab    = l_it_swf.
+**
+**  SORT l_it_swf BY objecttype
+**                   objectname.
+**
+**  READ TABLE l_it_swf WITH KEY objecttype = g_object_type    &quot;&apos;ENHO&apos;
+**                               objectname = enh_edt_layout-object1
+**                      INTO l_wa_swf BINARY SEARCH.
+**
+**  IF sy-subrc = 0.
+**    MOVE :
+**       l_wa_swf-state        TO p_switch_pos,
+**       l_wa_swf-text         TO p_switch_text,
+**       l_wa_swf-switch_id    TO p_switch_id.
+**  ENDIF.
+*
+** IF_ENH_PERSIST~LOAD_LOGS =&gt; Creation date
+*
+*  raw_object-&gt;from_data( s_comp ).
+*
+**  IF sub_components = abap_true.
+**  ENDIF.
+*  CLEAR raw_object-&gt;a0_maindata-composite.
+*</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="REVERSE_ENH_SPOT" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert Enhancement Spot RAW data to SAP object"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENTS_LIST" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
+     <ITEM SCONAME="OFF_SUB_COMPONENTS" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="OFF Composite Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RAW_OBJECT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_ENH_SPOT">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Data for Composit Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="SAP_OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ENH_SPOT_SAP">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Tool BAdI"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA s_comp         TYPE zaplink_enhs_data=&gt;ts_fm_data.
+  DATA o_gen          TYPE REF TO if_enh_spot_tool.
+  FIELD-SYMBOLS: &lt;b&gt; LIKE LINE OF s_comp-def_data.
+
+  ASSERT raw_object IS BOUND.
+  s_comp = raw_object-&gt;to_data( ).
+  cl_enh_factory=&gt;create_enhancement_spot( EXPORTING spot_name = s_comp-header-enhspotcomposite
+                                                      tooltype = cl_enh_tool_badi_def=&gt;tooltype
+                                                          dark = abap_true
+                                           IMPORTING spot = o_gen ).
+  sap_object ?= o_gen.
+  LOOP AT s_comp-def_data ASSIGNING &lt;b&gt;.
+    sap_object-&gt;add_badi_def( &lt;b&gt; ).
+  ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="REVERSE_RAW" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Convert Enhancement RAW data to SAP object"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="COMPONENTS_LIST" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_LIST"/>
+     <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Component name"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="OFF_SUB_COMPONENTS" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="OFF Composite Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="RAW_OBJECT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_RAW_DATA"/>
+     <ITEM SCONAME="SAP_OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ENHANCEMENT_SAP">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="General Methods for Enhancement Objects"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA o_ces      TYPE to_comp_enh_spot.
+  DATA o_es       TYPE to_enh_spot.
+  DATA o_cei      TYPE to_comp_enh_impl.
+  DATA o_ei       TYPE to_enh_impl.
+
+* Composit Enhancement Spot
+  TRY.
+      o_ces ?= raw_object.
+      sap_object = reverse_comp_enh_spot( raw_object = o_ces
+*                                      sub_components = sub_components
+                                     components_list = components_list ).
+    CATCH cx_sy_move_cast_error.    &quot; Wrong Type
+  ENDTRY.
+  CHECK sap_object IS NOT BOUND.
+
+* Enhancement Spot
+  TRY.
+      o_es ?= raw_object.
+      o_es-&gt;a0_maindata-enhspotcomposite = name.
+      sap_object = reverse_enh_spot( raw_object = o_es
+*                                 sub_components = sub_components
+                                components_list = components_list ).
+    CATCH cx_sy_move_cast_error.    &quot; Wrong Type
+  ENDTRY.
+  CHECK sap_object IS NOT BOUND.
+
+* Composit Enhancement Implementation
+  TRY.
+      o_cei ?= raw_object.
+      sap_object = reverse_comp_enh_impl( raw_object = o_cei
+*                                      sub_components = sub_components
+                                     components_list = components_list ).
+    CATCH cx_sy_move_cast_error.    &quot; Wrong Type
+  ENDTRY.
+  CHECK sap_object IS NOT BOUND.
+
+* Enhancement Implementation
+  TRY.
+      o_ei ?= raw_object.
+      sap_object = reverse_enh_impl( raw_object = o_ei
+*                                 sub_components = sub_components
+                                components_list = components_list ).
+    CATCH cx_sy_move_cast_error.    &quot; Wrong Type
+  ENDTRY.
+  ASSERT raw_object IS BOUND.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="_LOAD_COMP_ENH_IMPL" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Load Composit Enhancement Implementation as SAP object (w n)"/>
@@ -1058,34 +1362,16 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>`
-  DATA o_ensc         TYPE to_comp_enh_spot.
-*  DATA o_impl         TYPE to_badi_impl.
-  DATA d_type         TYPE td_comptype.
-  DATA o_comp         TYPE to_component.                    &quot; Issue 92
+  DATA o_sap_intf TYPE to_enhancement_sap.
 
   TRY.
-    d_type = object-&gt;type.
-    CASE d_type.
-      WHEN st_enh_spot.
-      WHEN st_comp_enh_spot.
-        o_ensc ?= object-&gt;raw.
-        o_ensc-&gt;a0_maindata-enhspotcomposite = object-&gt;name.
-        TRY.
-            components = import_to_comp_enh_spot( o_ensc ).
-          CATCH zaplink_cx_connector INTO o_mycx.
-            IF NOT o_mycx-&gt;messages IS BOUND.
-              o_mycx-&gt;messages = application_log.
-              o_mycx-&gt;update( ).
-            ENDIF.
-            RAISE EXCEPTION o_mycx.
-        ENDTRY.
-      WHEN st_enh_impl.
-      WHEN st_comp_enh_impl.
-      WHEN OTHERS.
-        mac_raise_type_not_supported me-&gt;class_name d_type.
-    ENDCASE.
-    check_component_list( EXPORTING     object = object
-                           CHANGING components = components ).
+    ASSERT object-&gt;raw IS BOUND.
+    CREATE OBJECT components.
+    o_sap_intf = reverse_raw( raw_object = object-&gt;raw
+                                    name = object-&gt;name
+*                          sub_components = f_subcomp
+                         components_list = components ).
+    o_sap_intf-&gt;save( ).
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
