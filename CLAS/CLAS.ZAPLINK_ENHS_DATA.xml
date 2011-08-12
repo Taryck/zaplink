@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="64F00653E0753A3DBA41370F0967A18E" CODE_SIGNATURE="09BD2BFADAEBF03B98BF3E4CFF5923DF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="32A095CCC3BAF00806EAE09DA7A9D7F9" CODE_SIGNATURE="E489305DF95A81ECD25DCDF8C5800DC2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
  </DEPENDENCIES>
@@ -71,7 +71,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     &lt;def&gt; LIKE LINE OF data-def_data,
     &lt;f&gt;   LIKE LINE OF &lt;def&gt;-filters.
 
-  MOVE-CORRESPONDING data-header to a0_maindata-main.
+* Header
+  MOVE-CORRESPONDING data-header TO a0_maindata-main.
+* Texts
+  a0_maindata-texts = data-texts.
+
+* Childs
   LOOP AT data-def_data ASSIGNING &lt;def&gt;.
     CLEAR s_def.
     MOVE-CORRESPONDING &lt;def&gt; TO s_def-main.
@@ -124,7 +129,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM REFCLSNAME="ZAPLINK_ENHANCEMENT_DATA" MTDNAME="ZAPLINK_CNX_EXT_CLEANER_4DATA~UNANONYMIZE"/>
   </REDEFINITIONS>
   <TYPES>
-   <ITEM CMPNAME="TS_BADI_DEF" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">BEGIN OF ts_badi_def.
+   <ITEM CMPNAME="TS_BADI_DEF" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">BEGIN OF ts_badi_def.
 *      include type ENH_BADI_DATA.
     INCLUDE TYPE ts_badi_def_main AS main.
     TYPES:
@@ -132,67 +137,91 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         filters   TYPE tt_filter_defs,
       END OF ts_badi_def
 `</ITEM>
-   <ITEM CMPNAME="TS_BADI_DEF_MAIN" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_badi_def_main,
+   <ITEM CMPNAME="TS_BADI_DEF_MAIN" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_badi_def_main,
 *      include type ENH_BADI_DATA.
 * Will use move-corresponding
-          badi_name       TYPE enh_badi_data-badi_name,
-          interface_name  TYPE enh_badi_data-interface_name,
-          single_use      TYPE enh_badi_data-single_use,
-          context_mode    TYPE enh_badi_data-context_mode,
-          sorter_badi     TYPE enh_badi_data-sorter_badi,
-          default_class   TYPE enh_badi_data-default_class,
-          mig_from_badi   TYPE enh_badi_data-mig_from_badi,
-          img_docu_id     TYPE enh_badi_data-img_docu_id,
-          use_fallback_class  TYPE enh_badi_data-use_fallback_class,
-          filter_limitation   TYPE enh_badi_data-filter_limitation,
-          exception_expected  TYPE enh_badi_data-exception_expected,
-        END OF ts_badi_def_main
+        badi_name       TYPE enh_badi_data-badi_name,
+        interface_name  TYPE enh_badi_data-interface_name,
+        single_use      TYPE enh_badi_data-single_use,
+        context_mode    TYPE enh_badi_data-context_mode,
+        sorter_badi     TYPE enh_badi_data-sorter_badi,
+        default_class   TYPE enh_badi_data-default_class,
+        mig_from_badi   TYPE enh_badi_data-mig_from_badi,
+        img_docu_id     TYPE enh_badi_data-img_docu_id,
+        use_fallback_class  TYPE enh_badi_data-use_fallback_class,
+        filter_limitation   TYPE enh_badi_data-filter_limitation,
+        exception_expected  TYPE enh_badi_data-exception_expected,
+      END OF ts_badi_def_main
 `</ITEM>
-   <ITEM CMPNAME="TS_FILTER_DEF" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">BEGIN OF ts_filter_def.
+   <ITEM CMPNAME="TS_ENHSPOTCOMPHEAD" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4">BEGIN OF ts_enhspotcomphead,
+        enhspotcomposite  TYPE enhspotcompositename,
+        version	          TYPE r3state,
+        enhspotcomptype	  TYPE enhspotcomptype,
+        composite         TYPE enhspotcompositename,
+        internal_use      TYPE enh_dy_spot-internal_use.
+    INCLUDE TYPE ts_get_language AS lang.
+    INCLUDE TYPE ts_get_attributes AS attrs.
+    TYPES:
+      END OF ts_enhspotcomphead
+`</ITEM>
+   <ITEM CMPNAME="TS_FILTER_DEF" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">BEGIN OF ts_filter_def.
 *      include type ENH_BADI_DATA.
     INCLUDE TYPE ts_filter_main AS main.
     TYPES:
         texts TYPE tt_ltexts,
       END OF ts_filter_def
 `</ITEM>
-   <ITEM CMPNAME="TS_FILTER_MAIN" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">BEGIN OF ts_filter_main,
+   <ITEM CMPNAME="TS_FILTER_MAIN" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_filter_main,
 *      include type ENH_BADI_FILTER.
 * Will use move-corresponding
-          filter_name         TYPE enh_badi_filter-filter_name,
-          filter_type         TYPE enh_badi_filter-filter_type,
-          constant            TYPE enh_badi_filter-constant,
-          check_type          TYPE enh_badi_filter-check_type,
-          check_type_is_dom   TYPE enh_badi_filter-check_type_is_dom,
-          check_class         TYPE enh_badi_filter-check_class,
-          check_length        TYPE enh_badi_filter-check_length,
-          check_decs          TYPE enh_badi_filter-check_decs,
-        END OF ts_filter_main
+        filter_name         TYPE enh_badi_filter-filter_name,
+        filter_type         TYPE enh_badi_filter-filter_type,
+        constant            TYPE enh_badi_filter-constant,
+        check_type          TYPE enh_badi_filter-check_type,
+        check_type_is_dom   TYPE enh_badi_filter-check_type_is_dom,
+        check_class         TYPE enh_badi_filter-check_class,
+        check_length        TYPE enh_badi_filter-check_length,
+        check_decs          TYPE enh_badi_filter-check_decs,
+      END OF ts_filter_main
 `</ITEM>
-   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="11 " TYPTYPE="4">
     BEGIN OF ts_fm_data,
-          header          TYPE enhspotcomphead,
-          def_data        TYPE enh_badi_data_it,
+        header          TYPE ts_enhspotcomphead,
+        texts           TYPE tt_ltexts,
+        def_data        TYPE enh_badi_data_it,
 *     documentation   TYPE tt_docs,
-        END OF ts_fm_data
+      END OF ts_fm_data
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Composite Enhancement Spot definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_HEADER" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_GET_ATTRIBUTES" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">BEGIN OF ts_get_attributes,
+        author      TYPE  cnam,
+        createdon   TYPE  rdir_cdate,
+        changedby   TYPE  unam,
+        changedon   TYPE  rdir_udate,
+      END OF ts_get_attributes
+`</ITEM>
+   <ITEM CMPNAME="TS_GET_LANGUAGE" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">BEGIN OF ts_get_language,
+        language      TYPE  spras,
+*        modi_langu    TYPE  spras,  &quot; only on editing
+      END OF ts_get_language
+`</ITEM>
+   <ITEM CMPNAME="TS_HEADER" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="4">
     BEGIN OF ts_header.
-    INCLUDE TYPE enhspotcomphead AS main.
+    INCLUDE TYPE ts_enhspotcomphead AS main.
     TYPES:
-        texts TYPE tt_ltexts,
+        texts             TYPE tt_ltexts,
       END OF ts_header
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Enhancement Composite Header Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_BADI_DEFS" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">tt_badi_defs TYPE SORTED TABLE OF ts_badi_def WITH UNIQUE KEY badi_name
+   <ITEM CMPNAME="TT_BADI_DEFS" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">tt_badi_defs TYPE SORTED TABLE OF ts_badi_def WITH UNIQUE KEY badi_name
 `</ITEM>
-   <ITEM CMPNAME="TT_FILTER_DEFS" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_filter_defs TYPE SORTED TABLE OF ts_filter_def WITH UNIQUE KEY filter_name
+   <ITEM CMPNAME="TT_FILTER_DEFS" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">tt_filter_defs TYPE SORTED TABLE OF ts_filter_def WITH UNIQUE KEY filter_name
 `</ITEM>
   </TYPES>
  </RAW>

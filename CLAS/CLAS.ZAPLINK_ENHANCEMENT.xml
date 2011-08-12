@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="DC09F2E4DF19F62505047D6456E74EA7" CODE_SIGNATURE="BAE4D1FE46B49628FBC198ACD078D962" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="48618A742E88E92A48FB8A3CD28AFD0B" CODE_SIGNATURE="629F459793293C1B426B842223CDB49E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -214,32 +214,34 @@ INCLUDE zaplink_macros.</MACROS>
   CREATE OBJECT raw_object.
   version = get_version( sap_object ).
   s_comp-header = sap_object-&gt;get_enhspotcomphead( version ).
-*  short_id = s_comp-header-shorttextid.
-*  long_id = s_comp-header-docuid.
+*  s_comp-texts-short_id = s_comp-header-shorttextid.
+*  s_comp-texts-long_id = s_comp-header-docuid.
 *  CLEAR: s_comp-header-shorttextid, s_comp-header-docuid.
-  s_comp-comp_enh = sap_object-&gt;if_enh_spot_composite~get_composite_childs( version ).
-  s_comp-enh = sap_object-&gt;if_enh_spot_composite~get_enh_spot_childs( version ).
+  IF sub_components = abap_true.
+    s_comp-comp_enh = sap_object-&gt;if_enh_spot_composite~get_composite_childs( version ).
+    s_comp-enh = sap_object-&gt;if_enh_spot_composite~get_enh_spot_childs( version ).
+  ENDIF.
   raw_object-&gt;from_data( s_comp ).
 
-  IF sub_components = abap_true.
-    LOOP AT raw_object-&gt;enhancements ASSIGNING &lt;enh&gt;.
-      o_enh = _load_enh_spot( &lt;enh&gt;-name ).
-      CREATE OBJECT &lt;enh&gt;-zl_object.
-      &lt;enh&gt;-zl_object-&gt;raw = convert_enh_spot( sap_object = o_enh
-                                           sub_components = sub_components
-                                          components_list = components_list ).
-      IF &lt;enh&gt;-zl_object IS BOUND.      CLEAR &lt;enh&gt;-name.       ENDIF.
-    ENDLOOP.
+* Sub objects
+  LOOP AT raw_object-&gt;enhancements ASSIGNING &lt;enh&gt;.
+    o_enh = _load_enh_spot( &lt;enh&gt;-name ).
+    CREATE OBJECT &lt;enh&gt;-zl_object.
+    &lt;enh&gt;-zl_object-&gt;raw = convert_enh_spot( sap_object = o_enh
+                                         sub_components = sub_components
+                                        components_list = components_list ).
+    IF &lt;enh&gt;-zl_object IS BOUND.      CLEAR &lt;enh&gt;-name.       ENDIF.
+  ENDLOOP.
 
-    LOOP AT raw_object-&gt;composit_enhancements ASSIGNING &lt;comp&gt;.
-      o_comp = _load_comp_enh_spot( &lt;comp&gt;-name ).
-      CREATE OBJECT &lt;comp&gt;-zl_object.
-      &lt;comp&gt;-zl_object-&gt;raw = convert_comp_enh_spot( sap_object = o_comp
-                                                 sub_components = sub_components
-                                                components_list = components_list ).
-      IF &lt;comp&gt;-zl_object IS BOUND.      CLEAR &lt;comp&gt;-name.       ENDIF.
-    ENDLOOP.
-  ENDIF.
+  LOOP AT raw_object-&gt;composit_enhancements ASSIGNING &lt;comp&gt;.
+    o_comp = _load_comp_enh_spot( &lt;comp&gt;-name ).
+    CREATE OBJECT &lt;comp&gt;-zl_object.
+    &lt;comp&gt;-zl_object-&gt;raw = convert_comp_enh_spot( sap_object = o_comp
+                                               sub_components = sub_components
+                                              components_list = components_list ).
+    IF &lt;comp&gt;-zl_object IS BOUND.      CLEAR &lt;comp&gt;-name.       ENDIF.
+  ENDLOOP.
+
   CLEAR raw_object-&gt;a0_maindata-enhspotcomposite.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONVERT_ENHANCEMENT" STATE="1">
@@ -397,13 +399,77 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  DATA s_comp         TYPE zaplink_enhs_data=&gt;ts_fm_data.
-  DATA version        TYPE r3state.
+  DATA s_comp           TYPE zaplink_enhs_data=&gt;ts_fm_data.
+  DATA version          TYPE r3state.
+  DATA texts            TYPE zaplink_enhs_data=&gt;ts_sotr.
+*  DATA et_textvers      TYPE enhtext_vers_it.
+*  DATA et_textversdata  TYPE enhtext_versdata_it.
 
   ASSERT sap_object IS BOUND.
   CREATE OBJECT raw_object.
-  version = get_version( sap_object ).
+  s_comp-header-version = version = get_version( sap_object ).
+  s_comp-header-enhspotcomposite = sap_object-&gt;if_enh_spot_tool~get_name( ).
+
+* From CL_R3STANDARD_PERSISTENCE=&gt;LOAD_SPOT
+  SELECT SINGLE shorttextid docuid
+    INTO (texts-short, texts-long)
+    FROM enhspotheader
+    WHERE enhspot = s_comp-header-enhspotcomposite
+      AND version = &apos;I&apos;.
+  IF sy-subrc &lt;&gt; 0.
+    SELECT SINGLE shorttextid docuid
+      INTO (texts-short, texts-long)
+      FROM enhspotheader
+      WHERE enhspot = s_comp-header-enhspotcomposite.
+*        AND version = &apos;A&apos;.
+  ENDIF.
+  IF texts IS NOT INITIAL.
+    s_comp-texts = raw_object-&gt;sotr_2_texts( texts ).
+  ENDIF.
+* From CL_ENH_SPOT_EDITOR=&gt;HANDLE_SPOT_NEW :
+*      CALL METHOD sap_object-&gt;get_all_elements
+*        EXPORTING
+*          version  = l_state
+*        RECEIVING
+*          elements = l_it_elem_it.
+**     Verarbeitung der ENHOBJ-Sätze
+*      LOOP AT l_it_elem_it INTO l_r_w_elem.
+*        CASE l_r_w_elem-&gt;get_type( ).
+*          WHEN &apos;R3OB&apos;.
+*            l_r_obj_int = l_r_w_elem-&gt;get_as_sap_object_element( ).
+*            l_enhobj = l_r_obj_int-&gt;get_enhspotobj( ).
+*            APPEND l_enhobj TO l_it_enhobj.
+* look at implementation
+*      CALL METHOD cl_r3standard_persistence=&gt;find_enhancements_by_obj
+*        EXPORTING
+*          obj_type        = &apos;ENHS&apos;
+*          obj_name        = l_obj_name
+**          version         = l_state
+*        RECEIVING
+*          enhancement_ids = l_it_enhname.
+
+* Language : Form FUELL_DY_ENHSPOT in program SAPLENHANCEMENT_SPOT_EDITOR
+  sap_object-&gt;if_enh_object~get_language( IMPORTING org_langu = s_comp-header-lang-language ) .
+*                                                   modi_langu = s_comp-header-lang-modi_langu ).
+
+* Attributes
+  sap_object-&gt;if_enh_spot_tool~get_attributes(
+      EXPORTING version = version
+      IMPORTING  author = s_comp-header-attrs-author
+              createdon = s_comp-header-attrs-createdon
+              changedby = s_comp-header-attrs-changedby
+              changedon = s_comp-header-attrs-changedon
+      ).
+* Composite
+  s_comp-header-composite = cl_enh_factory=&gt;enhspot_find_parent_composite( s_comp-header-enhspotcomposite ).
+* Internal use
+  s_comp-header-internal_use = sap_object-&gt;if_enh_spot_tool~get_internal( version ).
+
+*  sap_object-&gt;if_enh_spot_tool~get_tool_object_texts( EXPORTING i_state = version
+*                                                  IMPORTING et_textvers = et_textvers
+*                                                        et_textversdata = et_textversdata ).
   s_comp-def_data = sap_object-&gt;get_badi_defs( version ).
+
   raw_object-&gt;from_data( s_comp ).
 
 *  IF sub_components = abap_true.
@@ -483,6 +549,11 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="Composite Enhancement Implementation"/>
       </TEXTS>
      </ITEM>
+     <ITEM SCONAME="LOCKING" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ENHBOOLEAN" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Boolean"/>
+      </TEXTS>
+     </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_COMP_ENH_IMPL_SAP">
       <TEXTS>
        <ITEM LANG="E" TEXT="Enhancement Composite"/>
@@ -495,7 +566,8 @@ INCLUDE zaplink_macros.</MACROS>
   ASSERT component-&gt;get_type( ) = st_comp_enh_impl.
   _name = component-&gt;get_name( ).
 
-  object ?= _load_comp_enh_impl( _name ).</SOURCE>
+  object ?= _load_comp_enh_impl( name = _name
+                              locking = locking ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_COMP_ENH_SPOT" STATE="1">
     <TEXTS>
@@ -505,6 +577,11 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANG="E" TEXT="Composite Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="LOCKING" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ENHBOOLEAN" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Boolean"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_COMP_ENH_SPOT_SAP">
@@ -519,7 +596,8 @@ INCLUDE zaplink_macros.</MACROS>
   ASSERT component-&gt;get_type( ) = st_comp_enh_spot.
   _name = component-&gt;get_name( ).
 
-  object ?= _load_comp_enh_spot( _name ).</SOURCE>
+  object ?= _load_comp_enh_spot( name = _name
+                              locking = locking ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_ENHANCEMENT" STATE="1" MTDNEWEXC="X">
     <TEXTS>
@@ -529,6 +607,11 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANG="E" TEXT="Enhancement"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="LOCKING" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ENHBOOLEAN" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Boolean"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ENHANCEMENT_SAP">
@@ -551,13 +634,17 @@ INCLUDE zaplink_macros.</MACROS>
     d_type = component-&gt;get_type( ).
     CASE d_type.
       WHEN st_enh_spot.
-        object = load_enh_spot( component ).
+        object = load_enh_spot( component = component
+                                  locking = locking ).
       WHEN st_comp_enh_spot.
-        object = load_comp_enh_spot( component ).
+        object = load_comp_enh_spot( component = component
+                                       locking = locking ).
       WHEN st_enh_impl.
-        object = load_enh_impl( component ).
+        object = load_enh_impl( component = component
+                                  locking = locking ).
       WHEN st_comp_enh_impl.
-        object = load_comp_enh_impl( component ).
+        object = load_comp_enh_impl( component = component
+                                       locking = locking ).
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
@@ -574,6 +661,11 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="Enhancement Implementation"/>
       </TEXTS>
      </ITEM>
+     <ITEM SCONAME="LOCKING" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ENHBOOLEAN" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Boolean"/>
+      </TEXTS>
+     </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ENH_IMPL_SAP">
       <TEXTS>
        <ITEM LANG="E" TEXT="Enhancement Tool Redefinition BAdI"/>
@@ -586,7 +678,8 @@ INCLUDE zaplink_macros.</MACROS>
   ASSERT component-&gt;get_type( ) = st_enh_impl.
   _name = component-&gt;get_name( ).
 
-  object ?= _load_enh_impl( _name ).</SOURCE>
+  object ?= _load_enh_impl( name = _name
+                         locking = locking ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_ENH_SPOT" STATE="1">
     <TEXTS>
@@ -596,6 +689,11 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT">
       <TEXTS>
        <ITEM LANG="E" TEXT="Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="LOCKING" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ENHBOOLEAN" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Boolean"/>
       </TEXTS>
      </ITEM>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_ENH_SPOT_SAP">
@@ -610,7 +708,8 @@ INCLUDE zaplink_macros.</MACROS>
   ASSERT component-&gt;get_type( ) = st_enh_spot.
   _name = component-&gt;get_name( ).
 
-  object ?= _load_enh_spot( _name ).</SOURCE>
+  object ?= _load_enh_spot( name = _name
+                         locking = locking ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="OFF_EXPORT_FROM_COMP_ENH_IMPL" STATE="1" MTDNEWEXC="X">
     <TEXTS>
@@ -933,48 +1032,38 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-*  DATA s_comp         TYPE zaplink_ensc_data=&gt;ts_fm_data.
-*  DATA version        TYPE r3state.
-**  DATA short_id       TYPE sotr_conc.
-**  DATA long_id        TYPE sotr_conc.
-*  DATA o_enh          TYPE to_enh_spot_sap.
-*  DATA o_comp         TYPE to_comp_enh_spot_sap.
-*  FIELD-SYMBOLS:
-*    &lt;enh&gt;   LIKE LINE OF raw_object-&gt;enhancements,
-*    &lt;comp&gt;  LIKE LINE OF raw_object-&gt;composit_enhancements.
-*
-*  ASSERT sap_object IS BOUND.
-*  CREATE OBJECT raw_object.
-*  version = get_version( sap_object ).
-*  s_comp-header = sap_object-&gt;get_enhspotcomphead( version ).
-**  short_id = s_comp-header-shorttextid.
-**  long_id = s_comp-header-docuid.
-**  CLEAR: s_comp-header-shorttextid, s_comp-header-docuid.
-*  s_comp-comp_enh = sap_object-&gt;if_enh_spot_composite~get_composite_childs( version ).
-*  s_comp-enh = sap_object-&gt;if_enh_spot_composite~get_enh_spot_childs( version ).
-*  raw_object-&gt;from_data( s_comp ).
-*
-*  IF sub_components = abap_true.
-*    LOOP AT raw_object-&gt;enhancements ASSIGNING &lt;enh&gt;.
-*      o_enh = _load_enh_spot( &lt;enh&gt;-name ).
-*      CREATE OBJECT &lt;enh&gt;-zl_object.
-*      &lt;enh&gt;-zl_object-&gt;raw = convert_enh_spot( sap_object = o_enh
-*                                           sub_components = sub_components
-*                                          components_list = components_list ).
-*      IF &lt;enh&gt;-zl_object IS BOUND.      CLEAR &lt;enh&gt;-name.       ENDIF.
-*    ENDLOOP.
-*
-*    LOOP AT raw_object-&gt;composit_enhancements ASSIGNING &lt;comp&gt;.
-*      o_comp = _load_comp_enh_spot( &lt;comp&gt;-name ).
-*      CREATE OBJECT &lt;comp&gt;-zl_object.
-*      &lt;comp&gt;-zl_object-&gt;raw = convert_comp_enh_spot( sap_object = o_comp
-*                                                 sub_components = sub_components
-*                                                components_list = components_list ).
-*      IF &lt;comp&gt;-zl_object IS BOUND.      CLEAR &lt;comp&gt;-name.       ENDIF.
-*    ENDLOOP.
-*  ENDIF.
-*  CLEAR raw_object-&gt;a0_maindata-enhspotcomposite.
-*</SOURCE>
+  DATA s_comp         TYPE zaplink_ensc_data=&gt;ts_fm_data.
+  DATA o_gen          TYPE REF TO if_enh_spot_composite.
+  DATA name           TYPE  td_comp_enh_spot_name.
+  DATA object	        TYPE REF TO if_enh_object.
+  FIELD-SYMBOLS:
+    &lt;ce&gt; LIKE LINE OF s_comp-comp_enh,
+    &lt;e&gt;  LIKE LINE OF s_comp-enh.
+
+  ASSERT raw_object IS BOUND.
+  s_comp = raw_object-&gt;to_data( ).
+
+* Check for existence &amp; Delete if needed
+  object ?= _load_comp_enh_spot( name = s_comp-header-enhspotcomposite
+                              locking = abap_true ).
+  IF object IS BOUND.
+    object-&gt;delete( run_dark = abap_true ).
+    object-&gt;unlock( ).
+  ENDIF.
+
+* Create new one
+  cl_enh_factory=&gt;create_enhancement_spot_comp(
+        EXPORTING name      = s_comp-header-enhspotcomposite
+                  run_dark  = abap_true
+        IMPORTING composite = o_gen ).
+  sap_object ?= o_gen.
+* Only when sub component
+*  LOOP AT s_comp-comp_enh ASSIGNING &lt;ce&gt;.
+*    sap_object-&gt;if_enh_spot_composite~add_enh_spot_child( &lt;ce&gt; ).
+*  ENDLOOP.
+*  LOOP AT s_comp-enh ASSIGNING &lt;e&gt;.
+*    sap_object-&gt;if_enh_spot_composite~add_composite_child( &lt;e&gt; ).
+*  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="REVERSE_ENH_IMPL" STATE="1">
     <TEXTS>
@@ -1070,6 +1159,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA s_comp         TYPE zaplink_enhs_data=&gt;ts_fm_data.
   DATA o_gen          TYPE REF TO if_enh_spot_tool.
+  DATA txt_id         TYPE enhdocuobject.
   FIELD-SYMBOLS: &lt;b&gt; LIKE LINE OF s_comp-def_data.
 
   ASSERT raw_object IS BOUND.
@@ -1081,7 +1171,8 @@ INCLUDE zaplink_macros.</MACROS>
   sap_object ?= o_gen.
   LOOP AT s_comp-def_data ASSIGNING &lt;b&gt;.
     sap_object-&gt;add_badi_def( &lt;b&gt; ).
-  ENDLOOP.</SOURCE>
+  ENDLOOP.
+*  txt_id = sap_object-&gt;get_longtext_id( ).</SOURCE>
    </ITEM>
    <ITEM CMPNAME="REVERSE_RAW" STATE="1">
     <TEXTS>
@@ -1115,6 +1206,7 @@ INCLUDE zaplink_macros.</MACROS>
 * Composit Enhancement Spot
   TRY.
       o_ces ?= raw_object.
+      o_ces-&gt;a0_maindata-enhspotcomposite = name.
       sap_object = reverse_comp_enh_spot( raw_object = o_ces
 *                                      sub_components = sub_components
                                      components_list = components_list ).
@@ -1136,6 +1228,7 @@ INCLUDE zaplink_macros.</MACROS>
 * Composit Enhancement Implementation
   TRY.
       o_cei ?= raw_object.
+      o_cei-&gt;a0_maindata-enhcomposite = name.
       sap_object = reverse_comp_enh_impl( raw_object = o_cei
 *                                      sub_components = sub_components
                                      components_list = components_list ).
@@ -1146,6 +1239,7 @@ INCLUDE zaplink_macros.</MACROS>
 * Enhancement Implementation
   TRY.
       o_ei ?= raw_object.
+      o_ei-&gt;a0_maindata-enhspot = name.
       sap_object = reverse_enh_impl( raw_object = o_ei
 *                                 sub_components = sub_components
                                 components_list = components_list ).
@@ -1158,6 +1252,11 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Load Composit Enhancement Implementation as SAP object (w n)"/>
     </TEXTS>
     <PARAMETERS>
+     <ITEM SCONAME="LOCKING" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ENHBOOLEAN" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Boolean"/>
+      </TEXTS>
+     </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMP_ENH_IMPL_NAME">
       <TEXTS>
        <ITEM LANG="E" TEXT="ID of a Composite Enhancement Implementation"/>
@@ -1172,7 +1271,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   TRY.
       object ?= cl_enh_factory=&gt;load_enhancement_composite( name = name
-                                                            lock = abap_false
+                                                            lock = locking
                                                         run_dark = abap_true ).
     CATCH cx_enh_io_error.              &quot; Do not exists =&gt; Object is null
 *    CATCH cx_enh_is_locked .           &quot; Should not happend =&gt; leave exception
@@ -1186,6 +1285,11 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Load Composit Enhancement Spot as SAP object (from name)"/>
     </TEXTS>
     <PARAMETERS>
+     <ITEM SCONAME="LOCKING" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ENHBOOLEAN" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Boolean"/>
+      </TEXTS>
+     </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMP_ENH_SPOT_NAME">
       <TEXTS>
        <ITEM LANG="E" TEXT="Composite Enhancement Spot"/>
@@ -1200,7 +1304,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   TRY.
       object ?= cl_enh_factory=&gt;load_enhancement_spot_comp( name = name
-                                                            lock = abap_false
+                                                            lock = locking
                                                         run_dark = abap_true ).
     CATCH cx_enh_io_error.              &quot; Do not exists =&gt; Object is null
 *    CATCH cx_enh_is_locked .           &quot; Should not happend =&gt; leave exception
@@ -1214,6 +1318,11 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Load Enhancement Implementation as SAP object (from name)"/>
     </TEXTS>
     <PARAMETERS>
+     <ITEM SCONAME="LOCKING" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ENHBOOLEAN" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Boolean"/>
+      </TEXTS>
+     </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ENH_IMPL_NAME">
       <TEXTS>
        <ITEM LANG="E" TEXT="Enhancement Implementation"/>
@@ -1228,7 +1337,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   TRY.
       object ?= cl_enh_factory=&gt;get_enhancement( enhancement_id = name
-                                                           lock = abap_false
+                                                           lock = locking
                                                        run_dark = abap_true ).
     CATCH cx_enh_io_error.              &quot; Do not exists =&gt; Object is null
 *    CATCH cx_enh_is_locked .           &quot; Should not happend =&gt; leave exception
@@ -1242,6 +1351,11 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Load Enhancement Spot as SAP object (from name)"/>
     </TEXTS>
     <PARAMETERS>
+     <ITEM SCONAME="LOCKING" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ENHBOOLEAN" PAROPTIONL="X">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Boolean"/>
+      </TEXTS>
+     </ITEM>
      <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMP_ENH_SPOT_NAME">
       <TEXTS>
        <ITEM LANG="E" TEXT="Enhancement Spot"/>
@@ -1256,7 +1370,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   TRY.
       object ?= cl_enh_factory=&gt;get_enhancement_spot( spot_name = name
-                                                           lock = abap_false
+                                                           lock = locking
                                                        run_dark = abap_true ).
     CATCH cx_enh_io_error.              &quot; Do not exists =&gt; Object is null
 *    CATCH cx_enh_is_locked .           &quot; Should not happend =&gt; leave exception
@@ -1299,7 +1413,8 @@ INCLUDE zaplink_macros.</MACROS>
   DATA o_enh          TYPE to_enhancement_sap.
   DATA o_root         TYPE REF TO cx_root.
 
-  o_enh = load_enhancement( component ).
+  o_enh = load_enhancement( component = component
+                              locking = abap_true ).
   TRY.
       o_enh-&gt;delete( run_dark = abap_true ).
       result = abap_true.
@@ -1363,6 +1478,7 @@ INCLUDE zaplink_macros.</MACROS>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
     <SOURCE>`
   DATA o_sap_intf TYPE to_enhancement_sap.
+  DATA o_err_list TYPE REF TO cl_wb_checklist.
 
   TRY.
     ASSERT object-&gt;raw IS BOUND.
@@ -1371,7 +1487,9 @@ INCLUDE zaplink_macros.</MACROS>
                                     name = object-&gt;name
 *                          sub_components = f_subcomp
                          components_list = components ).
-    o_sap_intf-&gt;save( ).
+    o_sap_intf-&gt;check( EXPORTING    version = &apos;I&apos; &quot; Inactive
+                        CHANGING error_list = o_err_list ).
+    o_sap_intf-&gt;save( run_dark = abap_true ).
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>
    </ITEM>
