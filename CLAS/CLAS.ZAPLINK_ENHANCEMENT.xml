@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="48618A742E88E92A48FB8A3CD28AFD0B" CODE_SIGNATURE="629F459793293C1B426B842223CDB49E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="C75FC5FF9F509E0C31F4235D13EA003F" CODE_SIGNATURE="2C0E3857B61A4E6B8D3E21A7DD9198A7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -401,6 +401,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA s_comp           TYPE zaplink_enhs_data=&gt;ts_fm_data.
   DATA version          TYPE r3state.
+  DATA name             TYPE enhspotcompositename.
   DATA texts            TYPE zaplink_enhs_data=&gt;ts_sotr.
 *  DATA et_textvers      TYPE enhtext_vers_it.
 *  DATA et_textversdata  TYPE enhtext_versdata_it.
@@ -408,19 +409,22 @@ INCLUDE zaplink_macros.</MACROS>
   ASSERT sap_object IS BOUND.
   CREATE OBJECT raw_object.
   s_comp-header-version = version = get_version( sap_object ).
-  s_comp-header-enhspotcomposite = sap_object-&gt;if_enh_spot_tool~get_name( ).
+  s_comp-header-name = name = sap_object-&gt;if_enh_spot_tool~get_name( ).
 
+* Tool Type : BADI or not BADI
+  s_comp-header-tool_type = sap_object-&gt;if_enh_spot_tool~get_tool( ).
+* Texts
 * From CL_R3STANDARD_PERSISTENCE=&gt;LOAD_SPOT
   SELECT SINGLE shorttextid docuid
     INTO (texts-short, texts-long)
     FROM enhspotheader
-    WHERE enhspot = s_comp-header-enhspotcomposite
+    WHERE enhspot = name
       AND version = &apos;I&apos;.
   IF sy-subrc &lt;&gt; 0.
     SELECT SINGLE shorttextid docuid
       INTO (texts-short, texts-long)
       FROM enhspotheader
-      WHERE enhspot = s_comp-header-enhspotcomposite.
+      WHERE enhspot = name.
 *        AND version = &apos;A&apos;.
   ENDIF.
   IF texts IS NOT INITIAL.
@@ -461,7 +465,7 @@ INCLUDE zaplink_macros.</MACROS>
               changedon = s_comp-header-attrs-changedon
       ).
 * Composite
-  s_comp-header-composite = cl_enh_factory=&gt;enhspot_find_parent_composite( s_comp-header-enhspotcomposite ).
+  s_comp-header-composite = cl_enh_factory=&gt;enhspot_find_parent_composite( name ).
 * Internal use
   s_comp-header-internal_use = sap_object-&gt;if_enh_spot_tool~get_internal( version ).
 
@@ -474,7 +478,7 @@ INCLUDE zaplink_macros.</MACROS>
 
 *  IF sub_components = abap_true.
 *  ENDIF.
-  CLEAR raw_object-&gt;a0_maindata-enhspotcomposite.</SOURCE>
+  CLEAR raw_object-&gt;a0_maindata-name.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_VERSION" STATE="1" MTDDECLTYP="1">
     <TEXTS>
@@ -1164,7 +1168,7 @@ INCLUDE zaplink_macros.</MACROS>
 
   ASSERT raw_object IS BOUND.
   s_comp = raw_object-&gt;to_data( ).
-  cl_enh_factory=&gt;create_enhancement_spot( EXPORTING spot_name = s_comp-header-enhspotcomposite
+  cl_enh_factory=&gt;create_enhancement_spot( EXPORTING spot_name = s_comp-header-name
                                                       tooltype = cl_enh_tool_badi_def=&gt;tooltype
                                                           dark = abap_true
                                            IMPORTING spot = o_gen ).
@@ -1217,7 +1221,7 @@ INCLUDE zaplink_macros.</MACROS>
 * Enhancement Spot
   TRY.
       o_es ?= raw_object.
-      o_es-&gt;a0_maindata-enhspotcomposite = name.
+      o_es-&gt;a0_maindata-name = name.
       sap_object = reverse_enh_spot( raw_object = o_es
 *                                 sub_components = sub_components
                                 components_list = components_list ).
