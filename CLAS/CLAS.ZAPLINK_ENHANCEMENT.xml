@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C75FC5FF9F509E0C31F4235D13EA003F" CODE_SIGNATURE="2C0E3857B61A4E6B8D3E21A7DD9198A7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="66245C9F6A6682A3767D705125A297AA" CODE_SIGNATURE="F3732301B5F88C4E4E6E96F15390B226" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
+  <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
  </DEPENDENCIES>
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
@@ -68,6 +69,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </TEXTS>
    </ITEM>
   </ATTRIBUTS>
+  <DEFERRED>
+   <CLASSES>
+    <ITEM TYPEGROUP="ZAPLINK_ENHANCEMENT_DATA" TPUTYPE="1" IMPLICIT="X"/>
+   </CLASSES>
+  </DEFERRED>
   <LOCAL>
    <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
@@ -479,6 +485,21 @@ INCLUDE zaplink_macros.</MACROS>
 *  IF sub_components = abap_true.
 *  ENDIF.
   CLEAR raw_object-&gt;a0_maindata-name.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="CREATE_SOTR_ID" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Create a new SOTR Document ID"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="ZAPLINK_ENHANCEMENT_DATA=&gt;TD_SOTR_CONCEPT"/>
+    </PARAMETERS>
+    <SOURCE>`
+  CALL FUNCTION &apos;GUID_CREATE&apos;
+    IMPORTING
+*     EV_GUID_16       =
+*     EV_GUID_22       =
+      ev_guid_32       = result.
+  ASSERT result IS NOT INITIAL.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_VERSION" STATE="1" MTDDECLTYP="1">
     <TEXTS>
@@ -1040,6 +1061,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA o_gen          TYPE REF TO if_enh_spot_composite.
   DATA name           TYPE  td_comp_enh_spot_name.
   DATA object	        TYPE REF TO if_enh_object.
+  DATA texts          TYPE zaplink_enhs_data=&gt;ts_sotr.
   FIELD-SYMBOLS:
     &lt;ce&gt; LIKE LINE OF s_comp-comp_enh,
     &lt;e&gt;  LIKE LINE OF s_comp-enh.
@@ -1061,6 +1083,61 @@ INCLUDE zaplink_macros.</MACROS>
                   run_dark  = abap_true
         IMPORTING composite = o_gen ).
   sap_object ?= o_gen.
+
+* Add texts
+*  DATA x_h TYPE btfr_head.
+*  DATA x_s TYPE btfr_string.
+*  CALL FUNCTION &apos;BTFR_MAINTAIN_SINGLE_TEXT&apos;
+*    EXPORTING
+**     PACKAGE                            =
+*      object_type                        = st_comp_enh_spot
+*      langu                              = sy-langu
+**     CONCEPT                            =
+**     ALIAS                              =
+**     TRANSL_TYPE                        =
+*      flag_string                        = abap_true
+**     OPTIONS_EDITOR                     =
+**     OPTIONS_CHECK                      =
+**     FLAG_NO_CONTEXT                    =
+**     FLAG_DISPLAY                       =
+*      flag_no_screen                     = abap_true
+**     FLAG_CALLED_FROM_EDIT_SCREEN       =
+**     DEFAULT_TEXT                       =
+**     FLAG_CORRECTION_ENTRY              = &apos;X&apos;
+**     CORR_NUM                           =
+**     USE_KORRNUM_IMMEDIATEDLY           =
+*   IMPORTING
+**     FLAG_CANCELLED                     =
+*     header                             = x_h
+**     TEXT                               =
+*     string                             = x_s
+*   EXCEPTIONS
+*     parameter_error                    = 1
+*     text_not_found                     = 2
+*     invalid_object_type                = 3
+*     invalid_package                    = 4
+*     header_diff_interface              = 5
+*     invalid_tadir_entry                = 6
+*     invalid_transl_type                = 7
+*     invalid_concept                    = 8
+*     OTHERS                             = 9.
+*  IF sy-subrc &lt;&gt; 0.
+** MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+**         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+*  ENDIF.
+  DATA l_id TYPE enhdocuobject.
+  l_id = texts-long  = create_sotr_id( ).
+  sap_object-&gt;if_enh_spot_composite~set_longtext_id( l_id ).
+  sap_object-&gt;if_enh_object_docu~set_shorttext( &apos;X&apos; ).    &quot; not blank string
+  sap_object-&gt;if_enh_object~save( ).
+*  s_comp-header = sap_object-&gt;get_enhspotcomphead( &apos;I&apos; ).
+  texts-short = sap_object-&gt;if_enh_spot_composite~get_shorttext_id(  ).
+  FIELD-SYMBOLS: &lt;a&gt; TYPE ANY.
+  ASSIGN (&apos;SAP_OBJECT-&gt;DEVCLASS&apos;) TO &lt;a&gt;.
+  ASSIGN sap_object-&gt;(&apos;DEVCLASS&apos;) TO &lt;a&gt;.
+  raw_object-&gt;texts_2_sotr( sotr = texts
+                           texts = raw_object-&gt;a0_maindata-texts ).
+
 * Only when sub component
 *  LOOP AT s_comp-comp_enh ASSIGNING &lt;ce&gt;.
 *    sap_object-&gt;if_enh_spot_composite~add_enh_spot_child( &lt;ce&gt; ).
@@ -1251,6 +1328,90 @@ INCLUDE zaplink_macros.</MACROS>
   ENDTRY.
   ASSERT raw_object IS BOUND.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="_COMP_ENH_IMPL_EXISTS" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Check Composit Enhancement Implementation exists"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="EXISTS" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPEXISTS"/>
+     <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMP_ENH_IMPL_NAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ID of a Composite Enhancement Implementation"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA d_name         TYPE td_compname.
+  exists = me-&gt;exists-not_exists.
+  SELECT SINGLE enhcomposite INTO d_name
+    FROM enhcompheader
+    WHERE enhcomposite = name.
+  CHECK sy-subrc = 0.
+  exists = me-&gt;exists-exists.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="_COMP_ENH_SPOT_EXISTS" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Check Composit Enhancement Spot exists"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="EXISTS" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPEXISTS"/>
+     <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMP_ENH_SPOT_NAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Composite Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA d_name         TYPE td_compname.
+  exists = me-&gt;exists-not_exists.
+  SELECT SINGLE enhspotcomposite INTO d_name
+    FROM enhspotcomphead
+    WHERE enhspotcomposite = name.
+  CHECK sy-subrc = 0.
+  exists = me-&gt;exists-exists.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="_ENH_IMPL_EXISTS" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Check Enhancement Implementation exists"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="EXISTS" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPEXISTS"/>
+     <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ENH_IMPL_NAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Enhancement Implementation"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA d_name         TYPE td_compname.
+  exists = me-&gt;exists-not_exists.
+  SELECT SINGLE enhname INTO d_name
+    FROM enhheader
+    WHERE enhname = name.
+  CHECK sy-subrc = 0.
+  exists = me-&gt;exists-exists.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="_ENH_SPOT_EXISTS" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Checkk Enhancement Spot exists"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="EXISTS" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPEXISTS"/>
+     <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ENH_SPOT_NAME">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="Name (ID) of an Enhancement Spot"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA d_name         TYPE td_compname.
+  exists = me-&gt;exists-not_exists.
+  SELECT SINGLE enhspot INTO d_name
+    FROM enhspotheader
+    WHERE enhspot = name.
+  CHECK sy-subrc = 0.
+  exists = me-&gt;exists-exists.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="_LOAD_COMP_ENH_IMPL" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Load Composit Enhancement Implementation as SAP object (w n)"/>
@@ -1273,16 +1434,11 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  TRY.
-      object ?= cl_enh_factory=&gt;load_enhancement_composite( name = name
-                                                            lock = locking
-                                                        run_dark = abap_true ).
-    CATCH cx_enh_io_error.              &quot; Do not exists =&gt; Object is null
-*    CATCH cx_enh_is_locked .           &quot; Should not happend =&gt; leave exception
-*    CATCH cx_enh_permission_denied .
-*    CATCH cx_enh_canceled .
-*    CATCH cx_enh_internal_error .
-  ENDTRY.</SOURCE>
+  IF _comp_enh_impl_exists( name ) = abap_true.
+    object ?= cl_enh_factory=&gt;load_enhancement_composite( name = name
+                                                          lock = locking
+                                                      run_dark = abap_true ).
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_LOAD_COMP_ENH_SPOT" STATE="1">
     <TEXTS>
@@ -1306,16 +1462,11 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  TRY.
-      object ?= cl_enh_factory=&gt;load_enhancement_spot_comp( name = name
-                                                            lock = locking
-                                                        run_dark = abap_true ).
-    CATCH cx_enh_io_error.              &quot; Do not exists =&gt; Object is null
-*    CATCH cx_enh_is_locked .           &quot; Should not happend =&gt; leave exception
-*    CATCH cx_enh_permission_denied .
-*    CATCH cx_enh_canceled .
-*    CATCH cx_enh_internal_error .
-  ENDTRY.</SOURCE>
+  IF _comp_enh_spot_exists( name ) = abap_true.
+    object ?= cl_enh_factory=&gt;load_enhancement_spot_comp( name = name
+                                                          lock = locking
+                                                      run_dark = abap_true ).
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_LOAD_ENH_IMPL" STATE="1">
     <TEXTS>
@@ -1339,16 +1490,11 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  TRY.
-      object ?= cl_enh_factory=&gt;get_enhancement( enhancement_id = name
-                                                           lock = locking
-                                                       run_dark = abap_true ).
-    CATCH cx_enh_io_error.              &quot; Do not exists =&gt; Object is null
-*    CATCH cx_enh_is_locked .           &quot; Should not happend =&gt; leave exception
-*    CATCH cx_enh_permission_denied .
-*    CATCH cx_enh_canceled .
-*    CATCH cx_enh_internal_error .
-  ENDTRY.</SOURCE>
+  IF _enh_impl_exists( name ) = abap_true.
+    object ?= cl_enh_factory=&gt;get_enhancement( enhancement_id = name
+                                                         lock = locking
+                                                     run_dark = abap_true ).
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_LOAD_ENH_SPOT" STATE="1">
     <TEXTS>
@@ -1360,7 +1506,7 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="Enhancement Boolean"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMP_ENH_SPOT_NAME">
+     <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_ENH_SPOT_NAME">
       <TEXTS>
        <ITEM LANG="E" TEXT="Enhancement Spot"/>
       </TEXTS>
@@ -1372,16 +1518,11 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  TRY.
-      object ?= cl_enh_factory=&gt;get_enhancement_spot( spot_name = name
-                                                           lock = locking
-                                                       run_dark = abap_true ).
-    CATCH cx_enh_io_error.              &quot; Do not exists =&gt; Object is null
-*    CATCH cx_enh_is_locked .           &quot; Should not happend =&gt; leave exception
-*    CATCH cx_enh_permission_denied .
-*    CATCH cx_enh_canceled .
-*    CATCH cx_enh_internal_error .
-  ENDTRY.</SOURCE>
+  IF _enh_spot_exists( name ) = abap_true.
+    object ?= cl_enh_factory=&gt;get_enhancement_spot( spot_name = name
+                                                         lock = locking
+                                                     run_dark = abap_true ).
+  ENDIF.</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
@@ -1435,14 +1576,35 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>`
-  DATA d_type         TYPE td_comptype.
-  DATA o_enh          TYPE to_enhancement_sap.
+  DATA d_type             TYPE td_comptype.
+  DATA d_name             TYPE td_compname.
+  DATA n_enh_spot         TYPE td_enh_spot_name.
+  DATA n_comp_enh_spot    TYPE td_comp_enh_spot_name.
+  DATA n_enh_impl         TYPE td_enh_impl_name.
+  DATA n_comp_enh_impl    TYPE td_comp_enh_spot_name.
 
   exists = me-&gt;exists-not_exists.
-  o_enh = load_enhancement( component ).
-  IF o_enh IS BOUND.
-    exists = me-&gt;exists-exists.
-  ENDIF.</SOURCE>
+*  TRY.
+  d_type = component-&gt;get_type( ).
+  d_name = component-&gt;get_name( ).
+  CASE d_type.
+    WHEN st_enh_spot.
+      n_enh_spot = d_name.
+      exists = _enh_spot_exists( n_enh_spot ).
+    WHEN st_comp_enh_spot.
+      n_comp_enh_spot = d_name.
+      exists = _comp_enh_spot_exists( n_comp_enh_spot ).
+    WHEN st_enh_impl.
+      n_enh_impl = d_name.
+      exists = _enh_impl_exists( n_enh_impl ).
+    WHEN st_comp_enh_impl.
+      n_comp_enh_impl = d_name.
+      exists = _comp_enh_impl_exists( n_comp_enh_impl ).
+    WHEN OTHERS.
+      mac_raise_type_not_supported me-&gt;class_name d_type.
+  ENDCASE.
+*    mac_def_catch zaplink_cx_connector.
+*  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
     <SOURCE>`
