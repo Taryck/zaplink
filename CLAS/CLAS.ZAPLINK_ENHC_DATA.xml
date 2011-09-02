@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="80E0911A026C83157212F3129A8C32BB" CODE_SIGNATURE="47B32C53DE556590DCDCED5F7DB5CFCE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHC_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A9CE20BAE2A9A3BA98316E402E38AF4B" CODE_SIGNATURE="B06C5A280B1D1E4BD8CA842560159A98" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHC_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
  </DEPENDENCIES>
@@ -67,11 +67,15 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     <SOURCE>`
   DATA s_enh    LIKE LINE OF enhancement_implementations.
   DATA s_comp   LIKE LINE OF composit_enh_implementations.
+  DATA s_txt    TYPE ts_sotr.
   FIELD-SYMBOLS:
     &lt;enh&gt;   LIKE LINE OF data-enh,
     &lt;comp&gt;  LIKE LINE OF data-comp_enh.
 
-  a0_maindata = data-header.
+  a0_maindata-main = data-header.
+  s_txt-short = a0_maindata-shorttextid.
+  s_txt-long = a0_maindata-docuid.
+  a0_maindata-texts = sotr_2_texts( s_txt ).
   LOOP AT data-enh ASSIGNING &lt;enh&gt;.
     CLEAR s_enh.
     s_enh-name = &lt;enh&gt;.
@@ -101,7 +105,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     &lt;enh&gt;   LIKE LINE OF enhancement_implementations,
     &lt;comp&gt;  LIKE LINE OF composit_enh_implementations.
 
-  data-header = a0_maindata.
+  data-header = a0_maindata-main.
   LOOP AT enhancement_implementations ASSIGNING &lt;enh&gt;.
     CLEAR s_enh.
     s_enh = &lt;enh&gt;-name.
@@ -125,35 +129,41 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_COMP_ENH" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_comp_enh,
-        name      TYPE ENHCOMPOSITENAME,
-        zl_object TYPE to_raw,
-      END OF ts_comp_enh
+          name      TYPE enhcompositename,
+          zl_object TYPE to_raw,
+        END OF ts_comp_enh
 `</ITEM>
    <ITEM CMPNAME="TS_ENH" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">BEGIN OF ts_enh,
-        name      TYPE ENHCOMPOSITENAME,
-        zl_object TYPE to_raw,
-      END OF ts_enh
+          name      TYPE enhcompositename,
+          zl_object TYPE to_raw,
+        END OF ts_enh
 `</ITEM>
    <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">
     BEGIN OF ts_fm_data,
-        header          TYPE ts_header,
-        comp_enh        TYPE enhcompositename_it,
-        enh             TYPE enhname_it,
+          header          TYPE enhcompheader,
+          comp_enh        TYPE enhcompositename_it,
+          enh             TYPE enhname_it,
 *      documentation   TYPE tt_docs,
-      END OF ts_fm_data
+        END OF ts_fm_data
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Composite Enhancement Implementation definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_HEADER" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="ENHCOMPHEADER">
+   <ITEM CMPNAME="TS_HEADER" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">
+    BEGIN OF ts_header.
+    INCLUDE TYPE enhcompheader AS main.
+    TYPES:
+        texts TYPE tt_ltexts,
+      END OF ts_header
+`
     <TEXTS>
      <ITEM LANG="E" TEXT="Enhancement Composite Header Data"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TT_COMP_ENH" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">tt_comp_enh TYPE STANDARD TABLE OF ts_comp_enh WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_ENH" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_enh TYPE STANDARD TABLE OF ts_enh with DEFAULT KEY
+   <ITEM CMPNAME="TT_ENH" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_enh TYPE STANDARD TABLE OF ts_enh WITH DEFAULT KEY
 `</ITEM>
   </TYPES>
  </RAW>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AF2DEE9DDE1AA2A377268C5F9A2FF064" CODE_SIGNATURE="611C872ABEEEC61971BD9D0B852E50DA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="7776ED94B67657FBB5DA96D03C7E4970" CODE_SIGNATURE="8C077E76896A323464411F3FF15ED4A4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROGRAM"/>
@@ -782,7 +782,8 @@ AS</ITEM>
       ENDLOOP.
     ELSE.     &quot; Standard Exception
       LOOP AT _fm_data-attributes ASSIGNING &lt;at&gt;
-           WHERE attdecltyp = &apos;2&apos;   &quot; Constant
+           WHERE clsname = obj_name
+             AND attdecltyp = &apos;2&apos;   &quot; Constant
              AND locked = abap_true
              AND typtype = &apos;1&apos;
              AND type = &apos;SOTR_CONC&apos;

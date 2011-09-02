@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="985BC7851A79F4832738A86FB4D66698" CODE_SIGNATURE="17828D8555BAE8F4B67D4B93B2BFFF35" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHO_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B3C88A31B5F81113E9CD68741C656B9E" CODE_SIGNATURE="7A6D4988384971947285D2DB297E1025" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHO_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
  </DEPENDENCIES>
@@ -64,16 +64,21 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  DATA s_impl LIKE LINE OF badi_implementations.
+  DATA s_impl   LIKE LINE OF badi_implementations.
+  DATA s_txt    TYPE ts_sotr.
   FIELD-SYMBOLS:
     &lt;impl&gt; LIKE LINE OF data-impl_data.
 
-  a0_maindata = data-header.
+  a0_maindata-main = data-header.
+  a0_maindata-texts = sotr_2_texts( a0_maindata-text_ids ).
+  CLEAR a0_maindata-text_ids.
   LOOP AT data-impl_data ASSIGNING &lt;impl&gt;.
     CLEAR s_impl.
-    s_impl = &lt;impl&gt;.
-    CLEAR: s_impl-spot_name. &quot;s_impl-impl_name.
-* s_impl-IMPL_SHORTTEXT, s_impl-IMPL_SHORTTEXT_ID.
+    s_impl-main = &lt;impl&gt;.
+    s_txt-short = s_impl-impl_shorttext_id.
+    s_txt-long = s_impl-impl_longtext_id.
+    s_impl-texts = sotr_2_texts( s_txt ).
+    CLEAR: s_impl-spot_name, s_impl-impl_shorttext_id, s_impl-impl_shorttext, s_impl-impl_longtext_id.
     INSERT s_impl INTO TABLE badi_implementations.
   ENDLOOP.</SOURCE>
    </ITEM>
@@ -89,7 +94,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  fm_data-header = a0_maindata.</SOURCE>
+  fm_data-header = a0_maindata-main.</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
@@ -100,44 +105,51 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM REFCLSNAME="ZAPLINK_ENHANCEMENT_DATA" MTDNAME="ZAPLINK_CNX_EXT_CLEANER_4DATA~UNANONYMIZE"/>
   </REDEFINITIONS>
   <TYPES>
-   <ITEM CMPNAME="TO_COMP_ENH" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="CL_ENH_SPOT_COMPOSITE">
+   <ITEM CMPNAME="TO_COMP_ENH" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="CL_ENH_SPOT_COMPOSITE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Enhancement Spot Composite"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_BADI_IMPL" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">begin of ts_badi_impl.
-      include TYPE ENH_BADI_IMPL_DATA.
-  types:
-    END OF ts_badi_impl
+   <ITEM CMPNAME="TS_BADI_IMPL" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">BEGIN OF ts_badi_impl.
+    INCLUDE TYPE enh_badi_impl_data AS main.
+    TYPES:
+        texts TYPE tt_ltexts,
+      END OF ts_badi_impl
 `</ITEM>
-   <ITEM CMPNAME="TS_COMP_ENH_SPOT" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_comp_enh_spot,
-      name TYPE enhspotcompositename,
-      zl_object TYPE to_raw,
-    END OF ts_comp_enh_spot
+   <ITEM CMPNAME="TS_COMP_ENH_SPOT" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">BEGIN OF ts_comp_enh_spot,
+        name TYPE enhspotcompositename,
+        zl_object TYPE to_raw,
+      END OF ts_comp_enh_spot
 `</ITEM>
-   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">
     BEGIN OF ts_fm_data,
-        header      TYPE ts_header,
-        impl_data   TYPE ENH_BADI_IMPL_DATA_IT,
-*      documentation   TYPE tt_docs,
+        header      TYPE ts_fm_hdr,
+        impl_data   TYPE enh_badi_impl_data_it,
       END OF ts_fm_data
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Composite Enhancement Spot definition"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_HEADER" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">
-    BEGIN OF ts_header.
+   <ITEM CMPNAME="TS_FM_HDR" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_fm_hdr.
     INCLUDE TYPE enh_dy_spot.
     TYPES:
         spot_name TYPE enhspotname,
+        text_ids TYPE ts_sotr,
+      END OF ts_fm_hdr
+`</ITEM>
+   <ITEM CMPNAME="TS_HEADER" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">
+    BEGIN OF ts_header.
+    INCLUDE TYPE ts_fm_hdr AS main.
+    TYPES:
+        texts TYPE tt_ltexts,
       END OF ts_header
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="BAdI Main Data in Enhancement"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_BADI_IMPLS" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">tt_badi_impls type SORTED TABLE OF ts_badi_impl WITH UNIQUE key impl_name
+   <ITEM CMPNAME="TT_BADI_IMPLS" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">tt_badi_impls TYPE SORTED TABLE OF ts_badi_impl WITH UNIQUE KEY badi_name impl_name
 `</ITEM>
   </TYPES>
  </RAW>

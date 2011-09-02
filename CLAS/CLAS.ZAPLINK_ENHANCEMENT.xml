@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="66245C9F6A6682A3767D705125A297AA" CODE_SIGNATURE="F3732301B5F88C4E4E6E96F15390B226" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B04F06E8E49EB76DB991E2464DAAD935" CODE_SIGNATURE="99A5334AF7F09ADA247F878A0A377F0C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
@@ -30,6 +30,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
+  <ALIASES>
+   <ITEM CMPNAME="TT_LTEXTS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TT_LTEXTS"/>
+  </ALIASES>
   <ATTRIBUTS>
    <ITEM CMPNAME="BALLOG_SUBOBJECT" EXPOSURE="2" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;CNX_ENHENCEMENT&apos;" TYPTYPE="1" TYPE="BALSUBOBJ">
     <TEXTS>
@@ -71,7 +74,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   </ATTRIBUTS>
   <DEFERRED>
    <CLASSES>
-    <ITEM TYPEGROUP="ZAPLINK_ENHANCEMENT_DATA" TPUTYPE="1" IMPLICIT="X"/>
+    <ITEM TYPEGROUP="ZAPLINK_ENHANCEMENT_DATA" TPUTYPE="1" EXPLICIT="X"/>
    </CLASSES>
   </DEFERRED>
   <LOCAL>
@@ -158,29 +161,31 @@ INCLUDE zaplink_macros.</MACROS>
   CREATE OBJECT raw_object.
   version = get_version( sap_object ).
   s_comp-header = sap_object-&gt;get_enhcompheader( version ).
-  s_comp-comp_enh = sap_object-&gt;if_enh_composite~get_composite_childs( version ).
-  s_comp-enh = sap_object-&gt;if_enh_composite~get_enh_childs( version ).
+  IF sub_components = abap_true.
+    s_comp-comp_enh = sap_object-&gt;if_enh_composite~get_composite_childs( version ).
+    s_comp-enh = sap_object-&gt;if_enh_composite~get_enh_childs( version ).
+  ENDIF.
   raw_object-&gt;from_data( s_comp ).
 
-  IF sub_components = abap_true.
-    LOOP AT raw_object-&gt;enhancement_implementations ASSIGNING &lt;enh&gt;.
-      o_enh = _load_enh_impl( &lt;enh&gt;-name ).
-      CREATE OBJECT &lt;enh&gt;-zl_object.
-      &lt;enh&gt;-zl_object-&gt;raw = convert_enh_impl( sap_object = o_enh
-                                           sub_components = sub_components
-                                          components_list = components_list ).
-      IF &lt;enh&gt;-zl_object IS BOUND.      CLEAR &lt;enh&gt;-name.       ENDIF.
-    ENDLOOP.
+* Sub component as object if present (depend on sub_component value)
+  LOOP AT raw_object-&gt;enhancement_implementations ASSIGNING &lt;enh&gt;.
+    o_enh = _load_enh_impl( &lt;enh&gt;-name ).
+    CREATE OBJECT &lt;enh&gt;-zl_object.
+    &lt;enh&gt;-zl_object-&gt;raw = convert_enh_impl( sap_object = o_enh
+                                         sub_components = sub_components
+                                        components_list = components_list ).
+    IF &lt;enh&gt;-zl_object IS BOUND.      CLEAR &lt;enh&gt;-name.       ENDIF.
+  ENDLOOP.
 
-    LOOP AT raw_object-&gt;composit_enh_implementations ASSIGNING &lt;comp&gt;.
-      o_comp = _load_comp_enh_impl( &lt;comp&gt;-name ).
-      CREATE OBJECT &lt;comp&gt;-zl_object.
-      &lt;comp&gt;-zl_object-&gt;raw = convert_comp_enh_impl( sap_object = o_comp
-                                                 sub_components = sub_components
-                                                components_list = components_list ).
-      IF &lt;comp&gt;-zl_object IS BOUND.      CLEAR &lt;comp&gt;-name.       ENDIF.
-    ENDLOOP.
-  ENDIF.
+  LOOP AT raw_object-&gt;composit_enh_implementations ASSIGNING &lt;comp&gt;.
+    o_comp = _load_comp_enh_impl( &lt;comp&gt;-name ).
+    CREATE OBJECT &lt;comp&gt;-zl_object.
+    &lt;comp&gt;-zl_object-&gt;raw = convert_comp_enh_impl( sap_object = o_comp
+                                               sub_components = sub_components
+                                              components_list = components_list ).
+    IF &lt;comp&gt;-zl_object IS BOUND.      CLEAR &lt;comp&gt;-name.       ENDIF.
+  ENDLOOP.
+
   CLEAR raw_object-&gt;a0_maindata-enhcomposite.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CONVERT_COMP_ENH_SPOT" STATE="1">
@@ -220,16 +225,13 @@ INCLUDE zaplink_macros.</MACROS>
   CREATE OBJECT raw_object.
   version = get_version( sap_object ).
   s_comp-header = sap_object-&gt;get_enhspotcomphead( version ).
-*  s_comp-texts-short_id = s_comp-header-shorttextid.
-*  s_comp-texts-long_id = s_comp-header-docuid.
-*  CLEAR: s_comp-header-shorttextid, s_comp-header-docuid.
   IF sub_components = abap_true.
     s_comp-comp_enh = sap_object-&gt;if_enh_spot_composite~get_composite_childs( version ).
     s_comp-enh = sap_object-&gt;if_enh_spot_composite~get_enh_spot_childs( version ).
   ENDIF.
   raw_object-&gt;from_data( s_comp ).
 
-* Sub objects
+* Sub objects as object if present (depend on sub_component)
   LOOP AT raw_object-&gt;enhancements ASSIGNING &lt;enh&gt;.
     o_enh = _load_enh_spot( &lt;enh&gt;-name ).
     CREATE OBJECT &lt;enh&gt;-zl_object.
@@ -339,15 +341,28 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA s_comp         TYPE zaplink_enho_data=&gt;ts_fm_data.
   DATA version        TYPE r3state.
-  Data name           TYPE ENHNAME.
+  DATA name           TYPE enhname.
+  DATA o_store        TYPE REF TO cl_enh_store.   &quot; if_enh_store.
+  DATA hdr            TYPE enhheader.
 
   ASSERT sap_object IS BOUND.
   CREATE OBJECT raw_object.
   version = get_version( sap_object ).
   name = s_comp-header-spot_name = sap_object-&gt;get_spot_name( version ).
+
+* Texts
+  o_store ?= sap_object-&gt;get_store( ).
+  hdr = o_store-&gt;get_enhheader( version ).
+  s_comp-header-text_ids-short = hdr-shorttext_id.
+  s_comp-header-text_ids-long = hdr-docu_id.
+
+* Implementations
   s_comp-impl_data = sap_object-&gt;get_implementations( version ).
+
+*Composite Parent
 * From : Module STATUS_0100 in SAPLENHANCEMENT_EDITOR
   s_comp-header-composite = cl_enh_factory=&gt;enh_find_parent_composite( name ) .
+
 * From : FORM lesen_sfw in SAPLENHANCEMENT_EDITOR
 *  l_wa_swf-objecttype = &apos;ENHO&apos;.
 *  l_wa_swf-objectname = i_objekt.
@@ -564,7 +579,7 @@ INCLUDE zaplink_macros.</MACROS>
 *  o_comp-&gt;add_enh_spot_child( ).
   o_comp-&gt;if_enh_object~save( ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="LOAD_COMP_ENH_IMPL" STATE="1">
+   <ITEM CMPNAME="LOAD_COMP_ENH_IMPL" STATE="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Load Enhancement Implementation as SAP object"/>
     </TEXTS>
@@ -585,6 +600,13 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
   DATA _name      TYPE td_enh_impl_name.
 
@@ -1062,9 +1084,8 @@ INCLUDE zaplink_macros.</MACROS>
   DATA name           TYPE  td_comp_enh_spot_name.
   DATA object	        TYPE REF TO if_enh_object.
   DATA texts          TYPE zaplink_enhs_data=&gt;ts_sotr.
-  FIELD-SYMBOLS:
-    &lt;ce&gt; LIKE LINE OF s_comp-comp_enh,
-    &lt;e&gt;  LIKE LINE OF s_comp-enh.
+  DATA l_id           TYPE enhdocuobject.
+  FIELD-SYMBOLS: &lt;l&gt;  LIKE LINE OF raw_object-&gt;a0_maindata-texts.
 
   ASSERT raw_object IS BOUND.
   s_comp = raw_object-&gt;to_data( ).
@@ -1085,58 +1106,20 @@ INCLUDE zaplink_macros.</MACROS>
   sap_object ?= o_gen.
 
 * Add texts
-*  DATA x_h TYPE btfr_head.
-*  DATA x_s TYPE btfr_string.
-*  CALL FUNCTION &apos;BTFR_MAINTAIN_SINGLE_TEXT&apos;
-*    EXPORTING
-**     PACKAGE                            =
-*      object_type                        = st_comp_enh_spot
-*      langu                              = sy-langu
-**     CONCEPT                            =
-**     ALIAS                              =
-**     TRANSL_TYPE                        =
-*      flag_string                        = abap_true
-**     OPTIONS_EDITOR                     =
-**     OPTIONS_CHECK                      =
-**     FLAG_NO_CONTEXT                    =
-**     FLAG_DISPLAY                       =
-*      flag_no_screen                     = abap_true
-**     FLAG_CALLED_FROM_EDIT_SCREEN       =
-**     DEFAULT_TEXT                       =
-**     FLAG_CORRECTION_ENTRY              = &apos;X&apos;
-**     CORR_NUM                           =
-**     USE_KORRNUM_IMMEDIATEDLY           =
-*   IMPORTING
-**     FLAG_CANCELLED                     =
-*     header                             = x_h
-**     TEXT                               =
-*     string                             = x_s
-*   EXCEPTIONS
-*     parameter_error                    = 1
-*     text_not_found                     = 2
-*     invalid_object_type                = 3
-*     invalid_package                    = 4
-*     header_diff_interface              = 5
-*     invalid_tadir_entry                = 6
-*     invalid_transl_type                = 7
-*     invalid_concept                    = 8
-*     OTHERS                             = 9.
-*  IF sy-subrc &lt;&gt; 0.
-** MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
-**         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
-*  ENDIF.
-  DATA l_id TYPE enhdocuobject.
   l_id = texts-long  = create_sotr_id( ).
   sap_object-&gt;if_enh_spot_composite~set_longtext_id( l_id ).
-  sap_object-&gt;if_enh_object_docu~set_shorttext( &apos;X&apos; ).    &quot; not blank string
+  READ TABLE raw_object-&gt;a0_maindata-texts ASSIGNING &lt;l&gt;
+      WITH KEY lang = sy-langu.
+  IF &lt;l&gt; IS ASSIGNED.
+    sap_object-&gt;if_enh_object_docu~set_shorttext( &lt;l&gt;-text ).    &quot; not blank string
+  ELSE.
+    sap_object-&gt;if_enh_object_docu~set_shorttext( &apos;X&apos; ).    &quot; not blank string
+  ENDIF.
   sap_object-&gt;if_enh_object~save( ).
 *  s_comp-header = sap_object-&gt;get_enhspotcomphead( &apos;I&apos; ).
   texts-short = sap_object-&gt;if_enh_spot_composite~get_shorttext_id(  ).
-  FIELD-SYMBOLS: &lt;a&gt; TYPE ANY.
-  ASSIGN (&apos;SAP_OBJECT-&gt;DEVCLASS&apos;) TO &lt;a&gt;.
-  ASSIGN sap_object-&gt;(&apos;DEVCLASS&apos;) TO &lt;a&gt;.
-  raw_object-&gt;texts_2_sotr( sotr = texts
-                           texts = raw_object-&gt;a0_maindata-texts ).
+  set_sotr( sotr = texts
+           texts = raw_object-&gt;a0_maindata-texts ).
 
 * Only when sub component
 *  LOOP AT s_comp-comp_enh ASSIGNING &lt;ce&gt;.
@@ -1328,6 +1311,259 @@ INCLUDE zaplink_macros.</MACROS>
   ENDTRY.
   ASSERT raw_object IS BOUND.</SOURCE>
    </ITEM>
+   <ITEM CMPNAME="SET_SOTR" EXPOSURE="1" STATE="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Write SOTR from text table"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="SOTR" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TS_SOTR">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="SOTR IDs (Short &amp; Long)"/>
+      </TEXTS>
+     </ITEM>
+     <ITEM SCONAME="TEXTS" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TT_LTEXTS"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA _txt     TYPE string.
+  DATA s_pack   TYPE devclass.
+  DATA l_pack   TYPE devclass.
+  DATA s_type   TYPE trobjtype.
+  DATA l_type   TYPE trobjtype.
+  FIELD-SYMBOLS: &lt;t&gt; LIKE LINE OF texts.
+
+  DATA entry    TYPE sotr_text.
+
+  SELECT SINGLE h~paket u~object        &quot; See note 1481544
+    INTO (s_pack, s_type)
+    FROM sotr_head AS h INNER JOIN sotr_use AS u ON u~concept = h~concept
+    WHERE h~concept = sotr-short.
+  SELECT SINGLE h~paket u~object
+    INTO (l_pack, l_type)
+    FROM sotr_head AS h INNER JOIN sotr_use AS u ON u~concept = h~concept
+    WHERE h~concept = sotr-long.
+  IF sy-subrc &lt;&gt; 0.   l_pack = s_pack.    l_type = s_type.    ENDIF.
+
+  IF sotr-short IS NOT INITIAL.
+    CALL FUNCTION &apos;BTFR_MAINTAIN_SINGLE_TEXT&apos;
+      EXPORTING
+        package                            = s_pack
+        object_type                        = s_type
+        langu                              = sy-langu    &quot;master lang
+        concept                            = sotr-short
+*         ALIAS                              =
+*         TRANSL_TYPE                        =
+*         FLAG_STRING                        =
+*         OPTIONS_EDITOR                     =
+*         OPTIONS_CHECK                      =
+*         FLAG_NO_CONTEXT                    =
+*         FLAG_DISPLAY                       =
+        flag_no_screen                     = abap_true
+*         FLAG_CALLED_FROM_EDIT_SCREEN       =
+        default_text                       = ` `
+        flag_correction_entry              = abap_false
+*         CORR_NUM                           =
+*         USE_KORRNUM_IMMEDIATEDLY           =
+*       IMPORTING
+*         FLAG_CANCELLED                     =
+*         HEADER                             =
+*         TEXT                               =
+*         STRING                             =
+      EXCEPTIONS
+        parameter_error                    = 1
+        text_not_found                     = 2
+        invalid_object_type                = 3
+        invalid_package                    = 4
+        header_diff_interface              = 5
+        invalid_tadir_entry                = 6
+        invalid_transl_type                = 7
+        invalid_concept                    = 8
+        OTHERS                             = 9.
+    IF sy-subrc &lt;&gt; 0.
+      mac_raise_mf &apos;BTFR_MAINTAIN_SINGLE_TEXT&apos; sy-subrc.
+    ENDIF.
+  ENDIF.
+
+  IF sotr-long IS NOT INITIAL.
+    CALL FUNCTION &apos;BTFR_MAINTAIN_SINGLE_TEXT&apos;
+      EXPORTING
+        package                            = l_pack
+        object_type                        = l_type
+        langu                              = sy-langu    &quot; master lang
+        concept                            = sotr-long
+*         ALIAS                              =
+*         TRANSL_TYPE                        =
+        flag_string                        = abap_true
+*         OPTIONS_EDITOR                     =
+*         OPTIONS_CHECK                      =
+*         FLAG_NO_CONTEXT                    =
+*         FLAG_DISPLAY                       =
+        flag_no_screen                     = abap_true
+*         FLAG_CALLED_FROM_EDIT_SCREEN       =
+        default_text                       = ` `
+        flag_correction_entry              = abap_false
+*         CORR_NUM                           =
+*         USE_KORRNUM_IMMEDIATEDLY           =
+*       IMPORTING
+*         FLAG_CANCELLED                     =
+*         HEADER                             =
+*         TEXT                               =
+*         STRING                             =
+      EXCEPTIONS
+        parameter_error                    = 1
+        text_not_found                     = 2
+        invalid_object_type                = 3
+        invalid_package                    = 4
+        header_diff_interface              = 5
+        invalid_tadir_entry                = 6
+        invalid_transl_type                = 7
+        invalid_concept                    = 8
+        OTHERS                             = 9.
+    IF sy-subrc &lt;&gt; 0.
+      mac_raise_mf &apos;BTFR_MAINTAIN_SINGLE_TEXT&apos; sy-subrc.
+    ENDIF.
+  ENDIF.
+
+
+
+  LOOP AT texts ASSIGNING &lt;t&gt;.
+    IF &lt;t&gt;-text IS NOT INITIAL.
+*      IF &lt;t&gt;-lang = sy-lang.
+*        clear entry.
+*        entry-concept = sotr-short.
+*        CALL FUNCTION &apos;SOTR_UPDATE_CONCEPT_ENTRY&apos;
+*          EXPORTING
+*            entry                       = entry
+*            SOURCE_LANGU                = &lt;t&gt;-lang
+*            CHECK_MASTER_LANGU          = abap_false
+**         IN_UPDATE_TASK              =
+**         FLAG_CORRECTION_ENTRY       =
+*          EXCEPTIONS
+*            CONCEPT_NOT_FOUND           = 1
+*            ENTRY_NOT_FOUND             = 2
+*            LANGU_MISSING               = 3
+*            NO_MASTER_LANGU             = 4
+*            ERROR_IN_CORRECTION         = 5
+*            USER_CANCELLED              = 6
+*            OTHERS                      = 7.
+*        IF sy-subrc &lt;&gt; 0.
+** MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+**         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+*        ENDIF.
+*      ELSE.
+      CLEAR entry.
+      entry-langu = &lt;t&gt;-lang.
+      entry-text = &lt;t&gt;-text.
+      CALL FUNCTION &apos;SOTR_INSERT_CONCEPT_ENTRY&apos;
+        EXPORTING
+          concept                             = sotr-short
+*            SOURCE_LANGU                        = &lt;t&gt;-lang
+          check_master_langu                  = abap_false
+          check_master_system                 = abap_false
+*           CHECK_CONCEPT_EXIST                 = &apos;X&apos;
+*           IN_UPDATE_TASK                      =
+*           UPDATE_CONTEXT_FLAG                 = &apos;X&apos;
+*           FLAG_CORRECTION_ENTRY               =
+        CHANGING
+          entry                               = entry
+*         EXCEPTIONS
+*           CONCEPT_NOT_FOUND                   = 1
+*           IDENTICAL_CONTEXT_NOT_ALLOWED       = 2
+*           TEXT_TOO_LONG                       = 3
+*           LANGU_MISSING                       = 4
+*           NO_MASTER_LANGU                     = 5
+*           ERROR_IN_UPDATE                     = 6
+*           ERROR_IN_CORRECTION                 = 7
+*           USER_CANCELLED                      = 8
+*           OTHERS                              = 9
+                .
+      IF sy-subrc &lt;&gt; 0.
+* MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
+*         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
+      ENDIF.
+
+*      ENDIF.
+
+*      _txt = &lt;t&gt;-text.
+*      CALL FUNCTION &apos;BTFR_MAINTAIN_SINGLE_TEXT&apos;
+*        EXPORTING
+*          package                            = s_pack
+*          object_type                        = s_type
+*          langu                              = &lt;t&gt;-lang
+*          concept                            = sotr-short
+**         ALIAS                              =
+**         TRANSL_TYPE                        =
+**         FLAG_STRING                        =
+**         OPTIONS_EDITOR                     =
+**         OPTIONS_CHECK                      =
+**         FLAG_NO_CONTEXT                    =
+**         FLAG_DISPLAY                       =
+*          flag_no_screen                     = abap_true
+**         FLAG_CALLED_FROM_EDIT_SCREEN       =
+*          default_text                       = _txt
+*          flag_correction_entry              = abap_false
+**         CORR_NUM                           =
+**         USE_KORRNUM_IMMEDIATEDLY           =
+**       IMPORTING
+**         FLAG_CANCELLED                     =
+**         HEADER                             =
+**         TEXT                               =
+**         STRING                             =
+*        EXCEPTIONS
+*          parameter_error                    = 1
+*          text_not_found                     = 2
+*          invalid_object_type                = 3
+*          invalid_package                    = 4
+*          header_diff_interface              = 5
+*          invalid_tadir_entry                = 6
+*          invalid_transl_type                = 7
+*          invalid_concept                    = 8
+*          OTHERS                             = 9.
+*      IF sy-subrc &lt;&gt; 0.
+*        mac_raise_mf &apos;BTFR_MAINTAIN_SINGLE_TEXT&apos; sy-subrc.
+*      ENDIF.
+    ENDIF.
+    IF &lt;t&gt;-_ IS NOT INITIAL.
+      _txt = &lt;t&gt;-_.
+*      CALL FUNCTION &apos;BTFR_MAINTAIN_SINGLE_TEXT&apos;
+*        EXPORTING
+*          package                            = l_pack
+*          object_type                        = l_type
+*          langu                              = &lt;t&gt;-lang
+*          concept                            = sotr-long
+**         ALIAS                              =
+**         TRANSL_TYPE                        =
+**         FLAG_STRING                        =
+**         OPTIONS_EDITOR                     =
+**         OPTIONS_CHECK                      =
+**         FLAG_NO_CONTEXT                    =
+**         FLAG_DISPLAY                       =
+*          flag_no_screen                     = abap_true
+**         FLAG_CALLED_FROM_EDIT_SCREEN       =
+*          default_text                       = _txt
+*          flag_correction_entry              = abap_false
+**         CORR_NUM                           =
+**         USE_KORRNUM_IMMEDIATEDLY           =
+**       IMPORTING
+**         FLAG_CANCELLED                     =
+**         HEADER                             =
+**         TEXT                               =
+**         STRING                             =
+*        EXCEPTIONS
+*          parameter_error                    = 1
+*          text_not_found                     = 2
+*          invalid_object_type                = 3
+*          invalid_package                    = 4
+*          header_diff_interface              = 5
+*          invalid_tadir_entry                = 6
+*          invalid_transl_type                = 7
+*          invalid_concept                    = 8
+*          OTHERS                             = 9.
+*      IF sy-subrc &lt;&gt; 0.
+*        mac_raise_mf &apos;BTFR_MAINTAIN_SINGLE_TEXT&apos; sy-subrc.
+*      ENDIF.
+    ENDIF.
+  ENDLOOP.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="_COMP_ENH_IMPL_EXISTS" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Check Composit Enhancement Implementation exists"/>
@@ -1440,7 +1676,7 @@ INCLUDE zaplink_macros.</MACROS>
                                                       run_dark = abap_true ).
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_LOAD_COMP_ENH_SPOT" STATE="1">
+   <ITEM CMPNAME="_LOAD_COMP_ENH_SPOT" STATE="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Load Composit Enhancement Spot as SAP object (from name)"/>
     </TEXTS>
@@ -1461,11 +1697,30 @@ INCLUDE zaplink_macros.</MACROS>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
     <SOURCE>`
+  DATA o_root         TYPE REF TO cx_root.
   IF _comp_enh_spot_exists( name ) = abap_true.
-    object ?= cl_enh_factory=&gt;load_enhancement_spot_comp( name = name
-                                                          lock = locking
-                                                      run_dark = abap_true ).
+    TRY.
+        object ?= cl_enh_factory=&gt;load_enhancement_spot_comp( name = name
+                                                              lock = locking
+                                                          run_dark = abap_true ).
+
+*     CATCH cx_enh_io_error .
+*     CATCH cx_enh_internal_error .
+      CATCH cx_enh_permission_denied INTO o_root.
+      CATCH cx_enh_is_locked INTO o_root.
+      CATCH cx_enh_canceled INTO o_root.
+    ENDTRY.
+    IF o_root IS BOUND.
+      mac_cascade_raise o_mycx o_root.
+    ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_LOAD_ENH_IMPL" STATE="1">
@@ -1558,9 +1813,9 @@ INCLUDE zaplink_macros.</MACROS>
   DATA o_enh          TYPE to_enhancement_sap.
   DATA o_root         TYPE REF TO cx_root.
 
-  o_enh = load_enhancement( component = component
-                              locking = abap_true ).
   TRY.
+      o_enh = load_enhancement( component = component
+                                  locking = abap_true ).
       o_enh-&gt;delete( run_dark = abap_true ).
       result = abap_true.
 *cx_enh_mod_not_allowed
@@ -1684,6 +1939,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Name (ID) of an Enhancement Spot"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TD_SOTR_CONCEPT" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="SOTR_TEXT-CONCEPT"/>
    <ITEM CMPNAME="TO_COMP_ENH_IMPL" STATE="1" EDITORDER="12 " TYPTYPE="3" TYPE="ZAPLINK_ENHC_DATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Data for Composit Enhancement Implementation"/>
@@ -1729,6 +1985,11 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Enhancement Tool BAdI"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TS_SOTR" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_sotr,
+      short TYPE td_SOTR_CONCEPT,
+      long  TYPE td_SOTR_CONCEPT,
+    END OF ts_sotr
+`</ITEM>
   </TYPES>
  </RAW>
 </ZL_OBJECT>
