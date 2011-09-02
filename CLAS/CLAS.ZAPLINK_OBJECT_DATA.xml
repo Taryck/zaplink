@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="89ACAC517D8B1AA6AC36853C86BE930E" CODE_SIGNATURE="B037C3171EB8A56793781FCC45E67CE6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="85A0F3CD97F4D68F0BD1FC7C449A800E" CODE_SIGNATURE="0FCDA6E98C72BF6F3799C3051A190F5B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -1463,7 +1463,7 @@ AS</ITEM>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_CX_TEXT" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4">BEGIN OF ts_cx_text,
-            cmpname   TYPE seoo_attribute_r-cmpname.
+              cmpname   TYPE seoo_attribute_r-cmpname.
     INCLUDE TYPE sotr_head AS hdr.
     TYPES:
         lhdr      TYPE sotr_headu,
@@ -1472,9 +1472,9 @@ AS</ITEM>
       END OF ts_cx_text
 `</ITEM>
    <ITEM CMPNAME="TS_DEFERRED" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">BEGIN OF ts_deferred,                   &quot; used to handle
-                  classes TYPE seot_clsdeferrds_w,      &quot; class * definition load
-                  interfaces TYPE seot_intdeferrds_r,   &quot; interface * load
-                END OF ts_deferred
+                    classes TYPE seot_clsdeferrds_w,      &quot; class * definition load
+                    interfaces TYPE seot_intdeferrds_r,   &quot; interface * load
+                  END OF ts_deferred
 `</ITEM>
    <ITEM CMPNAME="TS_DOC_KEY" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">BEGIN OF ts_doc_key,                                    &quot; equiv DOKU_OBJ = CHAR 60
       name       TYPE seoclsname,                           &quot; CHAR 30
@@ -1508,25 +1508,25 @@ AS</ITEM>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TS_INCLUDE" EXPOSURE="2" STATE="1" EDITORDER="15 " TYPTYPE="4">BEGIN OF ts_include,                                  &quot; Issue 82
-          name       TYPE program,
-          raw_source TYPE tt_abaprawsource,
-        END OF ts_include
+            name       TYPE program,
+            raw_source TYPE tt_abaprawsource,
+          END OF ts_include
 `</ITEM>
    <ITEM CMPNAME="TS_INCLUDES" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="4">
     BEGIN OF ts_includes,
-          classpool      TYPE ts_include,
-          pubsec         TYPE ts_include,
-          prisec         TYPE ts_include,
-          prosec         TYPE ts_include,
-          cl             TYPE ts_include,
-          ccimp          TYPE ts_include,
-          ccdef          TYPE ts_include,
-          ccmac          TYPE ts_include,
-          interfacepool  TYPE ts_include,
-          intfsec        TYPE ts_include,
-          localtestclass TYPE ts_include,                   &quot; Issue 82
-          methods        TYPE tt_meth_incs,
-        END OF ts_includes
+            classpool      TYPE ts_include,
+            pubsec         TYPE ts_include,
+            prisec         TYPE ts_include,
+            prosec         TYPE ts_include,
+            cl             TYPE ts_include,
+            ccimp          TYPE ts_include,
+            ccdef          TYPE ts_include,
+            ccmac          TYPE ts_include,
+            interfacepool  TYPE ts_include,
+            intfsec        TYPE ts_include,
+            localtestclass TYPE ts_include,                 &quot; Issue 82
+            methods        TYPE tt_meth_incs,
+          END OF ts_includes
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="List of Class&apos;s include with ABAP Code"/>
@@ -1596,14 +1596,14 @@ AS</ITEM>
    </ITEM>
    <ITEM CMPNAME="TS_SOURCES" EXPOSURE="2" STATE="1" EDITORDER="42 " TYPTYPE="4">
     BEGIN OF ts_sources,
-                      classpool   TYPE  ts_sourceasstruc,
-                      local_types TYPE  ts_sourceasstruc,
-                      local_imp   TYPE  ts_sourceasstruc,
-                      macros      TYPE  ts_sourceasstruc,
-                      public      TYPE  ts_sourceasstruc,
-                      private     TYPE  ts_sourceasstruc,
-                      protected   TYPE  ts_sourceasstruc,
-                    END OF ts_sources
+                        classpool   TYPE  ts_sourceasstruc,
+                        local_types TYPE  ts_sourceasstruc,
+                        local_imp   TYPE  ts_sourceasstruc,
+                        macros      TYPE  ts_sourceasstruc,
+                        public      TYPE  ts_sourceasstruc,
+                        private     TYPE  ts_sourceasstruc,
+                        protected   TYPE  ts_sourceasstruc,
+                      END OF ts_sources
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class ABAP Source codes as structure"/>
@@ -1773,52 +1773,56 @@ AS</ITEM>
     BEGIN OF t_fm_data,
 *      name TYPE seoclsname,
 *      version TYPE seoversion,
-            class TYPE  vseoclass,
-            interface TYPE  vseointerf,
-            attributes  TYPE  seoo_attributes_r,
-            methods TYPE  seoo_methods_r,
-            events  TYPE  seoo_events_r,
-            types TYPE  seoo_types_r,
-            parameters  TYPE  seos_parameters_r,
-            exceps  TYPE  seos_exceptions_r,
-            implementings TYPE  seor_implementings_r,
-            inheritance TYPE  vseoextend,
-            redefinitions TYPE  seor_redefinitions_r,
-            impl_details  TYPE  seor_redefinitions_r,
-            friendships TYPE  seof_friendships_r,
-            typeusages TYPE  seot_typepusages_r,
-            clsdeferrds TYPE  seot_clsdeferrds_r,
-            intdeferrds TYPE  seot_intdeferrds_r,
-            comprisings TYPE  seor_comprisings_r,
-            explore_inheritance TYPE  seok_cls_typeinfos,
-            explore_implementings TYPE  seok_int_typeinfos,
-            explore_comprisings TYPE  seok_int_typeinfos,
-            aliases TYPE  seoo_aliases_r,
-            enhancement_methods TYPE  enhmeth_tabheader,
-            enhancement_attributes  TYPE  enhclasstabattrib,
-            enhancement_events  TYPE  enhclasstabevent,
-            enhancement_implementings TYPE  enhclasstabimplementing,
-            enhancement_comprisings TYPE  enhclasstabintfcompri,
-            class_desc  TYPE tt_seoclasstx,
-            component_desc  TYPE  tt_seocompotx,
-            subcomponent_desc TYPE  tt_seosubcotx,
-            includes TYPE ts_includes,
+              class TYPE  vseoclass,
+              interface TYPE  vseointerf,
+              attributes  TYPE  seoo_attributes_r,
+              methods TYPE  seoo_methods_r,
+              events  TYPE  seoo_events_r,
+              types TYPE  seoo_types_r,
+              parameters  TYPE  seos_parameters_r,
+              exceps  TYPE  seos_exceptions_r,
+              implementings TYPE  seor_implementings_r,
+              inheritance TYPE  vseoextend,
+              redefinitions TYPE  seor_redefinitions_r,
+              impl_details  TYPE  seor_redefinitions_r,
+              friendships TYPE  seof_friendships_r,
+              typeusages TYPE  seot_typepusages_r,
+              clsdeferrds TYPE  seot_clsdeferrds_r,
+              intdeferrds TYPE  seot_intdeferrds_r,
+              comprisings TYPE  seor_comprisings_r,
+              explore_inheritance TYPE  seok_cls_typeinfos,
+              explore_implementings TYPE  seok_int_typeinfos,
+              explore_comprisings TYPE  seok_int_typeinfos,
+              aliases TYPE  seoo_aliases_r,
+              enhancement_methods TYPE  enhmeth_tabheader,
+              enhancement_attributes  TYPE  enhclasstabattrib,
+              enhancement_events  TYPE  enhclasstabevent,
+              enhancement_implementings TYPE  enhclasstabimplementing,
+              enhancement_comprisings TYPE  enhclasstabintfcompri,
+              class_desc  TYPE tt_seoclasstx,
+              component_desc  TYPE  tt_seocompotx,
+              subcomponent_desc TYPE  tt_seosubcotx,
+              includes TYPE ts_includes,
+* FOR SEO_CLASS_RESOLVE_INHERITANCE (Issue 128)
+              enhancement_premeth TYPE  enhmeth_tabkeys,
+              enhancement_postmeth TYPE  enhmeth_tabkeys,
+              enhancement_owrmeth TYPE  enhmeth_tabkeys,
 * FOR SEO_CLASS_CREATE_COMPLETE only
-            method_sources TYPE seo_method_source_table,
-            textspool   TYPE tt_txtp_textpools,
-            locals_def  TYPE  rswsourcet,
-            locals_imp  TYPE  rswsourcet,
-            locals_mac  TYPE  rswsourcet,
-            locals_tst  TYPE  rswsourcet,   &quot; Issue 82 : Test Class
+              method_sources TYPE seo_method_source_table,
+              textspool   TYPE tt_txtp_textpools,
+              locals_def  TYPE  rswsourcet,
+              locals_imp  TYPE  rswsourcet,
+              locals_mac  TYPE  rswsourcet,
+              locals_tst  TYPE  rswsourcet,   &quot; Issue 82 : Test Class
 * FOR Exception class
-            exceptions_texts TYPE tt_cx_texts,
+              exceptions_texts TYPE tt_cx_texts,
 * FOR Class dynpros
-            dynpros     TYPE tt_dynpros,
+              dynpros     TYPE tt_dynpros,
 * FOR Class MENU PAINTER
-            menupainter TYPE to_menupainter,
+              menupainter TYPE to_menupainter,
 * FOR documentation
-            documentation TYPE tt_docs,
-          END OF t_fm_data
+              documentation TYPE tt_docs,
+            END OF t_fm_data
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Function Module Data"/>
