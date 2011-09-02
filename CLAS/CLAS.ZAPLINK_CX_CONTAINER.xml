@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FB41702DC14767650DA62A5D135716B8" CODE_SIGNATURE="C0D1D14357A11D4DA892CD1AC59E5F95" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_CONTAINER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6C3F4CC3EB82C8C5FC371059E9936229" CODE_SIGNATURE="C0D1D14357A11D4DA892CD1AC59E5F95" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_CONTAINER" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CX"/>
  </DEPENDENCIES>
@@ -29,45 +29,23 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </TEXTS>
   </A0_MAINDATA>
   <ATTRIBUTS>
-   <ITEM CMPNAME="ADD_COMP_FAILED" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ADD_COMP_FAILED,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;150&apos;,
-      attr1 type scx_attrname value &apos;TYPE&apos;,
-      attr2 type scx_attrname value &apos;NAME&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of ADD_COMP_FAILED
-`</ITEM>
-   <ITEM CMPNAME="ADD_FAILED" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ADD_FAILED,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;151&apos;,
-      attr1 type scx_attrname value &apos;CX_NAME&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of ADD_FAILED
-`</ITEM>
-   <ITEM CMPNAME="CIRCULAR_DEPENDENCIES" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of CIRCULAR_DEPENDENCIES,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;152&apos;,
-      attr1 type scx_attrname value &apos;&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of CIRCULAR_DEPENDENCIES
-`</ITEM>
    <ITEM CMPNAME="NAME" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="ZAPLINK_CX_COMPONENT=&gt;TD_COMPNAME"/>
    <ITEM CMPNAME="TYPE" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="ZAPLINK_CX_COMPONENT=&gt;TD_COMPTYPE"/>
-   <ITEM CMPNAME="ZAPLINK_CX_CONTAINER" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_CONTAINER,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;107&apos;,
-      attr1 type scx_attrname value &apos;CX_NAME&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of ZAPLINK_CX_CONTAINER
-`</ITEM>
   </ATTRIBUTS>
+  <EXCEPTIONS_TEXTS>
+   <ITEM CMPNAME="ADD_COMP_FAILED" EDITORDER="1 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="150" ATTRIBUT_1="TYPE" ATTRIBUT_2="NAME"/>
+   </ITEM>
+   <ITEM CMPNAME="ADD_FAILED" EDITORDER="2 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="151" ATTRIBUT_1="CX_NAME"/>
+   </ITEM>
+   <ITEM CMPNAME="CIRCULAR_DEPENDENCIES" EDITORDER="3 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="152"/>
+   </ITEM>
+   <ITEM CMPNAME="ZAPLINK_CX_CONTAINER" EDITORDER="4 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="107" ATTRIBUT_1="CX_NAME"/>
+   </ITEM>
+  </EXCEPTIONS_TEXTS>
   <LOCAL>
    <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS

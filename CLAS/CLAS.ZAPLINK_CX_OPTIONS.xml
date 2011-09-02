@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C49F536A16FD2F06655C9845E2051C22" CODE_SIGNATURE="C7A8CFA3745A18D34EA5FC7D4311AEEB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_OPTIONS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="62A91C9DF03B917FF62C678C0588DC0B" CODE_SIGNATURE="C7A8CFA3745A18D34EA5FC7D4311AEEB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_OPTIONS" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CX"/>
  </DEPENDENCIES>
@@ -29,26 +29,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   application</ITEM>
    </TEXTS>
   </A0_MAINDATA>
-  <ATTRIBUTS>
-   <ITEM CMPNAME="DIALOG_CANCELED" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of DIALOG_CANCELED,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;253&apos;,
-      attr1 type scx_attrname value &apos;&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of DIALOG_CANCELED
-`</ITEM>
-   <ITEM CMPNAME="ZAPLINK_CX_OPTIONS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_OPTIONS,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;111&apos;,
-      attr1 type scx_attrname value &apos;CX_NAME&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of ZAPLINK_CX_OPTIONS
-`</ITEM>
-  </ATTRIBUTS>
+  <EXCEPTIONS_TEXTS>
+   <ITEM CMPNAME="DIALOG_CANCELED" EDITORDER="3 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="253"/>
+   </ITEM>
+   <ITEM CMPNAME="ZAPLINK_CX_OPTIONS" EDITORDER="3 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="111" ATTRIBUT_1="CX_NAME"/>
+   </ITEM>
+  </EXCEPTIONS_TEXTS>
   <LOCAL>
    <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F6E1D5FFD8104803A153CAC5C8907445" CODE_SIGNATURE="F967C5247C898E52139411269BD6235D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="23DBC61CAF0C72320C38335CD6AF5340" CODE_SIGNATURE="F967C5247C898E52139411269BD6235D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_LIST" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CX"/>
  </DEPENDENCIES>
@@ -35,52 +35,16 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="TD_CONNCLASS" EXPOSURE="2" CMPTYPE="3" REFCLSNAME="ZAPLINK_DATATYPES" REFCMPNAME="TD_CONNCLASS"/>
   </ALIASES>
   <ATTRIBUTS>
-   <ITEM CMPNAME="ALREADY_EXISTS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ALREADY_EXISTS,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;300&apos;,
-      attr1 type scx_attrname value &apos;TYPE&apos;,
-      attr2 type scx_attrname value &apos;NAME&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of ALREADY_EXISTS
-`</ITEM>
    <ITEM CMPNAME="CONNCLASS" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TD_CONNCLASS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Type Name"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="INVALID_ACTION" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_ACTION,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;301&apos;,
-      attr1 type scx_attrname value &apos;SEL_ACTION&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of INVALID_ACTION
-`</ITEM>
-   <ITEM CMPNAME="ITERATOR_NOT_INITIALIZE" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ITERATOR_NOT_INITIALIZE,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;302&apos;,
-      attr1 type scx_attrname value &apos;&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of ITERATOR_NOT_INITIALIZE
-`</ITEM>
    <ITEM CMPNAME="NAME" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TD_COMPNAME">
     <TEXTS>
      <ITEM LANG="E" TEXT="Object Name"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="NOT_FOUND" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of NOT_FOUND,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;303&apos;,
-      attr1 type scx_attrname value &apos;TYPE&apos;,
-      attr2 type scx_attrname value &apos;NAME&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of NOT_FOUND
-`</ITEM>
    <ITEM CMPNAME="SEL_ACTION" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TD_ACTION">
     <TEXTS>
      <ITEM LANG="E" TEXT="Selection Action : Export, Import, Uninstall"/>
@@ -91,16 +55,24 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Object Type"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CX_LIST" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_LIST,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;110&apos;,
-      attr1 type scx_attrname value &apos;CX_NAME&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of ZAPLINK_CX_LIST
-`</ITEM>
   </ATTRIBUTS>
+  <EXCEPTIONS_TEXTS>
+   <ITEM CMPNAME="ALREADY_EXISTS" EDITORDER="1 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="300" ATTRIBUT_1="TYPE" ATTRIBUT_2="NAME"/>
+   </ITEM>
+   <ITEM CMPNAME="INVALID_ACTION" EDITORDER="3 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="301" ATTRIBUT_1="SEL_ACTION"/>
+   </ITEM>
+   <ITEM CMPNAME="ITERATOR_NOT_INITIALIZE" EDITORDER="4 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="302"/>
+   </ITEM>
+   <ITEM CMPNAME="NOT_FOUND" EDITORDER="5 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="303" ATTRIBUT_1="TYPE" ATTRIBUT_2="NAME"/>
+   </ITEM>
+   <ITEM CMPNAME="ZAPLINK_CX_LIST" EDITORDER="6 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="110" ATTRIBUT_1="CX_NAME"/>
+   </ITEM>
+  </EXCEPTIONS_TEXTS>
   <INTERFACES>
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>

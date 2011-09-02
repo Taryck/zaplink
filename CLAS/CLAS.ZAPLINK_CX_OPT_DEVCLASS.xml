@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F9A3FE80DF082FEEFFE71A320A9540C5" CODE_SIGNATURE="B7667BEF535453A6CEA4784DE845123E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_OPT_DEVCLASS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="47173D07BA8A846EE70085A01AB2F4C8" CODE_SIGNATURE="B7667BEF535453A6CEA4784DE845123E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX_OPT_DEVCLASS" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CX_OPTIONS"/>
  </DEPENDENCIES>
@@ -34,24 +34,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   </ALIASES>
   <ATTRIBUTS>
    <ITEM CMPNAME="DEVCLASS" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TD_DEVCLASS"/>
-   <ITEM CMPNAME="INVALID_SUBSTITUTIONKIND" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of INVALID_SUBSTITUTIONKIND,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;254&apos;,
-      attr1 type scx_attrname value &apos;SUBSTKIND&apos;,
-      attr2 type scx_attrname value &apos;OPT_CAT&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of INVALID_SUBSTITUTIONKIND
-`</ITEM>
-   <ITEM CMPNAME="MISSING_DEVCLASS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of MISSING_DEVCLASS,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;255&apos;,
-      attr1 type scx_attrname value &apos;SUBSTKIND&apos;,
-      attr2 type scx_attrname value &apos;OPT_CAT&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of MISSING_DEVCLASS
-`</ITEM>
    <ITEM CMPNAME="OPT_CAT" EXPOSURE="2" STATE="1" ATTDECLTYP="1" TYPTYPE="1" TYPE="STRING">
     <TEXTS>
      <ITEM LANG="E" TEXT="Pseudo constant : language dependant"/>
@@ -62,16 +44,18 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Devclass substitution Kind"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CX_OPT_DEVCLASS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4" LOCKED="X">begin of ZAPLINK_CX_OPT_DEVCLASS,
-      msgid type symsgid value &apos;ZAPLINK&apos;,
-      msgno type symsgno value &apos;111&apos;,
-      attr1 type scx_attrname value &apos;CX_NAME&apos;,
-      attr2 type scx_attrname value &apos;&apos;,
-      attr3 type scx_attrname value &apos;&apos;,
-      attr4 type scx_attrname value &apos;&apos;,
-    end of ZAPLINK_CX_OPT_DEVCLASS
-`</ITEM>
   </ATTRIBUTS>
+  <EXCEPTIONS_TEXTS>
+   <ITEM CMPNAME="INVALID_SUBSTITUTIONKIND" EDITORDER="1 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="254" ATTRIBUT_1="SUBSTKIND" ATTRIBUT_2="OPT_CAT"/>
+   </ITEM>
+   <ITEM CMPNAME="MISSING_DEVCLASS" EDITORDER="3 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="255" ATTRIBUT_1="SUBSTKIND" ATTRIBUT_2="OPT_CAT"/>
+   </ITEM>
+   <ITEM CMPNAME="ZAPLINK_CX_OPT_DEVCLASS" EDITORDER="2 ">
+    <MESSAGE CLASS="ZAPLINK" NUMBER="111" ATTRIBUT_1="CX_NAME"/>
+   </ITEM>
+  </EXCEPTIONS_TEXTS>
   <INTERFACES>
    <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
   </INTERFACES>
