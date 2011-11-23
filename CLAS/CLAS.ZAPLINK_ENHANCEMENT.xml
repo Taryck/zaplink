@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="997C11B21F0559B1ACB90856A1239770" CODE_SIGNATURE="0A0C6DD6C0FE8C65406564E83F3BD53B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="DDB1BF8329EEBB4E89DDCEA6D91C696A" CODE_SIGNATURE="E7B52C18F1B3BA6A556C0B8F70F2AF5C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
@@ -161,7 +161,7 @@ INCLUDE zaplink_macros.</MACROS>
   CREATE OBJECT raw_object.
   version = get_version( sap_object ).
   s_comp-header = sap_object-&gt;get_enhcompheader( version ).
-  IF sub_components = abap_true.
+  IF sub_components &gt;= sub_component-with_required.
     s_comp-comp_enh = sap_object-&gt;if_enh_composite~get_composite_childs( version ).
     s_comp-enh = sap_object-&gt;if_enh_composite~get_enh_childs( version ).
   ENDIF.
@@ -225,7 +225,7 @@ INCLUDE zaplink_macros.</MACROS>
   CREATE OBJECT raw_object.
   version = get_version( sap_object ).
   s_comp-header = sap_object-&gt;get_enhspotcomphead( version ).
-  IF sub_components = abap_true.
+  IF sub_components &gt;= sub_component-with_required.
     s_comp-comp_enh = sap_object-&gt;if_enh_spot_composite~get_composite_childs( version ).
     s_comp-enh = sap_object-&gt;if_enh_spot_composite~get_enh_spot_childs( version ).
   ENDIF.

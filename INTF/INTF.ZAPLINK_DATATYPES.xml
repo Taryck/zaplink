@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2EA6413BF6DF783E2B16FB4E2684DC6A" CODE_SIGNATURE="40C737F0D65529D010E43D70AB43193C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DATATYPES" TYPE="INTF" VERSION="1.01">
- <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-INTERFACES" MASTERLANG="E"/>
+<ZL_OBJECT CHECKSUM="CE1C7CE6EF30FDC480D2F83C340E9925" CODE_SIGNATURE="F8E4E3554C8B405E58B3DF23CC5D993C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DATATYPES" TYPE="INTF" VERSION="1.01">
+ <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" RELEASE="1" UNICODE="X">
    <TEXTS>
@@ -49,6 +49,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Name of the node in XML that belongs to component"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="DEFAULT_SUB_COMPONENT_LEVEL" EXPOSURE="2" STATE="1" ATTDECLTYP="2" ATTVALUE="SUB_COMPONENT-WITH_MINE" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Default Sub Component level"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="EXISTS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF exists,
       exists     TYPE td_exists VALUE abap_true,
@@ -80,10 +85,10 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="SUB_COMPONENT" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4">BEGIN OF sub_component,
-      without_any   TYPE td_with_subcomp VALUE &apos;N&apos;,         &quot;#EC NOTEXT
-      with_mine     TYPE td_with_subcomp VALUE abap_false,
-      with_required TYPE td_with_subcomp VALUE &apos;R&apos;,         &quot;#EC NOTEXT
-      with_all      TYPE td_with_subcomp VALUE abap_true,
+      without_any   TYPE td_with_subcomp VALUE &apos;0&apos;,         &quot;#EC NOTEXT
+      with_mine     TYPE td_with_subcomp VALUE &apos;3&apos;,         &quot;#EC NOTEXT
+      with_required TYPE td_with_subcomp VALUE &apos;6&apos;,         &quot;#EC NOTEXT
+      with_all      TYPE td_with_subcomp VALUE &apos;9&apos;,         &quot;#EC NOTEXT
     END OF sub_component
 `</ITEM>
    <ITEM CMPNAME="TEXTPOOL_KINDS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4">
@@ -299,9 +304,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Object type as Text"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TD_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="ABAP_BOOL">
+   <ITEM CMPNAME="TD_WITH_SUBCOMP" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="ZAPLINK_SUBCOMPONENT_LEVEL">
     <TEXTS>
-     <ITEM LANG="E" TEXT="With Sub component"/>
+     <ITEM LANG="E" TEXT="Sub Component level"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="TO_XML" EXPOSURE="2" STATE="1" EDITORDER="30 " TYPTYPE="3" TYPE="IF_IXML_DOCUMENT">

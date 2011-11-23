@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AE4ACC2D2425B5DC30A5ABBAD70B3AE6" CODE_SIGNATURE="56488D3D51F40BDE8AFAF4166F8F554E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A57D4BD7BCAB7415F5B82D6A9701E5C2" CODE_SIGNATURE="848507E2D72FC403731FCF1854DBFEE3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -191,7 +191,7 @@ INCLUDE zaplink_macros.</MACROS>
       alv_data = elements2alv( _err ).
       a_data-elem_pack = interface-&gt;if-&gt;publisher_package_name.
       MODIFY alv_data FROM a_data TRANSPORTING elem_pack WHERE elem_pack IS INITIAL.   &quot;update package
-      title = &apos;Incosistant TADIR entries please select elements that will change package. All unselected entries won&apos;&apos;t be in this interface&apos;(alv).
+      title = &apos;Inconsistant TADIR entries please select elements that will change package. All unselected entries won&apos;&apos;t be in this interface&apos;(alv).
       CALL FUNCTION &apos;REUSE_ALV_GRID_DISPLAY&apos;
         EXPORTING
 *           I_INTERFACE_CHECK                 = &apos; &apos;
@@ -2760,7 +2760,7 @@ INCLUDE zaplink_macros.</MACROS>
   <TEXTSPOOL>
    <ITEM ID="I" KEY="ALV">
     <TEXTS>
-     <ITEM LANGU="E" ENTRY="Incosistant TADIR entries please select elements that will change package. All unselected entries won&apos;&apos;t be in this interface" LENGTH="125 "/>
+     <ITEM LANGU="E" ENTRY="Inconsistant TADIR entries please select elements that will change package. All unselected entries won&apos;&apos;t be in this interface" LENGTH="129 "/>
     </TEXTS>
    </ITEM>
    <ITEM ID="I" KEY="C01">

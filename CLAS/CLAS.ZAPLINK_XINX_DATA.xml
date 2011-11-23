@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="1B605635A7578F9DB95CF5F13D88DAE4" CODE_SIGNATURE="8514456315D953A3070057176C74083B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F608F251A703BCBE6BF9A143C1F17D93" CODE_SIGNATURE="8514456315D953A3070057176C74083B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_XINX_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -205,19 +205,19 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <SOURCE>`
-  data d_OBJ_NAME type  E071-OBJ_NAME.
+  DATA d_obj_name TYPE  e071-obj_name.
 
   d_obj_name = data.
   CALL FUNCTION &apos;DD_E071_TO_DD&apos;
     EXPORTING
-      object              = ZAPLINK_DICTIONARY=&gt;supportedtypes-ext_index
+      object              = zaplink_dictionary=&gt;supportedtypes-ext_index
       obj_name            = d_obj_name
     IMPORTING
 *      TYPE                =
-      NAME                = result-table
-      ID                  = result-index
+      name                = result-table
+      id                  = result-index
     EXCEPTIONS
-      ILLEGAL_INPUT       = 1
+      illegal_input       = 1
       OTHERS              = 2.
   IF sy-subrc &lt;&gt; 0.
     mac_raise_mf &apos;DD_DD_TO_E071&apos; sy-subrc.

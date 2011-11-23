@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FED0D6359166809036D25BF7FC93EE29" CODE_SIGNATURE="580E7BCD471B8F60EB000AEB95979395" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E8D7128A9392CBC6ADD760C99DE7FF7C" CODE_SIGNATURE="ECB5A1D4DD289A1ECC4E0671AB5F0BB3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TRANSACTION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -355,7 +355,7 @@ INCLUDE zaplink_macros.</MACROS>
 
 * Issue 40 : Sub object has been disabled in V0.0.003 and is working in V0.0.004
 * Sub component
-        IF f_subcomp = abap_true.
+        IF f_subcomp &gt;= sub_component-with_all.
           IF o_data-&gt;a0_maindata-cinfo O transaction_types-object.
 * Object
             _name = o_data-&gt;a0_maindata-classname.

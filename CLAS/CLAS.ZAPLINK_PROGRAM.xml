@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AE74E10E2292CAC3FE1A790FAC96FE18" CODE_SIGNATURE="50A62CB7E873039A5A5F2043EAE9A762" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="34576DE09A6BB300FE6D6DB76D48F35B" CODE_SIGNATURE="C74935E7093DAB3294734DF130128D99" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1090,18 +1090,18 @@ INCLUDE zaplink_macros.</MACROS>
                                                   object = _obj ).
 
 * Issue 53
-        IF f_subcomp &lt;&gt; sub_component-without_any.
+        IF f_subcomp &gt;= sub_component-with_mine.
           SELECT * INTO TABLE t_varid
             FROM varid CLIENT SPECIFIED
             WHERE mandt = &apos;000&apos;
               AND report = _prog.
 
-          IF f_subcomp &lt;&gt; sub_component-with_mine.
+          IF f_subcomp &gt;= sub_component-with_required.
             SELECT * APPENDING TABLE t_varid
               FROM varid
               WHERE report = _prog
                 AND transport &lt;&gt; zaplink_vari_data=&gt;transport-normal.
-            IF f_subcomp = sub_component-with_all.
+            IF f_subcomp &gt;= sub_component-with_all.
               SELECT * APPENDING TABLE t_varid
                 FROM varid
                 WHERE report = _prog
