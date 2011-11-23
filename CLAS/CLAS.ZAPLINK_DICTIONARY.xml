@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="246D7F823530E8F4AF96141D976E2067" CODE_SIGNATURE="87956E13DA000D4AE0F98A69D7E81A3D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2B49455E9979DD753C4A78051D87C8C7" CODE_SIGNATURE="0495E1F1D0F5006CBACA1231A371BDCF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -556,11 +556,13 @@ END-OF-DEFINITION.</MACROS>
   DATA subrc      TYPE sy-subrc.
   DATA s_fm_data  TYPE zaplink_tabl_data=&gt;ts_fm_data.
   DATA d_mask     TYPE doku_obj.
+  DATA f_subcomp  TYPE td_with_subcomp.
   DATA t_texts    TYPE STANDARD TABLE OF dd02t WITH DEFAULT KEY.
   DATA t_ftexts   TYPE STANDARD TABLE OF dd03t WITH DEFAULT KEY.
 
   TRY.
     d_name = component-&gt;get_name( ).
+    f_subcomp = component-&gt;get_with_subcomp( ).
     CALL FUNCTION &apos;DDIF_TABL_GET&apos;
       EXPORTING
         name                = d_name
@@ -606,6 +608,15 @@ END-OF-DEFINITION.</MACROS>
     d_mask = d_name.
     s_fm_data-docs = zaplink_documentation=&gt;get( ids = zaplink_tabl_data=&gt;r_doc_ids
                                               object = d_mask ).
+    IF f_subcomp &lt; sub_component-with_mine.
+* Table Only
+      CLEAR: s_fm_data-indexes, s_fm_data-idx_fields.
+    ELSEIF f_subcomp &gt;= sub_component-with_all
+        OR f_subcomp &gt;= sub_component-with_required AND s_fm_data-header-contflag CO &apos;CG&apos;.
+* C	Customizing table, maintenance only by cust., not SAP import
+* G	Customizing table, protected against SAP Upd., only INS all.
+      s_fm_data-with_content = abap_true.
+    ENDIF.
 
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).

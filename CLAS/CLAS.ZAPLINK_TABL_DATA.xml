@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FDC86D57409696E93462C76915E0C0C6" CODE_SIGNATURE="2ADA1AC8D10094A3ECAE7BBC24C933E8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0A3EC3264EC12201F7F19978F0B26CAA" CODE_SIGNATURE="9FAAB186A72C553039EC771C81267F02" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -34,6 +34,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="A0_MAINDATA" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TS_MAINDATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Line Type for Table with Package Data"/>
+    </TEXTS>
+   </ITEM>
+   <ITEM CMPNAME="CONTENT" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="DATA">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Table&apos;s content"/>
     </TEXTS>
    </ITEM>
    <ITEM CMPNAME="DOC_IDS" EXPOSURE="1" STATE="1" ATTDECLTYP="2" TYPTYPE="4">
@@ -209,6 +214,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     &lt;d&gt; LIKE LINE OF fm_data-docs,
     &lt;dt&gt; LIKE LINE OF &lt;d&gt;-texts,
     &lt;t&gt; LIKE LINE OF fm_data-texts.
+  DATA p_table TYPE REF TO data.
+  FIELD-SYMBOLS:
+    &lt;tc&gt; TYPE STANDARD TABLE.
 
   a0_maindata-hdr = fm_data-header.
   a0_maindata-technical_settings = fm_data-tech.
@@ -290,7 +298,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   SORT t_index BY header-indexname.
   LOOP AT t_index ASSIGNING &lt;id&gt;.
     CLEAR s_index.
-    CREATE OBJECT s_index-zl_object EXPORTING fm_data = &lt;id&gt;.
+    CREATE OBJECT s_index-zl_object
+      EXPORTING
+        fm_data = &lt;id&gt;.
     APPEND s_index TO indexes.
   ENDLOOP.
 *  LOOP AT fm_data-indexes ASSIGNING &lt;i&gt;
@@ -308,7 +318,18 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *    ENDLOOP.
 *
 *    INSERT s_index INTO TABLE indexes.
-*  ENDLOOP.</SOURCE>
+*  ENDLOOP.
+
+* Table content
+  IF fm_data-with_content = abap_true AND fm_data-header-tabclass &lt;&gt; &apos;INTTAB&apos;.    &quot; skip for structures
+    CREATE DATA content TYPE STANDARD TABLE OF (a0_maindata-tabname).
+    CHECK sy-subrc = 0.
+    ASSIGN content-&gt;* TO &lt;t&gt;.
+    ASSERT sy-subrc = 0.
+    SELECT *
+      FROM (a0_maindata-tabname)
+      INTO TABLE &lt;tc&gt;.
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1">
     <TEXTS>
@@ -441,7 +462,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
   </METHODS>
   <TYPES>
-   <ITEM CMPNAME="TO_INDEX" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="3" TYPE="ZAPLINK_XINX_RAW"/>
+   <ITEM CMPNAME="TO_INDEX" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="3" TYPE="ZAPLINK_XINX_RAW"/>
    <ITEM CMPNAME="TS_FIELD" EXPOSURE="2" STATE="1" EDITORDER="14 " TYPTYPE="4">BEGIN OF ts_field.
     INCLUDE TYPE dd03p AS hdr.
     TYPES:
@@ -453,20 +474,21 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="TS_FM_DATA" EXPOSURE="2" STATE="1" EDITORDER="11 " TYPTYPE="4">
     BEGIN OF ts_fm_data,
 * DO pour type doc
-              header        TYPE dd02v,
-              tech          TYPE dd09v,
-              texts         TYPE tt_dd02t,
-              docs          TYPE tt_docs,
-              fields        TYPE tt_dd03p,
-              fields_texts  TYPE tt_dd03t,
-              forein_keys   TYPE tt_dd08v,      &quot; Header
-              fk_fields     TYPE tt_dd05m,
-              indexes       TYPE tt_dd12v,
-              idx_texts     TYPE tt_dd12t,
-              idx_fields    TYPE tt_dd17v,
-              search_helps  TYPE tt_dd35v,
-              sh_fields     TYPE tt_dd36m,
-            END OF ts_fm_data
+                header        TYPE dd02v,
+                tech          TYPE dd09v,
+                texts         TYPE tt_dd02t,
+                docs          TYPE tt_docs,
+                fields        TYPE tt_dd03p,
+                fields_texts  TYPE tt_dd03t,
+                forein_keys   TYPE tt_dd08v,      &quot; Header
+                fk_fields     TYPE tt_dd05m,
+                indexes       TYPE tt_dd12v,
+                idx_texts     TYPE tt_dd12t,
+                idx_fields    TYPE tt_dd17v,
+                search_helps  TYPE tt_dd35v,
+                sh_fields     TYPE tt_dd36m,
+                with_content  TYPE abap_bool,     &quot; With table content
+              END OF ts_fm_data
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Function Module Data"/>
@@ -478,11 +500,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         fields TYPE SORTED TABLE OF dd05m WITH UNIQUE KEY primpos,
       END OF ts_forein_key
 `</ITEM>
-   <ITEM CMPNAME="TS_INDEX" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4">BEGIN OF ts_index,
-      zl_object type to_index ,
-      END OF ts_index
+   <ITEM CMPNAME="TS_INDEX" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4">BEGIN OF ts_index,
+        zl_object TYPE to_index ,
+        END OF ts_index
 `</ITEM>
-   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="21 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_MAINDATA" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4">
     BEGIN OF ts_maindata.
     INCLUDE TYPE dd02v AS hdr.
 *    INCLUDE TYPE dd09v AS tech.
@@ -544,7 +566,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 `</ITEM>
    <ITEM CMPNAME="TT_FM_DATA" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="4">tt_fm_data TYPE STANDARD TABLE OF zaplink_xinx_data=&gt;ts_fm_data WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_INDEXES" EXPOSURE="2" STATE="1" EDITORDER="20 " TYPTYPE="4">tt_indexes TYPE STANDARD TABLE OF ts_index WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_INDEXES" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="4">tt_indexes TYPE STANDARD TABLE OF ts_index WITH DEFAULT KEY
 `</ITEM>
   </TYPES>
  </RAW>
