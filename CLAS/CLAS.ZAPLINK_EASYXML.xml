@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E4047AA69032F6E28DC6D2CC173A0513" CODE_SIGNATURE="34C3C6073209ACE9FC43A76605B337E0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="61424B472F0C705C5EE1F2153C901873" CODE_SIGNATURE="0A620842126AB6AE7E197E366A491CA1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -169,6 +169,7 @@ END-OF-DEFINITION.</MACROS>
   DATA svalue    TYPE string.
   FIELD-SYMBOLS: &lt;any&gt; TYPE ANY.
 
+  CHECK any IS NOT INITIAL.         &quot; prevent from do anything for an empty field
   IF typedesc IS BOUND.
     _desc = typedesc.
   ELSE.
@@ -181,12 +182,14 @@ END-OF-DEFINITION.</MACROS>
     WHEN cl_abap_datadescr=&gt;kind_ref.
       IF _desc-&gt;type_kind = cl_abap_refdescr=&gt;typekind_dref.   &quot; Data Ref
         ASSIGN any-&gt;* TO &lt;any&gt;.
-        _desc = cl_abap_typedescr=&gt;describe_by_data( p_data = &lt;any&gt; ).
-        add_any(   xmldoc = xmldoc
-                 xml_node = xml_node
-                     name = name
-                      any = &lt;any&gt;
-                 typedesc = _desc ).
+        IF sy-subrc = 0.        &quot; Ignore dref {A:INITIAL}
+          _desc = cl_abap_typedescr=&gt;describe_by_data( p_data = &lt;any&gt; ).
+          add_any(   xmldoc = xmldoc
+                   xml_node = xml_node
+                       name = name
+                        any = &lt;any&gt;
+                   typedesc = _desc ).
+        ENDIF.
       ELSE.
 * Unexpected =&gt; Ignored
         mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref&apos; &apos;ZAPLINK_EASYXML-&gt;ADD_ANY&apos;.
