@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="DDB1BF8329EEBB4E89DDCEA6D91C696A" CODE_SIGNATURE="E7B52C18F1B3BA6A556C0B8F70F2AF5C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8A27DF8079E9FF54E9D26F9AB15AE26F" CODE_SIGNATURE="B94D603522D31828CF14787390753355" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
@@ -170,19 +170,23 @@ INCLUDE zaplink_macros.</MACROS>
 * Sub component as object if present (depend on sub_component value)
   LOOP AT raw_object-&gt;enhancement_implementations ASSIGNING &lt;enh&gt;.
     o_enh = _load_enh_impl( &lt;enh&gt;-name ).
+    CHECK o_enh IS BOUND.
     CREATE OBJECT &lt;enh&gt;-zl_object.
     &lt;enh&gt;-zl_object-&gt;raw = convert_enh_impl( sap_object = o_enh
                                          sub_components = sub_components
                                         components_list = components_list ).
+    IF NOT &lt;enh&gt;-zl_object-&gt;raw IS BOUND.    CLEAR &lt;enh&gt;-zl_object.     ENDIF.
     IF &lt;enh&gt;-zl_object IS BOUND.      CLEAR &lt;enh&gt;-name.       ENDIF.
   ENDLOOP.
 
   LOOP AT raw_object-&gt;composit_enh_implementations ASSIGNING &lt;comp&gt;.
     o_comp = _load_comp_enh_impl( &lt;comp&gt;-name ).
+    CHECK o_comp IS BOUND.
     CREATE OBJECT &lt;comp&gt;-zl_object.
     &lt;comp&gt;-zl_object-&gt;raw = convert_comp_enh_impl( sap_object = o_comp
                                                sub_components = sub_components
                                               components_list = components_list ).
+    IF NOT &lt;comp&gt;-zl_object-&gt;raw IS BOUND.    CLEAR &lt;comp&gt;-zl_object.     ENDIF.
     IF &lt;comp&gt;-zl_object IS BOUND.      CLEAR &lt;comp&gt;-name.       ENDIF.
   ENDLOOP.
 
@@ -234,19 +238,23 @@ INCLUDE zaplink_macros.</MACROS>
 * Sub objects as object if present (depend on sub_component)
   LOOP AT raw_object-&gt;enhancements ASSIGNING &lt;enh&gt;.
     o_enh = _load_enh_spot( &lt;enh&gt;-name ).
+    CHECK o_enh IS BOUND.
     CREATE OBJECT &lt;enh&gt;-zl_object.
     &lt;enh&gt;-zl_object-&gt;raw = convert_enh_spot( sap_object = o_enh
                                          sub_components = sub_components
                                         components_list = components_list ).
+    IF NOT &lt;enh&gt;-zl_object-&gt;raw IS BOUND.    CLEAR &lt;enh&gt;-zl_object.     ENDIF.
     IF &lt;enh&gt;-zl_object IS BOUND.      CLEAR &lt;enh&gt;-name.       ENDIF.
   ENDLOOP.
 
   LOOP AT raw_object-&gt;composit_enhancements ASSIGNING &lt;comp&gt;.
     o_comp = _load_comp_enh_spot( &lt;comp&gt;-name ).
+    CHECK o_comp IS BOUND.
     CREATE OBJECT &lt;comp&gt;-zl_object.
     &lt;comp&gt;-zl_object-&gt;raw = convert_comp_enh_spot( sap_object = o_comp
                                                sub_components = sub_components
                                               components_list = components_list ).
+    IF NOT &lt;comp&gt;-zl_object-&gt;raw IS BOUND.    CLEAR &lt;comp&gt;-zl_object.     ENDIF.
     IF &lt;comp&gt;-zl_object IS BOUND.      CLEAR &lt;comp&gt;-name.       ENDIF.
   ENDLOOP.
 
