@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2B49455E9979DD753C4A78051D87C8C7" CODE_SIGNATURE="0495E1F1D0F5006CBACA1231A371BDCF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8AB2A87303AF2C7E787CD0D02EC2A049" CODE_SIGNATURE="BEDA18191846EAFB6A214FB279360875" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK_DICTIONARY">
    <INHERITANCE REFCLSNAME="ZAPLINK_CONNECTOR_" STATE="1"/>
    <TEXTS>
     <ITEM LANG="E" TEXT="Data for Class">U1&amp;FUNCTIONALITY&amp;
@@ -149,7 +149,7 @@ END-OF-DEFINITION.</MACROS>
   DATA type LIKE LINE OF supported_types.
 
   CALL METHOD super-&gt;constructor.
-  mac_create_log application_log ballog_subobject space.
+  mac_create_log application_log ballog_subobject space.    application_log-&gt;msgid = &apos;ZAPLINK_DICTIONARY&apos;.
   type-type = supportedtypes-type_group.    INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-domain.        INSERT type INTO TABLE supported_types.
   type-type = supportedtypes-data_element.  INSERT type INTO TABLE supported_types.
@@ -1381,6 +1381,7 @@ END-OF-DEFINITION.</MACROS>
   DATA d_subrc        TYPE sy-subrc.
   DATA s_fm_data      TYPE zaplink_tabl_data=&gt;ts_fm_data.
   DATA t_idx_flds     TYPE zaplink_tabl_data=&gt;tt_dd17v.
+  DATA d_cname        TYPE td_compname.
   FIELD-SYMBOLS: &lt;i&gt; LIKE LINE OF s_fm_data-indexes.
 
   TRY.
@@ -1457,6 +1458,45 @@ END-OF-DEFINITION.</MACROS>
     MODIFY dd03t FROM TABLE s_fm_data-fields_texts.
 
     zaplink_documentation=&gt;set( s_fm_data-docs ).
+
+* Handle Content
+    IF s_fm_data-with_content = abap_true.
+      d_cname = s_fm_data-header-tabname.
+*      COMMIT WORK AND WAIT.
+      IF NOT active_component( type = supportedtypes-table
+                               name = d_cname ) = abap_true.
+* Can&apos;t insert data into table &apos;&amp;1&apos;, because table don&apos;t exists as active
+        SET EXTENDED CHECK OFF.
+        IF 1 = 2.   MESSAGE i000 WITH s_fm_data-header-tabname.   ENDIF.
+        SET EXTENDED CHECK ON.
+        CALL METHOD application_log-&gt;add_error
+          EXPORTING
+*        id_msgid     =
+            id_msgno     = &apos;000&apos;
+*        id_msgv4     =
+            id_msgv1     = s_fm_data-header-tabname.
+      ELSEIF NOT o_data-&gt;content IS INITIAL.
+        DATA content TYPE REF TO data.
+        DATA o_node TYPE REF TO if_ixml_element.
+        DATA ez_xml    TYPE REF TO zaplink_easyxml.
+        FIELD-SYMBOLS:
+          &lt;n&gt;  TYPE ANY,
+          &lt;tc&gt; TYPE STANDARD TABLE.
+
+        CREATE OBJECT ez_xml.
+* Table
+        CREATE DATA content TYPE STANDARD TABLE OF (s_fm_data-header-tabname).
+        ASSIGN content-&gt;* TO &lt;tc&gt;.
+* Node
+        ASSIGN o_data-&gt;content-&gt;* TO &lt;n&gt;.
+        o_node = &lt;n&gt;.
+* Convert
+        ez_xml-&gt;read_any( EXPORTING xml_node = o_node
+                           CHANGING      any = &lt;tc&gt; ).
+        INSERT (s_fm_data-header-tabname) FROM TABLE &lt;tc&gt;.
+* Ignoring errors : previous existing entries don&apos;t want to be overwrited
+      ENDIF.
+    ENDIF.
 
     mac_def_catch zaplink_cx_connector.
   ENDTRY.</SOURCE>

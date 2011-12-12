@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="61424B472F0C705C5EE1F2153C901873" CODE_SIGNATURE="0A620842126AB6AE7E197E366A491CA1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9AF3AA74C4D4C02D50051AD6B77E84E6" CODE_SIGNATURE="5D0DF202C9B23A69929F92E85CCC7236" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_EASYXML" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-XML" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K" MSG_ID="ZAPLINK_EASYXML">
@@ -1067,7 +1067,7 @@ END-OF-DEFINITION.</MACROS>
   ENDIF.
   IF string+d_last(1) IN char_to_protect.   CONCATENATE result protection_char INTO result.   ENDIF.    &quot; Issue 61 &amp; 68</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="READ_ANY" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="READ_ANY" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Read XML to Any data"/>
     </TEXTS>
@@ -1096,6 +1096,7 @@ END-OF-DEFINITION.</MACROS>
   DATA string    TYPE string.
   DATA name      TYPE string.
   DATA object    TYPE REF TO object.
+  FIELD-SYMBOLS: &lt;any&gt; TYPE ANY.
 
   IF typedesc IS BOUND.
     _desc = typedesc.
@@ -1107,8 +1108,25 @@ END-OF-DEFINITION.</MACROS>
   stack_descr( _desc ).
   CASE _desc-&gt;kind.
     WHEN cl_abap_datadescr=&gt;kind_ref.
+      IF _desc-&gt;type_kind = cl_abap_refdescr=&gt;typekind_dref.   &quot; Data Ref
+        ASSIGN any-&gt;* TO &lt;any&gt;.
+        IF sy-subrc = 0.        &quot; already assigned
 * Unexpected =&gt; Ignored
-      mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref&apos; &apos;ZAPLINK_EASYXML-&gt;READ_ANY&apos;.
+          mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref&apos; &apos;ZAPLINK_EASYXML-&gt;READ_ANY&apos;.
+        ELSE.
+*          TRY.
+          CREATE DATA any TYPE REF TO if_ixml_element.
+*            CATCH cx_sy_create_data_error.
+*              mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref&apos; &apos;ZAPLINK_EASYXML-&gt;READ_ANY&apos;.
+*          ENDTRY.
+          ASSIGN any-&gt;* TO &lt;any&gt;.
+          ASSERT sy-subrc = 0.
+          &lt;any&gt; = xml_node.
+        ENDIF.
+      ELSE.
+* Unexpected =&gt; Ignored
+        mac_syserr_log -1 &apos;cl_abap_datadescr=&gt;kind_ref&apos; &apos;ZAPLINK_EASYXML-&gt;READ_ANY&apos;.
+      ENDIF.
     WHEN cl_abap_datadescr=&gt;kind_elem.
 *      string = xml_node-&gt;get_attribute( name = tn_value ).
       string = xml_node-&gt;get_value( ).

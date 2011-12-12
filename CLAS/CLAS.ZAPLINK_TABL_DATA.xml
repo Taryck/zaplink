@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0A3EC3264EC12201F7F19978F0B26CAA" CODE_SIGNATURE="9FAAB186A72C553039EC771C81267F02" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A0A3E6C5DCA55A4F6B2E98FBAEE38B21" CODE_SIGNATURE="5898D55A1D2DB66CEB8FF1FF009C8F40" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -216,7 +216,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     &lt;t&gt; LIKE LINE OF fm_data-texts.
   DATA p_table TYPE REF TO data.
   FIELD-SYMBOLS:
-    &lt;tc&gt; TYPE STANDARD TABLE.
+    &lt;tc&gt; TYPE STANDARD TABLE,
+    &lt;cl&gt; TYPE ANY,
+    &lt;mandt&gt; TYPE sy-mandt.
 
   a0_maindata-hdr = fm_data-header.
   a0_maindata-technical_settings = fm_data-tech.
@@ -322,13 +324,29 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
 * Table content
   IF fm_data-with_content = abap_true AND fm_data-header-tabclass &lt;&gt; &apos;INTTAB&apos;.    &quot; skip for structures
-    CREATE DATA content TYPE STANDARD TABLE OF (a0_maindata-tabname).
-    CHECK sy-subrc = 0.
-    ASSIGN content-&gt;* TO &lt;t&gt;.
-    ASSERT sy-subrc = 0.
-    SELECT *
-      FROM (a0_maindata-tabname)
-      INTO TABLE &lt;tc&gt;.
+    TRY.
+        CREATE DATA content TYPE STANDARD TABLE OF (a0_maindata-tabname).
+        ASSIGN content-&gt;* TO &lt;tc&gt;.
+        ASSERT sy-subrc = 0.
+        SELECT *
+          FROM (a0_maindata-tabname)
+          INTO TABLE &lt;tc&gt;.
+        IF NOT &lt;tc&gt; IS INITIAL.
+* Remove mandant information if exists
+          READ TABLE fm_data-fields ASSIGNING &lt;f&gt;
+              WITH KEY tabname = a0_maindata-tabname
+                       keyflag = abap_true
+                      datatype = &apos;CLNT&apos;.   &quot; Mandant
+          IF sy-subrc = 0.
+            LOOP AT &lt;tc&gt; ASSIGNING &lt;cl&gt;.
+              ASSIGN COMPONENT &lt;f&gt;-fieldname OF STRUCTURE &lt;cl&gt; TO &lt;mandt&gt;.
+              ASSERT sy-subrc = 0.
+              CLEAR &lt;mandt&gt;.
+            ENDLOOP.
+          ENDIF.
+        ENDIF.
+      CATCH cx_sy_create_data_error.
+    ENDTRY.
   ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="TO_DATA" EXPOSURE="2" STATE="1">
@@ -453,7 +471,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       ENDLOOP.
     ENDIF.
     INSERT s_field INTO TABLE fm_data-fields.
-  ENDLOOP.</SOURCE>
+  ENDLOOP.
+
+* Content
+  IF NOT content IS INITIAL.
+    fm_data-with_content = abap_true.
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UNANONYMIZE" EXPOSURE="2" STATE="1">
     <TEXTS>
