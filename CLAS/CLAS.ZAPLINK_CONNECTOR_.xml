@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E65C7B2D53B245B57F3C6BA2ED5D242A" CODE_SIGNATURE="9FFDE0EFF4ADCEF35F99FCC59FF307C2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E4C6CAE89CDF4B7697C1AD5A7F0A441B" CODE_SIGNATURE="5E2787083A6E5E2EEC713525539812FA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -124,6 +124,11 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Class Name"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="O_ACTIVATE" EXPOSURE="1" STATE="1" ATTDECLTYP="1" TYPTYPE="3" TYPE="ZAPLINK_ACTIVATE">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="ZAPLink : Activate components"/>
+    </TEXTS>
+   </ITEM>
    <ITEM CMPNAME="O_CX" EXPOSURE="1" STATE="1" ATTDECLTYP="1" TYPTYPE="1" TYPE="TO_ROOT_EXCEPTION">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
@@ -241,10 +246,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA o_raw_b   TYPE to_raw_base.
   DATA o_raw     TYPE to_raw.
   DATA _name     TYPE string.
-*  DATA o_comp    TYPE to_component.
-*  DATA o_c_in_l  TYPE to_component.
-*  DATA o_msgs    TYPE to_msg_coll.
-*  DATA o_msgs_2  TYPE to_msg_coll.
+  DATA wa_type   TYPE e071-object.
+  DATA wa_name   TYPE e071-obj_name.
+  DATA wa_flag   TYPE rs38l-head.
   DATA ez_xml    TYPE to_ez_xml.
   DATA o_cx      TYPE REF TO cx_root.
 *  DATA o_zlcx    TYPE REF TO zaplink_cx.     &quot; Issue 93
@@ -347,6 +351,23 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         ENDIF.
       ENDIF.
 
+* Add to worklist
+      wa_type = o_raw-&gt;type.
+      wa_name = o_raw-&gt;name.
+      CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+        EXPORTING
+          object                  = wa_type
+          obj_name                = wa_name
+*         DELETED_FLAG            = &apos; &apos;
+        IMPORTING
+          object_inserted         = wa_flag
+        EXCEPTIONS
+          wrong_object_name       = 1
+          OTHERS                  = 2.
+      IF sy-subrc &lt;&gt; 0.
+        mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+      ENDIF.
+
       components = write_to_sap( o_raw ).
       IF components IS NOT BOUND.   CREATE OBJECT components.   ENDIF.
 *      o_c_in_l = components-&gt;search( o_comp ).
@@ -397,6 +418,48 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 INCLUDE zaplink_macros.</MACROS>
   </LOCAL>
   <METHODS>
+   <ITEM CMPNAME="ACTIVE_COMPONENT" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Active specified component"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="NAME" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
+     <ITEM SCONAME="TYPE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
+    </PARAMETERS>
+    <SOURCE>`
+  DATA d_is_work_i    TYPE abap_bool.
+  DATA d_is_inactiv   TYPE abap_bool.
+  DATA d_obj_name     TYPE e071-obj_name.
+  DATA d_type         TYPE e071-object.
+  DATA t_comps      TYPE zaplink_list=&gt;tt_compkeys.
+  DATA s_comp       LIKE LINE OF t_comps.
+
+  result = abap_false.
+  s_comp-name = d_obj_name = name.
+  s_comp-type = d_type = type.
+  CALL FUNCTION &apos;RS_OBJECT_IN_WORKING_AREA&apos;
+    EXPORTING
+      object                        = d_type
+      obj_name                      = d_obj_name
+*     GLOBAL_CHECK                  = &apos; &apos;
+*     MODE                          = &apos;S&apos;
+    IMPORTING
+      object_is_work_item           = d_is_work_i     &quot; My inactive object
+      object_inactive_version       = d_is_inactiv.
+  IF NOT d_is_work_i IS INITIAL OR NOT d_is_inactiv IS INITIAL.
+    IF NOT o_activate IS BOUND.
+      CREATE OBJECT o_activate.
+    ELSE.
+      o_activate-&gt;reset( ).
+    ENDIF.
+    APPEND s_comp TO t_comps.
+    o_activate-&gt;add_keys( t_comps ).
+    t_comps = o_activate-&gt;activate( ).
+    result = abap_true.
+    IF NOT t_comps IS INITIAL.      CLEAR result.     ENDIF.
+  ENDIF.</SOURCE>
+   </ITEM>
    <ITEM CMPNAME="CHECK_COMPONENT_LIST" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
     <TEXTS>
      <ITEM LANG="E" TEXT="Check the component list for the presence of the object"/>
@@ -1405,7 +1468,7 @@ DATA _raw TYPE tt_abaprawsource.
    </ITEM>
   </TEXTSPOOL>
   <TYPEGROUPS>
-   <ITEM TYPEGROUP="ABAP" IMPLICIT="X"/>
+   <ITEM TYPEGROUP="ABAP" EXPLICIT="X"/>
    <ITEM TYPEGROUP="RPYTY" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
