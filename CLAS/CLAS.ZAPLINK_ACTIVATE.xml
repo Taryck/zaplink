@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="70DC61224DADF583F7E017A8DFFFDE10" CODE_SIGNATURE="B3B5C95FC23CDDBAC36EB0192D7D862B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="9EC6FE339D2CA8B131824AD26D9EBABB" CODE_SIGNATURE="D93555EA8EA1316E0526C66519CD0824" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
-  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
+  <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K">
    <TEXTS>
     <ITEM LANG="E" TEXT="ZAPLink : Activate components">U1&amp;FUNCTIONALITY&amp;
 ASAllow to activate (compile) a component list.
@@ -1115,7 +1115,27 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *    s_obj-component
     APPEND s_obj TO result.
   ENDLOOP.
+  SORT result BY object objname.
 * determine the program names on the basis of the TADIR keys *
+* Form is not suppose to get only :
+*    CASE lv_tadirobject.
+**----------------------------programs--------------------------------
+*      WHEN &apos;PROG&apos;.
+**----------------------------function groups ------------------------
+*      WHEN &apos;FUGR&apos;.
+**-----------------function groups with customer include ----------------
+** if FUGX exists then also FUGS exists
+** Since the prognames of FUGX and FUGS are identical, FUGX needn&apos;t be
+** considered here.
+*      WHEN &apos;FUGS&apos;.
+**---------------------------logical database, 2 programs---------------
+*      WHEN &apos;LDBA&apos;.
+**-----------------------classes and interfaces--------------------------
+*      WHEN &apos;CLAS&apos; OR &apos;INTF&apos;.
+**------------------------------type-pool--------------------------------
+*      WHEN &apos;TYPE&apos;.
+*    ENDCASE.
+* It generate wrong program name.
   PERFORM tadir_2_trdir IN PROGRAM rsparagenlod
           CHANGING result.</SOURCE>
    </ITEM>
@@ -1290,6 +1310,13 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA          s_obj LIKE LINE OF result.
   FIELD-SYMBOLS &lt;k&gt;   LIKE LINE OF keys.
   LOOP AT keys ASSIGNING &lt;k&gt;.   CLEAR s_obj.  s_obj-type = &lt;k&gt;-object.    s_obj-name = &lt;k&gt;-obj_name.    APPEND s_obj TO result.   ENDLOOP.</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="RESET" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Reset worklist"/>
+    </TEXTS>
+    <SOURCE>`
+  CLEAR: it_items, it_obj_list, component_list, activation_requested, object_count, force_activation.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SPLIT_LIST" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
