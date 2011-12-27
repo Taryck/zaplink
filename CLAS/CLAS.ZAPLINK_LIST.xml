@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F8FEA884E1D8F8C5988BF0011596361F" CODE_SIGNATURE="D91021D7B17059C483F57AF68F2DB119" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="358E059436A3653AF497493E25EA5AD6" CODE_SIGNATURE="9F7A7B69C8AF150DA351C518A722EE24" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -228,10 +228,9 @@ INCLUDE zaplink_macros.</MACROS>
   _idx = search_index( comp ).
   IF _idx-o_comp IS BOUND.
 * Component &apos;&amp;name&amp;&apos; (&amp;type&amp;) already in the collection
-    RAISE EXCEPTION TYPE zaplink_cx_list
-               EXPORTING textid = zaplink_cx_list=&gt;already_exists
-                           type = _idx-key-type
-                           name = _idx-key-name.
+    RAISE EXCEPTION TYPE zlcx_comp_already_exists
+               EXPORTING type = _idx-key-type
+                         name = _idx-key-name.
   ENDIF.
 
   _idx-o_comp = comp.
