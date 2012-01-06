@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A57D4BD7BCAB7415F5B82D6A9701E5C2" CODE_SIGNATURE="848507E2D72FC403731FCF1854DBFEE3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="2C320876CA74E12D82CB2C99C8FF59D1" CODE_SIGNATURE="2ABBBF835D61A95F872B42DE99524104" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -304,74 +304,6 @@ INCLUDE zaplink_macros.</MACROS>
                                           cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
     RAISE EXCEPTION o_mycx.
   ENDIF.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ANONYMIZE_INTERFACE_OFF" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Interface : Anonymized component data"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="OBJECT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INTERFACE">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="Interface Object"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
-    <SOURCE>`
-
-  CLEAR:
-*    object-&gt;a0_maindata-author,         &quot; Issue 88 : Person responsible : Must be clear because user might not exists
-    object-&gt;a0_maindata-created_by,
-    object-&gt;a0_maindata-created_on,
-    object-&gt;a0_maindata-changed_by,
-    object-&gt;a0_maindata-changed_on.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="ANONYMIZE_PACKAGE_OFF" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Package : Anonymized component data"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="OBJECT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_PACKAGE">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="Package Object"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
-    <SOURCE>`
-*  DATA o_raw_i     LIKE LINE OF object-&gt;interfaces.
-*  DATA o_interface TYPE to_interface.
-*  DATA o_raw_p     LIKE LINE OF object-&gt;packages.
-*  DATA o_package   TYPE to_package.
-*
-*  CLEAR:
-*    object-&gt;a0_maindata-created_by,
-*    object-&gt;a0_maindata-created_on,
-*    object-&gt;a0_maindata-changed_by,
-**    object-&gt;a0_maindata-as4user,    &quot; Issue 88 : Person responsible : Must be clear because user might not exists
-*    object-&gt;a0_maindata-changed_on.
-*
-*  LOOP AT object-&gt;interfaces INTO o_raw_i.
-*    o_interface ?= o_raw_i-zl_object-&gt;raw.
-*    anonymize_interface( o_interface ).
-*  ENDLOOP.
-*
-*  LOOP AT object-&gt;packages INTO o_raw_p.
-*    o_package ?= o_raw_p-zl_object-&gt;raw.
-*    anonymize_package( o_package ).
-*  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="BUILD_ERROR_MSG" STATE="1" MTDDECLTYP="1">
     <TEXTS>
@@ -746,102 +678,105 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
 
-      CLEAR o_mycx.
-      CREATE OBJECT o_data.
-      CALL METHOD package-&gt;get_all_attributes
-        IMPORTING
-          e_package_data  = o_data-&gt;a0_maindata
-        EXCEPTIONS
-          object_invalid  = 1
-          package_deleted = 2
-          intern_err      = 3
-          OTHERS          = 4.
-      IF sy-subrc &lt;&gt; 0.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
-          EXPORTING
-            textid  = zaplink_cx_connector=&gt;system_error
-            cx_name = &apos;error in package-&gt;get_all_attributes&apos;.
-      ENDIF.
+    CLEAR o_mycx.
+    CREATE OBJECT o_data.
+    CALL METHOD package-&gt;get_all_attributes
+      IMPORTING
+        e_package_data  = o_data-&gt;a0_maindata
+      EXCEPTIONS
+        object_invalid  = 1
+        package_deleted = 2
+        intern_err      = 3
+        OTHERS          = 4.
+    IF sy-subrc &lt;&gt; 0.
+      RAISE EXCEPTION TYPE zaplink_cx_connector
+        EXPORTING
+          textid  = zaplink_cx_connector=&gt;system_error
+          cx_name = &apos;error in package-&gt;get_all_attributes&apos;.
+    ENDIF.
 
-      CREATE OBJECT _component.
-      _component-&gt;set_type( st_package ).
-      _component-&gt;set_name( o_data-&gt;a0_maindata-devclass ).
-      subcomponents-&gt;add( _component ).
+* Issue 132
+    CLEAR: o_data-&gt;a0_maindata-dlvu_text, o_data-&gt;a0_maindata-component, o_data-&gt;a0_maindata-comp_text, o_data-&gt;a0_maindata-namespace.
+
+    CREATE OBJECT _component.
+    _component-&gt;set_type( st_package ).
+    _component-&gt;set_name( o_data-&gt;a0_maindata-devclass ).
+    subcomponents-&gt;add( _component ).
 
 * ACLs
-      CALL METHOD package-&gt;get_permissions_to_use
+    CALL METHOD package-&gt;get_permissions_to_use
+      IMPORTING
+        e_permissions    = permissions
+      EXCEPTIONS
+        object_invalid   = 1
+        unexpected_error = 2
+        OTHERS           = 3.
+    IF sy-subrc &lt;&gt; 0.
+      RAISE EXCEPTION TYPE zaplink_cx_connector
+        EXPORTING
+          textid  = zaplink_cx_connector=&gt;system_error
+          cx_name = &apos;package-&gt;get_permissions_to_use&apos;.
+    ELSEIF NOT permissions IS INITIAL.
+      LOOP AT permissions ASSIGNING &lt;p&gt;.
+        CHECK &lt;p&gt;-&gt;deleted_in_memory IS INITIAL.
+        perm_data-intf_name = &lt;p&gt;-&gt;package_interface_name.
+        perm_data-err_sever = &lt;p&gt;-&gt;error_severity.
+        APPEND perm_data TO o_data-&gt;acls.
+      ENDLOOP.
+    ENDIF.
+
+    IF with_subcomp = abap_true.
+* Interfaces
+      CALL METHOD package-&gt;get_interfaces
         IMPORTING
-          e_permissions    = permissions
+          e_package_interfaces = interfaces
         EXCEPTIONS
-          object_invalid   = 1
-          unexpected_error = 2
-          OTHERS           = 3.
+          object_invalid       = 1
+          unexpected_error     = 2
+          intern_err           = 3
+          OTHERS               = 4.
       IF sy-subrc &lt;&gt; 0.
         RAISE EXCEPTION TYPE zaplink_cx_connector
           EXPORTING
-            textid  = zaplink_cx_connector=&gt;system_error
-            cx_name = &apos;package-&gt;get_permissions_to_use&apos;.
-      ELSEIF NOT permissions IS INITIAL.
-        LOOP AT permissions ASSIGNING &lt;p&gt;.
-          CHECK &lt;p&gt;-&gt;deleted_in_memory IS INITIAL.
-          perm_data-intf_name = &lt;p&gt;-&gt;package_interface_name.
-          perm_data-err_sever = &lt;p&gt;-&gt;error_severity.
-          APPEND perm_data TO o_data-&gt;acls.
+            textid = zaplink_cx_connector=&gt;system_error.
+      ELSEIF NOT interfaces IS INITIAL.
+        LOOP AT interfaces ASSIGNING &lt;itf&gt;.
+          TRY.
+              intf-zl_object = conv_interface_raw( interface = &lt;itf&gt;
+                                               subcomponents = subcomponents ).
+            CATCH zaplink_cx_connector INTO o_mycx.
+              application_log-&gt;add_exception( o_mycx ).
+          ENDTRY.
+          APPEND intf TO o_data-&gt;interfaces.
         ENDLOOP.
       ENDIF.
 
-      IF with_subcomp = abap_true.
-* Interfaces
-        CALL METHOD package-&gt;get_interfaces
-          IMPORTING
-            e_package_interfaces = interfaces
-          EXCEPTIONS
-            object_invalid       = 1
-            unexpected_error     = 2
-            intern_err           = 3
-            OTHERS               = 4.
-        IF sy-subrc &lt;&gt; 0.
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;system_error.
-        ELSEIF NOT interfaces IS INITIAL.
-          LOOP AT interfaces ASSIGNING &lt;itf&gt;.
-            TRY.
-                intf-zl_object = conv_interface_raw( interface = &lt;itf&gt;
-                                                 subcomponents = subcomponents ).
-              CATCH zaplink_cx_connector INTO o_mycx.
-                application_log-&gt;add_exception( o_mycx ).
-            ENDTRY.
-            APPEND intf TO o_data-&gt;interfaces.
-          ENDLOOP.
-        ENDIF.
-
 * Packages
-        CALL METHOD package-&gt;get_sub_packages
-          IMPORTING
-            e_sub_packages   = packages
-          EXCEPTIONS
-            object_invalid   = 1
-            leaf_package     = 0   &quot; 053(PAK) : Package &amp;1 does not contain any sub-packages
-            unexpected_error = 3
-            OTHERS           = 4.
-        IF sy-subrc &lt;&gt; 0.
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-            EXPORTING
-              textid = zaplink_cx_connector=&gt;system_error.
-        ELSEIF NOT packages IS INITIAL.
-          LOOP AT packages ASSIGNING &lt;pack&gt;.
-            TRY.
-                pack-zl_object = conv_package_raw( package = &lt;pack&gt;
-                                             subcomponents = subcomponents ).
-              CATCH zaplink_cx_connector INTO o_mycx.
-                application_log-&gt;add_exception( o_mycx ).
-            ENDTRY.
-            APPEND pack TO o_data-&gt;packages.
-          ENDLOOP.
-        ENDIF.
-
+      CALL METHOD package-&gt;get_sub_packages
+        IMPORTING
+          e_sub_packages   = packages
+        EXCEPTIONS
+          object_invalid   = 1
+          leaf_package     = 0   &quot; 053(PAK) : Package &amp;1 does not contain any sub-packages
+          unexpected_error = 3
+          OTHERS           = 4.
+      IF sy-subrc &lt;&gt; 0.
+        RAISE EXCEPTION TYPE zaplink_cx_connector
+          EXPORTING
+            textid = zaplink_cx_connector=&gt;system_error.
+      ELSEIF NOT packages IS INITIAL.
+        LOOP AT packages ASSIGNING &lt;pack&gt;.
+          TRY.
+              pack-zl_object = conv_package_raw( package = &lt;pack&gt;
+                                           subcomponents = subcomponents ).
+            CATCH zaplink_cx_connector INTO o_mycx.
+              application_log-&gt;add_exception( o_mycx ).
+          ENDTRY.
+          APPEND pack TO o_data-&gt;packages.
+        ENDLOOP.
       ENDIF.
+
+    ENDIF.
 
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
@@ -1677,69 +1612,6 @@ INCLUDE zaplink_macros.</MACROS>
         RAISE EXCEPTION o_mycx.
     ENDTRY.
   ENDLOOP.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="UNANONYMIZE_INTERFACE_OFF" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Interface : unanonymized component data"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="OBJECT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_INTERFACE">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="Interface Object"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
-    <SOURCE>`
-
-  If object-&gt;a0_maindata-created_by is INITIAL. object-&gt;a0_maindata-created_by = sy-uname. endif.
-  If object-&gt;a0_maindata-created_on is INITIAL. object-&gt;a0_maindata-created_on = sy-datum. endif.
-*    object-&gt;a0_maindata-changed_by,
-*    object-&gt;a0_maindata-changed_on.</SOURCE>
-   </ITEM>
-   <ITEM CMPNAME="UNANONYMIZE_PACKAGE_OFF" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
-    <TEXTS>
-     <ITEM LANG="E" TEXT="Package : unanonymized component data"/>
-    </TEXTS>
-    <PARAMETERS>
-     <ITEM SCONAME="OBJECT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_PACKAGE">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="Package Object"/>
-      </TEXTS>
-     </ITEM>
-    </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
-    <SOURCE>`
-*  DATA o_raw_i     LIKE LINE OF object-&gt;interfaces.
-*  DATA o_interface TYPE to_interface.
-*  DATA o_raw_p     LIKE LINE OF object-&gt;packages.
-*  DATA o_package   TYPE to_package.
-*
-*  If object-&gt;a0_maindata-created_by is INITIAL. object-&gt;a0_maindata-created_by = sy-uname. endif.
-*  If object-&gt;a0_maindata-created_on is INITIAL. object-&gt;a0_maindata-created_on = sy-datum. endif.
-*  If object-&gt;a0_maindata-as4user is INITIAL. object-&gt;a0_maindata-as4user = sy-uname. endif. &quot; Person responsible
-*
-*  LOOP AT object-&gt;interfaces INTO o_raw_i.
-*    o_interface ?= o_raw_i-zl_object-&gt;raw.
-*    unanonymize_interface( o_interface ).
-*  ENDLOOP.
-*
-*  LOOP AT object-&gt;packages INTO o_raw_p.
-*    o_package ?= o_raw_p-zl_object-&gt;raw.
-*    unanonymize_package( o_package ).
-*  ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_INTERFACE" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
     <TEXTS>
