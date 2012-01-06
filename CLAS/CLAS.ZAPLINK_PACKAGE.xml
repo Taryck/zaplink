@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2C320876CA74E12D82CB2C99C8FF59D1" CODE_SIGNATURE="2ABBBF835D61A95F872B42DE99524104" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="95420CB344FA805B94238BA9157FCFE4" CODE_SIGNATURE="F140E644E5E9CE9C5E1990C80D2AFE08" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -696,7 +696,8 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
 
 * Issue 132
-    CLEAR: o_data-&gt;a0_maindata-dlvu_text, o_data-&gt;a0_maindata-component, o_data-&gt;a0_maindata-comp_text, o_data-&gt;a0_maindata-namespace.
+    CLEAR: o_data-&gt;a0_maindata-dlvu_text, o_data-&gt;a0_maindata-component, o_data-&gt;a0_maindata-comp_text,
+           o_data-&gt;a0_maindata-namespace, o_data-&gt;a0_maindata-layer_text.
 
     CREATE OBJECT _component.
     _component-&gt;set_type( st_package ).
