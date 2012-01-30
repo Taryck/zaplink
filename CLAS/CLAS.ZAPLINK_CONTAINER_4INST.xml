@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0598229C15F41D8786D797B71C3734D5" CODE_SIGNATURE="DDB44586CD9E39D3C2A77F325B26CC14" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="A026CE582900F0FEC3EBFBAF85A29E33" CODE_SIGNATURE="6073EB7FE0DF2EBC40E787F44439D451" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER_4INST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -274,11 +274,7 @@ result = _options.</SOURCE>
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA _streamfactory TYPE REF TO if_ixml_stream_factory.
-  DATA _stream TYPE REF TO if_ixml_istream.
-  DATA _parser TYPE REF TO if_ixml_parser.
-  DATA _doc TYPE REF TO	if_ixml_document.
-  DATA _xml TYPE string.
+  DATA _xml   TYPE string.
   DATA _file  TYPE to_file.
 
   IF o_file IS BOUND.
@@ -295,9 +291,35 @@ result = _options.</SOURCE>
   ENDTRY.
   file = _file.
 
+  load_from_xml( _xml ).</SOURCE>
+   </ITEM>
+   <ITEM CMPNAME="LOAD_FROM_XML" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+    <TEXTS>
+     <ITEM LANG="E" TEXT="Import XML container from File"/>
+    </TEXTS>
+    <PARAMETERS>
+     <ITEM SCONAME="XML" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="STRING">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="XML data"/>
+      </TEXTS>
+     </ITEM>
+    </PARAMETERS>
+    <EXCEPTIONS>
+     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E">
+      <TEXTS>
+       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
+      </TEXTS>
+     </ITEM>
+    </EXCEPTIONS>
+    <SOURCE>`
+  DATA _streamfactory   TYPE REF TO if_ixml_stream_factory.
+  DATA _stream          TYPE REF TO if_ixml_istream.
+  DATA _parser          TYPE REF TO if_ixml_parser.
+  DATA _doc             TYPE REF TO	if_ixml_document.
+
   _streamfactory = xmlengine-&gt;create_stream_factory( ).
   _doc = xmlengine-&gt;create_document( ).
-  _stream = _streamfactory-&gt;create_istream_string( _xml ).
+  _stream = _streamfactory-&gt;create_istream_string( xml ).
   _parser = xmlengine-&gt;create_parser(  stream_factory = _streamfactory
                                        istream        = _stream
                                        document       = _doc ).
