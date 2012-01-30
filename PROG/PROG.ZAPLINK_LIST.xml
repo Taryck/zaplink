@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="85611F450ACB6CEFF1D4363130913C5D" CODE_SIGNATURE="2CDD542F74A37209A1097E0590CD0CD8" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="AC376FF8261C2D57C0287E8F59C98AEC" CODE_SIGNATURE="2CDD542F74A37209A1097E0590CD0CD8" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VARCL="X" SUBC="M" RSTAT="K" RMAND="200" RLOAD="E" FIXPT="X" UCCHECK="X"/>
   <MENUPAINTER BAR="000002" FUNCTION="000002" MENU="000005">
    <FUNCTIONS>
-    <ITEM CODE="%PC" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_EXPORT" ICON_ID="@49@">
-     <TEXTS>
-      <ITEM LANGU="E" TEXT="Download" INFO="Download to PC"/>
-     </TEXTS>
-    </ITEM>
     <ITEM CODE="%PC" TEXTNO="002" TEXT_TYPE="S" TEXT_NAME="ICON_EXPORT" ICON_ID="@49@">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="Download"/>
+      <ITEM LANGU="E" TEXT="Download" INFO="Download to PC"/>
      </TEXTS>
     </ITEM>
     <ITEM CODE="%SC" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_SEARCH" ICON_ID="@13@">
@@ -30,14 +25,9 @@
       <ITEM LANGU="E" TEXT="ABC-Analyse"/>
      </TEXTS>
     </ITEM>
-    <ITEM CODE="&amp;ALL" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_SELECT_ALL" ICON_ID="@4B@">
-     <TEXTS>
-      <ITEM LANGU="E" TEXT="Select All" INFO="Select all lines"/>
-     </TEXTS>
-    </ITEM>
     <ITEM CODE="&amp;ALL" TEXTNO="002" TEXT_TYPE="S" TEXT_NAME="ICON_SELECT_ALL" ICON_ID="@4B@">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="Select All"/>
+      <ITEM LANGU="E" TEXT="Select All" INFO="Select all lines"/>
      </TEXTS>
     </ITEM>
     <ITEM CODE="&amp;AQW" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_CHANGE_TEXT" ICON_ID="@0Q@">
@@ -50,14 +40,9 @@
       <ITEM LANGU="E" TEXT="Hilfe"/>
      </TEXTS>
     </ITEM>
-    <ITEM CODE="&amp;ETA" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_SELECT_DETAIL" ICON_ID="@16@">
-     <TEXTS>
-      <ITEM LANGU="E" TEXT="Details" INFO="Displya item details"/>
-     </TEXTS>
-    </ITEM>
     <ITEM CODE="&amp;ETA" TEXTNO="002" TEXT_TYPE="S" TEXT_NAME="ICON_SELECT_DETAIL" ICON_ID="@16@">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="Details"/>
+      <ITEM LANGU="E" TEXT="Details" INFO="Displya item details"/>
      </TEXTS>
     </ITEM>
     <ITEM CODE="&amp;F03" TEXTNO="001" TEXT_TYPE="S">
@@ -75,14 +60,9 @@
       <ITEM LANGU="E" TEXT="Cancel"/>
      </TEXTS>
     </ITEM>
-    <ITEM CODE="&amp;ILT" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_FILTER" ICON_ID="@4G@">
-     <TEXTS>
-      <ITEM LANGU="E" TEXT="Filter" INFO="Filter entries"/>
-     </TEXTS>
-    </ITEM>
     <ITEM CODE="&amp;ILT" TEXTNO="002" TEXT_TYPE="S" TEXT_NAME="ICON_FILTER" ICON_ID="@4G@">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="Filter"/>
+      <ITEM LANGU="E" TEXT="Filter" INFO="Filter entries"/>
      </TEXTS>
     </ITEM>
     <ITEM CODE="&amp;NFO" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_INFORMATION" ICON_ID="@0S@">
@@ -95,24 +75,14 @@
       <ITEM LANGU="E" TEXT="Auffrischen"/>
      </TEXTS>
     </ITEM>
-    <ITEM CODE="&amp;ODN" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_SORT_DOWN" ICON_ID="@3F@">
+    <ITEM CODE="&amp;ODN" TEXTNO="002" TEXT_TYPE="S" TEXT_NAME="ICON_SORT_DOWN" ICON_ID="@3F@">
      <TEXTS>
       <ITEM LANGU="E" TEXT="Sort Descending" INFO="Sort list in descending order"/>
      </TEXTS>
     </ITEM>
-    <ITEM CODE="&amp;ODN" TEXTNO="002" TEXT_TYPE="S" TEXT_NAME="ICON_SORT_DOWN" ICON_ID="@3F@">
-     <TEXTS>
-      <ITEM LANGU="E" TEXT="Sort Descending"/>
-     </TEXTS>
-    </ITEM>
-    <ITEM CODE="&amp;OUP" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_SORT_UP" ICON_ID="@3E@">
-     <TEXTS>
-      <ITEM LANGU="E" TEXT="Sort Asscending" INFO="Sort list in asscending order"/>
-     </TEXTS>
-    </ITEM>
     <ITEM CODE="&amp;OUP" TEXTNO="002" TEXT_TYPE="S" TEXT_NAME="ICON_SORT_UP" ICON_ID="@3E@">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="Sort Asscending"/>
+      <ITEM LANGU="E" TEXT="Sort Asscending" INFO="Sort list in asscending order"/>
      </TEXTS>
     </ITEM>
     <ITEM CODE="&amp;RNT" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_PRINT" ICON_ID="@0X@">
@@ -120,14 +90,9 @@
       <ITEM LANGU="E" TEXT="Print"/>
      </TEXTS>
     </ITEM>
-    <ITEM CODE="&amp;SAL" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_DESELECT_ALL" ICON_ID="@4D@">
-     <TEXTS>
-      <ITEM LANGU="E" TEXT="Unselect All" INFO="Unselect all entries"/>
-     </TEXTS>
-    </ITEM>
     <ITEM CODE="&amp;SAL" TEXTNO="002" TEXT_TYPE="S" TEXT_NAME="ICON_DESELECT_ALL" ICON_ID="@4D@">
      <TEXTS>
-      <ITEM LANGU="E" TEXT="Unselect All"/>
+      <ITEM LANGU="E" TEXT="Unselect All" INFO="Unselect all entries"/>
      </TEXTS>
     </ITEM>
     <ITEM CODE="&amp;UMC" TEXTNO="001" TEXT_TYPE="S" TEXT_NAME="ICON_SUM" ICON_ID="@3Z@">
@@ -222,18 +187,18 @@
       <ITEM LANGU="E" TEXT="ALV Grid toolbar"/>
      </TEXTS>
      <KEYS>
-      <ITEM PFNO="02" FUNCODE="&amp;ETA" FUNNO="001"/>
+      <ITEM PFNO="02" FUNCODE="&amp;ETA" FUNNO="002"/>
       <ITEM PFNO="03" FUNCODE="BACK" FUNNO="001"/>
-      <ITEM PFNO="05" FUNCODE="&amp;ALL" FUNNO="001"/>
-      <ITEM PFNO="06" FUNCODE="&amp;SAL" FUNNO="001"/>
-      <ITEM PFNO="07" FUNCODE="&amp;ILT" FUNNO="001"/>
-      <ITEM PFNO="09" FUNCODE="%PC" FUNNO="001"/>
+      <ITEM PFNO="05" FUNCODE="&amp;ALL" FUNNO="002"/>
+      <ITEM PFNO="06" FUNCODE="&amp;SAL" FUNNO="002"/>
+      <ITEM PFNO="07" FUNCODE="&amp;ILT" FUNNO="002"/>
+      <ITEM PFNO="09" FUNCODE="%PC" FUNNO="002"/>
       <ITEM PFNO="12" FUNCODE="STOP" FUNNO="001"/>
       <ITEM PFNO="14" FUNCODE="CONFIRM" FUNNO="001"/>
       <ITEM PFNO="15" FUNCODE="ABORT" FUNNO="001"/>
       <ITEM PFNO="17" FUNCODE="CANCEL" FUNNO="001"/>
-      <ITEM PFNO="33" FUNCODE="&amp;OUP" FUNNO="001"/>
-      <ITEM PFNO="34" FUNCODE="&amp;ODN" FUNNO="001"/>
+      <ITEM PFNO="33" FUNCODE="&amp;OUP" FUNNO="002"/>
+      <ITEM PFNO="34" FUNCODE="&amp;ODN" FUNNO="002"/>
       <ITEM PFNO="71" FUNCODE="SEARCH" FUNNO="001"/>
       <ITEM PFNO="86" FUNCODE="PRINT" FUNNO="001"/>
      </KEYS>
@@ -245,13 +210,13 @@
        <COMPOSITION>
         <ITEM NO="01" PFNO="14"/>
         <ITEM NO="02" PFNO="17"/>
-        <ITEM NO="07" PFNO="02"/>
-        <ITEM NO="15" PFNO="33"/>
-        <ITEM NO="16" PFNO="34"/>
-        <ITEM NO="17" PFNO="05"/>
-        <ITEM NO="18" PFNO="06"/>
-        <ITEM NO="19" PFNO="07"/>
-        <ITEM NO="22" PFNO="09"/>
+        <ITEM NO="03" PFNO="02"/>
+        <ITEM NO="04" PFNO="33"/>
+        <ITEM NO="05" PFNO="34"/>
+        <ITEM NO="06" PFNO="05"/>
+        <ITEM NO="07" PFNO="06"/>
+        <ITEM NO="08" PFNO="07"/>
+        <ITEM NO="09" PFNO="09"/>
        </COMPOSITION>
       </ITEM>
      </PUSHBUTTONS>
@@ -315,10 +280,6 @@
      <TEXTS>
       <ITEM LANGU="E" TEXT="ALV Grid toolbar"/>
      </TEXTS>
-     <COMPOSITION>
-      <ITEM NO="01" MENUCODE="000001"/>
-      <ITEM NO="02" MENUCODE="000002"/>
-     </COMPOSITION>
     </ITEM>
     <ITEM OBJ_CODE="000002" MODAL="D">
      <TEXTS>
