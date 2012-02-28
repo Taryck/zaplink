@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A76111A5E064029290F408F4D89C5370" CODE_SIGNATURE="0B19AF7322DC88DAC9072E5ED400FE74" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="6507AF9761E6D1D5BA56453795032253" CODE_SIGNATURE="67A22C3F8CEA401C43E7ABDFEEC8DEFE" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROG_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -118,11 +118,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </EXCEPTIONS>
     <SOURCE>`
-  FIELD-SYMBOLS &lt;v&gt; LIKE LINE OF variants.
+  FIELD-SYMBOLS:
+    &lt;t&gt; LIKE LINE OF texts,
+    &lt;v&gt; LIKE LINE OF variants.
   CLEAR: a0_maindata-cnam, a0_maindata-cdat, a0_maindata-unam, a0_maindata-udat, a0_maindata-sdate, a0_maindata-stime, a0_maindata-idate,
          a0_maindata-itime, a0_maindata-vern, a0_maindata-state. &quot; Issue 68.
   LOOP AT variants ASSIGNING &lt;v&gt;.
     &lt;v&gt;-zl_object-&gt;anonymize( ).
+  ENDLOOP.
+* Issue 133 : Release still predent in documentation
+  LOOP AT texts ASSIGNING &lt;t&gt;.
+    CLEAR: &lt;t&gt;-long_txt-tdlreles, &lt;t&gt;-long_txt-tdfreles.
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" MTDTYPE="2" MTDDECLTYP="1">
