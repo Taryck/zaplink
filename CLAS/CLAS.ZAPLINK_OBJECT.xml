@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="313021C7486CF73FF5537A45302C1EA5" CODE_SIGNATURE="7A4F10347049A957213B72B1D24DC3B8" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="40D414F5D431FA2C1B5EB1E6A7822631" CODE_SIGNATURE="F104F89AC27DD3AE4ACCE8CB4EDBD80D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1744,7 +1744,7 @@ AS</ITEM>
       version                             = object_data-class-version
       state                               = object_data-class-state
 *     RESOLVE_EVENTHANDLER_TYPEINFO       = SEOX_FALSE
-      WITH_ENHANCEMENTS                   = SEOX_TRUE
+*      WITH_ENHANCEMENTS                   = SEOX_TRUE
 *     IGNORE_SWITCHES                     = &apos;X&apos;
     IMPORTING
       attributes                          = object_data-attributes
@@ -1755,13 +1755,14 @@ AS</ITEM>
       exceps                              = object_data-exceps
       implementings                       = object_data-implementings
       aliases                             = object_data-aliases
-      enhancement_methods                 = object_data-enhancement_methods
-      enhancement_attributes              = object_data-enhancement_attributes
-      enhancement_events                  = object_data-enhancement_events
-      enhancement_implementings           = object_data-enhancement_implementings
-      enhancement_premeth                 = object_data-enhancement_premeth
-      enhancement_postmeth                = object_data-enhancement_postmeth
-      enhancement_owrmeth                 = object_data-enhancement_owrmeth
+* Do not exist on ECC6.0 and not yet used so removed to ensure maximum workability
+*      enhancement_methods                 = object_data-enhancement_methods
+*      enhancement_attributes              = object_data-enhancement_attributes
+*      enhancement_events                  = object_data-enhancement_events
+*      enhancement_implementings           = object_data-enhancement_implementings
+*      enhancement_premeth                 = object_data-enhancement_premeth
+*      enhancement_postmeth                = object_data-enhancement_postmeth
+*      enhancement_owrmeth                 = object_data-enhancement_owrmeth
     EXCEPTIONS
       not_existing                        = 1
       is_interface                        = 2
