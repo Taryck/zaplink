@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FB8EBE63AC64EEEC158E1DE4CF24784B" CODE_SIGNATURE="CAE5FA2C3881431C8A041A03CCC8B285" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="DA71416EDE1B870104CBC9C67C4FA6CE" CODE_SIGNATURE="1C3F75BF93F3576EC92E0F09FA79D4A2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -132,12 +132,40 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Class/interface Order"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="OBJCAT" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4">BEGIN OF objcat,
+*00	General Object Type
+*01	Exit Class
+*10	Persistent Class
+*11	Factory for Persistent Class
+*12	Status Class for Persistent Class
+*20	View Class
+*30	Proxy Class for Remote Interface
+*40	Exception Class
+*50	Business Class
+*51	Business Class Interface for Static Components
+*52	Business Class Interface for Instance Dependent Components
+*60	BSP Application Class
+*70	Basis Class for BSP Element Handlers
+*80	Web Dynpro Runtime Object
+*90	ESI: Provider Interface (generated)
+*45	Area Class (Shared Objects)
+*05	Test Class (ABAP Unit)
+        class       TYPE td_classcat VALUE &apos;00&apos;,            &quot;#EC NOTEXT
+        exit        TYPE td_classcat VALUE &apos;01&apos;,            &quot;#EC NOTEXT
+        test        TYPE td_classcat VALUE &apos;05&apos;,            &quot;#EC NOTEXT
+        persistent  TYPE td_classcat VALUE &apos;10&apos;,            &quot;#EC NOTEXT
+        factory     TYPE td_classcat VALUE &apos;11&apos;,            &quot;#EC NOTEXT
+        proxy       TYPE td_classcat VALUE &apos;30&apos;,            &quot;#EC NOTEXT
+        exception   TYPE td_classcat VALUE &apos;40&apos;,            &quot;#EC NOTEXT
+        bsp         TYPE td_classcat VALUE &apos;60&apos;,            &quot;#EC NOTEXT
+        END OF objcat
+`</ITEM>
    <ITEM CMPNAME="OBJTYPE" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF objtype,
-              class             TYPE td_classtype VALUE &apos;0&apos;, &quot;#EC NOTEXT      Object Type : Class
-              exception_class   TYPE td_classtype VALUE &apos;5&apos;, &quot;#EC NOTEXT      Local Object type : Exception_Class
-              interface         TYPE td_classtype VALUE &apos;1&apos;, &quot;#EC NOTEXT      Object Type : Interface
-            END OF objtype
+                class             TYPE td_classtype VALUE &apos;0&apos;, &quot;#EC NOTEXT      Object Type : Class
+                exception_class   TYPE td_classtype VALUE &apos;5&apos;, &quot;#EC NOTEXT      Local Object type : Exception_Class
+                interface         TYPE td_classtype VALUE &apos;1&apos;, &quot;#EC NOTEXT      Object Type : Interface
+              END OF objtype
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Object types"/>
@@ -206,12 +234,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
    <ITEM CMPNAME="TYPETYPE" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4">
     BEGIN OF typetype,
-              like    TYPE seotyptype VALUE &apos;0&apos;, &quot;#EC NOTEXT      Attribute reference (LIKE)
-              type    TYPE seotyptype VALUE &apos;1&apos;, &quot;#EC NOTEXT      Type reference (TYPE)
-              otype   TYPE seotyptype VALUE &apos;2&apos;, &quot;#EC NOTEXT      Object (TYPE)
-              ref     TYPE seotyptype VALUE &apos;3&apos;, &quot;#EC NOTEXT      Object reference (TYPE REF TO)
-              code    TYPE seotyptype VALUE &apos;4&apos;, &quot;#EC NOTEXT      See coding
-            END OF typetype
+                like    TYPE seotyptype VALUE &apos;0&apos;, &quot;#EC NOTEXT      Attribute reference (LIKE)
+                type    TYPE seotyptype VALUE &apos;1&apos;, &quot;#EC NOTEXT      Type reference (TYPE)
+                otype   TYPE seotyptype VALUE &apos;2&apos;, &quot;#EC NOTEXT      Object (TYPE)
+                ref     TYPE seotyptype VALUE &apos;3&apos;, &quot;#EC NOTEXT      Object reference (TYPE REF TO)
+                code    TYPE seotyptype VALUE &apos;4&apos;, &quot;#EC NOTEXT      See coding
+              END OF typetype
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Types of type definition"/>
@@ -325,7 +353,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA s_key       TYPE seoclskey.
   DATA d_classname TYPE seoclsname.
   DATA d_prog      TYPE td_origin.
+  DATA o_cx_childs TYPE REF TO cl_oo_class_relations.
   FIELD-SYMBOLS:
+    &lt;cx&gt; LIKE LINE OF o_cx_childs-&gt;subclasses,
     &lt;c&gt; LIKE LINE OF circular_context,
     &lt;f&gt; LIKE LINE OF o_data-&gt;friends.
 
@@ -359,7 +389,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   ENDIF.
 
   _order-name = name.
-  IF _class-category = &apos;40&apos;.    _order-type = objtype-exception_class.   ELSE.   _order-type = objtype-class.   ENDIF.
+  IF _class-category =  objcat-exception.    _order-type = objtype-exception_class.   ELSE.   _order-type = objtype-class.   ENDIF.
 
   READ TABLE context TRANSPORTING NO FIELDS
        WITH KEY context = name
@@ -411,6 +441,23 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   ENDLOOP.
 
   do_object_list( name = name ).
+
+  IF _order-type = objtype-exception_class.
+* Issue 134 : Some exception class are missing
+* When exception class load of childrens also
+    CREATE OBJECT o_cx_childs
+      EXPORTING
+        clsname      = name
+        w_subclasses = seox_true
+      EXCEPTIONS
+        not_existing = 1
+        is_interface = 2
+        OTHERS       = 3.
+    ASSERT sy-subrc = 0.
+    LOOP AT o_cx_childs-&gt;subclasses ASSIGNING &lt;cx&gt;.
+      add_class_dep( &lt;cx&gt;-clsname ).
+    ENDLOOP.
+  ENDIF.
 
   unstack( ).
 
@@ -2488,14 +2535,15 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM TYPEGROUP="SEOP" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
+   <ITEM CMPNAME="TD_CLASSCAT" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="SEOCATEGRY"/>
    <ITEM CMPNAME="TD_CLASSTYPE" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="CHAR01">
     <TEXTS>
      <ITEM LANG="E" TEXT="Class type (SEOCLSTYPE)"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TD_CONTEXT" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="STRING"/>
-   <ITEM CMPNAME="TD_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="21 " TYPTYPE="1" TYPE="SEOCLASSDF-MSG_ID"/>
-   <ITEM CMPNAME="TD_NAME" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="SEOCLSNAME">
+   <ITEM CMPNAME="TD_CONTEXT" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="STRING"/>
+   <ITEM CMPNAME="TD_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="22 " TYPTYPE="1" TYPE="SEOCLASSDF-MSG_ID"/>
+   <ITEM CMPNAME="TD_NAME" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="1" TYPE="SEOCLSNAME">
     <TEXTS>
      <ITEM LANG="E" TEXT="Class/interface name"/>
     </TEXTS>
@@ -2530,21 +2578,21 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TR_DLVUNIT" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
+   <ITEM CMPNAME="TR_DLVUNIT" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
     tr_dlvunit TYPE RANGE OF tdevc-dlvunit
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Software component accepted"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TR_PACKAGES" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">
+   <ITEM CMPNAME="TR_PACKAGES" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
     tr_packages TYPE RANGE OF tdevc-devclass
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Range of package"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_COMP" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4">BEGIN OF ts_comp.
+   <ITEM CMPNAME="TS_COMP" EXPOSURE="2" STATE="1" EDITORDER="20 " TYPTYPE="4">BEGIN OF ts_comp.
     INCLUDE TYPE ts_compkey AS hdr.
     TYPES:
         kind     TYPE td_transport_kind,
@@ -2552,26 +2600,26 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         softcomp TYPE td_softcomp,
       END OF ts_comp
 `</ITEM>
-   <ITEM CMPNAME="TS_CONTEXT" EXPOSURE="2" STATE="1" EDITORDER="14 " TYPTYPE="4">BEGIN OF ts_context,
-            context   TYPE td_context,
-            type      TYPE td_classtype,    &quot; 0 Class 1 interface
-            full_def  TYPE flag,          &quot; Full definition required
-          END OF ts_context
+   <ITEM CMPNAME="TS_CONTEXT" EXPOSURE="2" STATE="1" EDITORDER="15 " TYPTYPE="4">BEGIN OF ts_context,
+              context   TYPE td_context,
+              type      TYPE td_classtype,    &quot; 0 Class 1 interface
+              full_def  TYPE flag,          &quot; Full definition required
+            END OF ts_context
 `</ITEM>
-   <ITEM CMPNAME="TS_LIST" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_LIST" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="4">
     BEGIN OF ts_list,
-          name      TYPE td_name,
-        END OF ts_list
+            name      TYPE td_name,
+          END OF ts_list
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class/interface name"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="22 " TYPTYPE="4">BEGIN OF ts_message,
-                name TYPE td_message,
-              END OF ts_message
+   <ITEM CMPNAME="TS_MESSAGE" EXPOSURE="2" STATE="1" EDITORDER="23 " TYPTYPE="4">BEGIN OF ts_message,
+                  name TYPE td_message,
+                END OF ts_message
 `</ITEM>
-   <ITEM CMPNAME="TS_ORDER" EXPOSURE="2" STATE="1" EDITORDER="12 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_ORDER" EXPOSURE="2" STATE="1" EDITORDER="13 " TYPTYPE="4">
     BEGIN OF ts_order.
     INCLUDE TYPE ts_list.
     TYPES:
@@ -2583,31 +2631,31 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Class/interface, type and flag"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_REQ_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="10 " TYPTYPE="4">BEGIN OF ts_req_object,
-          ori_name  TYPE td_name,
-          name      TYPE td_name,
-          type      TYPE td_classtype,    &quot; 0 Class 1 interface
-          full_def  TYPE flag,          &quot; Full definition required
-          source    TYPE td_context,
-        END OF ts_req_object
+   <ITEM CMPNAME="TS_REQ_OBJECT" EXPOSURE="2" STATE="1" EDITORDER="11 " TYPTYPE="4">BEGIN OF ts_req_object,
+            ori_name  TYPE td_name,
+            name      TYPE td_name,
+            type      TYPE td_classtype,    &quot; 0 Class 1 interface
+            full_def  TYPE flag,          &quot; Full definition required
+            source    TYPE td_context,
+          END OF ts_req_object
 `</ITEM>
-   <ITEM CMPNAME="TS_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">
     BEGIN OF ts_source,
-          name  TYPE td_name,
-          type  TYPE td_classtype,    &quot; 0 Class 1 interface
-          def   TYPE tt_abaprawsource,
-          macro TYPE tt_abaprawsource,
-          impl  TYPE tt_abaprawsource,
-        END OF ts_source
+            name  TYPE td_name,
+            type  TYPE td_classtype,    &quot; 0 Class 1 interface
+            def   TYPE tt_abaprawsource,
+            macro TYPE tt_abaprawsource,
+            impl  TYPE tt_abaprawsource,
+          END OF ts_source
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class/interface sources codes"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_TYPEGROUP" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_TYPEGROUP" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="4">
     BEGIN OF ts_typegroup,
-                name TYPE seotpuname,
-              END OF ts_typegroup
+                  name TYPE seotpuname,
+                END OF ts_typegroup
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="a Type Group"/>
@@ -2620,25 +2668,25 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Indexed list of class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_COMPS" EXPOSURE="2" STATE="1" EDITORDER="20 " TYPTYPE="4">tt_comps TYPE SORTED TABLE OF ts_comp WITH UNIQUE KEY type name
+   <ITEM CMPNAME="TT_COMPS" EXPOSURE="2" STATE="1" EDITORDER="21 " TYPTYPE="4">tt_comps TYPE SORTED TABLE OF ts_comp WITH UNIQUE KEY type name
 `</ITEM>
-   <ITEM CMPNAME="TT_CONTEXT" EXPOSURE="2" STATE="1" EDITORDER="15 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_CONTEXT" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="4">
     tt_context TYPE STANDARD TABLE OF ts_context WITH DEFAULT KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Context Stack"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_LIST" EXPOSURE="2" STATE="1" EDITORDER="13 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_LIST" EXPOSURE="2" STATE="1" EDITORDER="14 " TYPTYPE="4">
     tt_list TYPE STANDARD TABLE OF ts_order WITH DEFAULT KEY
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Class/interface list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_MESSAGE_IDS" EXPOSURE="2" STATE="1" EDITORDER="23 " TYPTYPE="4">tt_message_ids TYPE STANDARD TABLE OF ts_message WITH DEFAULT KEY
+   <ITEM CMPNAME="TT_MESSAGE_IDS" EXPOSURE="2" STATE="1" EDITORDER="24 " TYPTYPE="4">tt_message_ids TYPE STANDARD TABLE OF ts_message WITH DEFAULT KEY
 `</ITEM>
-   <ITEM CMPNAME="TT_ORDER" EXPOSURE="2" STATE="1" EDITORDER="16 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_ORDER" EXPOSURE="2" STATE="1" EDITORDER="17 " TYPTYPE="4">
     tt_order TYPE STANDARD TABLE OF ts_order WITH NON-UNIQUE KEY name
 `
     <TEXTS>
@@ -2652,16 +2700,16 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="List of pre-definied types"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_REQ_OBJECTS" EXPOSURE="2" STATE="1" EDITORDER="11 " TYPTYPE="4">tt_req_objects TYPE STANDARD TABLE OF ts_req_object WITH NON-UNIQUE KEY name
+   <ITEM CMPNAME="TT_REQ_OBJECTS" EXPOSURE="2" STATE="1" EDITORDER="12 " TYPTYPE="4">tt_req_objects TYPE STANDARD TABLE OF ts_req_object WITH NON-UNIQUE KEY name
 `</ITEM>
-   <ITEM CMPNAME="TT_SOURCES" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_SOURCES" EXPOSURE="2" STATE="1" EDITORDER="9 " TYPTYPE="4">
     tt_sources TYPE SORTED TABLE OF ts_source WITH UNIQUE KEY name
 `
     <TEXTS>
      <ITEM LANG="E" TEXT="Classes/interfaces codes"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TYPEGROUPS" EXPOSURE="2" STATE="1" EDITORDER="18 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_TYPEGROUPS" EXPOSURE="2" STATE="1" EDITORDER="19 " TYPTYPE="4">
     tt_typegroups TYPE STANDARD TABLE OF ts_typegroup WITH DEFAULT KEY
 `
     <TEXTS>
