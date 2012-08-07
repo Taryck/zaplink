@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B61C55928FEFD8B5F7EF906A82A7D827" CODE_SIGNATURE="EC1FD268EE4FDD33EF1F49BF5448C6A4" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F351A974F5D90D0F777FE9CA18701510" CODE_SIGNATURE="0444C387F08169ABA7C14BD4EC796147" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
@@ -61,6 +61,16 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Transport category : Enhancement Spot"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="TOOLTYPES" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4">BEGIN OF tooltypes,
+* List of type from table ENHTOOLS.
+        badi            TYPE enhheader-enhtooltype VALUE &apos;BADI_IMPL&apos;,
+        class           TYPE enhheader-enhtooltype VALUE &apos;CLASENH&apos;,
+        function_group  TYPE enhheader-enhtooltype VALUE &apos;FUGRENH&apos;,
+        interface       TYPE enhheader-enhtooltype VALUE &apos;INTFENH&apos;,
+        hook            TYPE enhheader-enhtooltype VALUE &apos;HOOK_IMPL&apos;,
+        web_dynpro      TYPE enhheader-enhtooltype VALUE &apos;WDYENH&apos;,
+      END OF tooltypes
+`</ITEM>
    <ITEM CMPNAME="_UUID" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;4181014E2AC27D33E1000000AC1201D6&apos;" TYPTYPE="1" TYPE="TD_CONNUUID">
     <TEXTS>
      <ITEM LANG="E" TEXT="UUID for connector BADI"/>
@@ -77,6 +87,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     <ITEM TYPEGROUP="ZAPLINK_ENHANCEMENT_DATA" TPUTYPE="1" EXPLICIT="X"/>
    </CLASSES>
   </DEFERRED>
+  <FRIENDS>
+   <ITEM REFCLSNAME="ZAPLINK_ENHANCEMENT_DATA" STATE="1"/>
+  </FRIENDS>
   <LOCAL>
    <TYPES>`
 *&quot;* USE THIS SOURCE FILE FOR ANY TYPE DECLARATIONS (CLASS
@@ -362,39 +375,54 @@ INCLUDE zaplink_macros.</MACROS>
   ASSERT sap_object IS BOUND.
   CREATE OBJECT raw_object.
   version = get_version( sap_object ).
-  name = s_comp-header-spot_name = sap_object-&gt;if_enh_tool~get_name( ).
+*  name = s_comp-header-spot_name = sap_object-&gt;if_enh_tool~get_name( ).
 
 * Texts
   o_store ?= sap_object-&gt;get_store( ).
   hdr = o_store-&gt;get_enhheader( version ).
   s_comp-header-text_ids-short = hdr-shorttext_id.
   s_comp-header-text_ids-long = hdr-docu_id.
+  CLEAR: hdr-data, hdr-data_version.    &quot; binary data
+
+* Main Screen from FORM fuell_dy_enhspot (LENHANCEMENT_SPOT_EDITORF01)
+*  s_comp-header-scr-devclass = i_ref_tool-&gt;if_enh_object~get_devclass( ).  &quot; already before
+  CALL METHOD sap_object-&gt;if_enh_object~get_language
+    IMPORTING
+      org_langu = s_comp-header-scr-langu.
+*  CALL METHOD o_store-&gt;if_enh_spot_store~get_attributes
+*    EXPORTING
+*      version   = version
+*    IMPORTING
+*      author    = s_comp-header-scr-author
+*      createdon = s_comp-header-scr-createdon
+*      changedby = s_comp-header-scr-changedby
+*      changedon = s_comp-header-scr-changedon.
 
 * List of type from table ENHTOOLS.
   CASE hdr-enhtooltype.
-    WHEN &apos;BADI_IMPL&apos;.
+    WHEN tooltypes-badi.
       o_badi_impl ?= sap_object.
 * Implementations
 *      s_comp-badi_impl-enh = o_badi_impl-&gt;get_implementations( version ).
       o_badi_impl-&gt;if_enh_cwb~get_data( EXPORTING i_version = version
                                         IMPORTING    e_data = s_comp-badi_impl-admin ).
-    WHEN &apos;CLASENH&apos;.
+    WHEN tooltypes-class.
       o_clasenh ?= sap_object.
       o_clasenh-&gt;if_enh_cwb~get_data( EXPORTING i_version = version
                                       IMPORTING    e_data = s_comp-clif_impl ).
-    WHEN &apos;FUGRENH&apos;.
+    WHEN tooltypes-function_group.
       o_fugrenh ?= sap_object.
       o_fugrenh-&gt;if_enh_cwb~get_data( EXPORTING i_version = version
                                       IMPORTING    e_data = s_comp-fugr_impl ).
-    WHEN &apos;HOOK_IMPL&apos;.
+    WHEN tooltypes-hook.
       o_hook_impl ?= sap_object.
       o_hook_impl-&gt;if_enh_cwb~get_data( EXPORTING i_version = version
                                         IMPORTING    e_data = s_comp-hook_impl-admin ).
-    WHEN &apos;INTFENH&apos;.
+    WHEN tooltypes-interface.
       o_intfenh ?= sap_object.
       o_intfenh-&gt;if_enh_cwb~get_data( EXPORTING i_version = version
                                       IMPORTING    e_data = s_comp-clif_impl ).
-    WHEN &apos;WDYENH&apos;.
+    WHEN tooltypes-web_dynpro.
       o_wdyenh ?= sap_object.
       o_wdyenh-&gt;if_enh_cwb~get_data( EXPORTING i_version = version
                                      IMPORTING    e_data = s_comp-wdyn_impl ).
@@ -403,6 +431,7 @@ INCLUDE zaplink_macros.</MACROS>
 *Composite Parent
 * From : Module STATUS_0100 in SAPLENHANCEMENT_EDITOR
   s_comp-header-composite = cl_enh_factory=&gt;enh_find_parent_composite( name ) .
+  s_comp-header-hdr = hdr.
 
 * From : FORM lesen_sfw in SAPLENHANCEMENT_EDITOR
 *  l_wa_swf-objecttype = &apos;ENHO&apos;.
