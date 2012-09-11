@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="DA71416EDE1B870104CBC9C67C4FA6CE" CODE_SIGNATURE="1C3F75BF93F3576EC92E0F09FA79D4A2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F09A5266045864419898622AF11B7CE7" CODE_SIGNATURE="EBCE679F372760765AB92BBF03BEDA2B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -442,6 +442,10 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
   do_object_list( name = name ).
 
+  unstack( ).
+  insert_order( s_order = _order   context = context ).
+
+* Issue 134 : Unstack &amp; Insert first because subclasses are not required by class, it&apos;s the opposit
   IF _order-type = objtype-exception_class.
 * Issue 134 : Some exception class are missing
 * When exception class load of childrens also
@@ -457,11 +461,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     LOOP AT o_cx_childs-&gt;subclasses ASSIGNING &lt;cx&gt;.
       add_class_dep( &lt;cx&gt;-clsname ).
     ENDLOOP.
-  ENDIF.
-
-  unstack( ).
-
-  insert_order( s_order = _order   context = context ).</SOURCE>
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ADD_DEFERRED_CODE" EXPOSURE="1" STATE="1">
     <TEXTS>
@@ -1143,29 +1143,16 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *  APPEND LINES OF static_objs TO objects_list.
   SORT objects_list.      DELETE ADJACENT DUPLICATES FROM objects_list.
 
+  IF origin IS NOT INITIAL.
 * Local class filtering
 * From analyse of abap naviguation : MF RS_NAVIGATION_PREPARE
-  d_prog = origin.
-  LOOP AT objects_list ASSIGNING &lt;o&gt;.
+    d_prog = origin.
+    LOOP AT objects_list ASSIGNING &lt;o&gt;.
 * FORM search_object =&gt; use &apos;WB_TREE_GET_INCLUDE&apos; to determine local object definitions
-    CALL FUNCTION &apos;WB_TREE_GET_INCLUDE&apos;
-      EXPORTING
-        objectname             = &lt;o&gt;
-        objecttype             = sana_tok_control_def   &quot; in form search_object
-        program                = d_prog
-*     IMPORTING
-*       INCLUDE_NAME           =
-*     TABLES
-*       INCL_TAB               =
-      EXCEPTIONS
-        index_not_found        = 1
-        object_not_found       = 2
-        OTHERS                 = 3.
-    IF sy-subrc &lt;&gt; 0.
       CALL FUNCTION &apos;WB_TREE_GET_INCLUDE&apos;
         EXPORTING
           objectname             = &lt;o&gt;
-          objecttype             = sana_tok_common_def   &quot; in form search_object
+          objecttype             = sana_tok_control_def   &quot; in form search_object
           program                = d_prog
 *     IMPORTING
 *       INCLUDE_NAME           =
@@ -1175,9 +1162,24 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
           index_not_found        = 1
           object_not_found       = 2
           OTHERS                 = 3.
-    ENDIF.
-    IF sy-subrc = 0.    DELETE objects_list.    ENDIF.
-  ENDLOOP.</SOURCE>
+      IF sy-subrc &lt;&gt; 0.
+        CALL FUNCTION &apos;WB_TREE_GET_INCLUDE&apos;
+          EXPORTING
+            objectname             = &lt;o&gt;
+            objecttype             = sana_tok_common_def   &quot; in form search_object
+            program                = d_prog
+*     IMPORTING
+*       INCLUDE_NAME           =
+*     TABLES
+*       INCL_TAB               =
+          EXCEPTIONS
+            index_not_found        = 1
+            object_not_found       = 2
+            OTHERS                 = 3.
+      ENDIF.
+      IF sy-subrc = 0.    DELETE objects_list.    ENDIF.
+    ENDLOOP.
+  ENDIF.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="APPEND_MESSAGE" EXPOSURE="1" STATE="1">
     <TEXTS>
