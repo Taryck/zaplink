@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F09A5266045864419898622AF11B7CE7" CODE_SIGNATURE="EBCE679F372760765AB92BBF03BEDA2B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="4A35B0F5292CB843D6449B3198202F41" CODE_SIGNATURE="C3683DB476FB5BAAF552E8B97718EEFA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -206,6 +206,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Classes/interfaces codes"/>
     </TEXTS>
    </ITEM>
+   <ITEM CMPNAME="REMAIN_REQUIREMENTS" STATE="1" TYPTYPE="1" TYPE="TT_REQ_OBJECTS"/>
    <ITEM CMPNAME="REQUIRED_OBJECTS" STATE="1" TYPTYPE="1" TYPE="TT_REQ_OBJECTS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Class/interface requirement"/>
@@ -529,10 +530,10 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA t_deps    TYPE SORTED TABLE OF ts_dep WITH NON-UNIQUE KEY ori_name.
   DATA s_order   LIKE LINE OF new_order.
   FIELD-SYMBOLS:
-    &lt;r&gt; LIKE LINE OF requirements,
+    &lt;r&gt; LIKE LINE OF remain_requirements,
     &lt;c&gt; LIKE LINE OF remain_classes.
 
-  LOOP AT requirements ASSIGNING &lt;r&gt;.
+  LOOP AT remain_requirements ASSIGNING &lt;r&gt;.
     CLEAR s_dep.    MOVE-CORRESPONDING &lt;r&gt; TO s_dep.    s_dep-count = 1.
     COLLECT s_dep INTO t_tmp.
   ENDLOOP.
@@ -548,7 +549,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *    ENDLOOP.
     READ TABLE t_deps TRANSPORTING NO FIELDS WITH TABLE KEY ori_name = &lt;c&gt;-name.
     IF sy-subrc &lt;&gt; 0.
-      CLEAR s_order.    s_order-name = &lt;c&gt;-name.    s_order-type = &lt;c&gt;-type.    APPEND s_order TO new_order.    DELETE requirements WHERE name = &lt;c&gt;-name.    result = abap_true.   DELETE remain_classes.
+      CLEAR s_order.    s_order-name = &lt;c&gt;-name.    s_order-type = &lt;c&gt;-type.    APPEND s_order TO new_order.    DELETE remain_requirements WHERE name = &lt;c&gt;-name.    result = abap_true.   DELETE remain_classes.
     ENDIF.
   ENDLOOP.
   add_without_requirements( ).</SOURCE>
@@ -1060,9 +1061,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
 * intf/class without any dependances
   LOOP AT remain_classes ASSIGNING &lt;c&gt;.
-    READ TABLE requirements TRANSPORTING NO FIELDS
+    READ TABLE remain_requirements TRANSPORTING NO FIELDS
          WITH KEY ori_name = &lt;c&gt;-name.
-    IF sy-subrc &lt;&gt; 0.   clear s_order.    s_order-name = &lt;c&gt;-name.    s_order-type = &lt;c&gt;-type.    APPEND s_order TO new_order.    DELETE requirements WHERE name = &lt;c&gt;-name.    result = abap_true.   DELETE remain_classes.    ENDIF.
+    IF sy-subrc &lt;&gt; 0.   CLEAR s_order.    s_order-name = &lt;c&gt;-name.    s_order-type = &lt;c&gt;-type.    APPEND s_order TO new_order.    DELETE remain_requirements WHERE name = &lt;c&gt;-name.    result = abap_true.   DELETE remain_classes.    ENDIF.
   ENDLOOP.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="ANALYSE_SOURCE" EXPOSURE="1" STATE="1">
@@ -2183,14 +2184,17 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     &lt;c&gt; LIKE LINE OF classes.
 
   _clean_up( ).
-*  loop at classes ASSIGNING &lt;c&gt;.
+* Reset Part :
+  REFRESH: deferred_declaration.  &quot; staring new program no declaration have been made
+  REFRESH: new_order.             &quot; rebuild order list
   remain_classes = classes.
+  remain_requirements = requirements.
 * intf/class without any dependances
   WHILE add_without_requirements( ) = abap_true.  ENDWHILE.
   WHILE add_deferred_ok( ) = abap_true.  ENDWHILE.
 
-  IF requirements IS INITIAL.
-    LOOP AT remain_classes ASSIGNING &lt;c&gt;.   CLEAR s_order.    s_order-name = &lt;c&gt;-name.    s_order-type = &lt;c&gt;-type.    APPEND s_order TO new_order.    DELETE requirements WHERE name = &lt;c&gt;-name.    DELETE remain_classes.    ENDLOOP.
+  IF remain_requirements IS INITIAL.
+    LOOP AT remain_classes ASSIGNING &lt;c&gt;.   CLEAR s_order.    s_order-name = &lt;c&gt;-name.    s_order-type = &lt;c&gt;-type.    APPEND s_order TO new_order.    DELETE remain_requirements WHERE name = &lt;c&gt;-name.    DELETE remain_classes.    ENDLOOP.
     order = new_order.
   ELSE.
     LOOP AT new_order ASSIGNING &lt;o&gt;.    WRITE:/ &lt;o&gt;-name.   ENDLOOP.
