@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E4C6CAE89CDF4B7697C1AD5A7F0A441B" CODE_SIGNATURE="5E2787083A6E5E2EEC713525539812FA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E2B794A1723E3A63591F364686B1A682" CODE_SIGNATURE="520AEB5C771A1BA0293E2044D5CD3C6B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -253,6 +253,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA o_cx      TYPE REF TO cx_root.
 *  DATA o_zlcx    TYPE REF TO zaplink_cx.     &quot; Issue 93
   DATA t_bapiret TYPE bapirettab.
+  DATA f_is_wi TYPE abap_bool.
 
   CHECK object IS BOUND.
 
@@ -354,18 +355,42 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * Add to worklist
       wa_type = o_raw-&gt;type.
       wa_name = o_raw-&gt;name.
-      CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
-        EXPORTING
-          object                  = wa_type
-          obj_name                = wa_name
-*         DELETED_FLAG            = &apos; &apos;
-        IMPORTING
-          object_inserted         = wa_flag
-        EXCEPTIONS
-          wrong_object_name       = 1
-          OTHERS                  = 2.
-      IF sy-subrc &lt;&gt; 0.
-        mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+      IF zaplink_tools=&gt;is_working_areable( o_raw-&gt;type ) = abap_true.
+        CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+          EXPORTING
+            object                  = wa_type
+            obj_name                = wa_name
+*            DELETED_FLAG            = &apos; &apos;
+          IMPORTING
+            object_inserted         = wa_flag
+          EXCEPTIONS
+            wrong_object_name       = 1
+            OTHERS                  = 2.
+        IF sy-subrc &lt;&gt; 0.
+          mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+        ENDIF.
+      ELSE.   &quot; Security Remove old eroneous entries
+        CALL FUNCTION &apos;RS_OBJECT_IN_WORKING_AREA&apos;
+          EXPORTING
+            object                        = wa_type
+            obj_name                      = wa_name
+*            GLOBAL_CHECK                  = &apos; &apos;
+*            MODE                          = &apos;S&apos;
+          IMPORTING
+            object_is_work_item           = f_is_wi
+*             OBJECT_INACTIVE_VERSION       =
+                  .
+        IF f_is_wi = abap_true.   &quot; shouldn&apos;t be the case
+          CALL FUNCTION &apos;RS_DELETE_FROM_WORKING_AREA&apos;
+            EXPORTING
+              object                         = wa_type
+              obj_name                       = wa_name
+              immediate                      = abap_true
+*              OWN_SET_ONLY                   = &apos; &apos;
+              actualize_working_area         = abap_false
+*              ADJUST_OBJECT_INPUT_DATA       = &apos;X&apos;
+                    .
+        ENDIF.
       ENDIF.
 
       components = write_to_sap( o_raw ).

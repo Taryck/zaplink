@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="51C733047DCF48B8A4C6A793B8996D7A" CODE_SIGNATURE="9D1618946558856A64ACBCE9D195777A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="EAD78CD74AFBCA4EB1FD9AACE2851CA3" CODE_SIGNATURE="5A5F959283BF600903D121E69E81B620" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUGR_DATA"/>
@@ -764,19 +764,20 @@ INCLUDE zaplink_macros.</MACROS>
     mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
   ENDIF.
 
-  CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
-    EXPORTING
-      object                  = &apos;REPT&apos;
-      obj_name                = _oname
-*      DELETED_FLAG            = &apos; &apos;
-*    IMPORTING
-*      OBJECT_INSERTED         =
-    EXCEPTIONS
-      wrong_object_name       = 1
-      OTHERS                  = 2.
-  IF sy-subrc &lt;&gt; 0.
-    mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
-  ENDIF.
+* Issue 137 Should not get REPT (no text with includes)
+*  CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+*    EXPORTING
+*      object                  = &apos;REPT&apos;
+*      obj_name                = _oname
+**      DELETED_FLAG            = &apos; &apos;
+**    IMPORTING
+**      OBJECT_INSERTED         =
+*    EXCEPTIONS
+*      wrong_object_name       = 1
+*      OTHERS                  = 2.
+*  IF sy-subrc &lt;&gt; 0.
+*    mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+*  ENDIF.
 
   _rep-subc = &apos;I&apos;.
   _rep-varcl = abap_true.   &quot; Case sensitive
@@ -1279,6 +1280,8 @@ INCLUDE zaplink_macros.</MACROS>
           LOOP AT s_fmd_fugr-functions ASSIGNING &lt;f&gt;.
             write_function( &lt;f&gt; ).
           ENDLOOP.
+* Issue 137
+          Commit work.      &quot; Otherwise Pool conent is empty because inlcude UXX is not up to date
 
           CALL FUNCTION &apos;RS_FUNCTION_POOL_CONTENTS&apos;
             EXPORTING
@@ -1298,7 +1301,8 @@ INCLUDE zaplink_macros.</MACROS>
                  WITH KEY funcname = &lt;f&gt;-header-name.
             IF sy-subrc &lt;&gt; 0.
               ROLLBACK WORK.
-              mac_add_mf_and_raise &apos;RS_FUNCTIONMODULE_INSERT&apos; 12.
+*              mac_add_mf_and_raise &apos;RS_FUNCTIONMODULE_INSERT&apos; 12.    &quot; CF write_function
+              mac_add_mf_and_raise &apos;RPY_FUNCTIONMODULE_INSERT&apos; 11.    &quot; Issue 137
             ENDIF.
 *            set_prog_rawsource( program = &lt;fi&gt;-include
 *                                    raw = &lt;f&gt;-source ).
