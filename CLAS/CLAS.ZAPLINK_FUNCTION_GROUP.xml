@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="EAD78CD74AFBCA4EB1FD9AACE2851CA3" CODE_SIGNATURE="5A5F959283BF600903D121E69E81B620" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="489FEE171553D97A6FBE2AF16D0D0C66" CODE_SIGNATURE="5A5F959283BF600903D121E69E81B620" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUGR_DATA"/>
@@ -1281,7 +1281,7 @@ INCLUDE zaplink_macros.</MACROS>
             write_function( &lt;f&gt; ).
           ENDLOOP.
 * Issue 137
-          Commit work.      &quot; Otherwise Pool conent is empty because inlcude UXX is not up to date
+          COMMIT WORK.      &quot; Otherwise Pool conent is empty because inlcude UXX is not up to date
 
           CALL FUNCTION &apos;RS_FUNCTION_POOL_CONTENTS&apos;
             EXPORTING
@@ -1302,7 +1302,7 @@ INCLUDE zaplink_macros.</MACROS>
             IF sy-subrc &lt;&gt; 0.
               ROLLBACK WORK.
 *              mac_add_mf_and_raise &apos;RS_FUNCTIONMODULE_INSERT&apos; 12.    &quot; CF write_function
-              mac_add_mf_and_raise &apos;RPY_FUNCTIONMODULE_INSERT&apos; 11.    &quot; Issue 137
+              mac_add_mf_and_raise &apos;RPY_FUNCTIONMODULE_INSERT&apos; 11. &quot; Issue 137
             ENDIF.
 *            set_prog_rawsource( program = &lt;fi&gt;-include
 *                                    raw = &lt;f&gt;-source ).
