@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="ABC6EBC4F050BE3A74169DCD6849B88B" CODE_SIGNATURE="BC8CEF534B31C877C0A0E2BBD08CFE3C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F3A132DB1B1F31B341206A5A9C935C6E" CODE_SIGNATURE="C99D6CBBC8C8BF018FE166DA0877CD2C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -2424,15 +2424,16 @@ AS</ITEM>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
     <SOURCE>`
-  DATA clskey TYPE seoclskey.
-  DATA d_type TYPE td_comptype.
+  DATA clskey  TYPE seoclskey.
+  DATA d_type  TYPE td_comptype.
   DATA s_subrc TYPE sy-subrc.
+  DATA d_name  TYPE td_compname.
 
   TRY.
     d_type = component-&gt;get_type( ).
+    clskey-clsname = d_name = component-&gt;get_name( ).
     CASE d_type.
       WHEN zaplink_object_data=&gt;object_types-class.
-        clskey-clsname = component-&gt;get_name( ).
         CALL FUNCTION &apos;SEO_CLASS_DELETE_COMPLETE&apos;
           EXPORTING
             clskey       = clskey
@@ -2469,7 +2470,6 @@ AS</ITEM>
           ENDCASE.
         ENDIF.
       WHEN zaplink_object_data=&gt;object_types-interface.
-        clskey-clsname = component-&gt;get_name( ).
 * Not working
 *      CALL FUNCTION &apos;SEO_INTERFACE_DELETE_W_DEPS&apos;
 *        EXPORTING
@@ -2523,7 +2523,10 @@ AS</ITEM>
 
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
-  result = abap_true.</SOURCE>
+  result = abap_true.
+* Issue 137 =&gt; Remove from Working Area
+  zaplink_tools=&gt;remove_comp_from_working_area( type = d_type
+                                                name = d_name ).</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>`

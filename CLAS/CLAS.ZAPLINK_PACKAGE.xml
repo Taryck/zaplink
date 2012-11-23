@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="95420CB344FA805B94238BA9157FCFE4" CODE_SIGNATURE="F140E644E5E9CE9C5E1990C80D2AFE08" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="93416E4CD3828E12A4513E7BD14586AC" CODE_SIGNATURE="FA2F9B4BF59A86E37C154523D70F40C1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -2441,14 +2441,16 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
     <SOURCE>`
-  DATA key_devc TYPE devclass.
-  DATA key_intf TYPE scomifnam.
-  DATA package  TYPE REF TO if_package.
+  DATA key_devc   TYPE devclass.
+  DATA key_intf   TYPE scomifnam.
+  DATA package    TYPE REF TO if_package.
   DATA interface  TYPE REF TO if_package_interface.
-  DATA d_type TYPE td_comptype.
+  DATA d_type     TYPE td_comptype.
+  DATA d_name     TYPE td_compname.
 
   TRY.
     d_type = component-&gt;get_type( ).
+    d_name = component-&gt;get_name( ).
     CASE d_type.
       WHEN st_package.
         key_devc = component-&gt;get_name( ).
@@ -2480,7 +2482,10 @@ INCLUDE zaplink_macros.</MACROS>
 
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
-  result = abap_true.</SOURCE>
+  result = abap_true.
+* Issue 137 =&gt; Remove from Working Area
+  zaplink_tools=&gt;remove_comp_from_working_area( type = d_type
+                                                name = d_name ).</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>`

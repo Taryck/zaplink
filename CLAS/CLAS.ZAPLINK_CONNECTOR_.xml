@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E2B794A1723E3A63591F364686B1A682" CODE_SIGNATURE="520AEB5C771A1BA0293E2044D5CD3C6B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="654080F34470843021B7E1582FE49340" CODE_SIGNATURE="E5A0B747B5525D54408BB8F2554CEAFA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -261,16 +261,18 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       root_node = object-&gt;get_root_element( ).
       IF NOT root_node IS BOUND.
         _name = &apos;$NONE$&apos;(001).
-        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-              textid = zaplink_cx_connector=&gt;invalid_xml
-           node_name = _name.
+        RAISE EXCEPTION TYPE zaplink_cx_connector
+          EXPORTING
+            textid    = zaplink_cx_connector=&gt;invalid_xml
+            node_name = _name.
       ENDIF.
 
       _name = root_node-&gt;get_name( ).
       IF _name &lt;&gt; comp_nodename.
-        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-              textid = zaplink_cx_connector=&gt;invalid_xml
-           node_name = _name.
+        RAISE EXCEPTION TYPE zaplink_cx_connector
+          EXPORTING
+            textid    = zaplink_cx_connector=&gt;invalid_xml
+            node_name = _name.
       ENDIF.
 
       TRY.
@@ -282,8 +284,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * Version handling to develop
       IF is_supported_version( o_raw_b-&gt;version ) = abap_false.
 * Version &apos;&amp;CONN_VER&amp;&apos; is not (or no longer) suported by this connector.
-        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-              textid = zaplink_cx_connector=&gt;unsuported_version
+        RAISE EXCEPTION TYPE zaplink_cx_connector
+          EXPORTING
+            textid   = zaplink_cx_connector=&gt;unsuported_version
             conn_ver = o_raw_b-&gt;version.
       ENDIF.
 
@@ -324,28 +327,28 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * Issue 45
         CALL FUNCTION &apos;BAL_DSP_LOG_DISPLAY&apos;
           EXPORTING
-            i_s_display_profile          = s_profil
-            i_t_log_handle               = t_handle
-*           I_T_MSG_HANDLE               =
-*           I_S_LOG_FILTER               =
-*           I_S_MSG_FILTER               =
-*           I_T_LOG_CONTEXT_FILTER       =
-*           I_T_MSG_CONTEXT_FILTER       =
-            i_amodal                     = abap_false
-*           I_SRT_BY_TIMSTMP             = &apos; &apos;
+            i_s_display_profile    = s_profil
+            i_t_log_handle         = t_handle
+*           I_T_MSG_HANDLE         =
+*           I_S_LOG_FILTER         =
+*           I_S_MSG_FILTER         =
+*           I_T_LOG_CONTEXT_FILTER =
+*           I_T_MSG_CONTEXT_FILTER =
+            i_amodal               = abap_false
+*           I_SRT_BY_TIMSTMP       = &apos; &apos;
           IMPORTING
-            e_s_exit_command             = s_choice
+            e_s_exit_command       = s_choice
           EXCEPTIONS
-            profile_inconsistent         = 1
-            internal_error               = 2
-            no_data_available            = 3
-            no_authority                 = 4
-            OTHERS                       = 5.
+            profile_inconsistent   = 1
+            internal_error         = 2
+            no_data_available      = 3
+            no_authority           = 4
+            OTHERS                 = 5.
         IF sy-subrc &lt;&gt; 0 OR s_choice-continue IS INITIAL.
           CREATE OBJECT o_mycx
             EXPORTING
               textid = zaplink_cx_connector=&gt;xml_error
-              TYPE   = o_raw_b-&gt;type
+              type   = o_raw_b-&gt;type
               name   = o_raw_b-&gt;name.
           o_mycx-&gt;update( ).
           RAISE EXCEPTION o_mycx.
@@ -355,43 +358,46 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 * Add to worklist
       wa_type = o_raw-&gt;type.
       wa_name = o_raw-&gt;name.
-      IF zaplink_tools=&gt;is_working_areable( o_raw-&gt;type ) = abap_true.
-        CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
-          EXPORTING
-            object                  = wa_type
-            obj_name                = wa_name
-*            DELETED_FLAG            = &apos; &apos;
-          IMPORTING
-            object_inserted         = wa_flag
-          EXCEPTIONS
-            wrong_object_name       = 1
-            OTHERS                  = 2.
-        IF sy-subrc &lt;&gt; 0.
-          mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
-        ENDIF.
-      ELSE.   &quot; Security Remove old eroneous entries
-        CALL FUNCTION &apos;RS_OBJECT_IN_WORKING_AREA&apos;
-          EXPORTING
-            object                        = wa_type
-            obj_name                      = wa_name
-*            GLOBAL_CHECK                  = &apos; &apos;
-*            MODE                          = &apos;S&apos;
-          IMPORTING
-            object_is_work_item           = f_is_wi
-*             OBJECT_INACTIVE_VERSION       =
-                  .
-        IF f_is_wi = abap_true.   &quot; shouldn&apos;t be the case
-          CALL FUNCTION &apos;RS_DELETE_FROM_WORKING_AREA&apos;
-            EXPORTING
-              object                         = wa_type
-              obj_name                       = wa_name
-              immediate                      = abap_true
-*              OWN_SET_ONLY                   = &apos; &apos;
-              actualize_working_area         = abap_false
-*              ADJUST_OBJECT_INPUT_DATA       = &apos;X&apos;
-                    .
-        ENDIF.
-      ENDIF.
+* Issue 137 =&gt; use commun way to add into Wroking Area
+      zaplink_tools=&gt;add_comp_to_working_area( type = o_raw-&gt;type
+                                               name = o_raw-&gt;name ).
+*      IF zaplink_tools=&gt;is_working_areable( o_raw-&gt;type ) = abap_true.
+*        CALL FUNCTION &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+*          EXPORTING
+*            object                  = wa_type
+*            obj_name                = wa_name
+**            DELETED_FLAG            = &apos; &apos;
+*          IMPORTING
+*            object_inserted         = wa_flag
+*          EXCEPTIONS
+*            wrong_object_name       = 1
+*            OTHERS                  = 2.
+*        IF sy-subrc &lt;&gt; 0.
+*          mac_add_mf_and_raise &apos;RS_INSERT_INTO_WORKING_AREA&apos; sy-subrc.
+*        ENDIF.
+*      ELSE.   &quot; Security Remove old eroneous entries
+*        CALL FUNCTION &apos;RS_OBJECT_IN_WORKING_AREA&apos;
+*          EXPORTING
+*            object                        = wa_type
+*            obj_name                      = wa_name
+**            GLOBAL_CHECK                  = &apos; &apos;
+**            MODE                          = &apos;S&apos;
+*          IMPORTING
+*            object_is_work_item           = f_is_wi
+**             OBJECT_INACTIVE_VERSION       =
+*                  .
+*        IF f_is_wi = abap_true.   &quot; shouldn&apos;t be the case
+*          CALL FUNCTION &apos;RS_DELETE_FROM_WORKING_AREA&apos;
+*            EXPORTING
+*              object                         = wa_type
+*              obj_name                       = wa_name
+*              immediate                      = abap_true
+**              OWN_SET_ONLY                   = &apos; &apos;
+*              actualize_working_area         = abap_false
+**              ADJUST_OBJECT_INPUT_DATA       = &apos;X&apos;
+*                    .
+*        ENDIF.
+*      ENDIF.
 
       components = write_to_sap( o_raw ).
       IF components IS NOT BOUND.   CREATE OBJECT components.   ENDIF.

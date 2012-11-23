@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="489FEE171553D97A6FBE2AF16D0D0C66" CODE_SIGNATURE="5A5F959283BF600903D121E69E81B620" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="61969D07134608E5FC2B01A326AD9AC3" CODE_SIGNATURE="B2E54613ADAA6E199393419B6ADEBA08" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUGR_DATA"/>
@@ -883,12 +883,13 @@ INCLUDE zaplink_macros.</MACROS>
   DATA pool   TYPE rs38l-area.
   DATA d_func TYPE rs38l-name.
   DATA type   TYPE td_comptype.
+  DATA name   TYPE td_compname.
 
   TRY.
     type = component-&gt;get_type( ).
     CASE type.
       WHEN supportedtypes-function.
-        d_func = component-&gt;get_name( ).
+        d_func = name = component-&gt;get_name( ).
         CALL FUNCTION &apos;RS_FUNCTION_DELETE&apos;
           EXPORTING
             funcname                 = d_func
@@ -904,7 +905,7 @@ INCLUDE zaplink_macros.</MACROS>
           mac_add_mf_and_raise &apos;RS_FUNCTION_DELETE&apos; sy-subrc.
         ENDIF.
       WHEN supportedtypes-group.
-        pool = component-&gt;get_name( ).
+        pool = name = component-&gt;get_name( ).
         CALL FUNCTION &apos;FUNCTION_POOL_DELETE&apos;
           EXPORTING
             pool              = pool
@@ -923,7 +924,10 @@ INCLUDE zaplink_macros.</MACROS>
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
 
-  result = abap_true.</SOURCE>
+  result = abap_true.
+* Issue 137 =&gt; Remove from Working Area
+  zaplink_tools=&gt;remove_comp_from_working_area( type = type
+                                                name = name ).</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>`
@@ -1281,7 +1285,7 @@ INCLUDE zaplink_macros.</MACROS>
             write_function( &lt;f&gt; ).
           ENDLOOP.
 * Issue 137
-          COMMIT WORK.      &quot; Otherwise Pool conent is empty because inlcude UXX is not up to date
+          Commit work.      &quot; Otherwise Pool conent is empty because inlcude UXX is not up to date
 
           CALL FUNCTION &apos;RS_FUNCTION_POOL_CONTENTS&apos;
             EXPORTING
@@ -1302,7 +1306,7 @@ INCLUDE zaplink_macros.</MACROS>
             IF sy-subrc &lt;&gt; 0.
               ROLLBACK WORK.
 *              mac_add_mf_and_raise &apos;RS_FUNCTIONMODULE_INSERT&apos; 12.    &quot; CF write_function
-              mac_add_mf_and_raise &apos;RPY_FUNCTIONMODULE_INSERT&apos; 11. &quot; Issue 137
+              mac_add_mf_and_raise &apos;RPY_FUNCTIONMODULE_INSERT&apos; 11.    &quot; Issue 137
             ENDIF.
 *            set_prog_rawsource( program = &lt;fi&gt;-include
 *                                    raw = &lt;f&gt;-source ).

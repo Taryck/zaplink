@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="8AB2A87303AF2C7E787CD0D02EC2A049" CODE_SIGNATURE="BEDA18191846EAFB6A214FB279360875" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="FF2F8DBA4DE4974E4AAB84A1F85770AD" CODE_SIGNATURE="FB5002AB40859EEBE2BA301ECB991D43" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -1893,8 +1893,8 @@ END-OF-DEFINITION.</MACROS>
         d_type = dd_eu_type-matchcode_obj.
 *      WHEN supportedtypes-table_index.
 *        d_type = dd_eu_type-table_index.
-      WHEN supportedtypes-ext_index or supportedtypes-table_index.                        &quot; Issue 55
-        IF type = supportedtypes-table_index.   d_type = dd_eu_type-table_index.    else.   d_type = dd_eu_type-ext_index.    endif.
+      WHEN supportedtypes-ext_index OR supportedtypes-table_index.                        &quot; Issue 55
+        IF type = supportedtypes-table_index.   d_type = dd_eu_type-table_index.    ELSE.   d_type = dd_eu_type-ext_index.    ENDIF.
         s_index = zaplink_xinx_data=&gt;name_2_key( d_name ).
         CALL FUNCTION &apos;RS_DD_INDX_DELETE&apos;
           EXPORTING
@@ -1911,11 +1911,15 @@ END-OF-DEFINITION.</MACROS>
           CASE sy-subrc.
             WHEN 1.
               RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+                EXPORTING
+                  textid = zaplink_cx_connector=&gt;not_found.
             WHEN OTHERS.
               mac_add_mf_and_raise &apos;RS_DD_INDX_DELETE&apos; sy-subrc.
           ENDCASE.
         ENDIF.
+* Issue 137 =&gt; Remove from Working Area
+        zaplink_tools=&gt;remove_comp_from_working_area( type = type
+                                                      name = d_name ).
         EXIT.
       WHEN supportedtypes-table_content.
 *        DELETE
@@ -1950,7 +1954,8 @@ END-OF-DEFINITION.</MACROS>
         CASE sy-subrc.
           WHEN 2.
             RAISE EXCEPTION TYPE zaplink_cx_connector
-              EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+              EXPORTING
+                textid = zaplink_cx_connector=&gt;not_found.
           WHEN OTHERS.
             mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
         ENDCASE.
@@ -1959,7 +1964,10 @@ END-OF-DEFINITION.</MACROS>
 
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
-  result = abap_true.</SOURCE>
+  result = abap_true.
+* Issue 137 =&gt; Remove from Working Area
+  zaplink_tools=&gt;remove_comp_from_working_area( type = type
+                                                name = d_name ).</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>`

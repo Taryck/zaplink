@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="83ADBAFC02D09BAB2E240BC97B303FB0" CODE_SIGNATURE="573FFDF75D00A9EC899F30A99D782114" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E3C4AB11322AA2B61D24AEFD187827D0" CODE_SIGNATURE="F9420D2256E9590574DC4BC4A5BDF9DF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -150,13 +150,14 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   DATA _name TYPE t100a-arbgb.
   DATA type  TYPE td_comptype.
+  DATA name  TYPE td_compname.
 
   TRY.
 
     type = component-&gt;get_type( ).
     CASE type.
       WHEN st_msgclass.
-        _name = component-&gt;get_name( ).
+        _name = name = component-&gt;get_name( ).
         CALL FUNCTION &apos;RS_DELETE_MESSAGE_ID&apos;
           EXPORTING
             nachrichtenklasse = _name
@@ -181,7 +182,10 @@ INCLUDE zaplink_macros.</MACROS>
 
     mac_def_catch zaplink_cx_connector.
   ENDTRY.
-  result = abap_true.</SOURCE>
+  result = abap_true.
+* Issue 137 =&gt; Remove from Working Area
+  zaplink_tools=&gt;remove_comp_from_working_area( type = type
+                                                name = name ).</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>`
