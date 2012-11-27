@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="93416E4CD3828E12A4513E7BD14586AC" CODE_SIGNATURE="FA2F9B4BF59A86E37C154523D70F40C1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="941CB97E5016925258930ADFABA748A0" CODE_SIGNATURE="6E3261754271A46044DA93C1B059D69A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -2453,7 +2453,7 @@ INCLUDE zaplink_macros.</MACROS>
     d_name = component-&gt;get_name( ).
     CASE d_type.
       WHEN st_package.
-        key_devc = component-&gt;get_name( ).
+        key_devc = d_name.
         TRY.
             package = load_devc( key_devc ).
             _delete_devc( package ).
@@ -2465,7 +2465,7 @@ INCLUDE zaplink_macros.</MACROS>
             RAISE EXCEPTION o_mycx.
         ENDTRY.
       WHEN st_interface.
-        key_intf = component-&gt;get_name( ).
+        key_intf = d_name.
         TRY.
             interface = load_intf( key_intf ).
             _delete_intf( interface ).

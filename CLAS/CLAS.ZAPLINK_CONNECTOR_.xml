@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="654080F34470843021B7E1582FE49340" CODE_SIGNATURE="E5A0B747B5525D54408BB8F2554CEAFA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="97503B278E7B7975BA5CA7807A6BD79B" CODE_SIGNATURE="3FA6EDC155FE432353B981C12666B3E1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -246,8 +246,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA o_raw_b   TYPE to_raw_base.
   DATA o_raw     TYPE to_raw.
   DATA _name     TYPE string.
-  DATA wa_type   TYPE e071-object.
-  DATA wa_name   TYPE e071-obj_name.
+*  DATA wa_type   TYPE e071-object.
+*  DATA wa_name   TYPE e071-obj_name.
   DATA wa_flag   TYPE rs38l-head.
   DATA ez_xml    TYPE to_ez_xml.
   DATA o_cx      TYPE REF TO cx_root.
@@ -263,16 +263,16 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         _name = &apos;$NONE$&apos;(001).
         RAISE EXCEPTION TYPE zaplink_cx_connector
           EXPORTING
-            textid    = zaplink_cx_connector=&gt;invalid_xml
-            node_name = _name.
+              textid    = zaplink_cx_connector=&gt;invalid_xml
+              node_name = _name.
       ENDIF.
 
       _name = root_node-&gt;get_name( ).
       IF _name &lt;&gt; comp_nodename.
         RAISE EXCEPTION TYPE zaplink_cx_connector
           EXPORTING
-            textid    = zaplink_cx_connector=&gt;invalid_xml
-            node_name = _name.
+              textid    = zaplink_cx_connector=&gt;invalid_xml
+              node_name = _name.
       ENDIF.
 
       TRY.
@@ -356,9 +356,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       ENDIF.
 
 * Add to worklist
-      wa_type = o_raw-&gt;type.
-      wa_name = o_raw-&gt;name.
-* Issue 137 =&gt; use commun way to add into Wroking Area
+*      wa_type = o_raw-&gt;type.
+*      wa_name = o_raw-&gt;name.
       zaplink_tools=&gt;add_comp_to_working_area( type = o_raw-&gt;type
                                                name = o_raw-&gt;name ).
 *      IF zaplink_tools=&gt;is_working_areable( o_raw-&gt;type ) = abap_true.
@@ -1105,16 +1104,18 @@ INCLUDE zaplink_macros.</MACROS>
   root_node = object-&gt;get_root_element( ).
   IF NOT root_node IS BOUND.
     _name = &apos;$NONE$&apos;(001).
-    RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-          textid = zaplink_cx_connector=&gt;invalid_xml
-       node_name = _name.
+    RAISE EXCEPTION TYPE zaplink_cx_connector
+      EXPORTING
+         textid    = zaplink_cx_connector=&gt;invalid_xml
+         node_name = _name.
   ENDIF.
 
   _name = root_node-&gt;get_name( ).
   IF _name &lt;&gt; comp_nodename.
-    RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-          textid = zaplink_cx_connector=&gt;invalid_xml
-       node_name = _name.
+    RAISE EXCEPTION TYPE zaplink_cx_connector
+      EXPORTING
+        textid   = zaplink_cx_connector=&gt;invalid_xml
+        node_name = _name.
   ENDIF.
 
 *  TRY.
