@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F351A974F5D90D0F777FE9CA18701510" CODE_SIGNATURE="0444C387F08169ABA7C14BD4EC796147" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="BB5F2CBF5DD1CE33190009F2F0712C80" CODE_SIGNATURE="D6B692613F7A997D028AE8CC86C3C357" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
@@ -1863,9 +1863,13 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
     <SOURCE>`
-  DATA o_enh          TYPE to_enhancement_sap.
-  DATA o_root         TYPE REF TO cx_root.
+  DATA o_enh    TYPE to_enhancement_sap.
+  DATA o_root   TYPE REF TO cx_root.
+  DATA type     TYPE td_comptype.
+  DATA name     TYPE td_compname.
 
+  type = component-&gt;get_type( ).
+  name = component-&gt;get_name( ).
   TRY.
       o_enh = load_enhancement( component = component
                                   locking = abap_true ).
@@ -1880,7 +1884,10 @@ INCLUDE zaplink_macros.</MACROS>
 *cx_enh_composite_not_empty
     CATCH cx_root INTO o_root.
       mac_cascade_raise o_mycx o_root.
-  ENDTRY.</SOURCE>
+  ENDTRY.
+* Issue 137 =&gt; Remove from Working Area
+  zaplink_tools=&gt;remove_comp_from_working_area( type = type
+                                                name = name ).</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
     <SOURCE>`
