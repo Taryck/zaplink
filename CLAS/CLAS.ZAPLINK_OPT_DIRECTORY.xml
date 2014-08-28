@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="AB03BAAFC708F2C401268FF2CBA0A8B4" CODE_SIGNATURE="8CBCB07981783246B8BE29AF91793237" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F087E7B6C296E48B54409B4AE534AD58" CODE_SIGNATURE="36766085F20C91981159C9FDCCFC18D7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_DIRECTORY" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -77,7 +77,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
   </ATTRIBUTS>
   <INTERFACES>
-   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="1 "/>
   </INTERFACES>
   <LOCAL>
    <TYPES>`
@@ -116,11 +116,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_OPTIONS" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 result = _devclass.</SOURCE>
@@ -137,11 +133,7 @@ result = _devclass.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_OPTIONS" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   result = _tr.</SOURCE>
@@ -158,18 +150,14 @@ result = _devclass.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_OPTIONS" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   CHECK data &lt;&gt; _devclass.
 
 *  IF _devclass IS INITIAL AND _substitution = substitutionkinds-fixed.
-*    RAISE EXCEPTION TYPE zaplink_cx_opt_devclass
-*          EXPORTING textid = zaplink_cx_opt_devclass=&gt;missing_devclass
+*    RAISE EXCEPTION TYPE ZCX_ZAPLINK_opt_devclass
+*          EXPORTING textid = ZCX_ZAPLINK_opt_devclass=&gt;missing_devclass
 *                 substkind = _substitution.
 *  ENDIF.
   _devclass = data.</SOURCE>
@@ -187,11 +175,7 @@ result = _devclass.</SOURCE>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_DIRECTORY"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_OPTIONS" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _name        TYPE trobj_name.    &quot; tadir-obj_name.
@@ -219,7 +203,7 @@ result = _devclass.</SOURCE>
     IF me-&gt;_devclass IS BOUND.
       TRY.
           result-devclass = me-&gt;_devclass-&gt;substitute( component ).
-        CATCH zaplink_cx_options INTO o_mycx.
+        CATCH ZCX_ZL_OPTIONS INTO o_mycx.
           RAISE EXCEPTION o_mycx.
       ENDTRY.
     ENDIF.
@@ -227,7 +211,7 @@ result = _devclass.</SOURCE>
     IF me-&gt;_tr IS BOUND.
       TRY.
           result-trkorr = _tr-&gt;substitute( component ).
-        CATCH zaplink_cx_options INTO o_mycx.
+        CATCH ZCX_ZL_OPTIONS INTO o_mycx.
           RAISE EXCEPTION o_mycx.
       ENDTRY.
     ENDIF.
@@ -295,7 +279,7 @@ result = _devclass.</SOURCE>
             object_exists_local        = 2
             OTHERS                     = 3.
         IF sy-subrc &lt;&gt; 0.
-          mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_INSERT&apos; sy-subrc.
+          mac_add_mf_and_raise_class &apos;ZCX_ZAPLINK_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_INSERT&apos; sy-subrc.
         ENDIF.
       ELSEIF _act_devc &lt;&gt; result-devclass.
         CALL FUNCTION &apos;TRINT_TADIR_MODIFY&apos;
@@ -327,7 +311,7 @@ result = _devclass.</SOURCE>
             object_has_no_tadir        = 3
             OTHERS                     = 4.
         IF sy-subrc &lt;&gt; 0.
-          mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_MODIFY&apos; sy-subrc.
+          mac_add_mf_and_raise_class &apos;ZCX_ZAPLINK_OPT_DEVCLASS&apos; &apos;TRINT_TADIR_MODIFY&apos; sy-subrc.
         ENDIF.
       ENDIF.
     ENDIF.
@@ -365,10 +349,10 @@ result = _devclass.</SOURCE>
         unknown_objectclass            = 3
         OTHERS                         = 4.
     IF sy-subrc &lt;&gt; 0.
-      mac_add_mf_and_raise_class &apos;ZAPLINK_CX_OPT_DEVCLASS&apos; &apos;RS_CORR_INSERT&apos; sy-subrc.
+      mac_add_mf_and_raise_class &apos;ZCX_ZAPLINK_OPT_DEVCLASS&apos; &apos;RS_CORR_INSERT&apos; sy-subrc.
     ENDIF.
 
-    mac_def_catch zaplink_cx_options.
+    mac_def_catch ZCX_ZL_OPTIONS.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="SET_TRANSPORT_REQUEST" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
@@ -383,50 +367,46 @@ result = _devclass.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPTIONS" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_OPTIONS" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   CHECK data &lt;&gt; _tr.
 
 *  IF _devclass IS INITIAL AND _substitution = substitutionkinds-fixed.
-*    RAISE EXCEPTION TYPE zaplink_cx_opt_devclass
-*          EXPORTING textid = zaplink_cx_opt_devclass=&gt;missing_devclass
+*    RAISE EXCEPTION TYPE ZCX_ZAPLINK_opt_devclass
+*          EXPORTING textid = ZCX_ZAPLINK_opt_devclass=&gt;missing_devclass
 *                 substkind = _substitution.
 *  ENDIF.
   _tr = data.</SOURCE>
    </ITEM>
   </METHODS>
   <TYPES>
-   <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_RAW_BASE">
+   <ITEM CMPNAME="TO_COMPONENT" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_RAW_BASE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Zap Link Component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_DEVCLASS" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_OPT_DEVCLASS">
+   <ITEM CMPNAME="TO_DEVCLASS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_OPT_DEVCLASS">
     <TEXTS>
      <ITEM LANG="E" TEXT="Zap Link DevClass options"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX_OPTIONS">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZCX_ZL_OPTIONS">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Options"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_LOG" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
+   <ITEM CMPNAME="TO_LOG" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_TR" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_OPT_TRANSPORT_REQUEST">
+   <ITEM CMPNAME="TO_TR" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="ZAPLINK_OPT_TRANSPORT_REQUEST">
     <TEXTS>
      <ITEM LANG="E" TEXT="Zap Link Transport Request options"/>
     </TEXTS>

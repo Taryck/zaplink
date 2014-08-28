@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="C0A5D0227461B40E958397D06E755FF1" CODE_SIGNATURE="3E72B317E71BA9EFDE5015946504CCE2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="89A857F40355536E874A098213A265B5" CODE_SIGNATURE="82C2338D9FD7B86B8FA4BD1A2D04FD08" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONTAINER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -77,11 +77,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONTAINER" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp    TYPE zaplink_list=&gt;to_component.
@@ -99,7 +95,7 @@ INCLUDE zaplink_macros.</MACROS>
     WHILE o_comp IS BOUND.
       TRY.
           _add_component( component = o_comp ).
-        CATCH zaplink_cx_container INTO o_mycx.
+        CATCH ZCX_ZL_CONTAINER INTO o_mycx.
           CALL METHOD log-&gt;add_exception
             EXPORTING
               exception    = o_mycx
@@ -123,7 +119,7 @@ INCLUDE zaplink_macros.</MACROS>
     compact( ).
     _update_componentslist( ).
 
-    mac_def_catch zaplink_cx_container.
+    mac_def_catch ZCX_ZL_CONTAINER.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" MTDTYPE="2" MTDDECLTYP="1">
@@ -138,11 +134,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
      <ITEM LANG="E" TEXT="Compact container : remove component already included as sub"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONTAINER" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_list TYPE to_list.
@@ -169,7 +161,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
         ENDIF.
         o_comp = _complist-&gt;get_next( ).
       ENDWHILE.
-    CATCH zaplink_cx INTO o_cx.
+    CATCH zcx_zaplink INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -195,11 +187,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONTAINER" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   CHECK NOT data-name IS INITIAL.
@@ -223,11 +211,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONTAINER" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp    TYPE zaplink_list=&gt;to_component.
@@ -242,12 +226,13 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
       WHILE o_comp IS BOUND.
         TRY.
             _remove_component( o_comp ).
-          CATCH zaplink_cx_connector.
+          CATCH ZCX_ZL_CONNECTOR.
+            &quot; Ignore errors
         ENDTRY.
 
         o_comp = object_list-&gt;get_next( ).
       ENDWHILE.
-    CATCH zaplink_cx INTO o_cx.
+    CATCH zcx_zaplink INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -263,20 +248,17 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONTAINER" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _streamfactory TYPE REF TO if_ixml_stream_factory.
-  DATA _outputstream TYPE REF TO if_ixml_ostream.
-  DATA _renderer TYPE REF TO if_ixml_renderer.
-  DATA _tempstring TYPE string.
-  DATA _printxmldoc TYPE REF TO cl_xml_document.
-  DATA _rc      TYPE sysubrc.
-  DATA _file    TYPE to_file.
+  DATA _outputstream  TYPE REF TO if_ixml_ostream.
+  DATA _renderer      TYPE REF TO if_ixml_renderer.
+  DATA _tempstring    TYPE string.
+  DATA _printxmldoc   TYPE REF TO cl_xml_document.
+  DATA _rc            TYPE sysubrc.
+  DATA _file          TYPE to_file.
+  DATA go_encoding    TYPE REF TO if_ixml_encoding.
 
   IF NOT xmldata IS BOUND.
     EXIT.
@@ -284,6 +266,8 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
 
   _streamfactory = xmlengine-&gt;create_stream_factory( ).
   _outputstream = _streamfactory-&gt;create_ostream_cstring( _tempstring ).
+  go_encoding = _outputstream-&gt;get_encoding( ).
+  go_encoding-&gt;set_character_set( &apos;utf-8&apos; ).    &quot; issue 136
   _update_header( ).
   _renderer = xmlengine-&gt;create_renderer( document = xmldata
                                            ostream = _outputstream ).
@@ -304,7 +288,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
   TRY.
       _file-&gt;set_filecontent( _tempstring ).
       _file-&gt;save( ).
-    CATCH zaplink_cx_file.
+    CATCH zcx_zl_file.
       RETURN.
   ENDTRY.
   file = _file.</SOURCE>
@@ -321,11 +305,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONTAINER" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_connector TYPE zaplink_component=&gt;to_connector.
@@ -335,23 +315,23 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
   DATA _comp     TYPE zaplink_component=&gt;ts_component.
   DATA object    TYPE to_xml.
   DATA _index    LIKE LINE OF _nodeindex.
-  DATA o_cx_cnx  TYPE REF TO zaplink_cx_connector.
-*  DATA o_cx_comp TYPE REF TO zaplink_cx_component.
-  DATA o_cx_list TYPE REF TO zaplink_cx_list.
+  DATA o_cx_cnx  TYPE REF TO ZCX_ZL_CONNECTOR.
+*  DATA o_cx_comp TYPE REF TO ZCX_ZAPLINK_component.
+*  DATA o_cx_list TYPE REF TO ZCX_ZL_LIST.
 
   CHECK component IS BOUND.
   TRY.
       _comp = component-&gt;get_key( ).
       o_connector = component-&gt;connector( ).
-    CATCH zaplink_cx INTO o_cx.
+    CATCH ZCX_ZAPLINK INTO o_cx.
       TRY.
           component-&gt;set_exception( o_cx ).
-        CATCH zaplink_cx INTO o_cx.
+        CATCH ZCX_ZAPLINK INTO o_cx.
           mac_cascade_raise o_mycx o_cx.
       ENDTRY.
 * Failed to add component &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;). Look at exception &amp; message collector in component to get the root cause.
-      RAISE EXCEPTION TYPE zaplink_cx_container
-                 EXPORTING textid = zaplink_cx_container=&gt;add_comp_failed
+      RAISE EXCEPTION TYPE ZCX_ZL_CONTAINER
+                 EXPORTING textid = ZCX_ZL_CONTAINER=&gt;add_comp_failed
                              type = _comp-type
                              name = _comp-name.
   ENDTRY.
@@ -364,27 +344,27 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
       object = o_connector-&gt;export_from_sap( component ).
       component-&gt;set_msg_coll( o_connector-&gt;application_log ).
       mac_add_log o_connector-&gt;application_log log &apos;W&apos;.
-    CATCH zaplink_cx_connector INTO o_cx_cnx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_cx_cnx.
       TRY.
           component-&gt;set_exception( o_cx_cnx ).
           component-&gt;set_msg_coll( o_connector-&gt;application_log ).
-        CATCH zaplink_cx INTO o_cx.
+        CATCH ZCX_ZAPLINK INTO o_cx.
           mac_cascade_raise o_mycx o_cx.
       ENDTRY.
 * Failed to add component &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;). Look at exception &amp; message collector in component to get the root cause.
-      RAISE EXCEPTION TYPE zaplink_cx_container
-                 EXPORTING textid = zaplink_cx_container=&gt;add_comp_failed
+      RAISE EXCEPTION TYPE ZCX_ZL_CONTAINER
+                 EXPORTING textid = ZCX_ZL_CONTAINER=&gt;add_comp_failed
                          previous = o_cx_cnx
                              type = _comp-type
                              name = _comp-name.
-    CATCH zaplink_cx INTO o_cx.
+    CATCH ZCX_ZAPLINK INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
 
   IF NOT object IS BOUND.
 * Failed to add component &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;). Look at exception &amp; message collector in component to get the root cause.
-    RAISE EXCEPTION TYPE zaplink_cx_container
-               EXPORTING textid = zaplink_cx_container=&gt;add_comp_failed
+    RAISE EXCEPTION TYPE ZCX_ZL_CONTAINER
+               EXPORTING textid = ZCX_ZL_CONTAINER=&gt;add_comp_failed
                            type = _comp-type
                            name = _comp-name.
 
@@ -405,15 +385,15 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
 * Issue 102 : Replaced code
 *      TRY.
 *          _complist-&gt;add( component ).
-*        CATCH zaplink_cx_list INTO o_cx_list.
+*        CATCH ZCX_ZL_LIST INTO o_cx_list.
 *          TRY.
 *              component-&gt;set_exception( o_cx_list ).
-*            CATCH zaplink_cx INTO o_cx.
+*            CATCH ZCX_ZAPLINK INTO o_cx.
 *              mac_cascade_raise o_mycx o_cx.
 *          ENDTRY.
 ** Failed to add component &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;). Look at exception &amp; message collector in component to get the root cause.
-*          RAISE EXCEPTION TYPE zaplink_cx_container
-*                     EXPORTING textid = zaplink_cx_container=&gt;add_comp_failed
+*          RAISE EXCEPTION TYPE ZCX_ZL_CONTAINER
+*                     EXPORTING textid = ZCX_ZL_CONTAINER=&gt;add_comp_failed
 *                                 type = _comp-type
 *                                 name = _comp-name.
 *      ENDTRY.
@@ -428,7 +408,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
 
       _search_components( root ).     &quot; Issue 102 : to keep comp list up to date
 
-    CATCH zaplink_cx_container INTO o_mycx.
+    CATCH ZCX_ZL_CONTAINER INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -440,11 +420,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
      <ITEM SCONAME="COMPONENT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONTAINER" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA node   TYPE REF TO if_ixml_node.
@@ -467,7 +443,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
       node = _find_component_node( component ).
     ENDWHILE.
 
-    mac_def_catch zaplink_cx_container.
+    mac_def_catch ZCX_ZL_CONTAINER.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_UPDATE_HEADER" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -475,11 +451,7 @@ xmlengine = cl_ixml=&gt;create( ).</SOURCE>
      <ITEM LANG="E" TEXT="Update Header into XML Data"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONTAINER" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONTAINER" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _root TYPE REF TO if_ixml_element.

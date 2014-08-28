@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="A07A02326A7705815078D145F3A0ACB5" CODE_SIGNATURE="1C5D7A17E0B1FC642821C10E81268A8E" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="00B5A27725E65A895214732A94D8DB3A" CODE_SIGNATURE="11101FE6EB00C0ECB8C1AC8E12F72565" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ACTIVATE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" RSTAT="K">
@@ -918,13 +918,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       </TEXTS>
      </ITEM>
     </PARAMETERS>
-    <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
-    </EXCEPTIONS>
     <SOURCE>`
   DATA t_keys      TYPE tt_compkeys.
 
@@ -1038,7 +1031,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -1048,7 +1041,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA d_count    TYPE i.
   DATA d_answer   TYPE c.
   DATA d_msg      TYPE string.
-  DATA o_cx       TYPE REF TO zaplink_cx.
+  DATA o_cx       TYPE REF TO zcx_zaplink.
 
   CLEAR activation_requested.
   d_count = LINES( it_obj_list ).   d_msg = d_count.  CONDENSE d_msg.
@@ -1071,8 +1064,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       text_not_found        = 1
       OTHERS                = 2.
   IF sy-subrc &lt;&gt; 0.
-    o_cx = zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;POPUP_TO_CONFIRM&apos;
-                                             subrc = sy-subrc ) .
+    o_cx = zcx_zaplink=&gt;create_from_mf_cx( funcname = &apos;POPUP_TO_CONFIRM&apos;
+                                              subrc = sy-subrc ) .
     RAISE EXCEPTION o_cx.
   ENDIF.
   IF d_answer CO &apos;YJ1&apos;.

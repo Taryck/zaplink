@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FF2F8DBA4DE4974E4AAB84A1F85770AD" CODE_SIGNATURE="FB5002AB40859EEBE2BA301ECB991D43" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="85937339E906F28B0D8F5FCCA856B195" CODE_SIGNATURE="003BA77342FC772C3B99F608C6863E96" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DICTIONARY" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -182,11 +182,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name     TYPE ddobjname.
@@ -230,7 +226,7 @@ END-OF-DEFINITION.</MACROS>
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_DOMAIN" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -250,11 +246,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name     TYPE ddobjname.
@@ -309,7 +301,7 @@ END-OF-DEFINITION.</MACROS>
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_INDEX" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -329,11 +321,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name     TYPE td_compname.
@@ -382,7 +370,7 @@ END-OF-DEFINITION.</MACROS>
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_LOCK_OBJECT" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -402,11 +390,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name     TYPE ddobjname.
@@ -453,7 +437,7 @@ END-OF-DEFINITION.</MACROS>
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_SEARCH_HELP" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -473,11 +457,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name     TYPE ddobjname.
@@ -524,7 +504,7 @@ END-OF-DEFINITION.</MACROS>
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_TABLE" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -544,11 +524,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name     TYPE ddobjname.
@@ -621,7 +597,7 @@ END-OF-DEFINITION.</MACROS>
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_TABLE_CONTENT" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -641,11 +617,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_table    TYPE zaplink_tabu_data=&gt;td_table_name.
@@ -656,7 +628,7 @@ END-OF-DEFINITION.</MACROS>
     CREATE OBJECT object.
     object-&gt;from_data( d_table ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_TABLE_TYPE" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -676,11 +648,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name     TYPE ddobjname.
@@ -725,7 +693,7 @@ END-OF-DEFINITION.</MACROS>
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_TYPE_GROUP" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -745,11 +713,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_type     TYPE td_typegroup.
@@ -786,7 +750,7 @@ END-OF-DEFINITION.</MACROS>
     object-&gt;set_source( t_source ).
     object-&gt;_code_signature = get_typegroup_signature( d_type ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_VIEW" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -806,11 +770,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name     TYPE ddobjname.
@@ -859,7 +819,7 @@ END-OF-DEFINITION.</MACROS>
     CREATE OBJECT object.
     object-&gt;from_data( s_fm_data ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_TYPEGROUP_SIGNATURE" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
@@ -879,11 +839,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_src    TYPE tt_abaprawsource.
@@ -915,11 +871,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_type     TYPE td_typegroup.
@@ -979,11 +931,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name         TYPE rsedd0-ddobjname.
@@ -1031,7 +979,7 @@ END-OF-DEFINITION.</MACROS>
 
     zaplink_documentation=&gt;set( s_fm_data-docs ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_DOMAIN" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -1051,11 +999,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name         TYPE rsedd0-ddobjname.
@@ -1108,7 +1052,7 @@ END-OF-DEFINITION.</MACROS>
 
     zaplink_documentation=&gt;set( s_fm_data-docs ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_INDEX" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -1128,11 +1072,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA s_index        TYPE ts_idx_key.
@@ -1199,7 +1139,7 @@ END-OF-DEFINITION.</MACROS>
 
     zaplink_documentation=&gt;set( s_fm_data-docs ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_LOCK_OBJECT" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -1219,11 +1159,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name         TYPE rsedd0-ddobjname.
@@ -1274,7 +1210,7 @@ END-OF-DEFINITION.</MACROS>
 
     zaplink_documentation=&gt;set( s_fm_data-docs ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_SEARCH_HELP" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -1294,11 +1230,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name         TYPE rsedd0-ddobjname.
@@ -1350,7 +1282,7 @@ END-OF-DEFINITION.</MACROS>
 
     zaplink_documentation=&gt;set( s_fm_data-docs ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TABLE" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -1370,11 +1302,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name         TYPE rsedd0-ddobjname.
@@ -1498,7 +1426,7 @@ END-OF-DEFINITION.</MACROS>
       ENDIF.
     ENDIF.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TABLE_TYPE" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -1518,11 +1446,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name         TYPE rsedd0-ddobjname.
@@ -1572,7 +1496,7 @@ END-OF-DEFINITION.</MACROS>
 
     zaplink_documentation=&gt;set( s_fm_data-docs ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TYPE_GROUP" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -1592,11 +1516,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_typegroup    TYPE td_typegroup.
@@ -1698,7 +1618,7 @@ END-OF-DEFINITION.</MACROS>
       ENDIF.
     ENDIF.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_VIEW" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -1718,11 +1638,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_name         TYPE rsedd0-ddobjname.
@@ -1776,12 +1692,12 @@ END-OF-DEFINITION.</MACROS>
 
     zaplink_documentation=&gt;set( s_fm_data-docs ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE" EXPOSURE="2">
     <SOURCE>`
   mac_obj_data.
 
@@ -1808,12 +1724,12 @@ END-OF-DEFINITION.</MACROS>
 
   TRY.      &quot; Issue 86
       super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE"/>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE" EXPOSURE="2"/>
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE" EXPOSURE="2">
     <SOURCE>`
   DATA d_type   TYPE td_comptype.
   DATA d_tgrp   TYPE td_typegroup.
@@ -1829,10 +1745,10 @@ END-OF-DEFINITION.</MACROS>
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW" EXPOSURE="2">
     <SOURCE>`
   mac_obj_data.
   DATA o_raw_idx TYPE to_raw_index.
@@ -1862,7 +1778,7 @@ END-OF-DEFINITION.</MACROS>
       mac_raise_type_not_supported me-&gt;class_name type.
   ENDCASE.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP" EXPOSURE="2">
     <SOURCE>`
   DATA d_name    TYPE td_compname.
   DATA d_objname TYPE rsedd0-ddobjname.
@@ -1910,9 +1826,9 @@ END-OF-DEFINITION.</MACROS>
         IF sy-subrc &lt;&gt; 0.
           CASE sy-subrc.
             WHEN 1.
-              RAISE EXCEPTION TYPE zaplink_cx_connector
+              RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
                 EXPORTING
-                  textid = zaplink_cx_connector=&gt;not_found.
+                  textid = ZCX_ZL_CONNECTOR=&gt;not_found.
             WHEN OTHERS.
               mac_add_mf_and_raise &apos;RS_DD_INDX_DELETE&apos; sy-subrc.
           ENDCASE.
@@ -1953,23 +1869,23 @@ END-OF-DEFINITION.</MACROS>
       IF sy-subrc &lt;&gt; 0. &quot; SAP NameSpace
         CASE sy-subrc.
           WHEN 2.
-            RAISE EXCEPTION TYPE zaplink_cx_connector
+            RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
               EXPORTING
-                textid = zaplink_cx_connector=&gt;not_found.
+                textid = ZCX_ZL_CONNECTOR=&gt;not_found.
           WHEN OTHERS.
             mac_add_mf_and_raise &apos;RS_DD_DELETE_OBJ&apos; sy-subrc.
         ENDCASE.
       ENDIF.
     ENDIF.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.
   result = abap_true.
 * Issue 137 =&gt; Remove from Working Area
   zaplink_tools=&gt;remove_comp_from_working_area( type = type
                                                 name = d_name ).</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS" EXPOSURE="2">
     <SOURCE>`
   DATA d_name      TYPE td_compname.
   DATA d_ddname    TYPE rsedd0-ddobjname.
@@ -2052,21 +1968,21 @@ END-OF-DEFINITION.</MACROS>
 
     ENDIF.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION" EXPOSURE="2">
     <SOURCE>`
   result = abap_false.
   if version = _ver.    result = abap_true.   endif.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP" EXPOSURE="2">
     <SOURCE>`
   mac_obj_data.
   DATA d_type       TYPE td_comptype.
 
   DEFINE mac_catch_local_cx.
-    catch zaplink_cx_connector into o_mycx.
+    catch ZCX_ZL_CONNECTOR into o_mycx.
       if not o_mycx-&gt;messages is bound.
         o_mycx-&gt;messages = application_log.
         o_mycx-&gt;update( ).
@@ -2155,17 +2071,17 @@ END-OF-DEFINITION.</MACROS>
           mac_raise_type_not_supported me-&gt;class_name d_type.
       ENDCASE.
       object-&gt;update_connector_data( me ).                  &quot; Issue 66
-      mac_def_catch zaplink_cx_connector.
+      mac_def_catch ZCX_ZL_CONNECTOR.
     ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP" EXPOSURE="2">
     <SOURCE>`
   mac_obj_data.
   DATA o_comp       TYPE to_component.
   DATA s_index      TYPE ts_idx_key.
 
   DEFINE lmac_catch_local_cx.
-    catch zaplink_cx_connector into o_mycx.
+    catch ZCX_ZL_CONNECTOR into o_mycx.
       if not o_mycx-&gt;messages is bound.
         o_mycx-&gt;messages = application_log.
         o_mycx-&gt;update( ).
@@ -2253,7 +2169,7 @@ END-OF-DEFINITION.</MACROS>
 
     check_component_list( EXPORTING     object = object
                            CHANGING components = components ). &quot; Issue 92
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
@@ -2261,7 +2177,7 @@ END-OF-DEFINITION.</MACROS>
    <ITEM TYPEGROUP="ABAP" IMPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TD_TYPEGROUP" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TYPEGROUP">
+   <ITEM CMPNAME="TD_TYPEGROUP" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="TYPEGROUP">
     <TEXTS>
      <ITEM LANG="E" TEXT="Type group name"/>
     </TEXTS>

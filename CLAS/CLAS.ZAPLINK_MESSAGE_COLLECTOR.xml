@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="451E3FE277C3C27C7EF08FDBA8483E1B" CODE_SIGNATURE="886368178EFB8E0BAC290703647AB4CD" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="AB8348B69749ECD143B85B0F90528C05" CODE_SIGNATURE="AE361B614B33060C9CF37D032776B670" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE_COLLECTOR" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-LOG" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -774,7 +774,7 @@ END-OF-DEFINITION.
     </PARAMETERS>
     <SOURCE>`
   DATA _detlevel  TYPE ballevel.
-  DATA o_zl_cx    TYPE REF TO zaplink_cx.
+  DATA o_zl_cx    TYPE REF TO ZCX_ZAPLINK.
 
   IF id_detlevel IS INITIAL.    _detlevel = md_level.   ELSE.   _detlevel = id_detlevel.    ENDIF.
   TRY.
@@ -888,7 +888,7 @@ END-OF-DEFINITION.
      <ITEM LANG="E" TEXT="Inserts All Messages of Another Log"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="IF_ADD_AS_SUBNODE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_ADD_AS_SUBNODE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Insert after Detail Level = md_level + 1"/>
       </TEXTS>
@@ -1116,7 +1116,7 @@ END-OF-DEFINITION.
        <ITEM LANG="E" TEXT="Line Index"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="SY-MSGTY" PAROPTIONL="X">
+     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="SY-MSGTY">
       <TEXTS>
        <ITEM LANG="E" TEXT="Message Type"/>
       </TEXTS>
@@ -1634,12 +1634,12 @@ END-OF-DEFINITION.
        <ITEM LANG="E" TEXT="First Message"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;" PAROPTIONL="X">
+     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;">
       <TEXTS>
        <ITEM LANG="E" TEXT="Message Type: Allowed I, W, E, A"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Consider More Critical Message Types Also?"/>
       </TEXTS>
@@ -1735,12 +1735,12 @@ END-OF-DEFINITION.
        <ITEM LANG="E" TEXT="Last message"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;" PAROPTIONL="X">
+     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;">
       <TEXTS>
        <ITEM LANG="E" TEXT="Message Type: Allowed I, W, E, A"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Consider More Critical Message Types Also?"/>
       </TEXTS>
@@ -1931,7 +1931,7 @@ END-OF-DEFINITION.
        <ITEM LANG="E" TEXT="List of  Collected Messages"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;" PAROPTIONL="X">
+     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;">
       <TEXTS>
        <ITEM LANG="E" TEXT="Message Type: Allowed I, W, E, A"/>
       </TEXTS>
@@ -2011,12 +2011,12 @@ END-OF-DEFINITION.
        <ITEM LANG="E" TEXT="Filter Criteria for Messages"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;" PAROPTIONL="X">
+     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;I&apos;">
       <TEXTS>
        <ITEM LANG="E" TEXT="Notification category"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Consider More Critical Message Types Also?"/>
       </TEXTS>
@@ -2140,22 +2140,22 @@ END-OF-DEFINITION.
        <ITEM LANG="E" TEXT="Summary of the Number of Errors"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="IF_OUTPUT_E_MESSAGES" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_OUTPUT_E_MESSAGES" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Output Number of Termination and Error Messages"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="IF_OUTPUT_HIGHEST_ONLY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_OUTPUT_HIGHEST_ONLY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Output Only Number of Highest Message Type"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="IF_OUTPUT_I_MESSAGES" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_OUTPUT_I_MESSAGES" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Output Number of Information and Status Messages"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="IF_OUTPUT_W_MESSAGES" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_OUTPUT_W_MESSAGES" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Output Number of Warning Messages"/>
       </TEXTS>
@@ -2252,7 +2252,7 @@ END-OF-DEFINITION.
        <ITEM LANG="E" TEXT="Message Type: Allowed I, W, E, A"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Consider More Critical Message Types Also?"/>
       </TEXTS>
@@ -2323,7 +2323,7 @@ END-OF-DEFINITION.
      <ITEM LANG="E" TEXT="&lt;Only For Factory Methods&gt;"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="AUTO_UPD_CUSTO" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="FLAG" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
+     <ITEM SCONAME="AUTO_UPD_CUSTO" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="FLAG" PARVALUE="ABAP_FALSE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Auto Update customizing tables"/>
       </TEXTS>
@@ -2621,7 +2621,7 @@ END-OF-DEFINITION.
        <ITEM LANG="E" TEXT="Problem class"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="IF_SET_FOLLOWING_AS_SUBNODE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_SET_FOLLOWING_AS_SUBNODE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Changes Detail Level (+1) of Existing, Following Message"/>
       </TEXTS>
@@ -2849,12 +2849,12 @@ END-OF-DEFINITION.
      <ITEM LANG="E" TEXT="Gets First Message as Exception"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;E&apos;" PAROPTIONL="X">
+     <ITEM SCONAME="ID_MSGTY" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="SYMSGTY" PARVALUE="&apos;E&apos;">
       <TEXTS>
        <ITEM LANG="E" TEXT="Message Type: Allowed I, W, E, A"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_OR_HIGHER" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Consider More Critical Message Types Also?"/>
       </TEXTS>
@@ -2891,14 +2891,10 @@ END-OF-DEFINITION.
      <ITEM LANG="E" TEXT="Raise exception when error in BAL Log"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA o_exception TYPE REF TO zaplink_cx.
+  DATA o_exception TYPE REF TO ZCX_ZAPLINK.
 
   IF NOT has_messages_of_msgt( id_msgty = &apos;E&apos; ) IS INITIAL.
 * Fatal Errors occurs, check ba log (SLG1) : &apos;&amp;1&apos; &apos;&amp;2&apos; &apos;&amp;3&apos;
@@ -2915,7 +2911,7 @@ END-OF-DEFINITION.
 *               id_probclass = &apos;1&apos;
                 ).
 
-    o_exception = zaplink_cx=&gt;create_from_application_log( message_collector = me ).
+    o_exception = ZCX_ZAPLINK=&gt;create_from_application_log( message_collector = me ).
 
     RAISE EXCEPTION o_exception.
   ENDIF.</SOURCE>
@@ -3017,7 +3013,7 @@ END-OF-DEFINITION.
      <ITEM LANG="E" TEXT="Saves Log with Collected Messages"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="IF_IN_UPDATE_TASK" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
+     <ITEM SCONAME="IF_IN_UPDATE_TASK" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE">
       <TEXTS>
        <ITEM LANG="E" TEXT='Call update program using &quot;IN UPDATE TASK&quot;'/>
       </TEXTS>
@@ -3128,7 +3124,7 @@ END-OF-DEFINITION.
   o_ref ?= cl_abap_classdescr=&gt;describe_by_data( p_data = exception ).
   o_obj ?= get_ref_type( o_ref ).
 
-  cx_src_pos = zaplink_cx=&gt;source_position_as_string( exception ).
+  cx_src_pos = ZCX_ZAPLINK=&gt;source_position_as_string( exception ).
 *  CALL METHOD exception-&gt;get_source_position
 *    IMPORTING
 *      program_name = prog
@@ -3201,7 +3197,7 @@ END-OF-DEFINITION.
      <ITEM LANG="E" TEXT="Add Zaplink exception to bal log"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="EXCEPTION" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="3" TYPE="ZAPLINK_CX">
+     <ITEM SCONAME="EXCEPTION" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="3" TYPE="ZCX_ZAPLINK">
       <TEXTS>
        <ITEM LANG="E" TEXT="Abstract Superclass for All Global Exceptions"/>
       </TEXTS>
@@ -3283,6 +3279,7 @@ END-OF-DEFINITION.
 TYPES:
     msgnumber	TYPE balmnr,
   END OF msg_x
+`
     <TEXTS>
      <ITEM LANG="E" TEXT="Msg with tech data"/>
     </TEXTS>
@@ -3296,6 +3293,7 @@ TYPES:
    </ITEM>
    <ITEM CMPNAME="T_MSG_X" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="4">
     t_msg_x TYPE STANDARD TABLE OF msg_x WITH NON-UNIQUE DEFAULT KEY
+`
     <TEXTS>
      <ITEM LANG="E" TEXT="Msg list with tech data"/>
     </TEXTS>

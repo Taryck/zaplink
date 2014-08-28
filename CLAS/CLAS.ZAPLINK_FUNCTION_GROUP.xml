@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="61969D07134608E5FC2B01A326AD9AC3" CODE_SIGNATURE="B2E54613ADAA6E199393419B6ADEBA08" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B102993DD0E2AB048836FCE2D1BC0407" CODE_SIGNATURE="75D6DF3BF064DD7EE2080E4B084F347D" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FUNCTION_GROUP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FUGR_DATA"/>
@@ -169,11 +169,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="FUNC" CMPTYPE="1" TYPTYPE="1" TYPE="TS_FMD_FUNC"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_pname     TYPE tfdir-pname.
@@ -286,7 +282,7 @@ INCLUDE zaplink_macros.</MACROS>
     DELETE FROM tftit WHERE funcname = func-header-name.
     DELETE FROM funct WHERE funcname = func-header-name.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_ALL_INCLUDES" STATE="1" MTDDECLTYP="1">
@@ -402,11 +398,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_src      TYPE string.
@@ -517,11 +509,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TS_FMD_FUNC"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 *  STATICS prev_func_name  TYPE  td_function_name.
@@ -584,7 +572,7 @@ INCLUDE zaplink_macros.</MACROS>
 
     prev_func-data = result.    prev_func-name = name.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="WRITE_FUNCTION" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -595,11 +583,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="FUNC" CMPTYPE="1" TYPTYPE="1" TYPE="TS_FMD_FUNC"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_doc       TYPE STANDARD TABLE OF rsfdo WITH DEFAULT KEY.
@@ -652,7 +636,7 @@ INCLUDE zaplink_macros.</MACROS>
     MODIFY tftit FROM TABLE func-texts.
     MODIFY funct FROM TABLE func-param_texts.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="WRITE_INCLUDE" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -682,11 +666,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _oname   TYPE e071-obj_name.
@@ -791,7 +771,7 @@ INCLUDE zaplink_macros.</MACROS>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE" EXPOSURE="2">
     <SOURCE>`
   DATA o_group    TYPE to_group.
   DATA o_function TYPE to_function.
@@ -811,17 +791,17 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
       super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE" EXPOSURE="2">
     <SOURCE>`
 *  DATA o_prog TYPE to_program.
 *
 *  TRY.
 *      super-&gt;zaplink_cnx_ext_cleaner~unanonymize( object ).
-*    CATCH zaplink_cx_connector INTO o_mycx.
+*    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
 *      RAISE EXCEPTION o_mycx.
 *  ENDTRY.
 *
@@ -835,7 +815,7 @@ INCLUDE zaplink_macros.</MACROS>
 **    o_prog-&gt;A0_MAINDATA-IDATE,
 **    o_prog-&gt;A0_MAINDATA-ITIME.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE" EXPOSURE="2">
     <SOURCE>`
   DATA d_group TYPE td_functiongroup_name.
   DATA d_func  TYPE td_function_name.
@@ -854,10 +834,10 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW" EXPOSURE="2">
     <SOURCE>`
   DATA o_group    TYPE to_group.
   DATA o_function TYPE to_function.
@@ -878,7 +858,7 @@ INCLUDE zaplink_macros.</MACROS>
       mac_raise_type_not_supported me-&gt;class_name type.
   ENDCASE.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP" EXPOSURE="2">
     <SOURCE>`
   DATA pool   TYPE rs38l-area.
   DATA d_func TYPE rs38l-name.
@@ -921,7 +901,7 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.
 
   result = abap_true.
@@ -929,7 +909,7 @@ INCLUDE zaplink_macros.</MACROS>
   zaplink_tools=&gt;remove_comp_from_working_area( type = type
                                                 name = name ).</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS" EXPOSURE="2">
     <SOURCE>`
   DATA d_group    TYPE td_functiongroup_name.
   DATA d_function TYPE TD_FUNCTION_NAME.
@@ -967,17 +947,17 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION" EXPOSURE="2">
     <SOURCE>`
   result = abap_false.
   if version = _ver.
     result = abap_true.
   endif.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP" EXPOSURE="2">
     <SOURCE>`
   DATA o_group    TYPE to_group.
   DATA o_function TYPE to_function.
@@ -1080,10 +1060,10 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP" EXPOSURE="2">
     <SOURCE>`
   DATA o_group      TYPE to_group.
   DATA o_function   TYPE to_function.
@@ -1318,10 +1298,10 @@ INCLUDE zaplink_macros.</MACROS>
       check_component_list( EXPORTING     object = object
                              CHANGING components = components ). &quot; Issue 92
 
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       ROLLBACK WORK.
       RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
+    CATCH ZCX_ZAPLINK INTO o_cx.
       ROLLBACK WORK.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
@@ -1358,12 +1338,12 @@ INCLUDE zaplink_macros.</MACROS>
    <ITEM TYPEGROUP="ABAP" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TD_FUNCTIONGROUP_NAME" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="TLIBG-AREA">
+   <ITEM CMPNAME="TD_FUNCTIONGROUP_NAME" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="TLIBG-AREA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Function group, to which the function module belongs"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TD_FUNCTION_NAME" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="RS38L-NAME">
+   <ITEM CMPNAME="TD_FUNCTION_NAME" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="RS38L-NAME">
     <TEXTS>
      <ITEM LANG="E" TEXT="Name of Function Module"/>
     </TEXTS>
@@ -1393,21 +1373,23 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Program Attributs"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="STRING">
+   <ITEM CMPNAME="TS_SOURCE" EXPOSURE="2" STATE="1" EDITORDER="8 " TYPTYPE="1" TYPE="STRING">
     <TEXTS>
      <ITEM LANG="E" TEXT="ABAP Source code"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_TEXT" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="4">begin of ts_text,
+   <ITEM CMPNAME="TS_TEXT" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">begin of ts_text,
       langu   type SPRAS,
       ENTRY	  type TEXTPOOLTX,
       LENGTH  type TEXTPOOLLN,
-    end of ts_text</ITEM>
-   <ITEM CMPNAME="TS_TEXTPOOL" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">begin of ts_textpool,
+    end of ts_text
+`</ITEM>
+   <ITEM CMPNAME="TS_TEXTPOOL" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">begin of ts_textpool,
       ID    type  TEXTPOOLID,
       KEY	  type  TEXTPOOLKY,
       texts type  tt_texts,
-    end of ts_textpool</ITEM>
+    end of ts_textpool
+`</ITEM>
    <ITEM CMPNAME="TT_INCLUDES" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="ZAPLINK_FUGR_DATA=&gt;TT_RAWINCLUDES"/>
    <ITEM CMPNAME="TT_RS38L_INCL" STATE="1" EDITORDER="2 " TYPTYPE="4">
     tt_rs38l_incl TYPE STANDARD TABLE OF rs38l_incl WITH DEFAULT KEY
@@ -1416,14 +1398,16 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="standard table of rs38l_incl"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TEXTPOOLS" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">
+   <ITEM CMPNAME="TT_TEXTPOOLS" EXPOSURE="2" STATE="1" EDITORDER="7 " TYPTYPE="4">
     TT_TEXTPOOLs type SORTED TABLE OF ts_textpool WITH UNIQUE key ID KEY
+`
     <TEXTS>
      <ITEM LANG="E" TEXT="Table of textppool"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="4">tt_texts type SORTED TABLE OF ts_text WITH UNIQUE KEY langu</ITEM>
-   <ITEM CMPNAME="T_RAW" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="RSWSOURCET">
+   <ITEM CMPNAME="TT_TEXTS" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_texts type SORTED TABLE OF ts_text WITH UNIQUE KEY langu
+`</ITEM>
+   <ITEM CMPNAME="T_RAW" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="1" TYPE="RSWSOURCET">
     <TEXTS>
      <ITEM LANG="E" TEXT="ABAP Source"/>
     </TEXTS>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="1F1F4278A18B22D519CF7CAB589D3F64" CODE_SIGNATURE="C91B91A491FA9713FAD5F6C9DC8E9F11" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D8557440ED603575DFC625325D80ADB2" CODE_SIGNATURE="3DE903307226627908563CF8F4F0BAC2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TOOLS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" WITH_UNIT_TESTS="X">
@@ -123,7 +123,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
   </ATTRIBUTS>
   <INTERFACES>
-   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="1 "/>
   </INTERFACES>
   <LOCAL>
    <TYPES>`
@@ -217,15 +217,11 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA wa_flag   TYPE rs38l-head.
-  DATA o_cx      TYPE REF TO zaplink_cx.
+  DATA o_cx      TYPE REF TO ZCX_ZAPLINK.
   DATA f_is_wi   TYPE abap_bool.
   DATA _name     TYPE e071-obj_name.
 
@@ -248,9 +244,9 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
           wrong_object_name = 1
           OTHERS            = 2.
       IF sy-subrc &lt;&gt; 0.
-        o_cx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RS_INSERT_INTO_WORKING_AREA&apos;
+        o_cx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;RS_INSERT_INTO_WORKING_AREA&apos;
                                                   subrc = sy-subrc
-                                              classname = &apos;ZAPLINK_CX&apos; ).
+                                              classname = &apos;ZCX_ZAPLINK&apos; ).
         RAISE EXCEPTION o_cx.
       ENDIF.
     ENDIF.
@@ -385,7 +381,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;cr_lf IN result WITH ``.
   REPLACE ALL OCCURRENCES OF cl_abap_char_utilities=&gt;form_feed IN result WITH ``.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="COMMENT_STATEMENT" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="COMMENT_STATEMENT" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Comment statement from ABAP Source"/>
     </TEXTS>
@@ -736,7 +732,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
      <ITEM LANG="E" TEXT="Get object list from Package"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="EXT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="EXT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Extend to sub package"/>
       </TEXTS>
@@ -753,7 +749,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
     </TEXTS>
     <PARAMETERS>
      <ITEM SCONAME="AUTHOR" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TR_AUTHOR" PAROPTIONL="X"/>
-     <ITEM SCONAME="EXT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="EXT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Extend to sub package"/>
       </TEXTS>
@@ -937,7 +933,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
   ENDLOOP.
   SUBTRACT 1 FROM x.    CHECK x &gt; 0.   DELETE my_table FROM 1 TO x.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="IS_WORKING_AREABLE" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="IS_WORKING_AREABLE" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Is type could be added to Workarea"/>
     </TEXTS>
@@ -1404,7 +1400,7 @@ ENDCLASS.       &quot;Abap_Unit_Testclass</LOCAL_TEST_CLASS>
 *    IF &lt;l&gt;(1) = &apos;&quot;&apos;.   DELETE table. CONTINUE. ENDIF.  &quot; commented line like :     &quot; comment
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="REMOVE_COMP_FROM_WORKING_AREA" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="REMOVE_COMP_FROM_WORKING_AREA" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Remove component from Working Area"/>
     </TEXTS>

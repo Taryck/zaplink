@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F3A132DB1B1F31B341206A5A9C935C6E" CODE_SIGNATURE="C99D6CBBC8C8BF018FE166DA0877CD2C" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="4477141A2BFFBA1190D0F27AC59D12CE" CODE_SIGNATURE="7DC1D871BA1EC2438CF2472AD7396DE0" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -93,11 +93,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA includes      TYPE t_fm_data-includes.
@@ -128,11 +124,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA classkey      TYPE seoclskey.
@@ -159,11 +151,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA pubsec_source TYPE seo_section_source.
@@ -188,9 +176,9 @@ INCLUDE zaplink_macros.</MACROS>
       interf_section_not_initialised       = 4
       OTHERS                               = 5.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_GENERATE_SECTION&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_GENERATE_SECTION&apos;
                                                 subrc = sy-subrc
-                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                            classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
     application_log-&gt;add_symsg( ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -230,9 +218,9 @@ INCLUDE zaplink_macros.</MACROS>
         interf_section_not_initialised       = 4
         OTHERS                               = 5.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_GENERATE_SECTION&apos;
+      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_GENERATE_SECTION&apos;
                                                   subrc = sy-subrc
-                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                              classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
       application_log-&gt;add_symsg( ).
       RAISE EXCEPTION o_mycx.
     ENDIF.
@@ -255,11 +243,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_cnx TYPE REF TO zaplink_object.
@@ -290,11 +274,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA new_code     TYPE tt_abaprawsource.
@@ -348,9 +328,9 @@ INCLUDE zaplink_macros.</MACROS>
                 db_error      = 5
                 OTHERS        = 6.
             IF sy-subrc &lt;&gt; 0.
-              o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
+              o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_DELETE_W_DEPS&apos;
                                                           subrc = sy-subrc
-                                                      classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                      classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
               application_log-&gt;add_symsg( ).
               RAISE EXCEPTION o_mycx.
             ENDIF.
@@ -369,9 +349,9 @@ INCLUDE zaplink_macros.</MACROS>
               db_error                = 5
               OTHERS                  = 6.
           IF sy-subrc &lt;&gt; 0.
-            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
+            o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_TYPEPUSAGE_CREATE_F_DATA&apos;
                                                         subrc = sy-subrc
-                                                    classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                    classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
             application_log-&gt;add_symsg( ).
             RAISE EXCEPTION o_mycx.
           ENDIF.
@@ -403,9 +383,9 @@ INCLUDE zaplink_macros.</MACROS>
                 db_error      = 5
                 OTHERS        = 6.
             IF sy-subrc &lt;&gt; 0.
-              o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLSDEFERRD_DELETE_W_DEPS&apos;
+              o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLSDEFERRD_DELETE_W_DEPS&apos;
                                                           subrc = sy-subrc
-                                                      classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                      classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
               application_log-&gt;add_symsg( ).
               RAISE EXCEPTION o_mycx.
             ENDIF.
@@ -424,9 +404,9 @@ INCLUDE zaplink_macros.</MACROS>
               db_error                = 5
               OTHERS                  = 6.
           IF sy-subrc &lt;&gt; 0.
-            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLSDEFERRD_CREATE_F_DATA&apos;
+            o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLSDEFERRD_CREATE_F_DATA&apos;
                                                         subrc = sy-subrc
-                                                    classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                    classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
             application_log-&gt;add_symsg( ).
             RAISE EXCEPTION o_mycx.
           ENDIF.
@@ -458,9 +438,9 @@ INCLUDE zaplink_macros.</MACROS>
                 db_error      = 5
                 OTHERS        = 6.
             IF sy-subrc &lt;&gt; 0.
-              o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTDEFERRD_DELETE_W_DEPS&apos;
+              o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_INTDEFERRD_DELETE_W_DEPS&apos;
                                                           subrc = sy-subrc
-                                                      classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                      classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
               application_log-&gt;add_symsg( ).
               RAISE EXCEPTION o_mycx.
             ENDIF.
@@ -479,9 +459,9 @@ INCLUDE zaplink_macros.</MACROS>
               db_error                = 5
               OTHERS                  = 6.
           IF sy-subrc &lt;&gt; 0.
-            o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTDEFERRD_CREATE_F_DATA&apos;
+            o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_INTDEFERRD_CREATE_F_DATA&apos;
                                                         subrc = sy-subrc
-                                                    classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                    classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
             application_log-&gt;add_symsg( ).
             RAISE EXCEPTION o_mycx.
           ENDIF.
@@ -541,11 +521,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA obj_mask   TYPE doku_obj.
@@ -618,7 +594,7 @@ INCLUDE zaplink_macros.</MACROS>
     object-&gt;from_data( object_data ).
     object-&gt;_code_signature = get_class_signature( classkey ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_INTERFACE" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -638,11 +614,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA obj_mask       TYPE doku_obj.
@@ -728,7 +700,7 @@ INCLUDE zaplink_macros.</MACROS>
     object-&gt;_code_signature = get_interface_signature( classkey ).
 
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GENERATE_CLASS" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
@@ -748,9 +720,9 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
+       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
      </ITEM>
     </EXCEPTIONS>
@@ -1058,11 +1030,7 @@ AS</ITEM>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_code    TYPE td_sourcecode.
@@ -1226,11 +1194,7 @@ AS</ITEM>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_code    TYPE td_sourcecode.
@@ -1258,11 +1222,7 @@ AS</ITEM>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _d               TYPE t_fm_data.
@@ -1423,9 +1383,9 @@ AS</ITEM>
          OTHERS                             = 7.
     ENDIF.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_CREATE_COMPLETE&apos;
+      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_CREATE_COMPLETE&apos;
                                                   subrc = sy-subrc
-                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                              classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
       application_log-&gt;add_symsg( ).
       RAISE EXCEPTION o_mycx.
     ENDIF.
@@ -1452,9 +1412,9 @@ AS</ITEM>
          locals_not_initialised       = 4
          OTHERS                       = 5.
       IF sy-subrc &lt;&gt; 0.
-        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_LOCALS&apos;
+        o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_LOCALS&apos;
                                                     subrc = sy-subrc
-                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
         application_log-&gt;add_symsg( ).
         RAISE EXCEPTION o_mycx.
       ENDIF.
@@ -1479,7 +1439,7 @@ AS</ITEM>
     CREATE OBJECT components.
     components-&gt;add( _component ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_INTERFACE" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
@@ -1499,11 +1459,7 @@ AS</ITEM>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _d           TYPE t_fm_data.
@@ -1611,9 +1567,9 @@ AS</ITEM>
           OTHERS                             = 7.
     ENDIF.
     IF sy-subrc &lt;&gt; 0.                                       &quot; Issue 118
-      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_CREATE_COMPLETE&apos;
+      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_CREATE_COMPLETE&apos;
                                                   subrc = sy-subrc
-                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                              classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
       application_log-&gt;add_symsg( ).
       RAISE EXCEPTION o_mycx.
     ENDIF.
@@ -1670,7 +1626,7 @@ AS</ITEM>
     CREATE OBJECT components.
     components-&gt;add( _component ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_CLAS" STATE="1" MTDNEWEXC="X">
@@ -1685,11 +1641,7 @@ AS</ITEM>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   CALL FUNCTION &apos;SEO_CLASS_TYPEINFO_GET&apos;
@@ -1731,9 +1683,9 @@ AS</ITEM>
       model_only                          = 3
       OTHERS                              = 4.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_TYPEINFO_GET&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_TYPEINFO_GET&apos;
                                                 subrc = sy-subrc
-                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                            classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
     application_log-&gt;add_symsg( ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -1769,9 +1721,9 @@ AS</ITEM>
       model_only                          = 3
       OTHERS                              = 4.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_RESOLVE_INHERITANCE&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_RESOLVE_INHERITANCE&apos;
                                                 subrc = sy-subrc
-                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                            classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
     application_log-&gt;add_symsg( ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -1925,11 +1877,7 @@ AS</ITEM>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA pubsec_source TYPE seo_section_source.
@@ -1940,8 +1888,8 @@ AS</ITEM>
 
   IF NOT application_log IS BOUND.
     d_text = &apos;APPLICATION_LOG can&apos;&apos;t be null&apos;(eal).
-    RAISE EXCEPTION TYPE zaplink_cx_connector
-          EXPORTING textid = zaplink_cx_connector=&gt;system_error
+    RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+          EXPORTING textid = ZCX_ZL_CONNECTOR=&gt;system_error
                     cx_name = d_text.
   ENDIF.
 
@@ -1963,13 +1911,13 @@ AS</ITEM>
     return.
   ELSEIF sy-subrc = 1.
     d_name = classkey.
-    RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING textid = zaplink_cx_connector=&gt;not_found
+    RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR EXPORTING textid = ZCX_ZL_CONNECTOR=&gt;not_found
                                                           type = zaplink_object_data=&gt;object_types-class
                                                           name = d_name.
   ELSEIF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_TYPEINFO_BY_VIS&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_TYPEINFO_BY_VIS&apos;
                                                 subrc = sy-subrc
-                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                            classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
     application_log-&gt;add_symsg( ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -2001,9 +1949,9 @@ AS</ITEM>
       _internal_class_not_existing         = 9
       OTHERS                               = 10.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
                                                 subrc = sy-subrc
-                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                            classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
     application_log-&gt;add_symsg( ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -2091,9 +2039,9 @@ AS</ITEM>
         _internal_class_not_existing         = 9
         OTHERS                               = 10.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
+      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_GENERATE_SECTIONS&apos;
                                                   subrc = sy-subrc
-                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                              classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
       application_log-&gt;add_symsg( ).
       RAISE EXCEPTION o_mycx.
     ENDIF.
@@ -2134,9 +2082,9 @@ AS</ITEM>
 *        ERROR_IN_CODE_GENERATION            = 5
 *        OTHERS                              = 6.
 *    IF sy-subrc &lt;&gt; 0.
-*      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLIF_SAVE_ALL&apos;
+*      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLIF_SAVE_ALL&apos;
 *                                                  subrc = sy-subrc
-*                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+*                                              classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
 *      application_log-&gt;add_symsg( ).
 *      RAISE EXCEPTION o_mycx.
 *    ENDIF.
@@ -2154,11 +2102,7 @@ AS</ITEM>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA f_has_error  TYPE abap_bool.
@@ -2209,9 +2153,9 @@ AS</ITEM>
           error_in_code_generation = 5
           OTHERS                   = 6.
       IF sy-subrc &lt;&gt; 0.
-        o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLIF_SAVE_ALL&apos;
+        o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLIF_SAVE_ALL&apos;
                                                     subrc = sy-subrc
-                                                classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
         application_log-&gt;add_symsg( ).
         RAISE EXCEPTION o_mycx.
       ENDIF.
@@ -2243,9 +2187,9 @@ AS</ITEM>
                 db_error      = 5
                 OTHERS        = 6.
             IF sy-subrc &lt;&gt; 0.
-              o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLSDEFERRD_DELETE_W_DEPS&apos;
+              o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLSDEFERRD_DELETE_W_DEPS&apos;
                                                           subrc = sy-subrc
-                                                      classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                      classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
               application_log-&gt;add_symsg( ).
               RAISE EXCEPTION o_mycx.
             ENDIF.
@@ -2262,9 +2206,9 @@ AS</ITEM>
                 db_error      = 5
                 OTHERS        = 6.
             IF sy-subrc &lt;&gt; 0.
-              o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTDEFERRD_DELETE_W_DEPS&apos;
+              o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_INTDEFERRD_DELETE_W_DEPS&apos;
                                                           subrc = sy-subrc
-                                                      classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                      classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
               application_log-&gt;add_symsg( ).
               RAISE EXCEPTION o_mycx.
             ENDIF.
@@ -2294,9 +2238,9 @@ AS</ITEM>
                   db_error                = 5
                   OTHERS                  = 6.
               IF sy-subrc &lt;&gt; 0.
-                o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLSDEFERRD_CREATE_F_DATA&apos;
+                o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLSDEFERRD_CREATE_F_DATA&apos;
                                                             subrc = sy-subrc
-                                                        classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                        classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
                 application_log-&gt;add_symsg( ).
                 RAISE EXCEPTION o_mycx.
               ENDIF.
@@ -2315,9 +2259,9 @@ AS</ITEM>
                   db_error                = 5
                   OTHERS                  = 6.
               IF sy-subrc &lt;&gt; 0.
-                o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTDEFERRD_CREATE_F_DATA&apos;
+                o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_INTDEFERRD_CREATE_F_DATA&apos;
                                                             subrc = sy-subrc
-                                                        classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                        classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
                 application_log-&gt;add_symsg( ).
                 RAISE EXCEPTION o_mycx.
               ENDIF.
@@ -2332,12 +2276,12 @@ AS</ITEM>
 
     ENDIF.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~ANONYMIZE" EXPOSURE="2">
     <SOURCE>`
   DATA _o_class       TYPE to_class.
   DATA _o_interface   TYPE to_interface.
@@ -2357,18 +2301,18 @@ AS</ITEM>
 
   TRY.
       super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CLEANER~UNANONYMIZE" EXPOSURE="2">
     <SOURCE>`
   DATA _o_class       TYPE to_class.
   DATA _o_interface   TYPE to_interface.
 
   TRY.
       super-&gt;zaplink_cnx_ext_cleaner~unanonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.
 
@@ -2382,7 +2326,7 @@ AS</ITEM>
     WHEN OTHERS.
   ENDCASE.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CNX_EXT_CODE_SIGNATURE~GET_SIGNATURE" EXPOSURE="2">
     <SOURCE>`
   DATA clskey TYPE seoclskey.
   DATA d_type TYPE td_comptype.
@@ -2399,10 +2343,10 @@ AS</ITEM>
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW" EXPOSURE="2">
     <SOURCE>`
   DATA o_clas TYPE to_class.
   DATA o_intf TYPE to_interface.
@@ -2422,7 +2366,7 @@ AS</ITEM>
       mac_raise_type_not_supported me-&gt;class_name type.
   ENDCASE.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DELETE_FROM_SAP" EXPOSURE="2">
     <SOURCE>`
   DATA clskey  TYPE seoclskey.
   DATA d_type  TYPE td_comptype.
@@ -2453,17 +2397,17 @@ AS</ITEM>
         IF sy-subrc &lt;&gt; 0.
           CASE sy-subrc.
             WHEN 1.
-              RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+              RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+                EXPORTING textid = ZCX_ZL_CONNECTOR=&gt;not_found.
             WHEN OTHERS.
               s_subrc = sy-subrc.
               CALL FUNCTION &apos;SEO_BSP_CLASS_DELETE_COMPLETE&apos;     &quot; Issue 119 : Brute force delete
                 EXPORTING
                   clskey = clskey.
               IF do_exists( component ) = abap_true.
-                o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_DELETE_W_DEPS&apos;
+                o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_CLASS_DELETE_W_DEPS&apos;
                                                             subrc = s_subrc
-                                                        classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                        classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
                 application_log-&gt;add_symsg( ).
                 RAISE EXCEPTION o_mycx.
               ENDIF.
@@ -2501,17 +2445,17 @@ AS</ITEM>
         IF sy-subrc &lt;&gt; 0.
           CASE sy-subrc.
             WHEN 1.
-              RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+              RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+                EXPORTING textid = ZCX_ZL_CONNECTOR=&gt;not_found.
             WHEN OTHERS.
               s_subrc = sy-subrc.
               CALL FUNCTION &apos;SEO_BSP_CLASS_DELETE_COMPLETE&apos;     &quot; Issue 119 : Brute force delete
                 EXPORTING
                   clskey = clskey.
               IF do_exists( component ) = abap_true.
-                o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_DELETE_COMPLETE&apos;
+                o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;SEO_INTERFACE_DELETE_COMPLETE&apos;
                                                             subrc = s_subrc
-                                                        classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+                                                        classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
                 application_log-&gt;add_symsg( ).
                 RAISE EXCEPTION o_mycx.
               ENDIF.
@@ -2521,14 +2465,14 @@ AS</ITEM>
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.
   result = abap_true.
 * Issue 137 =&gt; Remove from Working Area
   zaplink_tools=&gt;remove_comp_from_working_area( type = d_type
                                                 name = d_name ).</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~DO_EXISTS" EXPOSURE="2">
     <SOURCE>`
   DATA clskey TYPE seoclskey.
   DATA d_type TYPE td_comptype.
@@ -2578,17 +2522,17 @@ AS</ITEM>
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION" EXPOSURE="2">
     <SOURCE>`
   result = abap_false.
   if version = _ver OR version = &apos;1.0&apos;.   &quot; version 1.01 is downward compatible with version 1.0
     result = abap_true.
   endif.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~READ_FROM_SAP" EXPOSURE="2">
     <SOURCE>`
   DATA o_clas TYPE to_class.
   DATA o_intf TYPE to_interface.
@@ -2603,7 +2547,7 @@ AS</ITEM>
       WHEN zaplink_object_data=&gt;object_types-class.
         TRY.
             o_clas = export_from_sap_class( component ).
-          CATCH zaplink_cx_connector INTO o_mycx.
+          CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
             IF NOT o_mycx-&gt;messages IS BOUND.
               o_mycx-&gt;messages = application_log.
               o_mycx-&gt;update( ).
@@ -2615,7 +2559,7 @@ AS</ITEM>
       WHEN zaplink_object_data=&gt;object_types-interface.
         TRY.
             o_intf = export_from_sap_interface( component ).
-          CATCH zaplink_cx_connector INTO o_mycx.
+          CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
             IF NOT o_mycx-&gt;messages IS BOUND.
               o_mycx-&gt;messages = application_log.
               o_mycx-&gt;update( ).
@@ -2629,10 +2573,10 @@ AS</ITEM>
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
+   <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP" EXPOSURE="2">
     <SOURCE>`
   DATA _o_class       TYPE to_class.
   DATA _o_interface   TYPE to_interface.
@@ -2645,7 +2589,7 @@ AS</ITEM>
         _o_class-&gt;a0_maindata-clsname = object-&gt;name.
         TRY.
             components = import_to_sap_class( _o_class ).
-          CATCH zaplink_cx_connector INTO o_mycx.
+          CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
             IF NOT o_mycx-&gt;messages IS BOUND.
               o_mycx-&gt;messages = application_log.
               o_mycx-&gt;update( ).
@@ -2657,7 +2601,7 @@ AS</ITEM>
         _o_interface-&gt;a0_maindata-clsname = object-&gt;name.
         TRY.
             components = import_to_sap_interface( _o_interface ).
-          CATCH zaplink_cx_connector INTO o_mycx.
+          CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
             IF NOT o_mycx-&gt;messages IS BOUND.
               o_mycx-&gt;messages = application_log.
               o_mycx-&gt;update( ).
@@ -2669,7 +2613,7 @@ AS</ITEM>
     ENDCASE.
     check_component_list( EXPORTING     object = object
                            CHANGING components = components ). &quot; Issue 92
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
@@ -2711,22 +2655,22 @@ AS</ITEM>
    <ITEM TYPEGROUP="SEOX" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TD_SOURCECODE" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="SEOP_SOURCE_STRING">
+   <ITEM CMPNAME="TD_SOURCECODE" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="SEOP_SOURCE_STRING">
     <TEXTS>
      <ITEM LANG="E" TEXT="ABAP Source Code"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_CLASS" EXPOSURE="1" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_CLAS_DATA">
+   <ITEM CMPNAME="TO_CLASS" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CLAS_DATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Class data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_INTERFACE" EXPOSURE="1" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_INTF_DATA">
+   <ITEM CMPNAME="TO_INTERFACE" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_INTF_DATA">
     <TEXTS>
      <ITEM LANG="E" TEXT="Interface data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_BAPI_DATA" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_BAPI_DATA" STATE="1" EDITORDER="1 " TYPTYPE="4">
     BEGIN OF ts_bapi_data,
     class                       TYPE  vseoclass,
     attributes                  TYPE  seoo_attributes_r,
@@ -2756,7 +2700,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="All Data for BAPI call of class creation"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CLAS_ATTR" STATE="1" TYPTYPE="4">
+   <ITEM CMPNAME="TS_CLAS_ATTR" STATE="1" EDITORDER="2 " TYPTYPE="4">
     BEGIN OF ts_clas_attr.
   INCLUDE TYPE ts_base_attributs AS base.
   TYPES:
@@ -2766,17 +2710,17 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Root attributs for CLAS"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_INCLUDE" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;TS_INCLUDE">
+   <ITEM CMPNAME="TS_INCLUDE" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;TS_INCLUDE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Indlude : Name &amp; Source code"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_TYPEUSAGES" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="SEOT_TYPEPUSAGES_R">
+   <ITEM CMPNAME="TT_TYPEUSAGES" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="1" TYPE="SEOT_TYPEPUSAGES_R">
     <TEXTS>
      <ITEM LANG="E" TEXT="Type usage : Type pool or class/interface"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="T_FM_DATA" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;T_FM_DATA"/>
+   <ITEM CMPNAME="T_FM_DATA" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;T_FM_DATA"/>
   </TYPES>
  </RAW>
 </ZL_OBJECT>

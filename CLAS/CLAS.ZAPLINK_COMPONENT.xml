@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4700690B6E645C513D480D2493FF31B9" CODE_SIGNATURE="CE304F5334C08558E87B5F0030F2C760" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="682FCDF0DE9355C61582BFF758ECDD3F" CODE_SIGNATURE="F627DCF29DDA2161B7C108F3215F4895" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_COMPONENT" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -160,7 +160,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM REFCLSNAME="ZAPLINK_LIST" STATE="1"/>
   </FRIENDS>
   <INTERFACES>
-   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="1 "/>
   </INTERFACES>
   <LOCAL>
    <TYPES>`
@@ -183,7 +183,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="CLASS_CONSTRUCTOR"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="CLONE" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CLONE" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Clone Component"/>
     </TEXTS>
@@ -198,7 +198,7 @@ INCLUDE zaplink_macros.</MACROS>
   CREATE OBJECT result.
   result-&gt;copy_from( me ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONNECTOR" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CONNECTOR" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector : Getter"/>
     </TEXTS>
@@ -212,7 +212,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _connector-o_conn.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONNECTOR_EXISTS" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CONNECTOR_EXISTS" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector Exists : Getter"/>
     </TEXTS>
@@ -240,7 +240,7 @@ INCLUDE zaplink_macros.</MACROS>
   ENDIF.
   set_with_subcomp( default_sub_component_level ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="COPY_FROM" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="COPY_FROM" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Copy attributes from other Component"/>
     </TEXTS>
@@ -282,22 +282,18 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA _cx TYPE REF TO zaplink_cx_component.
+  DATA _cx TYPE REF TO ZCX_ZL_COMPONENT.
 *  TRY.
       CREATE OBJECT result.
       result-&gt;_set_key( key ).
-*    CATCH zaplink_cx_component INTO _cx.
+*    CATCH ZCX_ZL_COMPONENT INTO _cx.
 *      RAISE EXCEPTION _cx.
 *  ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="DO_EXISTS" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="DO_EXISTS" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Component Exists : Getter"/>
     </TEXTS>
@@ -307,7 +303,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _exists.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_ACTION" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_ACTION" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Action : Getter"/>
     </TEXTS>
@@ -321,7 +317,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _action.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_ADD_DATA" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_ADD_DATA" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Data : Getter"/>
     </TEXTS>
@@ -335,7 +331,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_ADD_OBJECT" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_ADD_OBJECT" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Object : Getter"/>
     </TEXTS>
@@ -349,7 +345,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _object.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CHECKSUM" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_CHECKSUM" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Checksum : Getter"/>
     </TEXTS>
@@ -363,7 +359,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _checksum.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_CODE_SIGNATURE" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Code Signature : Getter"/>
     </TEXTS>
@@ -377,7 +373,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _code_signature.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CONNUUID" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_CONNUUID" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Connector UUID : Getter"/>
     </TEXTS>
@@ -391,7 +387,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _connector-uuid.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_DEVCLASS" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_DEVCLASS" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="DevClass : Getter"/>
     </TEXTS>
@@ -405,7 +401,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _devclass.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_EXCEPTION" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_EXCEPTION" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Exception : Getter"/>
     </TEXTS>
@@ -431,21 +427,17 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   IF type IS INITIAL OR name IS INITIAL.
-    RAISE EXCEPTION TYPE zaplink_cx_component
-               EXPORTING textid = zaplink_cx_component=&gt;system_error.
+    RAISE EXCEPTION TYPE ZCX_ZL_COMPONENT
+               EXPORTING textid = ZCX_ZL_COMPONENT=&gt;system_error.
   ENDIF.
   result-type = type.
   result-name = name.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_MSG_COLL" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_MSG_COLL" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Message Collector : Getter"/>
     </TEXTS>
@@ -459,7 +451,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _msg_coll.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_NAME" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_NAME" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Name : Getter"/>
     </TEXTS>
@@ -473,7 +465,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = name.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_SRC_SYS" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_SRC_SYS" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Source System : Getter"/>
     </TEXTS>
@@ -487,7 +479,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _srcsystem.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_SUBCOMPONENTS" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_SUBCOMPONENTS" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Sub-Components list : Getter"/>
     </TEXTS>
@@ -501,7 +493,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _subcomponents.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPE" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TYPE" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Type : Getter"/>
     </TEXTS>
@@ -515,7 +507,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = type.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPEKIND" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TYPEKIND" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Transport Kind of Type : Getter"/>
     </TEXTS>
@@ -529,7 +521,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = _kind.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_WITH_SUBCOMP" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="With Sub Component : Getter"/>
     </TEXTS>
@@ -543,7 +535,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   result = with_subcomp.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="ON_CHANGE_CLEAR" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="ON_CHANGE_CLEAR" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Type or Name change : clear attr"/>
     </TEXTS>
@@ -555,17 +547,13 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Type or Name change : update attr"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA o_cx_cnx TYPE REF TO zaplink_cx_connector.
+  DATA o_cx_cnx TYPE to_conn_exception.
   IF _connector-o_conn IS BOUND AND NOT name IS INITIAL.
 *    TRY.
-        _exists = _connector-o_conn-&gt;do_exists( me ).
+       _exists = _connector-o_conn-&gt;do_exists( me ).
 *      CATCH zaplink_cx_connector INTO o_cx_cnx.
 *        mac_cascade_raise o_mycx o_cx_cnx.
 *    ENDTRY.
@@ -581,18 +569,18 @@ INCLUDE zaplink_macros.</MACROS>
        AND obj_name = name.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="REFRESH" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="REFRESH" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Refresh component informations"/>
     </TEXTS>
     <SOURCE>`
   TRY.
       on_change_update( ).                                  &quot; Issue 31
-    CATCH ZAPLINK_CX.   &quot;_COMPONENT INTO o_mycx.
+    CATCH ZCX_ZAPLINK.   &quot;_COMPONENT INTO o_mycx.
 *      RAISE EXCEPTION o_mycx.    &quot; Exception is ignored
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_ACTION" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_ACTION" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Action : Setter"/>
     </TEXTS>
@@ -606,7 +594,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   _action = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_ADD_DATA" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_ADD_DATA" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Data : Setter"/>
     </TEXTS>
@@ -620,7 +608,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   _data = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_ADD_OBJECT" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_ADD_OBJECT" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Additional Object : Setter"/>
     </TEXTS>
@@ -634,7 +622,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   _object = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_CHECKSUM" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_CHECKSUM" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Checksum : Setter"/>
     </TEXTS>
@@ -648,7 +636,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   _checksum = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_CODE_SIGNATURE" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_CODE_SIGNATURE" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Code Signature : Settter"/>
     </TEXTS>
@@ -674,37 +662,33 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA _cx    TYPE REF TO zaplink_cx.
+*  DATA _cx    TYPE to_root_exception.
   DATA o_conn TYPE to_connector.
 
   CHECK data &lt;&gt; _connector-uuid.
 
 *  TRY.
-      o_conn = zaplink_connectors=&gt;create_connector( type = type
-                                                 connuuid = data ).
+  o_conn = zaplink_connectors=&gt;create_connector( type = type
+                                             connuuid = data ).
 
-      _connector-o_conn = o_conn.
-      on_change_clear( ).
-      _connector-uuid = data.
-      IF o_conn IS BOUND.
-        _connector-exists = connexists-exists.
-      ELSE.
-        _connector-exists = connexists-not_exists.
-      ENDIF.
-      on_change_update( ).
+  _connector-o_conn = o_conn.
+  on_change_clear( ).
+  _connector-uuid = data.
+  IF o_conn IS BOUND.
+    _connector-exists = connexists-exists.
+  ELSE.
+    _connector-exists = connexists-not_exists.
+  ENDIF.
+  on_change_update( ).
 
 *    CATCH zaplink_cx INTO o_cx.
 *      mac_cascade_raise o_mycx o_cx.
 *  ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_DEVCLASS" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_DEVCLASS" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="DevClass : Setter"/>
     </TEXTS>
@@ -731,15 +715,11 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA cx TYPE REF TO cx_root.
-  DATA _cx TYPE REF TO zaplink_cx_component.
+  DATA _cx TYPE REF TO ZCX_ZL_COMPONENT.
   DATA _desc TYPE REF TO cl_abap_typedescr.
 
   IF data IS BOUND.
@@ -750,7 +730,7 @@ INCLUDE zaplink_macros.</MACROS>
 * Can&apos;t set Exception to the provided object type : &apos;&amp;OBJTYPE&amp;&apos;
         CREATE OBJECT _cx
           EXPORTING
-            textid   = zaplink_cx_component=&gt;invalid_exception
+            textid   = ZCX_ZL_COMPONENT=&gt;invalid_exception
             objtype  = _desc-&gt;absolute_name
             previous = cx.
         _cx-&gt;update( ).
@@ -772,15 +752,11 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA cx TYPE REF TO cx_root.
-  DATA _cx TYPE REF TO zaplink_cx_component.
+  DATA _cx TYPE REF TO ZCX_ZL_COMPONENT.
   DATA _desc TYPE REF TO cl_abap_typedescr.
 
   IF data IS BOUND.
@@ -791,7 +767,7 @@ INCLUDE zaplink_macros.</MACROS>
 * Can&apos;t set Message Collector to the provided object type : &apos;&amp;OBJTYPE&amp;&apos;
         CREATE OBJECT _cx
           EXPORTING
-            textid   = zaplink_cx_component=&gt;invalid_msg_coll
+            textid   = ZCX_ZL_COMPONENT=&gt;invalid_msg_coll
             objtype  = _desc-&gt;absolute_name
             previous = cx.
         _cx-&gt;update( ).
@@ -813,7 +789,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -825,7 +801,7 @@ INCLUDE zaplink_macros.</MACROS>
   on_change_clear( ).
   on_change_update( ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_SRC_SYS" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_SRC_SYS" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Source System: Setter"/>
     </TEXTS>
@@ -851,15 +827,11 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA cx TYPE REF TO cx_root.
-  DATA _cx TYPE REF TO zaplink_cx_component.
+  DATA _cx TYPE REF TO ZCX_ZL_COMPONENT.
   DATA _desc TYPE REF TO cl_abap_typedescr.
 
   IF data IS BOUND.
@@ -870,7 +842,7 @@ INCLUDE zaplink_macros.</MACROS>
 * Can&apos;t set Message Collector to the provided object type : &apos;&amp;OBJTYPE&amp;&apos;
         CREATE OBJECT _cx
           EXPORTING
-            textid   = zaplink_cx_component=&gt;invalid_subcomponents
+            textid   = ZCX_ZL_COMPONENT=&gt;invalid_subcomponents
             objtype  = _desc-&gt;absolute_name
             previous = cx.
         _cx-&gt;update( ).
@@ -892,7 +864,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -900,15 +872,15 @@ INCLUDE zaplink_macros.</MACROS>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_conn   TYPE to_connector.
-  DATA o_cx_cnx TYPE REF TO zaplink_cx_connector.
+  DATA o_cx_cnx TYPE TO_CONN_EXCEPTION.
 
   CHECK data &lt;&gt; type.
 
 *  TRY.
   TRY.
       o_conn = zaplink_connectors=&gt;create_connector( type = data ).
-    CATCH zaplink_cx_connector INTO o_cx_cnx.
-      IF o_cx_cnx-&gt;is_exception_text( zaplink_cx_connector=&gt;invalid_type ) IS INITIAL.    RAISE EXCEPTION o_cx_cnx.   ENDIF.
+    CATCH ZCX_ZL_CONNECTOR INTO o_cx_cnx.
+      IF o_cx_cnx-&gt;is_exception_text( ZCX_ZL_CONNECTOR=&gt;invalid_type ) IS INITIAL.    RAISE EXCEPTION o_cx_cnx.   ENDIF.
   ENDTRY.
 
   type = data.    CLEAR _connector.
@@ -921,7 +893,7 @@ INCLUDE zaplink_macros.</MACROS>
 *      mac_cascade_raise o_mycx o_cx.
 *  ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_WITH_SUBCOMP" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_WITH_SUBCOMP" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="With Sub Component : Setter"/>
     </TEXTS>
@@ -936,7 +908,7 @@ INCLUDE zaplink_macros.</MACROS>
   CHECK data &lt;&gt; with_subcomp.
   with_subcomp = data.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_GET_KEY" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="_GET_KEY" EXPOSURE="1" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Key : Getter"/>
     </TEXTS>
@@ -963,18 +935,14 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA _cx TYPE REF TO zaplink_cx_component.
+  DATA _cx TYPE REF TO ZCX_ZL_COMPONENT.
 *  TRY.
       set_type( data-type ).
       set_name( data-name ).
-*    CATCH zaplink_cx_component INTO _cx.
+*    CATCH ZCX_ZL_COMPONENT INTO _cx.
 *      RAISE EXCEPTION _cx.
 *  ENDTRY.</SOURCE>
    </ITEM>
@@ -988,12 +956,12 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="ZAP Link Connector interface"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_CONN_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
+   <ITEM CMPNAME="TO_CONN_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZCX_ZL_CONNECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CX_COMPONENT">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZCX_ZL_COMPONENT">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
@@ -1013,7 +981,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>

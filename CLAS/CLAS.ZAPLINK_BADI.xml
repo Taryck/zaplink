@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="F8FD6A8A12751F8647270945090B1D25" CODE_SIGNATURE="00E2C0D677EDDBCA75EA9063E41B9EDB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D060323E2FB12C51CE73B54663D057C5" CODE_SIGNATURE="F5740E75274EC80782DD82B66A1A05AF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_BADI" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -176,11 +176,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA obj_mask    TYPE doku_obj.
@@ -200,23 +196,23 @@ INCLUDE zaplink_macros.</MACROS>
     exit_name = component-&gt;get_name( ).
     CALL FUNCTION &apos;SXO_BADI_READ&apos;
       EXPORTING
-        exit_name                = exit_name
-*     MAINT_LANGU              = SY-LANGU
+        exit_name          = exit_name
+*       MAINT_LANGU        = SY-LANGU
       IMPORTING
-        badi                     = _d-definition
-        mast_langu               = _d-mast_langu
-        ext_clname               = _d-ext_clname
-        filter_obj               = _d-filter_obj
+        badi               = _d-definition
+        mast_langu         = _d-mast_langu
+        ext_clname         = _d-ext_clname
+        filter_obj         = _d-filter_obj
       TABLES
-        fcodes                   = _d-fcodes
-        cocos                    = _d-cocos
-        intas                    = _d-intas
-        scrns                    = _d-scrns
-        methods                  = _d-methods
-        inactive_tabstrips       = _d-inactive_tabstrips
+        fcodes             = _d-fcodes
+        cocos              = _d-cocos
+        intas              = _d-intas
+        scrns              = _d-scrns
+        methods            = _d-methods
+        inactive_tabstrips = _d-inactive_tabstrips
       EXCEPTIONS
-        read_failure             = 1
-        OTHERS                   = 2.
+        read_failure       = 1
+        OTHERS             = 2.
     IF sy-subrc &lt;&gt; 0.
 * MESSAGE ID SY-MSGID TYPE SY-MSGTY NUMBER SY-MSGNO
 *         WITH SY-MSGV1 SY-MSGV2 SY-MSGV3 SY-MSGV4.
@@ -250,7 +246,7 @@ INCLUDE zaplink_macros.</MACROS>
 
     o_data-&gt;documentation = zaplink_documentation=&gt;get( ids = r_doc_id_definition
                                                      object = obj_mask ).
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="EXPORT_FROM_SAP_IMPL" STATE="1" MTDNEWEXC="X">
@@ -270,11 +266,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA obj_mask    TYPE doku_obj.
@@ -322,23 +314,23 @@ INCLUDE zaplink_macros.</MACROS>
 
     CALL FUNCTION &apos;SXO_BADI_READ&apos;
       EXPORTING
-        exit_name                = exit_name
-*       MAINT_LANGU              = SY-LANGU
+        exit_name          = exit_name
+*       MAINT_LANGU        = SY-LANGU
       IMPORTING
-        badi                     = badi_info
-*       MAST_LANGU               =
-*       EXT_CLNAME               =
-        filter_obj               = filter_obj
+        badi               = badi_info
+*       MAST_LANGU         =
+*       EXT_CLNAME         =
+        filter_obj         = filter_obj
       TABLES
-        fcodes                   = t_fcodes
-        cocos                    = t_cocos
-        intas                    = t_intas
-        scrns                    = t_scrns
-        methods                  = methods
-*       INACTIVE_TABSTRIPS       =
+        fcodes             = t_fcodes
+        cocos              = t_cocos
+        intas              = t_intas
+        scrns              = t_scrns
+        methods            = methods
+*       INACTIVE_TABSTRIPS =
       EXCEPTIONS
-        read_failure             = 1
-        OTHERS                   = 2.
+        read_failure       = 1
+        OTHERS             = 2.
     IF sy-subrc &lt;&gt; 0.
       mac_add_mf_and_raise &apos;SXO_BADI_READ&apos; sy-subrc.
     ENDIF.
@@ -351,25 +343,25 @@ INCLUDE zaplink_macros.</MACROS>
 
     CALL FUNCTION &apos;SXO_IMPL_FOR_BADI_READ&apos;
       EXPORTING
-        imp_name                = imp_name
-        exit_name               = exit_name
-*       MAINT_LANGU             = SY-LANGU
-        inter_name              = inter_name
-        filter_obj              = filter_obj
+        imp_name          = imp_name
+        exit_name         = exit_name
+*       MAINT_LANGU       = SY-LANGU
+        inter_name        = inter_name
+        filter_obj        = filter_obj
       IMPORTING
-        impl                    = _d-implementation
-        mast_langu              = _d-mast_langu
-*      filter_values_obj       = _d-filter_values
+        impl              = _d-implementation
+        mast_langu        = _d-mast_langu
+*       filter_values_obj = _d-filter_values
       TABLES
-        fcodes                  = _d-fcodes
-        cocos                   = _d-cocos
-        intas                   = _d-intas
-        scrns                   = _d-scrns
+        fcodes            = _d-fcodes
+        cocos             = _d-cocos
+        intas             = _d-intas
+        scrns             = _d-scrns
       CHANGING
-        methods                 = methods
+        methods           = methods
       EXCEPTIONS
-        read_failure            = 1
-        OTHERS                  = 2.
+        read_failure      = 1
+        OTHERS            = 2.
     IF sy-subrc &lt;&gt; 0.
       mac_add_mf_and_raise &apos;SXO_IMPL_FOR_BADI_READ&apos; sy-subrc.
     ENDIF.
@@ -412,7 +404,7 @@ INCLUDE zaplink_macros.</MACROS>
     o_data-&gt;documentation = zaplink_documentation=&gt;get( ids = r_doc_id_implementation
                                                      object = obj_mask ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_DEF" STATE="1" MTDNEWEXC="X">
@@ -432,11 +424,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _d               TYPE zaplink_sxsd_data=&gt;t_fm_data.
@@ -472,25 +460,25 @@ INCLUDE zaplink_macros.</MACROS>
 
     CALL FUNCTION &apos;SXO_BADI_SAVE&apos;
       EXPORTING
-        badi                   = _d-definition
-*     MAINT_LANGU            = SY-LANGU
-*     GENFLAG                = SEEX_FALSE
-*     NO_DIALOG              = SEEX_FALSE
-*     WITH_MIG               = SEEX_FALSE
+        badi             = _d-definition
+*       MAINT_LANGU      = SY-LANGU
+*       GENFLAG          = SEEX_FALSE
+*       NO_DIALOG        = SEEX_FALSE
+*       WITH_MIG         = SEEX_FALSE
       IMPORTING
-        mast_langu             = mast_langu
+        mast_langu       = mast_langu
       TABLES
-        fcodes_to_insert       = _d-fcodes
-        cocos_to_insert        = _d-cocos
-        intas_to_insert        = _d-intas
-        sscrs_to_insert        = _d-scrns
+        fcodes_to_insert = _d-fcodes
+        cocos_to_insert  = _d-cocos
+        intas_to_insert  = _d-intas
+        sscrs_to_insert  = _d-scrns
       CHANGING
-        korrnum                = i_korrnr
-        devclass               = i_devclass
+        korrnum          = i_korrnr
+        devclass         = i_devclass
       EXCEPTIONS
-        save_failure           = 1
-        action_canceled        = 2
-        OTHERS                 = 3.
+        save_failure     = 1
+        action_canceled  = 2
+        OTHERS           = 3.
     CASE sy-subrc.
       WHEN &apos;0&apos;.
 ** i guess if we made it this far, we will assume success
@@ -499,8 +487,9 @@ INCLUDE zaplink_macros.</MACROS>
 *      RAISE EXCEPTION TYPE zaplink_cx_connector
 *        EXPORTING textid = zaplink_cx_connector=&gt;existing.
       WHEN OTHERS.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
-          EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+        RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+          EXPORTING
+            textid = ZCX_ZL_CONNECTOR=&gt;system_error.
     ENDCASE.
     IF mast_langu &lt;&gt; o_data-&gt;a0_maindata-mast_langu.
       transport_key-obj_name = o_data-&gt;a0_maindata-exit_name.
@@ -526,7 +515,7 @@ INCLUDE zaplink_macros.</MACROS>
     IF NOT components IS BOUND. CREATE OBJECT components. ENDIF.
     components-&gt;add( _component ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="IMPORT_TO_SAP_IMPL" STATE="1" MTDNEWEXC="X">
@@ -546,11 +535,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _d               TYPE zaplink_badi_data=&gt;t_fm_data.
@@ -615,7 +600,7 @@ INCLUDE zaplink_macros.</MACROS>
       EXPORTING
         filter_structure               = _d-filter_datatype
         extend                         = badi_data-flt_ext
-*      extend                         = _d-impl_w_filter
+*       extend                         = _d-impl_w_filter
       EXCEPTIONS
         ddic_object_not_active         = 1
         no_data_element                = 2
@@ -639,37 +624,37 @@ INCLUDE zaplink_macros.</MACROS>
 
     CREATE OBJECT o_filter_val
       EXPORTING
-        filter_object = o_filter
-        filter_values = _d-filter_values
-*      for_flt_val_creation = seex_false
-*      for_overview = seex_false
-*      filter_values_for_over =
-*      fieldcatalog =
-        .
+        filter_object          = o_filter
+        filter_values          = _d-filter_values
+*       for_flt_val_creation   = seex_false
+*       for_overview           = seex_false
+*       filter_values_for_over =
+*       fieldcatalog           =
+      .
 
     CALL FUNCTION &apos;SXO_IMPL_SAVE&apos;
       EXPORTING
-        impl                   = _d-implementation
-        flt_ext                = _d-impl_w_filter
-        flt_type               = _d-filter_datatype
-        maint_langu            = _d-mast_langu
-        filter_val_obj         = o_filter_val
-*     GENFLAG                = SEEX_FALSE
-*     NO_DIALOG              = SEEX_FALSE
+        impl             = _d-implementation
+        flt_ext          = _d-impl_w_filter
+        flt_type         = _d-filter_datatype
+        maint_langu      = _d-mast_langu
+        filter_val_obj   = o_filter_val
+*       GENFLAG          = SEEX_FALSE
+*       NO_DIALOG        = SEEX_FALSE
       IMPORTING
-        mast_langu             = mast_langu
+        mast_langu       = mast_langu
       TABLES
-        fcodes_to_insert       = _d-fcodes
-        cocos_to_insert        = _d-cocos
-        intas_to_insert        = _d-intas
-        sscrs_to_insert        = _d-scrns
+        fcodes_to_insert = _d-fcodes
+        cocos_to_insert  = _d-cocos
+        intas_to_insert  = _d-intas
+        sscrs_to_insert  = _d-scrns
       CHANGING
-        korrnum                = i_korrnr
-        devclass               = i_devclass
+        korrnum          = i_korrnr
+        devclass         = i_devclass
       EXCEPTIONS
-        save_failure           = 1
-        action_canceled        = 2
-        OTHERS                 = 3.
+        save_failure     = 1
+        action_canceled  = 2
+        OTHERS           = 3.
     IF sy-subrc &lt;&gt; 0.
       mac_add_mf_and_raise &apos;SXO_IMPL_SAVE&apos; sy-subrc.
     ENDIF.
@@ -719,7 +704,7 @@ INCLUDE zaplink_macros.</MACROS>
     IF NOT components IS BOUND. CREATE OBJECT components. ENDIF.
     components-&gt;add( _component ).
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
   </METHODS>
@@ -744,7 +729,7 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
       super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -813,8 +798,8 @@ INCLUDE zaplink_macros.</MACROS>
 *            RAISE EXCEPTION TYPE zaplink_cx_connector
 *              EXPORTING textid = zaplink_cx_connector=&gt;not_found.
             WHEN OTHERS.
-              RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+              RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+                EXPORTING textid = ZCX_ZL_CONNECTOR=&gt;system_error.
           ENDCASE.
         ENDIF.
       WHEN st_badi_impl.
@@ -837,14 +822,14 @@ INCLUDE zaplink_macros.</MACROS>
 *            RAISE EXCEPTION TYPE zaplink_cx_connector
 *              EXPORTING textid = zaplink_cx_connector=&gt;not_found.
             WHEN OTHERS.
-              RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+              RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+                EXPORTING textid = ZCX_ZL_CONNECTOR=&gt;system_error.
           ENDCASE.
         ENDIF.
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.
   result = abap_true.
 * Issue 137 =&gt; Remove from Working Area
@@ -881,7 +866,7 @@ INCLUDE zaplink_macros.</MACROS>
         WHEN OTHERS.
           mac_raise_type_not_supported me-&gt;class_name d_type.
       ENDCASE.
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
@@ -911,7 +896,7 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
@@ -937,7 +922,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDCASE.
     check_component_list( EXPORTING     object = object
                            CHANGING components = components ).    &quot; Issue 92
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
@@ -960,6 +945,7 @@ INCLUDE zaplink_macros.</MACROS>
   INCLUDE TYPE ts_base_attributs AS base.
   TYPES:
     END OF ts_clas_attr
+`
     <TEXTS>
      <ITEM LANG="E" TEXT="Root attributs for CLAS"/>
     </TEXTS>
@@ -969,6 +955,7 @@ INCLUDE zaplink_macros.</MACROS>
       simg(4)    TYPE c,     &quot;SIMG
       name       TYPE rsexscrn-exit_name,                   &quot; CHAR 30
     END OF ts_doc_key
+`
     <TEXTS>
      <ITEM LANG="E" TEXT="DOCU key structure"/>
     </TEXTS>

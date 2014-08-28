@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="2EE98B836D52A38BA5C26CDA61CE9CC2" CODE_SIGNATURE="86B054EE094B9DA228EDD0943F85A339" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3FE10A1ABD953350244155F2F11498DE" CODE_SIGNATURE="E3525B5A976B63E02C3B455D65B58292" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -113,11 +113,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM LANG="E" TEXT="Delete File"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_rc TYPE i.
@@ -141,10 +137,10 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         OTHERS               = 9.
     IF d_rc &lt;&gt; 0 AND sy-subrc = 0.     sy-subrc = 9.   ENDIF.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
-                                                       method = &apos;FILE_DELETE&apos;
-                                                        subrc = sy-subrc
-                                                 cx_classname = &apos;ZAPLINK_CX_FILE&apos; ).
+      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
+                                                        method = &apos;FILE_DELETE&apos;
+                                                         subrc = sy-subrc
+                                                  cx_classname = &apos;ZCX_ZL_FILE&apos; ).
       RAISE EXCEPTION o_mycx.
     ENDIF.
   ELSEIF _filetype = c_ft_server.
@@ -154,7 +150,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
         CREATE OBJECT o_mycx
           EXPORTING
-            textid   = zaplink_cx_file=&gt;delete_error
+            textid   = ZCX_ZL_FILE=&gt;delete_error
             filename = _filename
             filetype = _filetype
             previous = cx.
@@ -163,15 +159,15 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDTRY.
     IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;delete_error
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;delete_error
                     filename = _filename
                     filetype = _filetype
                      cx_name = &apos;DELETE DATASET&apos;.
     ENDIF.
   ELSE.
-    RAISE EXCEPTION TYPE zaplink_cx_file
-          EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+    RAISE EXCEPTION TYPE ZCX_ZL_FILE
+          EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                   filetype = _filetype.
   ENDIF.</SOURCE>
    </ITEM>
@@ -187,17 +183,13 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA tmptable TYPE table_of_strings.
   DATA cx_name TYPE string.
   DATA cx TYPE REF TO cx_root.
-*  DATA _cx TYPE REF TO zaplink_cx_file.
+*  DATA _cx TYPE REF TO ZCX_ZL_FILE.
   DATA _str LIKE LINE OF tmptable.
   FIELD-SYMBOLS:
     &lt;s&gt; LIKE LINE OF tmptable.
@@ -217,11 +209,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
           OTHERS               = 5.
       IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
-        o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
+        o_mycx ?= ZCX_ZAPLINK=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
                                                          method = &apos;FILE_EXIST&apos;
                                                           subrc = sy-subrc
-                                                         textid = zaplink_cx_file=&gt;load_error
-                                                   cx_classname = &apos;ZAPLINK_CX_FILE&apos; ).
+                                                         textid = ZCX_ZL_FILE=&gt;load_error
+                                                   cx_classname = &apos;ZCX_ZL_FILE&apos; ).
         RAISE EXCEPTION o_mycx.
       ENDIF.
     WHEN c_ft_server.
@@ -231,7 +223,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
           CREATE OBJECT o_mycx
             EXPORTING
-              textid   = zaplink_cx_file=&gt;load_error
+              textid   = ZCX_ZL_FILE=&gt;load_error
               filename = _filename
               filetype = _filetype
               previous = cx.
@@ -250,12 +242,12 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
           EXIT.
       ENDTRY.
     WHEN OTHERS.
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                     filetype = _filetype.
   ENDCASE.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_FILECONTENT" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_FILECONTENT" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Filecontent : Getter"/>
     </TEXTS>
@@ -269,7 +261,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <SOURCE>`
   result = _content.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_FILENAME" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_FILENAME" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Filename : Getter"/>
     </TEXTS>
@@ -283,7 +275,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     <SOURCE>`
   result = _filename.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_FILETYPE" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_FILETYPE" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Filetype : Getter"/>
     </TEXTS>
@@ -309,11 +301,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_is_ok   TYPE abap_bool.
@@ -399,8 +387,8 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ELSEIF _filetype = c_ft_server.
 * No dialog right now
   ELSE.
-    RAISE EXCEPTION TYPE zaplink_cx_file
-          EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+    RAISE EXCEPTION TYPE ZCX_ZL_FILE
+          EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                   filetype = _filetype.
   ENDIF.</SOURCE>
    </ITEM>
@@ -409,17 +397,13 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM LANG="E" TEXT="Load file content"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA tmptable TYPE table_of_strings.
   DATA cx_name TYPE string.
   DATA cx TYPE REF TO cx_root.
-*  DATA _cx TYPE REF TO zaplink_cx_file.
+*  DATA _cx TYPE REF TO ZCX_ZL_FILE.
   DATA _str LIKE LINE OF tmptable.
   FIELD-SYMBOLS:
     &lt;s&gt; LIKE LINE OF tmptable.
@@ -451,10 +435,10 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         unknown_error           = 18
         OTHERS                  = 19.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
+      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
                                                        method = &apos;GUI_UPLOAD&apos;
                                                         subrc = sy-subrc
-                                                 cx_classname = &apos;ZAPLINK_CX_FILE&apos; ).
+                                                 cx_classname = &apos;ZCX_ZL_FILE&apos; ).
       RAISE EXCEPTION o_mycx.
     ENDIF.
   ELSEIF _filetype = c_ft_server.
@@ -464,7 +448,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
         CREATE OBJECT o_mycx
           EXPORTING
-            textid   = zaplink_cx_file=&gt;load_error
+            textid   = ZCX_ZL_FILE=&gt;load_error
             filename = _filename
             filetype = _filetype
             previous = cx.
@@ -473,8 +457,8 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDTRY.
     IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;load_error
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;load_error
                     filename = _filename
                     filetype = _filetype
                      cx_name = &apos;OPEN DATASET&apos;.
@@ -487,7 +471,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
           CREATE OBJECT o_mycx
             EXPORTING
-              textid   = zaplink_cx_file=&gt;load_error
+              textid   = ZCX_ZL_FILE=&gt;load_error
               filename = _filename
               filetype = _filetype
               previous = cx.
@@ -506,7 +490,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
         CREATE OBJECT o_mycx
           EXPORTING
-            textid   = zaplink_cx_file=&gt;load_error
+            textid   = ZCX_ZL_FILE=&gt;load_error
             filename = _filename
             filetype = _filetype
             previous = cx.
@@ -515,15 +499,15 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDTRY.
     IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;load_error
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;load_error
                     filename = _filename
                     filetype = _filetype
                      cx_name = &apos;CLOSE DATASET&apos;.
     ENDIF.
   ELSE.
-    RAISE EXCEPTION TYPE zaplink_cx_file
-          EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+    RAISE EXCEPTION TYPE ZCX_ZL_FILE
+          EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                   filetype = _filetype.
   ENDIF.
 
@@ -545,11 +529,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA ft TYPE filetable.
@@ -579,19 +559,19 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         OTHERS                  = 5.
     IF sy-subrc &lt;&gt; 0.   &quot; OR filecount &lt; 0.
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
-      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
+      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
                                                        method = &apos;FILE_OPEN_DIALOG&apos;
                                                         subrc = sy-subrc
-                                                       textid = zaplink_cx_file=&gt;load_error
-                                                 cx_classname = &apos;ZAPLINK_CX_FILE&apos; ).
+                                                       textid = ZCX_ZL_FILE=&gt;load_error
+                                                 cx_classname = &apos;ZCX_ZL_FILE&apos; ).
       o_mycx-&gt;filename = filename.
       o_mycx-&gt;filetype = _filetype.
       RAISE EXCEPTION o_mycx.
     ENDIF.
     IF filecount = 0 OR ft IS INITIAL.
 * Dialog canceled by user
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;dialog_canceled
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;dialog_canceled
                     filename = filename
                     filetype = _filetype.
     ENDIF.
@@ -599,8 +579,8 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ELSEIF _filetype = c_ft_server.
 * No dialog right now
   ELSE.
-    RAISE EXCEPTION TYPE zaplink_cx_file
-          EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+    RAISE EXCEPTION TYPE ZCX_ZL_FILE
+          EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                   filetype = _filetype.
   ENDIF.</SOURCE>
    </ITEM>
@@ -609,17 +589,13 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM LANG="E" TEXT="Save file content"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA tmptable  TYPE table_of_strings.
 *  DATA cx_name   TYPE string.
   DATA o_cx      TYPE REF TO cx_root.
-  DATA o_cx_file TYPE REF TO zaplink_cx_file.
+  DATA o_cx_file TYPE REF TO ZCX_ZL_FILE.
   FIELD-SYMBOLS:
     &lt;s&gt; LIKE LINE OF tmptable.
 
@@ -689,17 +665,17 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
       IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
 *        TRY.
-            o_cx_file ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;GUI_DOWNLOAD&apos;
+            o_cx_file ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;GUI_DOWNLOAD&apos;
                                                            subrc = sy-subrc
-                                                       classname = &apos;ZAPLINK_CX_FILE&apos;
-                                                          textid = zaplink_cx_file=&gt;save_error ).
+                                                       classname = &apos;ZCX_ZL_FILE&apos;
+                                                          textid = ZCX_ZL_FILE=&gt;save_error ).
             o_cx_file-&gt;filename = _filename.
             o_cx_file-&gt;filetype = _filetype.
 *          CATCH cx_root INTO o_cx.
 ** Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
 *            CREATE OBJECT o_cx_file
 *              EXPORTING
-*                textid   = zaplink_cx_file=&gt;save_error
+*                textid   = ZCX_ZL_FILE=&gt;save_error
 *                filename = _filename
 *                filetype = _filetype
 *                previous = o_cx.
@@ -716,7 +692,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
         CREATE OBJECT o_cx_file
           EXPORTING
-            textid   = zaplink_cx_file=&gt;save_error
+            textid   = ZCX_ZL_FILE=&gt;save_error
             filename = _filename
             filetype = _filetype
             previous = o_cx.
@@ -725,8 +701,8 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDTRY.
     IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;save_error
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;save_error
                     filename = _filename
                     filetype = _filetype
                      cx_name = &apos;OPEN DATASET&apos;.
@@ -739,7 +715,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
           CREATE OBJECT o_cx_file
             EXPORTING
-              textid   = zaplink_cx_file=&gt;save_error
+              textid   = ZCX_ZL_FILE=&gt;save_error
               filename = _filename
               filetype = _filetype
               previous = o_cx.
@@ -754,7 +730,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
         CREATE OBJECT o_cx_file
           EXPORTING
-            textid   = zaplink_cx_file=&gt;save_error
+            textid   = ZCX_ZL_FILE=&gt;save_error
             filename = _filename
             filetype = _filetype
             previous = o_cx.
@@ -763,15 +739,15 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
     ENDTRY.
     IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;save_error
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;save_error
                     filename = _filename
                     filetype = _filetype
                      cx_name = &apos;CLOSE DATASET&apos;.
     ENDIF.
   ELSE.
-    RAISE EXCEPTION TYPE zaplink_cx_file
-          EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+    RAISE EXCEPTION TYPE ZCX_ZL_FILE
+          EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                   filetype = _filetype.
   ENDIF.</SOURCE>
    </ITEM>
@@ -787,11 +763,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA retfilename TYPE string.
@@ -816,8 +788,8 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         user_action       = retuseract.
     IF retuseract &lt;&gt; 0.
 * Dialog canceled by user
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;dialog_canceled
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;dialog_canceled
                     filename = filename
                     filetype = _filetype.
     ENDIF.
@@ -825,8 +797,8 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ELSEIF _filetype = c_ft_server.
 * No dialog right now
   ELSE.
-    RAISE EXCEPTION TYPE zaplink_cx_file
-          EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+    RAISE EXCEPTION TYPE ZCX_ZL_FILE
+          EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                   filetype = _filetype.
   ENDIF.</SOURCE>
    </ITEM>
@@ -852,11 +824,7 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_tmpdir  TYPE string.
@@ -872,8 +840,8 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   IF _filetype = c_ft_local.
     d_tmpdir = get_temp_directory( ).
     IF d_tmpdir IS INITIAL.
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                     filetype = _filetype.
     ENDIF.
     DO.
@@ -923,11 +891,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         OTHERS                 = 10.
     IF sy-subrc &lt;&gt; 0.
 * Exception &apos;&amp;CX_NAME&amp;&apos; while searching in &apos;&amp;FILENAME&amp;&apos;
-      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
+      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
                                                        method = &apos;EXECUTE&apos;
                                                         subrc = sy-subrc
-                                                       textid = zaplink_cx_file=&gt;search_error
-                                                 cx_classname = &apos;ZAPLINK_CX_FILE&apos; ).
+                                                       textid = ZCX_ZL_FILE=&gt;search_error
+                                                 cx_classname = &apos;ZCX_ZL_FILE&apos; ).
       RAISE EXCEPTION o_mycx.
     ENDIF.
 *    wait up to 1 SECONDS.
@@ -944,11 +912,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         OTHERS               = 5.
     IF sy-subrc &lt;&gt; 0 OR d_is_ok IS INITIAL.
 * Exception &apos;&amp;CX_NAME&amp;&apos; while searching in &apos;&amp;FILENAME&amp;&apos;
-      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
+      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
                                                        method = &apos;FILE_EXIST&apos;
                                                         subrc = sy-subrc
-                                                       textid = zaplink_cx_file=&gt;search_error
-                                                 cx_classname = &apos;ZAPLINK_CX_FILE&apos; ).
+                                                       textid = ZCX_ZL_FILE=&gt;search_error
+                                                 cx_classname = &apos;ZCX_ZL_FILE&apos; ).
       RAISE EXCEPTION o_mycx.
     ENDIF.
     CALL METHOD cl_gui_frontend_services=&gt;gui_upload
@@ -990,11 +958,11 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
         OTHERS                  = 19.
     IF sy-subrc &lt;&gt; 0.
 * Exception &apos;&amp;CX_NAME&amp;&apos; while searching in &apos;&amp;FILENAME&amp;&apos;
-      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
+      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_method_cx( class_name = &apos;CL_GUI_FRONTEND_SERVICES&apos;
                                                        method = &apos;FILE_EXIST&apos;
                                                         subrc = sy-subrc
-                                                       textid = zaplink_cx_file=&gt;search_error
-                                                 cx_classname = &apos;ZAPLINK_CX_FILE&apos; ).
+                                                       textid = ZCX_ZL_FILE=&gt;search_error
+                                                 cx_classname = &apos;ZCX_ZL_FILE&apos; ).
       RAISE EXCEPTION o_mycx.
     ENDIF.
     LOOP AT t_filelst ASSIGNING &lt;f&gt;.
@@ -1056,12 +1024,12 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
   ELSEIF _filetype = c_ft_server.
 * No dialog right now
   ELSE.
-    RAISE EXCEPTION TYPE zaplink_cx_file
-          EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+    RAISE EXCEPTION TYPE ZCX_ZL_FILE
+          EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                   filetype = _filetype.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_FILECONTENT" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_FILECONTENT" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Filecontent : Setter"/>
     </TEXTS>
@@ -1087,17 +1055,13 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   IF data IS INITIAL.
 * Filename &apos;&amp;file&amp;&apos; is invalid. Please provide a valid filename for filetype &apos;&amp;filetype&amp;&apos;
-    RAISE EXCEPTION TYPE zaplink_cx_file
-          EXPORTING textid = zaplink_cx_file=&gt;invalid_filename
+    RAISE EXCEPTION TYPE ZCX_ZL_FILE
+          EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filename
                   filename = data
                   filetype = _filetype.
   ENDIF.
@@ -1118,16 +1082,12 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   IF data &lt;&gt; c_ft_local AND data &lt;&gt; c_ft_server.
-    RAISE EXCEPTION TYPE zaplink_cx_file
-          EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+    RAISE EXCEPTION TYPE ZCX_ZL_FILE
+          EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                   filetype = data.
   ENDIF.
   IF NOT _filename IS INITIAL.
@@ -1155,12 +1115,12 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM LANG="E" TEXT="File or Directory"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TD_FILENAME" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="ZAPLINK_CX_FILE=&gt;T_FILENAME">
+   <ITEM CMPNAME="TD_FILENAME" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="1" TYPE="ZCX_ZL_FILE=&gt;T_FILENAME">
     <TEXTS>
      <ITEM LANG="E" TEXT="Filename"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TD_FILETYPE" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="ZAPLINK_CX_FILE=&gt;T_FILETYPE">
+   <ITEM CMPNAME="TD_FILETYPE" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="1" TYPE="ZCX_ZL_FILE=&gt;T_FILETYPE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Filetype : Local or Server"/>
     </TEXTS>
@@ -1170,12 +1130,12 @@ INCLUDE ZAPLINK_MACROS.</MACROS>
      <ITEM LANG="E" TEXT="Full file or directory name"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_CX_FILE">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZCX_ZL_FILE">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>

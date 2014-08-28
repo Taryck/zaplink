@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BC63E0106B90AEF18E94490B6925EF6C" CODE_SIGNATURE="0FCDA6E98C72BF6F3799C3051A190F5B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0B09F3C592F8BC2EE46D55F0A03760E4" CODE_SIGNATURE="F590E352D3044B945ABCC21C4D29FDAA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -61,7 +61,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
    <ITEM CMPNAME="DOCUMENTATION" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TT_DOCS"/>
    <ITEM CMPNAME="DOC_IDS" EXPOSURE="1" STATE="1" ATTDECLTYP="2" TYPTYPE="4">BEGIN OF doc_ids,
-      begin of class,
+      BEGIN OF class,
 *table TDCLT
 *DOKCLASS DOKTITEL
 *CA       Class attribute
@@ -74,14 +74,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         method    TYPE td_doc_id VALUE &apos;CO&apos;,
         event     TYPE td_doc_id VALUE &apos;CE&apos;,
         type      TYPE td_doc_id VALUE &apos;CT&apos;,
-      end of class,
-      begin of interface,
+      END OF class,
+      BEGIN OF interface,
         header    TYPE td_doc_id VALUE &apos;IF&apos;,
         attribute TYPE td_doc_id VALUE &apos;IA&apos;,
         method    TYPE td_doc_id VALUE &apos;IO&apos;,
         event     TYPE td_doc_id VALUE &apos;IE&apos;,
         type      TYPE td_doc_id VALUE &apos;IT&apos;,   &quot; does not exists yet
-      end of interface,
+      END OF interface,
     END OF doc_ids
 `</ITEM>
    <ITEM CMPNAME="EVENTS" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TT_EVENTS">
@@ -109,10 +109,10 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Method separator"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="OBJECT_TYPES" EXPOSURE="1" STATE="1" ATTDECLTYP="2" TYPTYPE="4">BEGIN OF Object_types,                                  &quot;#EC NOTEXT
+   <ITEM CMPNAME="OBJECT_TYPES" EXPOSURE="1" STATE="1" ATTDECLTYP="2" TYPTYPE="4">BEGIN OF object_types,                                  &quot;#EC NOTEXT
       class        TYPE td_comptype VALUE &apos;CLAS&apos;,
       interface    TYPE td_comptype VALUE &apos;INTF&apos;,
-    END OF Object_types
+    END OF object_types
 `</ITEM>
    <ITEM CMPNAME="OBJ_LANGU" EXPOSURE="1" STATE="1" TYPTYPE="1" TYPE="SYLANGU">
     <TEXTS>
@@ -144,10 +144,10 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="R_DOC_IDS" EXPOSURE="1" STATE="1" ATTDECLTYP="1" TYPTYPE="4">begin of R_DOC_IDS,
-      class       type TR_DOCID,
-      interface   type TR_DOCID,
-    end of R_DOC_IDS
+   <ITEM CMPNAME="R_DOC_IDS" EXPOSURE="1" STATE="1" ATTDECLTYP="1" TYPTYPE="4">BEGIN OF r_doc_ids,
+      class       TYPE tr_docid,
+      interface   TYPE tr_docid,
+    END OF r_doc_ids
 `</ITEM>
    <ITEM CMPNAME="TYPEGROUPS" EXPOSURE="2" STATE="1" TYPTYPE="1" TYPE="TT_TYPEGROUPS">
     <TEXTS>
@@ -1416,7 +1416,7 @@ AS</ITEM>
    <ITEM TYPEGROUP="SEOT" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZCX_ZL_CONNECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
@@ -1426,7 +1426,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Menu painter Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>

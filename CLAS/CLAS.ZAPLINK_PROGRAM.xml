@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="EBE8BBDFA4BD21B395F3038DE3FD3145" CODE_SIGNATURE="2F9A687BFA423A07CFB1345ADB2CF0B3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="13C7F8ECB0447C678E5FE14F6421AFF1" CODE_SIGNATURE="D11F5CB766D497476CBBBF158FD64E62" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PROGRAM" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -751,7 +751,7 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
       super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -762,7 +762,7 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
       super-&gt;zaplink_cnx_ext_cleaner~unanonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.
 
@@ -794,7 +794,7 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~CREATE_NEW_RAW">
@@ -889,7 +889,7 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.
   result = abap_true.
 * Issue 137 =&gt; Remove from Working Area
@@ -933,7 +933,7 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~GET_VALUES">
@@ -1126,7 +1126,7 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
@@ -1240,7 +1240,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDCASE.
     check_component_list( EXPORTING     object = object
                            CHANGING components = components ). &quot; Issue 92
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>

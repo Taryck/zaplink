@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="B4869ED12B1981E05962617DA7226212" CODE_SIGNATURE="DD0729CF0602CA8ECA5DA8A86782F52D" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="00AFF87B29B325BF60A485899936852F" CODE_SIGNATURE="3057B7B6CA40F3D2F2A8F1A1764AE409" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FRM" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VARCL="X" SUBC="I" APPL="S" RMAND="220" RLOAD="E" UCCHECK="X"/>
@@ -36,7 +36,7 @@
     DATA _name  TYPE t_obj_name.
     DATA _cx    TYPE t_exception.
     DATA _msg_col TYPE t_msg_col.
-    DATA o_cx   TYPE REF TO zaplink_cx.
+    DATA o_cx   TYPE REF TO ZCX_ZAPLINK.
 
     WRITE: / &apos;Object list for Container&apos;(001), name. SKIP.
     TRY.
@@ -86,7 +86,7 @@
 
           t_comp = objlist-&gt;get_next( ).
         ENDWHILE.
-      CATCH zaplink_cx INTO o_cx.
+      CATCH ZCX_ZAPLINK INTO o_cx.
         o_cx-&gt;write( ).
     ENDTRY.
   ENDFORM.                    &quot; DSP_RESULT_UNINSTALL
@@ -101,7 +101,7 @@
     DATA _type  TYPE t_obj_type.
     DATA _name  TYPE t_obj_name.
     DATA _act   TYPE zaplink_component=&gt;td_action.
-    DATA o_cx   TYPE REF TO zaplink_cx.
+    DATA o_cx   TYPE REF TO ZCX_ZAPLINK.
     DATA _cx    TYPE t_exception.
     DATA _msg_col TYPE t_msg_col.
     DATA _subc  TYPE t_objlist.
@@ -191,7 +191,7 @@
 
           t_comp = objlist-&gt;get_next( ).
         ENDWHILE.
-      CATCH zaplink_cx INTO o_cx.
+      CATCH ZCX_ZAPLINK INTO o_cx.
         o_cx-&gt;write( ).
     ENDTRY.
 
@@ -206,7 +206,7 @@
           EXPORTING
             name = d_name
             file = o_file.
-      CATCH zaplink_cx INTO o_exception.
+      CATCH ZCX_ZAPLINK INTO o_exception.
         o_exception-&gt;write( ).
         EXIT.
     ENDTRY.
@@ -249,7 +249,7 @@
             with_subcomp = f_sub
           CHANGING
             objlist      = objlist.
-      CATCH zaplink_cx INTO o_exception.
+      CATCH ZCX_ZAPLINK INTO o_exception.
         o_exception-&gt;write( ).
         EXIT.
     ENDTRY.
@@ -265,7 +265,7 @@
     TRY.
         objlist = zaplink_gui=&gt;refresh( file = o_file
                                 with_subcomp = f_sub ).
-      CATCH zaplink_cx INTO o_exception.
+      CATCH ZCX_ZAPLINK INTO o_exception.
         o_exception-&gt;write( ).
         EXIT.
     ENDTRY.
@@ -301,7 +301,7 @@
             with_subcomp = f_sub
           CHANGING
             objlist      = objlist.
-      CATCH zaplink_cx INTO o_exception.
+      CATCH ZCX_ZAPLINK INTO o_exception.
         o_exception-&gt;write( ).
         EXIT.
     ENDTRY.
@@ -355,7 +355,7 @@
             name         = d_name
 *        CHANGING
             list       = objlist.
-      CATCH zaplink_cx INTO o_exception.
+      CATCH ZCX_ZAPLINK INTO o_exception.
         o_exception-&gt;write( ).
         EXIT.
     ENDTRY.
@@ -369,7 +369,7 @@
     TRY.
         objlist = zaplink_gui=&gt;get_objlist( file = o_file ).
         objlist-&gt;display( ).
-      CATCH zaplink_cx INTO o_exception.
+      CATCH ZCX_ZAPLINK INTO o_exception.
         o_exception-&gt;write( ).
     ENDTRY.
 *  PERFORM dsp_result_display USING space objlist space.
@@ -387,7 +387,7 @@
             name         = d_name
           CHANGING
             list         = objlist.
-      CATCH zaplink_cx INTO o_exception.
+      CATCH ZCX_ZAPLINK INTO o_exception.
         o_exception-&gt;write( ).
     ENDTRY.
     PERFORM dsp_result_uninstall USING d_name.
@@ -422,7 +422,7 @@
             with_subcomp = f_sub
           CHANGING
             objlist      = objlist.
-      CATCH zaplink_cx INTO o_exception.
+      CATCH ZCX_ZAPLINK INTO o_exception.
         o_exception-&gt;write( ).
         EXIT.
     ENDTRY.
@@ -458,7 +458,7 @@
             with_subcomp = f_sub
           CHANGING
             objlist      = objlist.
-      CATCH zaplink_cx INTO o_exception.
+      CATCH ZCX_ZAPLINK INTO o_exception.
         o_exception-&gt;write( ).
         EXIT.
     ENDTRY.
@@ -487,7 +487,7 @@
         mac_replace d_file: uname, sysid, datum, uzeit.
         o_file-&gt;set_filename( d_file ).
 
-      CATCH zaplink_cx INTO o_exception.
+      CATCH ZCX_ZAPLINK INTO o_exception.
         o_exception-&gt;write( ).
         LEAVE PROGRAM.
     ENDTRY.

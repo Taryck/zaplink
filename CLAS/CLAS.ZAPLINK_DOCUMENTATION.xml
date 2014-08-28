@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BEF99A5C6AE2E687599DE22AAD508832" CODE_SIGNATURE="6E8B6A7017336E16BF6A481947BA4D6F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="D8A35E22E8C2A1F25CAEC21B43F003C6" CODE_SIGNATURE="03215816851B630466BF459D5A8AD82B" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DOCUMENTATION" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -76,9 +76,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 INCLUDE zaplink_macros.
 
 DEFINE lmac_add_mf_and_raise.
-  o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &amp;1
-                                              subrc = &amp;2
-                                          classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+  o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &amp;1
+                                               subrc = &amp;2
+                                           classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
   log-&gt;add_symsg( ).
   log-&gt;add_exception( o_mycx ).
   raise exception o_mycx.
@@ -121,11 +121,7 @@ END-OF-DEFINITION.</MACROS>
      <ITEM SCONAME="LANG" CMPTYPE="1" PARDECLTYP="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TS_LANG"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _text  TYPE tt_rawtext.
@@ -176,7 +172,7 @@ END-OF-DEFINITION.</MACROS>
         lang-tdstyle.
     ENDIF.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
@@ -198,7 +194,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -278,7 +274,7 @@ END-OF-DEFINITION.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -378,7 +374,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -448,7 +444,7 @@ FIELD-SYMBOLS &lt;l&gt; LIKE LINE OF raw.
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -590,7 +586,7 @@ SPLIT string AT LINE_SEPARATOR
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.
 * Issue 137 =&gt; Remove from Working Area
   zaplink_tools=&gt;remove_comp_from_working_area( type = type
@@ -629,7 +625,7 @@ SPLIT string AT LINE_SEPARATOR
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
@@ -665,7 +661,7 @@ SPLIT string AT LINE_SEPARATOR
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
@@ -695,10 +691,10 @@ SPLIT string AT LINE_SEPARATOR
       ENDCASE.
       check_component_list( EXPORTING     object = object
                              CHANGING components = components ). &quot; Issue 92
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       ROLLBACK WORK.
       RAISE EXCEPTION o_mycx.
-    CATCH zaplink_cx INTO o_cx.
+    CATCH ZCX_ZAPLINK INTO o_cx.
       ROLLBACK WORK.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>

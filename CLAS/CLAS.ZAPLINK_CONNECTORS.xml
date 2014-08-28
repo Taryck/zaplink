@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="5B7560E74FEC0419D0961753AA9F5307" CODE_SIGNATURE="8F4640F0F775934778AAF20E337F03D6" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="BB63C1A2E5F271C7988D25A5BD759D76" CODE_SIGNATURE="66505752E050FB52B733E20CA116D820" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTORS" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -114,7 +114,7 @@ AS</ITEM>
    </ITEM>
   </ATTRIBUTS>
   <INTERFACES>
-   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="1 "/>
   </INTERFACES>
   <LOCAL>
    <TYPES>`
@@ -144,11 +144,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 
@@ -201,14 +197,13 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
       reset_connectors( ).
-    CATCH zaplink_cx INTO o_cx.
-      IF o_cx-&gt;IS_EXCEPTION_TEXT( zaplink_cx_connector=&gt;twice_uuid ) = abap_true OR
-         o_cx-&gt;IS_EXCEPTION_TEXT( zaplink_cx_connector=&gt;twice_class ) = abap_true.
+    CATCH ZCX_ZL_CNX_TWICE_UUID ZCX_ZL_CNX_TWICE_CLASS INTO o_cx.
         RAISE EXCEPTION o_cx.   &quot;  Major failure that will cause Short Dump
-      ENDIF.
+    CATCH zcx_zaplink INTO o_cx.
+      &quot; Ignore other exceptions
   ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CLEAR_CONNECTORS" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CLEAR_CONNECTORS" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Remove all connectors"/>
     </TEXTS>
@@ -229,11 +224,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="TYPE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE" PAROPTIONL="X"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _cx        TYPE REF TO cx_root.
@@ -249,21 +240,23 @@ INCLUDE zaplink_macros.</MACROS>
                WITH TABLE KEY uuid = connuuid.
     IF sy-subrc &lt;&gt; 0.
 * Class &apos;&amp;CONNUUID&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNCLASS&amp;&apos;
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-                 EXPORTING textid = zaplink_cx_connector=&gt;invalid_uuid
-                             type = type
-                         connuuid = connuuid.
+      RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+        EXPORTING
+          textid   = ZCX_ZL_CONNECTOR=&gt;invalid_uuid
+          type     = type
+          connuuid = connuuid.
     ELSE.
       IF NOT type IS INITIAL.
         READ TABLE &lt;cl&gt;-types TRANSPORTING NO FIELDS
              WITH TABLE KEY type = type.
         IF sy-subrc &lt;&gt; 0.
 * Class &apos;&amp;CONNUUID&amp;&apos; for type &apos;&amp;TYPE&amp;&apos; is not a valid connector. Check attribute SUPPORTED_TYPES of Class &apos;&amp;CONNCLASS&amp;&apos;
-          RAISE EXCEPTION TYPE zaplink_cx_connector
-                     EXPORTING textid = zaplink_cx_connector=&gt;type_not_supported
-                                 type = type
-                            connclass = &lt;cl&gt;-classname
-                             connuuid = connuuid.
+          RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+            EXPORTING
+              textid    = ZCX_ZL_CONNECTOR=&gt;type_not_supported
+              type      = type
+              connclass = &lt;cl&gt;-classname
+              connuuid  = connuuid.
         ENDIF.
       ENDIF.
     ENDIF.
@@ -290,9 +283,10 @@ INCLUDE zaplink_macros.</MACROS>
     TRY.
         CREATE OBJECT result TYPE (_classname).
       CATCH cx_root INTO _cx.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
-                   EXPORTING textid = zaplink_cx=&gt;system_error
-                           previous = _cx.
+        RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+          EXPORTING
+            textid   = zcx_zaplink=&gt;system_error
+            previous = _cx.
     ENDTRY.
   ENDIF.</SOURCE>
    </ITEM>
@@ -309,11 +303,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="TYPE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _conn LIKE LINE OF type_list.
@@ -330,7 +320,7 @@ INCLUDE zaplink_macros.</MACROS>
 *      mac_cascade_raise o_mycx o_cx.
 *  ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_CLASSNAME" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_CLASSNAME" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get connector&apos;s classname"/>
     </TEXTS>
@@ -361,7 +351,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -385,7 +375,7 @@ INCLUDE zaplink_macros.</MACROS>
 *    ENDTRY.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPEKIND" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TYPEKIND" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get Program ID of object type"/>
     </TEXTS>
@@ -400,7 +390,7 @@ INCLUDE zaplink_macros.</MACROS>
        WITH TABLE KEY object = data.
   IF sy-subrc = 0.    result = &lt;t&gt;-pgmid.   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_TYPEORDER" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_TYPEORDER" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get order of object Type"/>
     </TEXTS>
@@ -427,11 +417,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="TYPE" CMPTYPE="1" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA lt_return TYPE STANDARD TABLE OF ddshretval.
@@ -467,9 +453,9 @@ INCLUDE zaplink_macros.</MACROS>
       no_values_found        = 2
       OTHERS                 = 3.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;F4IF_INT_TABLE_VALUE_REQUEST&apos;
-                                                subrc = sy-subrc
-                                            classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+    o_mycx ?= zcx_zaplink=&gt;create_from_mf_cx( funcname = &apos;F4IF_INT_TABLE_VALUE_REQUEST&apos;
+                                                 subrc = sy-subrc
+                                             classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
     o_mycx-&gt;update( ).
     RAISE EXCEPTION o_mycx.
   ELSE.
@@ -493,17 +479,13 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA ez_xml    TYPE REF TO zaplink_easyxml.
   DATA _xml_comp TYPE REF TO if_ixml_document.
   DATA _clone    TYPE REF TO if_ixml_node.
-  DATA _cx       TYPE REF TO zaplink_cx.
+  DATA _cx       TYPE to_root_exception.
 
   _xml_comp = xmlengine-&gt;create_document( ).
   _clone = node-&gt;clone( ).
@@ -516,10 +498,10 @@ INCLUDE zaplink_macros.</MACROS>
           xmldoc = _xml_comp
         CHANGING
           any    = result.
-    CATCH zaplink_cx INTO _cx.
+    CATCH zcx_zaplink INTO _cx.
       CREATE OBJECT o_mycx
         EXPORTING
-          textid   = zaplink_cx=&gt;system_error
+          textid   = zcx_zaplink=&gt;system_error
           previous = _cx.
       o_mycx-&gt;update( ).
       RAISE EXCEPTION o_mycx.
@@ -542,11 +524,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_xml  TYPE to_xml.
@@ -573,11 +551,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_XML"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA ez_xml    TYPE REF TO zaplink_easyxml.
@@ -597,11 +571,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Reset all connectors to default (remove local)"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_conn      TYPE REF TO zaplink_connector.
@@ -631,10 +601,10 @@ INCLUDE zaplink_macros.</MACROS>
         is_class     = 2
         OTHERS       = 3.
     IF sy-subrc &lt;&gt; 0.
-      o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;cl_oo_if_relations&apos;
-                                                       method = &apos;constructor&apos;
-                                                        subrc = sy-subrc
-                                                 cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
+      o_mycx ?= zcx_zaplink=&gt;create_from_method_cx( class_name = &apos;cl_oo_if_relations&apos;
+                                                        method = &apos;constructor&apos;
+                                                         subrc = sy-subrc
+                                                  cx_classname = &apos;ZAPLINK_CX_CONNECTOR&apos;).
       RAISE EXCEPTION o_mycx.
     ENDIF.
     IF _connectors IS BOUND.
@@ -647,11 +617,10 @@ INCLUDE zaplink_macros.</MACROS>
 
             _add_connector( class = &lt;im_cl&gt;-clsname ).
 
-          CATCH zaplink_cx INTO o_cx.
-            IF o_cx-&gt;is_exception_text( zaplink_cx_connector=&gt;twice_uuid ) = abap_true OR
-               o_cx-&gt;is_exception_text( zaplink_cx_connector=&gt;twice_class ) = abap_true.
-              RAISE EXCEPTION o_cx.
-            ENDIF.
+          CATCH ZCX_ZL_CNX_TWICE_UUID ZCX_ZL_CNX_TWICE_CLASS into o_cx.
+            RAISE EXCEPTION O_CX.
+          CATCH zcx_zaplink INTO o_cx.
+*           &quot; Ignore other Exceptions
         ENDTRY.
 
       ENDLOOP.
@@ -664,11 +633,10 @@ INCLUDE zaplink_macros.</MACROS>
 
             _add_connector( class = &lt;s_cl&gt;-clsname ).
 
-          CATCH zaplink_cx INTO o_cx.
-            IF o_cx-&gt;is_exception_text( zaplink_cx_connector=&gt;twice_uuid ) = abap_true OR
-               o_cx-&gt;is_exception_text( zaplink_cx_connector=&gt;twice_class ) = abap_true.
-              RAISE EXCEPTION o_cx.
-            ENDIF.
+          CATCH ZCX_ZL_CNX_TWICE_UUID ZCX_ZL_CNX_TWICE_CLASS into o_cx.
+            RAISE EXCEPTION O_CX.
+          CATCH zcx_zaplink INTO o_cx.
+*           &quot; Ignore other Exceptions
         ENDTRY.
 
       ENDLOOP.
@@ -677,7 +645,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="STRING_2_XML" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="STRING_2_XML" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert string to XML Document"/>
     </TEXTS>
@@ -708,7 +676,7 @@ INCLUDE zaplink_macros.</MACROS>
 
   IF o_doc IS BOUND.  result = o_doc.   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="TYPE2TEXT" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="TYPE2TEXT" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get object Type as text"/>
     </TEXTS>
@@ -725,7 +693,7 @@ INCLUDE zaplink_macros.</MACROS>
     result = &lt;t&gt;-text.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="XML_2_STRING" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="XML_2_STRING" EXPOSURE="2" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert XML document to String"/>
     </TEXTS>
@@ -782,7 +750,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
       </TEXTS>
@@ -792,7 +760,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA connector TYPE REF TO zaplink_connector.
   DATA o_cx_root TYPE REF TO cx_root.
   DATA o_cx_create TYPE REF TO cx_sy_create_object_error.
-  DATA cx_comp   TYPE REF TO zaplink_cx_component.
+  DATA cx_comp   TYPE REF TO zcx_zl_component.
   DATA tabletypeline TYPE ko105.
   DATA _conn     LIKE LINE OF type_list.
   DATA _class    LIKE LINE OF _conn-classes.
@@ -833,24 +801,25 @@ INCLUDE zaplink_macros.</MACROS>
                WITH TABLE KEY uuid = the_class-uuid.
     IF sy-subrc = 0.
       IF &lt;cl&gt;-classname &lt;&gt; class.                           &quot; Issue 25
-        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-                        textid = zaplink_cx_connector=&gt;twice_uuid
-                     connclass = class
-                    otherclass = &lt;cl&gt;-classname
-                      connuuid = &lt;cl&gt;-uuid.
+        RAISE EXCEPTION TYPE zcx_zl_cnx_twice_uuid
+          EXPORTING
+            connclass  = class
+            otherclass = &lt;cl&gt;-classname
+            connuuid   = &lt;cl&gt;-uuid.
       ELSEIF NOT ( &lt;cl&gt;-devclass &lt;&gt; local_devclass AND devclass = local_devclass ).
-        RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-                        textid = zaplink_cx_connector=&gt;twice_class
-                     connclass = class.
+        RAISE EXCEPTION TYPE zcx_zl_cnx_twice_class
+          EXPORTING
+            connclass = class.
       ELSE.
 * OK : Overide general class with local class
         LOOP AT &lt;cl&gt;-types ASSIGNING &lt;t&gt;.
           READ TABLE type_list ASSIGNING &lt;c&gt;
                WITH TABLE KEY object = &lt;t&gt;-type.
           IF sy-subrc &lt;&gt; 0.
-            RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-                            textid = zaplink_cx_connector=&gt;system_error
-                           cx_name = &apos;TYPE NOT FOUND&apos;.
+            RAISE EXCEPTION TYPE zcx_zl_connector
+              EXPORTING
+                textid  = zcx_zl_connector=&gt;system_error
+                cx_name = &apos;TYPE NOT FOUND&apos;.
           ELSE.
             DELETE &lt;c&gt;-classes WHERE classname = class.
           ENDIF.
@@ -907,11 +876,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="TYPE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 
@@ -922,13 +887,13 @@ INCLUDE zaplink_macros.</MACROS>
                WITH TABLE KEY object = type.
     IF sy-subrc &lt;&gt; 0.
 * Type &apos;&amp;1&apos; is not assigned to a ZAPLINK connector and is not a known SAPobject type (transaction SE01).
-      RAISE EXCEPTION TYPE zaplink_cx_connector
-                 EXPORTING textid = zaplink_cx_connector=&gt;invalid_type
+      RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+                 EXPORTING textid = ZCX_ZL_CONNECTOR=&gt;invalid_type
                              type = type.
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="_UPDATE_DEF_CLASS" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="_UPDATE_DEF_CLASS" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Update default"/>
     </TEXTS>
@@ -991,12 +956,12 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Zap Link Component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="3" TYPE="ZAPLINK_CONNECTOR">
+   <ITEM CMPNAME="TO_CONNECTOR" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_CONNECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAP Link Connector interface"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZCX_ZL_CONNECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
@@ -1006,17 +971,17 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="ZapLink Components list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
+   <ITEM CMPNAME="TO_MSG_COLL" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_MESSAGE_COLLECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="Message Collector"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_RAW_BASE" EXPOSURE="2" STATE="1" TYPTYPE="3" TYPE="ZAPLINK_RAW_BASE">
+   <ITEM CMPNAME="TO_RAW_BASE" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_RAW_BASE">
     <TEXTS>
      <ITEM LANG="E" TEXT="Base RAW component without data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
@@ -1027,7 +992,7 @@ INCLUDE zaplink_macros.</MACROS>
       types TYPE tt_types,   &quot; supported_types
     END OF ts_class
 `</ITEM>
-   <ITEM CMPNAME="TS_COMPONENT" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">BEGIN OF ts_component,
+   <ITEM CMPNAME="TS_COMPONENT" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">BEGIN OF ts_component,
           type TYPE td_comptype,
           name TYPE td_compname,
         END OF ts_component

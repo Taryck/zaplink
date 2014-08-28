@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="358E059436A3653AF497493E25EA5AD6" CODE_SIGNATURE="9F7A7B69C8AF150DA351C518A722EE24" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F9D0FD55E475A4D010389194B12750B6" CODE_SIGNATURE="77954DBB3EEE354F6F27CD2221EED416" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_LIST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -188,7 +188,7 @@ PROCESS AFTER INPUT.
    </ITEM>
   </DYNPROS>
   <INTERFACES>
-   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="1 "/>
   </INTERFACES>
   <LOCAL>
    <TYPES>`
@@ -218,7 +218,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _idx  LIKE LINE OF _index.
@@ -228,9 +228,10 @@ INCLUDE zaplink_macros.</MACROS>
   _idx = search_index( comp ).
   IF _idx-o_comp IS BOUND.
 * Component &apos;&amp;name&amp;&apos; (&amp;type&amp;) already in the collection
-    RAISE EXCEPTION TYPE zlcx_comp_already_exists
-               EXPORTING type = _idx-key-type
-                         name = _idx-key-name.
+    RAISE EXCEPTION TYPE zcx_zl_comp_already_exists
+      EXPORTING
+        type = _idx-key-type
+        name = _idx-key-name.
   ENDIF.
 
   _idx-o_comp = comp.
@@ -250,11 +251,11 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp   TYPE to_component.
-  DATA o_cx_comp TYPE REF TO zaplink_cx_component.
+  DATA o_cx_comp TYPE REF TO ZCX_ZL_COMPONENT.
   DATA _list    TYPE tt_compkeys.
   FIELD-SYMBOLS:
     &lt;k&gt; LIKE LINE OF _list.
@@ -268,18 +269,18 @@ INCLUDE zaplink_macros.</MACROS>
       LOOP AT _list ASSIGNING &lt;k&gt;.
         TRY.
             o_comp = zaplink_component=&gt;create_new( &lt;k&gt; ).
-          CATCH zaplink_cx_component INTO o_cx_comp.
+          CATCH ZCX_ZL_COMPONENT INTO o_cx_comp.
 * Action failed due to exception &apos;&amp;CX_NAME&amp;&apos;
             CREATE OBJECT o_mycx
               EXPORTING
-                textid   = zaplink_cx_list=&gt;zaplink_cx_list
+                textid   = zcx_zl_list=&gt;zcx_zl_list
                 previous = o_cx_comp.
             o_mycx-&gt;update( ).
             RAISE EXCEPTION o_mycx.
         ENDTRY.
         add( o_comp ).
       ENDLOOP.
-    CATCH zaplink_cx_list INTO o_mycx.
+    CATCH zcx_zl_list INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -295,7 +296,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_allcomp   TYPE	tt_allcomplist.
@@ -320,7 +321,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Change selection list"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA alv TYPE td_alv.
@@ -486,7 +487,7 @@ INCLUDE zaplink_macros.</MACROS>
                                    OR ( fieldname = fn_sel AND tabname = alv_h_tables-item )
                                    OR fieldname = alv_conf-hierar-layout-expand_fieldname.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CLEAR" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CLEAR" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Clear component list"/>
     </TEXTS>
@@ -513,7 +514,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp TYPE to_component.
@@ -528,7 +529,7 @@ INCLUDE zaplink_macros.</MACROS>
         result-&gt;add( o_comp ).
         If &lt;i&gt;-selected = abap_true.    result-&gt;select( o_comp ).    endif.
       ENDLOOP.
-    CATCH zaplink_cx.
+    CATCH ZCX_ZAPLINK.
       CLEAR result.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -554,7 +555,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _key     TYPE ts_compkey.
@@ -656,7 +657,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
@@ -700,7 +701,7 @@ INCLUDE zaplink_macros.</MACROS>
       ENDIF.
     ENDLOOP.
 
-    mac_def_catch zaplink_cx_list.
+    mac_def_catch ZCX_ZL_LIST.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="DISPLAY" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
@@ -708,7 +709,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Display list content"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA alv        TYPE td_alv.
@@ -789,7 +790,7 @@ INCLUDE zaplink_macros.</MACROS>
     LOOP AT _index TRANSPORTING NO FIELDS WHERE selected = abap_true. ADD 1 TO result. ENDLOOP.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_KEYS" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_KEYS" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Return components as a key list"/>
     </TEXTS>
@@ -821,11 +822,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA component TYPE ts_compkey.
@@ -842,8 +839,8 @@ INCLUDE zaplink_macros.</MACROS>
     WHEN iterator_types-all.
     WHEN OTHERS.
 * GET_NEXT has been called without initialize a iterator.
-      RAISE EXCEPTION TYPE zaplink_cx_list
-                 EXPORTING textid = zaplink_cx_list=&gt;iterator_not_initialize.
+      RAISE EXCEPTION TYPE ZCX_ZL_LIST
+                 EXPORTING textid = ZCX_ZL_LIST=&gt;iterator_not_initialize.
   ENDCASE.
 
   ADD 1 TO _iterator_tabix.
@@ -851,8 +848,8 @@ INCLUDE zaplink_macros.</MACROS>
   ASSERT sy-subrc = 0.
 *  IF sy-subrc &lt;&gt; 0.
 ** should not happend
-*    RAISE EXCEPTION TYPE zaplink_cx_list
-*               EXPORTING textid = zaplink_cx_list=&gt;system_error.
+*    RAISE EXCEPTION TYPE ZCX_ZL_LIST
+*               EXPORTING textid = ZCX_ZL_LIST=&gt;system_error.
 *  ENDIF.
 
   result = &lt;i&gt;-o_comp.
@@ -891,7 +888,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_allcomp TYPE tt_allcomplist.
@@ -917,7 +914,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Initialize Iterator on all component of the list"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA s_cursor LIKE LINE OF t_cursors.
@@ -943,7 +940,7 @@ INCLUDE zaplink_macros.</MACROS>
   ENDCASE.
   DESCRIBE TABLE t_cursors LINES _iterator_count.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="INIT_SEL_ITER" EXPOSURE="2" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="INIT_SEL_ITER" EXPOSURE="2" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Initialize Iterator on selected component"/>
     </TEXTS>
@@ -980,7 +977,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   IF _index IS INITIAL.   result = abap_true.   ENDIF.</SOURCE>
@@ -998,7 +995,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_allcomp TYPE tt_allcomplist.
@@ -1032,7 +1029,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="ABAP_BOOL"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _idx LIKE LINE OF _index.
@@ -1079,7 +1076,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_list TYPE tt_complist.
@@ -1104,14 +1101,14 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _idx LIKE LINE OF _index.
 
   TRY.
       _idx = search_index( comp ).
-    CATCH zaplink_cx_list INTO o_exception.
+    CATCH ZCX_ZL_LIST INTO o_exception.
       RAISE EXCEPTION o_exception.
   ENDTRY.
 
@@ -1130,11 +1127,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   FIELD-SYMBOLS:
@@ -1143,7 +1136,7 @@ INCLUDE zaplink_macros.</MACROS>
   LOOP AT data-&gt;_index ASSIGNING &lt;i&gt;.
     TRY.
         remove( &lt;i&gt;-o_comp ).
-      CATCH zaplink_cx_list INTO o_exception.
+      CATCH ZCX_ZL_LIST INTO o_exception.
     ENDTRY.
   ENDLOOP.</SOURCE>
    </ITEM>
@@ -1152,7 +1145,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Reverse the selection"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
@@ -1175,7 +1168,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _idx LIKE LINE OF _index.
@@ -1184,8 +1177,8 @@ INCLUDE zaplink_macros.</MACROS>
   IF NOT _idx-o_comp IS BOUND.
 * not a real exception.
 * Component &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;) not found in the collection
-*    RAISE EXCEPTION TYPE zaplink_cx_list
-*               EXPORTING textid = zaplink_cx_list=&gt;not_found
+*    RAISE EXCEPTION TYPE ZCX_ZL_LIST
+*               EXPORTING textid = ZCX_ZL_LIST=&gt;not_found
 *                           type = _idx-key-type
 *                           name = _idx-key-name.
     exit.
@@ -1233,14 +1226,14 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 
   TRY.
       _select( comp = comp
               value = abap_true ).
-    CATCH zaplink_cx_list INTO o_exception.
+    CATCH ZCX_ZL_LIST INTO o_exception.
       RAISE EXCEPTION o_exception.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -1256,7 +1249,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp TYPE to_component.
@@ -1271,7 +1264,7 @@ INCLUDE zaplink_macros.</MACROS>
         result-&gt;add( o_comp ).
 *        If &lt;i&gt;-selected = abap_true.    result-&gt;select( o_comp ).    endif.
       ENDLOOP.
-    CATCH zaplink_cx.
+    CATCH ZCX_ZAPLINK.
       CLEAR result.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -1280,7 +1273,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Select all components from list"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA s_idx LIKE LINE OF _index.
@@ -1292,7 +1285,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Select components from list depending on actions"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA action TYPE td_sel_action.
@@ -1319,7 +1312,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   TRY.
@@ -1331,11 +1324,11 @@ INCLUDE zaplink_macros.</MACROS>
         WHEN sel_actions-uninstall.
           select_uninstall( ).
         WHEN OTHERS.
-          RAISE EXCEPTION TYPE zaplink_cx_list
-                     EXPORTING textid = zaplink_cx_list=&gt;invalid_action
+          RAISE EXCEPTION TYPE ZCX_ZL_LIST
+                     EXPORTING textid = ZCX_ZL_LIST=&gt;invalid_action
                            sel_action = sel_action.
       ENDCASE.
-    CATCH zaplink_cx_list INTO o_exception.
+    CATCH ZCX_ZL_LIST INTO o_exception.
       RAISE EXCEPTION o_exception.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -1344,7 +1337,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Select components from list able to be exported"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
@@ -1362,7 +1355,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Select components from list able to be imported"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
@@ -1380,7 +1373,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Select components from list able to be uninstalled"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   FIELD-SYMBOLS &lt;i&gt; LIKE LINE OF _index.
@@ -1405,14 +1398,14 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 
   TRY.
       _select( comp = comp
               value = abap_false ).
-    CATCH zaplink_cx_list INTO o_exception.
+    CATCH ZCX_ZL_LIST INTO o_exception.
       RAISE EXCEPTION o_exception.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -1421,7 +1414,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Unselect all components from list"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA s_idx LIKE LINE OF _index.
@@ -1440,7 +1433,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   FIELD-SYMBOLS:
@@ -1470,11 +1463,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="DATA" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_COMPONENT"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_list TYPE to_me.
@@ -1484,7 +1473,7 @@ INCLUDE zaplink_macros.</MACROS>
   CHECK data IS BOUND.
   TRY.
       o_list = data-&gt;get_subcomponents( ).
-    CATCH zaplink_cx INTO o_cx.
+    CATCH ZCX_ZAPLINK INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
   CHECK o_list IS BOUND.
@@ -1512,7 +1501,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="VALUE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_LIST" LANGU="E"/>
+     <ITEM SCONAME="ZCX_ZL_LIST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _idx LIKE LINE OF _index.
@@ -1520,8 +1509,8 @@ INCLUDE zaplink_macros.</MACROS>
   _idx = search_index( comp ).
   IF NOT _idx-o_comp IS BOUND.
 * Component &apos;&amp;NAME&amp;&apos; (&amp;TYPE&amp;) not found in the collection
-    RAISE EXCEPTION TYPE zaplink_cx_list
-               EXPORTING textid = zaplink_cx_list=&gt;not_found
+    RAISE EXCEPTION TYPE ZCX_ZL_LIST
+               EXPORTING textid = ZCX_ZL_LIST=&gt;not_found
                            type = _idx-key-type
                            name = _idx-key-name.
   ENDIF.
@@ -1530,8 +1519,8 @@ INCLUDE zaplink_macros.</MACROS>
   MODIFY TABLE _index FROM _idx TRANSPORTING selected.
 
   IF sy-subrc &lt;&gt; 0.
-    RAISE EXCEPTION TYPE zaplink_cx_list
-               EXPORTING textid = zaplink_cx_list=&gt;system_error
+    RAISE EXCEPTION TYPE ZCX_ZL_LIST
+               EXPORTING textid = ZCX_ZL_LIST=&gt;system_error
                            type = _idx-key-type
                            name = _idx-key-name.
   ENDIF.</SOURCE>
@@ -1620,7 +1609,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="Zap Link Component"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_EXCEPTION" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX_LIST">
+   <ITEM CMPNAME="TO_EXCEPTION" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZCX_ZL_LIST">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink Exception for Component"/>
     </TEXTS>
@@ -1630,7 +1619,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="ZapLink Components list"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>

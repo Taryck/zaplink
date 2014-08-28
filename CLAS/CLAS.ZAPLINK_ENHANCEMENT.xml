@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BB5F2CBF5DD1CE33190009F2F0712C80" CODE_SIGNATURE="D6B692613F7A997D028AE8CC86C3C357" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="298FF782E982D436B26A0F3008BFC839" CODE_SIGNATURE="F106EEAA42F51C43608E539E97F3F77F" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_ENHANCEMENT" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_ENHANCEMENT_DATA"/>
@@ -619,11 +619,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA s_comp     TYPE zaplink_ensc_data=&gt;ts_fm_data.
@@ -668,11 +664,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _name      TYPE td_enh_impl_name.
@@ -735,11 +727,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA d_type         TYPE td_comptype.
@@ -762,7 +750,7 @@ INCLUDE zaplink_macros.</MACROS>
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="LOAD_ENH_IMPL" STATE="1">
@@ -842,11 +830,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA f_subcomp  TYPE td_with_subcomp.
@@ -867,10 +851,10 @@ INCLUDE zaplink_macros.</MACROS>
 
     TRY.
         o_list-&gt;remove( component ).
-      CATCH zaplink_cx_list.
+      CATCH ZCX_ZL_LIST.
     ENDTRY.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="OFF_EXPORT_FROM_COMP_ENH_SPOT" STATE="1" MTDNEWEXC="X">
@@ -890,11 +874,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA f_subcomp  TYPE td_with_subcomp.
@@ -915,10 +895,10 @@ INCLUDE zaplink_macros.</MACROS>
 
     TRY.
         o_list-&gt;remove( component ).
-      CATCH zaplink_cx_list.
+      CATCH ZCX_ZL_LIST.
     ENDTRY.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="OFF_EXPORT_FROM_ENHANCEMENT" STATE="1" MTDNEWEXC="X">
@@ -934,11 +914,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_RAW"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 *  DATA f_subcomp  TYPE td_with_subcomp.
@@ -959,10 +935,10 @@ INCLUDE zaplink_macros.</MACROS>
 *
 *    TRY.
 *        o_list-&gt;remove( component ).
-*      CATCH zaplink_cx_list.
+*      CATCH ZCX_ZL_LIST.
 *    ENDTRY.
 *
-*    mac_def_catch zaplink_cx_connector.
+*    mac_def_catch ZCX_ZL_CONNECTOR.
 *  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="OFF_EXPORT_FROM_ENH_IMPL" STATE="1" MTDNEWEXC="X">
@@ -982,11 +958,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA f_subcomp  TYPE td_with_subcomp.
@@ -1007,10 +979,10 @@ INCLUDE zaplink_macros.</MACROS>
 
     TRY.
         o_list-&gt;remove( component ).
-      CATCH zaplink_cx_list.
+      CATCH ZCX_ZL_LIST.
     ENDTRY.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="OFF_EXPORT_FROM_ENH_SPOT" STATE="1" MTDNEWEXC="X">
@@ -1030,11 +1002,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 *  DATA f_subcomp  TYPE td_with_subcomp.
@@ -1056,10 +1024,10 @@ INCLUDE zaplink_macros.</MACROS>
 *
 *    TRY.
 *        o_list-&gt;remove( component ).
-*      CATCH zaplink_cx_list.
+*      CATCH ZCX_ZL_LIST.
 *    ENDTRY.
 *
-*    mac_def_catch zaplink_cx_connector.
+*    mac_def_catch ZCX_ZL_CONNECTOR.
 *  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="REVERSE_COMP_ENH_IMPL" STATE="1">
@@ -1751,11 +1719,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_root         TYPE REF TO cx_root.
@@ -1918,7 +1882,7 @@ INCLUDE zaplink_macros.</MACROS>
     WHEN OTHERS.
       mac_raise_type_not_supported me-&gt;class_name d_type.
   ENDCASE.
-*    mac_def_catch zaplink_cx_connector.
+*    mac_def_catch ZCX_ZL_CONNECTOR.
 *  ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
@@ -1949,11 +1913,11 @@ INCLUDE zaplink_macros.</MACROS>
 
     TRY.
         o_list-&gt;remove( component ).
-      CATCH zaplink_cx_list.
+      CATCH ZCX_ZL_LIST.
     ENDTRY.
 
     object-&gt;update_connector_data( me ).
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
@@ -1971,7 +1935,7 @@ INCLUDE zaplink_macros.</MACROS>
     o_sap_intf-&gt;check( EXPORTING    version = &apos;I&apos; &quot; Inactive
                         CHANGING error_list = o_err_list ).
     o_sap_intf-&gt;save( run_dark = abap_true ).
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>

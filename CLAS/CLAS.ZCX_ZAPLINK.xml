@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="400EA3131A2B0BB1A37FB0F565E32CA9" CODE_SIGNATURE="FCE2ADA89CC897E2B981651261E7B047" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CX" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="E00711F6992BAFD443D3873885263FFA" CODE_SIGNATURE="D21DB82630C02D31912557FAFCE682DB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZCX_ZAPLINK" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="CX_STATIC_CHECK"/>
   <ITEM TYPE="INTF" NAME="IF_T100_MESSAGE"/>
@@ -87,7 +87,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM CMPNAME="SYSTEM_ERROR" EDITORDER="3 ">
     <MESSAGE CLASS="ZAPLINK" NUMBER="104" ATTRIBUT_1="CX_NAME"/>
    </ITEM>
-   <ITEM CMPNAME="ZAPLINK_CX" EDITORDER="2 ">
+   <ITEM CMPNAME="ZCX_ZAPLINK" EDITORDER="2 ">
     <MESSAGE CLASS="ZAPLINK" NUMBER="105" ATTRIBUT_1="CX_NAME"/>
    </ITEM>
   </EXCEPTIONS_TEXTS>
@@ -95,7 +95,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    <ITEM STATE="1"/>
   </FRIENDS>
   <INTERFACES>
-   <ITEM REFCLSNAME="IF_T100_MESSAGE" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+   <ITEM REFCLSNAME="IF_T100_MESSAGE" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="1 "/>
   </INTERFACES>
   <LOCAL>
    <TYPES>`
@@ -129,7 +129,7 @@ INCLUDE zaplink_macros.</MACROS>
 * Interface use
   CREATE OBJECT _exceptions
     EXPORTING
-      clsname      = &apos;ZAPLINK_CX&apos;
+      clsname      = &apos;ZCX_ZAPLINK&apos;
 *      w_superclasses = seox_true
 *      w_subclasses = seox_true
 *      w_references = seox_true
@@ -275,12 +275,12 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="Message Collector: Standard Implementation"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="PREV_CX" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="3" TYPE="ZAPLINK_CX" PAROPTIONL="X">
+     <ITEM SCONAME="PREV_CX" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_EXCEPTION" PAROPTIONL="X">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink exception class"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CX">
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_EXCEPTION">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink exception class"/>
       </TEXTS>
@@ -292,11 +292,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   result = _create_cx( cx_name = cx_name
@@ -356,7 +352,7 @@ AS</ITEM>
        <ITEM LANG="E" TEXT="Method name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CX">
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_EXCEPTION">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -433,7 +429,7 @@ AS</ITEM>
        <ITEM LANG="E" TEXT="Name of Function Module"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CX">
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_EXCEPTION">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -460,7 +456,7 @@ AS</ITEM>
   DATA lt_ptrdir      TYPE STANDARD TABLE OF trdir WITH DEFAULT KEY.
   DATA lt_pfupararef  TYPE STANDARD TABLE OF sfupararef WITH DEFAULT KEY.
   DATA lt_uincl       TYPE STANDARD TABLE OF abaptxt255 WITH DEFAULT KEY.
-  DATA _cx            TYPE REF TO zaplink_cx.
+  DATA _cx            TYPE to_exception.
   DATA _subrc         TYPE sy-subrc.
   FIELD-SYMBOLS:
     &lt;t&gt; LIKE LINE OF lt_pfunct,
@@ -475,27 +471,27 @@ AS</ITEM>
 
   CALL FUNCTION &apos;FUNC_GET_OBJECT&apos;
     EXPORTING
-      funcname                 = _funcname
-*     R3STATE                  = &apos;A&apos;
+      funcname           = _funcname
+*     R3STATE            = &apos;A&apos;
     TABLES
-      ptfdir                   = lt_ptfdir
-      ptftit                   = lt_ptftit
-      pfunct                   = lt_pfunct
-      penlfdir                 = lt_penlfdir
-      ptrdir                   = lt_ptrdir
-      pfupararef               = lt_pfupararef
-      uincl                    = lt_uincl
-*     VSMODISRC                =
-*     VSMODILOG                =
+      ptfdir             = lt_ptfdir
+      ptftit             = lt_ptftit
+      pfunct             = lt_pfunct
+      penlfdir           = lt_penlfdir
+      ptrdir             = lt_ptrdir
+      pfupararef         = lt_pfupararef
+      uincl              = lt_uincl
+*     VSMODISRC          =
+*     VSMODILOG          =
     EXCEPTIONS
-      function_not_exist       = 1
-      version_not_found        = 2
-      OTHERS                   = 3.
+      function_not_exist = 1
+      version_not_found  = 2
+      OTHERS             = 3.
   IF sy-subrc &lt;&gt; 0.
     _cx = create_from_mf_cx( funcname = &apos;FUNC_GET_OBJECT&apos;
                                 subrc = sy-subrc ).
     result-&gt;previous = _cx.
-    result-&gt;textid_msg = zaplink_cx=&gt;system_error.
+    result-&gt;textid_msg = ZCX_ZAPLINK=&gt;system_error.
     EXIT.
   ENDIF.
 
@@ -513,10 +509,10 @@ AS</ITEM>
       EXIT.
     ENDIF.
   ENDIF.
-  ASSERT ID ZAPLINK CONDITION &lt;p&gt; IS ASSIGNED.     CHECK &lt;p&gt; IS ASSIGNED.
+  ASSERT ID zaplink CONDITION &lt;p&gt; IS ASSIGNED.     CHECK &lt;p&gt; IS ASSIGNED.
 *  IF NOT &lt;p&gt; IS ASSIGNED.
-*    RAISE EXCEPTION TYPE zaplink_cx
-*          EXPORTING textid = zaplink_cx=&gt;system_error.
+*    RAISE EXCEPTION TYPE ZCX_ZAPLINK
+*          EXPORTING textid = ZCX_ZAPLINK=&gt;system_error.
 *  ENDIF.
 
   result-&gt;cx_name = &lt;p&gt;-parameter.
@@ -549,7 +545,7 @@ AS</ITEM>
        <ITEM LANG="E" TEXT="Exception class name inherited from ZAPLINK_CX"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CX">
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_EXCEPTION">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -561,11 +557,7 @@ AS</ITEM>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 
@@ -746,7 +738,7 @@ AS</ITEM>
   WHILE _cx IS BOUND.
     _msg = _cx-&gt;get_text( ).
 *    if not _cx-&gt;systemstack is INITIAL.   t_stack = _cx-&gt;systemstack.   endif.
-    _pos = zaplink_cx=&gt;source_position_as_string( _cx ).
+    _pos = ZCX_ZAPLINK=&gt;source_position_as_string( _cx ).
     CONCATENATE _msg _pos INTO _msg SEPARATED BY space.
     APPEND _msg TO _exceptions.
     _cx = _cx-&gt;previous.
@@ -788,7 +780,7 @@ AS</ITEM>
        <ITEM LANG="E" TEXT="Exception class name inherited from ZAPLINK_CX"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="3" TYPE="ZAPLINK_CX">
+     <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TO_EXCEPTION">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -848,21 +840,21 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Exception ID : Message or GUID"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="CX_ROOT">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="3" TYPE="CX_ROOT">
     <TEXTS>
      <ITEM LANG="E" TEXT="Abstract Superclass for All Global Exceptions"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TS_CX" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="4">BEGIN OF ts_cx,
+   <ITEM CMPNAME="TS_CX" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">BEGIN OF ts_cx,
         class TYPE seoclsname,
       END OF ts_cx
 `</ITEM>
-   <ITEM CMPNAME="TS_SOURCE_DEF" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">
+   <ITEM CMPNAME="TS_SOURCE_DEF" EXPOSURE="2" STATE="1" EDITORDER="6 " TYPTYPE="4">
     BEGIN OF ts_source_def,
           type_txt TYPE euobjt-singular,
           name TYPE	seu_objkey,
@@ -878,7 +870,7 @@ AS</ITEM>
      <ITEM LANG="E" TEXT="Source position"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TT_CX_LIST" EXPOSURE="2" STATE="1" EDITORDER="4 " TYPTYPE="4">tt_cx_list TYPE HASHED TABLE OF ts_cx WITH UNIQUE KEY class
+   <ITEM CMPNAME="TT_CX_LIST" EXPOSURE="2" STATE="1" EDITORDER="5 " TYPTYPE="4">tt_cx_list TYPE HASHED TABLE OF ts_cx WITH UNIQUE KEY class
 `</ITEM>
   </TYPES>
  </RAW>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="BA32D5A9BD5DAABB64EE50D872209CF4" CODE_SIGNATURE="B01349B958D939EF5BACE1E28E2658AB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_TRANSPORT_REQUEST" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="8934B569087007D7C08F749E9D915C2D" CODE_SIGNATURE="319C65E9069FFA2A02DA5B459788DCA5" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OPT_TRANSPORT_REQUEST" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -92,11 +92,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPT_DEVCLASS" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_OPT_TRANSPORT_REQUEST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 result = _substitution.</SOURCE>
@@ -109,11 +105,7 @@ result = _substitution.</SOURCE>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_TRANSPORT_REQUEST"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPT_DEVCLASS" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_OPT_TRANSPORT_REQUEST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   result = _transport_request.</SOURCE>
@@ -130,11 +122,7 @@ result = _substitution.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPT_DEVCLASS" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_OPT_TRANSPORT_REQUEST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   CHECK data &lt;&gt; _substitution.
@@ -147,13 +135,13 @@ result = _substitution.</SOURCE>
          substitutionkinds-input.
     WHEN substitutionkinds-fixed.
       IF _transport_request IS INITIAL.
-        RAISE EXCEPTION TYPE zaplink_cx_opt_transport_req
-              EXPORTING textid = zaplink_cx_opt_transport_req=&gt;missing_transport_request
+        RAISE EXCEPTION TYPE ZCX_ZL_OPT_TRANSPORT_REQUEST
+              EXPORTING textid = ZCX_ZL_OPT_TRANSPORT_REQUEST=&gt;missing_transport_request
                      substkind = data.
       ENDIF.
     WHEN OTHERS.
-      RAISE EXCEPTION TYPE zaplink_cx_opt_transport_req
-            EXPORTING textid = zaplink_cx_opt_transport_req=&gt;invalid_substitutionkind
+      RAISE EXCEPTION TYPE ZCX_ZL_OPT_TRANSPORT_REQUEST
+            EXPORTING textid = ZCX_ZL_OPT_TRANSPORT_REQUEST=&gt;invalid_substitutionkind
                    substkind = data.
   ENDCASE.
   _substitution = data.</SOURCE>
@@ -166,18 +154,14 @@ result = _substitution.</SOURCE>
      <ITEM SCONAME="DATA" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_TRANSPORT_REQUEST"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPT_DEVCLASS" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_OPT_TRANSPORT_REQUEST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 CHECK data &lt;&gt; _transport_request.
 
   IF _transport_request IS INITIAL AND _substitution = substitutionkinds-fixed.
-    RAISE EXCEPTION TYPE zaplink_cx_opt_transport_req
-          EXPORTING textid = zaplink_cx_opt_transport_req=&gt;missing_transport_request
+    RAISE EXCEPTION TYPE ZCX_ZL_OPT_TRANSPORT_REQUEST
+          EXPORTING textid = ZCX_ZL_OPT_TRANSPORT_REQUEST=&gt;missing_transport_request
                  substkind = _substitution.
   ENDIF.
   _transport_request = data.</SOURCE>
@@ -199,11 +183,7 @@ CHECK data &lt;&gt; _transport_request.
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_OPT_DEVCLASS" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Options"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_OPT_TRANSPORT_REQUEST" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_e071   TYPE STANDARD TABLE OF e071.
@@ -274,8 +254,8 @@ CHECK data &lt;&gt; _transport_request.
 * to develop using MF TRINT_ORDER_CHOICE
       ENDIF.
     WHEN OTHERS.
-      RAISE EXCEPTION TYPE zaplink_cx_opt_transport_req
-            EXPORTING textid = zaplink_cx_opt_transport_req=&gt;invalid_substitutionkind
+      RAISE EXCEPTION TYPE ZCX_ZL_OPT_TRANSPORT_REQUEST
+            EXPORTING textid = ZCX_ZL_OPT_TRANSPORT_REQUEST=&gt;invalid_substitutionkind
                    substkind = _substitution.
   ENDCASE.</SOURCE>
    </ITEM>

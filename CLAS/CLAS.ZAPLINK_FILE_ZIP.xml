@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D7F7DC27CA1FFF1E7DDA85B8A702C543" CODE_SIGNATURE="52DDF89C01731BBFBBF30D2843E10DC2" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE_ZIP" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="038E5CAC661D64B454AE042BD55B335F" CODE_SIGNATURE="51DB08FCCFBB45D9A9559213415162C3" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_FILE_ZIP" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_FILE"/>
  </DEPENDENCIES>
@@ -28,9 +28,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   </A0_MAINDATA>
   <ATTRIBUTS>
    <ITEM CMPNAME="FILEKINDS" EXPOSURE="2" STATE="1" ATTDECLTYP="2" TYPTYPE="4">BEGIN OF filekinds,
-        normal    TYPE td_filekind VALUE space,              &quot;#EC NOTEXT
-        zipped    TYPE td_filekind VALUE &apos;Z&apos;,                &quot;#EC NOTEXT
-      END OF filekinds
+          normal    TYPE td_filekind VALUE space,           &quot;#EC NOTEXT
+          zipped    TYPE td_filekind VALUE &apos;Z&apos;,             &quot;#EC NOTEXT
+        END OF filekinds
 `</ITEM>
    <ITEM CMPNAME="FILENAME_IN_ZIP" EXPOSURE="1" STATE="1" ATTDECLTYP="2" ATTVALUE="&apos;container.xml&apos;" TYPTYPE="1" TYPE="TD_FILENAME">
     <TEXTS>
@@ -74,11 +74,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 result = _filekind.</SOURCE>
@@ -95,17 +91,13 @@ result = _filekind.</SOURCE>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_FILE" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for Files"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_FILE" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 IF     data &lt;&gt; filekinds-normal
      AND data &lt;&gt; filekinds-zipped.
-    RAISE EXCEPTION TYPE zaplink_cx_file
-          EXPORTING textid = zaplink_cx_file=&gt;invalid_filekind
+    RAISE EXCEPTION TYPE ZCX_ZL_FILE
+          EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filekind
                   filekind = data.
   ENDIF.
 
@@ -113,9 +105,9 @@ IF     data &lt;&gt; filekinds-normal
    </ITEM>
   </METHODS>
   <REDEFINITIONS>
-   <ITEM REFCLSNAME="ZAPLINK_FILE" MTDNAME="LOAD">
+   <ITEM REFCLSNAME="ZAPLINK_FILE" MTDNAME="LOAD" EXPOSURE="2">
     <SOURCE>`
-  DATA _cx       TYPE REF TO zaplink_cx_file.
+  DATA _cx       TYPE REF TO ZCX_ZL_FILE.
   DATA tmptable  TYPE STANDARD TABLE OF x.
   DATA cx_name   TYPE string.
   DATA cx        TYPE REF TO cx_root.
@@ -134,7 +126,7 @@ IF     data &lt;&gt; filekinds-normal
     WHEN filekinds-normal.
       TRY.
           super-&gt;load( ).
-        CATCH zaplink_cx_file INTO _cx.
+        CATCH ZCX_ZL_FILE INTO _cx.
           RAISE EXCEPTION _cx.
       ENDTRY.
     WHEN filekinds-zipped.
@@ -189,8 +181,8 @@ IF     data &lt;&gt; filekinds-normal
                 cx_name = &apos;OTHERS&apos;.
             ENDCASE.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-            RAISE EXCEPTION TYPE zaplink_cx_file
-                  EXPORTING textid = zaplink_cx_file=&gt;save_error
+            RAISE EXCEPTION TYPE ZCX_ZL_FILE
+                  EXPORTING textid = ZCX_ZL_FILE=&gt;save_error
                           filename = _filename
                           filetype = _filetype
                            cx_name = cx_name.
@@ -222,7 +214,7 @@ IF     data &lt;&gt; filekinds-normal
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
             CREATE OBJECT _cx
               EXPORTING
-                textid   = zaplink_cx_file=&gt;save_error
+                textid   = ZCX_ZL_FILE=&gt;save_error
                 filename = _filename
                 filetype = _filetype
                 previous = cx.
@@ -231,8 +223,8 @@ IF     data &lt;&gt; filekinds-normal
         ENDTRY.
         IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-          RAISE EXCEPTION TYPE zaplink_cx_file
-                EXPORTING textid = zaplink_cx_file=&gt;save_error
+          RAISE EXCEPTION TYPE ZCX_ZL_FILE
+                EXPORTING textid = ZCX_ZL_FILE=&gt;save_error
                         filename = _filename
                         filetype = _filetype
                          cx_name = &apos;OPEN DATASET&apos;.
@@ -245,7 +237,7 @@ IF     data &lt;&gt; filekinds-normal
 * Exception &amp;cx_name&amp; while loading file &amp;filename&amp; (&amp;filetype&amp;)
             CREATE OBJECT _cx
               EXPORTING
-                textid   = zaplink_cx_file=&gt;load_error
+                textid   = ZCX_ZL_FILE=&gt;load_error
                 filename = _filename
                 filetype = _filetype
                 previous = cx.
@@ -264,7 +256,7 @@ IF     data &lt;&gt; filekinds-normal
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
             CREATE OBJECT _cx
               EXPORTING
-                textid   = zaplink_cx_file=&gt;save_error
+                textid   = ZCX_ZL_FILE=&gt;save_error
                 filename = _filename
                 filetype = _filetype
                 previous = cx.
@@ -273,8 +265,8 @@ IF     data &lt;&gt; filekinds-normal
         ENDTRY.
         IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-          RAISE EXCEPTION TYPE zaplink_cx_file
-                EXPORTING textid = zaplink_cx_file=&gt;save_error
+          RAISE EXCEPTION TYPE ZCX_ZL_FILE
+                EXPORTING textid = ZCX_ZL_FILE=&gt;save_error
                         filename = _filename
                         filetype = _filetype
                          cx_name = &apos;CLOSE DATASET&apos;.
@@ -326,7 +318,7 @@ IF     data &lt;&gt; filekinds-normal
         CATCH cx_root INTO cx.
           CREATE OBJECT _cx
             EXPORTING
-              textid   = zaplink_cx_file=&gt;save_error
+              textid   = ZCX_ZL_FILE=&gt;save_error
               filename = _filename
               filetype = _filetype
               previous = cx.
@@ -335,14 +327,14 @@ IF     data &lt;&gt; filekinds-normal
       ENDTRY.
 
     WHEN OTHERS.
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                     filetype = _filetype.
   ENDCASE.</SOURCE>
    </ITEM>
-   <ITEM REFCLSNAME="ZAPLINK_FILE" MTDNAME="SAVE">
+   <ITEM REFCLSNAME="ZAPLINK_FILE" MTDNAME="SAVE" EXPOSURE="2">
     <SOURCE>`
-  DATA _cx TYPE REF TO zaplink_cx_file.
+  DATA _cx TYPE REF TO ZCX_ZL_FILE.
   DATA tmptable TYPE STANDARD TABLE OF x.
   DATA cx_name TYPE string.
   DATA cx TYPE REF TO cx_root.
@@ -358,7 +350,7 @@ IF     data &lt;&gt; filekinds-normal
     WHEN filekinds-normal.
       TRY.
           super-&gt;save( ).
-        CATCH zaplink_cx_file INTO _cx.
+        CATCH ZCX_ZL_FILE INTO _cx.
           RAISE EXCEPTION _cx.
       ENDTRY.
     WHEN filekinds-zipped.
@@ -376,7 +368,7 @@ IF     data &lt;&gt; filekinds-normal
         CATCH cx_root INTO cx.
           CREATE OBJECT _cx
             EXPORTING
-              textid   = zaplink_cx_file=&gt;save_error
+              textid   = ZCX_ZL_FILE=&gt;save_error
               filename = _filename
               filetype = _filetype
               previous = cx.
@@ -460,8 +452,8 @@ IF     data &lt;&gt; filekinds-normal
                 cx_name = &apos;OTHERS&apos;.
             ENDCASE.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-            RAISE EXCEPTION TYPE zaplink_cx_file
-                  EXPORTING textid = zaplink_cx_file=&gt;save_error
+            RAISE EXCEPTION TYPE ZCX_ZL_FILE
+                  EXPORTING textid = ZCX_ZL_FILE=&gt;save_error
                           filename = _filename
                           filetype = _filetype
                            cx_name = cx_name.
@@ -474,7 +466,7 @@ IF     data &lt;&gt; filekinds-normal
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
             CREATE OBJECT _cx
               EXPORTING
-                textid   = zaplink_cx_file=&gt;save_error
+                textid   = ZCX_ZL_FILE=&gt;save_error
                 filename = _filename
                 filetype = _filetype
                 previous = cx.
@@ -483,8 +475,8 @@ IF     data &lt;&gt; filekinds-normal
         ENDTRY.
         IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-          RAISE EXCEPTION TYPE zaplink_cx_file
-                EXPORTING textid = zaplink_cx_file=&gt;save_error
+          RAISE EXCEPTION TYPE ZCX_ZL_FILE
+                EXPORTING textid = ZCX_ZL_FILE=&gt;save_error
                         filename = _filename
                         filetype = _filetype
                          cx_name = &apos;OPEN DATASET&apos;.
@@ -496,7 +488,7 @@ IF     data &lt;&gt; filekinds-normal
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
             CREATE OBJECT _cx
               EXPORTING
-                textid   = zaplink_cx_file=&gt;save_error
+                textid   = ZCX_ZL_FILE=&gt;save_error
                 filename = _filename
                 filetype = _filetype
                 previous = cx.
@@ -510,7 +502,7 @@ IF     data &lt;&gt; filekinds-normal
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
             CREATE OBJECT _cx
               EXPORTING
-                textid   = zaplink_cx_file=&gt;save_error
+                textid   = ZCX_ZL_FILE=&gt;save_error
                 filename = _filename
                 filetype = _filetype
                 previous = cx.
@@ -519,22 +511,22 @@ IF     data &lt;&gt; filekinds-normal
         ENDTRY.
         IF sy-subrc &lt;&gt; 0.
 * Exception &amp;cx_name&amp; while saving file &amp;filename&amp; (&amp;filetype&amp;)
-          RAISE EXCEPTION TYPE zaplink_cx_file
-                EXPORTING textid = zaplink_cx_file=&gt;save_error
+          RAISE EXCEPTION TYPE ZCX_ZL_FILE
+                EXPORTING textid = ZCX_ZL_FILE=&gt;save_error
                         filename = _filename
                         filetype = _filetype
                          cx_name = &apos;CLOSE DATASET&apos;.
         ENDIF.
       ENDIF.
     WHEN OTHERS.
-      RAISE EXCEPTION TYPE zaplink_cx_file
-            EXPORTING textid = zaplink_cx_file=&gt;invalid_filetype
+      RAISE EXCEPTION TYPE ZCX_ZL_FILE
+            EXPORTING textid = ZCX_ZL_FILE=&gt;invalid_filetype
                     filetype = _filetype.
   ENDCASE.</SOURCE>
    </ITEM>
   </REDEFINITIONS>
   <TYPES>
-   <ITEM CMPNAME="TD_FILEKIND" EXPOSURE="2" STATE="1" EDITORDER="3 " TYPTYPE="1" TYPE="CHAR1">
+   <ITEM CMPNAME="TD_FILEKIND" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="1" TYPE="CHAR1">
     <TEXTS>
      <ITEM LANG="E" TEXT="File Kind : Normal, Compressed"/>
     </TEXTS>

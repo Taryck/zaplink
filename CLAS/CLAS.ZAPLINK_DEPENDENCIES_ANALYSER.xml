@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4A35B0F5292CB843D6449B3198202F41" CODE_SIGNATURE="C3683DB476FB5BAAF552E8B97718EEFA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="1B23C6FDEA3885193017358E1E6B64FC" CODE_SIGNATURE="6C91883A58E724BBC73AA354A61B3236" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_DEPENDENCIES_ANALYSER" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -248,8 +248,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
   </ATTRIBUTS>
   <INTERFACES>
-   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
-   <ITEM REFCLSNAME="ZAPLINK_KERNEL_TYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_DATATYPES" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="1 "/>
+   <ITEM REFCLSNAME="ZAPLINK_KERNEL_TYPES" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="2 "/>
   </INTERFACES>
   <LOCAL>
    <TYPES>`
@@ -295,11 +295,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _name TYPE string.
@@ -320,7 +316,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Add class and dependenties"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FULL" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
+     <ITEM SCONAME="FULL" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Full definition required"/>
       </TEXTS>
@@ -332,11 +328,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _codes      LIKE LINE OF classes.
@@ -383,8 +375,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       model_only         = 0
       OTHERS             = 4.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                         classname = &apos;ZAPLINK_CX&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( subrc = sy-subrc
+                                         classname = &apos;ZCX_ZAPLINK&apos;
                                           funcname = &apos;SEO_CLIF_GET&apos; ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -577,11 +569,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM SCONAME="INTERFACES" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;TT_INTERFACES"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _key        TYPE td_name.
@@ -600,7 +588,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Add Interface dependenties"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FULL" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
+     <ITEM SCONAME="FULL" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Full definition required"/>
       </TEXTS>
@@ -612,11 +600,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _codes      LIKE LINE OF classes.
@@ -687,11 +671,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _name       TYPE string.
@@ -741,11 +721,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA ref_objs     TYPE tt_abaprawsource.
@@ -771,11 +747,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _key   TYPE seoclskey.
@@ -798,8 +770,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       namespace_error           = 6
       OTHERS                    = 7.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                         classname = &apos;ZAPLINK_CX&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( subrc = sy-subrc
+                                         classname = &apos;ZCX_ZAPLINK&apos;
                                           funcname = &apos;SEO_CLIF_CHECK_NAME&apos; ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -813,10 +785,10 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       type_not_found = 1
       OTHERS         = 2.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_method_cx( class_name = &apos;cl_abap_typedescr&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_method_cx( class_name = &apos;cl_abap_typedescr&apos;
                                                      method = &apos;describe_by_name&apos;
                                                       subrc = sy-subrc
-                                               cx_classname = &apos;ZAPLINK_CX&apos;).
+                                               cx_classname = &apos;ZCX_ZAPLINK&apos;).
     RAISE EXCEPTION o_mycx.
   ENDIF.
 
@@ -839,8 +811,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       model_only         = 0
       OTHERS             = 4.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                         classname = &apos;ZAPLINK_CX&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( subrc = sy-subrc
+                                         classname = &apos;ZCX_ZAPLINK&apos;
                                           funcname = &apos;SEO_CLIF_GET&apos; ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -863,7 +835,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Add object to dependenties list"/>
     </TEXTS>
     <PARAMETERS>
-     <ITEM SCONAME="FULL" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
+     <ITEM SCONAME="FULL" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Full component is requiered"/>
       </TEXTS>
@@ -880,11 +852,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA s_obj       LIKE LINE OF required_objects.
@@ -911,8 +879,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       model_only         = 0
       OTHERS             = 4.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                         classname = &apos;ZAPLINK_CX&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( subrc = sy-subrc
+                                         classname = &apos;ZCX_ZAPLINK&apos;
                                           funcname = &apos;SEO_CLIF_GET&apos; ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -955,11 +923,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _code TYPE string.
@@ -977,7 +941,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
        <ITEM LANG="E" TEXT="ABAP source code"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="FULL" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X">
+     <ITEM SCONAME="FULL" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE">
       <TEXTS>
        <ITEM LANG="E" TEXT="Full component is requiered"/>
       </TEXTS>
@@ -994,11 +958,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_objs       TYPE tt_abaprawsource.
@@ -1023,11 +983,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM SCONAME="TYPES" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ZAPLINK_OBJECT_DATA=&gt;TT_TYPES"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _name TYPE string.
@@ -1300,11 +1256,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _codes      LIKE LINE OF classes.
@@ -1337,11 +1289,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   CONSTANTS c_intftype TYPE td_classtype VALUE &apos;9&apos;.
@@ -1704,11 +1652,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _key   TYPE seoclskey.
@@ -1731,8 +1675,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       model_only         = 0
       OTHERS             = 4.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                         classname = &apos;ZAPLINK_CX&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( subrc = sy-subrc
+                                         classname = &apos;ZCX_ZAPLINK&apos;
                                           funcname = &apos;SEO_CLIF_GET&apos; ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -1752,11 +1696,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Handle circular context"/>
     </TEXTS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   TYPES:
@@ -1961,11 +1901,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA s_excl_c     LIKE LINE OF excluded_includes.
@@ -2009,8 +1945,8 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       delimiter_error                   = 1
       OTHERS                            = 2.
   IF sy-subrc &lt;&gt; 0.
-    o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( subrc = sy-subrc
-                                         classname = &apos;ZAPLINK_CX&apos;
+    o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( subrc = sy-subrc
+                                         classname = &apos;ZCX_ZAPLINK&apos;
                                           funcname = &apos;RS_PROGNAME_SPLIT&apos; ).
     RAISE EXCEPTION o_mycx.
   ENDIF.
@@ -2046,11 +1982,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   CHECK NOT name IS INITIAL.
@@ -2084,11 +2016,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA _key        TYPE td_name.
@@ -2212,11 +2140,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA t_includes TYPE tt_abaprawsource.
@@ -2453,11 +2377,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   zaplink_program_4dep_analyser=&gt;set_prog_textpool( program = name
@@ -2493,7 +2413,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
        <ITEM LANG="E" TEXT="Name to stack"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="FULL" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE" PAROPTIONL="X"/>
+     <ITEM SCONAME="FULL" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="ABAP_BOOL" PARVALUE="ABAP_FALSE"/>
      <ITEM SCONAME="TYPE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_CLASSTYPE" PAROPTIONL="X"/>
     </PARAMETERS>
     <SOURCE>`
@@ -2564,7 +2484,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="Data for Class"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="5 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>
@@ -2579,7 +2499,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
      <ITEM LANG="E" TEXT="ZAPLink Class &amp; Interface connector"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="6 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
     </TEXTS>

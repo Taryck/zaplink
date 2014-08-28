@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="E3C4AB11322AA2B61D24AEFD187827D0" CODE_SIGNATURE="F9420D2256E9590574DC4BC4A5BDF9DF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="0E762D2BF7C981E4E94C983145C120D9" CODE_SIGNATURE="406955781A4883FB18971FC1FA6952B7" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MESSAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -115,7 +115,7 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
       super-&gt;zaplink_cnx_ext_cleaner~anonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -125,7 +125,7 @@ INCLUDE zaplink_macros.</MACROS>
 
   TRY.
       super-&gt;zaplink_cnx_ext_cleaner~unanonymize( object ).
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.
 
@@ -169,18 +169,18 @@ INCLUDE zaplink_macros.</MACROS>
         IF sy-subrc &lt;&gt; 0. &quot; SAP NameSpace
           CASE sy-subrc.
             WHEN 2.
-              RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;not_found.
+              RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+                EXPORTING textid = ZCX_ZL_CONNECTOR=&gt;not_found.
             WHEN OTHERS.
-              RAISE EXCEPTION TYPE zaplink_cx_connector
-                EXPORTING textid = zaplink_cx_connector=&gt;system_error.
+              RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+                EXPORTING textid = ZCX_ZL_CONNECTOR=&gt;system_error.
           ENDCASE.
         ENDIF.
       WHEN OTHERS.
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.
   result = abap_true.
 * Issue 137 =&gt; Remove from Working Area
@@ -209,7 +209,7 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name type.
     ENDCASE.
 
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~IS_SUPPORTED_VERSION">
@@ -350,7 +350,7 @@ INCLUDE zaplink_macros.</MACROS>
         mac_raise_type_not_supported me-&gt;class_name d_type.
     ENDCASE.
     object-&gt;update_connector_data( me ).                    &quot; Issue 66
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM REFCLSNAME="ZAPLINK_CONNECTOR_" MTDNAME="ZAPLINK_CONNECTOR~WRITE_TO_SAP">
@@ -462,23 +462,23 @@ INCLUDE zaplink_macros.</MACROS>
         CASE sy-subrc.
           WHEN 0.
           WHEN 2 OR 5.
-            RAISE EXCEPTION TYPE zaplink_cx_connector
+            RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
                   EXPORTING
                       name = _name
                       type = object-&gt;type
-                    textid = zaplink_cx_connector=&gt;object_locked.
+                    textid = ZCX_ZL_CONNECTOR=&gt;object_locked.
           WHEN 6 OR 7 OR 8 OR 9.
-            RAISE EXCEPTION TYPE zaplink_cx_connector
+            RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
                   EXPORTING
                       name = _name
                       type = object-&gt;type
-                    textid = zaplink_cx_connector=&gt;not_authorized.
+                    textid = ZCX_ZL_CONNECTOR=&gt;not_authorized.
           WHEN OTHERS.
-            RAISE EXCEPTION TYPE zaplink_cx_connector
+            RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
                   EXPORTING
                       name = _name
                       type = object-&gt;type
-                    textid = zaplink_cx_connector=&gt;system_error.
+                    textid = ZCX_ZL_CONNECTOR=&gt;system_error.
         ENDCASE.
 
 *      CALL FUNCTION &apos;RS_CORR_INSERT&apos;
@@ -502,18 +502,18 @@ INCLUDE zaplink_macros.</MACROS>
 *      IF sy-subrc &lt;&gt; 0.
 *        CASE sy-subrc.
 *          WHEN 2.
-*            RAISE EXCEPTION TYPE zaplink_cx_connector
+*            RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
 *                  EXPORTING
 *                      name = _name
 *                      type = object-&gt;type
 *                  devclass = &apos;$TMP&apos;
-*                    textid = zaplink_cx_connector=&gt;not_authorized.
+*                    textid = ZCX_ZL_CONNECTOR=&gt;not_authorized.
 *          WHEN OTHERS.
-*            RAISE EXCEPTION TYPE zaplink_cx_connector
+*            RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
 *                  EXPORTING
 *                      name = _name
 *                      type = object-&gt;type
-*                    textid = zaplink_cx_connector=&gt;system_error.
+*                    textid = ZCX_ZL_CONNECTOR=&gt;system_error.
 *        ENDCASE.
 *      ENDIF.
 
@@ -538,7 +538,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDCASE.
     check_component_list( EXPORTING     object = object
                            CHANGING components = components ). &quot; Issue 92
-    mac_def_catch zaplink_cx_connector.
+    mac_def_catch ZCX_ZL_CONNECTOR.
   ENDTRY.</SOURCE>
    </ITEM>
   </REDEFINITIONS>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D3E316546514E074736FB367AFB92DD2" CODE_SIGNATURE="5EC2F5AF017FC376ED3D238B1642B467" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="29E601AF8C628CFA28744490E73FB253" CODE_SIGNATURE="CB389F47D031047A8E9F3DEC704AADDF" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_GUI" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -78,7 +78,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
    </ITEM>
   </ATTRIBUTS>
   <INTERFACES>
-   <ITEM REFCLSNAME="ZAPLINK_TYPES" EXPOSURE="2" STATE="1" RELTYPE="1"/>
+   <ITEM REFCLSNAME="ZAPLINK_TYPES" EXPOSURE="2" STATE="1" RELTYPE="1" EDITORDER="2 "/>
   </INTERFACES>
   <LOCAL>
    <TYPES>`
@@ -116,30 +116,30 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="Object Type"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="with sub components"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_cont   TYPE to_container.
   DATA obj_list TYPE to_list.
   DATA obj      TYPE to_component.
   DATA _objname TYPE string.
-  DATA _cx      TYPE REF TO zaplink_cx.
+  DATA _cx      TYPE REF TO zcx_zaplink.
 
   IF objtype IS INITIAL.
-    RAISE EXCEPTION TYPE zaplink_cx_gui EXPORTING textid = zaplink_cx_gui=&gt;missing_objtype.
+    RAISE EXCEPTION TYPE ZCX_ZL_GUI
+      EXPORTING
+        textid = ZCX_ZL_GUI=&gt;missing_objtype.
   ELSEIF name IS INITIAL.
-    RAISE EXCEPTION TYPE zaplink_cx_gui EXPORTING textid = zaplink_cx_gui=&gt;missing_name.
+    RAISE EXCEPTION TYPE ZCX_ZL_GUI
+      EXPORTING
+        textid = ZCX_ZL_GUI=&gt;missing_name.
   ENDIF.
 
   TRY.
@@ -156,9 +156,10 @@ INCLUDE zaplink_macros.</MACROS>
     obj-&gt;set_with_subcomp( with_subcomp ).
 
     IF obj-&gt;connector_exists( ) = zaplink_component=&gt;connexists-not_exists. &quot; OR NOT obj-&gt;connector( ) IS BOUND.
-      RAISE EXCEPTION TYPE zaplink_cx_connector EXPORTING
-            textid = zaplink_cx_connector=&gt;invalid_type
-              type = objtype.
+      RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+        EXPORTING
+          textid = ZCX_ZL_CONNECTOR=&gt;invalid_type
+          type   = objtype.
     ENDIF.
 
     CREATE OBJECT obj_list.
@@ -178,12 +179,12 @@ INCLUDE zaplink_macros.</MACROS>
         container = o_cont.
 
     IF o_cont-&gt;log-&gt;has_messages_of_msgt( id_msgty = &apos;E&apos; ) = abap_true.
-      o_mycx ?= zaplink_cx=&gt;create_from_application_log( cx_name = &apos;ZAPLINK_CX_GUI&apos;
+      o_mycx ?= zcx_zaplink=&gt;create_from_application_log( cx_name = &apos;ZCX_ZL_GUI&apos;
                                                message_collector = o_cont-&gt;log ).
       RAISE EXCEPTION o_mycx.
     ENDIF.
 
-    mac_def_catch zaplink_cx_gui.
+    mac_def_catch ZCX_ZL_GUI.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CHANGE_SELECTION" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
@@ -203,11 +204,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   TRY.
@@ -215,7 +212,7 @@ INCLUDE zaplink_macros.</MACROS>
         list-&gt;select_default( action ).
       ENDIF.
       list-&gt;change_selection( ).
-    CATCH zaplink_cx INTO o_cx.
+    CATCH ZCX_ZAPLINK INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -239,7 +236,7 @@ INCLUDE zaplink_macros.</MACROS>
     </PARAMETERS>
     <SOURCE>`
   DATA o_file    TYPE to_file.
-  DATA o_cx_file TYPE REF TO zaplink_cx_file.
+  DATA o_cx_file TYPE REF TO ZCX_ZL_FILE.
   DATA d_msg     TYPE string.
 
   TRY.
@@ -247,8 +244,8 @@ INCLUDE zaplink_macros.</MACROS>
       o_file-&gt;set_filetype( zaplink_file=&gt;filetypes-local ).
       o_file-&gt;load_dialog( filename ).
       filename = o_file-&gt;get_filename( ).
-    CATCH zaplink_cx_file INTO o_cx_file.
-      CHECK o_cx_file-&gt;is_exception_text( zaplink_cx_file=&gt;dialog_canceled ) IS INITIAL.
+    CATCH ZCX_ZL_FILE INTO o_cx_file.
+      CHECK o_cx_file-&gt;is_exception_text( ZCX_ZL_FILE=&gt;dialog_canceled ) IS INITIAL.
       d_msg = o_cx_file-&gt;get_text( ).
       MESSAGE d_msg TYPE &apos;W&apos;.
   ENDTRY.</SOURCE>
@@ -270,11 +267,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA s_info    TYPE ts_contdata.
@@ -283,7 +276,7 @@ INCLUDE zaplink_macros.</MACROS>
 *  DATA o_file    TYPE to_file.
 
   IF name IS INITIAL.
-    RAISE EXCEPTION TYPE zaplink_cx_gui EXPORTING textid = zaplink_cx_gui=&gt;missing_container_name.
+    RAISE EXCEPTION TYPE ZCX_ZL_GUI EXPORTING textid = ZCX_ZL_GUI=&gt;missing_container_name.
   ENDIF.
 
   TRY.
@@ -300,7 +293,7 @@ INCLUDE zaplink_macros.</MACROS>
                                                  data = s_info ).
     container-&gt;save_to_file( ).
 
-    mac_def_catch zaplink_cx_gui.
+    mac_def_catch ZCX_ZL_GUI.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CREATE_FILE" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
@@ -313,7 +306,7 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="Filename"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="FILETYPE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILETYPE" PARVALUE="ZAPLINK_FILE=&gt;C_FT_LOCAL" PAROPTIONL="X">
+     <ITEM SCONAME="FILETYPE" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_FILETYPE" PARVALUE="ZAPLINK_FILE=&gt;C_FT_LOCAL">
       <TEXTS>
        <ITEM LANG="E" TEXT="Filetype : Local or Server"/>
       </TEXTS>
@@ -325,19 +318,15 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
-  DATA _cx TYPE REF TO zaplink_cx_file.
+  DATA _cx TYPE REF TO ZCX_ZL_LIST.
   TRY.
       CREATE OBJECT o_file.
       o_file-&gt;set_filetype( filetype ).
       o_file-&gt;set_filename( filename ).
-    CATCH zaplink_cx_file INTO _cx.
+    CATCH ZCX_ZL_LIST INTO _cx.
       mac_cascade_raise o_mycx _cx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -356,18 +345,14 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="Component List to export"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="With sub component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_cont     TYPE to_container.
@@ -394,7 +379,7 @@ INCLUDE zaplink_macros.</MACROS>
       IMPORTING
         container = o_cont.
 
-    mac_def_catch zaplink_cx_gui.
+    mac_def_catch ZCX_ZL_GUI.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="GET_OBJLIST" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
@@ -414,11 +399,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   TRY.
@@ -427,7 +408,7 @@ INCLUDE zaplink_macros.</MACROS>
           file         = file
          IMPORTING
            list        = list.
-    CATCH zaplink_cx_gui INTO o_mycx.
+    CATCH ZCX_ZL_GUI INTO o_mycx.
       RAISE EXCEPTION o_mycx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -440,11 +421,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="VALUE" CMPTYPE="1" PARDECLTYP="2" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_COMPNAME"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_conn TYPE to_connector.
@@ -452,8 +429,8 @@ INCLUDE zaplink_macros.</MACROS>
   CHECK NOT type IS INITIAL.
   TRY.
       o_conn = zaplink_connectors=&gt;create_connector( type = type ).
-    CATCH zaplink_cx INTO o_cx.
-      IF o_cx-&gt;is_exception_text( zaplink_cx_connector=&gt;invalid_type ) = abap_true.
+    CATCH ZCX_ZAPLINK INTO o_cx.
+      IF o_cx-&gt;is_exception_text( ZCX_ZL_CONNECTOR=&gt;invalid_type ) = abap_true.
 * There is no ZAPLink connector installed for object type &apos;&amp;1&apos;
         MESSAGE w050 WITH type.
         EXIT.
@@ -468,7 +445,7 @@ INCLUDE zaplink_macros.</MACROS>
           type = type
         CHANGING
           name = value.
-    CATCH zaplink_cx_connector INTO o_cx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_cx.
       RAISE EXCEPTION o_cx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -494,22 +471,18 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="For info : Container&apos;s name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="with sub components"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_cont    TYPE to_container.
-  DATA _cx       TYPE REF TO zaplink_cx.
+  DATA _cx       TYPE REF TO ZCX_ZAPLINK.
   DATA o_activ   TYPE to_activate.
   DATA o_list    TYPE to_list.
   DATA t_keys    TYPE tt_compkeys.
@@ -533,7 +506,7 @@ INCLUDE zaplink_macros.</MACROS>
 *            file = file
 *          CHANGING
 *            list   = list.
-*      CATCH zaplink_cx INTO o_mycx.
+*      CATCH ZCX_ZAPLINK INTO o_mycx.
 *        RAISE EXCEPTION o_mycx.
 *    ENDTRY.
 *  ENDIF.
@@ -551,7 +524,7 @@ INCLUDE zaplink_macros.</MACROS>
 *            file = file
 *          CHANGING
 *            list   = list.
-*      CATCH zaplink_cx INTO o_mycx.
+*      CATCH ZCX_ZAPLINK INTO o_mycx.
 *        RAISE EXCEPTION o_mycx.
 *    ENDTRY.
 *  ENDIF.
@@ -568,7 +541,7 @@ INCLUDE zaplink_macros.</MACROS>
 *            file = file
 *          CHANGING
 *            list   = list.
-*      CATCH zaplink_cx INTO o_mycx.
+*      CATCH ZCX_ZAPLINK INTO o_mycx.
 *        RAISE EXCEPTION o_mycx.
 *    ENDTRY.
 *  ENDIF.
@@ -599,10 +572,10 @@ INCLUDE zaplink_macros.</MACROS>
         ENDWHILE.
       ENDIF.
 
-    CATCH zaplink_cx INTO _cx.
+    CATCH ZCX_ZAPLINK INTO _cx.
       CREATE OBJECT o_mycx
         EXPORTING
-          textid   = zaplink_cx_gui=&gt;system_error
+          textid   = ZCX_ZL_GUI=&gt;system_error
           previous = _cx.
       o_mycx-&gt;update( ).
       RAISE EXCEPTION o_mycx.
@@ -624,18 +597,14 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="Component List to export"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="With sub component"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_cont     TYPE to_container.
@@ -664,7 +633,7 @@ INCLUDE zaplink_macros.</MACROS>
       IMPORTING
         container = o_cont.
 
-    mac_def_catch zaplink_cx_gui.
+    mac_def_catch ZCX_ZL_GUI.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UNINSTALL" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
@@ -687,18 +656,14 @@ INCLUDE zaplink_macros.</MACROS>
        <ITEM LANG="E" TEXT="For info : Container&apos;s name"/>
       </TEXTS>
      </ITEM>
-     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE" PAROPTIONL="X">
+     <ITEM SCONAME="WITH_SUBCOMP" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_WITH_SUBCOMP" PARVALUE="ABAP_TRUE">
       <TEXTS>
        <ITEM LANG="E" TEXT="with sub components"/>
       </TEXTS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_list TYPE to_list.
@@ -725,7 +690,7 @@ INCLUDE zaplink_macros.</MACROS>
     o_cont-&gt;uninstall_from_sap( o_list ).
 
     list = o_list.
-    mac_def_catch zaplink_cx_gui.
+    mac_def_catch ZCX_ZL_GUI.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="UPDATE_SUBOBJ" EXPOSURE="2" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
@@ -745,11 +710,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   _update_subobj( o_list = o_list
@@ -782,11 +743,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 
@@ -801,7 +758,7 @@ INCLUDE zaplink_macros.</MACROS>
     CHECK container IS BOUND.
     list = container-&gt;get_content( ).
 
-    mac_def_catch zaplink_cx_gui.
+    mac_def_catch ZCX_ZL_GUI.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_LOAD" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
@@ -826,18 +783,14 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 *  DATA o_file TYPE to_file.
   DATA d_filename TYPE td_filename.
 
   IF NOT file IS BOUND.
-    RAISE EXCEPTION TYPE zaplink_cx_gui EXPORTING textid = zaplink_cx_gui=&gt;missing_filename.
+    RAISE EXCEPTION TYPE ZCX_ZL_GUI EXPORTING textid = ZCX_ZL_GUI=&gt;missing_filename.
   ENDIF.
 
   TRY.
@@ -881,7 +834,7 @@ INCLUDE zaplink_macros.</MACROS>
 
       container-&gt;load_from_file( ).
 
-    CATCH zaplink_cx INTO o_cx.
+    CATCH ZCX_ZAPLINK INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
    </ITEM>
@@ -902,11 +855,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_GUI" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_GUI" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
 *  DATA o_file TYPE to_file.
@@ -925,7 +874,7 @@ INCLUDE zaplink_macros.</MACROS>
 
     container-&gt;save_to_file( file ).
 
-    mac_def_catch zaplink_cx_gui.
+    mac_def_catch ZCX_ZL_GUI.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="_UPDATE_SELECTION" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
@@ -940,11 +889,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp   TYPE to_component.
@@ -976,11 +921,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   DATA o_comp   TYPE to_component.
@@ -1010,12 +951,12 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM LANG="E" TEXT="ZAP Link Connector interface"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX_GUI">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZCX_ZL_GUI">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink Exception for GUI"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="2" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>

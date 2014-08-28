@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="97503B278E7B7975BA5CA7807A6BD79B" CODE_SIGNATURE="3FA6EDC155FE432353B981C12666B3E1" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="69F8678FA8828AF75B20279E86724C8F" CODE_SIGNATURE="B2CD3500FBACFE8B647421ACB3374C79" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CONNECTOR_" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSABSTRCT="X" CLSCCINCL="X" FIXPT="X" UNICODE="X" MSG_ID="ZAPLINK">
@@ -155,12 +155,12 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         CATCH cx_sy_move_cast_error.    &quot; Auto anonymize can&apos;t be done
       ENDTRY.
       IF o_intf is bound.     o_intf-&gt;anonymize( ).     ENDIF.
-    CATCH zaplink_cx INTO o_cx.
+    CATCH zcx_zaplink INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
   TRY.
       object-&gt;anonymize( ).
-    CATCH zaplink_cx INTO o_cx.
+    CATCH zcx_zaplink INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
      </ITEM>
@@ -174,13 +174,13 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
           o_intf ?= object.
         CATCH cx_sy_move_cast_error.    &quot; Auto anonymize can&apos;t be done
       ENDTRY.
-      IF o_intf is bound.       o_intf-&gt;unanonymize( ).     endif.
-    CATCH zaplink_cx INTO o_cx.
+      IF o_intf IS BOUND.       o_intf-&gt;unanonymize( ).     ENDIF.
+    CATCH zcx_zaplink INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.
   TRY.
       object-&gt;unanonymize( ).
-    CATCH zaplink_cx INTO o_cx.
+    CATCH zcx_zaplink INTO o_cx.
       mac_cascade_raise o_mycx o_cx.
   ENDTRY.</SOURCE>
      </ITEM>
@@ -213,7 +213,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     TRY.
         object = ez_xml-&gt;any2xml( any       = o_data
                                   type      = comp_nodename ).
-      CATCH zaplink_cx INTO o_cx.
+      CATCH zcx_zaplink INTO o_cx.
         mac_cascade_raise o_mycx o_cx.
     ENDTRY.
   ENDIF.</SOURCE>
@@ -246,14 +246,14 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
   DATA o_raw_b   TYPE to_raw_base.
   DATA o_raw     TYPE to_raw.
   DATA _name     TYPE string.
-*  DATA wa_type   TYPE e071-object.
-*  DATA wa_name   TYPE e071-obj_name.
   DATA wa_flag   TYPE rs38l-head.
   DATA ez_xml    TYPE to_ez_xml.
   DATA o_cx      TYPE REF TO cx_root.
-*  DATA o_zlcx    TYPE REF TO zaplink_cx.     &quot; Issue 93
   DATA t_bapiret TYPE bapirettab.
   DATA f_is_wi TYPE abap_bool.
+  DATA t_handle TYPE bal_t_logh.
+  DATA s_profil TYPE bal_s_prof.
+  DATA s_choice TYPE bal_s_excm.
 
   CHECK object IS BOUND.
 
@@ -261,32 +261,32 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
       root_node = object-&gt;get_root_element( ).
       IF NOT root_node IS BOUND.
         _name = &apos;$NONE$&apos;(001).
-        RAISE EXCEPTION TYPE zaplink_cx_connector
+        RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
           EXPORTING
-              textid    = zaplink_cx_connector=&gt;invalid_xml
-              node_name = _name.
+            textid    = ZCX_ZL_CONNECTOR=&gt;invalid_xml
+            node_name = _name.
       ENDIF.
 
       _name = root_node-&gt;get_name( ).
       IF _name &lt;&gt; comp_nodename.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
+        RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
           EXPORTING
-              textid    = zaplink_cx_connector=&gt;invalid_xml
-              node_name = _name.
+            textid    = ZCX_ZL_CONNECTOR=&gt;invalid_xml
+            node_name = _name.
       ENDIF.
 
       TRY.
           o_raw_b = zaplink_connectors=&gt;node_2_raw( root_node ).
-        CATCH zaplink_cx_connector INTO o_mycx.
+        CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
           RAISE EXCEPTION o_mycx.
       ENDTRY.
 
 * Version handling to develop
       IF is_supported_version( o_raw_b-&gt;version ) = abap_false.
 * Version &apos;&amp;CONN_VER&amp;&apos; is not (or no longer) suported by this connector.
-        RAISE EXCEPTION TYPE zaplink_cx_connector
+        RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
           EXPORTING
-            textid   = zaplink_cx_connector=&gt;unsuported_version
+            textid   = ZCX_ZL_CONNECTOR=&gt;unsuported_version
             conn_ver = o_raw_b-&gt;version.
       ENDIF.
 
@@ -302,9 +302,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *        mac_create_log o_msgs ballog_subobject space.   o_comp-&gt;set_msg_coll( o_msgs ).
         application_log-&gt;add_from_instance( io_msglist = ez_xml-&gt;application_log
                                      if_add_as_subnode = abap_true ).
-        DATA t_handle TYPE bal_t_logh.
-        DATA s_profil TYPE bal_s_prof.
-        DATA s_choice TYPE bal_s_excm.
 
         APPEND application_log-&gt;md_handle TO t_handle.
         CALL FUNCTION &apos;BAL_DSP_PROFILE_SINGLE_LOG_GET&apos;
@@ -347,7 +344,7 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
         IF sy-subrc &lt;&gt; 0 OR s_choice-continue IS INITIAL.
           CREATE OBJECT o_mycx
             EXPORTING
-              textid = zaplink_cx_connector=&gt;xml_error
+              textid = ZCX_ZL_CONNECTOR=&gt;xml_error
               type   = o_raw_b-&gt;type
               name   = o_raw_b-&gt;name.
           o_mycx-&gt;update( ).
@@ -408,19 +405,19 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 *        IF NOT o_msgs_2 IS INITIAL.   o_msgs-&gt;add_from_instance( io_msglist = o_msgs_2 ).   ENDIF.
 *        o_c_in_l-&gt;set_msg_coll( o_msgs ).
 *      ENDIF.
-    CATCH zaplink_cx_connector INTO o_mycx.
+    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
       RAISE EXCEPTION o_mycx.
-*    CATCH zaplink_cx INTO o_zlcx.      &quot; Issue 93
+*    CATCH ZCX_ZAPLINK INTO o_zlcx.      &quot; Issue 93
 *      CREATE OBJECT o_mycx
 *        EXPORTING
-*          textid  = zaplink_cx=&gt;system_error
+*          textid  = ZCX_ZAPLINK=&gt;system_error
 *          previous = o_zlcx.
 *      o_mycx-&gt;update( ).
 *      RAISE EXCEPTION o_mycx.
     CATCH cx_root INTO o_cx.
       CREATE OBJECT o_mycx
         EXPORTING
-          textid   = zaplink_cx=&gt;system_error
+          textid   = zcx_zaplink=&gt;system_error
           previous = o_cx.
       o_mycx-&gt;update( ).
       RAISE EXCEPTION o_mycx.
@@ -499,7 +496,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="OBJECT" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TO_RAW"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -513,7 +510,7 @@ INCLUDE zaplink_macros.</MACROS>
   IF NOT components IS BOUND.   CREATE OBJECT components.   ENDIF.
   TRY.
       components-&gt;add( o_comp ).
-    CATCH zaplink_cx_list.
+    CATCH zcx_zl_list.
   ENDTRY.</SOURCE>
    </ITEM>
    <ITEM CMPNAME="CLASS_CONSTRUCTOR" EXPOSURE="2" STATE="1" MTDTYPE="2" MTDDECLTYP="1">
@@ -534,7 +531,7 @@ INCLUDE zaplink_macros.</MACROS>
     <SOURCE>`
   class_name = zaplink_tools=&gt;get_clas_name( me ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_ABAPSOURCE2FLOWLOGIC" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_ABAPSOURCE2FLOWLOGIC" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Structured ABAP source to flow logic"/>
     </TEXTS>
@@ -550,7 +547,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_ABAP_RAW2SOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_ABAP_RAW2SOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Raw data to structured source data"/>
     </TEXTS>
@@ -565,7 +562,7 @@ INCLUDE zaplink_macros.</MACROS>
     CONCATENATE result &lt;c&gt; INTO result SEPARATED BY line_separator. &quot; will start with line_sep better for XML display and required because get_value remove spaces
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_ABAP_SOURCE2RAW" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_ABAP_SOURCE2RAW" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Structured source data to Raw data"/>
     </TEXTS>
@@ -581,7 +578,7 @@ INCLUDE zaplink_macros.</MACROS>
     ENDIF.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="CONV_FLOWLOGIC2ABAPSOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="CONV_FLOWLOGIC2ABAPSOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Convert flow logic table to ABAP Source"/>
     </TEXTS>
@@ -597,7 +594,7 @@ INCLUDE zaplink_macros.</MACROS>
     CONCATENATE result &lt;c&gt; INTO result SEPARATED BY line_separator. &quot; will start with line_sep better for XML display and required because get_value remove spaces
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="FUSION_TEXTPOOL" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="FUSION_TEXTPOOL" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Fusion 2 texts pool"/>
     </TEXTS>
@@ -645,7 +642,7 @@ INCLUDE zaplink_macros.</MACROS>
     INSERT &lt;c&gt; INTO TABLE result.
   ENDLOOP.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_DYNPROS" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_DYNPROS" EXPOSURE="1" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get program Dynpros"/>
     </TEXTS>
@@ -799,7 +796,7 @@ INCLUDE zaplink_macros.</MACROS>
      </ITEM>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -861,7 +858,7 @@ INCLUDE zaplink_macros.</MACROS>
   CREATE OBJECT result.
   result-&gt;from_data( s_fm_data ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_PROG_RAWSOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_PROG_RAWSOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get program RAW source code"/>
     </TEXTS>
@@ -991,7 +988,7 @@ INCLUDE zaplink_macros.</MACROS>
     READ REPORT program INTO result STATE &apos;A&apos;.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_PROG_SOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_PROG_SOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get program source code"/>
     </TEXTS>
@@ -1009,7 +1006,7 @@ INCLUDE zaplink_macros.</MACROS>
   code = get_prog_rawsource( program ).
   result = conv_abap_raw2source( code ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="GET_PROG_TEXTPOOL" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="GET_PROG_TEXTPOOL" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Get program Texts pool"/>
     </TEXTS>
@@ -1088,7 +1085,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="RESULT" CMPTYPE="1" PARDECLTYP="3" TYPTYPE="1" TYPE="TD_COMPTYPE"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
       </TEXTS>
@@ -1104,28 +1101,28 @@ INCLUDE zaplink_macros.</MACROS>
   root_node = object-&gt;get_root_element( ).
   IF NOT root_node IS BOUND.
     _name = &apos;$NONE$&apos;(001).
-    RAISE EXCEPTION TYPE zaplink_cx_connector
+    RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
       EXPORTING
-         textid    = zaplink_cx_connector=&gt;invalid_xml
+         textid    = ZCX_ZL_CONNECTOR=&gt;invalid_xml
          node_name = _name.
   ENDIF.
 
   _name = root_node-&gt;get_name( ).
   IF _name &lt;&gt; comp_nodename.
-    RAISE EXCEPTION TYPE zaplink_cx_connector
+    RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
       EXPORTING
-        textid   = zaplink_cx_connector=&gt;invalid_xml
+        textid   = ZCX_ZL_CONNECTOR=&gt;invalid_xml
         node_name = _name.
   ENDIF.
 
 *  TRY.
       o_raw = zaplink_connectors=&gt;node_2_raw( root_node ).
       result = o_raw-&gt;type.
-*    CATCH zaplink_cx_connector INTO o_mycx.
+*    CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
 *      RAISE EXCEPTION o_mycx.
 *  ENDTRY.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_BASE_ATTRIBUTS" EXPOSURE="1" STATE="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_BASE_ATTRIBUTS" EXPOSURE="1" STATE="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Build default Connector Base Attributs"/>
     </TEXTS>
@@ -1146,7 +1143,7 @@ INCLUDE zaplink_macros.</MACROS>
 *  TRY.
       _name = attributs-name = component-&gt;get_name( ).
       _type = component-&gt;get_type( ).
-*    CATCH zaplink_cx INTO o_cx.
+*    CATCH ZCX_ZAPLINK INTO o_cx.
 *      mac_cascade_raise o_mycx o_cx.
 *  ENDTRY.
   attributs-class = string.
@@ -1176,11 +1173,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="PROGRAM" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX_CONNECTOR" LANGU="E">
-      <TEXTS>
-       <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
-      </TEXTS>
-     </ITEM>
+     <ITEM SCONAME="ZCX_ZL_CONNECTOR" LANGU="E"/>
     </EXCEPTIONS>
     <SOURCE>`
   INCLUDE mseusbit. &quot; for c_type_dynp_select_norm, c_type_dynp_select_mod, c_type_dynp_select_incl
@@ -1265,9 +1258,9 @@ INCLUDE zaplink_macros.</MACROS>
 *        damaged              = 2
 *        OTHERS               = 3.
 *    IF sy-subrc &lt;&gt; 0.
-*      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RS_SCRP_DYNPRO_CHECK&apos;
+*      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;RS_SCRP_DYNPRO_CHECK&apos;
 *                                                  subrc = sy-subrc
-*                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+*                                              classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
 *      application_log-&gt;add_symsg( ).
 *      application_log-&gt;add_exception( o_mycx ).
 *      continue.
@@ -1302,10 +1295,10 @@ INCLUDE zaplink_macros.</MACROS>
         OTHERS                         = 10.
     IF sy-subrc &lt;&gt; 0.
 *      TRY.
-          o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RPY_DYNPRO_INSERT&apos;
-                                                      subrc = sy-subrc
-                                                  classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
-*        CATCH zaplink_cx INTO o_cx.
+          o_mycx ?= zcx_zaplink=&gt;create_from_mf_cx( funcname = &apos;RPY_DYNPRO_INSERT&apos;
+                                                       subrc = sy-subrc
+                                                   classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
+*        CATCH ZCX_ZAPLINK INTO o_cx.
 *          mac_cascade_raise o_mycx o_cx.
 *      ENDTRY.
       application_log-&gt;add_symsg( ).
@@ -1334,9 +1327,9 @@ INCLUDE zaplink_macros.</MACROS>
 *        not_executed                   = 4
 *        OTHERS                         = 5.
 *    IF sy-subrc &lt;&gt; 0.
-*      o_mycx ?= zaplink_cx=&gt;create_from_mf_cx( funcname = &apos;RPY_DYNPRO_INSERT_NATIVE&apos;
+*      o_mycx ?= ZCX_ZAPLINK=&gt;create_from_mf_cx( funcname = &apos;RPY_DYNPRO_INSERT_NATIVE&apos;
 *                                                  subrc = sy-subrc
-*                                              classname = &apos;ZAPLINK_CX_CONNECTOR&apos; ).
+*                                              classname = &apos;ZCX_ZL_CONNECTOR&apos; ).
 *      application_log-&gt;add_symsg( ).
 *      application_log-&gt;add_exception( o_mycx ).
 *    ENDIF.
@@ -1356,7 +1349,7 @@ INCLUDE zaplink_macros.</MACROS>
      <ITEM SCONAME="PROGRAM" CMPTYPE="1" PARPASSTYP="1" TYPTYPE="1" TYPE="TD_PROGNAME"/>
     </PARAMETERS>
     <EXCEPTIONS>
-     <ITEM SCONAME="ZAPLINK_CX" LANGU="E">
+     <ITEM SCONAME="ZCX_ZAPLINK" LANGU="E">
       <TEXTS>
        <ITEM LANG="E" TEXT="ZAPlink Framework : Root exception class"/>
       </TEXTS>
@@ -1405,7 +1398,7 @@ INCLUDE zaplink_macros.</MACROS>
   DELETE FROM rsmptexts WHERE progname = program.
   MODIFY rsmptexts FROM TABLE s_fm_data-texts.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_PROG_RAWSOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_PROG_RAWSOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Set program RAW source code"/>
     </TEXTS>
@@ -1419,7 +1412,7 @@ INCLUDE zaplink_macros.</MACROS>
     INSERT REPORT program FROM raw STATE &apos;A&apos;.
   ENDIF.</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_PROG_SOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_PROG_SOURCE" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Set program source code"/>
     </TEXTS>
@@ -1434,7 +1427,7 @@ DATA _raw TYPE tt_abaprawsource.
   set_prog_rawsource( program = program
                           raw = _raw ).</SOURCE>
    </ITEM>
-   <ITEM CMPNAME="SET_PROG_TEXTPOOL" EXPOSURE="1" STATE="1" MTDDECLTYP="1" MTDNEWEXC="X">
+   <ITEM CMPNAME="SET_PROG_TEXTPOOL" EXPOSURE="1" STATE="1" MTDDECLTYP="1">
     <TEXTS>
      <ITEM LANG="E" TEXT="Set program Texts pool"/>
     </TEXTS>
@@ -1504,7 +1497,7 @@ DATA _raw TYPE tt_abaprawsource.
    <ITEM TYPEGROUP="RPYTY" EXPLICIT="X"/>
   </TYPEGROUPS>
   <TYPES>
-   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZAPLINK_CX_CONNECTOR">
+   <ITEM CMPNAME="TO_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="2 " TYPTYPE="3" TYPE="ZCX_ZL_CONNECTOR">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception for Connectors"/>
     </TEXTS>
@@ -1514,7 +1507,7 @@ DATA _raw TYPE tt_abaprawsource.
      <ITEM LANG="E" TEXT="Menu painter Data"/>
     </TEXTS>
    </ITEM>
-   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZAPLINK_CX">
+   <ITEM CMPNAME="TO_ROOT_EXCEPTION" EXPOSURE="1" STATE="1" EDITORDER="1 " TYPTYPE="3" TYPE="ZCX_ZAPLINK">
     <TEXTS>
      <ITEM LANG="E" TEXT="ZAPlink ROOT Exception"/>
     </TEXTS>
