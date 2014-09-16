@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="D40D355CD6FAAD7E5B9DBDC5E5F00AED" CODE_SIGNATURE="78A32A6AC84618D91B00CCF9E6FCB206" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="3A3F710B287CBDE81C0AD3A75C8E6684" CODE_SIGNATURE="DDB662EA02109AC72695229F85FF4C95" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_CLAS_DATA" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_OBJECT_DATA"/>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_PROGRAM"/>
@@ -676,6 +676,9 @@ AS</ITEM>
     &lt;fr&gt;  LIKE LINE OF fm_data-friendships,
     &lt;re&gt;  LIKE LINE OF fm_data-redefinitions.
 
+* Added to allow dynamic clear
+  FIELD-SYMBOLS: &lt;any&gt; TYPE any.
+
 * added for exception classes
   FIELD-SYMBOLS:
     &lt;cx&gt;   LIKE LINE OF fm_data-exceptions_texts,
@@ -741,7 +744,7 @@ AS</ITEM>
         SCAN ABAP-SOURCE  &lt;at&gt;-typesrc TOKENS INTO t_tokens
                                    STATEMENTS INTO t_statements.
         ASSERT sy-subrc = 0.
-        CHECK LINES( t_statements ) = 8.
+        CHECK lines( t_statements ) = 8.
         d_is_ok = abap_true.
         LOOP AT t_statements ASSIGNING &lt;st&gt; FROM 2 TO 7.
           CASE sy-tabix.
@@ -762,7 +765,7 @@ AS</ITEM>
             EXIT.
           ENDIF.
           READ TABLE t_tokens ASSIGNING &lt;tk&gt; INDEX &lt;st&gt;-to.
-          d_len = STRLEN( &lt;tk&gt;-str ) - 2.
+          d_len = strlen( &lt;tk&gt;-str ) - 2.
           ASSERT  d_len &gt;= 0.
           &lt;tk&gt;-str = &lt;tk&gt;-str+1(d_len).    &quot; &apos;ZAPLINK_DEVTOOLS&apos; =&gt; ZAPLINK_DEVTOOLS
           CASE d_field.
@@ -935,6 +938,12 @@ AS</ITEM>
        WHERE clsname = a0_maindata-clsname.
     CLEAR: _re.
     _re-hdr = &lt;re&gt;.
+* Field ATTVAlue stands for :
+*  interfaces /BCV/IF_UIF_REPR_TECHNOLOGY
+*      data values GV_DISPLAY_SUBTYPE = &apos;1ALV&apos;
+*                  GV_DISPLAY_TYPE = &apos;1TABLE&apos;
+*                  GV_RUNTIME_COMPONENT = &apos;/BCV/WDC_UIF_ALV_QVIEW&apos; .
+    mac_clear_field_if_exists _re &apos;EXPOSURE&apos; &lt;any&gt;.     &quot; ISSUE 142 : remove field Exposure
 
     _mk-clsname = &lt;re&gt;-clsname.
     _mk-cpdname = &lt;re&gt;-mtdname.

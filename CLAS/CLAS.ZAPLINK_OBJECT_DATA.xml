@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="0B09F3C592F8BC2EE46D55F0A03760E4" CODE_SIGNATURE="F590E352D3044B945ABCC21C4D29FDAA" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="4EEAD7B370F0014E6AB84E6693994176" CODE_SIGNATURE="DE0B78A3B37BBC3BAF87A222E579FB76" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_OBJECT_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="1" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -731,14 +731,16 @@ AS</ITEM>
 
 * ISSUE 2 : Begin
 *CLSDEFERRDS  TYPE  SEOT_CLSDEFERRDS_R
-  LOOP AT fm_data-clsdeferrds ASSIGNING &lt;cd&gt;.
+  LOOP AT fm_data-clsdeferrds ASSIGNING &lt;cd&gt;
+       WHERE typegroup &lt;&gt; obj_name.               &quot; ISSUE 140 : No dependeciens with my-self
     _dc = &lt;cd&gt;.
     CLEAR: _dc-clsname.
     INSERT _dc INTO TABLE deferred-classes.
   ENDLOOP.
 
 *INTDEFERRDS  TYPE  SEOT_INTDEFERRDS_R
-  LOOP AT fm_data-intdeferrds ASSIGNING &lt;id&gt;.
+  LOOP AT fm_data-intdeferrds ASSIGNING &lt;id&gt;
+      WHERE typegroup &lt;&gt; obj_name.                &quot; ISSUE 140 : No dependeciens with my-self
     _di = &lt;id&gt;.
     CLEAR: _di-clsname.
     INSERT _di INTO TABLE deferred-interfaces.
