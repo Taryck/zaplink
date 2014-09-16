@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="4CB8174886712694384D67DFD2F2D012" CODE_SIGNATURE="17954349A564D6869A49AB0FEC7B020C" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MACROS" TYPE="PROG" VERSION="1.0">
+<ZL_OBJECT CHECKSUM="BB2DD93C3DAEC048B07FC26A72910DD6" CODE_SIGNATURE="29BC65949FE5D39A2D98B5BC2E09F3E6" CONNECTOR="AAAD0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_MACROS" TYPE="PROG" VERSION="1.0">
  <DIRECTORY DEVCLASS="ZAPLINK-FRAMEWORK-CORE" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA EDTX="X" VARCL="X" SUBC="I" RSTAT="K" RMAND="200" RLOAD="E" UCCHECK="X"/>
@@ -9,6 +9,15 @@
 *---------------------------------------------------------------------*
 * Contains macros uses in framework objects
 *---------------------------------------------------------------------*
+
+* Macro to clear a field if exists
+* Introduced by ISSUE 142
+DEFINE mac_clear_field_if_exists.
+  ASSIGN COMPONENT &amp;2 OF STRUCTURE &amp;1 to &amp;3.
+  IF sy-subrc = 0.
+    CLEAR &amp;3.
+  ENDIF.
+END-OF-DEFINITION.
 
 * Macro for raising exception from symsg
 DEFINE mac_raise_symsg.
@@ -24,8 +33,8 @@ END-OF-DEFINITION.
 * Raise CNX exception : Type not supported
 DEFINE mac_raise_type_not_supported.
 * Type &apos;&amp;TYPE&amp;&apos; is not supported by this connector &apos;&amp;CONNCLASS&amp;&apos;
-  raise exception type ZCX_ZL_CONNECTOR
-    exporting
+  RAISE EXCEPTION type ZCX_ZL_CONNECTOR
+    EXPORTING
       textid    = ZCX_ZL_CONNECTOR=&gt;type_not_supported
       type      = &amp;2
       connclass = &amp;1.
@@ -34,8 +43,8 @@ END-OF-DEFINITION.
 * Create a ZAPLink Cascade exception
 DEFINE mac_cascade_raise.
 * Exception &apos;&amp;CX_NAME&amp;&apos; has occured
-  create object &amp;1
-    exporting
+  CREATE OBJECT &amp;1
+    EXPORTING
       textid   = zcx_zaplink=&gt;system_error
       previous = &amp;2.
   &amp;1-&gt;update( ).
