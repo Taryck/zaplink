@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="ABC87694C32C5B6C50CE9E103CB22B53" CODE_SIGNATURE="17F8353C58197612AE3D2AFD0854BA9A" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="F5CB7616F4D6E354ED08C533F5E432F5" CODE_SIGNATURE="62CA12D351104C33A523D5EC3CC6A6DB" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_PACKAGE" TYPE="CLAS" VERSION="1.01">
  <DEPENDENCIES>
   <ITEM TYPE="CLAS" NAME="ZAPLINK_CONNECTOR_"/>
  </DEPENDENCIES>
@@ -652,6 +652,7 @@ INCLUDE zaplink_macros.</MACROS>
   DATA pack        LIKE LINE OF o_data-&gt;packages.
   DATA _component  TYPE to_component.
   FIELD-SYMBOLS:
+    &lt;any&gt; TYPE any,
     &lt;pack&gt; LIKE LINE OF packages,
     &lt;itf&gt; LIKE LINE OF interfaces,
     &lt;p&gt; LIKE LINE OF permissions.
@@ -669,11 +670,19 @@ INCLUDE zaplink_macros.</MACROS>
         intern_err      = 3
         OTHERS          = 4.
     IF sy-subrc &lt;&gt; 0.
-      RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+      RAISE EXCEPTION TYPE zcx_zl_connector
         EXPORTING
-          textid  = ZCX_ZL_CONNECTOR=&gt;system_error
+          textid  = zcx_zl_connector=&gt;system_error
           cx_name = &apos;error in package-&gt;get_all_attributes&apos;.
     ENDIF.
+
+* Issue 144 : New attribute to DEVC
+    ASSIGN COMPONENT &apos;TRANSLATION_DEPTH_TEXT&apos; OF STRUCTURE o_data-&gt;a0_maindata TO &lt;any&gt;.
+    IF sy-subrc = 0.      CLEAR &lt;any&gt;.      ENDIF.
+    ASSIGN COMPONENT &apos;TRANSLATION_DEPTH&apos; OF STRUCTURE o_data-&gt;a0_maindata TO &lt;any&gt;.
+    IF sy-subrc = 0.    IF &lt;any&gt; = &apos;NOT_CLASSIFIED&apos;.          CLEAR &lt;any&gt;.      ENDIF.      ENDIF.
+* Issue 144 : End
+
 
 * Issue 132
     CLEAR: o_data-&gt;a0_maindata-dlvu_text, o_data-&gt;a0_maindata-component, o_data-&gt;a0_maindata-comp_text,
@@ -693,9 +702,9 @@ INCLUDE zaplink_macros.</MACROS>
         unexpected_error = 2
         OTHERS           = 3.
     IF sy-subrc &lt;&gt; 0.
-      RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+      RAISE EXCEPTION TYPE zcx_zl_connector
         EXPORTING
-          textid  = ZCX_ZL_CONNECTOR=&gt;system_error
+          textid  = zcx_zl_connector=&gt;system_error
           cx_name = &apos;package-&gt;get_permissions_to_use&apos;.
     ELSEIF NOT permissions IS INITIAL.
       LOOP AT permissions ASSIGNING &lt;p&gt;.
@@ -717,15 +726,15 @@ INCLUDE zaplink_macros.</MACROS>
           intern_err           = 3
           OTHERS               = 4.
       IF sy-subrc &lt;&gt; 0.
-        RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+        RAISE EXCEPTION TYPE zcx_zl_connector
           EXPORTING
-            textid = ZCX_ZL_CONNECTOR=&gt;system_error.
+            textid = zcx_zl_connector=&gt;system_error.
       ELSEIF NOT interfaces IS INITIAL.
         LOOP AT interfaces ASSIGNING &lt;itf&gt;.
           TRY.
               intf-zl_object = conv_interface_raw( interface = &lt;itf&gt;
                                                subcomponents = subcomponents ).
-            CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
+            CATCH zcx_zl_connector INTO o_mycx.
               application_log-&gt;add_exception( o_mycx ).
           ENDTRY.
           APPEND intf TO o_data-&gt;interfaces.
@@ -742,15 +751,15 @@ INCLUDE zaplink_macros.</MACROS>
           unexpected_error = 3
           OTHERS           = 4.
       IF sy-subrc &lt;&gt; 0.
-        RAISE EXCEPTION TYPE ZCX_ZL_CONNECTOR
+        RAISE EXCEPTION TYPE zcx_zl_connector
           EXPORTING
-            textid = ZCX_ZL_CONNECTOR=&gt;system_error.
+            textid = zcx_zl_connector=&gt;system_error.
       ELSEIF NOT packages IS INITIAL.
         LOOP AT packages ASSIGNING &lt;pack&gt;.
           TRY.
               pack-zl_object = conv_package_raw( package = &lt;pack&gt;
                                            subcomponents = subcomponents ).
-            CATCH ZCX_ZL_CONNECTOR INTO o_mycx.
+            CATCH zcx_zl_connector INTO o_mycx.
               application_log-&gt;add_exception( o_mycx ).
           ENDTRY.
           APPEND pack TO o_data-&gt;packages.
@@ -759,7 +768,7 @@ INCLUDE zaplink_macros.</MACROS>
 
     ENDIF.
 
-    mac_def_catch ZCX_ZL_CONNECTOR.
+    mac_def_catch zcx_zl_connector.
   ENDTRY.
 
   IF o_mycx IS BOUND.   RAISE EXCEPTION o_mycx.   ENDIF.</SOURCE>
