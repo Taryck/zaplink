@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<ZL_OBJECT CHECKSUM="FE0210190B5A2A50E60A40E4FAE2933D" CODE_SIGNATURE="BD571DB40693C53E7D8384DE99E77F82" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
+<ZL_OBJECT CHECKSUM="B8715B26A67006447417F10C7857F326" CODE_SIGNATURE="173624077BDD273FFCB712575FE25496" CONNECTOR="39AC0A4B07A5A05AE1000000AC120173" NAME="ZAPLINK_TABL_DATA" TYPE="CLAS" VERSION="1.01">
  <DIRECTORY DEVCLASS="ZAPLINK-CONNECTORS-MAIN" MASTERLANG="E"/>
  <RAW>
   <A0_MAINDATA VERSION="1" LANGU="E" EXPOSURE="2" STATE="1" CLSCCINCL="X" FIXPT="X" UNICODE="X">
@@ -216,7 +216,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
     &lt;dt&gt; LIKE LINE OF &lt;d&gt;-texts,
     &lt;t&gt; LIKE LINE OF fm_data-texts.
   DATA p_table TYPE REF TO data.
-  DATA s_dep  LIKE LINE OF _dependencies.
   FIELD-SYMBOLS:
     &lt;tc&gt; TYPE STANDARD TABLE,
     &lt;cl&gt; TYPE any,
@@ -249,23 +248,9 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
 * fields
   LOOP AT fm_data-fields ASSIGNING &lt;f&gt;
-          WHERE tabname = a0_maindata-tabname
-            AND adminfield = 0.                 &quot; Issue 143 : &quot;Nesting depth for includes&quot; = 0 no include.
-
-* Issue 143 : Dependencies
-    IF &lt;f&gt;-fieldname = &apos;.INCLUDE&apos;.
-      s_dep-type = zaplink_dictionary=&gt;supportedtypes-table.
-      s_dep-name = &lt;f&gt;-precfield.
-      APPEND s_dep TO _dependencies.
-    ELSEIF &lt;f&gt;-rollname IS NOT INITIAL.
-      s_dep-type = zaplink_dictionary=&gt;supportedtypes-data_element.
-      s_dep-name = &lt;f&gt;-rollname.
-      APPEND s_dep TO _dependencies.
-    ENDIF.
-* Issue 143 : End
-
+          WHERE tabname = a0_maindata-tabname.
 * Issue 141 : Take only required fields
-    CLEAR: s_field, s_field_edit, s_dep.
+    CLEAR: s_field, s_field_edit.
 * No longer transfert all fields
 *    s_field-hdr = &lt;f&gt;.      CLEAR: s_field-tabname.
     MOVE-CORRESPONDING &lt;f&gt; TO s_field_edit.                 &quot; Keep only field that user can edit =&gt; usefull to create table nothing more
@@ -319,9 +304,6 @@ B2My uncle : Jacky BEDU (1934-2009) who died during the completion of this
 
     INSERT s_field INTO TABLE fields.
   ENDLOOP.
-
-* Issue 143 : clean duplicates
-  SORT _dependencies. DELETE ADJACENT DUPLICATES FROM _dependencies.
 
 * indexes
   t_index = conv_index( fm_data ).
