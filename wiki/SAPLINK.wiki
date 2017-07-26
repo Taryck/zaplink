@@ -1,0 +1,24 @@
+<wiki:toc max_depth="3" />
+=*Z*APLink vs *S*APLink=
+What are main differences beetween SAPLink and ZAPLink ?
+
+== Concept changes ==
+Here are the following concept similarities and differences : This list has been made to help people who knows SAPLink to handle ZAPLink framework. SAPLink features might have change beetween times.
+|| *SAPLink* || *ZAPLink* || *Changes* ||
+|| Plugin    || [Connector] || SAPLink's plugin are for only one component type. ZAPLink conenctor can handle many component types. ZAPLink handle connector version. SAPLink has yet not plugin versions ||
+|| nugget    || [Container] || ||
+|| slink     || [Container] || ZAPLink container don't care about root node names that why container can handle ABAP component direclty in a XML file like slink or in a structured file like nugget. ||
+
+== Which one choose ? ==
+It's just a personal point of view guided by design of ZAPLink framework.
+|| *Feature* || *Winner* ||
+|| Installation || Both ||
+|| Supported component types || SAPLINK ||
+|| Enhancment capabilities || ZAPLink ||
+SAPLink tools is more for "one times component load". If you plan to use ofen, or to invole it in your SAP project, choose ZAPLink.
+
+== Conversion of SAPLink plugin to ZAPLink connector ==
+Plugins from SAPLink could be converted into ZAPLink connectors with a "moderated effort".
+
+= Thanks =
+Thanks to [http://code.google.com/p/saplink SAPLink project] for their initial work on this subject.

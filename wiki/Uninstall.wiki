@@ -1,0 +1,26 @@
+#labels Featured
+<wiki:toc max_depth="3" />
+= Uninstallation procedure =
+Uninstall time : 3-5 minutes. The installer allow you also to *uninstall* the framework. To do so :
+== Uninstall all extensions ==
+Use ZAPLink standard program to uninstall all extensions
+
+== Uninstall additional plug-ins ==
+Remove all plug-ins that were not installed by the framework.
+
+== Uninstall framework ==
+Use the ZAPLink's installer with the same container as for the installation *AND* check the uninstall checkbox. You might need to do this several times (each times some object are deleted). You might also be prompted by Standard SAP confirmation pop-up.
+* Run program ZAPLINK_INSTALLER with XML file :
+[https://wiki.zaplink.googlecode.com/hg/Install-04.JPG]  
+* Leave default selection that remove all component that will be installed after :
+[https://wiki.zaplink.googlecode.com/hg/Install-05.JPG]  
+* Confirm some delete confirmation messages like this one :
+[https://wiki.zaplink.googlecode.com/hg/Install-06.JPG]  
+* Control that no errors appears :
+[https://wiki.zaplink.googlecode.com/hg/Install-07.JPG]  
+
+== Uninstall Installer ==
+Delete program ZAPLINK_INSTALLER that were used to install and uninstall framework.
+
+== Remove TADIR ==
+You might also want to remove TADIR entries that belongs to the removed Zaplink objects.

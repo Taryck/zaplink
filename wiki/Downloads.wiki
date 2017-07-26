@@ -1,0 +1,26 @@
+#labels Featured
+<wiki:toc max_depth="3" />
+= Downloads =
+All ready to use downloads are listed here. Except for ZAPLink basic framework which is provided with an installer, all other download might need a ZAPLink framework installed with required connectors.
+
+Download list :
+  # ZAPLink basic framework.
+  # ZAPLink extractor : Tools for devloppers in ordre to push update to Google Code (ZAPLink project or your own).
+  # Customer SGEN : [http://help.sap.com/saphelp_sm32/helpdata/en/b1/52583c65399965e10000000a114084/frameset.htm SGEN transaction] can't be used on application HOME. This developement allow you to generate (compile) all (or part) of customer's devlopments.
+
+=[https://wiki.zaplink.googlecode.com/hg/icon.png] ZAPLink basic framework =
+Please read this [Install install page] if you're familiar with ZAPLink framework installation.
+Take a look to [Roadmap ZAPLink framework roadmap] for versions details.
+
+= ZAPLink extractor =
+Need ZAPLink basic framework. *No container yet created* because reserved to developers.
+This application allow to extract ABAP component to XML File. One component into one file. Also detecting ABAP component change based on a checksum of XML content.
+This tools allow you to save all your developments (Classes, programs, custo, ...) to prevent developments loss due to :
+  * Accidental deletion of component
+  * Component overwrited by transport request
+  * Devlopment system failure that require restoration (last week save)
+
+= Customer SGEN =
+Need ZAPLink basic framework. *No container yet created*.
+This application allow you to run SGEN of customer specific devlopments. This is usefull on intergation system to ensure that a transport resquest (with Code 0) do not invalidate other components not in this transport request.
+Eg : when changing a method from public to private the transported component is OK (transport request has RC = 0) but all users of this method will no longer compile. Using SGEN after each bacth of transport request will ensure that all customer specific component compile.

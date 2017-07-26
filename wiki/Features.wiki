@@ -1,0 +1,122 @@
+#labels Featured
+<wiki:toc max_depth="3" />
+ZAPLink's framework features are :
+  * Basic version
+    # Export ABAP components from SAP systems to files
+    # Import ABAP components from file to SAP systems
+    # Uninstall(delete) ABAP components from SAP System
+  * Extended version
+    # XML cleaning : To remove useless components such as change date and author, to allow easier delta analyse.
+    # Checksum : Add a MD5 checksum on xml. If checksum has change this means that component has changed.
+	# ...
+  * your own version
+    # Combine ZAPlink features together or with you own development to provide new features with added values
+  * ...
+
+_*Note*_ : You can try the export feature with the [http://code.google.com/p/zaplink/downloads/list?can=2&q=label%3AStandaloneExtractor stand alone extractor]. *Warning* this tools is provided as stand alone for test purpose or as quick extract tool. No message can't be provided, this means that some message send to user or display in the result screen might be ununderstandable.
+	
+= Export =
+Export could be done after container initialization or in one step. Here is the main sequence :
+== Define export area ==
+Using one or many of the following select-options, you could define the main selection area :
+* Component type
+* Component name
+* Component package
+* Person responsible of the component
+_Note_ that this main selection can't be adjusted when run one step mode in background because of no user interaction.
+
+[https://wiki.zaplink.googlecode.com/hg/EXP-00.JPG]
+
+== Adjust component list ==
+Now you can adjust component list by deselecting (by default all exportable component are selected) as follow :
+
+[https://wiki.zaplink.googlecode.com/hg/EXP-01.JPG]
+
+== Result of export == 
+After export is finished you get a result summary as follow :
+
+[https://wiki.zaplink.googlecode.com/hg/EXP-02.JPG]
+
+= Import =
+Import container in SAP system is made list this :
+== Select container ==
+Specify containter to import (and type, here ZIP) as follow :
+
+[https://wiki.zaplink.googlecode.com/hg/IMP-00.JPG]
+
+== Adjust component list ==
+Now you have adjust component list, by default all existing component are *not* overwrited. You can extend default selection to overwrite component and/or reduce selection to only install part of the container.
+
+[https://wiki.zaplink.googlecode.com/hg/IMP-01.JPG]
+
+== Provide transport request ==
+You will be prompted for a transport request depending of the option choosen for package and transport request options as follow :
+Package options
+
+[https://wiki.zaplink.googlecode.com/hg/IMP-02.JPG]
+
+Transport request options
+
+[https://wiki.zaplink.googlecode.com/hg/IMP-03.JPG]
+
+== Result of import == 
+After import is finished you get a result summary as follow :
+
+[https://wiki.zaplink.googlecode.com/hg/IMP-04.JPG]
+
+= Uninstall =
+To Uninstall a container from SAP system proceed as follow :
+== Select container ==
+Specify containter to uninstall as follow :
+
+[https://wiki.zaplink.googlecode.com/hg/DEL-00.JPG]
+
+== Adjust component list ==
+Now you have adjust component list, by default all existing component are unistall. You can reduce selection to only uninstall part of the container.
+
+[https://wiki.zaplink.googlecode.com/hg/DEL-01.JPG]
+
+== Provide transport request ==
+You might be prompted for a transport request depending if the existing component is in a transport request or not and if is affected to package $TMP (without transport request).
+
+== Result of import == 
+After uninstall is finished you get a result summary as follow :
+
+[https://wiki.zaplink.googlecode.com/hg/DEL-02.JPG]
+	
+= Display content of container =
+To display content of a container proceed as follow :
+== Select container ==
+Specify containter to display as follow :
+
+[https://wiki.zaplink.googlecode.com/hg/DSP-00.JPG]
+
+== Result == 
+get result as follow :
+
+[https://wiki.zaplink.googlecode.com/hg/DSP-01.JPG]
+	
+= Enhancements =
+Features enhancement are possible like :
+	# *XML cleaning* : To remove useless attributs such as change date and author, to allow easier delta analyse.
+    # *Checksum* : Add a MD5 checksum on xml. If checksum has change this means that component has changed.
+	# Container in zip file : to preserver storage space. [https://code.google.com/p/zaplink/source/browse/CLAS/CLAS.ZAPLINK_FILE_ZIP.xml Download Class ZAPLINK_FILE_ZIP]
+    # Many others will rise from ZAPLink devloper group or from you...
+
+You can also build our own features as :
+	# *Combine ZAPLink features* together or with you own development to provide *new features with added values*.
+	# *Combine ZAPLink extensions* together to provide *new features with added values*.
+	
+= Exemples =
+== Mass Extractor ==
+To use repository capabilities of [http://mercurial.selenic.com/ Merciruial] provided by Google code, we have to convert ABAP component of this framework to files.
+If we add to do it one by one it will takes too much times, and we might miss some change. ZAPLink extractor allow you to create one file per ABAP component and save it to file. Local file is changed only if ABAP component has changed.
+This tools use ZAPLink features :
+  * Basic version
+    # Export ABAP components from SAP systems to files
+  * Extended version
+    # XML cleaning : To remove useless components such as change date and author, to allow easier delta analyse.
+    # Checksum : Add a MD5 checksum on xml. If checksum has change this means that component has changed.
+  * it's own feature
+    # Create local directories
+[Tools Tools provided to developpers] are build on ZAPLink framework.

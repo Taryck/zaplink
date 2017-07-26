@@ -1,0 +1,17 @@
+<wiki:toc max_depth="3" />
+[https://wiki.zaplink.googlecode.com/hg/ZAPLink.H.gif]
+
+= Introduction =
+
+ZAPLink is a framework. This means that it allow (as far as possible) to let you enhance features by adding your own developments :
+  * Connectors
+  * Extend Framework concept by ABAP Object inheritance
+  * BADI implementation
+  * ...
+This intend to upgrade ZAPLink Framework without breaking you own developments
+  
+= Details =
+
+ZAP Link framework is developed with ABAP Objects. ABAP Programs are only used to provide user interface with objects.
+
+The framework is based on [Concepts this concepts]

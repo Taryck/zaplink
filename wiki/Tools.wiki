@@ -1,0 +1,16 @@
+<wiki:toc max_depth="3" />
+= Mass Extractor =
+This development tools is used to interface SAP with Google code.
+
+To use repository capabilities of [http://mercurial.selenic.com/ Mercurial] (provided by Google code), we have to convert ABAP component of this framework to files.
+
+If we add to do it one by one it will takes too much times, and we might miss some change. So ZAPLink extractor has been build in 1 day to allow you to create one file per ABAP component and save it to local files. This local files are changed only if his ABAP component has changed.
+
+This tools use the following ZAPLink features :
+  * *Basic* version
+    # Export ABAP components
+  * *Extentions*
+    # XML cleaning
+    # Checksum
+  * it's own feature
+    # Create local directories

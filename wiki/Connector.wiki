@@ -1,0 +1,13 @@
+<wiki:toc max_depth="3" />
+= Introduction =
+
+A connector allow ZAPLink framework to handle one *or many* ABAP Component type, such as ZAPLINK_OBJECT connector that hanlde both :
+  * Classes
+  * Interfaces
+
+= Rules =
+Creating a new connector for unsupported component type, or enhancing offical ZAPLink connector *must follow* the following rules :
+  # _Redundancy_ : No data must be present twice in the raw data or XML file. eg : do not repeat component name on different segments
+  # _Connector UUID_ : Please generate your own (with function module 'GUID_CREATE') do not use existing one.
+  # _Version_ : Use major version change (1.x to 2.x) when XML format (or raw data) are *no longer* compatible. Use minor version change (1.1x to 1.2x) when XML format (and raw data) *are compatible*.
+  # _Handle version managment_ : By implementing IS_SUPPORTED_VERSION handle version managment.

@@ -1,0 +1,78 @@
+#labels Featured
+<wiki:toc max_depth="3" />
+= Installation procedure =
+Install time 15-20 minutes. To install the framework, you must have *developer rights* on SAP and have a *developer key*
+
+== Create installer ==
+Create a program (eg: ZAPLINK_INSTALLER) and use ABAP Installer source code (copy and paste from file).
+	* Create the new program ZAPLINK_INSTALLER using transaction SE38 :
+[https://wiki.zaplink.googlecode.com/hg/Install-01.JPG]
+	* Copy source code from text file to buffer :
+[https://wiki.zaplink.googlecode.com/hg/Install-00.JPG]  
+	* Paste source code to program :
+[https://wiki.zaplink.googlecode.com/hg/Install-02.JPG]  
+	* Save program
+
+== Compile installer ==
+Compile this program :
+
+[https://wiki.zaplink.googlecode.com/hg/Install-03.JPG]  
+
+== Uninstall previous framework ==
+Uninstall previous version of the framework using XML file
+	* Run program ZAPLINK_INSTALLER with XML file :
+[https://wiki.zaplink.googlecode.com/hg/Install-04.JPG]  
+	* Leave default selection that remove all component that will be installed after :
+[https://wiki.zaplink.googlecode.com/hg/Install-05.JPG]  
+	* Confirm some delete confirmation messages like this one :
+[https://wiki.zaplink.googlecode.com/hg/Install-06.JPG]  
+	* Control that no errors appears :
+[https://wiki.zaplink.googlecode.com/hg/Install-07.JPG]
+
+Text like *I:ZAPLINK_CONNECTOR:001* are normal because you've just remove message classes.
+
+== Install new framework ==
+Install framework using XML file
+	* Run program ZAPLINK_INSTALLER with XML file :
+[https://wiki.zaplink.googlecode.com/hg/Install-08.JPG]  
+	* You will be prompted will ALV grid to choose component to install. In order to the framework to work, you must install all components. However you could decide to *NOT* install DEVC (package) components (because this will require transport request).
+[https://wiki.zaplink.googlecode.com/hg/Install-09.JPG]  
+Note : As ZAPLink is a framework, the installer will install components using their *original package* (ZAPLINK). To prevent this, and use _$TMP_ devlopment class, please unselect all DEVC components. If ZAPLINK package exists previously on the SAP system this workaround do not works.
+	* As standard, you are be prompted for a transport request for new objects :
+[https://wiki.zaplink.googlecode.com/hg/Install-10.JPG]  
+	* Wait for installation progress :
+[https://wiki.zaplink.googlecode.com/hg/Install-11.JPG]  
+
+Progression message like *I:ZAPLINK_LIST:000* are normal because message classes are not yet installed.
+	* Check the installation :
+[https://wiki.zaplink.googlecode.com/hg/Install-12.JPG]
+If you have some error (with read light), please note every component with read light and try to reimport those components a couple of times.
+_For example :_ variants can't be imported if program requiers other component not yet activated (which is the case for this framework installation)
+
+== Compile framework ==
+You could use the auto compile option of the installer by answering "Yes" to the following pop-up question :
+[https://wiki.zaplink.googlecode.com/hg/Activation-06.JPG]
+
+Or you could manualy compile the framework by using the folowwing method :
+In order to compile the framework manualy, *you must have an emtpy worklist*. this means no inactive component connected to your user.  
+	* Complile program ZAPLINK using transaction SE38 :
+[https://wiki.zaplink.googlecode.com/hg/Activation-00.JPG]  
+	* Worklist will be display like below, Extend list (Whole Worklist) and select all component :
+[https://wiki.zaplink.googlecode.com/hg/Activation-01.JPG]
+	* Control that none of your component is present in the list and confirm object list :
+[https://wiki.zaplink.googlecode.com/hg/Activation-02.JPG]
+	* Mainprogram pop-up screen :
+You might be prompted with some screen like the follow screen. Select any entry that belogns to Zaplink framework.
+
+[https://wiki.zaplink.googlecode.com/hg/Activation-03.JPG]
+	* Framework is now compiled :
+[https://wiki.zaplink.googlecode.com/hg/Install-03.JPG]  
+
+== Control framework ==
+Check that the framwork is working on the framework XML file.
+	* Call transaction ZLINK to display containt of the framework container file (XML file) :
+[https://wiki.zaplink.googlecode.com/hg/Activation-04.JPG]  
+	* Check that you have a valid ALV list like the following :
+[https://wiki.zaplink.googlecode.com/hg/Activation-05.JPG]
+
+There is also an [Uninstall Uninstallation procedure].

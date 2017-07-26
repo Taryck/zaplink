@@ -1,0 +1,157 @@
+#summary ZAPLink FrameWork roadmap for Basic & Extended version
+<wiki:toc max_depth="4" />
+
+=[https://wiki.zaplink.googlecode.com/hg/icon.png] ZAPLink *framework* =
+Please read this [Install install page] if you're familiar with ZAPLink framework installation.
+Here is all Basic Framework releases.
+==V0==
+===V0.0==
+No final build exists. This version is still in test.
+====V0.0.000====
+This [https://wiki.zaplink.googlecode.com/hg/ZAPLink%20Framework.V0.0.zip Version] was made the 2010-01-22.
+  * initial release
+  * Take a look to *[http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ADetected_on_Release-0.0.000%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Detected_on_Release+Release+Summary&x=priority&cells=tiles the knowned bug list]*
+
+====V0.0.001====
+This [https://wiki.zaplink.googlecode.com/hg/ZAPLink%20Framework.V0.0.001.zip Version] was made the 2010-01-28.
+  * Enhanced error handling, Introducing macro to do that
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.001%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles	the corrected bug list] 
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.001%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the enhancement list]
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.001%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the task list] 
+  * Take a look to *[http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ADetected_on_Release-0.0.001%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Detected_on_Release+Release+Summary&x=priority&cells=tiles the knowned bug list]*
+
+====V0.0.002====
+This [https://wiki.zaplink.googlecode.com/hg/ZAPLink%20Framework.V0.0.002.zip Version] was made the 2010-02-08.
+
+Transaction '*ZLINK*' has been added to the framework.
+
+*Screens* has been added to Program and Class.
+
+New dictionary connectors :
+  # Type group
+
+For more details :
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.002%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles	the corrected bug list] 
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.002%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the enhancement list]
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.002%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the task list] 
+  * Take a look to *[http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ADetected_on_Release-0.0.002%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Detected_on_Release+Release+Summary&x=priority&cells=tiles the knowned bug list]*
+
+====V0.0.003====
+This [https://wiki.zaplink.googlecode.com/hg/ZAPLink%20Framework.V0.0.003.zip Version] was made the 2010-02-19.
+
+*Menu painter* has been added to Program and Class.
+
+New dictionary connectors :
+  # Domain
+  # Data element
+  # View
+
+Connector Change :
+  # Class & Interface V1.0 ==> V1.01
+
+For more details :
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.003%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the corrected bug list] 
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.003%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the enhancement list]
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.003%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the task list] 
+  * Take a look to *[http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ADetected_on_Release-0.0.003%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Detected_on_Release+Release+Summary&x=priority&cells=tiles the knowned bug list]*
+
+====V0.0.004====
+This [https://wiki.zaplink.googlecode.com/hg/ZAPLink%20Framework.V0.0.004.zip Version] was made the 2010-04-02.
+
+New connector :
+  # Documentation (DOCT)
+  # Dictionary : Search helps 
+  # Dictionary : Table types
+  # Dictionary : Table/Structure 
+  # Dictionary : Lock object
+  # Function group
+  
+Major Fixes :
+  * [http://code.google.com/p/zaplink/issues/detail?id=47&can=1&q=label%3ARelease-0.0.004%20label%3Atype-defect&colspec=ID%20Type%20Status%20Priority%20Release%20Summary Need to install twice time framework in order to compile]
+  * [http://code.google.com/p/zaplink/issues/detail?id=45&can=1&q=label%3ARelease-0.0.004%20label%3Atype-defect&colspec=ID%20Type%20Status%20Priority%20Release%20Summary When XML parsing retrieves errors import process continue]
+  * [http://code.google.com/p/zaplink/issues/detail?id=46&can=1&q=label%3ARelease-0.0.004%20label%3Atype-defect&colspec=ID%20Type%20Status%20Priority%20Release%20Summary Error in XML Parsing with attribute staring with number] 
+  
+
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.004%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the corrected bug list] 
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.004%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the enhancement list]
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.004%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the task list] 
+  * Take a look to *[http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ADetected_on_Release-0.0.004%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Detected_on_Release+Release+Summary&x=priority&cells=tiles the knowned bug list]*
+
+====V0.0.005====
+This [https://wiki.zaplink.googlecode.com/hg/ZAPLink%20Framework.V0.0.005.zip Version] was made the 2010-05-07.
+
+Major changes :
+  * Installer now allow to active all installed components
+  * "Code Signature" and XML Checksum are now stable, after a fresh install on an other SAP System, theses MD5 hash no longer change
+  * Transaction ZL_INFOS allow to provide an XML file listing SAP system configuration such as support package and ZAPLink components with code Signature. This XML Info file is now mandatory for every Issue report.
+  * In case of framework broken you can use program ZAPLINK_INFOS_STANDALONE.  
+
+  
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.005%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the corrected bug list] 
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.005%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the enhancement list]
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.005%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the task list] 
+  * Take a look to *[http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ADetected_on_Release-0.0.005%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Detected_on_Release+Release+Summary&x=priority&cells=tiles the knowned bug list]*
+
+====V0.0.006====
+This [https://wiki.zaplink.googlecode.com/hg/ZAPLink%20Framework.V0.0.006.zip Version] was made the 2010-09-11.
+
+Major changes :
+  * Installer now allow to display containers
+  * Handle Program's Variant, Local test classes, Extention indexes
+  * Handle textpool with standalone generator
+  
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.006%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the corrected bug list] 
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.006%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the enhancement list]
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.006%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the task list] 
+  * Take a look to *[http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ADetected_on_Release-0.0.006%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Detected_on_Release+Release+Summary&x=priority&cells=tiles the knowned bug list]*
+
+====V0.0.007====
+Major changes :
+  * Minor fix in Program's variant import
+  * Handle Check points
+  * Handle Variant for Check points
+  * Exception classes are now message based exception classes
+
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.007%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the corrected bug list] 
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.007%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the enhancement list]
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.007%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the task list] 
+  * Take a look to *[http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ADetected_on_Release-0.0.007%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Detected_on_Release+Release+Summary&x=priority&cells=tiles the knowned bug list]*
+
+====V0.0.008====
+Major changes :
+  * Full dependencie Check
+  * Function module fixes
+
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.008%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the corrected bug list] 
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.008%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the enhancement list]
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.008%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the task list] 
+  * Take a look to *[http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ADetected_on_Release-0.0.008%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Detected_on_Release+Release+Summary&x=priority&cells=tiles the knowned bug list]*
+
+====V0.0.009====
+This *will be* the next "build" version.
+  * Take a look to <a href="http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.009%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles"> the <b>expected</b> corrected bug list</a>
+  * Take a look to <a href="http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.009%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles"> the <b>expected</b> enhancement list</a>
+  * Take a look to <a href="http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.009%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles"> the <b>expected</b> task list</a>
+
+<wiki:comment>
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.009%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the corrected bug list] 
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.009%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the enhancement list]
+  * Take a look to [http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.009%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles the task list] 
+  * Take a look to *[http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ADetected_on_Release-0.0.009%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Detected_on_Release+Release+Summary&x=priority&cells=tiles the knowned bug list]*
+
+V0.0.010
+This *will be* the next "build" version.
+  * Take a look to <a href="http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.010%20label%3Atype-defect&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles"> the <b>expected</b> corrected bug list</a>
+  * Take a look to <a href="http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.010%20label%3Atype-enhancement&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles"> the <b>expected</b> enhancement list</a>
+  * Take a look to <a href="http://code.google.com/p/zaplink/issues/list?can=1&q=label%3ARelease-0.0.010%20label%3Atype-task&colspec=ID+Type+Status+Priority+Release+Summary&x=priority&cells=tiles"> the <b>expected</b> task list</a>
+</wiki:comment>
+
+=[https://wiki.zaplink.googlecode.com/hg/icon.png] ZAPLink *extensions* =
+These extensions need a ZAPLink framework installed. Here is all Framework's extensions releases.
+==ZIP File==
+This extension allow to save XML content comptacted using ZIP.
+Take a look to _[http://code.google.com/p/zaplink/source/browse/CLAS/CLAS.ZAPLINK_FILE_ZIP.xml CLAS.ZAPLINK_FILE_ZIP.xml]_.
+===V0.0.000==
+Data is *GZipped* before been writed to the disk. (before revision: 62e653bf2d). The file cannot be edited.
+===V0.0.001==
+Data is Zipped as a file before been writed to the disk. (revision: 62e653bf2d and after). The file is a normal ZIP file and can be extracted and then edited.

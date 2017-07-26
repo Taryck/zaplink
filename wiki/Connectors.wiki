@@ -1,0 +1,26 @@
+#summary ZAPLink connectors list
+[https://wiki.zaplink.googlecode.com/hg/ZAPLink.Connector.gif]
+<wiki:toc max_depth="3" />
+= Official =
+
+Here is the list of all official connectors :
+  * [https://connectors.zaplink.googlecode.com/hg/1FAC0A4B07A5A05AE1000000AC120173.1.0.xml Message Class]
+  * [https://connectors.zaplink.googlecode.com/hg/29AD0A4B07A5A05AE1000000AC120173.1.0.xml Package] (Development class & Package interface)
+  * [https://connectors.zaplink.googlecode.com/hg/39AC0A4B07A5A05AE1000000AC120173.1.01.xml Objects] (Class and interface) with textpool, Screens & Menu painter
+  * [https://connectors.zaplink.googlecode.com/hg/5079624B82531D63E1000000AC120173.1.0.xml Dictionary] (Type Group, Domain, Data element, View, Table)
+  * [https://connectors.zaplink.googlecode.com/hg/5DAA0A4B07A5A05AE1000000AC120173.1.0.xml BAdI] (Implentation & Definition)
+  * [https://connectors.zaplink.googlecode.com/hg/A816684B5215E22AE1000000AC120173.1.0.xml Transaction]
+  * [https://connectors.zaplink.googlecode.com/hg/AAAD0A4B07A5A05AE1000000AC120173.1.0.xml Program] (Program or include) with textpool, screen & Menu painter
+  * [https://connectors.zaplink.googlecode.com/hg/DF0813D1BA8C0EF1BEAE000C291B645B.1.0.xml OS Command] (transaction sexx)
+
+== Old versions ==
+Here is the list of all previous version of the official connectors :
+  * [https://connectors.zaplink.googlecode.com/hg/39AC0A4B07A5A05AE1000000AC120173.1.0.xml Objects] (Class and interface) with textpool & Screens
+
+= un-official =
+== hosted @ ZAPLink ==
+Here will be listed all connectors that are not developed by ZAPLink team but that hosted on our connector's repository :
+Please send new connectors version to [mailto:transaltion@zaplink.org transaltion@zaplink.org]
+
+== hosted elsewhere ==
+Here will be listed all connectors that are not hosted on our connector's repository :

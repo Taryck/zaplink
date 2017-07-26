@@ -1,0 +1,17 @@
+#labels Featured
+#summary We need you for ...
+<wiki:toc max_depth="3" />
+[https://wiki.zaplink.googlecode.com/hg/Uncle%20Sam.gif]
+
+= Translations =
+We need you for translation of :
+  * [http://code.google.com/p/zaplink/source/checkout?repo=wiki Wiki pages]
+  * ZAPLink components :
+    * Descriptions
+    * Documentations
+    * Textpools
+    * Long Texts
+Please send us your translations to [mailto:transaltion@zaplink.org transaltion@zaplink.org]
+
+= Enhance Framework =
+Let us know, [https://code.google.com/p/zaplink/issues/entry?template=Enhancement%20Request what could be improved in our framework].

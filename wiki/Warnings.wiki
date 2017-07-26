@@ -1,0 +1,21 @@
+#labels Featured
+#summary Important warnings to read
+<wiki:toc max_depth="3" />
+= Packages =
+The following packages hierachy will be created :
+
+[https://wiki.zaplink.googlecode.com/hg/Package%20Hierachy.PNG]
+
+You can prevent this by do not select DEVC component at the installation, like explained in details in the [Install install page].
+
+= Application logs =
+Running ZAPLink framework's object will generate the required entries in Bal Log tables. This entries are managed via transaction SLG0. As exemple, here is the entries that will be created :
+
+[https://wiki.zaplink.googlecode.com/hg/SLG0.PNG]
+
+New entries might be added by next framework realease, but all of them will use '*ZAPLINK*' as Object.
+
+= Transaction =
+The ZAPLink framework will create transaction '*ZLINK*' as the interface's framework.
+ZAPLink framework extentions may also introduce other transactions.
+_*Tips :* If these transaction code already exists in your system, transaction will be, by default, deselected to prevent overwrite. You can edit XML Container to change transaction code in attribut "*NAME*" of XML node "ZL_OBJECT", also check that "*TYPE*" is "*TRAN*"_

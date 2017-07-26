@@ -1,0 +1,21 @@
+<wiki:toc max_depth="3" />
+= ZAPLink Main Concepts =
+To use ZAPLink features you don't need to understand all ZAPLink concepts. However this might helps you if you have a bug to hunt down.
+Undestanding ZAPLink concepts his required for :
+  * Connector devlopers
+  * Devlopers that use ZAPLink components (eg : for combining features)
+
+Here are the ZAPLink Main Concepts :
+  * File (ZAPLINK_FILE) : Object that handle file managment
+  * Component (ZAPLINK_COMPONENT) : Object that identify ABAP component fully. It also might contain a sub component list.
+  * Container (ZAPLINK_CONTAINER) : Object that handle container actions such has adding or removing components from the container.
+  * [Connector Connector] (ZAPLINK_OBJECT, ZAPLINK_PACKAGE, `...` ) : Objects that implements ZAPLINK_CONNECTOR interface. This implementation allow the container to convert a ABAP component to XML file (or raw content).
+  * List (ZAPLINK_LIST) : Object that contains a set of distinct component.
+  
+= ZAPLink Minor Concepts =
+Several other more minor concepts also exists :
+  * Options (ZAPLINK_OPTIONS) : Objects that contains Basic options as follow.
+  * Devlopment class options (ZAPLINK_OPT_DEVCLASS) : Object that handle rules to applie to package
+  * Transport request options (ZAPLINK_OPT_DEVCLASS) : Object that handle rules to applie to transport request
+
+All this concepts could be extended by inheriting from ZAPLink object.
